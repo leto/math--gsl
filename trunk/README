@@ -1,0 +1,46 @@
+Math::GSL
+
+Math::GSL is an interface to the GNU Scientific Library.  The GNU Scientific Library (GSL) 
+is a numerical library for C and C++ programmers. It is free software under the GNU General Public License.
+Math::GSL uses SWIG to generate Perl bindings to *most* GSL functionality.
+
+Currently Math::GSL requires GSL 1.8, which is two versions behind the current (as of Jan 2007) GSL 1.10 .
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+	perl Build.PL
+	./Build
+	./Build test
+	./Build install
+
+SUPPORT AND DOCUMENTATION
+
+After installing, you can find documentation for this module with the
+perldoc command.
+
+    perldoc Math::GSL
+
+You can also look for information at:
+
+    RT, CPAN's request tracker
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Math::GSL
+
+    AnnoCPAN, Annotated CPAN documentation
+        http://annocpan.org/dist/Math::GSL
+
+    CPAN Ratings
+        http://cpanratings.perl.org/d/Math::GSL
+
+    Search CPAN
+        http://search.cpan.org/dist/Math::GSL
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2008 Jonathan Leto
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+

@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-Math::GSL - Perl bindings to the GNU Scientific Library (GSL)
+Math::GSL - OO Perl interface to the  GNU Scientific Library (GSL)
 
 =head1 VERSION
 
@@ -26,23 +26,8 @@ our $VERSION = '0.01';
 
 =head1 EXPORT
 
-Nothing is exported by default.
+Nothing is exported by default. This is alpha software, the API could change at any second.
 
-=head1 FUNCTIONS
-
-=head2 function1
-
-=cut
-
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
-}
 
 =head1 AUTHOR
 

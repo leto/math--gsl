@@ -325,8 +325,8 @@ if ('cygwin' eq $Config{osname} &&
 my $class = Module::Build->subclass( code => $code );
 
 my $builder = $class->new( 
-    module_name         => 'Math::Gsl',
-    add_to_cleanup      => [ 'Math-Gsl-*', 'tmp*'  ],
+    module_name         => 'Math::GSL',
+    add_to_cleanup      => [ 'Math-GSL-*', 'tmp*'  ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',

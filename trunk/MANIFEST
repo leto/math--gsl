@@ -3,5 +3,3 @@ Changes
 MANIFEST
 README
 lib/Math/GSL.pm
-t/lib/Math/GSL.pm
-t/lib/Math/GSL/Sf.pm

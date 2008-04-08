@@ -1,8 +1,10 @@
 #!/usr/bin/perl -w
 
 
+use Config;
 # Build.PL needs to do this
 
+my $archlib = $Config{archlib};
 my $swig = "swig";
 my $opt  = "-shadow -Wall -perl5"; 
 
@@ -15,10 +17,12 @@ my @swigs = qw/
     Version Wavelet Wavelet2d
    /;
 
-map { system "$swig $opt -module Math::GSL::$_ $_.i" } @swigs;
+# to do all
+#map { system "$swig $opt -module Math::GSL::$_ $_.i" } @swigs;
 
+system "$swig $opt -module Math::GSL::Sf Sf.i";
 
-my $cmd2= q{gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE -I/usr/local/include/};
+my $cmd2= q{gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I}.$archlib.q{/CORE -I/usr/local/include/};
 
 my $cmd3= q{ gcc -L/usr/local/lib -shared Sf_wrap.o -lgsl -o Sf.so};
 

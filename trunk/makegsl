@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
 
+
+# Build.PL needs to do this
+
 my $swig = "swig";
 my $opt  = "-shadow -Wall -perl5"; 
 
@@ -12,10 +15,8 @@ my @swigs = qw/
     Version Wavelet Wavelet2d
    /;
 
-for my $sw (@swigs){
-      my $cmd = "$swig $opt -module Math::GSL::$sw $sw.i";
-      system $cmd;
-}
+map { system "$swig $opt -module Math::GSL::$_ $_.i" } @swigs;
+
 
 my $cmd2= q{gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE -I/usr/local/include/};
 

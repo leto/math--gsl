@@ -3,4 +3,3 @@
     - initial tests for special function library gsl_sf <--> Math::GSL::Sf
     - Proof Of Concept: makegsl and testgsl
 
-

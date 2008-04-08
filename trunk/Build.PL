@@ -309,20 +309,14 @@ if ($?) {
     print "ok\n";
 }
 
-use Data::Dumper;
-print Dumper [ $gsl_pkgcfg{cflags} ];
-
 my $ccflags = $gsl_pkgcfg{cflags};
 
-
- ## Swig produces a number of GCC warnings. Turn them off if we can.
+## Swig produces a number of GCC warnings. Turn them off if we can.
 $ccflags .= try_cflags("-Wno-strict-aliasing");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
-
-print Dumper [ $gsl_pkgcfg{cflags} ];
 
 my $ldflags = "$gsl_pkgcfg{libs} -gsl";
 my $swig_flags='-Wall';

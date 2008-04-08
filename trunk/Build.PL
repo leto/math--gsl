@@ -174,7 +174,8 @@ sub compile_c {
   # I doubt optimization makes much of a difference. But if it does,
   # it can be added back via @extra_compiler_flags.
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags,
-	       @extra_compiler_flags, );
+               @extra_compiler_flags, 
+       );
   
   my @cc = $self->split_like_shell($cf->{cc});
   @cc = "gcc" unless @cc;
@@ -331,25 +332,23 @@ my $builder = $class->new(
     dist_abstract       => 'Interface to the GNU Scientific Library',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
-    include_dirs	=> '/usr/local/lib/perl5/5.10.0/mach/CORE/',
-    extra_linker_flags  => $ldflags,
-    extra_compiler_flags=> $ccflags,
-    swig_flags          => $swig_flags,
+    include_dirs	=>    '/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE',
+    extra_linker_flags  => '-I/usr/local/include/ ' . $ldflags,
+    extra_compiler_flags=> "", #$ccflags,
+    swig_flags          => $swig_flags, 
+            #'-importall -module Math::GSL -shadow -Wall ' . $swig_flags,
     swig_installed      => $swig_installed,
     license             => 'gpl',
     requires => {
-	'ExtUtils::PkgConfig'     => '1.03',
-        'Test::More'              => 0,
-        'version'                 => 0,
-    	 perl 			  => '5.6.0',
+	    'ExtUtils::PkgConfig'   =>  '1.03',
+        'Test::More'            =>       0,
+        'version'               =>       0,
+    	 perl 			        => '5.8.0',
     },
-    sign                => 1,
-    swig_source         => [ 
-				[ 	'GSL.i', 
-					[ 'Types.i', 'Sf.i' ],
-			   
-				],
-			   ],
+    sign                  => 1,
+    swig_source           => [ 
+					            [ 'Types.i', 'Sf.i' ],
+			                 ],
 );
 
 $builder->add_build_element('swig');

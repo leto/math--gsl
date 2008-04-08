@@ -1,6 +1,6 @@
 0.01
     - Added swig interface files and swig-ified build script
     - initial tests for special function library gsl_sf <--> Math::GSL::Sf
-
+    - Proof Of Concept: makegsl and testgsl
 
 

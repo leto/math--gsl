@@ -20,6 +20,7 @@ use warnings;
 use Module::Build;
 use ExtUtils::PkgConfig;
 use Config;
+use Data::Dumper;
 
 my $code = <<'EOC';
 use File::Copy;
@@ -102,9 +103,9 @@ sub compile_swig {
 
     my $blib_lib = File::Spec->catfile($self->blib, 'lib');
 
-    print "+++swig -o $c_file -outdir $blib_lib -perl $file\n"; 
+    print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
     $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib,
-		     '-perl', @swig_flags, $file)
+		     '-perl5', @swig_flags, $file)
 	or die "error building $c_file file from '$file'";
     
     my $pm_file = "${file_base}.pm";
@@ -162,9 +163,12 @@ sub compile_c {
 			? map {"-I$_"} (@{$p->{include_dirs}}, File::Spec->catdir($cf->{installarchlib}, 'CORE'))
 			: "-I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE";
  
-  my @extra_compiler_flags = $self->split_like_shell($p->{extra_compiler_flags}) ||  "-Wall -fpic -Dbool=char"; ;
+  my @extra_compiler_flags =  "-Wall -fpic -Dbool=char -I/usr/local/include/"; ;
+     #$self->split_like_shell($p->{extra_compiler_flags}) 
+
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
-  my @ccflags = $self->split_like_shell($cf->{ccflags});
+
+  my @ccflags = split / /, $self->split_like_shell($cf->{ccflags});
   my @optimize = $self->split_like_shell($cf->{optimize});
 
   # Whoah! There seems to be a bug in gcc 4.1.0 and optimization
@@ -173,6 +177,8 @@ sub compile_c {
   # SWIG does - do conversions between parameters and transfers calls
   # I doubt optimization makes much of a difference. But if it does,
   # it can be added back via @extra_compiler_flags.
+  print "ccflags=@ccflags\n";
+  print "extra=@extra_compiler_flags\n";
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags,
                @extra_compiler_flags, 
        );
@@ -205,16 +211,16 @@ sub try_compile {
 
 	my $cccmd = $args{cccmd};
 	my $errornull;
-	my $ccflags = $Config{'ccflags'};
-        $ccflags .= " $args{ccflags}" if $args{ccflags};
+	my $ccflags = ""; # $Config{'ccflags'};
+    #$ccflags .= " $args{ccflags}" if $args{ccflags};
 
-        if ($args{silent} ) {
+    if ($args{silent} ) {
 	    $errornull = "2>/dev/null" unless defined $errornull;
 	} else {
 	    $errornull = '';
 	}
 
-        $cccmd = "$Config{'cc'} -o $tmp $ccflags $tmp.c $errornull"
+    $cccmd = "$Config{'cc'} -o $tmp $ccflags $tmp.c $errornull"
 	    unless defined $cccmd;
 
 	printf "cccmd = $cccmd\n" if $args{verbose};
@@ -303,7 +309,11 @@ if ($?) {
     print "ok\n";
 }
 
+use Data::Dumper;
+print Dumper [ $gsl_pkgcfg{cflags} ];
+
 my $ccflags = $gsl_pkgcfg{cflags};
+
 
  ## Swig produces a number of GCC warnings. Turn them off if we can.
 $ccflags .= try_cflags("-Wno-strict-aliasing");
@@ -312,8 +322,10 @@ $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
+print Dumper [ $gsl_pkgcfg{cflags} ];
+
 my $ldflags = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags='';
+my $swig_flags='-Wall';
 if ('cygwin' eq $Config{osname} && 
     $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
@@ -333,8 +345,8 @@ my $builder = $class->new(
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	=>    '/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE',
-    extra_linker_flags  => '-I/usr/local/include/ ' . $ldflags,
-    extra_compiler_flags=> "", #$ccflags,
+    extra_linker_flags  => '-I./lib -I../lib -I~/work/Math-GSL/blib/lib -I/usr/local/include/ ' . $ldflags,
+    extra_compiler_flags=> $ccflags,
     swig_flags          => $swig_flags, 
             #'-importall -module Math::GSL -shadow -Wall ' . $swig_flags,
     swig_installed      => $swig_installed,

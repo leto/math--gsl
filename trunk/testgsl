@@ -11,7 +11,7 @@ my %results = (
               );
 
 while (my($k,$v)=each %results){
-    my $x = eval "Sf::$k";
+    my $x = eval "Math::GSL::Sf::$k";
     ok( abs($x - $v) < $eps, "$k ?= $x" );    
 }
 

@@ -1,8 +1,24 @@
-swig -shadow -Wall -perl5 Sf.i
-swig -shadow -Wall -perl5 Types.i
-swig -shadow -Wall -perl5 Errno.i
+#!/usr/bin/perl -w
 
-gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE -I/usr/local/include/
+my $swig = "swig";
+my $opt  = "-shadow -Wall -perl5"; 
 
+my @swigs = qw/
+    Blas Block Bspline Cblas Cdf Chebyshev CheckRange Combination Complex
+    Const Deriv Dft Dht Diff Eigen Errno Fft Fit Heapsort Histogram Histogram2d
+    Ieee_utils Integration Interp Linalg Machine Math Matrix Message Min Mode Monte
+    Multifit Multimin Multiroots Nan Ntuple Odeiv Permutation Permute Poly Pow_int Precision
+    Qrng Randist Rng Roots Sf Siman Sort Specfunc Spline Statistics Sum Sys Test Types Vector
+    Version Wavelet Wavelet2d
+   /;
 
-gcc -L/usr/local/lib -shared Sf_wrap.o -lgsl -o Sf.so
+for my $sw (@swigs){
+      my $cmd = "$swig $opt -module Math::GSL::$sw $sw.i";
+      system $cmd;
+}
+
+my $cmd2= q{gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE -I/usr/local/include/};
+
+my $cmd3= q{ gcc -L/usr/local/lib -shared Sf_wrap.o -lgsl -o Sf.so};
+
+system "$cmd2 && $cmd3";

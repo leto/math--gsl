@@ -64,3 +64,4 @@ Vector.i
 Version.i
 Wavelet.i
 Wavelet2d.i
+t/Sf.t

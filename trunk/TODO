@@ -1,0 +1,21 @@
+
+=head 2 Stuff to figure out
+
+* how should we interface to gsl_sf_result ?
+
+http://www.gnu.org/software/gsl/manual/html_node/The-gsl_005fsf_005fresult-struct.html
+
+     use Math::GSL::Result;
+     use Math::GSL::Sf qw/gsl_sf_bessel/;
+     
+     my $x = 5.0;
+     my $result = Math::GSL::Result->new;
+     
+     my $expected = -0.17759677131433830434739701;
+       
+     my $status = gsl_sf_bessel_J0_e ($x, $result);
+     
+     print "status  = $status\n";
+     printf "J0($x) = %.18f\n\t= +/- % .18f\n", $result->val, $result->err;
+     printf "exact   = $expected\n;
+

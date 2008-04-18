@@ -3,6 +3,8 @@
 
 use Config;
 # Build.PL needs to do this
+# this seems to not like perl 5.8, but is known to work on linux+freebsd for
+# perl 5.10
 
 my $archlib = $Config{archlib};
 my $swig = "swig";
@@ -26,4 +28,6 @@ my $cmd2= q{ gcc -Wall -fpic -c Sf_wrap.c  -Dbool=char -I}.$archlib.q{/CORE -I/u
 
 my $cmd3= q{ gcc -L/usr/local/lib -shared Sf_wrap.o -lgsl -o Sf.so};
 
+print "Running $cmd2 && $cmd3\n";
 system "$cmd2 && $cmd3";
+

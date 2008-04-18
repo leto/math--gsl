@@ -23,6 +23,7 @@ use Config;
 use Data::Dumper;
 
 my $code = <<'EOC';
+use Config;
 use File::Copy;
 
 sub process_swig_files {
@@ -91,14 +92,14 @@ sub compile_swig {
     
     my @swig;
     if (defined($p->{swig})) {
-	@swig = $self->split_like_shell($p->{swig});
+	    @swig = $self->split_like_shell($p->{swig});
     } else {
-	@swig = ('swig');
+	    @swig = ('swig');
     }
     if (defined($p->{swig_flags})) {
-	@swig_flags = $self->split_like_shell($p->{swig_flags});
+	    @swig_flags = $self->split_like_shell($p->{swig_flags});
     } else {
-	@swig_flags = ();
+	    @swig_flags = ();
     }
 
     my $blib_lib = File::Spec->catfile($self->blib, 'lib');
@@ -159,12 +160,15 @@ sub compile_c {
   return $obj_file if $self->up_to_date($file, $obj_file);
 
 
+  $cf->{installarchlib} = $Config{archlib};
+
   my @include_dirs = @{$p->{include_dirs}} 
 			? map {"-I$_"} (@{$p->{include_dirs}}, File::Spec->catdir($cf->{installarchlib}, 'CORE'))
-			: "-I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE";
- 
-  my @extra_compiler_flags =  "-Wall -fpic -Dbool=char -I/usr/local/include/"; ;
-     #$self->split_like_shell($p->{extra_compiler_flags}) 
+			: map {"-I$_"} ( File::Spec->catdir($cf->{installarchlib}, 'CORE') ) ;
+			# "-I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE";
+
+  my @extra_compiler_flags = split / /, q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/};
+  # $self->split_like_shell($p->{extra_compiler_flags});
 
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
 
@@ -211,8 +215,8 @@ sub try_compile {
 
 	my $cccmd = $args{cccmd};
 	my $errornull;
-	my $ccflags = ""; # $Config{'ccflags'};
-    #$ccflags .= " $args{ccflags}" if $args{ccflags};
+	my $ccflags =  $Config{'ccflags'};
+    $ccflags .= " $args{ccflags}" if $args{ccflags};
 
     if ($args{silent} ) {
 	    $errornull = "2>/dev/null" unless defined $errornull;
@@ -333,7 +337,7 @@ my $class = Module::Build->subclass( code => $code );
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
-    add_to_cleanup      => [ 'Math-GSL-*', 'tmp*'  ],
+    add_to_cleanup      => [ q{Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build} ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
@@ -353,8 +357,8 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [ 
-					            [ 'Types.i', 'Sf.i' ],
-			                 ],
+                                [ 'Sf.i', ] 
+                             ],
 );
 
 $builder->add_build_element('swig');

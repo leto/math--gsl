@@ -65,3 +65,4 @@ Version.i
 Wavelet.i
 Wavelet2d.i
 t/Sf.t
+t/00-load.t

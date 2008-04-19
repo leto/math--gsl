@@ -19,9 +19,7 @@ our $VERSION = '0.01';
 =head1 SYNOPSIS
 
 
-    use Math::GSL::Sf;
-
-    my $foo = Math::GSL->new();
+    use Math::GSL::Sf qw/ ... /;
     ...
 
 =head1 EXPORT
@@ -40,13 +38,13 @@ the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Math::GSL>
 automatically be notified of progress on your bug as I make changes.
 
 
-
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc Math::GSL
+
+or online at L<http://leto.net/code/Math-GSL/>
 
 
 You can also look for information at:

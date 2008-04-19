@@ -21,7 +21,7 @@ Fit.i
 Heapsort.i
 Histogram.i
 Histogram2d.i
-Ieee_utils.i
+IEEEUtils.i
 Integration.i
 Interp.i
 lib/Math/GSL.pm
@@ -43,7 +43,7 @@ Odeiv.i
 Permutation.i
 Permute.i
 Poly.i
-Pow_int.i
+PowInt.i
 Precision.i
 Qrng.i
 Randist.i

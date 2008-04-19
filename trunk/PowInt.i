@@ -1,4 +1,4 @@
-%module gsl_pow_int
+%module PowInt
 %{
 #include "gsl/gsl_pow_int.h"
 %}

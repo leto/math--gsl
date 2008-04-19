@@ -21,6 +21,7 @@ use Module::Build;
 use ExtUtils::PkgConfig;
 use Config;
 use Data::Dumper;
+use File::Fu;
 
 my $code = <<'EOC';
 use Config;
@@ -102,10 +103,10 @@ sub compile_swig {
 	    @swig_flags = ();
     }
 
-    my $blib_lib = File::Spec->catfile($self->blib, 'lib');
+    my $blib_lib = File::Fu->dir($self->blib) +  'lib';
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
-    $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib,
+    $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib + 'Math/GSL/',
 		     '-perl5', @swig_flags, $file)
 	or die "error building $c_file file from '$file'";
     
@@ -337,7 +338,7 @@ my $class = Module::Build->subclass( code => $code );
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
-    add_to_cleanup      => [ q{Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build} ],
+    add_to_cleanup      => [ q{Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so} ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',

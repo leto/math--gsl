@@ -1,4 +1,4 @@
-%module gsl_math
+%module Math
 %{
 #include "gsl/gsl_math.h"
 %}

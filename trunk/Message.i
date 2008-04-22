@@ -1,4 +1,4 @@
-%module gsl_message
+%module Message
 %{
 #include "gsl/gsl_message.h"
 %}

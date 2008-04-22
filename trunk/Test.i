@@ -1,4 +1,4 @@
-%module gsl_test
+%module Test
 %{
 #include "gsl/gsl_test.h"
 %}

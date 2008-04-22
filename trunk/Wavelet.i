@@ -1,4 +1,4 @@
-%module gsl_wavelet
+%module Wavelet
 %{
 #include "gsl/gsl_wavelet.h"
 %}

@@ -1,4 +1,4 @@
-%module gsl_wavelet2d
+%module Wavelet2d
 %{
 #include "gsl/gsl_wavelet2d.h"
 %}

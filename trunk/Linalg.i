@@ -1,4 +1,4 @@
-%module gsl_linalg
+%module Linalg
 %{
 #include "gsl/gsl_linalg.h"
 %}

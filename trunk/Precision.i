@@ -1,4 +1,4 @@
-%module gsl_precision
+%module Precision
 %{
 #include "gsl/gsl_precision.h"
 %}

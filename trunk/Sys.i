@@ -1,4 +1,4 @@
-%module gsl_sys
+%module Sys
 %{
 #include "gsl/gsl_sys.h"
 %}

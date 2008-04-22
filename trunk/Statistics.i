@@ -1,4 +1,4 @@
-%module gsl_statistics
+%module Statistics
 %{
 #include "gsl/gsl_statistics.h"
 %}

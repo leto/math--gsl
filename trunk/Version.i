@@ -1,4 +1,4 @@
-%module gsl_version
+%module Version
 %{
 #include "gsl/gsl_version.h"
 %}

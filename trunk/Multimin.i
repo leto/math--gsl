@@ -1,4 +1,4 @@
-%module gsl_multimin
+%module Multimin
 %{
 #include "gsl/gsl_multimin.h"
 %}

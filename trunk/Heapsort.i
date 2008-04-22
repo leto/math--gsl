@@ -1,4 +1,4 @@
-%module gsl_heapsort
+%module Heapsort
 %{
 #include "gsl/gsl_fit.h"
 %}

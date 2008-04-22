@@ -1,4 +1,4 @@
-%module gsl_min
+%module Min
 %{
 #include "gsl/gsl_min.h"
 %}

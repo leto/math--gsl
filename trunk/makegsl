@@ -1,8 +1,10 @@
 #!/usr/bin/perl -w
 
+#### Build.PL loves us all
+### This script should not be needed 
+
 
 use Config;
-# Build.PL needs to do this
 # this seems to not like perl 5.8, but is known to work on linux+freebsd for
 # perl 5.10
 

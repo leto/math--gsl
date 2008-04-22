@@ -1,4 +1,4 @@
-%module gsl_siman
+%module Siman
 %{
 #include "gsl/gsl_siman.h"
 %}

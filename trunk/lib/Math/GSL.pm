@@ -98,8 +98,9 @@ sub verify_results
     $eps ||= 1e-8;
     while (my($k,$v)=each %$results){
         my $x = eval $k;
+        my $res = abs($x-$v);
         $@ ? ok(0)
-           : ok( abs($x - $v) < $eps, "$k ?= $x" );    
+           : ok( $res < $eps, "$k ?= $x, +- $res" );    
     }
 }
 

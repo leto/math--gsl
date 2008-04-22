@@ -1,4 +1,4 @@
-%module gsl_matrix
+%module Matrix
 %{
 #include "gsl/gsl_matrix.h"
 %}

@@ -1,4 +1,4 @@
-%module gsl_integration
+%module Integration
 %{
 #include "gsl/gsl_integration.h"
 %}

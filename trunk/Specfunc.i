@@ -1,4 +1,4 @@
-%module gsl_specfunc
+%module Specfunc
 %{
 #include "gsl/gsl_specfunc.h"
 %}

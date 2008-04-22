@@ -1,4 +1,4 @@
-%module gsl_deriv
+%module Deriv
 %{
 #include "gsl/gsl_deriv.h"
 %}

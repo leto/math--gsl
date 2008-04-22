@@ -1,4 +1,4 @@
-%module gsl_sort
+%module Sort
 %{
 #include "gsl/gsl_sort.h"
 %}

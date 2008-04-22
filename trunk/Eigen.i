@@ -1,4 +1,4 @@
-%module gsl_eigen
+%module Eigen
 %{
 #include "gsl/gsl_eigen.h"
 %}

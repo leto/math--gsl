@@ -1,4 +1,4 @@
-%module gsl_poly
+%module Poly
 %{
 #include "gsl/gsl_poly.h"
 %}

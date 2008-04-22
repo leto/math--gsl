@@ -1,4 +1,4 @@
-%module gsl_vector
+%module Vector
 %{
 #include "gsl/gsl_vector.h"
 #include "gsl/gsl_vector_char.h"

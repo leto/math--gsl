@@ -1,4 +1,4 @@
-%module gsl_roots
+%module Roots
 %{
 #include "gsl/gsl_roots.h"
 %}

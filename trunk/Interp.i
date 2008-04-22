@@ -1,4 +1,4 @@
-%module gsl_interp
+%module Interp
 %{
 #include "gsl/gsl_interp.h"
 %}

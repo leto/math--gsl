@@ -1,4 +1,4 @@
-%module gsl_multiroots
+%module Multiroots
 %{
 #include "gsl/gsl_multiroots.h"
 %}

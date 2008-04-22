@@ -1,4 +1,4 @@
-%module gsl_errno
+%module Errno
 %{
 #include "gsl/gsl_errno.h"
 %}

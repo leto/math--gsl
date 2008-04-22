@@ -1,4 +1,4 @@
-%module gsl_mode
+%module Mode
 %{
 #include "gsl/gsl_mode.h"
 %}

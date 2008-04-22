@@ -1,4 +1,4 @@
-%module gsl_spline
+%module Spline
 %{
 #include "gsl/gsl_spline.h"
 %}

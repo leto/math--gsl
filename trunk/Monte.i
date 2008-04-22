@@ -1,4 +1,4 @@
-%module gsl_monte
+%module Monte
 %{
 #include "gsl/gsl_monte.h"
 #include "gsl/gsl_monte_miser.h"

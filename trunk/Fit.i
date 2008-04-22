@@ -1,4 +1,4 @@
-%module gsl_fit
+%module Fit
 %{
 #include "gsl/gsl_fit.h"
 %}

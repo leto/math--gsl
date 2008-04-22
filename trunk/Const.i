@@ -1,4 +1,4 @@
-%module gsl_const
+%module Const
 %{
 #include "gsl/gsl_const.h"
 #include "gsl/gsl_const_cgs.h"

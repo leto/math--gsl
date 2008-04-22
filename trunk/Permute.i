@@ -1,4 +1,4 @@
-%module gsl_permute
+%module Permute
 %{
 #include "gsl/gsl_permute.h"
 %}

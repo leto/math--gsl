@@ -1,4 +1,4 @@
-%module gsl_multifit
+%module Multifit
 %{
 #include "gsl/gsl_multifit.h"
 #include "gsl/gsl_multifit_nlin.h"

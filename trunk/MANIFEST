@@ -1,3 +1,4 @@
+lib/Math/GSL.pm
 BLAS.i
 Block.i
 Bspline.i
@@ -24,7 +25,6 @@ Histogram2d.i
 IEEEUtils.i
 Integration.i
 Interp.i
-lib/Math/GSL.pm
 Linalg.i
 Machine.i
 makegsl
@@ -60,6 +60,7 @@ Statistics.i
 Sum.i
 Sys.i
 t/00-load.t
+t/Randist.t
 t/SF.t
 Test.i
 testgsl

@@ -62,6 +62,7 @@ sub process_swig {
 	      $self->compile_swig($main_swig_file, $c_file);
 	      # Only need to build $c_file once no matter how many 
 	      # includes there are.
+          print "bye bye\n";
 	      last;
 	  }
       }
@@ -358,8 +359,9 @@ my $builder = $class->new(
     	 perl 			        => '5.8.0',
     },
     sign                  => 1,
-    swig_source           => [ 
-                                [ 'SF.i', ] 
+    swig_source           => [  
+                                [ 'SF.i', ],
+                                [ 'Randist.i'],
                              ],
 );
 

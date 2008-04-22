@@ -362,6 +362,7 @@ my $builder = $class->new(
     swig_source           => [  
                                 [ 'SF.i', ],
                                 [ 'Randist.i'],
+                                [ 'Errno.i'],
                              ],
 );
 

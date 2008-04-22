@@ -98,9 +98,14 @@ sub verify_results
     $eps ||= 1e-8;
     while (my($k,$v)=each %$results){
         my $x = eval $k;
-        my $res = abs($x-$v);
-        $@ ? ok(0)
-           : ok( $res < $eps, "$k ?= $x, +- $res" );    
+        print "got $x for $k\n";
+        if($x =~ /nan/i){
+                ok( $v eq $x, "'$v'?='$x'" );
+        } else { 
+            my $res = abs($x-$v);
+            $@ ? ok(0)
+               : ok( $res < $eps, "$k ?= $x, +- $res" );    
+        }
     }
 }
 
@@ -113,5 +118,13 @@ sub _has_quads          { $Config{use64bitint} eq 'define' || ($Config{longsize}
 sub _has_long_doubles                 { $Config{d_longdbl}     eq 'define'             }
 sub _has_long_doubles_as_default      { $Config{uselongdouble} eq 'define'             }
 sub _has_long_doubles_same_as_doubles { $Config{doublesize}    == $Config{longdblsize} }
+
+sub _assert_dies($;$)
+{
+    my ($code,$msg) = @_;
+    my $status = eval { &$code };
+    print "status=||$status||\n\$\?=$?\n\$\!=$!\n" if 0;
+    $@  ?  ok(1, $msg) : ok (0, join "\n", $@,  $msg );
+}
 
 42;

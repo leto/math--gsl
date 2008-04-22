@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use Test::More tests=> 2;
-use Sf;
+use SF;
 
 my $eps = 1e-8;
 
@@ -11,7 +11,7 @@ my %results = (
               );
 
 while (my($k,$v)=each %results){
-    my $x = eval "Math::GSL::Sf::$k";
+    my $x = eval "Math::GSL::SF::$k";
     my $res = abs($x - $v);
     ok( $res < $eps, "$k ?= $x, res=$res" );    
 }

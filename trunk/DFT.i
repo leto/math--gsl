@@ -1,4 +1,4 @@
-%module gsl_dft
+%module DFT
 %{
 #include "gsl/gsl_dft_complex.h"
 #include "gsl/gsl_dft_complex_float.h"

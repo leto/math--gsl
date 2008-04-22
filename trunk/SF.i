@@ -1,4 +1,4 @@
-%module Sf
+%module SF
 %{
 #include "gsl/gsl_sf.h"
 #include "gsl/gsl_sf_airy.h"

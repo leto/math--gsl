@@ -1,4 +1,4 @@
-%module gsl_dht
+%module DHT
 %{
 #include "gsl/gsl_dht.h"
 %}

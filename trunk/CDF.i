@@ -1,4 +1,4 @@
-%module Cdf
+%module CDF
 %{
 #include "gsl/gsl_cdf.h"
 %}

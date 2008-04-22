@@ -1,4 +1,4 @@
-%module Cblas 
+%module CBLAS 
 %{
 #include "gsl/gsl_cblas.h"
 %}

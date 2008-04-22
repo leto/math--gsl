@@ -1,4 +1,4 @@
-%module gsl_qrng
+%module QRNG
 %{
 #include "gsl/gsl_qrng.h"
 %}

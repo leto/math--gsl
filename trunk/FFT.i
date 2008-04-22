@@ -1,4 +1,4 @@
-%module gsl_fft
+%module FFT
 %{
 #include "gsl/gsl_fft.h"
 #include "gsl/gsl_fft_complex.h"

@@ -1,6 +1,6 @@
-%module gsl_rng
+%module RNG
 %{
-#include "gsl/gsl_rng.h"
+    #include "gsl/gsl_rng.h"
 %}
 %import "gsl/gsl_types.h"
 

@@ -1,4 +1,4 @@
-%module gsl_nan
+%module NAN
 %{
 #include "gsl/gsl_nan.h"
 %}

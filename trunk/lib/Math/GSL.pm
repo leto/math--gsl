@@ -3,6 +3,8 @@ package Math::GSL;
 use warnings;
 use strict;
 
+my $VERSION = 0.01;
+
 =head1 NAME
 
 Math::GSL - OO Perl interface to the  GNU Scientific Library (GSL)

@@ -26,6 +26,7 @@ use File::Fu;
 my $code = <<'EOC';
 use Config;
 use File::Copy;
+use File::Fu;
 
 sub process_swig_files {
     my $self = shift;
@@ -77,7 +78,6 @@ sub process_swig {
     my @dirs = File::Spec->splitdir($file_base);
     $archdir = File::Spec->catdir($self->blib,'arch', @dirs[1..$#dirs]);
   }
-  print "archdir is $archdir\n";
   
   # .o -> .so
   $self->link_c($archdir, $file_base, $obj_file);
@@ -102,11 +102,14 @@ sub compile_swig {
     } else {
 	    @swig_flags = ();
     }
+   
+    push @swig_flags, $self->split_like_shell( qq{-module Math::GSL::$file_base} );
 
-    my $blib_lib = File::Fu->dir($self->blib) +  'lib';
+    my $blib_lib =  File::Spec->catfile('blib','lib');
+    #my $blib_lib = 'blib/lib';
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
-    $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib + 'Math/GSL/',
+    $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib . '/Math/GSL/',
 		     '-perl5', @swig_flags, $file)
 	or die "error building $c_file file from '$file'";
     
@@ -166,10 +169,9 @@ sub compile_c {
   my @include_dirs = @{$p->{include_dirs}} 
 			? map {"-I$_"} (@{$p->{include_dirs}}, File::Spec->catdir($cf->{installarchlib}, 'CORE'))
 			: map {"-I$_"} ( File::Spec->catdir($cf->{installarchlib}, 'CORE') ) ;
-			# "-I/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE";
 
-  my @extra_compiler_flags = split / /, q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/};
-  # $self->split_like_shell($p->{extra_compiler_flags});
+  my @extra_compiler_flags = #split / /, q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/};
+   $self->split_like_shell($p->{extra_compiler_flags});
 
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
 
@@ -182,8 +184,7 @@ sub compile_c {
   # SWIG does - do conversions between parameters and transfers calls
   # I doubt optimization makes much of a difference. But if it does,
   # it can be added back via @extra_compiler_flags.
-  print "ccflags=@ccflags\n";
-  print "extra=@extra_compiler_flags\n";
+
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags,
                @extra_compiler_flags, 
        );
@@ -344,8 +345,8 @@ my $builder = $class->new(
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	=>    '/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE',
-    extra_linker_flags  => '-I./lib -I../lib -I~/work/Math-GSL/blib/lib -I/usr/local/include/ ' . $ldflags,
-    extra_compiler_flags=> $ccflags,
+    extra_linker_flags  => '-shared -I./lib -I../lib -I/usr/local/include/ ' . $ldflags,
+    extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/ } . $ccflags,
     swig_flags          => $swig_flags, 
             #'-importall -module Math::GSL -shadow -Wall ' . $swig_flags,
     swig_installed      => $swig_installed,
@@ -358,7 +359,7 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [ 
-                                [ 'Sf.i', ] 
+                                [ 'SF.i', ] 
                              ],
 );
 

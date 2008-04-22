@@ -1,7 +1,8 @@
 #!/usr/bin/perl -w
 
 use Test::More tests=> 2;
-use SF;
+use lib "lib";
+use Math::GSL::SF;
 
 my $eps = 1e-8;
 

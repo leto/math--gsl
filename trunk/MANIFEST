@@ -60,7 +60,6 @@ Statistics.i
 Sum.i
 Sys.i
 t/00-load.t
-t/Sf.t
 t/SF.t
 Test.i
 testgsl

@@ -3,7 +3,7 @@ use File::Fu;
 my $lib  = File::Fu->dir('..') + 'lib'; 
 
 BEGIN {
-	use_ok( 'Math::GSL::Sf' );
+	use_ok( 'Math::GSL' );
 }
 
-diag( "Testing Math::GSL::Sf " . $Math::GSL::Sf::VERSION . ", Perl $], $^X" );
+diag( "Testing Math::GSL " . $Math::GSL::VERSION . ", Perl $], $^X" );

@@ -8,7 +8,7 @@ use Config;
 
 my $archlib = $Config{archlib};
 my $swig = "swig";
-my $opt  = "-shadow -Wall -perl5"; 
+my $opt  = "-shadow -Wall -perl5 -o lib/Math/GSL/SF.pm"; 
 
 my @swigs = qw/
     BLAS Block Bspline CBLAS CDF Chebyshev CheckRange Combination Complex
@@ -22,7 +22,9 @@ my @swigs = qw/
 # to do all
 #map { system "$swig $opt -module Math::GSL::$_ $_.i" } @swigs;
 
-system "$swig $opt -module Math::GSL::SF SF.i";
+my $swig_cmd = "$swig $opt -module Math::GSL::SF SF.i";
+print "$swig_cmd\n";
+system $swig_cmd;
 
 my $cmd2= q{ gcc -Wall -fpic -c SF_wrap.c  -Dbool=char -I}.$archlib.q{/CORE -I/usr/local/include/};
 

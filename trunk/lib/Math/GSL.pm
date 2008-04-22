@@ -3,9 +3,10 @@ package Math::GSL;
 use warnings;
 use Config;
 use Data::Dumper;
+use Test::More;
 use strict;
 
-my $VERSION = 0.01;
+our $VERSION = 0.01;
 
 =head1 NAME
 
@@ -97,7 +98,8 @@ sub verify_results
     $eps ||= 1e-8;
     while (my($k,$v)=each %$results){
         my $x = eval $k;
-        ok( abs($x - $v) < $eps, "$k ?= $x" );    
+        $@ ? ok(0)
+           : ok( abs($x - $v) < $eps, "$k ?= $x" );    
     }
 }
 

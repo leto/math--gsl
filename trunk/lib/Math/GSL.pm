@@ -15,9 +15,6 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 
@@ -83,5 +80,23 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
+
+sub new 
+{
+    my ($self,$args) = @_;
+    my $class = ref $self || $self || 'Math::GSL';
+    my $this = { };
+    bless $this, $class;
+}
+
+sub verify_results
+{
+    my ($self,$results,$eps) = @_;
+    $eps ||= 1e-8;
+    while (my($k,$v)=each %$results){
+        my $x = eval $k;
+        ok( abs($x - $v) < $eps, "$k ?= $x" );    
+    }
+}
 
 42;

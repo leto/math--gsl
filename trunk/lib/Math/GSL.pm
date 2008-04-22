@@ -1,6 +1,8 @@
 package Math::GSL;
 
 use warnings;
+use Config;
+use Data::Dumper;
 use strict;
 
 my $VERSION = 0.01;
@@ -98,5 +100,15 @@ sub verify_results
         ok( abs($x - $v) < $eps, "$k ?= $x" );    
     }
 }
+
+use constant MIN_DOUBLE => 2.2250738585072014e-308;
+use constant MAX_DOUBLE => 1.7976931348623157E+308;
+use constant MAX_FLOAT  => 3.40282347E+38;
+use constant MIN_FLOAT  => 1.175494351e-38;
+
+sub _has_quads          { $Config{use64bitint} eq 'define' || ($Config{longsize} >= 8) }
+sub _has_long_doubles                 { $Config{d_longdbl}     eq 'define'             }
+sub _has_long_doubles_as_default      { $Config{uselongdouble} eq 'define'             }
+sub _has_long_doubles_same_as_doubles { $Config{doublesize}    == $Config{longdblsize} }
 
 42;

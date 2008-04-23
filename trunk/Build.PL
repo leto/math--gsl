@@ -360,7 +360,7 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [  
-                                map { [ "$_.i" ] } qw/SF Randist Errno Machine/ 
+                                map { [ "$_.i" ] } qw/SF Randist Errno Machine Fit/ 
                              ],
 );
 

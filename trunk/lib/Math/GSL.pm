@@ -92,6 +92,11 @@ sub new
     bless $this, $class;
 }
 
+sub subsystems
+{
+    return qw/ Errno Fit Machine Randist SF /;
+}
+
 sub verify_results
 {
     my ($self,$results,$eps) = @_;

@@ -23,3 +23,7 @@ http://www.gnu.org/software/gsl/manual/html_node/The-gsl_005fsf_005fresult-struc
 =head2  Notes
 
 * $status should get stringified to an actual message (via gsl_strerror)
+
+=head2 Stuff to fix
+
+* make the interface not be hardcoded to /usr/local/include/gsl

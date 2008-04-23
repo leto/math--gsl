@@ -1,7 +1,7 @@
 %module Machine
 %{
-#include "gsl/gsl_machine.h"
+#include "/usr/local/include/gsl/gsl_machine.h"
 %}
 
-%include "gsl/gsl_machine.h"
+%include "/usr/local/include/gsl/gsl_machine.h"
 

@@ -1,7 +1,7 @@
 %module Randist
 %{
-#include "gsl/gsl_randist.h"
+#include "/usr/local/include/gsl/gsl_randist.h"
 %}
 
-%include "gsl/gsl_randist.h"
+%include "/usr/local/include/gsl/gsl_randist.h"
 

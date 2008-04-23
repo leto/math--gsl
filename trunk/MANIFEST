@@ -62,6 +62,7 @@ Sys.i
 t/00-load.t
 t/Randist.t
 t/SF.t
+t/Machine.t
 Test.i
 testgsl
 TODO

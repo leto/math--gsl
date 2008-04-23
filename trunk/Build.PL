@@ -340,7 +340,7 @@ my $class = Module::Build->subclass( code => $code );
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
-    add_to_cleanup      => [ q{Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so} ],
+    add_to_cleanup      => [ q{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so} ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
@@ -355,14 +355,12 @@ my $builder = $class->new(
     requires => {
 	    'ExtUtils::PkgConfig'   =>  '1.03',
         'Test::More'            =>       0,
-        'version'               =>       0,
-    	 perl 			        => '5.8.0',
+        version               =>       0,
+    	perl 			        => '5.8.6',
     },
     sign                  => 1,
     swig_source           => [  
-                                [ 'SF.i', ],
-                                [ 'Randist.i'],
-                                [ 'Errno.i'],
+                                map { [ "$_.i" ] } qw/SF Randist Errno Machine/ 
                              ],
 );
 

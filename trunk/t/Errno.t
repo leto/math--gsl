@@ -1,4 +1,4 @@
-use Test::More tests=>3;
+use Test::More 'no_plan';
 use Math::GSL;
 use Math::GSL::Errno;
 use Data::Dumper;

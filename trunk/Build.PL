@@ -62,7 +62,6 @@ sub process_swig {
 	      $self->compile_swig($main_swig_file, $c_file);
 	      # Only need to build $c_file once no matter how many 
 	      # includes there are.
-          print "bye bye\n";
 	      last;
 	  }
       }
@@ -108,6 +107,8 @@ sub compile_swig {
 
     my $blib_lib =  File::Spec->catfile('blib','lib');
     #my $blib_lib = 'blib/lib';
+
+    mkdir File::Spec->catfile($blib_lib, 'Math/GSL');
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
     $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib . '/Math/GSL/',
@@ -360,7 +361,8 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [  
-                                map { [ "$_.i" ] } qw/SF Randist Errno Machine Fit/ 
+                                map { [ "$_.i" ] } 
+                                qw/ CDF Deriv Errno Fit Machine Randist SF Types/ 
                              ],
 );
 

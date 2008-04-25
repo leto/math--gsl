@@ -1,4 +1,4 @@
-use Test::More tests => 6;
+use Test::More 'no_plan';
 use File::Fu;
 my $lib  = File::Fu->dir('..') + 'lib'; 
 

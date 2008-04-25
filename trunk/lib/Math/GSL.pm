@@ -94,7 +94,7 @@ sub new
 
 sub subsystems
 {
-    return qw/ Errno Fit Machine Randist SF /;
+    return qw/ CDF Errno Fit Machine Randist SF Types /;
 }
 
 sub verify_results

@@ -362,7 +362,7 @@ my $builder = $class->new(
     sign                  => 1,
     swig_source           => [  
                                 map { [ "$_.i" ] } 
-                                qw/ CDF Deriv Errno Fit Machine Randist SF Types/ 
+                                qw/ CDF Deriv Errno Fit Machine PowInt Randist SF Types/ 
                              ],
 );
 

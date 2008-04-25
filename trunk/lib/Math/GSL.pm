@@ -94,7 +94,7 @@ sub new
 
 sub subsystems
 {
-    return qw/ CDF Errno Fit Machine Randist SF Types /;
+    return qw/ CDF Errno Fit Machine PowInt Randist SF Types /;
 }
 
 sub verify_results
@@ -103,7 +103,7 @@ sub verify_results
     $eps ||= 1e-8;
     while (my($k,$v)=each %$results){
         my $x = eval $k;
-        print "got $x for $k\n";
+        print "got $x for $k\n" if defined $ENV{DEBUG};
         if($x =~ /nan/i){
                 ok( $v eq $x, "'$v'?='$x'" );
         } else { 

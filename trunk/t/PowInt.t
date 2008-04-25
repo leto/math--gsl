@@ -6,7 +6,6 @@ use Data::Dumper;
 use strict;
 use warnings;
 
-
 {
     my $gsl = Math::GSL->new;
     my $results = { 
@@ -14,6 +13,8 @@ use warnings;
                 'Math::GSL::PowInt::gsl_pow_3(4)'=>  4 ** 3,
                 'Math::GSL::PowInt::gsl_pow_4(5)'=>  5 ** 4,
                 'Math::GSL::PowInt::gsl_pow_5(6)'=>  6 ** 5,
+                'Math::GSL::PowInt::gsl_pow_6(7)'=>  7 ** 6,
+                'Math::GSL::PowInt::gsl_pow_7(8)'=>  8 ** 7,
               };
 
     $gsl->verify_results($results);

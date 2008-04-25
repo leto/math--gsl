@@ -104,7 +104,7 @@ sub verify_results
     while (my($k,$v)=each %$results){
         my $x = eval $k;
         print "got $x for $k\n" if defined $ENV{DEBUG};
-        if($x =~ /nan/i){
+        if(defined $x && $x =~ /nan/i){
                 ok( $v eq $x, "'$v'?='$x'" );
         } else { 
             my $res = abs($x-$v);

@@ -1,10 +1,11 @@
 Math::GSL
 
-Math::GSL is an interface to the GNU Scientific Library.  The GNU Scientific Library (GSL) 
-is a numerical library for C and C++ programmers. It is free software under the GNU General Public License.
-Math::GSL uses SWIG to generate Perl bindings to *most* GSL functionality.
+Math::GSL is an interface to the GNU Scientific Library, using SWIG.  The GNU
+Scientific Library (GSL) is a numerical library for C and C++ programmers. It
+is free software under the GNU General Public License.  Math::GSL uses SWIG to
+generate Perl bindings to *most* GSL functionality.
 
-Currently Math::GSL requires GSL 1.8, which is two versions behind the current (as of Jan 2007) GSL 1.10 .
+Currently Math::GSL requires at least Perl 5.8.6, GSL 1.10,  and SWIG 1.3.35 .
 
 INSTALLATION
 

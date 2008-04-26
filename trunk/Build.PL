@@ -22,6 +22,7 @@ use ExtUtils::PkgConfig;
 use Config;
 use Data::Dumper;
 use File::Fu;
+require 5.8.6;
 
 my $code = <<'EOC';
 use Config;
@@ -268,11 +269,13 @@ sub try_cflags ($) {
 
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
-use constant MIN_GSL_VERSION => 1.8;
+use constant MIN_GSL_VERSION => 1.10;
 my $gv = $gsl_pkgcfg{'modversion'};
 if (exists($gsl_pkgcfg{'modversion'})) {
-    if ($gsl_pkgcfg{'modversion'} =~ m{\A((?:\d+)(?:\.\d+))}) {
-	if ($1 < MIN_GSL_VERSION) {
+  if ($gsl_pkgcfg{'modversion'} =~ m{\A((?:\d+)(?:\.\d+))}) {
+    my @current= split /\./, $1;
+    my @min= split /\./, $gv;
+    if ($current[1] < $min[1] && $current[0] <= $min[0]) {
 	    printf "
 *** 
 *** You need to have gsl %s or greater installed. (You have $gv).

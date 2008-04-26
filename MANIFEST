@@ -1,4 +1,3 @@
-lib/Math/GSL.pm
 BLAS.i
 Block.i
 Bspline.i
@@ -25,6 +24,7 @@ Histogram2d.i
 IEEEUtils.i
 Integration.i
 Interp.i
+lib/Math/GSL.pm
 Linalg.i
 Machine.i
 MANIFEST
@@ -59,9 +59,16 @@ Statistics.i
 Sum.i
 Sys.i
 t/00-load.t
+t/CDF.t
+t/Complex.t
+t/Deriv.t
+t/Errno.t
+t/Fit.t
+t/Machine.t
+t/Poly.t
+t/PowInt.t
 t/Randist.t
 t/SF.t
-t/Machine.t
 Test.i
 TODO
 Types.i

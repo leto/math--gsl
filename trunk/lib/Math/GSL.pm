@@ -94,7 +94,10 @@ sub new
 
 sub subsystems
 {
-    return qw/ CDF Errno Fit Machine PowInt Randist SF Types /;
+    return qw/ 
+             CDF Errno Fit Machine
+             Poly PowInt Randist SF Types 
+    /;
 }
 
 sub verify_results

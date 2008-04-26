@@ -1,7 +1,9 @@
 %module Poly
 %{
-#include "gsl/gsl_poly.h"
+#include "/usr/local/include/gsl/gsl_poly.h"
+#include "/usr/local/include/gsl/gsl_complex.h"
 %}
 
-%include "gsl/gsl_poly.h"
+%include "/usr/local/include/gsl/gsl_poly.h"
+%include "/usr/local/include/gsl/gsl_complex.h"
 

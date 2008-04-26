@@ -268,14 +268,14 @@ sub try_cflags ($) {
 
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
-use constant MIN_GSL_VERSION => 1.10;
+use constant MIN_GSL_VERSION => "1.10";
 my $gv = $gsl_pkgcfg{'modversion'};
 
 if (defined $gv) {
-  if ($gsl_pkgcfg{'modversion'} =~ m{\A((?:\d+)(?:\.\d+))}) {
+  if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
     my @current= split /\./, $1;
     my @min= split /\./, MIN_GSL_VERSION;
-    unless ($current[0] > $min[0] && $current[1] >= $min[1]) {
+    unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
 	    printf "
 *** 
 *** You need to have gsl %s or greater installed. (You have $gv).
@@ -365,7 +365,7 @@ my $builder = $class->new(
     sign                  => 1,
     swig_source           => [  
                                 map { [ "$_.i" ] } 
-                                qw/ CDF Deriv Errno Fit Machine PowInt Randist SF Types/ 
+                                qw/ CDF Deriv Errno Fit Machine Poly PowInt Randist SF Types/ 
                              ],
 );
 

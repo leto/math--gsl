@@ -27,7 +27,6 @@ Integration.i
 Interp.i
 Linalg.i
 Machine.i
-makegsl
 MANIFEST
 Math.i
 Matrix.i
@@ -64,7 +63,6 @@ t/Randist.t
 t/SF.t
 t/Machine.t
 Test.i
-testgsl
 TODO
 Types.i
 Vector.i

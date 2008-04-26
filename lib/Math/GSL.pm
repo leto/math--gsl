@@ -113,7 +113,7 @@ sub verify_results
         }
 
         print "got $x for $k\n" if defined $ENV{DEBUG};
-        if(defined $x && $x =~ /nan/i){
+        if(defined $x && $x =~ /nan|inf/i){
                 ok( $v eq $x, "'$v'?='$x'" );
         } else { 
             my $res = abs($x-$v);

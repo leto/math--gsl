@@ -7,7 +7,7 @@
 
 %perlcode %{
     package Math::GSL::PowInt;
-
+    use base 'Math::GSL';
     require Exporter;
     require DynaLoader;
 

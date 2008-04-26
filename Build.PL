@@ -346,10 +346,10 @@ my $builder = $class->new(
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ q{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so} ],
     create_makefile_pl  => 'passthrough',
-    dist_abstract       => 'Interface to the GNU Scientific Library',
+    dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
-    include_dirs	=>    '/usr/local/lib/perl5/5.10.0/i386-freebsd/CORE',
+    include_dirs	    => q{},
     extra_linker_flags  => '-shared -I./lib -I../lib -I/usr/local/include/ ' . $ldflags,
     extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/ } . $ccflags,
     swig_flags          => $swig_flags, 
@@ -359,13 +359,17 @@ my $builder = $class->new(
     requires => {
 	    'ExtUtils::PkgConfig'   =>  '1.03',
         'Test::More'            =>       0,
-        version               =>       0,
+        version                 =>       0,
     	perl 			        => '5.8.6',
     },
     sign                  => 1,
     swig_source           => [  
                                 map { [ "$_.i" ] } 
-                                qw/ CDF Deriv Errno Fit Machine Poly PowInt Randist SF Types/ 
+                                qw/ 
+                                    CDF Complex Deriv Errno Fit 
+                                    Machine Poly PowInt
+                                    Randist SF Types
+                                  / 
                              ],
 );
 

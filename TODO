@@ -2,6 +2,8 @@
 
 =head2  Stuff to figure out
 
+* check for minimum SWIG version
+
 * how should we interface to gsl_sf_result ?
 
 http://www.gnu.org/software/gsl/manual/html_node/The-gsl_005fsf_005fresult-struct.html
@@ -26,4 +28,9 @@ http://www.gnu.org/software/gsl/manual/html_node/The-gsl_005fsf_005fresult-struc
 
 =head2 Stuff to fix
 
-* make the interface not be hardcoded to /usr/local/include/gsl
+* make sure in Build.PL that the GSL include files are where we think they
+  are, so that the compilation doesn't blowup when people have put there
+  headers in a non-standard place
+
+* make the interface files not be hardcoded to /usr/local/include/gsl, possibly
+  using an environment variable

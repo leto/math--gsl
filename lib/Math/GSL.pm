@@ -102,10 +102,16 @@ sub subsystems
 
 sub verify_results
 {
-    my ($self,$results,$eps) = @_;
+    my ($self,$results,$class, $eps) = @_;
     $eps ||= 1e-8;
     while (my($k,$v)=each %$results){
-        my $x = eval $k;
+        my $x; 
+        if (defined $class){
+            $x = eval qq{${class}::$k};
+        } else {
+            $x = eval $k;
+        }
+
         print "got $x for $k\n" if defined $ENV{DEBUG};
         if(defined $x && $x =~ /nan/i){
                 ok( $v eq $x, "'$v'?='$x'" );

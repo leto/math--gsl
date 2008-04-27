@@ -7,12 +7,14 @@ use warnings;
 my $class = qw{Math::GSL::PowInt};
 
 {
-    ok( gsl_pow_4(2) == gsl_pow_2(4) , q{%export_tags works} );
+    ok( gsl_pow_4(2) == gsl_pow_2(4) , q{%EXPORT_TAGS works} );
 }
 {
-    Math::GSL::_assert_dies( sub { gsl_pow_2() } , 'gsl_pow args');
-    Math::GSL::_assert_dies( sub { gsl_pow_2(1,2) } , 'gsl_pow args');
-    Math::GSL::_assert_dies( sub { gsl_pow_2(qw(1 2)) } , 'gsl_pow args');
+    # SWIG takes care of arg checking, but it's still nice to check
+    Math::GSL::_assert_dies( sub { gsl_pow_2() } ,       'Invalid gsl_pow args');
+    Math::GSL::_assert_dies( sub { gsl_pow_2(1,2) } ,    'Invalid gsl_pow args');
+    Math::GSL::_assert_dies( sub { gsl_pow_2( () ) } ,   'Invalid gsl_pow args');
+    Math::GSL::_assert_dies( sub { gsl_pow_2(qw(1 2)) } ,'Invalid gsl_pow args');
 }
 {
     my $results = { 

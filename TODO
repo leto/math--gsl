@@ -1,5 +1,10 @@
 =head1 TODO
 
+=head2 Stuff to do SOON
+
+* use Test::Class
+
+
 =head2  Stuff to figure out
 
 * check for minimum SWIG version
@@ -22,9 +27,9 @@ http://www.gnu.org/software/gsl/manual/html_node/The-gsl_005fsf_005fresult-struc
      printf "J0($x) = %.18f\n\t= +/- % .18f\n", $result->val, $result->err;
      printf "exact   = $expected\n;
 
-=head2  Notes
-
 * $status should get stringified to an actual message (via gsl_strerror)
+
+* same goes for gsl_complex_*, gsl_vector_* 
 
 =head2 Stuff to fix
 

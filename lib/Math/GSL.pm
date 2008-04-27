@@ -1,5 +1,5 @@
 package Math::GSL;
-
+use strict;
 use warnings;
 use Config;
 use Data::Dumper;
@@ -10,10 +10,11 @@ require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
 our @EXPORT_OK = qw( is_similar );
-
-use strict;
-
-our $VERSION = 0.01;
+use constant MAX_DOUBLE => 1.7976931348623157e+308;
+use constant MIN_DOUBLE => 2.2250738585072014e-308;
+use constant MAX_FLOAT  => 3.40282347e+38;
+use constant MIN_FLOAT  => 1.175494351e-38;
+our $VERSION = 0.042;
 
 =head1 NAME
 
@@ -128,12 +129,6 @@ sub verify_results
         }
     }
 }
-
-use constant MAX_DOUBLE => 1.7976931348623157e+308;
-use constant MIN_DOUBLE => 2.2250738585072014e-308;
-use constant MAX_FLOAT  => 3.40282347e+38;
-use constant MIN_FLOAT  => 1.175494351e-38;
-
 
 sub is_similar {
     my ($x,$y, $eps) = @_;

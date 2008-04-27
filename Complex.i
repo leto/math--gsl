@@ -19,3 +19,8 @@ gsl_complex gsl_complex_rect (double x, double y);
 /* r= r e^(i theta) */
 gsl_complex gsl_complex_polar (double r, double theta); 
 
+%perlcode %{
+
+@EXPORT_OK = qw(gsl_complex);
+
+%}

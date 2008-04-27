@@ -30,6 +30,7 @@ sub GSL_COMPLEX_RECT : Test(2) {
     ok( is_similar($real,5), 'gsl_complex_rect real'); 
     ok( is_similar($imag,3), 'gsl_complex_rect imag'); 
 }
+=head
 sub GSL_COMPLEX_POLAR : Test(2) {
     my $self = shift;
     print <<WTF;
@@ -46,4 +47,5 @@ WTF
     ok( is_similar($r,1.0),     'gsl_complex_polar r, res=' .($r-1.) . "\n"); 
     ok( is_similar($theta,0.1), 'gsl_complex_polar theta, res=' .($theta-0.1) . "\n");
 }
+=cut
 42;

@@ -25,6 +25,6 @@ use warnings;
 
     my $y = Math::GSL::Poly::gsl_poly_eval( $vals , 3, 1.0);
 
-    ok( abs($y - (3.14+2.72+5.55) ) < 1e-8, 'gsl_poly_eval' );
+    ok( Math::GSL::is_similar($y,3.14+2.72+5.55) , 'gsl_poly_eval' );
 }
 

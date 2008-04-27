@@ -30,6 +30,10 @@ my $results = {
                 q{is_valid_float(1e0)}        => 1,
                 q{is_valid_float(1e0)}        => 1,
                 q{is_valid_float('0e0')}      => 1,
+                q{is_similar(5,5)}            => 1,
+                q{is_similar(5,4)}            => 0,
+                q{is_similar(0.10005,0.1000501, 1e-5)}  => 1,
+                q{is_similar(0.10005,0.1000501, 1e-7)}  => 0,
               };
 
 $gsl->verify_results($results);

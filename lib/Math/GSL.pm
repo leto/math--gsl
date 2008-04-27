@@ -129,6 +129,13 @@ use constant MIN_DOUBLE => 2.2250738585072014e-308;
 use constant MAX_FLOAT  => 3.40282347e+38;
 use constant MIN_FLOAT  => 1.175494351e-38;
 
+
+sub is_similar($$;$) {
+    my ($x,$y, $eps) = @_;
+    $eps ||= 1e-8;
+    abs($x-$y) < $eps ? 1 : 0;
+}
+
 sub is_valid_double
 {
     my $x=shift;
@@ -142,7 +149,7 @@ sub is_valid_double
       $x < MAX_DOUBLE       
     ) ? 1 : 0;  
 }
-sub is_valid_float  
+sub is_valid_float
 { 
     my $x=shift; 
     return 0 unless ( defined $x && looks_like_number($x) );

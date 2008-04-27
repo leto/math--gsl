@@ -5,11 +5,11 @@ use Data::Dumper;
 use strict;
 use warnings;
 
-# gsl_complex gsl_complex_polar (double r, double theta)
 {
     my $x =Math::GSL::Complex::gsl_complex->new;
     ok( defined $x && $x->isa('Math::GSL::Complex'), 'gsl_complex' );
 }
+
 {
     my $x = Math::GSL::Complex::gsl_complex->new;
     $x = Math::GSL::Complex::gsl_complex_rect(5,3);
@@ -20,5 +20,4 @@ use warnings;
     ok( is_similar($real,5), 'gsl_complex_rect real'); 
     ok( is_similar($imag,3), 'gsl_complex_rect imag'); 
 }
-
 

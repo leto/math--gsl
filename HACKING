@@ -1,0 +1,9 @@
+How to hack on Math::GSL
+------------------------
+
+Use 
+    git checkout master
+    git checkout test_case
+
+to switch between different branches.
+

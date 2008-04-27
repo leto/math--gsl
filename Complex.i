@@ -21,6 +21,6 @@ gsl_complex gsl_complex_polar (double r, double theta);
 
 %perlcode %{
 
-@EXPORT_OK = qw(gsl_complex);
+@EXPORT_OK = qw(gsl_complex_rect gsl_complex_polar);
 
 %}

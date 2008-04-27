@@ -25,6 +25,7 @@ IEEEUtils.i
 Integration.i
 Interp.i
 lib/Math/GSL.pm
+lib/Math/GSL/Complex/Test.pm
 Linalg.i
 Machine.i
 MANIFEST

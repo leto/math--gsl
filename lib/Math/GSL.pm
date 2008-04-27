@@ -5,13 +5,19 @@ use Config;
 use Data::Dumper;
 use Test::More;
 use Scalar::Util qw/looks_like_number/;
+require DynaLoader;
+require Exporter;
+our @ISA = qw(Exporter DynaLoader);
+our @EXPORT = qw();
+our @EXPORT_OK = qw( is_similar );
+
 use strict;
 
 our $VERSION = 0.01;
 
 =head1 NAME
 
-Math::GSL - OO Perl interface to the  GNU Scientific Library (GSL)
+Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
@@ -27,7 +33,6 @@ Version 0.01
 
 =head1 EXPORT
 
-Nothing is exported by default. This is alpha software, the API could change at any second.
 
 
 =head1 AUTHOR
@@ -130,7 +135,7 @@ use constant MAX_FLOAT  => 3.40282347e+38;
 use constant MIN_FLOAT  => 1.175494351e-38;
 
 
-sub is_similar($$;$) {
+sub is_similar {
     my ($x,$y, $eps) = @_;
     $eps ||= 1e-8;
     abs($x-$y) < $eps ? 1 : 0;

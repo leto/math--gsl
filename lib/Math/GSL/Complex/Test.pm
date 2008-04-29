@@ -5,14 +5,13 @@ use Math::GSL::Complex qw/gsl_complex_rect gsl_complex_polar/;
 use Math::GSL qw/is_similar/;
 use strict;
 
-
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{gsl_complex} = Math::GSL::Complex::gsl_complex->new;
-};
-sub teardown : Test(teardown) {
+}
 
-};
+sub teardown : Test(teardown) {
+}
 
 sub GSL_COMPLEX_NEW : Test {
     my $self = shift;

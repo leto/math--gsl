@@ -3,6 +3,14 @@ How to hack on Math::GSL
 
 Get git >= 1.5 and SWIG >= 1.3.35
 
+To get the latest source:
+
+git clone http://leto.net/code/Math-GSL.git
+
+You can browse the mirror at
+
+http://repo.or.cz/w/Math-GSL.git
+
 Use 
     git checkout master
     git checkout test_case

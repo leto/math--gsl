@@ -9,7 +9,13 @@
 
 %include "carrays.i"
 %array_functions(double, doubleArray);
+%include "typemaps.i"
 
+// I wish this typemap worked
+%{
+    extern double gsl_poly_eval(const double *INPUT, const int len, const double x);
+%}
+extern double gsl_poly_eval(const double  *INPUT, const int len, const double x);
 
 %perlcode %{
 

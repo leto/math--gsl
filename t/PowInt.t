@@ -31,6 +31,8 @@ my $class = qw{Math::GSL::PowInt};
                 'gsl_pow_9(4)'      =>      4 ** 9,
                 q{gsl_pow_2('nan')} =>      q{nan},
                 q{gsl_pow_2('inf')} =>      q{inf},
+		q{gsl_pow_3('nan')} =>      q{nan},
+                q{gsl_pow_3('inf')} =>      q{inf},
               };
     my $gsl = Math::GSL->new;
     $gsl->verify_results($results, $class);

@@ -33,6 +33,19 @@ my $class = qw{Math::GSL::PowInt};
                 q{gsl_pow_2('inf')} =>      q{inf},
 		q{gsl_pow_3('nan')} =>      q{nan},
                 q{gsl_pow_3('inf')} =>      q{inf},
+		q{gsl_pow_4('nan')} =>      q{nan},
+                q{gsl_pow_4('inf')} =>      q{inf},
+		q{gsl_pow_5('nan')} =>      q{nan},
+                q{gsl_pow_5('inf')} =>      q{inf},
+		q{gsl_pow_6('nan')} =>      q{nan},
+                q{gsl_pow_6('inf')} =>      q{inf},
+		q{gsl_pow_7('nan')} =>      q{nan},
+                q{gsl_pow_7('inf')} =>      q{inf},
+		q{gsl_pow_8('nan')} =>      q{nan},
+                q{gsl_pow_8('inf')} =>      q{inf},
+		q{gsl_pow_9('nan')} =>      q{nan},
+                q{gsl_pow_9('inf')} =>      q{inf},
+		'gsl_pow_int(5,10)'      =>      5 ** 10,
               };
     my $gsl = Math::GSL->new;
     $gsl->verify_results($results, $class);

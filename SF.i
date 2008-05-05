@@ -70,3 +70,7 @@
 %include "/usr/local/include/gsl/gsl_sf_zeta.h"
 
 
+%perlcode %{
+@EXPORT_OK = qw/gsl_sf_bessel_J0 gsl_sf_erf gsl_sf_gamma/;
+
+%}

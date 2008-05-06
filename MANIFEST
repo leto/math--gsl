@@ -26,8 +26,11 @@ Integration.i
 Interp.i
 lib/Math/GSL.pm
 lib/Math/GSL/Complex/Test.pm
+lib/Math/GSL/Const/Test.pm
+lib/Math/GSL/Poly/Test.pm
 Linalg.i
 Machine.i
+HACKING
 MANIFEST
 Math.i
 Matrix.i
@@ -62,6 +65,7 @@ Sys.i
 t/00-load.t
 t/CDF.t
 t/Complex.t
+t/Const.t
 t/Deriv.t
 t/Errno.t
 t/Fit.t
@@ -70,6 +74,8 @@ t/Poly.t
 t/PowInt.t
 t/Randist.t
 t/SF.t
+t/GSL.t
+
 Test.i
 TODO
 Types.i

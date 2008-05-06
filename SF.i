@@ -71,6 +71,12 @@
 
 
 %perlcode %{
-@EXPORT_OK = qw/gsl_sf_bessel_J0 gsl_sf_erf gsl_sf_gamma/;
+
+@EXPORT_OK = map { 'gsl_sf_' . $_ } qw/
+                bessel_J0
+                erf
+                gamma
+                dilog
+                /;
 
 %}

@@ -1,7 +1,6 @@
 %module PowInt
 %{
 #include "/usr/local/include/gsl/gsl_pow_int.h"
-extern double gsl_pow_int(double x, int n);
 %}
 
 %include "/usr/local/include/gsl/gsl_pow_int.h"

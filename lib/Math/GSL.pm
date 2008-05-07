@@ -22,7 +22,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
-Version 0.01
+Version 0.42
 
 =cut
 
@@ -99,11 +99,12 @@ sub new
     bless $this, $class;
 }
 
+# sync this with Build.PL's list of subsystems
 sub subsystems
 {
     return qw/ 
-             CDF Errno Fit Machine
-             Poly PowInt Randist SF Types 
+             Const Complex CDF Errno Fit Machine
+             Poly PowInt Randist RNG SF Types 
     /;
 }
 

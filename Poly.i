@@ -19,6 +19,6 @@ extern double gsl_poly_eval(const double  *INPUT, const int len, const double x)
 
 %perlcode %{
 
-@EXPORT_OK = qw(gsl_poly_eval);
+@EXPORT_OK = qw(gsl_poly_eval gsl_poly_solve_quadratic);
 
 %}

@@ -69,4 +69,19 @@
 %include "/usr/local/include/gsl/gsl_sf_trig.h"
 %include "/usr/local/include/gsl/gsl_sf_zeta.h"
 
+%include "typemaps.i"
+%inline %{
+extern int gsl_sf_bessel_J0_e(const double x,  gsl_sf_result *OUTPUT);
+%}
 
+%perlcode %{
+
+@EXPORT_OK = map { 'gsl_sf_' . $_ } qw/
+                bessel_J0
+                bessel_J0_e
+                erf
+                gamma
+                dilog
+                /;
+
+%}

@@ -18,6 +18,7 @@ Eigen.i
 Errno.i
 FFT.i
 Fit.i
+HACKING
 Heapsort.i
 Histogram.i
 Histogram2d.i
@@ -26,9 +27,12 @@ Integration.i
 Interp.i
 lib/Math/GSL.pm
 lib/Math/GSL/Complex/Test.pm
+lib/Math/GSL/Const/Test.pm
+lib/Math/GSL/Poly/Test.pm
 Linalg.i
 Machine.i
 MANIFEST
+MANIFEST.skip
 Math.i
 Matrix.i
 Message.i
@@ -62,9 +66,11 @@ Sys.i
 t/00-load.t
 t/CDF.t
 t/Complex.t
+t/Const.t
 t/Deriv.t
 t/Errno.t
 t/Fit.t
+t/GSL.t
 t/Machine.t
 t/Poly.t
 t/PowInt.t

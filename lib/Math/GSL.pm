@@ -104,7 +104,7 @@ sub subsystems
 {
     return qw/ 
              Const Complex CDF Errno Fit Machine
-             Poly PowInt Randist SF Types 
+             Poly PowInt Randist RNG SF Types 
     /;
 }
 

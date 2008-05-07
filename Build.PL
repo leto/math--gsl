@@ -369,7 +369,7 @@ my $builder = $class->new(
                                 qw/ 
                                     CDF Complex Const Deriv 
                                     Errno Fit Machine Poly PowInt
-                                    Randist SF Types
+                                    Randist RNG SF Types
                                   / 
                              ],
 );

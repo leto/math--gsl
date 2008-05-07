@@ -27,22 +27,12 @@ use Math::GSL::PowInt qw /gsl_pow_2/;
 
 print "gsl_pow_2(4)=" . gsl_pow_2(4) . "\n";
 
-=head1 ABSTRACT
-
-
 =head1 DESCRIPTION
 
 This module uses the GSL mathematical functions. It contains gsl_pow_2 to gsl_pow_9. If you need a power higher than 9, you can use gsl_pow_int.
-You have to add the functions you want to use inside the qw /put_funtion_here /.
-
-=head1 EXPORT
-
-
-=head1 SEE ALSO
-
+You have to add the functions you want to use inside the qw /put_funtion_here /. You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module.
 
 =head1 AUTHOR
-
 
 Jonathan Leto <jaleto@gmail.com> and Thierry Moisan <thierry.moisan@gmail.com>
 

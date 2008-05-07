@@ -1,7 +1,7 @@
 use Test::More 'no_plan';
-use Math::GSL;
+use Math::GSL qw/is_similar/;
 use Math::GSL::Errno;
-use Math::GSL::SF;
+use Math::GSL::SF qw/gsl_sf_bessel_J0 gsl_sf_bessel_J0_e/;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -32,3 +32,9 @@ my $results = {
 
 $gsl->verify_results($results, 'Math::GSL::SF');
 
+{
+    my $result = Math::GSL::SF::gsl_sf_result_struct->new;
+    my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
+    ok( defined $result->{err}, '$result->{err}' );
+    ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0)) , '$result->{val}' );
+};

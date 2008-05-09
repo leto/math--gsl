@@ -14,7 +14,7 @@ use constant MAX_DOUBLE => 1.7976931348623157e+308;
 use constant MIN_DOUBLE => 2.2250738585072014e-308;
 use constant MAX_FLOAT  => 3.40282347e+38;
 use constant MIN_FLOAT  => 1.175494351e-38;
-our $VERSION = 0.042;
+our $VERSION = 0.043;
 
 =head1 NAME
 
@@ -22,29 +22,22 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
-Version 0.42
+Version 0.43
 
 =cut
 
 =head1 SYNOPSIS
 
-
-    use Math::GSL::Sf qw/ ... /;
-    ...
-
-=head1 EXPORT
-
+    use Math::GSL::RNG qw/:all/;
 
 
 =head1 AUTHOR
 
-Jonathan Leto, C<< <jonathan at leto.net> >>
+Jonathan Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan@gmail.com> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-math-gsl at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Math::GSL>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests to the authors directly.
 
 
 =head1 SUPPORT
@@ -55,14 +48,7 @@ You can find documentation for this module with the perldoc command.
 
 or online at L<http://leto.net/code/Math-GSL/>
 
-
-You can also look for information at:
-
 =over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Math::GSL>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
@@ -84,7 +70,7 @@ L<http://search.cpan.org/dist/Math::GSL>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Jonathan Leto, all rights reserved.
+Copyright 2008 Jonathan Leto, Thierry Moisan all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

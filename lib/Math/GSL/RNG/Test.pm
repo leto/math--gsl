@@ -13,6 +13,9 @@ sub make_fixture : Test(setup) {
 }
 
 sub teardown : Test(teardown) {
+    my $self = shift;
+
+    gsl_rng_free($self->{rng});
 }
 
 sub GSL_RNG_NEW : Tests {
@@ -42,7 +45,7 @@ sub GSL_RNG_DEFAULT : Tests {
     my $seed = 42;
 
     my $rng = gsl_rng_alloc($gsl_rng_default);
-    isa_ok( $self->{rng}, 'Math::GSL::RNG', 'gsl_rng_alloc' );
+    isa_ok( $rng, 'Math::GSL::RNG', 'gsl_rng_alloc' );
 
     eval { gsl_rng_set($rng, $seed) };
     isa_ok( $rng, 'Math::GSL::RNG', 'gsl_rng_set' );

@@ -30,9 +30,10 @@ sub GSL_RNG_ALLOC : Tests {
         my $rng;
         eval { $rng = gsl_rng_alloc($rngtype) };
         isa_ok( $rng, 'Math::GSL::RNG');
-        ok( !$@ );
+        ok( !$@ ,'gsl_rng_alloc');
     }
 }
+
 sub GSL_RNG_NEW: Tests {
     my $rng;
     $rng = Math::GSL::RNG->new($gsl_rng_knuthran, int 10*rand);
@@ -40,25 +41,37 @@ sub GSL_RNG_NEW: Tests {
 
     $rng = Math::GSL::RNG->new($gsl_rng_knuthran);
     isa_ok($rng, 'Math::GSL::RNG' );
+
+    $rng = Math::GSL::RNG->new;
+    isa_ok($rng, 'Math::GSL::RNG' );
 }
+
+sub GSL_RNG_METHODS : Tests {
+    can_ok('Math::GSL::RNG', qw/copy get new free/ );
+}
+
 sub GSL_RNG_STATE : Tests {
     my $seed = int 10*rand;
     my $k    = 10 + int(100*rand);
     my $rng1 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
 
-    map { my $x = gsl_rng_get($rng1) } (1..$k);
+    map { my $x = $rng1->get } (1..$k);
 
     my $rng2 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
-    gsl_rng_memcpy($rng2, $rng1);
+    $rng2 = $rng1->copy;
 
-    my @vals1 = map { my $x = gsl_rng_get($rng1) } (1..$k);
-    gsl_rng_memcpy($rng1, $rng2);
-    gsl_rng_free($rng2);
-
-    my @vals2 = map { gsl_rng_get($rng2) } (1..$k);
+    my @vals1 = map { $rng1->get } (1..$k);
+    my @vals2 = map { $rng2->get } (1..$k);
     
     is_deeply( [@vals1], [@vals2], "state test, $#vals1 values checked");
 }
+
+sub GSL_RNG_GET : Tests {
+    my $rng = Math::GSL::RNG->new;
+    my $x   = $rng->get;
+    ok( defined $x, '$rng->get' );
+}
+
 sub GSL_RNG_NO_MORE_SECRETS : Tests {
     my $seed = int 10*rand;
     my $k    = 10 + int(100*rand);
@@ -66,10 +79,10 @@ sub GSL_RNG_NO_MORE_SECRETS : Tests {
     my $rng2 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
 
     # throw away the first ten values
-    map { my $x = gsl_rng_get($rng1) } (1..$k);
-    map { my $x = gsl_rng_get($rng2) } (1..$k);
+    map { my $x = $rng1->get } (1..$k);
+    map { my $x = $rng2->get } (1..$k);
     
-    my ($n1,$n2) = ( gsl_rng_get($rng1) , gsl_rng_get($rng2) ); 
+    my ($n1,$n2) = ( $rng1->get , $rng2->get ); 
     ok( $n1 == $n2 , "parrallel state test: $n1 ?= $n2" );
 }
 
@@ -88,6 +101,7 @@ sub GSL_RNG_DEFAULT : Tests {
     ok( defined $rand && $rand == 1608637542, 'gsl_rng_get' );
 
     my $rng2 = gsl_rng_alloc($gsl_rng_default);
+
     eval { gsl_rng_memcpy($rng2, $rng) };
     ok ( ! $@, 'gsl_rng_memcpy' );
 

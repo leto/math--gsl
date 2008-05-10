@@ -7,7 +7,7 @@
 %include "/usr/local/include/gsl/gsl_rng.h"
 
 %perlcode %{
-
+use Data::Dumper;
 @EXPORT_OK = qw/ gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
                  gsl_rng_name gsl_rng_size gsl_rng_state gsl_rng_print_state 
@@ -28,15 +28,36 @@
               /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
  
-
 sub new {
     my ($class, $type, $seed) = @_;
-    my $rng = gsl_rng_alloc($type);
+    $type ||= $gsl_rng_default;
     $seed ||= int 100*rand;
 
+    my $self = {};
+    my $rng  = gsl_rng_alloc($type);
     gsl_rng_set($rng, $seed);
-    return $rng;
+
+    $self->{_rng} = $rng; 
+    bless $self, $class;
 }
 
+sub copy {
+    my ($self)    = @_;
+    my $copy      = Math::GSL::RNG->new;
+    $copy->{_rng} = gsl_rng_clone($self->{_rng});
+
+    return $copy;
+}
+
+sub free {
+    my ($self)    = @_;
+    gsl_rng_free($self->{_rng});
+}
+
+sub get {
+    my ($self) = @_;
+
+    gsl_rng_get($self->{_rng});
+}
 
 %}

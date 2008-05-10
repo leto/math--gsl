@@ -1,6 +1,4 @@
 use Test::More 'no_plan';
-use File::Fu;
-my $lib  = File::Fu->dir('..') + 'lib'; 
 
 BEGIN {
 	use_ok( 'Math::GSL' );

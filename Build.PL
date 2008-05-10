@@ -21,12 +21,10 @@ use Module::Build;
 use ExtUtils::PkgConfig;
 use Config;
 use Data::Dumper;
-use File::Fu;
 
 my $code = <<'EOC';
 use Config;
 use File::Copy;
-use File::Fu;
 
 sub process_swig_files {
     my $self = shift;
@@ -369,7 +367,7 @@ my $builder = $class->new(
                                 qw/ 
                                     CDF Complex Const Deriv 
                                     Errno Fit Machine Poly PowInt
-                                    Randist RNG SF Types
+                                    Randist RNG Roots SF Types
                                   / 
                              ],
 );

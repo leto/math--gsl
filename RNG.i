@@ -27,5 +27,15 @@
                 $gsl_rng_waterman14 $gsl_rng_zuf 
               /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+ 
+
+sub new {
+    my ($class,$type, $seed) = @_;
+    my $rng = gsl_rng_alloc($type);
+
+    gsl_rng_set($rng, $seed);
+    return $rng;
+}
+
 
 %}

@@ -29,10 +29,12 @@ lib/Math/GSL.pm
 lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const/Test.pm
 lib/Math/GSL/Poly/Test.pm
+lib/Math/GSL/RNG/Test.pm
+lib/Math/GSL/Roots/Test.pm
 Linalg.i
 Machine.i
 MANIFEST
-MANIFEST.skip
+MANIFEST.SKIP
 Math.i
 Matrix.i
 Message.i
@@ -75,6 +77,8 @@ t/Machine.t
 t/Poly.t
 t/PowInt.t
 t/Randist.t
+t/Roots.t
+t/RNG.t
 t/SF.t
 Test.i
 TODO
@@ -83,3 +87,5 @@ Vector.i
 Version.i
 Wavelet.i
 Wavelet2d.i
+subsystems.txt
+typemap_examples.i

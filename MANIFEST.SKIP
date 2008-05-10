@@ -1,0 +1,6 @@
+\.git*
+tmp.*
+\..*swp
+\.bak
+_build
+Build

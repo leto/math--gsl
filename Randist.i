@@ -90,8 +90,6 @@ our %EXPORT_TAGS = (
         pareto              => [ gsl_ran_pareto , gsl_ran_pareto_pdf ]
 );
 
-__END__
-
 =head1 NAME
 
 Math::GSL::Randist - Probability Distributions

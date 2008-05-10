@@ -1,6 +1,6 @@
 use Test::More tests=>4;
 use Math::GSL;
-use Math::GSL::Randist qw/:all/;
+use Math::GSL::Randist;
 use Data::Dumper;
 use strict;
 use warnings;

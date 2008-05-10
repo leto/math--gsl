@@ -30,8 +30,9 @@
  
 
 sub new {
-    my ($class,$type, $seed) = @_;
+    my ($class, $type, $seed) = @_;
     my $rng = gsl_rng_alloc($type);
+    $seed ||= int 100*rand;
 
     gsl_rng_set($rng, $seed);
     return $rng;

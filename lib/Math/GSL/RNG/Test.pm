@@ -73,14 +73,14 @@ sub GSL_RNG_GET : Tests {
 }
 
 sub GSL_RNG_NO_MORE_SECRETS : Tests {
-    my $seed = int 10*rand;
+    my $seed = 1+int 10*rand;
     my $k    = 10 + int(100*rand);
     my $rng1 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
     my $rng2 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
 
     # throw away the first ten values
-    map { my $x = $rng1->get } (1..$k);
-    map { my $x = $rng2->get } (1..$k);
+    map {  $rng1->get } (1..$k);
+    map {  $rng2->get } (1..$k);
     
     my ($n1,$n2) = ( $rng1->get , $rng2->get ); 
     ok( $n1 == $n2 , "parrallel state test: $n1 ?= $n2" );

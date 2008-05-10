@@ -72,6 +72,16 @@ sub GSL_RNG_GET : Tests {
     ok( defined $x, '$rng->get' );
 }
 
+sub GSL_RNG_NAME : Tests {
+    my $self  = shift;
+    my $name1 = gsl_rng_name($self->{rng});
+    ok( defined $name1 , "\$gsl_rng_default=$name1" );
+
+    my $rng   = Math::GSL::RNG->new;
+    my $name2 = $rng->name;
+    ok($name1 eq $name2, "\$rng->name == gsl_rng_name = $name2" );
+}
+
 sub GSL_RNG_NO_MORE_SECRETS : Tests {
     my $seed = 1+int 10*rand;
     my $k    = 10 + int(100*rand);

@@ -53,7 +53,10 @@ sub free {
     my ($self)    = @_;
     gsl_rng_free($self->{_rng});
 }
-
+sub name {
+    my ($self)    = @_;
+    gsl_rng_name($self->{_rng});
+}
 sub get {
     my ($self) = @_;
 

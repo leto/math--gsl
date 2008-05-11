@@ -26,6 +26,7 @@ IEEEUtils.i
 Integration.i
 Interp.i
 lib/Math/GSL.pm
+lib/Math/GSL/Block/Test.pm
 lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const/Test.pm
 lib/Math/GSL/ODEIV/Test.pm
@@ -68,6 +69,7 @@ Statistics.i
 Sum.i
 Sys.i
 t/00-load.t
+t/Block.t
 t/CDF.t
 t/Complex.t
 t/Const.t

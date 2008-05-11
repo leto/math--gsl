@@ -29,6 +29,7 @@ lib/Math/GSL.pm
 lib/Math/GSL/Block/Test.pm
 lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const/Test.pm
+lib/Math/GSL/Matrix/Test.pm
 lib/Math/GSL/ODEIV/Test.pm
 lib/Math/GSL/Poly/Test.pm
 lib/Math/GSL/RNG/Test.pm
@@ -78,6 +79,7 @@ t/Errno.t
 t/Fit.t
 t/GSL.t
 t/Machine.t
+t/Matrix.t
 t/ODEIV.t
 t/Poly.t
 t/PowInt.t

@@ -28,9 +28,11 @@ Interp.i
 lib/Math/GSL.pm
 lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const/Test.pm
+lib/Math/GSL/ODEIV/Test.pm
 lib/Math/GSL/Poly/Test.pm
 lib/Math/GSL/RNG/Test.pm
 lib/Math/GSL/Roots/Test.pm
+lib/Math/GSL/Vector/Test.pm
 Linalg.i
 Machine.i
 MANIFEST
@@ -74,12 +76,14 @@ t/Errno.t
 t/Fit.t
 t/GSL.t
 t/Machine.t
+t/ODEIV.t
 t/Poly.t
 t/PowInt.t
 t/Randist.t
 t/Roots.t
 t/RNG.t
 t/SF.t
+t/Vector.t
 Test.i
 TODO
 Types.i

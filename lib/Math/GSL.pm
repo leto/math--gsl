@@ -89,8 +89,11 @@ sub new
 sub subsystems
 {
     return qw/ 
-             Const Complex CDF Errno Fit Machine
-             Poly PowInt Randist RNG SF Types 
+             Const Complex CDF 
+             Errno Fit Machine
+             ODEIV Poly PowInt 
+             Randist Roots RNG 
+             SF Types Vector
     /;
 }
 

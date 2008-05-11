@@ -366,8 +366,8 @@ my $builder = $class->new(
                                 map { [ "$_.i" ] } 
                                 qw/ 
                                     CDF Complex Const Deriv 
-                                    Errno Fit Machine Poly PowInt
-                                    Randist RNG Roots SF Types
+                                    Errno Fit Machine ODEIV Poly PowInt
+                                    Randist RNG Roots SF Types Vector
                                   / 
                              ],
 );

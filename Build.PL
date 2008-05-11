@@ -365,7 +365,7 @@ my $builder = $class->new(
     swig_source           => [  
                                 map { [ "$_.i" ] } 
                                 qw/ 
-                                    CDF Complex Const Deriv 
+                                    Block CDF Complex Const Deriv 
                                     Errno Fit Machine ODEIV Poly PowInt
                                     Randist RNG Roots SF Types Vector
                                   / 

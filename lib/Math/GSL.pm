@@ -88,7 +88,7 @@ sub new
 # sync this with Build.PL's list of subsystems
 sub subsystems
 {
-    return qw/ 
+    return qw/ Block 
              Const Complex CDF 
              Errno Fit Machine
              ODEIV Poly PowInt 

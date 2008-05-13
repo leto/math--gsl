@@ -91,7 +91,7 @@ sub subsystems
     return qw/
              Block Const Complex
              CDF Errno Fit
-             Machine Matrix 
+             Machine Matrix Min
              ODEIV Poly PowInt 
              Randist Roots RNG 
              SF Types Vector

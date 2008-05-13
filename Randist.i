@@ -38,7 +38,7 @@ our @EXPORT_OK = qw/gsl_ran_bernoulli gsl_ran_bernoulli_pdf gsl_ran_beta
                     gsl_ran_weibull_pdf gsl_ran_dir_2d gsl_ran_dir_2d_trig_method 
                     gsl_ran_dir_3d gsl_ran_dir_nd gsl_ran_shuffle 
                     gsl_ran_choose gsl_ran_sample 
-                    gsl_ran_discrete_ gsl_ran_discrete_t gsl_ran_discrete_free(gsl_ran_discrete_t 
+                    gsl_ran_discrete_t gsl_ran_discrete_free
                     gsl_ran_discrete gsl_ran_discrete_pdf  
                 /;
 

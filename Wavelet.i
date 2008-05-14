@@ -10,10 +10,8 @@ typedef int size_t;
 %include "/usr/local/include/gsl/gsl_wavelet.h"
 
 %include "carrays.i"
-%include "cpointer.i"
 %include "typemaps.i"
 %array_functions(double, doubleArray);
-%pointer_functions(double, ptr);
 
 
 %perlcode %{
@@ -35,10 +33,6 @@ typedef int size_t;
     $gsl_wavelet_bspline
     $gsl_wavelet_bspline_centered
 /;
-
-# int gsl_wavelet_transform_forward (const gsl_wavelet * w, double *data, 
-#                                   size_t stride, size_t n, gsl_wavelet_workspace * work);
-
 
 
 %EXPORT_TAGS = ( all        => [ @EXPORT_OK ], );

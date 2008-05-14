@@ -35,6 +35,19 @@ sub GSL_WAVELET_TRANSFORM_FORWARD : Tests {
     ok( !$status , 'gsl_wavelet_transform_forward' );
 }
 
+sub GSL_WAVELET_TRANSFORM_INVERSE : Tests { 
+    my $self = shift;
+
+    my $array = _double_array([0..255]);
+    my $status = gsl_wavelet_transform_inverse ($self->{wavelet},$array,1.0, 256, $self->{workspace} ); 
+    ok( !$status , 'gsl_wavelet_transform_inverse' );
+}
+
+sub GSL_WAVELET_NAME : Tests {
+    my $self = shift;
+    ok( gsl_wavelet_name($self->{wavelet}) eq 'daubechies', 'gsl_wavelet_name' );
+
+}
 sub _double_array {
     my ($vals) = @_;
     my $i=0;

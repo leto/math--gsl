@@ -1,0 +1,9 @@
+.gitignore
+Build
+blib
+*.bak
+*_wrap*c
+*_wrap*so
+\.*swp
+_build
+tmp*

@@ -342,7 +342,7 @@ my $class = Module::Build->subclass( code => $code );
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
-    add_to_cleanup      => [ q{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so} ],
+    add_to_cleanup      => [ q{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so *.orig} ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',

@@ -1,4 +1,5 @@
 .gitignore
+*.core
 Build
 blib
 *.bak

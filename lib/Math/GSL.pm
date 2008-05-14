@@ -90,11 +90,12 @@ sub subsystems
 {
     return qw/
              Block Const Complex
-             CDF Errno Fit
+             CDF Errno Fit Function
              Machine Matrix Min
              ODEIV Poly PowInt 
              Randist Roots RNG 
              SF Types Vector
+             Wavelet2D
     /;
 }
 

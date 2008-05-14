@@ -367,11 +367,11 @@ my $builder = $class->new(
                                 qw/ 
                                     Block CDF Complex
                                     Const Deriv Errno
-                                    Fit Machine Matrix
+                                    Fit Function Machine Matrix
                                     Min ODEIV Poly
                                     PowInt Randist RNG
                                     Roots SF Types
-                                    Vector
+                                    Vector Wavelet2D
                                   / 
                              ],
 );

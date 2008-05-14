@@ -4,12 +4,15 @@
 #include "/usr/local/include/gsl/gsl_matrix_double.h"
 #include "/usr/local/include/gsl/gsl_matrix_int.h"
 #include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
+#include "/usr/local/include/gsl/gsl_matrix_complex_long_double.h"
+ 
 %}
 
 %include "/usr/local/include/gsl/gsl_matrix.h"
 %include "/usr/local/include/gsl/gsl_matrix_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_int.h"
 %include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
+%include "/usr/local/include/gsl/gsl_matrix_complex_long_double.h"
 
 %perlcode %{ 
 
@@ -38,8 +41,30 @@
                 gsl_matrix_isneg gsl_matrix_isnonneg gsl_matrix_add gsl_matrix_sub
                 gsl_matrix_mul_elements gsl_matrix_div_elements gsl_matrix_scale
                 gsl_matrix_add_constant gsl_matrix_add_diagonal gsl_matrix_get_row
-                gsl_matrix_get_col gsl_matrix_set_row gsl_matrix_set_col 
-        /;
+                gsl_matrix_get_col gsl_matrix_set_row gsl_matrix_set_coli
+		gsl_matrix_complex_long_double_alloc gsl_matrix_complex_long_double_calloc gsl_matrix_complex_long_double_alloc_from_block  
+		gsl_matrix_complex_long_double_alloc_from_matrix  gsl_vector_complex_long_double_alloc_row_from_matrix
+		gsl_vector_complex_long_double_alloc_col_from_matrix gsl_matrix_complex_long_double_free
+		gsl_matrix_complex_long_double_submatrix gsl_matrix_complex_long_double_row gsl_matrix_complex_long_double_column 
+		gsl_matrix_complex_long_double_diagonal gsl_matrix_complex_long_double_subdiagonal gsl_matrix_complex_long_double_superdiagonal 
+		gsl_matrix_complex_long_double_subrow gsl_matrix_complex_long_double_subcolumn gsl_matrix_complex_long_double_view_array 
+		gsl_matrix_complex_long_double_view_array_with_tda gsl_matrix_complex_long_double_view_vector gsl_matrix_complex_long_double_view_vector_with_tda 
+		gsl_matrix_complex_long_double_const_submatrix gsl_matrix_complex_long_double_const_row gsl_matrix_complex_long_double_const_column 
+		gsl_matrix_complex_long_double_const_diagonal gsl_matrix_complex_long_double_const_subdiagonal gsl_matrix_complex_long_double_const_superdiagonal  
+		gsl_matrix_complex_long_double_const_subrow gsl_matrix_complex_long_double_const_subcolumn gsl_matrix_complex_long_double_const_view_array 
+		gsl_matrix_complex_long_double_const_view_array_with_tda gsl_matrix_complex_long_double_const_view_vector
+		gsl_matrix_complex_long_double_const_view_vector_with_tda 
+		gsl_matrix_complex_long_double_set gsl_matrix_complex_long_double_set_zero gsl_matrix_complex_long_double_set_identity 
+		gsl_matrix_complex_long_double_set_all gsl_matrix_complex_long_double_fread gsl_matrix_complex_long_double_fwrite 
+		gsl_matrix_complex_long_double_fscanf gsl_matrix_complex_long_double_fprintf gsl_matrix_complex_long_double_memcpy 
+		gsl_matrix_complex_long_double_swap gsl_matrix_complex_long_double_swap_rows gsl_matrix_complex_long_double_swap_columns 
+		gsl_matrix_complex_long_double_swap_rowcol gsl_matrix_complex_long_double_transpose gsl_matrix_complex_long_double_transpose_memcpy 
+		gsl_matrix_complex_long_double_isnull gsl_matrix_complex_long_double_ispos gsl_matrix_complex_long_double_isneg 
+		gsl_matrix_complex_long_double_add gsl_matrix_complex_long_double_sub gsl_matrix_complex_long_double_mul_elements 
+		gsl_matrix_complex_long_double_div_elements gsl_matrix_complex_long_double_scale gsl_matrix_complex_long_double_add_constant 
+		gsl_matrix_complex_long_double_add_diagonal 
+        
+/;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 %}

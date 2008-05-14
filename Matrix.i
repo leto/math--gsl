@@ -5,7 +5,7 @@
 #include "/usr/local/include/gsl/gsl_matrix_int.h"
 #include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
 #include "/usr/local/include/gsl/gsl_matrix_complex_long_double.h"
- 
+#include "/usr/local/include/gsl/gsl_matrix_complex_float.h" 
 %}
 
 %include "/usr/local/include/gsl/gsl_matrix.h"
@@ -13,6 +13,7 @@
 %include "/usr/local/include/gsl/gsl_matrix_int.h"
 %include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_complex_long_double.h"
+%include "/usr/local/include/gsl/gsl_matrix_complex_float.h" 
 
 %perlcode %{ 
 
@@ -63,7 +64,31 @@
 		gsl_matrix_complex_long_double_add gsl_matrix_complex_long_double_sub gsl_matrix_complex_long_double_mul_elements 
 		gsl_matrix_complex_long_double_div_elements gsl_matrix_complex_long_double_scale gsl_matrix_complex_long_double_add_constant 
 		gsl_matrix_complex_long_double_add_diagonal 
-        
+       		gsl_matrix_complex_float_alloc 
+		gsl_matrix_complex_float_calloc 
+		gsl_matrix_complex_float_alloc_from_block 
+		gsl_matrix_complex_float_alloc_from_matrix gsl_vector_complex_float 
+		gsl_vector_complex_float_alloc_row_from_matrix 
+		gsl_vector_complex_float_alloc_col_from_matrix 
+		gsl_matrix_complex_float_free gsl_matrix_complex_float_submatrix gsl_matrix_complex_float_row 
+		gsl_matrix_complex_float_column gsl_matrix_complex_float_diagonal  gsl_matrix_complex_float_subdiagonal 
+		gsl_matrix_complex_float_superdiagonal gsl_matrix_complex_float_subrow gsl_matrix_complex_float_subcolumn 
+		gsl_matrix_complex_float_view_array gsl_matrix_complex_float_view_array_with_tda gsl_matrix_complex_float_view_vector 
+		gsl_matrix_complex_float_view_vector_with_tda gsl_matrix_complex_float_const_submatrix gsl_matrix_complex_float_const_row  
+		gsl_matrix_complex_float_const_column gsl_matrix_complex_float_const_diagonal gsl_matrix_complex_float_const_subdiagonal   
+		gsl_matrix_complex_float_const_superdiagonal gsl_matrix_complex_float_const_subrow gsl_matrix_complex_float_const_subcolumn 
+		gsl_matrix_complex_float_const_view_array gsl_matrix_complex_float_const_view_array_with_tda gsl_matrix_complex_float_const_view_vector   
+		gsl_matrix_complex_float_const_view_vector_with_tda gsl_complex_float gsl_matrix_complex_float_set gsl_complex_float gsl_complex_float
+		gsl_matrix_complex_float_set_zero gsl_matrix_complex_float_set_identity gsl_matrix_complex_float_set_all 
+		gsl_matrix_complex_float_fread gsl_matrix_complex_float_fwrite 
+		gsl_matrix_complex_float_fscanf gsl_matrix_complex_float_fprintf  
+		gsl_matrix_complex_float_memcpy(gsl_matrix_complex_float gsl_matrix_complex_float_swap  
+		gsl_matrix_complex_float_swap_rows gsl_matrix_complex_float_swap_columns gsl_matrix_complex_float_swap_rowcol 
+		gsl_matrix_complex_float_transpose gsl_matrix_complex_float_transpose_memcpy 
+		gsl_matrix_complex_float_isnull gsl_matrix_complex_float_ispos 
+		gsl_matrix_complex_float_isneg  gsl_matrix_complex_float_add 
+		gsl_matrix_complex_float_sub gsl_matrix_complex_float_mul_elements gsl_matrix_complex_float_div_elements 
+		gsl_matrix_complex_float_scale gsl_matrix_complex_float_add_constant gsl_matrix_complex_float_add_diagonal 
 /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

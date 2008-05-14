@@ -41,7 +41,7 @@
                 gsl_matrix_isneg gsl_matrix_isnonneg gsl_matrix_add gsl_matrix_sub
                 gsl_matrix_mul_elements gsl_matrix_div_elements gsl_matrix_scale
                 gsl_matrix_add_constant gsl_matrix_add_diagonal gsl_matrix_get_row
-                gsl_matrix_get_col gsl_matrix_set_row gsl_matrix_set_coli
+                gsl_matrix_get_col gsl_matrix_set_row gsl_matrix_set_col
 		gsl_matrix_complex_long_double_alloc gsl_matrix_complex_long_double_calloc gsl_matrix_complex_long_double_alloc_from_block  
 		gsl_matrix_complex_long_double_alloc_from_matrix  gsl_vector_complex_long_double_alloc_row_from_matrix
 		gsl_vector_complex_long_double_alloc_col_from_matrix gsl_matrix_complex_long_double_free

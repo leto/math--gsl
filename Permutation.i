@@ -1,7 +1,7 @@
 %module Permutation
 %{
-#include "gsl/gsl_permutation.h"
+#include "/usr/local/include/gsl/gsl_permutation.h"
 %}
 
-%include "gsl/gsl_permutation.h"
+%include "/usr/local/include/gsl/gsl_permutation.h"
 

@@ -1,10 +1,10 @@
 %module BLAS
 %{
-#include "gsl/gsl_blas.h"
-#include "gsl/gsl_blas_types.h"
+#include "/usr/local/include/gsl/gsl_blas.h"
+#include "/usr/local/include/gsl/gsl_blas_types.h"
 
 %}
 
-%include "gsl/gsl_blas.h"
-%include "gsl/gsl_blas_types.h"
+%include "/usr/local/include/gsl/gsl_blas.h"
+%include "/usr/local/include/gsl/gsl_blas_types.h"
 

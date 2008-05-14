@@ -1,7 +1,7 @@
 %module Combination
 %{
-#include "gsl/gsl_combination.h"
+#include "/usr/local/include/gsl/gsl_combination.h"
 %}
 
-%include "gsl/gsl_combination.h"
+%include "/usr/local/include/gsl/gsl_combination.h"
 

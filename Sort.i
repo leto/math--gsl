@@ -1,7 +1,7 @@
 %module Sort
 %{
-#include "gsl/gsl_sort.h"
+    #include "/usr/local/include/gsl/gsl_sort.h"
 %}
 
-%include "gsl/gsl_sort.h"
+%include "/usr/local/include/gsl/gsl_sort.h"
 

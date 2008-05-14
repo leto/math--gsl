@@ -1,7 +1,7 @@
 %module Heapsort
 %{
-#include "gsl/gsl_fit.h"
+#include "/usr/local/include/gsl/gsl_heapsort.h"
 %}
 
-%include "gsl/gsl_fit.h"
+%include "/usr/local/include/gsl/gsl_heapsort.h"
 

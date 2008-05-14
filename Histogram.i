@@ -1,7 +1,7 @@
 %module Histogram
 %{
-#include "gsl/gsl_histogram.h"
+#include "/usr/local/include/gsl/gsl_histogram.h"
 %}
 
-%include "gsl/gsl_histogram.h"
+%include "/usr/local/include/gsl/gsl_histogram.h"
 

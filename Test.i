@@ -1,7 +1,7 @@
 %module Test
 %{
-#include "gsl/gsl_test.h"
+#include "/usr/local/include/gsl/gsl_test.h"
 %}
 
-%include "gsl/gsl_test.h"
+%include "/usr/local/include/gsl/gsl_test.h"
 

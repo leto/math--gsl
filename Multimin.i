@@ -1,8 +1,10 @@
 %module Multimin
-%{
-#include "gsl/gsl_multimin.h"
-%}
-%import "gsl/gsl_types.h"
 
-%include "gsl/gsl_multimin.h"
+%{
+    #include "/usr/local/include/gsl/gsl_types.h"
+    #include "/usr/local/include/gsl/gsl_multimin.h"
+%}
+
+%include "/usr/local/include/gsl/gsl_types.h"
+%include "/usr/local/include/gsl/gsl_multimin.h"
 

@@ -365,13 +365,19 @@ my $builder = $class->new(
     swig_source           => [  
                                 map { [ "$_.i" ] } 
                                 qw/ 
-                                    Block CDF Complex
-                                    Const Deriv Errno
-                                    Fit Function Machine Matrix
-                                    Min ODEIV Poly
-                                    PowInt Randist RNG
-                                    Roots SF Types
-                                    Vector Wavelet2D
+BLAS                  Diff                  Machine               Permute               Statistics
+Block                 Eigen                 Matrix                Poly                  Sum
+Bspline               Errno                 PowInt                Sys
+CBLAS                 FFT                   Min                   
+CDF                   Fit                   Mode                  QRNG                  Types
+Chebyshev             Function              Monte                 RNG                   Vector
+Heapsort              Multifit              Randist               
+Combination           Histogram             Multimin              Roots                 Wavelet
+Complex               Histogram2d           Multiroots            SF                    Wavelet2D
+Const                 NAN                   Siman                 
+DFT                   Integration           Ntuple                Sort                  
+DHT                   Interp                ODEIV                 
+Deriv                 Linalg                Permutation           Spline
                                   / 
                              ],
 );

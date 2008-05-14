@@ -1,7 +1,7 @@
 %module Chebyshev
 %{
-#include "gsl/gsl_chebyshev.h"
+#include "/usr/local/include/gsl/gsl_chebyshev.h"
 %}
 
-%include "gsl/gsl_chebyshev.h"
+%include "/usr/local/include/gsl/gsl_chebyshev.h"
 

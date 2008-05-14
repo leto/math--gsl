@@ -187,8 +187,22 @@ For example the beta tag contains theses functions : gsl_ran_beta, gsl_ran_beta_
 For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
+You might also want to write
+
+    use Math::GSL::RNG qw/:all/;
+
+since a lot of the functions of Math::GSL::Randist take as argument a structure that is created by Math::GSL::RNG. Refer to Math::GSL::RNG documentation to see how to create such a structure.
+
+Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is given in the EXAMPLES part on how to use the function related to this structure.
+
+
 =head1 EXAMPLES
 
+    use Math::GSL::Randist qw/:all/; 
+    print gsl_ran_exponential_pdf(5,2) . "\n"; 
+
+    use Math::GSL::Randist qw/:all/;
+    $x= Math::GSL::gsl_ran_discrete_t::new;
 
 
 =head1 AUTHOR

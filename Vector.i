@@ -1,45 +1,26 @@
 %module Vector
 %{
-#include "/usr/include/stdio.h"
-#include "/usr/local/include/gsl/gsl_vector.h"
-#include "/usr/local/include/gsl/gsl_vector_char.h"
-#include "/usr/local/include/gsl/gsl_vector_complex.h"
-#include "/usr/local/include/gsl/gsl_vector_complex_double.h"
-#include "/usr/local/include/gsl/gsl_vector_complex_float.h"
-#include "/usr/local/include/gsl/gsl_vector_complex_long_double.h"
-#include "/usr/local/include/gsl/gsl_vector_double.h"
-#include "/usr/local/include/gsl/gsl_vector_float.h"
-#include "/usr/local/include/gsl/gsl_vector_int.h"
-#include "/usr/local/include/gsl/gsl_vector_long.h"
-#include "/usr/local/include/gsl/gsl_vector_long_double.h"
-#include "/usr/local/include/gsl/gsl_vector_short.h"
-#include "/usr/local/include/gsl/gsl_vector_uchar.h"
-#include "/usr/local/include/gsl/gsl_vector_uint.h"
-#include "/usr/local/include/gsl/gsl_vector_ulong.h"
-#include "/usr/local/include/gsl/gsl_vector_ushort.h"
-
+    #include "/usr/include/stdio.h"
+    #include "/usr/local/include/gsl/gsl_vector.h"
+    #include "/usr/local/include/gsl/gsl_vector_char.h"
+    #include "/usr/local/include/gsl/gsl_vector_complex.h"
+    #include "/usr/local/include/gsl/gsl_vector_complex_double.h"
+    #include "/usr/local/include/gsl/gsl_vector_double.h"
+    #include "/usr/local/include/gsl/gsl_vector_float.h"
+    #include "/usr/local/include/gsl/gsl_vector_int.h"
 %}
 %include "/usr/local/include/gsl/gsl_vector.h"
 %include "/usr/local/include/gsl/gsl_vector_char.h"
 %include "/usr/local/include/gsl/gsl_vector_complex.h"
 %include "/usr/local/include/gsl/gsl_vector_complex_double.h"
-%include "/usr/local/include/gsl/gsl_vector_complex_float.h"
-%include "/usr/local/include/gsl/gsl_vector_complex_long_double.h"
 %include "/usr/local/include/gsl/gsl_vector_double.h"
-%include "/usr/local/include/gsl/gsl_vector_float.h"
 %include "/usr/local/include/gsl/gsl_vector_int.h"
-%include "/usr/local/include/gsl/gsl_vector_long.h"
-%include "/usr/local/include/gsl/gsl_vector_long_double.h"
-%include "/usr/local/include/gsl/gsl_vector_short.h"
-%include "/usr/local/include/gsl/gsl_vector_uchar.h"
-%include "/usr/local/include/gsl/gsl_vector_uint.h"
-%include "/usr/local/include/gsl/gsl_vector_ulong.h"
-%include "/usr/local/include/gsl/gsl_vector_ushort.h"
 
 FILE *fopen(char *, char *);
 int fclose(FILE *);
 
 %perlcode %{
+
 
 @EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_b gsl_vector_alloc_from_v
@@ -56,5 +37,25 @@ int fclose(FILE *);
                  gsl_vector_ispos gsl_vector_isneg gsl_vector_isnonneg 
                  /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+sub new {
+    my ($class, $values) = @_;
+    my $length  = $#$values;
+    my $vector;
+    die __PACKAGE__.'::new($x) - $x must be an int or nonempty array reference'
+        if( !(defined $values) || ($length == -1));
+
+    if ( ref $values eq 'ARRAY' ){
+        $vector  = gsl_vector_alloc($length+1);
+        map { gsl_vector_set($vector, $_, $values[$_] ) }  (0 .. $length);
+    } elsif ( int $values == $values && $values > 0) {
+        $vector  = gsl_vector_alloc($length);
+    } else {
+        die __PACKAGE__.'::new($x) - $x must be an int or array reference';
+    }
+
+    $self->{_vector} = $vector; 
+    bless {}, $class;
+}
 
 %}

@@ -26,6 +26,48 @@ sub GSL_VECTOR_SET_GET: Tests {
     ok( $elem == 42, 'gsl_vector_set/gsl_vector_get' );
 }
 
+sub GSL_VECTOR_ISNONNEG: Tests {
+    my $self = shift;
+    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4); 
+    ok( !gsl_vector_isnonneg($self->{vector}),'gsl_vector_isnonneg' );
+    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4); 
+    ok( gsl_vector_isnonneg($self->{vector}),'gsl_vector_isnonneg' );
+}
+
+sub GSL_VECTOR_ISNULL: Tests {
+    my $self = shift;
+    ok( !gsl_vector_isnull($self->{vector}), 'gsl_vector_isnull' );
+    map { gsl_vector_set($self->{vector}, $_, 0 ) } (0..4); 
+    ok( gsl_vector_isnull($self->{vector}),'gsl_vector_isnull' );
+    gsl_vector_set($self->{vector}, 0, 5 );
+    ok( !gsl_vector_isnull($self->{vector}), 'gsl_vector_isnull' );
+}
+
+sub GSL_VECTOR_ISPOS: Tests {
+    my $self = shift;
+    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4); 
+    ok( !gsl_vector_ispos($self->{vector}),'gsl_vector_pos' );
+    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4); 
+    ok( gsl_vector_ispos($self->{vector}),'gsl_vector_pos' );
+}
+
+sub GSL_VECTOR_ISNEG: Tests {
+    my $self = shift;
+
+    map { gsl_vector_set($self->{vector}, $_, -$_ ) } (0..4); 
+    ok( !gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
+
+    gsl_vector_set($self->{vector}, 0, -1 );
+
+    ok( gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
+}
+
+sub GSL_VECTOR_MAX: Tests {
+    my $self = shift;
+    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+    ok( is_similar( gsl_vector_max($self->{vector}) ,16), 'gsl_vector_max' );
+
+}
 sub GSL_VECTOR_FREAD_FWRITE: Tests { 
     my $self = shift;
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;

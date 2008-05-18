@@ -12,10 +12,13 @@
 %include "/usr/local/include/gsl/gsl_matrix_int.h"
 %include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_char.h"
+
+FILE *fopen(char *, char *);
+int fclose(FILE *);
  
 %perlcode %{ 
 
-@EXPORT_OK = qw/
+@EXPORT_OK = qw/fopen fclose
                 gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block
                 gsl_matrix_alloc_from_matrix gsl_vector_alloc_row_from_matrix
                 gsl_vector_alloc_col_from_matrix gsl_matrix_free gsl_matrix_submatrix
@@ -213,6 +216,40 @@ for($i = 0; $i< 100; $i++){ # OUT OF RANGE ERROR
 }
 gsl_matrix_free ($m);
 
+
+use Math::GSL::Matrix qw/:all/;
+$m = gsl_matrix_alloc (100, 100);
+$a = gsl_matrix_alloc (100, 100);
+
+for($i = 0; $i < 100; $i++){
+	for($j = 0; $j < 100; $j++){
+	gsl_matrix_set ($m, $i, $j, 0.23 + $i + $j);
+	}
+}
+
+The next program shows how to write a matrix to a file. 
+
+$out = fopen("test.dat", "wb");
+gsl_matrix_fwrite ($out, $m);
+fclose ($out);
+
+$in = fopen("test.dat", "rb");
+gsl_matrix_fread ($in, $a);
+fclose($in);
+
+$k=0;
+for($i = 0; $i < 100; $i++){
+	for($j = 0; $j < 100; $j++){
+	$mij = gsl_matrix_get ($m, $i, $j);
+	$aij = gsl_matrix_get ($a, $i, $j);
+	if ($mij != $aij){ $k++ };
+	}
+}
+
+gsl_matrix_free($m);
+gsl_matrix_free($a);
+
+print "differences = $k (should be zero)\n";
 
 =head1 AUTHOR
 

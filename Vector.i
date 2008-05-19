@@ -58,4 +58,9 @@ sub new {
     bless {}, $class;
 }
 
+sub get {
+    my ($self, $indices) = @_;
+    return [ map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ];
+}
+
 %}

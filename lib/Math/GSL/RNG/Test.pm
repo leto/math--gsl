@@ -82,32 +82,6 @@ sub GSL_RNG_NAME : Tests {
     ok($name1 eq $name2, "\$rng->name == gsl_rng_name = $name2" );
 }
 
-sub GSL_RNG_SHUFFLE : Tests {
-	my $rng=Math::GSL::RNG->new;
-	my $i;
-	my $j;
-	my @x=0..9;
-	my @count = map { [(0)x10] } (1 .. 10);
-	for($i=0; $i<100000; $i++)
-	{
-		gsl_ran_shuffle ($rng, @x, 10, 4);
-		$count[ $x[$_] ][$_] ++ for 0 .. 9
-	}
-	for($i=0; $i<10; $i++)
-	{
-		for($j=0; $j<10; $j++)
-		{
-			$d = abs($count[i][j] - 10000);
-			$sigma = $d / 10000;
-			if($sigma>5 && $d>1)
-			{
-				print "Error, expected:0.1 but observed" . $count[i][j]/100000;	
-			}
-		}
-	}
-	print "gsl_ran_shuffle on {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}";
-}	
-
 sub GSL_RNG_NO_MORE_SECRETS : Tests {
     my $seed = 1+int 10*rand;
     my $k    = 10 + int(100*rand);

@@ -358,7 +358,6 @@ my $builder = $class->new(
         'Scalar::Util'          =>       0,
         'Test::More'            =>       0,
         'Test::Class'           =>       0,
-	'Test::Pod'             =>      '1.00',
         version                 =>       0,
     	perl 			        => '5.8.6',
     },

@@ -108,6 +108,7 @@ Mathematical functions concerning Matrices
 use Math::GSL::Matrix qw / put_functions_here/;
 
 =head1 DESCRIPTION
+
 Here is a list of all the functions included in this module :
 
 gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block

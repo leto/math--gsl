@@ -1,4 +1,4 @@
-use Test::More tests=>4;
+use Test::More 'no_plan';
 use Math::GSL;
 use Math::GSL::Randist qw/:all/;
 use Math::GSL::RNG qw/:all/;

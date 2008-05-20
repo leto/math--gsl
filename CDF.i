@@ -51,6 +51,7 @@ These functions compute the cumulative distribution functions P(x), Q(x) and the
 use Math::GSL::CDF qw / put_functions_here/;
 
 =head1 DESCRIPTION
+
 Here is a list of all the functions included in this module :
 gsl_cdf_ugaussian_P gsl_cdf_ugaussian_Q gsl_cdf_ugaussian_Pinv 
 gsl_cdf_ugaussian_Qinv gsl_cdf_gaussian_P gsl_cdf_gaussian_Q 
@@ -120,7 +121,6 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 example using tag:
 
 use Math::GSL::CDF qw /:beta/;
-
 print gsl_cdf_beta_P(1,2,3) . "\n";
 
 

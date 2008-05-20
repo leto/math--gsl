@@ -23,7 +23,6 @@ sub GSL_POLY_EVAL : Test {
 
     ok( is_similar($y,3.14+2.72+5.55) );
 }
-=head
 sub GSL_POLY_SOLVE_QUADRATIC : Test(2) {
     my ($a,$b,$c) = (1, 6, 9);
     my ($x0,$x1);
@@ -33,7 +32,6 @@ sub GSL_POLY_SOLVE_QUADRATIC : Test(2) {
     ok( is_similar( $x0, -3) );
     ok( is_similar( $x1, -3) );
 }
-=cut
 
 # this should be a typemap
 sub _double_array {

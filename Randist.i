@@ -6,7 +6,6 @@
     I32 len;
     int i;
     SV  **tv;
-    //printf("FOO\n");
 
     if (!SvROK($input))
         croak("Argument $argnum is not a reference.");
@@ -15,12 +14,15 @@
 
     tempav = (AV*)SvRV($input);
     len = av_len(tempav);
-    $1 = (void **) malloc((len+2)*sizeof(int *));
+    $1 = (int **) malloc((len+2)*sizeof(int *));
     for (i = 0; i <= len; i++) {
         tv = av_fetch(tempav, i, 0);    
-       // $1[i] = (int *) SvIV(*tv);
+        //$1[i] = (int) SvIV(*tv);
     }
 };
+%typemap(freearg) void * {
+    free($1);
+}
 
 %{
     #include "/usr/local/include/gsl/gsl_randist.h"

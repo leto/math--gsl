@@ -6,7 +6,7 @@
     I32 len;
     int i;
     SV  **tv;
-    printf("FOO\n");
+    //printf("FOO\n");
 
     if (!SvROK($input))
         croak("Argument $argnum is not a reference.");
@@ -24,9 +24,7 @@
 
 %{
     #include "/usr/local/include/gsl/gsl_randist.h"
-    extern void gsl_ran_shuffle(const gsl_rng *, void *, size_t, size_t);
 %}
-
 %include "/usr/local/include/gsl/gsl_randist.h"
 
 

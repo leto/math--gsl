@@ -88,7 +88,6 @@ t/Roots.t
 t/RNG.t
 t/SF.t
 t/Vector.t
-Test.i
 TODO
 Types.i
 Vector.i
@@ -97,3 +96,10 @@ Wavelet.i
 Wavelet2d.i
 subsystems.txt
 typemap_examples.i
+lib/Math/GSL/Min/Test.pm
+lib/Math/GSL/Wavelet/Test.pm
+lib/Math/GSL/Wavelet2D/Test.pm
+t/Function.t
+t/Min.t
+t/Wavelet.t
+Wavelet2D.i

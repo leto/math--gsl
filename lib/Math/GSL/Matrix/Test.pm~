@@ -37,6 +37,7 @@ sub GSL_MATRIX_CALLOC : Tests {
 
    my @got = map { gsl_matrix_get($matrix, $_, $_) } (0..4);
    map { is($got[$_], 0) } (0..4);
+   
 }
 
 1;

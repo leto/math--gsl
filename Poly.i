@@ -1,5 +1,5 @@
 %module Poly
-%typemap(in) double const [] {
+/*%typemap(in) double const [] {
     AV *tempav;
     I32 len;
     int i;
@@ -40,7 +40,7 @@
   SV *tempsv;
   tempsv = SvRV($input);
   sv_setnv(tempsv, *$1);
-}
+}*/
 
 %{
     #include "/usr/local/include/gsl/gsl_poly.h"

@@ -1,8 +1,34 @@
 %module Randist
-%{
-#include "/usr/local/include/gsl/gsl_randist.h"
-%}
+%include "typemaps.i"
 
+%typemap(in) void * {
+    AV *tempav;
+    I32 len;
+    int i,x;
+    SV  **tv;
+
+    if (!SvROK($input))
+        croak("Argument $argnum is not a reference.");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Argument $argnum is not an array.");
+
+    tempav = (AV*)SvRV($input);
+    len = av_len(tempav);
+    $1 = (int **) malloc((len+2)*sizeof(int *));
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(tempav, i, 0);    
+        x  = SvIV(*tv);
+        memset((int*)($1+i), x , 1);
+        //printf("curr = %d\n", (int)($1+i) );
+    }
+};
+%typemap(freearg) void * {
+    free($1);
+}
+
+%{
+    #include "/usr/local/include/gsl/gsl_randist.h"
+%}
 %include "/usr/local/include/gsl/gsl_randist.h"
 
 %perlcode %{

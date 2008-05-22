@@ -3,6 +3,7 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL qw/is_similar/;
+use Math::GSL::Vector qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -56,5 +57,13 @@ sub GSL_MATRIX_SUBMATRIX {
    my @got = map { gsl_matrix_get($matrix, $_, $_) } (0..2);
    map { is($got[$_], $_) } (0..2);
 
+}
+
+sub GSL_MATRIX_ROW {
+   my $matrix = gsl_matrix_alloc(4,4);
+   map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
+   my $vector = gsl_matrix_row($matrix, 2);
+   my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   map { is($got[$_], $_) } (0..3);
 }
 1;

@@ -374,7 +374,7 @@ Chebyshev             Function              Monte                 RNG           
 Heapsort              Multifit              Randist               
 Combination           Histogram             Multimin              Roots                 Wavelet
 Complex               Histogram2d           Multiroots            SF                    Wavelet2D
-Const                 NAN                   Siman                 
+Const                 Siman                 
 DFT                   Integration           Ntuple                Sort                  
 DHT                   Interp                ODEIV                 
 Deriv                 Linalg                Permutation           Spline

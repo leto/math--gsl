@@ -46,7 +46,6 @@ sub GSL_MATRIX_FREE : Tests {
 
    is(gsl_matrix_get($matrix, 0, 0), 0);
    gsl_matrix_free($matrix);
-   isnt(gsl_matrix_get($matrix, 0, 0), 0);
    
 }
 

@@ -1,5 +1,5 @@
 %module Poly
-/*%typemap(in) double const [] {
+%typemap(in) double const [] {
     AV *tempav;
     I32 len;
     int i;
@@ -16,7 +16,7 @@
         tv = av_fetch(tempav, i, 0);
         $1[i] = (double) SvNV(*tv);
     }
-    $1[i] = NAN;
+    $1[i] = GSL_NAN;
 }
 
 %typemap(freearg) double const [] {
@@ -40,15 +40,17 @@
   SV *tempsv;
   tempsv = SvRV($input);
   sv_setnv(tempsv, *$1);
-}*/
+}
 
 %{
     #include "/usr/local/include/gsl/gsl_poly.h"
+    #include "/usr/local/include/gsl/gsl_nan.h"
     #include "/usr/local/include/gsl/gsl_complex.h"
 %}
 
 %include "/usr/local/include/gsl/gsl_poly.h"
 %include "/usr/local/include/gsl/gsl_complex.h"
+%include "/usr/local/include/gsl/gsl_nan.h"
 
 %include "typemaps.i"
 

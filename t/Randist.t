@@ -27,8 +27,10 @@ use warnings;
     eval {
            gsl_ran_shuffle ($rng, $x, 10, 4);
     };
-    ok(!$@, join (" ", $@) || 'gsl_ran_shuffle' ); 
+    print Dumper [ $x ];
+    ok(!$@, 'gsl_ran_shuffle' ); 
 }
+exit;
 {
 	my $rng = gsl_rng_alloc($gsl_rng_default);
 	my $x= [0..9];
@@ -49,7 +51,7 @@ use warnings;
 			if($sigma>5 && $d>1)
 			{
                 $status=0;
-				ok($status, "Error, expected:0.1 but observed" . $count[$i][$j]/100000);	
+				ok($status, "Error, expected: 0.1 but observed " . $count[$i][$j]/100000);	
 			}
 		}
 	}

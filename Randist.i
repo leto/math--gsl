@@ -4,7 +4,7 @@
 %typemap(in) void * {
     AV *tempav;
     I32 len;
-    int i;
+    int i,x;
     SV  **tv;
 
     if (!SvROK($input))
@@ -17,7 +17,9 @@
     $1 = (int **) malloc((len+2)*sizeof(int *));
     for (i = 0; i <= len; i++) {
         tv = av_fetch(tempav, i, 0);    
-        //$1[i] = (int) SvIV(*tv);
+        x  = SvIV(*tv);
+        memset((int*)($1+i), x , 1);
+        //printf("curr = %d\n", (int)($1+i) );
     }
 };
 %typemap(freearg) void * {

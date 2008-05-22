@@ -7,6 +7,7 @@ use Data::Dumper;
 use Math::GSL::Errno;
 use strict;
 
+# This allows us to eval code
 BEGIN{ Math::GSL::Errno::gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
@@ -82,6 +83,18 @@ sub GSL_VECTOR_NEW: Tests {
 
     eval { Math::GSL::Vector->new([]) };
     ok( $@, 'new takes only nonempty array refs');
+}
+sub GSL_VECTOR_GET: Tests {
+    my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (reverse 1..10) ] );
+    my @x = $vec->get([0..9]);
+    is_deeply( \@x, [map { $_ ** 2 } (reverse 1..10)] );
+}
+
+sub GSL_VECTOR_SET: Tests {
+    my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (1..10) ] );
+    $vec->set( [ 0..4] , [ reverse 1..5 ] );
+    my ($x) = $vec->get([0]);
+    ok( $x == 5, "gsl_vector_set: $x ?= 5" );
 }
 sub GSL_VECTOR_MIN: Tests {
     my $self = shift;

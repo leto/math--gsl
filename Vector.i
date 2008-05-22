@@ -47,28 +47,29 @@ sub new {
 
     if ( ref $values eq 'ARRAY' ){
         $vector  = gsl_vector_alloc($length+1);
-        map { gsl_vector_set($vector, $_, $values[$_] ) }  (0 .. $length);
+        map { gsl_vector_set($vector, $_, $values->[$_] ) }  (0 .. $length);
     } elsif ( int $values == $values && $values > 0) {
         $vector  = gsl_vector_alloc($length);
     } else {
         die __PACKAGE__.'::new($x) - $x must be an int or array reference';
     }
-
+    my $self = {}; 
     $self->{_vector} = $vector; 
-    bless {}, $class;
+    bless $self, $class;
 }
 
 sub get {
     my ($self, $indices) = @_;
-    return [ map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ];
+    return  map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ;
 }
 
 sub set {
     my ($self, $indices, $values) = @_;
-    croak(__PACKAGE__.'::set($indices, $values) - $indices and $values must be array references of the same length') 
+    die (__PACKAGE__.'::set($indices, $values) - $indices and $values must be array references of the same length') 
         unless ( ref $indices eq 'ARRAY' && ref $values eq 'ARRAY' &&  $#$indices == $#$values );
-    
-    map {  gsl_vector_set($self->{_vector}, @$indices[$_], @$values[$_] ) } (0..$#$indices);
+    eval { 
+        map {  gsl_vector_set($self->{_vector}, $indices->[$_], $values->[$_] ) } (0..$#$indices);
+    }; 
     return;
 }
 

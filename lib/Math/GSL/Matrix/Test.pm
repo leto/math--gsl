@@ -48,4 +48,13 @@ sub GSL_MATRIX_FREE : Tests {
    isnt(gsl_matrix_get($matrix, 0, 0), 0);
    
 }
+
+sub GSL_MATRIX_SUBMATRIX {
+   my $matrix = gsl_matrix_alloc(5,5);
+   map { gsl_matrix_set($matrix, $_,$_, $_) } (0..4);
+   my $subMatrix = gsl_matrix_submatrix($matrix, 0, 0, 2, 2);
+   my @got = map { gsl_matrix_get($matrix, $_, $_) } (0..2);
+   map { is($got[$_], $_) } (0..2);
+
+}
 1;

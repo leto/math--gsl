@@ -39,4 +39,13 @@ sub GSL_MATRIX_CALLOC : Tests {
    map { is($got[$_], 0) } (0..4);
 }
 
+sub GSL_MATRIX_FREE : Tests {
+   my $matrix = gsl_matrix_calloc(5,5);
+   isa_ok($matrix, 'Math::GSL::Matrix');
+
+   is(gsl_matrix_get($matrix, 0, 0), 0);
+   gsl_matrix_free($matrix);
+   isnt(gsl_matrix_get($matrix, 0, 0), 0);
+   
+}
 1;

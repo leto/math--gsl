@@ -2,8 +2,8 @@ package Math::GSL::Matrix::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::Matrix qw/:all/;
+use Math::GSL::Vector qw/gsl_vector_get/;
 use Math::GSL qw/is_similar/;
-use Math::GSL::Vector qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -49,7 +49,7 @@ sub GSL_MATRIX_FREE : Tests {
    
 }
 
-sub GSL_MATRIX_SUBMATRIX {
+sub GSL_MATRIX_SUBMATRIX : Tests {
    my $matrix = gsl_matrix_alloc(5,5);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..4);
    my $subMatrix = gsl_matrix_submatrix($matrix, 0, 0, 2, 2);
@@ -58,11 +58,39 @@ sub GSL_MATRIX_SUBMATRIX {
 
 }
 
-sub GSL_MATRIX_ROW {
+sub GSL_MATRIX_ROW : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
    my $vector = gsl_matrix_row($matrix, 2);
-   my @got = map { gsl_vector_get($vector, $_) } (0..3);
-   map { is($got[$_], $_) } (0..3);
+  # my @got = map { gsl_vector_get($vector, $_) } (0..3);
+  # map { is($got[$_], $_) } (0..3);
+}
+
+sub GSL_MATRIX_COLUMN : Tests {
+   my $matrix = gsl_matrix_alloc(4,4);
+   map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
+   my $vector = gsl_matrix_column($matrix, 2);
+   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   #map { is($got[$_], 1) } (0..3);
+}
+
+sub GSL_MATRIX_DIAGONAL : Tests {
+   my $matrix = gsl_matrix_alloc(4,4);
+   map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
+   my $vector = gsl_matrix_diagonal($matrix);
+   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   #map { is($got[$_], $_) } (0..3);
+}
+
+sub GSL_MATRIX_SUBDIAGONAL : Tests {
+   my $matrix = gsl_matrix_alloc(4,4);
+   map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
+   my $vector = gsl_matrix_subdiagonal($matrix, 0);
+   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   #map { is($got[$_], $_) } (0..3);
+
+   $vector = gsl_matrix_subdiagonal($matrix, 1);
+   #@got = map { gsl_vector_get($vector, $_) } (0..2);
+   #map { is($got[$_], $_) } (1..3);
 }
 1;

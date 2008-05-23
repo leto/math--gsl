@@ -20,7 +20,6 @@ sub GSL_POLY_SOLVE_QUADRATIC : Tests {
     my ($a,$b,$c) = (1, 6, 9);
     my ($x0,$x1)=(0,0);
     my ($num_roots) = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
-
     is_deeply ( [ $num_roots, $x0, $x1], [ 2, -3, -3 ] );
 }
 

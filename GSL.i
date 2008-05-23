@@ -4,9 +4,9 @@
     int i;
     SV **tv;
     if (!SvROK($input))
-        croak("$input is not a reference!");
+        croak("Math::GSL::Sort : $input is not a reference!");
     if (SvTYPE(SvRV($input)) != SVt_PVAV)
-        croak("$input is not an array!");
+        croak("Math::GSL::Sort : $input is not an array ref!");
         
     tempav = (AV*)SvRV($input);
     len = av_len(tempav);
@@ -17,26 +17,7 @@
     }
     $1[i] = GSL_NAN;
 }
-
+%apply double const [] { double *data };
 %typemap(freearg) double const [] {
     free($1);
-}
-
-%typemap(in) double * (double dvalue) {
-  SV* tempsv;
-  if (!SvROK($input)) {
-    croak("$input is not a reference!\n");
-  }
-  tempsv = SvRV($input);
-  if ((!SvNOK(tempsv)) && (!SvIOK(tempsv))) {
-    croak("$input is not a reference!\n");
-  }
-  dvalue = SvNV(tempsv);
-  $1 = &dvalue;
-}
-
-%typemap(argout) double * {
-  SV *tempsv;
-  tempsv = SvRV($input);
-  sv_setnv(tempsv, *$1);
 }

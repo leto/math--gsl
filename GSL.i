@@ -4,9 +4,9 @@
     int i;
     SV **tv;
     if (!SvROK($input))
-        croak("Math::GSL::Sort : $input is not a reference!");
+        croak("Math::GSL : $input is not a reference!");
     if (SvTYPE(SvRV($input)) != SVt_PVAV)
-        croak("Math::GSL::Sort : $input is not an array ref!");
+        croak("Math::GSL : $input is not an array ref!");
         
     tempav = (AV*)SvRV($input);
     len = av_len(tempav);

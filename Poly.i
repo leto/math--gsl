@@ -2,7 +2,6 @@
 %include "GSL.i" 
 %typemap(in) double * (double dvalue) {
   SV* tempsv;
-  printf("FOO\n");
   if (!SvROK($input)) {
     croak("Math::GSL::Sort : $input is not a reference!\n");
   }
@@ -19,6 +18,8 @@
   sv_setnv(tempsv, *$1);
 }
 %include "typemaps.i"
+
+
 %{
     #include "/usr/local/include/gsl/gsl_nan.h"
     #include "/usr/local/include/gsl/gsl_poly.h"
@@ -32,7 +33,23 @@
 
 %perlcode %{
 
-@EXPORT_OK = qw(gsl_poly_eval gsl_poly_solve_quadratic);
+@EXPORT_OK = qw/
+                gsl_poly_eval 
+                gsl_poly_complex_eval 
+                gsl_complex_poly_complex_eval 
+                gsl_poly_dd_init 
+                gsl_poly_dd_eval 
+                gsl_poly_dd_taylor 
+                gsl_poly_solve_quadratic 
+                gsl_poly_complex_solve_quadratic 
+                gsl_poly_solve_cubic 
+                gsl_poly_complex_solve_cubic 
+                gsl_poly_complex_workspace_alloc 
+                gsl_poly_complex_workspace_free 
+                gsl_poly_complex_solve 
+                $GSL_POSZERO $GSL_NEGZERO
+             /;
+
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 %}

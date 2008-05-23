@@ -69,6 +69,7 @@ Statistics.i
 Sum.i
 Sys.i
 t/00-load.t
+t/01-pod.t
 t/Block.t
 t/CDF.t
 t/Complex.t
@@ -101,3 +102,4 @@ t/Function.t
 t/Min.t
 t/Wavelet.t
 Wavelet2D.i
+GSL.i

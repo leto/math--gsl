@@ -1,13 +1,13 @@
 package Math::GSL::Wavelet::Test;
 use base q{Test::Class};
 use Test::More;
-use Math::GSL::Errno;
+use Math::GSL::Errno qw/:all/;
 use Math::GSL::Wavelet qw/:all/;
 use Math::GSL qw/is_similar/;
 use Data::Dumper;
 use strict;
 
-BEGIN{ Math::GSL::Errno::gsl_set_error_handler_off(); }
+BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

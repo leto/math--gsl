@@ -4,11 +4,11 @@ use Test::More;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/is_similar/;
 use Data::Dumper;
-use Math::GSL::Errno;
+use Math::GSL::Errno qw/:all/;
 use strict;
 
 # This allows us to eval code
-BEGIN{ Math::GSL::Errno::gsl_set_error_handler_off(); }
+BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

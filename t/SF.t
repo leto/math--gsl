@@ -1,12 +1,12 @@
 use Test::More 'no_plan';
 use Math::GSL qw/is_similar/;
-use Math::GSL::Errno;
+use Math::GSL::Errno qw/:all/;
 use Math::GSL::SF qw/gsl_sf_bessel_J0 gsl_sf_bessel_J0_e/;
 use Data::Dumper;
 use strict;
 use warnings;
 
-BEGIN{ Math::GSL::Errno::gsl_set_error_handler_off(); }
+BEGIN{ gsl_set_error_handler_off(); }
 
 my $gsl = Math::GSL->new;
 

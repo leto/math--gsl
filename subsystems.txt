@@ -4,7 +4,6 @@ Bspline
 CBLAS
 CDF         - needs examples
 Chebyshev
-CheckRange
 Combination
 Complex     - need to test packed arrays, needs docs, examples
 Const       - needs docs, examples

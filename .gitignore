@@ -5,6 +5,7 @@ blib
 *.bak
 *_wrap*c
 *_wrap*so
-\.*swp
+\.*sw[op]
 _build
 tmp*
+pod2htm*

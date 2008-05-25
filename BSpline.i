@@ -1,4 +1,4 @@
-%module Bspline
+%module BSpline
 %{
 #include "/usr/local/include/gsl/gsl_bspline.h"
 %}

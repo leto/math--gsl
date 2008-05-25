@@ -69,8 +69,10 @@ sub GSL_MATRIX_ROW : Tests {
 sub GSL_MATRIX_COLUMN : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
-   my $vector = gsl_matrix_column($matrix, 2);
-   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   my $view = gsl_matrix_column($matrix, 2);
+   print Dumper [ $view ];
+   #my @views = map { gsl_vector_get($vector, $_) } (0..3);
+   #print Dumper [ @views ];
    #map { is($got[$_], 1) } (0..3);
 }
 

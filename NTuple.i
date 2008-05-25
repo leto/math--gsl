@@ -1,4 +1,4 @@
-%module Ntuple
+%module NTuple
 %{
 #include "/usr/local/include/gsl/gsl_ntuple.h"
 %}

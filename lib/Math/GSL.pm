@@ -91,7 +91,7 @@ sub subsystems
     return qw/
         BLAS         Diff         Machine       Permute   Statistics
         Block        Eigen        Matrix        Poly      Sum
-        Bspline      Errno        PowInt        Sys
+        BSpline      Errno        PowInt        Sys
         CBLAS        FFT          Min           
         CDF          Fit          Mode          QRNG      Types
         Chebyshev    Function     Monte         RNG       Vector
@@ -99,7 +99,7 @@ sub subsystems
         Combination  Histogram    Multimin      Roots     Wavelet
         Complex      Histogram2d  Multiroots    SF        Wavelet2D
         Const        Siman         
-        DFT          Integration  Ntuple        Sort                  
+        DFT          Integration  NTuple        Sort                  
         DHT          Interp       ODEIV         
         Deriv        Linalg       Permutation   Spline
     /;

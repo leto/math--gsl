@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+use Math::GSL::SF qw/:bessel/;
+
+my $x = [ map { $_/ 100 } ( 0 .. 1000 ) ];
+
+open my $fh, ">", 'bessel.data' or die $!;
+
+for my $t (@$x) {
+   print $fh join (" ", $t,  map { Math::GSL::SF::gsl_sf_bessel_Jn( $_, $t) } (0..5)) . "\n";
+}
+
+close $fh;

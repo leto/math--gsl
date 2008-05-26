@@ -115,6 +115,7 @@ sub verify_results
         defined $class ? ( $x = eval qq{${class}::$k} )
                        : ( $x = eval $k);
 
+        print $@ if $@;
         print "got $x for $k\n" if defined $ENV{DEBUG};
 
         if (ref $v eq 'ARRAY'){
@@ -122,7 +123,9 @@ sub verify_results
         } else {
              $val = $v;
         }
-        if (defined $x && $x =~ /nan|inf/i){
+        if (!defined $x ){
+            ok(0, qq{'$k' died} );
+        } elsif ($x =~ /nan|inf/i){
                 ok( $val eq $x, "'$v'?='$x'" );
         } else { 
             my $res = abs($x-$val);

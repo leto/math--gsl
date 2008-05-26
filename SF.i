@@ -347,6 +347,8 @@ push @EXPORT_misc, qw/
                gsl_sf_Si 
                gsl_sf_Ci_e 
                gsl_sf_Ci 
+               /;
+@EXPORT_fermi_dirac = qw/
                gsl_sf_fermi_dirac_m1_e 
                gsl_sf_fermi_dirac_m1 
                gsl_sf_fermi_dirac_0_e 
@@ -366,7 +368,6 @@ push @EXPORT_misc, qw/
                gsl_sf_fermi_dirac_inc_0_e 
                gsl_sf_fermi_dirac_inc_0 
                /;
-
 @EXPORT_legendre = qw/
                gsl_sf_legendre_Pl_e 
                gsl_sf_legendre_Pl 
@@ -393,6 +394,13 @@ push @EXPORT_misc, qw/
                gsl_sf_legendre_sphPlm_array 
                gsl_sf_legendre_sphPlm_deriv_array 
                gsl_sf_legendre_array_size 
+               gsl_sf_legendre_H3d_0_e 
+               gsl_sf_legendre_H3d_0 
+               gsl_sf_legendre_H3d_1_e 
+               gsl_sf_legendre_H3d_1 
+               gsl_sf_legendre_H3d_e 
+               gsl_sf_legendre_H3d 
+               gsl_sf_legendre_H3d_array 
                /;
 @EXPORT_gamma = qw/
                gsl_sf_lngamma_e 
@@ -412,9 +420,7 @@ push @EXPORT_misc, qw/
                gsl_sf_gamma_inc_e 
                gsl_sf_gamma_inc 
                /;
-push @EXPORT_misc, qw/
-               gsl_sf_taylorcoeff_e 
-               gsl_sf_taylorcoeff 
+@EXPORT_factorial = qw/
                gsl_sf_fact_e 
                gsl_sf_fact 
                gsl_sf_doublefact_e 
@@ -423,35 +429,8 @@ push @EXPORT_misc, qw/
                gsl_sf_lnfact 
                gsl_sf_lndoublefact_e 
                gsl_sf_lndoublefact 
-               gsl_sf_lnchoose_e 
-               gsl_sf_lnchoose 
-               gsl_sf_choose_e 
-               gsl_sf_choose 
-               gsl_sf_lnpoch_e 
-               gsl_sf_lnpoch 
-               gsl_sf_lnpoch_sgn_e 
-               gsl_sf_poch_e 
-               gsl_sf_poch 
-               gsl_sf_pochrel_e 
-               gsl_sf_pochrel 
-
-
-               gsl_sf_lnbeta_e 
-               gsl_sf_lnbeta 
-               gsl_sf_lnbeta_sgn_e 
-               gsl_sf_beta_e 
-               gsl_sf_beta 
-               gsl_sf_beta_inc_e 
-               gsl_sf_beta_inc 
-               gsl_sf_gegenpoly_1_e 
-               gsl_sf_gegenpoly_2_e 
-               gsl_sf_gegenpoly_3_e 
-               gsl_sf_gegenpoly_1 
-               gsl_sf_gegenpoly_2 
-               gsl_sf_gegenpoly_3 
-               gsl_sf_gegenpoly_n_e 
-               gsl_sf_gegenpoly_n 
-               gsl_sf_gegenpoly_array 
+               /;
+@EXPORT_hypergeometric = qw/
                gsl_sf_hyperg_0F1_e 
                gsl_sf_hyperg_0F1 
                gsl_sf_hyperg_1F1_int_e 
@@ -474,6 +453,8 @@ push @EXPORT_misc, qw/
                gsl_sf_hyperg_2F1_conj_renorm 
                gsl_sf_hyperg_2F0_e 
                gsl_sf_hyperg_2F0 
+               /;
+@EXPORT_laguerre = qw/
                gsl_sf_laguerre_1_e 
                gsl_sf_laguerre_2_e 
                gsl_sf_laguerre_3_e 
@@ -482,6 +463,37 @@ push @EXPORT_misc, qw/
                gsl_sf_laguerre_3 
                gsl_sf_laguerre_n_e 
                gsl_sf_laguerre_n 
+               /;
+push @EXPORT_misc, qw/
+               gsl_sf_taylorcoeff_e 
+               gsl_sf_taylorcoeff 
+               gsl_sf_lnchoose_e 
+               gsl_sf_lnchoose 
+               gsl_sf_choose_e 
+               gsl_sf_choose 
+               gsl_sf_lnpoch_e 
+               gsl_sf_lnpoch 
+               gsl_sf_lnpoch_sgn_e 
+               gsl_sf_poch_e 
+               gsl_sf_poch 
+               gsl_sf_pochrel_e 
+               gsl_sf_pochrel 
+               gsl_sf_lnbeta_e 
+               gsl_sf_lnbeta 
+               gsl_sf_lnbeta_sgn_e 
+               gsl_sf_beta_e 
+               gsl_sf_beta 
+               gsl_sf_beta_inc_e 
+               gsl_sf_beta_inc 
+               gsl_sf_gegenpoly_1_e 
+               gsl_sf_gegenpoly_2_e 
+               gsl_sf_gegenpoly_3_e 
+               gsl_sf_gegenpoly_1 
+               gsl_sf_gegenpoly_2 
+               gsl_sf_gegenpoly_3 
+               gsl_sf_gegenpoly_n_e 
+               gsl_sf_gegenpoly_n 
+               gsl_sf_gegenpoly_array 
                gsl_sf_lambert_W0_e 
                gsl_sf_lambert_W0 
                gsl_sf_lambert_Wm1_e 
@@ -498,13 +510,6 @@ push @EXPORT_misc, qw/
                gsl_sf_conicalP_sph_reg 
                gsl_sf_conicalP_cyl_reg_e 
                gsl_sf_conicalP_cyl_reg 
-               gsl_sf_legendre_H3d_0_e 
-               gsl_sf_legendre_H3d_0 
-               gsl_sf_legendre_H3d_1_e 
-               gsl_sf_legendre_H3d_1 
-               gsl_sf_legendre_H3d_e 
-               gsl_sf_legendre_H3d 
-               gsl_sf_legendre_H3d_array 
                gsl_sf_log_e 
                gsl_sf_log 
                gsl_sf_log_abs_e 
@@ -514,22 +519,6 @@ push @EXPORT_misc, qw/
                gsl_sf_log_1plusx 
                gsl_sf_log_1plusx_mx_e 
                gsl_sf_log_1plusx_mx 
-               gsl_sf_mathieu_a_array 
-               gsl_sf_mathieu_b_array 
-               gsl_sf_mathieu_a 
-               gsl_sf_mathieu_b 
-               gsl_sf_mathieu_a_coeff 
-               gsl_sf_mathieu_b_coeff 
-               gsl_sf_mathieu_alloc 
-               gsl_sf_mathieu_free 
-               gsl_sf_mathieu_ce 
-               gsl_sf_mathieu_se 
-               gsl_sf_mathieu_ce_array 
-               gsl_sf_mathieu_se_array 
-               gsl_sf_mathieu_Mc 
-               gsl_sf_mathieu_Ms 
-               gsl_sf_mathieu_Mc_array 
-               gsl_sf_mathieu_Ms_array 
                gsl_sf_pow_int_e 
                gsl_sf_pow_int 
                gsl_sf_psi_int_e 
@@ -550,6 +539,24 @@ push @EXPORT_misc, qw/
                gsl_sf_synchrotron_1 
                gsl_sf_synchrotron_2_e 
                gsl_sf_synchrotron_2 
+               /;
+@EXPORT_mathieu = qw/
+               gsl_sf_mathieu_a_array 
+               gsl_sf_mathieu_b_array 
+               gsl_sf_mathieu_a 
+               gsl_sf_mathieu_b 
+               gsl_sf_mathieu_a_coeff 
+               gsl_sf_mathieu_b_coeff 
+               gsl_sf_mathieu_alloc 
+               gsl_sf_mathieu_free 
+               gsl_sf_mathieu_ce 
+               gsl_sf_mathieu_se 
+               gsl_sf_mathieu_ce_array 
+               gsl_sf_mathieu_se_array 
+               gsl_sf_mathieu_Mc 
+               gsl_sf_mathieu_Ms 
+               gsl_sf_mathieu_Mc_array 
+               gsl_sf_mathieu_Ms_array 
                /;
 @EXPORT_transport = qw/
                gsl_sf_transport_2_e 
@@ -613,29 +620,53 @@ push @EXPORT_misc, qw/
                GSL_SF_FACT_NMAX 
                GSL_SF_DOUBLEFACT_NMAX 
                GSL_SF_MATHIEU_COEFF 
-             /;
-@EXPORT_OK = (
-                @EXPORT_airy, @EXPORT_bessel, @EXPORT_clausen, @EXPORT_hydrogenic,
-                @EXPORT_coulumb, @EXPORT_coupling, @EXPORT_dawson, @EXPORT_debye,
-                @EXPORT_dilog, @EXPORT_misc, @EXPORT_elliptic, @EXPORT_error, @EXPORT_legendre,
-                @EXPORT_gamma, @EXPORT_transport, @EXPORT_trig, @EXPORT_zeta, @EXPORT_eta,
-                @EXPORT_vars
+               /;
+
+@EXPORT_OK = ( 
+               @EXPORT_airy, @EXPORT_bessel, @EXPORT_clausen, @EXPORT_hydrogenic,
+               @EXPORT_coulumb, @EXPORT_coupling, @EXPORT_dawson, @EXPORT_debye,
+               @EXPORT_dilog, @EXPORT_misc, @EXPORT_elliptic, @EXPORT_error, @EXPORT_legendre,
+               @EXPORT_gamma, @EXPORT_transport, @EXPORT_trig, @EXPORT_zeta, @EXPORT_eta,
+               @EXPORT_vars
              );
 
-
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ], bessel => [ @EXPORT_bessel ], airy => [ @EXPORT_airy ], clausen => [ @EXPORT_clausen ], hydrogenic => [ @EXPORT_hydrogenic ], coulumb => [ @EXPORT_coulum ], coupling => [@EXPORT_coupling ], dawson => [ @EXPORT_dawson ], debye => [ @EXPORT_debye ], dilog => [ @EXPORT_dilog ], misc => [ @EXPORT_misc ], elliptic => [ @EXPORT_elliptic ], error => [ @EXPORT_error ], legendre => [ @EXPORT_legendre ], gamma => [ @EXPORT_gamme ], transport => [ @EXPORT_transport ], trig => [ @EXPORT_trig ], zeta => [ @EXPORT_zeta ], eta => [ @EXPORT_eta ], vars => [ @EXPORT_vars ] );
-
+%EXPORT_TAGS = ( 
+                 all            => [ @EXPORT_OK ],
+                 airy           => [ @EXPORT_airy ], 
+                 bessel         => [ @EXPORT_bessel ], 
+                 clausen        => [ @EXPORT_clausen ], 
+                 coulumb        => [ @EXPORT_coulumb ], 
+                 coupling       => [ @EXPORT_coupling ], 
+                 dawson         => [ @EXPORT_dawson ], 
+                 debye          => [ @EXPORT_debye ], 
+                 dilog          => [ @EXPORT_dilog ], 
+                 eta            => [ @EXPORT_eta ], 
+                 elliptic       => [ @EXPORT_elliptic ], 
+                 error          => [ @EXPORT_error ], 
+                 factorial      => [ @EXPORT_factorial ],
+                 gamma          => [ @EXPORT_gamma ], 
+                 hydrogenic     => [ @EXPORT_hydrogenic ], 
+                 hypergeometric => [ @EXPORT_hypergeometric ],
+                 laguerre       => [ @EXPORT_laguerre ],
+                 legendre       => [ @EXPORT_legendre ], 
+                 mathieu        => [ @EXPORT_mathieu ], 
+                 misc           => [ @EXPORT_misc ], 
+                 transport      => [ @EXPORT_transport ], 
+                 trig           => [ @EXPORT_trig ], 
+                 vars           => [ @EXPORT_vars ],
+                 zeta           => [ @EXPORT_zeta ],
+                );
 
 __END__
 
 =head1 NAME
 
-Math::GSL::SF
-
+Math::GSL::SF - Special Functions
 
 =head1 SYPNOPSIS
 
-use Math::GSL::SF qw / put_functions_here/;
+use Math::GSL::SF qw /:all/;
+use Math::GSL::SF qw /:bessel :airy :zeta/;
 
 =head1 DESCRIPTION
 
@@ -806,7 +837,12 @@ gsl_sf_zetam1_int, gsl_sf_hzeta_e, gsl_sf_hzeta,
 gsl_sf_eta_int_e, gsl_sf_eta_int, gsl_sf_eta_e, gsl_sf_eta 
 
 
-You have to add the functions you want to use inside the qw /put_funtion_here / with spaces bewteen each function. You can also write use Math::GSL::SF qw/:all/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
+You can import the functions that you want to use by giving a space separated list to Math::GSL::SF when you use the package. You can also write 
+
+    use Math::GSL::SF qw/:all/
+    
+to use all avaible functions of the module. Note that tag names begin with a colon. 
+Other tags are also available, here is a complete list of all tags for this module :
 
 airy
 bessel 
@@ -817,19 +853,25 @@ coupling
 dawson
 debye
 dilog
+factorial
 misc
 elliptic
 error
+hypergeometric
+laguerre
 legendre
 gamma
 transport
 trig
 zeta
-eta,
+eta
 vars
 
-For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
-Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+For more informations on the functions, we refer you to the GSL offcial documentation: 
+
+http://www.gnu.org/software/gsl/manual/html_node/
+
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
 =head1 EXAMPLES
 
@@ -846,5 +888,4 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
-}%
-
+%}

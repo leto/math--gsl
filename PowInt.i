@@ -30,7 +30,7 @@ print "gsl_pow_2(4)=" . gsl_pow_2(4) . "\n";
 
 This module uses the GSL mathematical functions. It contains gsl_pow_2 to gsl_pow_9. If you need a power higher than 9, you can use gsl_pow_int.
 
-You have to add the functions you want to use inside the qw /put_funtion_here /. 
+You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. 
 
 You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module.
 

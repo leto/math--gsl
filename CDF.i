@@ -83,7 +83,7 @@ gsl_cdf_geometric_P gsl_cdf_geometric_Q gsl_cdf_negative_binomial_P
 gsl_cdf_negative_binomial_Q gsl_cdf_pascal_P gsl_cdf_pascal_Q 
 gsl_cdf_hypergeometric_P gsl_cdf_hypergeometric_Q
 
-You have to add the functions you want to use inside the qw /put_funtion_here /. You can also write use Math::GSL::PowInt qw/:name_of_tag/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
+You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
 
 geometric
 tdist

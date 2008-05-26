@@ -1,6 +1,7 @@
 package Math::GSL;
 use strict;
 use warnings;
+use Math::GSL::Machine qw/:all/;
 use Config;
 use Data::Dumper;
 use Test::More;
@@ -85,7 +86,6 @@ sub new
     bless $this, $class;
 }
 
-# sync this with Build.PL's list of subsystems
 sub subsystems
 {
     return qw/
@@ -107,23 +107,27 @@ sub subsystems
 
 sub verify_results
 {
-    my ($self,$results,$class, $eps) = @_;
-    $eps ||= 1e-8;
+    my ($self,$results,$class) = @_;
+    my ($x,$val);
+
     while (my($k,$v)=each %$results){
-        my $x; 
-        if (defined $class){
-            $x = eval qq{${class}::$k};
-        } else {
-            $x = eval $k;
-        }
+        my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
+        defined $class ? ( $x = eval qq{${class}::$k} )
+                       : ( $x = eval $k);
 
         print "got $x for $k\n" if defined $ENV{DEBUG};
-        if(defined $x && $x =~ /nan|inf/i){
-                ok( $v eq $x, "'$v'?='$x'" );
+
+        if (ref $v eq 'ARRAY'){
+            ($val, $eps)   = @$v;
+        } else {
+             $val = $v;
+        }
+        if (defined $x && $x =~ /nan|inf/i){
+                ok( $val eq $x, "'$v'?='$x'" );
         } else { 
-            my $res = abs($x-$v);
+            my $res = abs($x-$val);
             $@ ? ok(0)
-               : ok( $res < $eps, "$k ?= $x, +- $res" );    
+            : ok( $res < $eps, "$k ?= $x, +- $res" );    
         }
     }
 }

@@ -21,8 +21,6 @@ my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
 my $SQRT_TOL0 = 2.0*$GSL_SQRT_DBL_EPSILON;
 my $TEST_SNGL = 1.0e-06;
 
-my $gsl = Math::GSL->new;
-my $r = Math::GSL::SF::gsl_sf_result_struct->new;
 my $w = 0.8*$GSL_LOG_DBL_MAX;
 my $DBL_MAX = 1.7976931348623157e+308;
 my $y = 0.2*$DBL_MAX;
@@ -1162,6 +1160,7 @@ my $results = {
                 'gsl_sf_eta_e ( 20, $r)'	=> [0.9999990466115815221, $TOL0 ], 
               };
 
+my $gsl = Math::GSL->new;
 $gsl->verify_results($results, 'Math::GSL::SF');
 
 {

@@ -2,6 +2,7 @@ package Math::GSL;
 use strict;
 use warnings;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::Const qw/:all/;
 use Config;
 use Data::Dumper;
 use Test::More;

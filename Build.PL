@@ -368,7 +368,7 @@ my $builder = $class->new(
 BLAS                  Diff                  Machine               Permute               Statistics
 Block                 Eigen                 Matrix                Poly                  Sum
 BSpline               Errno                 PowInt                Sys
-CBLAS                 FFT                   Min                   
+CBLAS                 FFT                   Min                   Math
 CDF                   Fit                   Mode                  QRNG                  Types
 Chebyshev             Function              Monte                 RNG                   Vector
 Heapsort              Multifit              Randist               

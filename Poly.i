@@ -47,7 +47,7 @@
                 gsl_poly_complex_workspace_alloc 
                 gsl_poly_complex_workspace_free 
                 gsl_poly_complex_solve 
-                $GSL_POSZERO $GSL_NEGZERO
+                $GSL_POSZERO $GSL_NEGZERO $GSL_NAN
              /;
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );

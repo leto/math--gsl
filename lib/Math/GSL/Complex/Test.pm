@@ -39,4 +39,20 @@ sub GSL_COMPLEX_POLAR : Tests {
     ok( is_similar($theta,0.1), 'gsl_complex_polar theta, res=' .($theta-0.1) . "\n");
 }
 
+sub GSL_COMPLEX_ABS : Tests {
+    my $x = Math::GSL::Complex->new(5,3);
+    isa_ok( $x, 'Math::GSL::Complex' );
+
+    $abs = gsl_complex_abs($x);
+    is ( $abs, sqrt(34));
+}
+
+sub GSL_COMPLEX_ABS2 : Tests {
+    my $x = Math::GSL::Complex->new(5,3);
+    isa_ok( $x, 'Math::GSL::Complex' );
+
+    $abs = gsl_complex_abs2($x);
+    is ( $abs, 34);
+}
+
 42;

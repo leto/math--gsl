@@ -11,7 +11,12 @@ require DynaLoader;
 require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
-our @EXPORT_OK = qw( is_similar );
+our @EXPORT_OK = qw( is_similar $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
+our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
+
 use constant MAX_DOUBLE => 1.7976931348623157e+308;
 use constant MIN_DOUBLE => 2.2250738585072014e-308;
 use constant MAX_FLOAT  => 3.40282347e+38;
@@ -128,7 +133,7 @@ sub verify_results
         if (!defined $x ){
             ok(0, qq{'$k' died} );
         } elsif ($x =~ /nan|inf/i){
-                ok( $val eq $x, "'$v'?='$x'" );
+                ok( $val eq $x, "'$val'?='$x'" );
         } else { 
             my $res = abs($x-$val);
             $@ ? ok(0)

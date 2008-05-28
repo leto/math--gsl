@@ -49,6 +49,9 @@
                 gsl_poly_complex_solve 
                 $GSL_POSZERO $GSL_NEGZERO $GSL_NAN
              /;
+our $GSL_NAN = q{nan};
+#our $GSL_POSZERO = 0.0;
+#our $GSL_NEGZERO = -1*0.0;
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

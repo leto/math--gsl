@@ -1,5 +1,6 @@
 %module SF
 %{
+    #include "/usr/local/include/gsl/gsl_mode.h"
     #include "/usr/local/include/gsl/gsl_sf.h"
     #include "/usr/local/include/gsl/gsl_sf_airy.h"
     #include "/usr/local/include/gsl/gsl_sf_bessel.h"
@@ -32,9 +33,10 @@
     #include "/usr/local/include/gsl/gsl_sf_trig.h"
     #include "/usr/local/include/gsl/gsl_sf_zeta.h"
 %}
-%import "/usr/local/include/gsl/gsl_types.h"
+//%import "/usr/local/include/gsl/gsl_types.h"
 
 // Grab the declarations  
+%include "/usr/local/include/gsl/gsl_mode.h"
 %include "/usr/local/include/gsl/gsl_sf.h"
 %include "/usr/local/include/gsl/gsl_sf_airy.h"
 %include "/usr/local/include/gsl/gsl_sf_bessel.h"

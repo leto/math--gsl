@@ -1,5 +1,6 @@
 %module Poly
 %include "GSL.i" 
+
 %typemap(in) double * (double dvalue) {
   SV* tempsv;
   if (!SvROK($input)) {
@@ -17,7 +18,6 @@
   tempsv = SvRV($input);
   sv_setnv(tempsv, *$1);
 }
-%include "typemaps.i"
 
 
 %{

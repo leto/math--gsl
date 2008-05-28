@@ -113,6 +113,7 @@ sub verify_results
 
     while (my($k,$v)=each %$results){
         my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
+
         defined $class ? ( $x = eval qq{${class}::$k} )
                        : ( $x = eval $k);
 
@@ -131,7 +132,7 @@ sub verify_results
         } else { 
             my $res = abs($x-$val);
             $@ ? ok(0)
-            : ok( $res < $eps, "$k ?= $x, +- $res" );    
+            : ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
         }
     }
 }

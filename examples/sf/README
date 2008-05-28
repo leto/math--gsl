@@ -1,8 +1,7 @@
-
-To see a graph of bessel functions, run the script named "bessel" in the current directory:
+Requirements:
+    * Gnuplot
+    
+To see a graph of Bessel functions, run the script named "bessel" in the current directory:
 
     ./bessel
 
-Then use gnuplot to see the results with:
-
-    gnuplot -persist plot_bessel.gnuplot

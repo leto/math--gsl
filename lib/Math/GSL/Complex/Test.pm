@@ -3,6 +3,7 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/is_similar/;
+use Math::GSL::Const qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -168,8 +169,8 @@ sub GSL_COMPLEX_SQRT : Tests {
     my $x = gsl_complex_rect(-7,24);
 
     my $z = gsl_complex_sqrt($x);
-    ok( gsl_real($z) == 3, 'gsl_complex_sqrt');
-    ok( gsl_imag($z) == 4, 'gsl_complex_sqrt');
+    ok( is_similar(gsl_real($z),3), 'gsl_complex_sqrt');
+    ok( is_similar(gsl_imag($z),4), 'gsl_complex_sqrt');
 }
 
 sub GSL_COMPLEX_SQRT_REAL : Tests {
@@ -180,11 +181,19 @@ sub GSL_COMPLEX_SQRT_REAL : Tests {
 }
 
 sub GSL_COMPLEX_POW : Tests {
-    my $x = gsl_complex_rect(3,4);
-    my $y = gsl_complex_rect(1,2);
+    my $x = gsl_complex_rect(0,1);
+    my $y = gsl_complex_rect(2,0);
     my $z = gsl_complex_pow($x, $y);
-#    ok( gsl_real($z) == , 'gsl_complex_pow'); # I don't understand how to calulate the output by hand
-#    ok( gsl_imag($z) == , 'gsl_complex_pow'); 
+
+    my ($real, $imag)  = gsl_parts($z);
+    ok( is_similar($real, -1), 'gsl_complex_pow' );
+    ok( is_similar($imag, 0),  'gsl_complex_pow' );
+
+    $x = gsl_complex_rect(3,4);
+    $z = gsl_complex_pow($x, $y);
+
+    ok( is_similar(gsl_real($z), 3**2 - 4**2), 'gsl_complex_pow');
+    ok( is_similar(gsl_imag($z), 2*3*4), 'gsl_complex_pow'); 
 }
 
 42;

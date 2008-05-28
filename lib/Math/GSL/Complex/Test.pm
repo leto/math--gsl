@@ -119,4 +119,72 @@ sub GSL_COMPLEX_DIV_REAL : Tests {
     ok( gsl_real($z) == 3, 'gsl_complex_div_real');
 }
 
+sub GSL_COMPLEX_ADD_IMAG : Tests  {
+    my $x = gsl_complex_rect(6,3);
+
+    my $z = gsl_complex_add_imag($x, 2);
+    ok( gsl_imag($z) == 5, 'gsl_complex_add_imag');
+}
+
+sub GSL_COMPLEX_SUB_IMAG : Tests {
+    my $x = gsl_complex_rect(6,3);
+
+    my $z = gsl_complex_sub_imag($x, 2);
+    ok( gsl_imag($z) == 1, 'gsl_complex_sub_imag');
+}
+
+sub GSL_COMPLEX_MUL_IMAG : Tests {
+    my $x = gsl_complex_rect(6,3);
+
+    my $z = gsl_complex_mul_imag($x, 2);
+    is_deeply( [ gsl_parts($z) ], [ -6, 12 ] );
+}
+
+sub GSL_COMPLEX_DIV_IMAG : Tests {
+    my $x = gsl_complex_rect(6,4);
+
+    my $z = gsl_complex_div_imag($x, 2); 
+    is_deeply( [ gsl_parts($z) ], [ 2, -3 ] );
+}
+
+sub GSL_COMPLEX_CONJUGATE : Tests {
+    my $x = gsl_complex_rect(6,4);
+
+    my $z = gsl_complex_conjugate($x);
+    ok( gsl_real($z) == 6, 'gsl_complex_conjugate');
+    ok( gsl_imag($z) == -4, 'ggsl_complex_conjugat');
+}
+
+
+sub GSL_COMPLEX_NEGATIVE : Tests {
+    my $x = gsl_complex_rect(6,4);
+
+    my $z = gsl_complex_negative($x);
+    ok( gsl_real($z) == -6, 'gsl_complex_negative');
+    ok( gsl_imag($z) == -4, 'gsl_complex_negative');
+}
+
+sub GSL_COMPLEX_SQRT : Tests {
+    my $x = gsl_complex_rect(-7,24);
+
+    my $z = gsl_complex_sqrt($x);
+    ok( gsl_real($z) == 3, 'gsl_complex_sqrt');
+    ok( gsl_imag($z) == 4, 'gsl_complex_sqrt');
+}
+
+sub GSL_COMPLEX_SQRT_REAL : Tests {
+    my $x = gsl_complex_rect(9,4);
+
+    my $z = gsl_complex_sqrt_real(-4);
+    ok( gsl_imag($z) == 2, 'gsl_complex_sqrt_real');
+}
+
+sub GSL_COMPLEX_POW : Tests {
+    my $x = gsl_complex_rect(3,4);
+    my $y = gsl_complex_rect(1,2);
+    my $z = gsl_complex_pow($x, $y);
+#    ok( gsl_real($z) == , 'gsl_complex_pow'); # I don't understand how to calulate the output by hand
+#    ok( gsl_imag($z) == , 'gsl_complex_pow'); 
+}
+
 42;

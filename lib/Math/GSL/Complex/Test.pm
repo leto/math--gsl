@@ -21,13 +21,8 @@ sub GSL_COMPLEX_NEW : Test {
 }
 
 sub GSL_COMPLEX_RECT : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
-
-    my ($real,$imag) = ($x->real,$x->imag);
-    print "x=$real + $imag*I\n" if $ENV{DEBUG};
-    ok( is_similar($real,5), 'gsl_complex_rect real'); 
-    ok( is_similar($imag,3), 'gsl_complex_rect imag'); 
+    my $x = gsl_complex_rect(5,3);
+    is_deeply( [ gsl_parts($x) ], [ 5, 3 ], 'gs_complex_rect' );
 }
 
 sub GSL_COMPLEX_POLAR : Tests {
@@ -40,103 +35,88 @@ sub GSL_COMPLEX_POLAR : Tests {
 }
 
 sub GSL_COMPLEX_ABS : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
-
+    my $x = gsl_complex_rect(5,3);
     my $abs = gsl_complex_abs($x);
-    is ( $abs, sqrt(34));
+    ok ( is_similar($abs, sqrt(34)), 'gsl_complex_abs');
 }
 
 sub GSL_COMPLEX_ABS2 : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
-
+    my $x = gsl_complex_rect(5,3);
     my $abs = gsl_complex_abs2($x);
-    is ( $abs, 34);
+    ok( is_similar($abs, 34), 'gsl_complex_abs2' );
 }
 
-#sub GSL_COMPLEX_LOGABS : Tests {
-#    my $x = Math::GSL::Complex->new(5,3);
-#    isa_ok( $x, 'Math::GSL::Complex' );
-#
-#    my $abs = gsl_complex_logabs($x);
-#    is ( $abs, log(gsl_complex_abs($x))); #doesn't work, what is supposed to be the output?
-#}
+sub GSL_COMPLEX_LOGABS : Tests {
+    my $x = gsl_complex_rect(5,3);
+
+    my $abs = gsl_complex_logabs($x);
+    ok ( is_similar($abs, log(sqrt(34)) ), 'gsl_complex_logabs' );
+}
 
 sub GSL_COMPLEX_ADD : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    my $y = Math::GSL::Complex->new(1,2);
-    isa_ok( $x, 'Math::GSL::Complex' );
-    isa_ok( $y, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
+    my $y = gsl_complex_rect(1,2);
 
-    my $abs = gsl_complex_add($x, $y);
-    is ( $abs->real, 6);
-    is ( $abs->imag, 5);
+    my $z = gsl_complex_add($x, $y);
+    is_deeply( [ gsl_parts($z) ], [ 6, 5 ] );
 }
 
 sub GSL_COMPLEX_SUB : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    my $y = Math::GSL::Complex->new(1,2);
-    isa_ok( $x, 'Math::GSL::Complex' );
-    isa_ok( $y, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
+    my $y = gsl_complex_rect(1,2);
 
-    my $abs = gsl_complex_sub($x, $y);
-    is ( $abs->real, 4);
-    is ( $abs->imag, 1);
+    my $z = gsl_complex_sub($x, $y);
+    is_deeply( [ gsl_parts($z) ], [ 4, 1 ] );
 }
 
 sub GSL_COMPLEX_MUL : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    my $y = Math::GSL::Complex->new(1,2);
-    isa_ok( $x, 'Math::GSL::Complex' ); 
-    isa_ok( $y, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
+    my $y = gsl_complex_rect(1,2);
 
-    my $abs = gsl_complex_mul($x, $y);
-    is ( $abs->real, 5);
-    is ( $abs->imag, 6);
+    my $z = gsl_complex_mul($x, $y);
+    is_deeply( [ gsl_parts($z) ], [ -1, 13 ] );
 }
 
 sub GSL_COMPLEX_DIV : Tests {
-    my $x = Math::GSL::Complex->new(4,5);
-    my $y = Math::GSL::Complex->new(2,1);
-    isa_ok( $x, 'Math::GSL::Complex' );
-    isa_ok( $y, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(4,5);
+    my $y = gsl_complex_rect(2,1);
 
-    my $abs = gsl_complex_div($x, $y);
-    is ( $abs->real, 2);
-    is ( $abs->imag, 5);
+    my $z = gsl_complex_div($x, $y);
+    is_deeply( [ gsl_parts($z) ], [ 13/5, 6/5 ] );
 }
-
+sub GSL_COMPLEX_EQ : Tests {
+    my $x = gsl_complex_rect(4,5);
+    my $y = gsl_complex_rect(2,1);
+    ok(! gsl_complex_eq($x,$y), 'gsl_complex_eq' );
+    $y    = gsl_complex_rect(4,5);
+    ok( gsl_complex_eq($x,$y), 'gsl_complex_eq' );
+}
 sub GSL_COMPLEX_ADD_REAL : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
 
-    my $abs = gsl_complex_add_real($x, 1);
-    is ( $abs->real, 6);
+    my $z = gsl_complex_add_real($x, 1);
+    ok( gsl_real($z) ==  6, 'gsl_complex_add_real');
 }
 
 sub GSL_COMPLEX_SUB_REAL : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
 
-    my $abs = gsl_complex_sub_real($x, 1);
-    is ( $abs->real, 4);
+    my $z = gsl_complex_sub_real($x, 1);
+    ok( gsl_real($z) == 4, 'gsl_complex_sub_real');
 }
 
 sub GSL_COMPLEX_MUL_REAL : Tests {
-    my $x = Math::GSL::Complex->new(5,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(5,3);
 
-    my $abs = gsl_complex_mul_real($x, 2);
-    is ( $abs->real, 10);
+    my $z = gsl_complex_mul_real($x, 2);
+    ok( gsl_real($z) == 10, 'gsl_complex_mul_real');
 }
 
 sub GSL_COMPLEX_DIV_REAL : Tests {
-    my $x = Math::GSL::Complex->new(6,3);
-    isa_ok( $x, 'Math::GSL::Complex' );
+    my $x = gsl_complex_rect(6,3);
 
-    my $abs = gsl_complex_div_real($x, 2);
-    is ( $abs->real, 3);
+    my $z = gsl_complex_div_real($x, 2);
+    ok( gsl_real($z) == 3, 'gsl_complex_div_real');
 }
 
 42;

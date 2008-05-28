@@ -11,12 +11,6 @@
 %include "carrays.i"
 %array_functions(double, doubleArray);
 
-/* r= real+i*imag */
-//gsl_complex gsl_complex_rect (double x, double y); 
-
-/* r= r e^(i theta) */
-//gsl_complex gsl_complex_polar (double r, double theta); 
-
 %perlcode %{
 
 @EXPORT_OK = qw(
@@ -36,10 +30,14 @@
     gsl_complex_coth gsl_complex_arcsinh gsl_complex_arccosh gsl_complex_arccosh_real 
     gsl_complex_arcsech gsl_complex_arccsch gsl_complex_arctanh gsl_complex_arctanh_real 
     gsl_complex_arccoth new_doubleArray delete_doubleArray doubleArray_setitem
+    gsl_real gsl_imag gsl_parts
+    gsl_complex_eq
 );
+  # gsl_set_real gsl_set_imag gsl_set_complex gsl_set_complex_packed
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+### wrapper interface ###
 sub new {
     my ($class, @values) = @_;
     my $this = {};
@@ -48,12 +46,40 @@ sub new {
 }
 sub real {
     my ($self) = @_;
-    return doubleArray_getitem($self->{_complex}->{dat}, 0 );
+    gsl_real($self->{_complex}->{dat});
 }
 
 sub imag {
     my ($self) = @_;
-    return doubleArray_getitem($self->{_complex}->{dat}, 1 );
+    gsl_imag($self->{_complex}->{dat});
+}
+
+sub parts {
+    my ($self) = @_;
+    gsl_parts($self->{_complex}->{dat});
+}
+
+### end wrapper interface ###
+
+### some important macros that are in gsl_complex.h
+sub gsl_complex_eq {
+    my ($z,$w) = @_;
+    gsl_real($z) == gsl_real($w) && gsl_imag($z) == gsl_imag($w) ? 1 : 0;
+}
+
+sub gsl_real {
+    my $z = shift;
+    return doubleArray_getitem($z->{dat}, 0 );
+}
+
+sub gsl_imag {
+    my $z = shift;
+    return doubleArray_getitem($z->{dat}, 1 );
+}
+
+sub gsl_parts {
+    my $z = shift;
+    return (gsl_real($z), gsl_imag($z));
 }
 
 __END__

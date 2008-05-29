@@ -31,9 +31,13 @@
     gsl_complex_arcsech gsl_complex_arccsch gsl_complex_arctanh gsl_complex_arctanh_real 
     gsl_complex_arccoth new_doubleArray delete_doubleArray doubleArray_setitem
     gsl_real gsl_imag gsl_parts
-    gsl_complex_eq
+    gsl_complex_eq gsl_set_real gsl_set_imag
+    $GSL_COMPLEX_ONE $GSL_COMPLEX_ZERO $GSL_COMPLEX_NEGONE
 );
-  # gsl_set_real gsl_set_imag gsl_set_complex gsl_set_complex_packed
+# macros to implement
+# gsl_set_complex gsl_set_complex_packed
+our ($GSL_COMPLEX_ONE, $GSL_COMPLEX_ZERO, $GSL_COMPLEX_NEGONE) = map { gsl_complex_rect($_, 0) } qw(1 0 -1); 
+
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -65,6 +69,16 @@ sub parts {
 sub gsl_complex_eq {
     my ($z,$w) = @_;
     gsl_real($z) == gsl_real($w) && gsl_imag($z) == gsl_imag($w) ? 1 : 0;
+}
+
+sub gsl_set_real {
+    my ($z,$r) = @_;
+    doubleArray_setitem($z->{dat}, 0, $r);
+}
+
+sub gsl_set_imag {
+    my ($z,$i) = @_;
+    doubleArray_setitem($z->{dat}, 1, $i);
 }
 
 sub gsl_real {

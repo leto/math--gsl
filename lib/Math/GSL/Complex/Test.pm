@@ -3,7 +3,6 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/is_similar/;
-use Math::GSL::Const qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -194,6 +193,20 @@ sub GSL_COMPLEX_POW : Tests {
 
     ok( is_similar(gsl_real($z), 3**2 - 4**2), 'gsl_complex_pow');
     ok( is_similar(gsl_imag($z), 2*3*4), 'gsl_complex_pow'); 
+}
+
+sub GSL_COMPLEX_SET_REAL : Test: { 
+    my $x = gsl_complex_rect(3,4);
+    gsl_set_real($x, 5);
+    ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_real');
+    ok( is_similar(gsl_imag($x), 4), 'gsl_complex_set_real');
+}
+
+sub GSL_COMPLEX_SET_IMAG : Test: { 
+    my $x = gsl_complex_rect(3,4);
+    gsl_set_imag($x, 5);
+    ok( is_similar(gsl_imag($x), 5), 'gsl_complex_set_imag');
+    ok( is_similar(gsl_real($x), 3), 'gsl_complex_set_imag');
 }
 
 42;

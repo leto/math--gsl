@@ -18,6 +18,8 @@
     $1[i] = GSL_NAN;
 }
 %apply double const [] { double *data };
+/*
 %typemap(freearg) double const [] {
     free($1);
 }
+*/

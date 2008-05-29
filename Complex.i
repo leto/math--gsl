@@ -31,7 +31,7 @@
     gsl_complex_arcsech gsl_complex_arccsch gsl_complex_arctanh gsl_complex_arctanh_real 
     gsl_complex_arccoth new_doubleArray delete_doubleArray doubleArray_setitem
     gsl_real gsl_imag gsl_parts
-    gsl_complex_eq gsl_set_real gsl_set_imag
+    gsl_complex_eq gsl_set_real gsl_set_imag gsl_set_complex
     $GSL_COMPLEX_ONE $GSL_COMPLEX_ZERO $GSL_COMPLEX_NEGONE
 );
 # macros to implement
@@ -94,6 +94,12 @@ sub gsl_imag {
 sub gsl_parts {
     my $z = shift;
     return (gsl_real($z), gsl_imag($z));
+}
+
+sub gsl_set_complex {
+    my ($z, $r, $i) = @_;
+    gsl_set_real($z, $r);
+    gsl_set_imag($z, $i);
 }
 
 __END__

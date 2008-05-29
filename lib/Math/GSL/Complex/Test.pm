@@ -209,4 +209,10 @@ sub GSL_COMPLEX_SET_IMAG : Test: {
     ok( is_similar(gsl_real($x), 3), 'gsl_complex_set_imag');
 }
 
+sub GSL_COMPLEX_SET_COMPLEX : Test: {
+    my $x = gsl_complex_rect(3,4);
+    gsl_set_complex($x, 5, 3);
+    ok( is_similar(gsl_imag($x), 3), 'gsl_complex_set_complex');
+    ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_complex');
+}
 42;

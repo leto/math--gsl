@@ -195,24 +195,66 @@ sub GSL_COMPLEX_POW : Tests {
     ok( is_similar(gsl_imag($z), 2*3*4), 'gsl_complex_pow'); 
 }
 
-sub GSL_COMPLEX_SET_REAL : Test: { 
+sub GSL_COMPLEX_SET_REAL : Tests { 
     my $x = gsl_complex_rect(3,4);
     gsl_set_real($x, 5);
     ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_real');
     ok( is_similar(gsl_imag($x), 4), 'gsl_complex_set_real');
 }
 
-sub GSL_COMPLEX_SET_IMAG : Test: { 
+sub GSL_COMPLEX_SET_IMAG : Tests { 
     my $x = gsl_complex_rect(3,4);
     gsl_set_imag($x, 5);
     ok( is_similar(gsl_imag($x), 5), 'gsl_complex_set_imag');
     ok( is_similar(gsl_real($x), 3), 'gsl_complex_set_imag');
 }
 
-sub GSL_COMPLEX_SET_COMPLEX : Test: {
+sub GSL_COMPLEX_SET_COMPLEX : Tests {
     my $x = gsl_complex_rect(3,4);
     gsl_set_complex($x, 5, 3);
     ok( is_similar(gsl_imag($x), 3), 'gsl_complex_set_complex');
     ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_complex');
+}
+
+sub GSL_COMPLEX_SIN : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_sin($x);
+    ok( is_similar(gsl_real($z), 0.53092108624852), 'gsl_complex_sin');
+    ok( is_similar(gsl_imag($z), -3.59056458998578), 'gsl_complex_sin');
+}
+
+sub GSL_COMPLEX_COS : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_cos($x);
+    ok( is_similar(gsl_real($z), -3.72454550491532), 'gsl_complex_cos');
+    ok( is_similar(gsl_imag($z), -0.511822569987385), 'gsl_complex_cos');
+}
+
+sub GSL_COMPLEX_TAN : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_tan($x);
+    ok( is_similar(gsl_real($z), -0.0098843750383225), 'gsl_complex_tan');
+    ok( is_similar(gsl_imag($z), 0.965385879022133), 'gsl_complex_tan');
+}
+
+sub GSL_COMPLEX_SEC : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_sec($x);
+    ok( is_similar(gsl_real($z), -0.263512975158389), 'gsl_complex_sec');
+    ok( is_similar(gsl_imag($z), 0.0362116365587685), 'gsl_complex_sec');
+}
+
+sub GSL_COMPLEX_CSC : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_csc($x);
+    ok( is_similar(gsl_real($z), 0.0403005788568915), 'gsl_complex_csc');
+    ok( is_similar(gsl_imag($z), 0.27254866146294), 'gsl_complex_csc');
+}
+
+sub GSL_COMPLEX_COT : Tests {
+    my $x = gsl_complex_rect(3,2);
+    my $z = gsl_complex_cot($x);
+    ok( is_similar(gsl_real($z), -0.0106047834703371), 'gsl_complex_cot');
+    ok( is_similar(gsl_imag($z), -1.035746637765), 'gsl_complex_cot');
 }
 42;

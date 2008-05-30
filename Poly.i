@@ -19,16 +19,62 @@
   sv_setnv(tempsv, *$1);
 }
 
+%typemap(in) gsl_complex const [] {
+    AV *tempav;
+    I32 len;
+    int i, magic, stuff;
+    double x,y;
+    gsl_complex z;
+    SV **elem, **helem, **real, **imag;
+    HV *hash, *htmp;
+    SV *svtmp, tmp;
+    double result[2];
 
+    printf("gsl_complex typemap\n");
+    if (!SvROK($input))
+        croak("Math::GSL : $input is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $input is not an array ref!");
+       
+    z      = gsl_complex_rect(0,0);
+    tempav = (AV*)SvRV($input);
+    len    = av_len(tempav);
+    $1 = (gsl_complex *) malloc((len+1)*sizeof(gsl_complex));
+    for (i = 0; i <= len; i++) {
+        elem  = av_fetch(tempav, i, 0);
+
+        hash = (HV*) SvRV(*elem);
+        helem = hv_fetch(hash, "dat", 3, 0);
+        magic = mg_get(*helem);
+        if ( magic != 0)
+            croak("FETCH magic failed!\n");
+
+        printf("magic = %d\n", magic);
+        if( *helem == NULL)
+            croak("Structure does not contain 'dat' element\n");
+        printf("helem is:\n");
+        Perl_sv_dump(*helem);
+        if( i == 0){
+            svtmp = (SV*)SvRV(*helem);
+            Perl_sv_dump(svtmp);
+        }
+        printf("re z = %f\n", GSL_REAL(z) );
+        printf("im z = %f\n", GSL_IMAG(z) );
+        $1[i] = z;
+    }
+    //$1[i] = GSL_NAN;
+}
 %{
     #include "/usr/local/include/gsl/gsl_nan.h"
     #include "/usr/local/include/gsl/gsl_poly.h"
     #include "/usr/local/include/gsl/gsl_complex.h"
+    #include "/usr/local/include/gsl/gsl_complex_math.h"
 %}
 
 %include "/usr/local/include/gsl/gsl_nan.h"
 %include "/usr/local/include/gsl/gsl_poly.h"
 %include "/usr/local/include/gsl/gsl_complex.h"
+%include "/usr/local/include/gsl/gsl_complex_math.h"
 
 
 %perlcode %{

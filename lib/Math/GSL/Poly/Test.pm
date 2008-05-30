@@ -32,5 +32,12 @@ sub GSL_POLY_COMPLEX_EVAL : Tests {
 
     is_deeply( [ gsl_parts($got) ] , [ 9, 4 ] );
 }
-
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests { 
+    my $z    = gsl_complex_rect(2,1);                      # 2+i
+    my $c1   = gsl_complex_rect(3,2);                      # 3+2i
+    my $c2   = gsl_complex_rect(0,5);                      # 5i
+    print "foo\n";
+    my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
+    print Dumper [ $got ];
+}
 42;

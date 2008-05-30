@@ -28,10 +28,11 @@ sub GSL_POLY_SOLVE_QUADRATIC : Tests {
 
 sub GSL_POLY_COMPLEX_EVAL : Tests {
     my $z   = gsl_complex_rect(2,1);                      # 2+i
-    my $got = gsl_poly_complex_eval(  [ 1, 4 ], 2, $z);   # 1 + 4 x
+    my $got = gsl_poly_complex_eval( [ 1, 4 ], 2, $z);   # 1 + 4 x
 
     is_deeply( [ gsl_parts($got) ] , [ 9, 4 ] );
 }
+
 sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests { 
     my $z    = gsl_complex_rect(2,1);                      # 2+i
     my $c1   = gsl_complex_rect(3,2);                      # 3+2i
@@ -40,4 +41,29 @@ sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests {
     my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
     print Dumper [ $got ];
 }
+
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests {
+    my $z   = gsl_complex_rect(0.674,-1.423);
+    my $w   = gsl_complex_rect(-1.44, 9.55);
+    $y = gsl_complex_poly_complex_eval ($z, 1, $w);
+
+    is_deeply( [ gsl_parts($got) ] , [0.674,-1.423] );
+}
+
+sub GSL_POLY_SOLVE_CUBIC : Tests {
+    my ($x0, $x1, $x2) = (0, 0, 0);
+    my ($num_roots) = gsl_poly_solve_cubic (-51.0, 867.0, -4913.0, \$x0, \$x1, \$x2);
+
+    is_deeply ( [ $num_roots, $x0, $x1, $x2], [ 3, 17.0, 17.0, 17.0] );
+}
+
+sub GSL_POLY_COMPLEX_SOLVE_QUADRATIC : Tests {
+    my $z0 = gsl_complex_rect(2,3);
+    my $z1 = gsl_complex_rect(3,2);
+    print Dumper [ $z0 ];
+    my ($num_roots) = gsl_poly_complex_solve_quadratic (4.0, -20.0, 26.0, \$z0, \$z1);
+
+    is_deeply ( [ $num_roots, gsl_real($z0), gsl_complex($z0), gsl_real($z1), gsl_complex($z1)], [ 2, 2.5, -0.5, 2.5, 0.5] );
+}
+
 42;

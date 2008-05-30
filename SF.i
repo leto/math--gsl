@@ -877,6 +877,11 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/na
 
 =head1 EXAMPLES
 
+use Math::GSL::SF qw/:all/;
+$x = gsl_sf_dilog(0.1);
+print "gsl_sf_dilog(0.1) = " . $x . "\n";
+
+An example using Math::GSL::SF and gnuplot is in the examples/sf folder of the source code.
 
 =head1 AUTHOR
 

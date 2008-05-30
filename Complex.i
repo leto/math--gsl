@@ -132,6 +132,8 @@ gsl_complex_cosh gsl_complex_sech gsl_complex_csch gsl_complex_tanh
 gsl_complex_coth gsl_complex_arcsinh gsl_complex_arccosh gsl_complex_arccosh_real 
 gsl_complex_arcsech gsl_complex_arccsch gsl_complex_arctanh gsl_complex_arctanh_real 
 gsl_complex_arccoth new_doubleArray delete_doubleArray doubleArray_setitem
+gsl_real gsl_imag gsl_parts
+gsl_complex_eq gsl_set_real gsl_set_imag gsl_set_complex
 
 You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
 
@@ -140,6 +142,16 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 
 =head1 EXAMPLES
 
+use Math::GSL::Complex qw/:all/;
+$x = gsl_complex_rect(6,4);
+$z = gsl_complex_conjugate($x);
+print "Real = " gsl_real($z) . "\n Imag = " . gsl_imag($z);
+
+
+use Math::GSL::Complex qw/:all/;
+$x = gsl_complex_rect(5,3);
+$z = gsl_complex_mul_real($x, 2);
+print "Real = " gsl_real($z) . "\n Imag = " . gsl_imag($z);
 
 =head1 AUTHOR
 

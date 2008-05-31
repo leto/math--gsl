@@ -1,7 +1,7 @@
 package Math::GSL::Poly::Test;
 use base q{Test::Class};
 use Test::More;
-use Math::GSL qw/is_similar/;
+use Math::GSL qw/:all/;
 use Math::GSL::Poly qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Data::Dumper;
@@ -28,24 +28,27 @@ sub GSL_POLY_SOLVE_QUADRATIC : Tests {
 
 sub GSL_POLY_COMPLEX_EVAL : Tests {
     my $z   = gsl_complex_rect(2,1);                      # 2+i
-    my $got = gsl_poly_complex_eval( [ 1, 4 ], 2, $z);   # 1 + 4 x
+    my $got = gsl_poly_complex_eval( [ 1, 4 ], 2, $z);    # 1 + 4 x
 
     is_deeply( [ gsl_parts($got) ] , [ 9, 4 ] );
 }
 
 sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests { 
+    local $TODO = "typemap for array of gsl_complex objects is needed";
     my $z    = gsl_complex_rect(2,1);                      # 2+i
     my $c1   = gsl_complex_rect(3,2);                      # 3+2i
     my $c2   = gsl_complex_rect(0,5);                      # 5i
+
     my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
-    is_deeply( [ gsl_parts($got) ], [ 4, 16 ], 'gsl_complex_poly_eval' );
+    is_deeply( [ gsl_parts($got) ], [ 4, 16 ],'gsl_complex_poly_eval' );
 }
 
 sub GSL_COMPLEX_POLY_COMPLEX_EVAL2 : Tests {
+    local $TODO = "typemap for array of gsl_complex objects is needed";
     my $z   = gsl_complex_rect(0.674,-1.423);
     my $w   = gsl_complex_rect(-1.44, 9.55);
-    my $got = gsl_complex_poly_complex_eval ([ $z ], 1, $w);
 
+    my $got = gsl_complex_poly_complex_eval ([ $z ], 1, $w);
     is_deeply( [ gsl_parts($got) ] , [0.674,-1.423], 'gsl_complex_poly_eval2' );
 }
 
@@ -59,10 +62,13 @@ sub GSL_POLY_SOLVE_CUBIC : Tests {
 sub GSL_POLY_COMPLEX_SOLVE_QUADRATIC : Tests {
     my $z0 = gsl_complex_rect(2,3);
     my $z1 = gsl_complex_rect(3,2);
-    print Dumper [ $z0 ];
-    my ($num_roots) = gsl_poly_complex_solve_quadratic (4.0, -20.0, 26.0, \$z0, \$z1);
 
-    is_deeply ( [ $num_roots, gsl_real($z0), gsl_complex($z0), gsl_real($z1), gsl_complex($z1)], [ 2, 2.5, -0.5, 2.5, 0.5] );
+    my ($num_roots) = gsl_poly_complex_solve_quadratic ( 4.0, -20.0, 26.0 , $z0, $z1);
+
+    ok_similar ([ $num_roots, gsl_parts($z0), gsl_parts($z1) ], 
+                [ 2,     2.5, -0.5, 2.5, 0.5                 ]
+
+    );
 }
 
 42;

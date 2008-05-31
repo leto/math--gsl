@@ -2,7 +2,7 @@ package Math::GSL::Complex::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::Complex qw/:all/;
-use Math::GSL qw/is_similar/;
+use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -22,7 +22,7 @@ sub GSL_COMPLEX_NEW : Test {
 
 sub GSL_COMPLEX_RECT : Tests {
     my $x = gsl_complex_rect(5,3);
-    is_deeply( [ gsl_parts($x) ], [ 5, 3 ], 'gs_complex_rect' );
+    ok_similar( [ gsl_parts($x) ], [ 5, 3 ], 'gsl_complex_rect' );
 }
 
 sub GSL_COMPLEX_POLAR : Tests {
@@ -58,7 +58,7 @@ sub GSL_COMPLEX_ADD : Tests {
     my $y = gsl_complex_rect(1,2);
 
     my $z = gsl_complex_add($x, $y);
-    is_deeply( [ gsl_parts($z) ], [ 6, 5 ] );
+    ok_similar( [ gsl_parts($z) ], [ 6, 5 ], 'gsl_complex_add' );
 }
 
 sub GSL_COMPLEX_SUB : Tests {
@@ -66,7 +66,7 @@ sub GSL_COMPLEX_SUB : Tests {
     my $y = gsl_complex_rect(1,2);
 
     my $z = gsl_complex_sub($x, $y);
-    is_deeply( [ gsl_parts($z) ], [ 4, 1 ] );
+    ok_similar( [ gsl_parts($z) ], [ 4, 1 ], 'gsl_complex_sub' );
 }
 
 sub GSL_COMPLEX_MUL : Tests {
@@ -74,7 +74,7 @@ sub GSL_COMPLEX_MUL : Tests {
     my $y = gsl_complex_rect(1,2);
 
     my $z = gsl_complex_mul($x, $y);
-    is_deeply( [ gsl_parts($z) ], [ -1, 13 ] );
+    ok_similar( [ gsl_parts($z) ], [ -1, 13 ], 'gsl_complex_mul' );
 }
 
 sub GSL_COMPLEX_DIV : Tests {
@@ -82,7 +82,7 @@ sub GSL_COMPLEX_DIV : Tests {
     my $y = gsl_complex_rect(2,1);
 
     my $z = gsl_complex_div($x, $y);
-    is_deeply( [ gsl_parts($z) ], [ 13/5, 6/5 ] );
+    ok_similar( [ gsl_parts($z) ], [ 13/5, 6/5 ], 'gsl_complex_div' );
 }
 sub GSL_COMPLEX_EQ : Tests {
     my $x = gsl_complex_rect(4,5);
@@ -137,22 +137,21 @@ sub GSL_COMPLEX_MUL_IMAG : Tests {
     my $x = gsl_complex_rect(6,3);
 
     my $z = gsl_complex_mul_imag($x, 2);
-    is_deeply( [ gsl_parts($z) ], [ -6, 12 ] );
+    ok_similar( [ gsl_parts($z) ], [ -6, 12 ], 'gsl_complex_mul_imag' );
 }
 
 sub GSL_COMPLEX_DIV_IMAG : Tests {
     my $x = gsl_complex_rect(6,4);
 
     my $z = gsl_complex_div_imag($x, 2); 
-    is_deeply( [ gsl_parts($z) ], [ 2, -3 ] );
+    ok_similar( [ gsl_parts($z) ], [ 2, -3 ], 'gsl_complex_div_imag' );
 }
 
 sub GSL_COMPLEX_CONJUGATE : Tests {
     my $x = gsl_complex_rect(6,4);
 
     my $z = gsl_complex_conjugate($x);
-    ok( gsl_real($z) == 6, 'gsl_complex_conjugate');
-    ok( gsl_imag($z) == -4, 'ggsl_complex_conjugat');
+    ok_similar( [ gsl_parts($z) ], [6, -4], 'gsl_complex_conjugate');
 }
 
 
@@ -160,18 +159,14 @@ sub GSL_COMPLEX_NEGATIVE : Tests {
     my $x = gsl_complex_rect(6,4);
 
     my $z = gsl_complex_negative($x);
-    ok( gsl_real($z) == -6, 'gsl_complex_negative');
-    ok( gsl_imag($z) == -4, 'gsl_complex_negative');
+    ok_similar( [ gsl_parts($z) ], [-6, -4], 'gsl_complex_negative');
 }
 
 sub GSL_COMPLEX_SQRT : Tests {
     my $x = gsl_complex_rect(-7,24);
 
     my $z = gsl_complex_sqrt($x);
-    ok( is_similar( [ gsl_parts($z)  ], 
-                    [ 3  ,     4     ], 
-                  ),'gsl_complex_sqrt'  
-    );
+    ok_similar( [ gsl_parts($z)  ], [ 3  , 4 ] ,'gsl_complex_sqrt'  );
 }
 
 sub GSL_COMPLEX_SQRT_REAL : Tests {
@@ -186,77 +181,85 @@ sub GSL_COMPLEX_POW : Tests {
     my $y = gsl_complex_rect(2,0);
     my $z = gsl_complex_pow($x, $y);
 
-    my ($real, $imag)  = gsl_parts($z);
-    ok( is_similar($real, -1), 'gsl_complex_pow' );
-    ok( is_similar($imag, 0),  'gsl_complex_pow' );
+    ok_similar( [ gsl_parts($z) ], [-1, 0 ], 'gsl_complex_pow' );
 
     $x = gsl_complex_rect(3,4);
     $z = gsl_complex_pow($x, $y);
 
-    ok( is_similar(gsl_real($z), 3**2 - 4**2), 'gsl_complex_pow');
-    ok( is_similar(gsl_imag($z), 2*3*4), 'gsl_complex_pow'); 
+    ok_similar( [gsl_parts($z) ], [ 3**2 - 4**2, 2*3*4 ], 'gsl_complex_pow' );
 }
 
 sub GSL_COMPLEX_SET_REAL : Tests { 
     my $x = gsl_complex_rect(3,4);
     gsl_set_real($x, 5);
-    ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_real');
-    ok( is_similar(gsl_imag($x), 4), 'gsl_complex_set_real');
+    ok_similar(  [ gsl_parts($x) ], [ 5, 4 ], 'gsl_complex_set_real');
 }
 
 sub GSL_COMPLEX_SET_IMAG : Tests { 
     my $x = gsl_complex_rect(3,4);
     gsl_set_imag($x, 5);
-    ok( is_similar(gsl_imag($x), 5), 'gsl_complex_set_imag');
-    ok( is_similar(gsl_real($x), 3), 'gsl_complex_set_imag');
+    ok_similar(  [ gsl_parts($x) ], [ 3, 5 ], 'gsl_complex_set_imag');
 }
 
 sub GSL_COMPLEX_SET_COMPLEX : Tests {
     my $x = gsl_complex_rect(3,4);
     gsl_set_complex($x, 5, 3);
-    ok( is_similar(gsl_imag($x), 3), 'gsl_complex_set_complex');
-    ok( is_similar(gsl_real($x), 5), 'gsl_complex_set_complex');
+    ok_similar(  [ gsl_parts($x) ], [ 5, 3 ], 'gsl_complex_set_complex');
 }
 
 sub GSL_COMPLEX_SIN : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_sin($x);
-    ok( is_similar(gsl_real($z), 0.53092108624852), 'gsl_complex_sin');
-    ok( is_similar(gsl_imag($z), -3.59056458998578), 'gsl_complex_sin');
+
+    ok_similar( [ gsl_parts($z)                       ], 
+                [ 0.53092108624852, -3.59056458998578 ], 
+                'gsl_complex_sin'
+    );
 }
 
 sub GSL_COMPLEX_COS : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_cos($x);
-    ok( is_similar(gsl_real($z), -3.72454550491532), 'gsl_complex_cos');
-    ok( is_similar(gsl_imag($z), -0.511822569987385), 'gsl_complex_cos');
+    ok_similar( [ gsl_parts($z)                       ], 
+                [ -3.72454550491532, -0.511822569987385],
+                'gsl_complex_cos'
+    );
 }
 
 sub GSL_COMPLEX_TAN : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_tan($x);
-    ok( is_similar(gsl_real($z), -0.0098843750383225), 'gsl_complex_tan');
-    ok( is_similar(gsl_imag($z), 0.965385879022133), 'gsl_complex_tan');
+    ok_similar( [ gsl_parts($z)                       ], 
+                [ -0.0098843750383225, 0.965385879022133 ], 
+                'gsl_complex_tan'
+    );
 }
 
 sub GSL_COMPLEX_SEC : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_sec($x);
-    ok( is_similar(gsl_real($z), -0.263512975158389), 'gsl_complex_sec');
-    ok( is_similar(gsl_imag($z), 0.0362116365587685), 'gsl_complex_sec');
+    ok_similar( [ gsl_parts($z)                          ], 
+                [ -0.263512975158389, 0.0362116365587685 ],
+                'gsl_complex_sec'
+    );
 }
 
 sub GSL_COMPLEX_CSC : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_csc($x);
-    ok( is_similar(gsl_real($z), 0.0403005788568915), 'gsl_complex_csc');
-    ok( is_similar(gsl_imag($z), 0.27254866146294), 'gsl_complex_csc');
+    ok_similar( [ gsl_parts($z)                       ], 
+                [ 0.0403005788568915, 0.27254866146294],
+                'gsl_complex_csc'
+    );
 }
 
 sub GSL_COMPLEX_COT : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_cot($x);
-    ok( is_similar(gsl_real($z), -0.0106047834703371), 'gsl_complex_cot');
-    ok( is_similar(gsl_imag($z), -1.035746637765), 'gsl_complex_cot');
+    ok_similar( [ gsl_parts($z)                       ], 
+                [ -0.0106047834703371, -1.035746637765],
+                'gsl_complex_cot'
+    );
 }
+
 42;

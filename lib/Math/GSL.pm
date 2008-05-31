@@ -11,7 +11,7 @@ require DynaLoader;
 require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
-our @EXPORT_OK = qw( is_similar $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar is_similar $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
@@ -164,6 +164,11 @@ sub is_similar {
     } else {
         abs($x-$y) <= $eps ? return 1 : return 0;
     }
+}
+
+sub ok_similar {
+    my ($x,$y, $msg, $eps) = @_;
+    ok(is_similar($x,$y,$eps), $msg);
 }
 
 sub is_valid_double

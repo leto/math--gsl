@@ -37,17 +37,16 @@ sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests {
     my $z    = gsl_complex_rect(2,1);                      # 2+i
     my $c1   = gsl_complex_rect(3,2);                      # 3+2i
     my $c2   = gsl_complex_rect(0,5);                      # 5i
-    print "foo\n";
     my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
-    print Dumper [ $got ];
+    is_deeply( [ gsl_parts($got) ], [ 4, 16 ], 'gsl_complex_poly_eval' );
 }
 
-sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests {
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL2 : Tests {
     my $z   = gsl_complex_rect(0.674,-1.423);
     my $w   = gsl_complex_rect(-1.44, 9.55);
-    $y = gsl_complex_poly_complex_eval ($z, 1, $w);
+    my $got = gsl_complex_poly_complex_eval ([ $z ], 1, $w);
 
-    is_deeply( [ gsl_parts($got) ] , [0.674,-1.423] );
+    is_deeply( [ gsl_parts($got) ] , [0.674,-1.423], 'gsl_complex_poly_eval2' );
 }
 
 sub GSL_POLY_SOLVE_CUBIC : Tests {

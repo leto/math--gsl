@@ -145,7 +145,25 @@ sub verify_results
 sub is_similar {
     my ($x,$y, $eps) = @_;
     $eps ||= 1e-8;
-    abs($x-$y) < $eps ? 1 : 0;
+    if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+        if ( $#$x != $#$y ){
+            warn "is_similar(): argument of different length!";
+            return 0;
+        } else {
+            map { 
+                    my $delta = abs($x->[$_] - $y->[$_]);
+                    if($delta > $eps){
+                        warn "\n\tElements start differing at index $_, delta = $delta\n";
+                        warn qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
+                        warn qq{\t\t\$y->[$_] = } . $y->[$_] . "\n";
+                        return 0;
+                    }
+                } (0..$#$x);
+            return 1;
+        }
+    } else {
+        abs($x-$y) <= $eps ? return 1 : return 0;
+    }
 }
 
 sub is_valid_double

@@ -168,8 +168,10 @@ sub GSL_COMPLEX_SQRT : Tests {
     my $x = gsl_complex_rect(-7,24);
 
     my $z = gsl_complex_sqrt($x);
-    ok( is_similar(gsl_real($z),3), 'gsl_complex_sqrt');
-    ok( is_similar(gsl_imag($z),4), 'gsl_complex_sqrt');
+    ok( is_similar( [ gsl_parts($z)  ], 
+                    [ 3  ,     4     ], 
+                  ),'gsl_complex_sqrt'  
+    );
 }
 
 sub GSL_COMPLEX_SQRT_REAL : Tests {

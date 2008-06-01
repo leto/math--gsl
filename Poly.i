@@ -145,7 +145,7 @@ print "x²+6x+9 contains $num_roots roots which are $x0 and $x1. \n";
  
 =head1 AUTHOR
 
-Jonathan Leto <jaleto@gmail.com> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 

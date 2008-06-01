@@ -885,7 +885,7 @@ An example using Math::GSL::SF and gnuplot is in the examples/sf folder of the s
 
 =head1 AUTHOR
 
-Jonathan Leto <jaleto@gmail.com> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 

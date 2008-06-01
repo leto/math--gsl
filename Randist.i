@@ -233,7 +233,7 @@ Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is
 
 =head1 AUTHOR
 
-Jonathan Leto <jaleto@gmail.com> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 

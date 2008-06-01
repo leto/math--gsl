@@ -1,6 +1,6 @@
 BLAS.i
 Block.i
-Bspline.i
+BSpline.i
 Build.PL
 CBLAS.i
 CDF.i
@@ -48,7 +48,7 @@ Monte.i
 Multifit.i
 Multimin.i
 Multiroots.i
-Ntuple.i
+NTuple.i
 ODEIV.i
 Permutation.i
 Permute.i
@@ -95,11 +95,17 @@ Version.i
 Wavelet.i
 subsystems.txt
 typemap_examples.i
+lib/Math/GSL/Sort/Test.pm
 lib/Math/GSL/Min/Test.pm
 lib/Math/GSL/Wavelet/Test.pm
 lib/Math/GSL/Wavelet2D/Test.pm
 t/Function.t
+t/Sort.t
 t/Min.t
 t/Wavelet.t
 Wavelet2D.i
 GSL.i
+bin/create_export_code
+examplex/sf/bessel
+examples/sf/plot_bessel.gnuplot
+examplex/sf/README

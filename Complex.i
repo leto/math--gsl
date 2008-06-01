@@ -116,24 +116,138 @@ use Math::GSL::Complex qw/:all/;
 =head1 DESCRIPTION
 
 Here is a list of all the functions included in this module :
-gsl_complex_arg gsl_complex_abs gsl_complex_rect gsl_complex_polar doubleArray_getitem 
-gsl_complex_rect gsl_complex_polar gsl_complex_arg gsl_complex_abs gsl_complex_abs2 
-gsl_complex_logabs gsl_complex_add gsl_complex_sub gsl_complex_mul gsl_complex_div 
-gsl_complex_add_real gsl_complex_sub_real gsl_complex_mul_real gsl_complex_div_real 
-gsl_complex_add_imag gsl_complex_sub_imag gsl_complex_mul_imag gsl_complex_div_imag 
-gsl_complex_conjugate gsl_complex_inverse gsl_complex_negative gsl_complex_sqrt 
-gsl_complex_sqrt_real gsl_complex_pow gsl_complex_pow_real gsl_complex_exp 
-gsl_complex_log gsl_complex_log10 gsl_complex_log_b gsl_complex_sin 
-gsl_complex_cos gsl_complex_sec gsl_complex_csc gsl_complex_tan 
-gsl_complex_cot gsl_complex_arcsin gsl_complex_arcsin_real gsl_complex_arccos 
-gsl_complex_arccos_real gsl_complex_arcsec gsl_complex_arcsec_real gsl_complex_arccsc 
-gsl_complex_arccsc_real gsl_complex_arctan gsl_complex_arccot gsl_complex_sinh 
-gsl_complex_cosh gsl_complex_sech gsl_complex_csch gsl_complex_tanh 
-gsl_complex_coth gsl_complex_arcsinh gsl_complex_arccosh gsl_complex_arccosh_real 
-gsl_complex_arcsech gsl_complex_arccsch gsl_complex_arctanh gsl_complex_arctanh_real 
-gsl_complex_arccoth new_doubleArray delete_doubleArray doubleArray_setitem
-gsl_real gsl_imag gsl_parts
-gsl_complex_eq gsl_set_real gsl_set_imag gsl_set_complex
+
+    gsl_complex_arg 
+
+    gsl_complex_abs 
+
+    gsl_complex_rect($x,$y) - create a complex number in cartesian form $x + $y*I
+
+    gsl_complex_polar($r,$theta) - create a complex number in polar form $r*exp(I*$theta) 
+
+    gsl_complex_abs2 
+
+    gsl_complex_logabs 
+
+    gsl_complex_add 
+
+    gsl_complex_sub 
+
+    gsl_complex_mul 
+
+    gsl_complex_div 
+
+    gsl_complex_add_real 
+
+    gsl_complex_sub_real 
+
+    gsl_complex_mul_real 
+
+    gsl_complex_div_real 
+
+    gsl_complex_add_imag 
+
+    gsl_complex_sub_imag 
+
+    gsl_complex_mul_imag 
+
+    gsl_complex_div_imag 
+
+    gsl_complex_conjugate 
+
+    gsl_complex_inverse 
+
+    gsl_complex_negative 
+
+    gsl_complex_sqrt 
+
+    gsl_complex_sqrt_real 
+
+    gsl_complex_pow 
+
+    gsl_complex_pow_real 
+
+    gsl_complex_exp 
+
+    gsl_complex_log 
+
+    gsl_complex_log10 
+
+    gsl_complex_log_b 
+
+    gsl_complex_sin 
+
+    gsl_complex_cos 
+
+    gsl_complex_sec 
+
+    gsl_complex_csc 
+
+    gsl_complex_tan 
+
+    gsl_complex_cot 
+
+    gsl_complex_arcsin 
+
+    gsl_complex_arcsin_real 
+
+    gsl_complex_arccos 
+
+    gsl_complex_arccos_real 
+
+    gsl_complex_arcsec 
+
+    gsl_complex_arcsec_real 
+
+    gsl_complex_arccsc 
+
+    gsl_complex_arccsc_real 
+
+    gsl_complex_arctan 
+
+    gsl_complex_arccot 
+
+    gsl_complex_sinh 
+
+    gsl_complex_cosh 
+
+    gsl_complex_sech 
+
+    gsl_complex_csch 
+
+    gsl_complex_tanh 
+
+    gsl_complex_coth 
+
+    gsl_complex_arcsinh 
+
+    gsl_complex_arccosh 
+
+    gsl_complex_arccosh_real 
+
+    gsl_complex_arcsech 
+
+    gsl_complex_arccsch 
+
+    gsl_complex_arctanh 
+
+    gsl_complex_arctanh_real 
+
+    gsl_complex_arccoth 
+
+    gsl_real($z) - return the real part of $z 
+
+    gsl_imag($z) - return the imaginary part of $z 
+
+    gsl_parts($z) - return a list of the real and imaginary parts of $z
+
+    gsl_complex_eq 
+
+    gsl_set_real($z, $x) - sets the real part of $z to $x
+
+    gsl_set_imag($z, $y) - sets the imaginary part of $z to $y
+
+    gsl_set_complex
 
 You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
 
@@ -142,20 +256,26 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 
 =head1 EXAMPLES
 
-use Math::GSL::Complex qw/:all/;
-$x = gsl_complex_rect(6,4);
-$z = gsl_complex_conjugate($x);
-print "Real = " gsl_real($z) . "\n Imag = " . gsl_imag($z);
+This code defines $z as 6 + 4*I, takes the complex conjugate of that number, then prints it out.
 
+    my $z = gsl_complex_rect(6,4);
+    my $y = gsl_complex_conjugate($z);
+    my ($real, $imag) = gsl_parts($y);
 
-use Math::GSL::Complex qw/:all/;
-$x = gsl_complex_rect(5,3);
-$z = gsl_complex_mul_real($x, 2);
-print "Real = " gsl_real($z) . "\n Imag = " . gsl_imag($z);
+    print "z = $real + $imag*I\n";
+
+This code defines $z as 5 + 3*I, multiplies it by 2 and then prints it out.
+
+    my $x = gsl_complex_rect(5,3);
+    my $z = gsl_complex_mul_real($x, 2);
+    my $real = gsl_real($z);
+    my $imag = gsl_real($z);
+    print "Re(\$z) = $real\n";
+
 
 =head1 AUTHOR
 
-Jonathan Leto <jaleto@gmail.com> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 

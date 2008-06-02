@@ -25,7 +25,7 @@ int fclose(FILE *);
 @EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_b gsl_vector_alloc_from_v
                  gsl_vector_free gsl_vector_view_array gsl_vector_view_array_w
-                 gsl_vector_const_view_a gsl_vector_subvector gsl_vector_subvector_wi 
+                 gsl_vector_const_view_a gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
                  gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
                  gsl_vector_set_basis gsl_vector_fread gsl_vector_fwrite gsl_vector_fscanf
@@ -104,11 +104,11 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_const_view_a
 
-    gsl_vector_subvector
+    gsl_vector_subvector - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
 
-    gsl_vector_subvector_wi
+    gsl_vector_subvector_wi 
 
-    gsl_vector_const_subvec
+    gsl_vector_subvector_with_stride($v, $offset, $stride, $size) - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position and with a $stride step between each element of $v
 
     gsl_vector_const_subvec
 
@@ -120,13 +120,13 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_const_ptr
 
-    gsl_vector_set_zero
+    gsl_vector_set_zero($v) - set all the elements of $v to 0
 
-    gsl_vector_set_all
+    gsl_vector_set_all($v, $x) - set all the elements of $v to $x
 
-    gsl_vector_set_basis
+    gsl_vector_set_basis($v, $i) - set all the elements of $v to 0 except for the $i-th element which is set to 1 and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_fread
+    gsl_vector_fread($file, $v)
 
     gsl_vector_fwrite
 
@@ -175,6 +175,14 @@ Here is a list of all the functions included in this module :
     gsl_vector_isnonneg
 
 You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
+
+
+Precision on the vector_view type : every modification you'll make on a vector_view will also modify the original vector. 
+For example, the following code will zero the even elements of the vector v of length n, while leaving the odd elements untouched :
+
+$v_even= gsl_vector_subvector_with_stride ($v, 0, 2, $size/2);
+gsl_vector_set_zero ($v_even->{vector});
+
 
 For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want

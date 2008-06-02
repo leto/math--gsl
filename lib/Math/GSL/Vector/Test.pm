@@ -130,5 +130,50 @@ sub GSL_VECTOR_SUBVECTOR : Tests {
     ok_similar( [gsl_vector_get($vec_sub->{vector}, 0), gsl_vector_get($vec_sub->{vector}, 1), gsl_vector_get($vec_sub->{vector}, 2)], [4, 9, 16]);
 }
 
+sub GSL_VECTOR_CALLOC : Tests {
+   my $vector = gsl_vector_calloc(5);
+   isa_ok($vector, 'Math::GSL::Vector');
+   
+   my @got = map { gsl_vector_get($vector, $_) } (0..4);
+   map { is($got[$_] , 0 ) } (0..4);
+}
+
+sub GSL_VECTOR_CALLOC_GET : Tests {
+   my $vector = gsl_vector_calloc(5);
+   isa_ok($vector, 'Math::GSL::Vector');
+   
+   local $TODO = 'get subroutine doesn\'t seem to like calloc ';
+   my @got = map { $vector->get($_) } (0..4);
+   map { is($got[$_] , 0 ) } (0..4);
+}
+
+sub GSL_VECTOR_SET_ALL : Tests {
+   my $self = shift;
+   gsl_vector_set_all($self->{vector}, 4);
+   map { is(gsl_vector_get($self->{vector} , $_ ), 4) } (0..4);
+}
+
+sub GSL_VECTOR_SET_ZERO : Tests {
+   my $self = shift;
+   gsl_vector_set_zero($self->{vector});
+   map { is(gsl_vector_get($self->{vector} , $_ ), 0) } (0..4);
+}
+
+sub GSL_VECTOR_SET_BASIS : Tests {
+   my $self = shift;
+   my $x = gsl_vector_set_basis($self->{vector}, 0);
+   is (gsl_vector_get($self->{vector} , 0 ), 1);
+   is ($x, 0, "output");
+   map { is(gsl_vector_get($self->{vector} , $_ ), 0) } (1..4);
+}
+
+sub GSL_VECTOR_SUBVECTOR_WITH_STRIDE : Tests {
+   my $self = shift;
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   my $sub_stride = gsl_vector_subvector_with_stride($self->{vector}, 0, 2, 3);
+   is(gsl_vector_get($sub_stride->{vector} , 0 ), 0, "first element");
+   is(gsl_vector_get($sub_stride->{vector} , 1 ), 4, "second element");
+   is(gsl_vector_get($sub_stride->{vector} , 2 ), 16, "third element");
+}
 
 1;

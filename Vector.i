@@ -24,7 +24,7 @@ int fclose(FILE *);
 
 @EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_b gsl_vector_alloc_from_v
-                 gsl_vector_free gsl_vector_view_array gsl_vector_view_array_w gsl_vector_const_view_a
+                 gsl_vector_free gsl_vector_view_array gsl_vector_view_array_w
                  gsl_vector_const_view_a gsl_vector_subvector gsl_vector_subvector_wi 
                  gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
@@ -73,4 +73,125 @@ sub set {
     return;
 }
 
+__END__
+
+=head1 NAME
+
+Math::GSL::Vector
+Functions concerning Vectors.
+
+=head1 SYPNOPSIS
+
+use Math::GSL::Vector qw/:all/;
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions included in this module :
+
+    gsl_vector_alloc($x) - create a vector of size $x
+
+    gsl_vector_calloc($x) - create a vector of size $x and initializes all the elements of the vector to zero
+
+    gsl_vector_alloc_from_b
+
+    gsl_vector_alloc_from_v
+
+    gsl_vector_free($v) - free a previously allocated vector $v
+
+    gsl_vector_view_array
+
+    gsl_vector_view_array_w
+
+    gsl_vector_const_view_a
+
+    gsl_vector_subvector
+
+    gsl_vector_subvector_wi
+
+    gsl_vector_const_subvec
+
+    gsl_vector_const_subvec
+
+    gsl_vector_get($v, $i) - return the $i-th element of a vector $v
+
+    gsl_vector_set($v, $i, $x) - return the vector $v with his $i-th element set to $x
+
+    gsl_vector_ptr
+
+    gsl_vector_const_ptr
+
+    gsl_vector_set_zero
+
+    gsl_vector_set_all
+
+    gsl_vector_set_basis
+
+    gsl_vector_fread
+
+    gsl_vector_fwrite
+
+    gsl_vector_fscanf
+
+    gsl_vector_fprintf
+
+    gsl_vector_memcpy
+
+    gsl_vector_reverse
+
+    gsl_vector_swap
+
+    gsl_vector_swap_element
+
+    gsl_vector_max
+
+    gsl_vector_min
+
+    gsl_vector_minmax
+
+    gsl_vector_max_index
+
+    gsl_vector_min_index
+
+    gsl_vector_minmax_index
+
+    gsl_vector_add
+
+    gsl_vector_sub
+
+    gsl_vector_mul
+
+    gsl_vector_div
+
+    gsl_vector_scale
+
+    gsl_vector_add_constant
+
+    gsl_vector_isnull
+
+    gsl_vector_ispos
+
+    gsl_vector_isneg
+
+    gsl_vector_isnonneg
+
+You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
+
+For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+=head1 EXAMPLES
+
+
+=head1 AUTHOR
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
 %}

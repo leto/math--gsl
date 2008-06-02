@@ -2,7 +2,7 @@ package Math::GSL::Vector::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::Vector qw/:all/;
-use Math::GSL qw/is_similar/;
+use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
 use strict;
@@ -120,6 +120,14 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
     is_deeply( [ map { gsl_vector_get($self->{vector}, $_) } (0..4) ],
                [ map { $_ ** 2 } (0..4) ],
              );
+}
+
+sub GSL_VECTOR_SUBVECTOR : Tests {
+    my $self = shift;
+    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+    my $vec_sub = gsl_vector_subvector($self->{vector}, 2, 3);
+
+    ok_similar( [gsl_vector_get($vec_sub->{vector}, 0), gsl_vector_get($vec_sub->{vector}, 1), gsl_vector_get($vec_sub->{vector}, 2)], [4, 9, 16]);
 }
 
 

@@ -176,4 +176,47 @@ sub GSL_VECTOR_SUBVECTOR_WITH_STRIDE : Tests {
    is(gsl_vector_get($sub_stride->{vector} , 2 ), 16, "third element");
 }
 
+sub GSL_VECTOR_MAX_INDEX : Tests {
+   my $self = shift;
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   my $index = gsl_vector_max_index($self->{vector});
+   is($index, 4, "Position of the maximum"); 
+}
+
+sub GSL_VECTOR_MIN_INDEX : Tests {
+   my $self = shift;
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   my $index = gsl_vector_min_index($self->{vector});
+   is($index, 0, "Position of the minimum"); 
+}
+
+sub GSL_VECTOR_MINMAX_INDEX : Tests {
+   my $self = shift;
+   my $min;
+   my $max;
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   local $TODO = 'datatype problem with gsl_vector_minmax_index... ';
+   gsl_vector_minmax_index($self->{vector}, \$min, \$max);
+   is($min, 0, "Minimum position");
+   is($max, 4, "Maximum position"); 
+}
+
+sub GSL_VECTOR_MINMAX : Tests {
+   my $self = shift;
+   my ($min, $max);
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   local $TODO = 'datatype problem with gsl_vector_minmax... ';
+   gsl_vector_minmax($self->{vector}, \$min, \$max);
+   is($min , 0, "Minimum");
+   is($max, 16, "Maximum"); 
+}
+
+sub GSL_VECTOR_MEMCPY : Tests {
+   my $self = shift;
+   my $copy = gsl_vector_alloc(5);
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
+   ok( gsl_vector_memcpy($copy, $self));
+   map { is(gsl_vector_get($copy->{vector}, $_), $_ ** 2 ) } (0..4); ;
+}
+
 1;

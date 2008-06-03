@@ -16,6 +16,7 @@
 %include "/usr/local/include/gsl/gsl_vector_double.h"
 %include "/usr/local/include/gsl/gsl_vector_int.h"
 
+
 FILE *fopen(char *, char *);
 int fclose(FILE *);
 
@@ -142,15 +143,15 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_swap_element
 
-    gsl_vector_max
+    gsl_vector_max($v) - return the maximum value in the vector $v
 
-    gsl_vector_min
+    gsl_vector_min($v) - return the minimum value in the vector $v
 
     gsl_vector_minmax
 
-    gsl_vector_max_index
+    gsl_vector_max_index($v) - return the position of the maximum value in the vector $v
 
-    gsl_vector_min_index
+    gsl_vector_min_index - return the position of the minimum value in the vector $v
 
     gsl_vector_minmax_index
 

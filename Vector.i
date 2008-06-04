@@ -31,7 +31,7 @@ int fclose(FILE *);
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
                  gsl_vector_set_basis gsl_vector_fread gsl_vector_fwrite gsl_vector_fscanf
                  gsl_vector_fprintf gsl_vector_memcpy gsl_vector_reverse gsl_vector_swap 
-                 gsl_vector_swap_element gsl_vector_max gsl_vector_min gsl_vector_minmax 
+                 gsl_vector_swap_elements gsl_vector_max gsl_vector_min gsl_vector_minmax 
                  gsl_vector_max_index gsl_vector_min_index gsl_vector_minmax_index
                  gsl_vector_add gsl_vector_sub gsl_vector_mul gsl_vector_div
                  gsl_vector_scale gsl_vector_add_constant gsl_vector_isnull
@@ -137,11 +137,11 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_memcpy
 
-    gsl_vector_reverse
+    gsl_vector_reverse($v) - reverse the order of the elements of the vector $v and return 0 if the opertaion succeded, 1 otherwise
 
-    gsl_vector_swap
+    gsl_vector_swap($v, $v2) - swap the values of the vectors $v and $v2 and return 0 if the opertaion succeded, 1 otherwise 
 
-    gsl_vector_swap_element
+    gsl_vector_swap_elements($v, $i, $j) - permute the elements at position $i and $j in the vector $v and return 0 if the operation succeded, 1 otherwise.
 
     gsl_vector_max($v) - return the maximum value in the vector $v
 
@@ -155,25 +155,26 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_minmax_index
 
-    gsl_vector_add
+    gsl_vector_add($v, $v2) - add the elements of $v2 to the elements of $v, the two vectors must have the same lenght and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_sub
+    gsl_vector_sub($v, $v2) - substract the elements of $v2 from the elements of $v, the two vectors must have the same lenght and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_mul
+    gsl_vector_mul($v, $v2) - multiply the elements of $v by the elements of $v2, the two vectors must have the same lenght and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_div
+    gsl_vector_div($v, $v2) - divides the elements of $v by the elements of $v2, the two vectors must have the same lenght and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_scale
+    gsl_vector_scale($v, $x) - multiplty the elements of the vector $v by a constant $x and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_add_constant
+    gsl_vector_add_constant($v, $x) - add a constant $x to the elements of the vector $v and return 0 if the operation succeded, 1 otherwise.
 
-    gsl_vector_isnull
+    gsl_vector_isnull($v) - verify if all the elements of the vector $v are null, return 0 if it's the case, 1 otherwise.
 
-    gsl_vector_ispos
+    gsl_vector_ispos($v) - verify if all the elements of the vector $v are positive, return 0 if it's the case, 1 otherwise.
 
-    gsl_vector_isneg
+    gsl_vector_isneg($v) - verify if all the elements of the vector $v are negative, return 0 if it's the case, 1 otherwise.
 
-    gsl_vector_isnonneg
+    gsl_vector_isnonneg($v) - verify if all the elements the vector $v are not negative, return 0 if it's the case, 1 otherwise.
+
 
 You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
 

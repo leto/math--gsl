@@ -106,6 +106,6 @@ t/Wavelet.t
 Wavelet2D.i
 GSL.i
 bin/create_export_code
-examplex/sf/bessel
+examples/sf/bessel
 examples/sf/plot_bessel.gnuplot
-examplex/sf/README
+examples/sf/README

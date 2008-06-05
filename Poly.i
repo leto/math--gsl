@@ -115,18 +115,31 @@ use Math::GSL::Poly qw/:all/;
 =head1 DESCRIPTION
 
 Here is a list of all the functions included in this module :
-gsl_poly_eval 
+
+gsl_poly_eval
+ 
 gsl_poly_complex_eval 
+
 gsl_complex_poly_complex_eval 
+
 gsl_poly_dd_init 
+
 gsl_poly_dd_eval 
+
 gsl_poly_dd_taylor 
+
 gsl_poly_solve_quadratic 
+
 gsl_poly_complex_solve_quadratic 
-gsl_poly_solve_cubic 
+
+gsl_poly_solve_cubic($a, $b, $c, \$x0, \$x1, \$x2) - find the real roots of the cubic equation x³+$a*x²+$b*x+$c, return the number of real root (either one or three) and the real roots are returned bye $x0, $x1 and $x2 which are deferenced.
+
 gsl_poly_complex_solve_cubic 
+
 gsl_poly_complex_workspace_alloc 
+
 gsl_poly_complex_workspace_free 
+
 gsl_poly_complex_solve 
 
 For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/

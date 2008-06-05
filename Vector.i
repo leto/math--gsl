@@ -1,4 +1,9 @@
 %module Vector
+%include "typemaps.i"
+
+%typemap(in) double * {
+    printf("double typemap\n");
+}
 %{
     #include "/usr/include/stdio.h"
     #include "/usr/local/include/gsl/gsl_vector.h"
@@ -16,6 +21,13 @@
 %include "/usr/local/include/gsl/gsl_vector_double.h"
 %include "/usr/local/include/gsl/gsl_vector_int.h"
 
+/*
+%apply double *INPUT { double *min_out, double *max_out };
+%{
+    extern void gsl_vector_minmax (const gsl_vector *, double *, double *);
+%}
+extern void gsl_vector_minmax (const gsl_vector * v, double *INPUT, double *INPUT);
+*/
 
 FILE *fopen(char *, char *);
 int fclose(FILE *);

@@ -8,10 +8,15 @@ use strict;
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{gsl_permutation} = Math::GSL::Complex::gsl_complex->new(6);
+    $self = gsl_permutation_alloc(6);
 }
 
 sub teardown : Test(teardown) {
 }
 
+sub GSL_PERMUTATION_ALLOC : Tests {
+    my $p = gsl_permutation_alloc(6);
+    isa_ok($p, 'Math::GSL::Permutation');
+}
 
+1;

@@ -150,9 +150,10 @@ sub GSL_MATRIX_SWAP_ROWCOL : Tests {
    is(gsl_matrix_swap_rowcol($self->{matrix}, 0, 2), 0);
    
    my @got = map { gsl_matrix_get($self->{matrix}, $_, 2) } (0..4);
-   map { is($got[$_], $_) } (0..4);   
+   is_deeply( [ @got ], [ qw/2 1 0 3 4/  ] );
+
    @got = map { gsl_matrix_get($self->{matrix}, 0, $_) } (0..4);
-   map { is($got[$_], 2) } (0..4);
+   is_deeply( [ @got ], [ qw/2 2 2 2 2/ ] );
 }
 
 sub GSL_MATRIX_TRANSPOSE_MEMCPY : Tests {

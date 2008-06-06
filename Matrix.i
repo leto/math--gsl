@@ -18,6 +18,8 @@ int fclose(FILE *);
  
 %perlcode %{ 
 
+no warnings 'redefine';
+
 @EXPORT_OK = qw/fopen fclose
         gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block
         gsl_matrix_alloc_from_matrix gsl_vector_alloc_row_from_matrix

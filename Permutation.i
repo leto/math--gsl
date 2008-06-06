@@ -34,6 +34,14 @@
             /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+### wrapper interface ###
+sub new {
+    my ($class, $value) = @_;
+    my $this = {};
+    $this->{_permutation} = gsl_permutation_alloc($value);
+    bless $this, $class;
+}
+
 __END__
 
 =head1 NAME

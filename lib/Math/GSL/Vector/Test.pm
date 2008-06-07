@@ -127,7 +127,9 @@ sub GSL_VECTOR_SUBVECTOR : Tests {
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
     my $vec_sub = gsl_vector_subvector($self->{vector}, 2, 3);
 
-    ok_similar( [gsl_vector_get($vec_sub->{vector}, 0), gsl_vector_get($vec_sub->{vector}, 1), gsl_vector_get($vec_sub->{vector}, 2)], [4, 9, 16]);
+    ok_similar( [ map { gsl_vector_get($vec_sub->{vector}, $_) } (0..2) ], 
+                [ 4, 9, 16 ], 
+              );
 }
 
 sub GSL_VECTOR_CALLOC : Tests {
@@ -185,9 +187,10 @@ sub GSL_VECTOR_MIN_INDEX : Tests {
 sub GSL_VECTOR_MINMAX_INDEX : Tests {
    my $self = shift;
    my ($min,$max)=(0,0);
+   print Dumper [ $self->{vector} ];
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
    local $TODO = 'datatype problem with gsl_vector_minmax_index... ';
-   #gsl_vector_minmax_index($self->{vector}, \$min, \$max);
+   gsl_vector_minmax_index($self->{vector}, \$min, \$max);
    ok_similar( [ 0, 4 ], [ $min, $max], 'gsl_vector_minmax_index' );
 }
 
@@ -277,13 +280,22 @@ sub GSL_VECTOR_SCALE : Tests {
 }
 
 sub GSL_VECTOR_SWAP : Tests {
-   my $self = shift;
-   my $second_vec->{vector} = gsl_vector_alloc(5);
-   map { gsl_vector_set($self->{vector}, $_, $_**2 ) } (0..4); ;
-   map { gsl_vector_set($second_vec->{vector}, $_, $_) } (0..4); ;
-   is( gsl_vector_swap($self->{vector}, $second_vec->{vector}), 0);
-   map { is(gsl_vector_get($second_vec->{vector}, $_), $_**2 ) } (0..4); ;   
-   map { is(gsl_vector_get($self->{vector}, $_), $_ ) } (0..4); ;   
+
+   my @idx  = (0..(5+int rand(5)));
+   my $vec1 = gsl_vector_alloc($#idx+1);
+   my $vec2 = gsl_vector_alloc($#idx+1);
+
+   map { gsl_vector_set($vec1, $_, $_**2 ) } @idx;
+   map { gsl_vector_set($vec2, $_, $_)     } @idx;
+
+   is( gsl_vector_swap($vec1, $vec2), 0);
+
+   ok_similar( [ map { gsl_vector_get($vec1, $_)  } @idx ], 
+               [ @idx ],
+             );
+   ok_similar( [ map { gsl_vector_get($vec2, $_)  } @idx ], 
+               [ map { $_**2 } @idx ],
+             );
 }
 
 1;

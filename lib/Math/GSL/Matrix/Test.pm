@@ -70,14 +70,18 @@ sub GSL_MATRIX_ROW : Tests {
 }
 
 sub GSL_MATRIX_COLUMN : Tests {
-   my $self = shift;
-   my $vector_view->{vector} = gsl_vector_alloc(5);
-   my $line;
-   for ($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line,$_, $_) } (0..4); }
-   $vector_view->{vector} = gsl_matrix_column($self->{matrix}, 1);
-   my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..4);
-   map { is($got[$_], $_) } (0..4);
+    my $self = shift;
+    my $vector_view->{vector} = gsl_vector_alloc(5);
+    my $line;
+    for ($line=0; $line<5; $line++) {
+        map { gsl_matrix_set($self->{matrix}, $line,$_, $_) } (0..4); 
+    }
+    $vector_view->{vector} = gsl_matrix_column($self->{matrix}, 1);
+    print Dumper [ $vector_view  ];
+    print Dumper [ $vector_view->{vector} ];
+
+    my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..4);
+    map { is($got[$_], $_) } (0..4);
 }
 
 sub GSL_MATRIX_DIAGONAL : Tests {

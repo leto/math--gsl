@@ -13,6 +13,11 @@
 %include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_char.h"
 
+%typemap(in) gsl_vector const * {
+    printf("gsl_vector_view const *\n");
+
+}
+
 FILE *fopen(char *, char *);
 int fclose(FILE *);
  

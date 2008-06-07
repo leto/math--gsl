@@ -14,6 +14,7 @@ sub make_fixture : Test(setup) {
 }
 
 sub teardown : Test(teardown) {
+    unlink 'matrix' if -f 'matrix';
 }
 
 sub GSL_MATRIX_ALLOC : Tests {
@@ -355,4 +356,24 @@ sub GSL_MATRIX_SET_COL : Tests {
    map { is(gsl_matrix_get($self->{matrix}, $_, 1), $_**2) } (0..4);  
 }
 
+sub GSL_MATRIX_FREAD_FWRITE : Tests {
+   my $self = shift;
+   my $line;
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); }
+
+   my $fh = fopen("matrix", "w");
+   is( gsl_matrix_fwrite($fh, $self->{matrix}), 0);
+   fclose($fh);
+
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); }
+
+   $fh = fopen("matrix", "r");   
+   
+   is(gsl_matrix_fread($fh, $self->{matrix}), 0);
+   for ($line=0; $line<5; $line++) {
+   map { is(gsl_matrix_get($self->{matrix}, $line, $_), $_**2) } (0..4); }
+   fclose($fh); 
+}
 1;

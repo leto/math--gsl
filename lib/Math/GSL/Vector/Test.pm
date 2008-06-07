@@ -120,6 +120,7 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
     is_deeply( [ map { gsl_vector_get($self->{vector}, $_) } (0..4) ],
                [ map { $_ ** 2 } (0..4) ],
              );
+    fclose($fh);
 }
 
 sub GSL_VECTOR_SUBVECTOR : Tests {

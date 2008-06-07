@@ -120,6 +120,7 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
     is_deeply( [ map { gsl_vector_get($self->{vector}, $_) } (0..4) ],
                [ map { $_ ** 2 } (0..4) ],
              );
+    fclose($fh);
 }
 
 sub GSL_VECTOR_SUBVECTOR : Tests {
@@ -298,4 +299,20 @@ sub GSL_VECTOR_SWAP : Tests {
              );
 }
 
+sub GSL_VECTOR_FPRINTF_FSCANF : Tests {  
+   my $self = shift;
+   map { gsl_vector_set($self->{vector}, $_, $_**2) } (0..4); 
+
+   my $fh = fopen("vector", "w");
+   is( gsl_vector_fprintf($fh, $self->{vector}, "%f"), 0);
+   fclose($fh);
+
+   map { gsl_vector_set($self->{vector}, $_, $_**3) } (0..4);
+
+   $fh = fopen("vector", "r");   
+   
+   is(gsl_vector_fscanf($fh, $self->{vector}), 0);
+   map { is(gsl_vector_get($self->{vector}, $_), $_**2) } (0..4);
+   fclose($fh); 
+}
 1;

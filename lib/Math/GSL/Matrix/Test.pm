@@ -376,4 +376,26 @@ sub GSL_MATRIX_FREAD_FWRITE : Tests {
    map { is(gsl_matrix_get($self->{matrix}, $line, $_), $_**2) } (0..4); }
    fclose($fh); 
 }
+
+sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
+   my $self = shift;
+   my $line;
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); }
+
+   my $fh = fopen("matrix", "w");
+   is( gsl_matrix_fprintf($fh, $self->{matrix}, "%f"), 0);
+   fclose($fh);
+
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); }
+
+   $fh = fopen("matrix", "r");   
+   
+   is(gsl_matrix_fscanf($fh, $self->{matrix}), 0);
+   for ($line=0; $line<5; $line++) {
+   map { is(gsl_matrix_get($self->{matrix}, $line, $_), $_**2) } (0..4); }
+   fclose($fh); 
+}
+
 1;

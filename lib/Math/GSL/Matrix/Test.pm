@@ -59,24 +59,25 @@ sub GSL_MATRIX_SUBMATRIX : Tests {
 }
 
 sub GSL_MATRIX_ROW : Tests {
-   my $matrix = gsl_matrix_alloc(4,4);
-   map { gsl_matrix_set($matrix, $_,0, $_) } (0..3);
-   map { gsl_matrix_set($matrix, $_,1, $_) } (0..3);
-   map { gsl_matrix_set($matrix, $_,2, $_) } (0..3);
-   map { gsl_matrix_set($matrix, $_,3, $_) } (0..3);
-   my $vector_view = gsl_matrix_row($matrix, 1);
-   my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..3);
-   map { is($got[$_], $_) } (0..3);
+   my $self = shift;
+   my $line;
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $_,$line, $_) } (0..4); }
+
+   my $vector_view = gsl_matrix_row($self->{matrix}, 1);
+   my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..4);
+   map { is($got[$_], $_) } (0..4);
 }
 
 sub GSL_MATRIX_COLUMN : Tests {
-   my $matrix = gsl_matrix_alloc(4,4);
-   map { gsl_matrix_set($matrix, 2,$_, $_) } (0..3);
-   my $view = gsl_matrix_column($matrix, 2);
-   print Dumper [ $view ];
-   #my @views = map { gsl_vector_get($vector, $_) } (0..3);
-   #print Dumper [ @views ];
-   #map { is($got[$_], 1) } (0..3);
+   my $self = shift;
+   my $vector_view->{vector} = gsl_vector_alloc(5);
+   my $line;
+   for ($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line,$_, $_) } (0..4); }
+   $vector_view->{vector} = gsl_matrix_column($self->{matrix}, 1);
+   my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..4);
+   map { is($got[$_], $_) } (0..4);
 }
 
 sub GSL_MATRIX_DIAGONAL : Tests {
@@ -154,5 +155,203 @@ sub GSL_MATRIX_SWAP_ROWCOL : Tests {
    map { is($got[$_], 2) } (0..4);
 }
 
-  
+sub GSL_MATRIX_TRANSPOSE_MEMCPY : Tests {
+   my $self = shift;
+   map { gsl_matrix_set($self->{matrix}, 0,$_, $_) } (0..4);
+   my $matrix = gsl_matrix_alloc(5,5); 
+   is(gsl_matrix_transpose_memcpy($matrix, $self->{matrix}), 0);   
+   my @got = map { gsl_matrix_get($matrix, $_, 0) } (0..4);
+   map { is($got[$_], $_) } (0..4);
+}
+
+sub GSL_MATRIX_TRANSPOSE : Tests {
+   my $self = shift;
+   map { gsl_matrix_set($self->{matrix}, 0,$_, $_) } (0..4); 
+   is(gsl_matrix_transpose($self->{matrix}), 0);   
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, 0) } (0..4);
+   map { is($got[$_], $_) } (0..4);
+}
+
+sub GSL_MATRIX_ADD : Tests {
+   my $self = shift;
+   my $matrix = gsl_matrix_alloc(5, 5);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4);
+   map { gsl_matrix_set($matrix, $_, $_, $_) } (0..4); 
+   is(gsl_matrix_add($self->{matrix}, $matrix), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], $_*2) } (0..4);
+}
+
+sub GSL_MATRIX_SUB : Tests {
+   my $self = shift;
+   my $matrix = gsl_matrix_alloc(5, 5);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4);
+   map { gsl_matrix_set($matrix, $_, $_, $_) } (0..4); 
+   is(gsl_matrix_sub($self->{matrix}, $matrix), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], 0) } (0..4);
+}
+
+sub GSL_MATRIX_MUL_ELEMENTS : Tests {
+   my $self = shift;
+   my $matrix = gsl_matrix_alloc(5, 5);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4);
+   map { gsl_matrix_set($matrix, $_, $_, $_) } (0..4); 
+   is(gsl_matrix_mul_elements($self->{matrix}, $matrix), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], $_**2) } (0..4);
+}
+
+sub GSL_MATRIX_DIV_ELEMENTS : Tests {
+   my $self = shift;
+   my $matrix = gsl_matrix_alloc(5, 5);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_+1) } (0..4);
+   map { gsl_matrix_set($matrix, $_, $_, $_+1) } (0..4); 
+   is(gsl_matrix_div_elements($self->{matrix}, $matrix), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], 1) } (0..4);
+}
+
+sub GSL_MATRIX_SCALE : Tests {
+   my $self = shift; 
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4); 
+   is(gsl_matrix_scale($self->{matrix}, 4), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], $_*4) } (0..4);
+}
+
+sub GSL_MATRIX_ADD_CONSTANT : Tests {
+   my $self = shift; 
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4); 
+   is(gsl_matrix_add_constant($self->{matrix}, 8), 0);
+   my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
+   map { is($got[$_], $_+8) } (0..4);
+}
+
+sub GSL_MATRIX_MAX : Tests {
+   my $self = shift;
+   my $line;   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2 ) } (0..4); } 
+   is(gsl_matrix_max($self->{matrix}), 16);
+}
+
+sub GSL_MATRIX_MIN : Tests {
+   my $self = shift;
+   my $line;
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2 ) } (0..4); } 
+   is(gsl_matrix_min($self->{matrix}), 0);
+}
+
+sub GSL_MATRIX_MINMAX : Test {
+   my $self = shift;
+   my ($min, $max);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
+   gsl_matrix_minmax($self->{matrix}, \$min, \$max);
+   is($min, 0);
+   is($max, 16);
+}
+
+sub GSL_MATRIX_MAX_INDEX : Tests {
+   my $self = shift;
+   my ($imax, $jmax);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
+   gsl_matrix_max_index($self->{matrix}, \$imax, \$jmax);
+   is($imax, 4);
+   is($jmax, 4);
+}
+
+sub GSL_MATRIX_ISNULL : Tests {
+   my $self = shift;
+   my $line;
+   is(gsl_matrix_isnull($self->{matrix}), 0);
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
+   is(gsl_matrix_isnull($self->{matrix}), 1);
+}
+
+sub GSL_MATRIX_ISPOS : Tests {
+   my $self = shift;
+   my $line;
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, -1) } (0..4); }
+   is(gsl_matrix_ispos($self->{matrix}), 0);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 1) } (0..4); }
+   is(gsl_matrix_ispos($self->{matrix}), 1);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
+   is(gsl_matrix_ispos($self->{matrix}), 0);
+}
+
+sub GSL_MATRIX_ISNEG : Tests {
+   my $self = shift;
+   my $line;
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, -1) } (0..4); }
+   is(gsl_matrix_isneg($self->{matrix}), 1);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 1) } (0..4); }
+   is(gsl_matrix_isneg($self->{matrix}), 0);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
+   is(gsl_matrix_isneg($self->{matrix}), 0);
+}
+
+sub GSL_MATRIX_ISNONNEG : Tests {
+   my $self = shift;
+   my $line;
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, -1) } (0..4); }
+   is(gsl_matrix_isnonneg($self->{matrix}), 0);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 1) } (0..4); }
+   is(gsl_matrix_isnonneg($self->{matrix}), 1);
+   
+   for($line=0; $line<5; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
+   is(gsl_matrix_isnonneg($self->{matrix}), 1);
+}
+
+sub GSL_MATRIX_GET_ROW : Tests {
+   my $self = shift;
+   my $vector->{vector} = gsl_vector_alloc(5);
+   map { gsl_matrix_set($self->{matrix}, 0, $_, $_) } (0..4);
+   is(gsl_matrix_get_row($vector->{vector}, $self->{matrix}, 0), 0);
+   map { is(gsl_vector_get($vector->{vector}, $_), $_) } (0..4); 
+}
+
+sub GSL_MATRIX_GET_COL : Tests {
+   my $self = shift;
+   my $vector->{vector} = gsl_vector_alloc(5);
+   map { gsl_matrix_set($self->{matrix}, $_, 0, $_) } (0..4);
+   is(gsl_matrix_get_col($vector->{vector}, $self->{matrix}, 0), 0);
+   map { is(gsl_vector_get($vector->{vector}, $_), $_) } (0..4); 
+}
+
+sub GSL_MATRIX_SET_ROW : Tests {
+   my $self = shift;
+   my $vector->{vector} = gsl_vector_alloc(5);
+   map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
+   is(gsl_matrix_set_row($self->{matrix}, 1, $vector->{vector}), 0);
+   map { is(gsl_matrix_get($self->{matrix}, 1, $_), $_**2) } (0..4);  
+}
+
+sub GSL_MATRIX_SET_COL : Tests {
+   my $self = shift;
+   my $vector->{vector} = gsl_vector_alloc(5);
+   map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
+   is(gsl_matrix_set_col($self->{matrix}, 1, $vector->{vector}), 0);
+   map { is(gsl_matrix_get($self->{matrix}, $_, 1), $_**2) } (0..4);  
+}
+
 1;

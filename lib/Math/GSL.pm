@@ -35,10 +35,71 @@ Version 0.43
 
 =head1 SYNOPSIS
 
-    use Math::GSL::RNG qw/:all/;
+    use Math::GSL qw/:all/;
+    use Math::GSL qw/ok_similar is_similar/;
+    use Math::GSL qw/$GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX/;
 
 
-=head1 AUTHOR
+This module contains a few helper functions and global variables. Each GSL subsystem has it's own
+module. For example, the random number generator subsystem is Math::GSL::RNG .
+
+=head1 SUBSYSTEMS
+
+    Math::GSL::BLAS
+    Math::GSL::BSpline
+    Math::GSL::Block
+    Math::GSL::CBLAS
+    Math::GSL::CDF
+    Math::GSL::Chebyshev
+    Math::GSL::Combination
+    Math::GSL::Complex
+    Math::GSL::Const
+    Math::GSL::DFT
+    Math::GSL::DHT
+    Math::GSL::Deriv
+    Math::GSL::Diff
+    Math::GSL::Eigen
+    Math::GSL::Errno
+    Math::GSL::FFT
+    Math::GSL::Fit
+    Math::GSL::Function
+    Math::GSL::Heapsort
+    Math::GSL::Histogram
+    Math::GSL::Histogram2d
+    Math::GSL::Integration
+    Math::GSL::Interp
+    Math::GSL::Linalg
+    Math::GSL::Machine
+    Math::GSL::Matrix
+    Math::GSL::Min
+    Math::GSL::Mode
+    Math::GSL::Monte
+    Math::GSL::Multifit
+    Math::GSL::Multimin
+    Math::GSL::Multiroots
+    Math::GSL::NTuple
+    Math::GSL::ODEIV
+    Math::GSL::Permutation
+    Math::GSL::Permute
+    Math::GSL::Poly
+    Math::GSL::PowInt
+    Math::GSL::QRNG
+    Math::GSL::RNG
+    Math::GSL::Randist
+    Math::GSL::Roots
+    Math::GSL::SF
+    Math::GSL::Siman
+    Math::GSL::Sort
+    Math::GSL::Spline
+    Math::GSL::Statistics
+    Math::GSL::Sum
+    Math::GSL::Sys
+    Math::GSL::Types
+    Math::GSL::Vector
+    Math::GSL::Wavelet
+
+
+=head1 AUTHORS
 
 Jonathan Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan@gmail.com> >>
 

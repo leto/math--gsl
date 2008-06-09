@@ -14,6 +14,7 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     my $self = shift;
+    unlink 'rng' if -f 'rng';
 
     gsl_rng_free($self->{rng});
 }
@@ -119,4 +120,17 @@ sub GSL_RNG_DEFAULT : Tests {
     ok( ! $@, 'gsl_rng_free' );
 }
 
+sub GSL_RNG_FWRITE_FREAD : Tests {
+    my $self = shift;
+    my $rng = gsl_rng_alloc($gsl_rng_default);
+
+    my $fh = fopen("rng" , "w");
+    is(gsl_rng_fwrite($fh, $self->{rng}), 0);
+    fclose($fh);
+
+    $fh = fopen("rng", "r");
+    is(gsl_rng_fread($fh, $rng),0);
+    is(gsl_rng_get($rng), gsl_rng_get($self->{rng}));
+    fclose($fh);
+}
 1;

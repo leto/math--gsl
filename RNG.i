@@ -6,9 +6,13 @@
 
 %include "/usr/local/include/gsl/gsl_rng.h"
 
+FILE *fopen(char *, char *);
+int fclose(FILE *);
+
 %perlcode %{
 use Data::Dumper;
-@EXPORT_OK = qw/ gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
+@EXPORT_OK = qw/ fopen fclose
+                 gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
                  gsl_rng_name gsl_rng_size gsl_rng_state gsl_rng_print_state 
                 $gsl_rng_default $$gsl_rng_knuthran $$gsl_rng_ran0 $gsl_rng_borosh13

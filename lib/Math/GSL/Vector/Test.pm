@@ -191,7 +191,7 @@ sub GSL_VECTOR_MINMAX_INDEX : Tests {
    print Dumper [ $self->{vector} ];
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
-   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax_index($self->{vector});
+   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax_index($self->{vector}, $min, $max);
    ok_similar( [ 0, 4 ], [ $min, $max], 'gsl_vector_minmax_index' );
 }
 
@@ -200,7 +200,7 @@ sub GSL_VECTOR_MINMAX : Tests {
    my $vector->{vector} = gsl_vector_alloc(5); 
    map { gsl_vector_set($vector->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
-   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax($vector->{vector});
+   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax($vector->{vector}, $min, $max);
 
    ok_similar( [ 0, 16 ], [ $min, $max], 'gsl_vector_minmax' );
 }

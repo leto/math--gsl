@@ -190,18 +190,17 @@ sub GSL_VECTOR_MINMAX_INDEX : Tests {
    my ($min,$max)=(0,0);
    print Dumper [ $self->{vector} ];
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   local $TODO = 'datatype problem with gsl_vector_minmax_index... ';
-   gsl_vector_minmax_index($self->{vector}, \$min, \$max);
+
+   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax_index($self->{vector});
    ok_similar( [ 0, 4 ], [ $min, $max], 'gsl_vector_minmax_index' );
 }
 
 sub GSL_VECTOR_MINMAX : Tests {
    my ($min, $max) = (17,42);
-   my $vector = gsl_vector_alloc(5);
-   local $TODO = 'datatype problem with gsl_vector_minmax_index... ';
-   map { gsl_vector_set($vector, $_, $_ ** 2 ) } (0..4); ;
+   my $vector->{vector} = gsl_vector_alloc(5); 
+   map { gsl_vector_set($vector->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
-   #gsl_vector_minmax($vector, \$min, \$max);
+   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax($vector->{vector});
 
    ok_similar( [ 0, 16 ], [ $min, $max], 'gsl_vector_minmax' );
 }

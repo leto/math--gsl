@@ -10,7 +10,6 @@ FILE *fopen(char *, char *);
 int fclose(FILE *);
 
 %perlcode %{
-use Data::Dumper;
 @EXPORT_OK = qw/ fopen fclose
                  gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min

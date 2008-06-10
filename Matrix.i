@@ -1,6 +1,11 @@
 %module Matrix
+
+%apply int *INOUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
+
+%apply double *INOUT { double * min_out, double * max_out };
 %{
     #include "/usr/local/include/gsl/gsl_matrix.h"
+    #include "/usr/local/include/gsl/gsl_vector_double.h"
     #include "/usr/local/include/gsl/gsl_matrix_double.h"
     #include "/usr/local/include/gsl/gsl_matrix_int.h"
     #include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
@@ -8,18 +13,12 @@
 %}
 
 %include "/usr/local/include/gsl/gsl_matrix.h"
+%include "/usr/local/include/gsl/gsl_vector_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_int.h"
 %include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
 %include "/usr/local/include/gsl/gsl_matrix_char.h"
 
-%typemap(in) gsl_vector const * {
-    printf("gsl_vector_view const *\n");
-
-}
-
-FILE *fopen(char *, char *);
-int fclose(FILE *);
  
 %perlcode %{ 
 

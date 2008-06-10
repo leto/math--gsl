@@ -1,7 +1,36 @@
 %module Vector
 
+%include "typemaps.i"
+
+%apply int *INOUT { size_t *imin, size_t *imax };
+
+%apply double *INOUT { double * min_out, double * max_out };
+
+%typemap(in) double *v {
+    AV *tempav;
+    I32 len;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $input is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $input is not an array ref!");
+        
+    tempav = (AV*)SvRV($input);
+    len = av_len(tempav);
+    $1 = (double *) malloc((len+1)*sizeof(double));
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(tempav, i, 0);
+        $1[i] = (double) SvNV(*tv);
+    }
+    $1[i] = GSL_NAN;
+}
+
+FILE * fopen(char *, char *);
+int fclose(FILE *);
+
 %{
-    #include "/usr/include/stdio.h"
+    #include "/usr/local/include/gsl/gsl_nan.h"
     #include "/usr/local/include/gsl/gsl_vector.h"
     #include "/usr/local/include/gsl/gsl_vector_char.h"
     #include "/usr/local/include/gsl/gsl_vector_complex.h"
@@ -10,6 +39,8 @@
     #include "/usr/local/include/gsl/gsl_vector_float.h"
     #include "/usr/local/include/gsl/gsl_vector_int.h"
 %}
+
+%include "/usr/local/include/gsl/gsl_nan.h"
 %include "/usr/local/include/gsl/gsl_vector.h"
 %include "/usr/local/include/gsl/gsl_vector_char.h"
 %include "/usr/local/include/gsl/gsl_vector_complex.h"
@@ -18,19 +49,6 @@
 %include "/usr/local/include/gsl/gsl_vector_int.h"
 
 
-%include "typemaps.i"
-
-%apply int *OUTPUT { size_t *imin, size_t *imax };
-extern void gsl_vector_minmax_index (const gsl_vector * v, size_t *imax, size_t *imin);
-
-%apply double *INPUT { double * base };
-extern gsl_vector_view gsl_vector_view_array (double * base, size_t n);
-
-/*%apply double *OUTPUT { double *min_out, double *max_out };*/
-extern void gsl_vector_minmax (const gsl_vector *INPUT, double *OUTPUT, double *OUTPUT);
-
-FILE * fopen(char *, char *);
-int fclose(FILE *);
 
 %perlcode %{
 
@@ -90,12 +108,11 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Vector
-Functions concerning Vectors.
+Math::GSL::Vector - Functions concerning vectors
 
 =head1 SYPNOPSIS
 
-use Math::GSL::Vector qw/:all/;
+    use Math::GSL::Vector qw/:all/;
 
 =head1 DESCRIPTION
 

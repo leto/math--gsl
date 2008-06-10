@@ -14,8 +14,8 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_QRNG_ALLOC : Tests {
-    $qrng->{qrng} = gsl_qrng_alloc($gsl_qrng_sobol, 2);
-    isa_ok( $qrng->{qrng}, 'Math::GSL::QRNG');
+    my $qrng = gsl_qrng_alloc($gsl_qrng_sobol, 2);
+    isa_ok( $qrng, 'Math::GSL::QRNG');
 }
 
 1;

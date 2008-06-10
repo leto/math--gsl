@@ -263,9 +263,8 @@ sub GSL_MATRIX_MAX_INDEX : Tests {
    my $self = shift;
    my ($imax, $jmax);
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   gsl_matrix_max_index($self->{matrix}, \$imax, \$jmax);
-   is($imax, 4);
-   is($jmax, 4);
+   ($imax, $jmax) = gsl_matrix_max_index($self->{matrix}, $imax, $jmax);
+   ok_similar( [ $imax, $jmax ], [ 0 .. 4 ], 'gsl_matrix_max_index' );
 }
 
 sub GSL_MATRIX_ISNULL : Tests {

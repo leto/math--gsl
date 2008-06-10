@@ -10,7 +10,6 @@ use strict;
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{matrix} = gsl_matrix_alloc(5,5);
-
 }
 
 sub teardown : Test(teardown) {
@@ -28,7 +27,6 @@ sub GSL_MATRIX_SET : Tests {
 
     my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
     ok_similar( [ @got ], [ map { $_**2 } (0..4) ] );
-
 }
 
 sub GSL_MATRIX_CALLOC : Tests {
@@ -45,7 +43,6 @@ sub GSL_MATRIX_FREE : Tests {
 
    is(gsl_matrix_get($matrix, 0, 0), 0);
    gsl_matrix_free($matrix);
-   
 }
 
 sub GSL_MATRIX_SUBMATRIX : Tests {
@@ -75,8 +72,8 @@ sub GSL_MATRIX_COLUMN : Tests {
         map { gsl_matrix_set($self->{matrix}, $line,$_, $_) } (0..4); 
     }
     $view = gsl_matrix_column($self->{matrix}, 1);
-    print Dumper [ $view  ];
 
+    print Dumper [ $view ];
     my @got = map { gsl_vector_get($view, $_) } (0..4);
     ok_similar( [ @got ], [ 0 .. 4 ], 'gsl_matrix_column' );
 }
@@ -85,6 +82,7 @@ sub GSL_MATRIX_DIAGONAL : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
    my $vector = gsl_matrix_diagonal($matrix);
+   print Dumper [ $vector ];
    my @got = map { gsl_vector_get($vector, $_) } (0..3);
    ok_similar( [ @got ], [ 0 .. 3 ], 'gsl_matrix_diagonal');
 }
@@ -97,7 +95,8 @@ sub GSL_MATRIX_SUBDIAGONAL : Tests {
    ok_similar( [ @got ], [ 0 .. 3 ], 'gsl_matrix_subdiagonal');
 
    $vector = gsl_matrix_subdiagonal($matrix, 1);
-   @got = map { gsl_vector_get($vector, $_) } (0..2);
+   print Dumper [ $vector->{vector} ];
+   @got = map { gsl_vector_get($vector->{vector}, $_) } (0..2);
    ok_similar( [ @got ], [ 1 .. 3 ], 'gsl_matrix_subdiagonal');
 }
 
@@ -265,11 +264,14 @@ sub GSL_MATRIX_MAX_INDEX : Tests {
 
 sub GSL_MATRIX_ISNULL : Tests {
    my $self = shift;
-   my $line;
-   is(gsl_matrix_isnull($self->{matrix}), 0);
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
+
    is(gsl_matrix_isnull($self->{matrix}), 1);
+
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, $_) } (0..4); 
+   }
+
+   is(gsl_matrix_isnull($self->{matrix}), 0);
 }
 
 sub GSL_MATRIX_ISPOS : Tests {
@@ -357,43 +359,54 @@ sub GSL_MATRIX_SET_COL : Tests {
 
 sub GSL_MATRIX_FREAD_FWRITE : Tests {
    my $self = shift;
-   my $line;
-   for ($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); }
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); 
+   }
 
    my $fh = fopen("matrix", "w");
    is( gsl_matrix_fwrite($fh, $self->{matrix}), 0);
    fclose($fh);
 
-   for ($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); }
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); 
+   }
 
    $fh = fopen("matrix", "r");   
    
    is(gsl_matrix_fread($fh, $self->{matrix}), 0);
-   for ($line=0; $line<5; $line++) {
-   map { is(gsl_matrix_get($self->{matrix}, $line, $_), $_**2) } (0..4); }
+   for my $line (0..4) {
+        ok_similar( 
+                    [ map { gsl_matrix_get($self->{matrix}, $line, $_) } (0..4) ], 
+                    [ map { $_**2 } (0..4) ],
+                  );
+   }
    fclose($fh); 
 }
 
 sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
    my $self = shift;
-   my $line;
-   for ($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); }
+
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); 
+   }
 
    my $fh = fopen("matrix", "w");
    is( gsl_matrix_fprintf($fh, $self->{matrix}, "%f"), 0);
    fclose($fh);
 
-   for ($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); }
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); 
+   }
 
    $fh = fopen("matrix", "r");   
    
    is(gsl_matrix_fscanf($fh, $self->{matrix}), 0);
-   for ($line=0; $line<5; $line++) {
-   map { is(gsl_matrix_get($self->{matrix}, $line, $_), $_**2) } (0..4); }
+   for my $line (0..4) {
+        ok_similar( 
+                    [ map { gsl_matrix_get($self->{matrix}, $line, $_) } (0..4) ], 
+                    [ map { $_**2 } (0..4) ],
+                  );
+   }
    fclose($fh); 
 }
 

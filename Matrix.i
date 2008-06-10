@@ -1,7 +1,6 @@
 %module Matrix
 %typemap(in) gsl_vector const * {
     printf("gsl_vector_view const *\n");
-
 }
 
 FILE *fopen(char *, char *);

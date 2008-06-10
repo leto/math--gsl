@@ -3,7 +3,7 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL::Vector qw/:all/;
-use Math::GSL qw/is_similar/;
+use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -25,11 +25,9 @@ sub GSL_MATRIX_ALLOC : Tests {
 sub GSL_MATRIX_SET : Tests {
     my $self = shift;
     map { gsl_matrix_set($self->{matrix}, $_,$_, $_ ** 2) } (0..4);
-    isa_ok( $self->{matrix}, 'Math::GSL::Matrix' );
 
     my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
-
-    map { ok(is_similar($got[$_], $_ ** 2)) } (0..4);
+    ok_similar( [ @got ], [ map { $_**2 } (0..4) ] );
 
 }
 
@@ -38,7 +36,7 @@ sub GSL_MATRIX_CALLOC : Tests {
    isa_ok($matrix, 'Math::GSL::Matrix');
 
    my @got = map { gsl_matrix_get($matrix, $_, $_) } (0..4);
-   map { is($got[$_], 0) } (0..4);
+   ok_similar( [ @got ], [ 0,0,0,0,0 ], 'gsl_matrix_calloc' );
 }
 
 sub GSL_MATRIX_FREE : Tests {
@@ -55,8 +53,7 @@ sub GSL_MATRIX_SUBMATRIX : Tests {
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..4);
    my $subMatrix = gsl_matrix_submatrix($matrix, 0, 0, 2, 2);
    my @got = map { gsl_matrix_get($matrix, $_, $_) } (0..2);
-   map { is($got[$_], $_) } (0..2);
-
+   ok_similar( [ @got ], [ 0..2 ] );
 }
 
 sub GSL_MATRIX_ROW : Tests {
@@ -72,37 +69,36 @@ sub GSL_MATRIX_ROW : Tests {
 
 sub GSL_MATRIX_COLUMN : Tests {
     my $self = shift;
-    my $vector_view->{vector} = gsl_vector_alloc(5);
-    my $line;
-    for ($line=0; $line<5; $line++) {
+    my $view = gsl_vector_alloc(5);
+
+    for my $line (0..4) {
         map { gsl_matrix_set($self->{matrix}, $line,$_, $_) } (0..4); 
     }
-    $vector_view->{vector} = gsl_matrix_column($self->{matrix}, 1);
-    print Dumper [ $vector_view  ];
-    print Dumper [ $vector_view->{vector} ];
+    $view = gsl_matrix_column($self->{matrix}, 1);
+    print Dumper [ $view  ];
 
-    my @got = map { gsl_vector_get($vector_view->{vector}, $_) } (0..4);
-    map { is($got[$_], $_) } (0..4);
+    my @got = map { gsl_vector_get($view, $_) } (0..4);
+    ok_similar( [ @got ], [ 0 .. 4 ], 'gsl_matrix_column' );
 }
 
 sub GSL_MATRIX_DIAGONAL : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
    my $vector = gsl_matrix_diagonal($matrix);
-   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
-   #map { is($got[$_], $_) } (0..3);
+   my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   ok_similar( [ @got ], [ 0 .. 3 ], 'gsl_matrix_diagonal');
 }
 
 sub GSL_MATRIX_SUBDIAGONAL : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
    my $vector = gsl_matrix_subdiagonal($matrix, 0);
-   #my @got = map { gsl_vector_get($vector, $_) } (0..3);
-   #map { is($got[$_], $_) } (0..3);
+   my @got = map { gsl_vector_get($vector, $_) } (0..3);
+   ok_similar( [ @got ], [ 0 .. 3 ], 'gsl_matrix_subdiagonal');
 
    $vector = gsl_matrix_subdiagonal($matrix, 1);
-   #@got = map { gsl_vector_get($vector, $_) } (0..2);
-   #map { is($got[$_], $_) } (1..3);
+   @got = map { gsl_vector_get($vector, $_) } (0..2);
+   ok_similar( [ @got ], [ 1 .. 3 ], 'gsl_matrix_subdiagonal');
 }
 
 sub GSL_MATRIX_SWAP : Tests {

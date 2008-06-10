@@ -26,12 +26,10 @@
     $1[i] = GSL_NAN;
 }
 
-
 FILE * fopen(char *, char *);
 int fclose(FILE *);
 
 %{
-    #include "/usr/include/stdio.h"
     #include "/usr/local/include/gsl/gsl_nan.h"
     #include "/usr/local/include/gsl/gsl_vector.h"
     #include "/usr/local/include/gsl/gsl_vector_char.h"

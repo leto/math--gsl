@@ -1,8 +1,19 @@
 %module Permutation
 %{
+    #include "/usr/local/include/gsl/gsl_permute.h"
+    #include "/usr/local/include/gsl/gsl_permute_double.h"
+    #include "/usr/local/include/gsl/gsl_permute_int.h"
+    #include "/usr/local/include/gsl/gsl_permute_vector.h"
+    #include "/usr/local/include/gsl/gsl_permute_vector_double.h"
+    #include "/usr/local/include/gsl/gsl_permute_vector_int.h"
     #include "/usr/local/include/gsl/gsl_permutation.h"
 %}
-
+%include "/usr/local/include/gsl/gsl_permute.h"
+%include "/usr/local/include/gsl/gsl_permute_double.h"
+%include "/usr/local/include/gsl/gsl_permute_int.h"
+%include "/usr/local/include/gsl/gsl_permute_vector.h"
+%include "/usr/local/include/gsl/gsl_permute_vector_double.h"
+%include "/usr/local/include/gsl/gsl_permute_vector_int.h"
 %include "/usr/local/include/gsl/gsl_permutation.h"
 
 %perlcode %{ 
@@ -30,7 +41,15 @@
                 gsl_permutation_canonical_to_linear 
                 gsl_permutation_inversions 
                 gsl_permutation_linear_cycles 
-                gsl_permutation_canonical_cycles 
+                gsl_permutation_canonical_cycles
+                gsl_permute
+                gsl_permute_inverse
+                gsl_permute_int 
+                gsl_permute_int_inverse
+                gsl_permute_vector
+                gsl_permute_vector_inverse 
+                gsl_permute_vector_int
+                gsl_permute_vector_int_inverse 
             /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -79,7 +98,14 @@ use Math::GSL::Permutation qw/:all/;
  gsl_permutation_canonical_to_linear($p, $q) - convert a canonical permutation $q back into linear form and store it in $p and return 0 if the operation suceeded, 1 otherwise 
  gsl_permutation_inversions($p) - return the number of inversions in the permutation $p 
  gsl_permutation_linear_cycles($p) - return the number of cycles in the permutation $p, given a linear form 
- gsl_permutation_canonical_cycles($p) - return the number of cycles in the permutation $p, given a canonical form
+ gsl_permute_vector_int_inversegsl_permutation_canonical_cycles($p) - return the number of cycles in the permutation $p, given a canonical form
+ gsl_permute
+ gsl_permute_inverse
+ gsl_permute_int 
+ gsl_permute_int_inverse
+ gsl_permute_vector
+ gsl_permute_vector_inverse 
+ gsl_permute_vector_int
  
  You have to add the functions you want to use inside the qw/put_funtion_here/ with spaces between each function. 
  You can also write use Math::GSL::CDF qw/:all/ to use all avaible functions of the module. 

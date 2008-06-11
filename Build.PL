@@ -365,7 +365,7 @@ my $builder = $class->new(
     swig_source           => [  
                                 map { [ "$_.i" ] } 
                                 qw/ 
-BLAS                  Diff                  Machine               Permute               Statistics
+BLAS                  Diff                  Machine                                     Statistics
 Block                 Eigen                 Matrix                Poly                  Sum
 BSpline               Errno                 PowInt                Sys
 CBLAS                 FFT                   Min                   Math

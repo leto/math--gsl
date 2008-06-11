@@ -80,7 +80,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::NTuple
     Math::GSL::ODEIV
     Math::GSL::Permutation
-    Math::GSL::Permute
     Math::GSL::Poly
     Math::GSL::PowInt
     Math::GSL::QRNG

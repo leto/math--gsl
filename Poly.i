@@ -105,8 +105,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Poly
-Functions for evaluating and solving polynomials
+Math::GSL::Poly - Functions for evaluating and solving polynomials
 
 =head1 SYPNOPSIS
 
@@ -114,47 +113,47 @@ use Math::GSL::Poly qw/:all/;
 
 =head1 DESCRIPTION
 
-Here is a list of all the functions included in this module :
+ Here is a list of all the functions included in this module :
 
-gsl_poly_eval
+ gsl_poly_eval
  
-gsl_poly_complex_eval 
+ gsl_poly_complex_eval 
 
-gsl_complex_poly_complex_eval 
+ gsl_complex_poly_complex_eval 
 
-gsl_poly_dd_init 
+ gsl_poly_dd_init 
 
-gsl_poly_dd_eval 
+ gsl_poly_dd_eval 
 
-gsl_poly_dd_taylor 
+ gsl_poly_dd_taylor 
 
-gsl_poly_solve_quadratic 
+ gsl_poly_solve_quadratic 
 
-gsl_poly_complex_solve_quadratic 
+ gsl_poly_complex_solve_quadratic 
 
-gsl_poly_solve_cubic($a, $b, $c, \$x0, \$x1, \$x2) - find the real roots of the cubic equation x³+$a*x²+$b*x+$c, return the number of real root (either one or three) and the real roots are returned bye $x0, $x1 and $x2 which are deferenced.
+ gsl_poly_solve_cubic($a, $b, $c, \$x0, \$x1, \$x2) - find the real roots of the cubic equation x**3+$a*x**2+$b*x+$c, return the number of real root (either one or three) and the real roots are returned bye $x0, $x1 and $x2 which are deferenced.
 
-gsl_poly_complex_solve_cubic 
+ gsl_poly_complex_solve_cubic 
 
-gsl_poly_complex_workspace_alloc 
+ gsl_poly_complex_workspace_alloc 
 
-gsl_poly_complex_workspace_free 
+ gsl_poly_complex_workspace_free 
 
-gsl_poly_complex_solve 
+ gsl_poly_complex_solve 
 
-For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
-Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+ For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =head1 EXAMPLES
 
-use Math::GSL::Poly qw/:all/;
-$a = 1;
-$b = 6;
-$c = 9;
-$x0 = 0;
-$x1 = 0;
-$num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
-print "x²+6x+9 contains $num_roots roots which are $x0 and $x1. \n";
+ use Math::GSL::Poly qw/:all/;
+ $a = 1;
+ $b = 6;
+ $c = 9;
+ $x0 = 0;
+ $x1 = 0;
+ $num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
+ print "x**2+6x+9 contains $num_roots roots which are $x0 and $x1. \n";
  
 =head1 AUTHOR
 

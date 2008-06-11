@@ -107,8 +107,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Matrix
-Mathematical functions concerning Matrices
+Math::GSL::Matrix - Mathematical functions concerning Matrices
 
 =head1 SYPNOPSIS
 
@@ -194,72 +193,74 @@ gsl_matrix_int_mul_elements gsl_matrix_int_div_elements gsl_matrix_int_scale
 gsl_matrix_int_add_constant gsl_matrix_int_add_diagonal
 gsl_matrix_get_row gsl_matrix_get_col gsl_matrix_set_row gsl_matrix_set_col
 
-You have to add the functions you want to use inside the qw /put_funtion_here /. You can also write use Math::GSL::PowInt qw/:name_of_tag/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
+ You have to add the functions you want to use inside the qw /put_funtion_here /. 
+ You can also write use Math::GSL::PowInt qw/:name_of_tag/ to use all avaible functions of the module. 
+ Other tags are also avaible, here is a complete list of all tags for this module :
 
-all
-int
-double
-char
+ all 
+ int 
+ double 
+ char 
 
-For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
-Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
+ For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
 =head1 EXAMPLES
 
-Most of the examples from this section are perl versions of the examples there : http://www.gnu.org/software/gsl/manual/html_node/Example-programs-for-matrices.html
+ Most of the examples from this section are perl versions of the examples there : http://www.gnu.org/software/gsl/manual/html_node/Example-programs-for-matrices.html
 
+ The program below shows how to allocate, initialize and read from a matrix using the functions gsl_matrix_alloc, gsl_matrix_set and gsl_matrix_get. 
 
-The program below shows how to allocate, initialize and read from a matrix using the functions gsl_matrix_alloc, gsl_matrix_set and gsl_matrix_get. 
-
-use Math::GSL::Matrix qw/:all/;
-$m = gsl_matrix_alloc (10,3);
-for($i = 0; $i< 10; $i++){
+ use Math::GSL::Matrix qw/:all/;
+ $m = gsl_matrix_alloc (10,3);
+ for($i = 0; $i< 10; $i++){
     for($j = 0; $j<3; $j++){
         gsl_matrix_set($m, $i, $j, 0.23 + 100*$i + $j); 
     }
-}
-for($i = 0; $i< 100; $i++){ # OUT OF RANGE ERROR
-    for($j=0; $j<3; $j++){
+ }
+
+ for($i = 0; $i< 100; $i++){ # OUT OF RANGE ERROR
+     for($j=0; $j<3; $j++){
         print "m($i, $j) = " . gsl_matrix_get ($m, $i, $j) . "\n";
     }
-}
-gsl_matrix_free ($m);
+ }
+ gsl_matrix_free ($m);
 
 
-use Math::GSL::Matrix qw/:all/;
+ use Math::GSL::Matrix qw/:all/;
 
-$m = gsl_matrix_alloc (100, 100);
-$a = gsl_matrix_alloc (100, 100);
+ $m = gsl_matrix_alloc (100, 100);
+ $a = gsl_matrix_alloc (100, 100);
 
-for($i = 0; $i < 100; $i++){
-    for($j = 0; $j < 100; $j++){
-        gsl_matrix_set ($m, $i, $j, 0.23 + $i + $j);
-    }
-}
+ for($i = 0; $i < 100; $i++){
+     for($j = 0; $j < 100; $j++){
+         gsl_matrix_set ($m, $i, $j, 0.23 + $i + $j);
+     }
+ }
 
-The next program shows how to write a matrix to a file. 
+ The next program shows how to write a matrix to a file. 
 
-$out = fopen("test.dat", "wb");
-gsl_matrix_fwrite ($out, $m);
-fclose ($out);
+ $out = fopen("test.dat", "wb");
+ gsl_matrix_fwrite ($out, $m);
+ fclose ($out);
 
-$in = fopen("test.dat", "rb");
-gsl_matrix_fread ($in, $a);
-fclose($in);
+ $in = fopen("test.dat", "rb");
+ gsl_matrix_fread ($in, $a);
+ fclose($in);
 
-$k=0;
-for($i = 0; $i < 100; $i++){
-    for($j = 0; $j < 100; $j++){
-        $mij = gsl_matrix_get ($m, $i, $j);
-        $aij = gsl_matrix_get ($a, $i, $j);
-        if ($mij != $aij){ $k++ };
-    }
-}
+ $k=0;
+ for($i = 0; $i < 100; $i++){
+     for($j = 0; $j < 100; $j++){
+         $mij = gsl_matrix_get ($m, $i, $j);
+         $aij = gsl_matrix_get ($a, $i, $j);
+         if ($mij != $aij){ $k++ };
+     }
+ }
 
-gsl_matrix_free($m);
-gsl_matrix_free($a);
+ gsl_matrix_free($m);
+ gsl_matrix_free($a);
 
-print "differences = $k (should be zero)\n";
+ print "differences = $k (should be zero)\n";
 
 =head1 AUTHOR
 

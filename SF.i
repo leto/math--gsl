@@ -668,11 +668,11 @@ Math::GSL::SF - Special Functions
 =head1 SYPNOPSIS
 
 use Math::GSL::SF qw /:all/;
-use Math::GSL::SF qw /:bessel :airy :zeta/;
 
 =head1 DESCRIPTION
 
 Here is a list of all included functions:
+
 gsl_sf_airy_Ai_e, gsl_sf_airy_Ai, gsl_sf_airy_Bi_e, 
 gsl_sf_airy_Bi, gsl_sf_airy_Ai_scaled_e, gsl_sf_airy_Ai_scaled, 
 gsl_sf_airy_Bi_scaled_e, gsl_sf_airy_Bi_scaled, gsl_sf_airy_Ai_deriv_e, 
@@ -838,50 +838,44 @@ gsl_sf_zetam1_e, gsl_sf_zetam1, gsl_sf_zetam1_int_e,
 gsl_sf_zetam1_int, gsl_sf_hzeta_e, gsl_sf_hzeta, 
 gsl_sf_eta_int_e, gsl_sf_eta_int, gsl_sf_eta_e, gsl_sf_eta 
 
+ You can import the functions that you want to use by giving a space separated list to Math::GSL::SF when you use the package. 
+ You can also write use Math::GSL::SF qw/:all/ to use all avaible functions of the module. Note that the tag names begin with a colon. 
+ Other tags are also available, here is a complete list of all tags for this module :
 
-You can import the functions that you want to use by giving a space separated list to Math::GSL::SF when you use the package. You can also write 
+ airy
+ bessel 
+ clausen 
+ hydrogenic
+ coulumb
+ coupling
+ dawson
+ debye
+ dilog
+ factorial
+ misc
+ elliptic
+ error
+ hypergeometric
+ laguerre
+ legendre
+ gamma
+ transport
+ trig
+ zeta
+ eta
+ vars
 
-    use Math::GSL::SF qw/:all/
-    
-to use all avaible functions of the module. Note that tag names begin with a colon. 
-Other tags are also available, here is a complete list of all tags for this module :
+ For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
 
-airy
-bessel 
-clausen 
-hydrogenic
-coulumb
-coupling
-dawson
-debye
-dilog
-factorial
-misc
-elliptic
-error
-hypergeometric
-laguerre
-legendre
-gamma
-transport
-trig
-zeta
-eta
-vars
-
-For more informations on the functions, we refer you to the GSL offcial documentation: 
-
-http://www.gnu.org/software/gsl/manual/html_node/
-
-Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
+ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
 =head1 EXAMPLES
 
-use Math::GSL::SF qw/:all/;
-$x = gsl_sf_dilog(0.1);
-print "gsl_sf_dilog(0.1) = " . $x . "\n";
+ use Math::GSL::SF qw/:all/;
+ $x = gsl_sf_dilog(0.1);
+ print "gsl_sf_dilog(0.1) = " . $x . "\n";
 
-An example using Math::GSL::SF and gnuplot is in the examples/sf folder of the source code.
+ An example using Math::GSL::SF and gnuplot is in the examples/sf folder of the source code.
 
 =head1 AUTHOR
 

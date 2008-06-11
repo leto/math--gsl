@@ -2,9 +2,9 @@
 
 %include "typemaps.i"
 
-%apply int *INOUT { size_t *imin, size_t *imax };
+%apply int *OUTPUT { size_t *imin, size_t *imax };
 
-%apply double *INOUT { double * min_out, double * max_out };
+%apply double *OUTPUT { double * min_out, double * max_out };
 
 %typemap(in) double *v {
     AV *tempav;

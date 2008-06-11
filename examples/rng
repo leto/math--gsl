@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Math::GSL::RNG qw/:all/;
+
+my $rng = Math::GSL::RNG->new($gsl_rng_knuthran, int rand(10) );
+my $num = shift;
+
+print join "\n", map { $rng->get } (1..$num);

@@ -188,7 +188,6 @@ sub GSL_VECTOR_MIN_INDEX : Tests {
 sub GSL_VECTOR_MINMAX_INDEX : Tests {
    my $self = shift;
    my ($min,$max)=(0,0);
-   print Dumper [ $self->{vector} ];
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
    ($min, $max) = Math::GSL::Vector::gsl_vector_minmax_index($self->{vector}, $min, $max);
@@ -215,7 +214,8 @@ sub GSL_VECTOR_MEMCPY : Tests {
 
 sub GSL_VECTOR_VIEW_ARRAY : Tests {
    my @array = [1,2,3,4,5,6];
-   my $vec_view = gsl_vector_view_array(@array, 2);
+   my $vec_view->{vector} = gsl_vector_alloc(2);
+   $vec_view = gsl_vector_view_array(@array, 2);
    map { is(gsl_vector_get($vec_view->{vector}, $_), $_+1 ) } (0..1); ;
 }
 

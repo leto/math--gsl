@@ -1,8 +1,8 @@
 %module Matrix
 
-%apply int *INOUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
+%apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
 
-%apply double *INOUT { double * min_out, double * max_out };
+%apply double *OUTPUT { double * min_out, double * max_out };
 %{
     #include "/usr/local/include/gsl/gsl_matrix.h"
     #include "/usr/local/include/gsl/gsl_vector_double.h"

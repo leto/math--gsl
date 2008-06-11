@@ -246,25 +246,36 @@ sub GSL_MATRIX_MIN : Tests {
 
 sub GSL_MATRIX_MINMAX : Test {
    my $self = shift;
-   # TODO: make it so that min/max do not have to be passed in, because
-   # passing undefined values for them causes a core dump
-   my ($min, $max)=(0,0);
+   my ($min, $max);
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   ($min, $max) = gsl_matrix_minmax($self->{matrix}, $min, $max);
+   ($min, $max) = gsl_matrix_minmax($self->{matrix});
    ok_similar( [ $min, $max ], [ 0, 16], 'gsl_matrix_minmax' );
 }
 
 sub GSL_MATRIX_MAX_INDEX : Tests {
    my $self = shift;
-   my ($imax, $jmax)=(0,0);
+   my $line;
+   my ($imax, $jmax);
+   for( $line =0; $line<4; $line++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_) } (0..4); } # the matrix has to be clompletely filled or the function will return strange value... bug?
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   ($imax, $jmax) = gsl_matrix_max_index($self->{matrix}, $imax, $jmax);
+   ($imax, $jmax) = gsl_matrix_max_index($self->{matrix});
    ok_similar( [ $imax, $jmax ], [ 4, 4 ], 'gsl_matrix_max_index' );
+}
+
+sub GSL_MATRIX_MIN_INDEX : Tests {
+   my $self = shift;
+   my ($imax, $jmax);
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
+   ($imax, $jmax) = gsl_matrix_min_index($self->{matrix});
+   ok_similar( [ $imax, $jmax ], [ 0, 0 ], 'gsl_matrix_min_index' );
 }
 
 sub GSL_MATRIX_ISNULL : Tests {
    my $self = shift;
-
+   for my $line (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); 
+   }
    is(gsl_matrix_isnull($self->{matrix}), 1);
 
    for my $line (0..4) {

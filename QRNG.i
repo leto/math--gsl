@@ -1,4 +1,9 @@
 %module QRNG
+
+%include "typemaps.i"
+
+%apply double *OUTPUT { double x[] };
+
 %{
     #include "/usr/local/include/gsl/gsl_types.h"
     #include "/usr/local/include/gsl/gsl_qrng.h"

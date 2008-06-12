@@ -3,7 +3,10 @@
 use strict;
 use Math::GSL::RNG qw/:all/;
 
-my $rng = Math::GSL::RNG->new($gsl_rng_knuthran, int rand(10) );
-my $num = shift;
+my $rng = Math::GSL::RNG->new($gsl_rng_knuthran, int rand(1e5) );
+my ($num,$min,$max) = @ARGV;
+$num ||= 10;
+$min ||= 0;
+$max ||= 100;
 
-print join "\n", map { $rng->get } (1..$num);
+print join "\n", map { $min + $rng->get % ($max-$min+1)  } (1..$num);

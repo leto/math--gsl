@@ -2,6 +2,7 @@ package Math::GSL::Permutation::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::Permutation qw/:all/;
+use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
@@ -106,7 +107,41 @@ sub GSL_PERMUTATION_PREV : Tests {
 #    my $self = shift;
 #    my @data = [5, 4, 3, 2, 1, 0];
 #    gsl_permutation_init($self->{permutation});    
-#    gsl_permute($self->{permutation}, \@data, 1);
+#    gsl_permute($self->{permutation}, \@data, 1); # need a typemap to input and output an array of double
 #    map { is($data[$_], $_) } (0..5);
-#} 
+#}
+
+#sub GSL_PERMUTE_INVERSE : Tests {
+#    my $self = shift;
+#    my @data = [5, 4, 3, 2, 1, 0];
+#    gsl_permutation_init($self->{permutation});    
+#    gsl_permute_inverse($self->{permutation}, \@data, 1); # need a typemap to input and output an array of double
+#    map { is($data[$_], $_) } (0..5);
+#}
+
+sub GSL_PERMUTE_VECTOR : Tests {
+     my $self = shift;
+     gsl_permutation_init($self->{permutation});
+     gsl_permutation_swap($self->{permutation}, 0, 1);
+    
+     my $vec->{vector} = gsl_vector_alloc(6);
+     map { gsl_vector_set($vec->{vector}, $_, $_) } (0..5);
+     gsl_permute_vector($self->{permutation}, $vec->{vector});
+     is(gsl_vector_get($vec->{vector}, 0), 1);
+     is(gsl_vector_get($vec->{vector}, 1), 0);
+     map { is(gsl_vector_get($vec->{vector}, $_), $_) } (2..5);
+}
+
+sub GSL_PERMUTE_VECTOR_INVERSE : Tests {
+     my $self = shift;
+     gsl_permutation_init($self->{permutation});
+     gsl_permutation_swap($self->{permutation}, 0, 1);
+    
+     my $vec->{vector} = gsl_vector_alloc(6);
+     map { gsl_vector_set($vec->{vector}, $_, $_) } (0..5);
+     gsl_permute_vector_inverse($self->{permutation}, $vec->{vector});
+     is(gsl_vector_get($vec->{vector}, 0), 1);
+     is(gsl_vector_get($vec->{vector}, 1), 0);
+     map { is(gsl_vector_get($vec->{vector}, $_), $_) } (2..5);
+}  
 1;

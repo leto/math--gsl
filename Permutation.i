@@ -1,4 +1,8 @@
 %module Permutation
+
+FILE * fopen(char *, char *);
+int fclose(FILE *);
+
 %{
     #include "/usr/local/include/gsl/gsl_permute.h"
     #include "/usr/local/include/gsl/gsl_permute_double.h"
@@ -17,7 +21,7 @@
 %include "/usr/local/include/gsl/gsl_permutation.h"
 
 %perlcode %{ 
-@EXPORT_OK = qw/
+@EXPORT_OK = qw/fopen fclose
                 gsl_permutation_alloc 
                 gsl_permutation_calloc 
                 gsl_permutation_init 

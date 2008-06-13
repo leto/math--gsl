@@ -14,6 +14,7 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     my $self = shift;
+    unlink 'permutation' if -f 'permutation';
 
     gsl_permutation_free($self->{permutation});
 }
@@ -162,9 +163,19 @@ sub GSL_PERMUTATION_MUL : Tests {
      map {  is(gsl_permutation_get($p->{permutation}, $_), $_)} (2..4);
 }
 
-sub GSL_PERMUTATION_FWRITE : Tests {
+sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
     my $self = shift;
-#    my $fh = fopen("permutation", "w");
-#    gsl_permutation_fwrite 
+    gsl_permutation_init($self->{permutation});
+    my $fh = fopen("permutation", "w");
+    gsl_permutation_fwrite($fh, $self->{permutation});
+    fclose($fh);
+
+    my $p->{permutation} = gsl_permutation_alloc(6);
+    $fh = fopen("permutation", "r");
+    gsl_permutation_fread($fh, $p->{permutation});
+    map { is(gsl_permutation_get($p->{permutation}, $_), $_) } (0..5);
+    fclose($fh);
 }
+
+
 1;

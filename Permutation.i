@@ -131,7 +131,27 @@ use Math::GSL::Permutation qw/:all/;
  map { print gsl_permutation_get($p->{permutation},$_) . ", " } (0..3);
  print gsl_permutation_get($p->{permutation}, 4);
  print "] \n";
+
+
+ use Math::GSL::Permutation qw/:all/;
+ use Math::GSL::Vector qw/:all/;
+ my $p->{permutation} = gsl_permutation_calloc(6); 
+ gsl_permutation_init($p->{permutation});
+ gsl_permutation_swap($p->{permutation}, 0, 1);
+ print "The permutation has his first and second elements swapped : [";
+ map { print gsl_permutation_get($p->{permutation}, $_) . "," } (0..4);
+ print gsl_permutation_get($p->{permutation}, 5) . "] \n";    
+ my $vec->{vector} = gsl_vector_alloc(6);
+ map { gsl_vector_set($vec->{vector}, $_, $_) } (0..5);
  
+ print "We will now apply the permutation to this vector : [";
+ map { print gsl_vector_get($vec->{vector}, $_) . "," } (0..4);
+ print gsl_vector_get($vec->{vector}, 5) . "] \n";     
+ gsl_permute_vector($p->{permutation}, $vec->{vector});
+ print "The vector is now : [";
+ map { print gsl_vector_get($vec->{vector}, $_) . "," } (0..4);
+ print gsl_vector_get($vec->{vector}, 5) . "] \n";     
+
 
 =head1 AUTHOR
 

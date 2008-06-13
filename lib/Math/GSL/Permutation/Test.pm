@@ -177,5 +177,17 @@ sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
     fclose($fh);
 }
 
-
+#sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
+#    my $self = shift;
+#    my $fh = fopen("permutation", "w");
+#    gsl_permutation_init($self->{permutation});
+#    gsl_permutation_fprintf($fh, $self->{permutation}, "%f");
+#    fclose($fh);
+#
+#    $fh = fopen("permutation", "r");
+#    my $p->{permutation} = gsl_permutation_alloc(6); 
+#    is(gsl_permutation_fscanf($fh, $p->{permutation}), 0); # I don't understand why gsl_permutation_fscanf fails there
+#    map { is(gsl_permutation_get($p->{permutation}, $_), $_) } (0..5);
+#    fclose($fh);
+#}
 1;

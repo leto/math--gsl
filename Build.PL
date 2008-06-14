@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
-# $Id: Build.PL,v 1.25 2006/08/05 08:48:12 rocky Exp $
+
+# This script has been heavily modified from the Device::Cdio Build.PL 
+# Jonathan Leto <jonathan@leto.net>
+
 #    Copyright (C) 2006 Rocky Bernstein <rocky@cpan.org>
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -17,10 +20,16 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 use strict;
 use warnings;
-use Module::Build;
-use ExtUtils::PkgConfig;
 use Config;
 use Data::Dumper;
+
+BEGIN {
+    eval { 
+        require Module::Build;
+        require ExtUtils::PkgConfig; 
+    };
+    die "Math::GSL requires Module::Build and ExtUtils::PkgConfig, please install these first.\n" if $@;
+}
 
 my $code = <<'EOC';
 use Config;
@@ -103,10 +112,9 @@ sub compile_swig {
    
     push @swig_flags, $self->split_like_shell( qq{-module Math::GSL::$file_base} );
 
-    my $blib_lib =  File::Spec->catfile('blib','lib');
-    #my $blib_lib = 'blib/lib';
+    my $blib_lib =  File::Spec->catfile(qw/blib lib/);
 
-    mkdir File::Spec->catfile($blib_lib, 'Math/GSL');
+    mkdir File::Spec->catfile($blib_lib, qw/Math GSL/);
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
     $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib . '/Math/GSL/',
@@ -115,7 +123,7 @@ sub compile_swig {
     
     my $pm_file = "${file_base}.pm";
     my $from = File::Spec->catfile($blib_lib, $pm_file);
-    my $to   = File::Spec->catfile("lib", $pm_file);
+    my $to   = File::Spec->catfile(qw/lib Math GSL/, $pm_file);
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);
@@ -354,7 +362,7 @@ my $builder = $class->new(
     swig_installed      => $swig_installed,
     license             => 'gpl',
     requires => {
-	    'ExtUtils::PkgConfig'   =>  '1.03',
+        'ExtUtils::PkgConfig'   =>  '1.03',
         'Scalar::Util'          =>       0,
         'Test::More'            =>       0,
         'Test::Class'           =>       0,
@@ -363,8 +371,7 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [  
-                                map { [ "$_.i" ] } 
-                                qw/ 
+                                map { [ "$_.i" ] } sort qw/ 
 BLAS                  Diff                  Machine                                     Statistics
 Block                 Eigen                 Matrix                Poly                  Sum
 BSpline               Errno                 PowInt                Sys

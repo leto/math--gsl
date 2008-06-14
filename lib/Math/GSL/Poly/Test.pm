@@ -4,8 +4,11 @@ use Test::More;
 use Math::GSL qw/:all/;
 use Math::GSL::Poly qw/:all/;
 use Math::GSL::Complex qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
+
+BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
 }
@@ -30,7 +33,7 @@ sub GSL_POLY_COMPLEX_EVAL : Tests {
     my $z   = gsl_complex_rect(2,1);                      # 2+i
     my $got = gsl_poly_complex_eval( [ 1, 4 ], 2, $z);    # 1 + 4 x
 
-    is_deeply( [ gsl_parts($got) ] , [ 9, 4 ] );
+    is_deeply( [ gsl_parts($got) ] , [ 9, 4 ], 'gsl_poly_complex_eval' );
 }
 
 sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests { 
@@ -40,7 +43,7 @@ sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests {
     my $c2   = gsl_complex_rect(0,5);                      # 5i
 
     my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
-    is_deeply( [ gsl_parts($got) ], [ 4, 16 ],'gsl_complex_poly_eval' );
+    is_deeply( [ gsl_parts($got) ], [ 4, 16 ],'gsl_complex_poly_complex_eval' );
 }
 
 sub GSL_COMPLEX_POLY_COMPLEX_EVAL2 : Tests {

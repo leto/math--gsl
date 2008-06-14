@@ -9,3 +9,4 @@ blib
 _build
 tmp*
 pod2htm*
+lib/Math/GSL/[A-z]*\.pm

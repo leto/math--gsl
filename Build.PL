@@ -186,7 +186,7 @@ sub compile_c {
 
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
 
-  my @ccflags = split / /, $self->split_like_shell($cf->{ccflags});
+  my @ccflags  = $self->split_like_shell($cf->{ccflags});
   my @optimize = $self->split_like_shell($cf->{optimize});
 
   # Whoah! There seems to be a bug in gcc 4.1.0 and optimization
@@ -351,10 +351,27 @@ if ('cygwin' eq $Config{osname} &&
 }
 
 my $class = Module::Build->subclass( code => $code );
+my @Subsystems = sort qw/
+            BLAS         Diff          Machine      Statistics Wavelet
+            Block        Eigen         Matrix       Poly       Wavelet2D
+            BSpline      Errno         PowInt       Sys
+            CBLAS        FFT           Min          Math
+            CDF          Fit           Mode         QRNG
+            Chebyshev    Function      Monte        RNG
+            Heapsort     Multifit      Randist      Sum
+            Combination  Histogram     Multimin     Roots      
+            Complex      Histogram2d   Multiroots   SF         
+            Const        Siman         IEEEUtils    Types
+            DFT          Integration   NTuple       Sort                  
+            DHT          Interp        ODEIV        Vector
+            Deriv        Linalg        Permutation  Spline
+/;
+my $cleanup = qq{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build blib *.so *.orig } . 
+              join (" ", map { qq{lib/Math/GSL/$_.pm} } @Subsystems);
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
-    add_to_cleanup      => [ q{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build *.so *.orig} ],
+    add_to_cleanup      => [ $cleanup ],
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
@@ -375,23 +392,9 @@ my $builder = $class->new(
     },
     sign                  => 1,
     swig_source           => [  
-                                map { [ "$_.i" ] } sort qw/ 
-BLAS                  Diff                  Machine                                     Statistics
-Block                 Eigen                 Matrix                Poly                  Sum
-BSpline               Errno                 PowInt                Sys
-CBLAS                 FFT                   Min                   Math
-CDF                   Fit                   Mode                  QRNG                  Types
-Chebyshev             Function              Monte                 RNG                   Vector
-Heapsort              Multifit              Randist               
-Combination           Histogram             Multimin              Roots                 Wavelet
-Complex               Histogram2d           Multiroots            SF                    Wavelet2D
-Const                 Siman                 IEEEUtils
-DFT                   Integration           NTuple                Sort                  
-DHT                   Interp                ODEIV                 
-Deriv                 Linalg                Permutation           Spline
-                                  / 
+                                map { [ "$_.i" ] } @Subsystems
                              ],
 );
-
 $builder->add_build_element('swig');
 $builder->create_build_script();
+print "Have a great day!\n";

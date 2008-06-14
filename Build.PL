@@ -34,6 +34,7 @@ BEGIN {
 my $code = <<'EOC';
 use Config;
 use File::Copy;
+use File::Spec::Functions qw/:ALL/;
 
 sub process_swig_files {
     my $self = shift;
@@ -82,8 +83,8 @@ sub process_swig {
   # Unfortunately we have to pre-compute the whole path.
   my $archdir;
   {
-    my @dirs = File::Spec->splitdir($file_base);
-    $archdir = File::Spec->catdir($self->blib,'arch', @dirs[1..$#dirs]);
+    my @dirs = splitdir($file_base);
+    $archdir = catdir($self->blib,'arch', @dirs[1..$#dirs]);
   }
   
   # .o -> .so
@@ -112,18 +113,20 @@ sub compile_swig {
    
     push @swig_flags, $self->split_like_shell( qq{-module Math::GSL::$file_base} );
 
-    my $blib_lib =  File::Spec->catfile(qw/blib lib/);
+    my $blib_lib =  catfile(qw/blib lib/);
 
-    mkdir File::Spec->catfile($blib_lib, qw/Math GSL/);
+    mkdir catfile($blib_lib, qw/Math GSL/);
+    my $outdir = catfile($blib_lib, qw/Math GSL/);
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
-    $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib . '/Math/GSL/',
-		     '-perl5', @swig_flags, $file)
+    $self->do_system(@swig, '-o', $c_file,
+                     '-outdir', $outdir, 
+		             '-perl5', @swig_flags, $file)
 	or die "error building $c_file file from '$file'";
     
     my $pm_file = "${file_base}.pm";
-    my $from = File::Spec->catfile($blib_lib, $pm_file);
-    my $to   = File::Spec->catfile(split qq/lib Math $file_base GSL/, $pm_file);
+    my $from    = catfile($blib_lib, qw/Math GSL/, $pm_file);
+    my $to      = catfile(qw/lib Math GSL/,$pm_file);
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);
@@ -140,7 +143,7 @@ sub link_c {
   my ($self, $to, $file_base, $obj_file) = @_;
   my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
-  my $lib_file = File::Spec->catfile($to, File::Basename::basename("$file_base.so"));
+  my $lib_file = catfile($to, File::Basename::basename("$file_base.so"));
 
   $self->add_to_cleanup($lib_file);
   my $objects = $p->{objects} || [];
@@ -175,8 +178,8 @@ sub compile_c {
   $cf->{installarchlib} = $Config{archlib};
 
   my @include_dirs = @{$p->{include_dirs}} 
-			? map {"-I$_"} (@{$p->{include_dirs}}, File::Spec->catdir($cf->{installarchlib}, 'CORE'))
-			: map {"-I$_"} ( File::Spec->catdir($cf->{installarchlib}, 'CORE') ) ;
+			? map {"-I$_"} (@{$p->{include_dirs}}, catdir($cf->{installarchlib}, 'CORE'))
+			: map {"-I$_"} ( catdir($cf->{installarchlib}, 'CORE') ) ;
 
   my @extra_compiler_flags = #split / /, q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/};
    $self->split_like_shell($p->{extra_compiler_flags});

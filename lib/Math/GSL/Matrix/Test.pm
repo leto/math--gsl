@@ -421,4 +421,20 @@ sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
    fclose($fh); 
 }
 
+sub GSL_MATRIX_MINMAX_INDEX : Tests { 
+   my $self = shift;
+   my $line;
+   for ($line = 0; $line<4; $line ++) {
+   map { gsl_matrix_set($self->{matrix}, $line, $_, $_) } (0..4); }
+   map { gsl_matrix_set($self->{matrix}, 4, $_, $_**2) } (0..4);
+   my ($imin, $jmin, $imax, $jmax) = gsl_matrix_minmax_index($self->{matrix});
+   ok_similar( [ $imin, $jmin, $imax, $jmax ], [ 0, 0, 4, 4], 'gsl_matrix_minmax_index' );
+}
+
+sub GSL_MATRIX_ADD_DIAGONAL : Tests {
+   my $self = shift;
+   map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4);
+   gsl_matrix_add_diagonal($self->{matrix}, 4);
+   map { is(gsl_matrix_get($self->{matrix}, $_, $_), $_+4) } (0..4);
+}
 1;

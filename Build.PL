@@ -123,7 +123,7 @@ sub compile_swig {
     
     my $pm_file = "${file_base}.pm";
     my $from = File::Spec->catfile($blib_lib, $pm_file);
-    my $to   = File::Spec->catfile(qw/lib Math GSL/, $pm_file);
+    my $to   = File::Spec->catfile(split qq/lib Math $file_base GSL/, $pm_file);
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);
@@ -272,6 +272,7 @@ sub try_cflags ($) {
 	
 }
 
+print "Checking for GSL..";
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
 use constant MIN_GSL_VERSION => "1.10";
@@ -284,26 +285,26 @@ if (defined $gv) {
     unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
 	    printf "
 *** 
-*** You need to have gsl %s or greater installed. (You have $gv).
-*** Get gsl at http://www.gnu.org/software/gsl
+*** You need to have GSL %s or greater installed. (You have $gv).
+*** Get GSL at http://www.gnu.org/software/gsl
 ", MIN_GSL_VERSION;
 	    exit 1;
 	} else {
-	    print "Good, I found gsl version $gv installed.\n";
+	    print "Found GSL version $gv\n";
 	    
 	}
     } else {
 	print "
 *** 
-*** Can't parse gsl version $gv.
+*** Can't parse GSL version $gv.
 *** Will continue and keep my fingers crossed for luck.
 ";
     }
 } else {
     print "
 *** 
-*** Can't find gsl configuration info. Is gsl installed?
-*** Get gsl at http://www.gnu.org/software/gsl
+*** Can't find GSL configuration info. Is GSL installed?
+*** Get GSL at http://www.gnu.org/software/gsl
 ";
     exit 1;
 }
@@ -323,7 +324,7 @@ if ($?) {
 " if @swig_version;
 } else {
     $swig_installed = 1;
-    print "ok\n";
+    print qq{Found $swig_version[1]};
 }
 
 my $ccflags = $gsl_pkgcfg{cflags};

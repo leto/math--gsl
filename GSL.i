@@ -15,11 +15,15 @@
         tv = av_fetch(tempav, i, 0);
         $1[i] = (double) SvNV(*tv);
     }
-    $1[i] = GSL_NAN;
 }
 %apply double const [] { double *data };
+%apply double const [] { double x[] };
 /*
 %typemap(freearg) double const [] {
     free($1);
 }
 */
+
+%typemap(argout) double const [] {
+    printf("argout double const\n");
+}

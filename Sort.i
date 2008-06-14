@@ -22,7 +22,6 @@
         tv = av_fetch(tempav, i, 0);
         $1[i] = (double) SvNV(*tv);
     }
-    $1[i] = GSL_NAN;
 }
 
 %typemap(argout) double * {

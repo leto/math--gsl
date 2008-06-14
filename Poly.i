@@ -1,6 +1,11 @@
 %module Poly
 %include "GSL.i" 
 
+%{
+    #include "/usr/local/include/gsl/gsl_sys.h"
+%}
+%include "/usr/local/include/gsl/gsl_sys.h"
+
 %typemap(in) double * (double dvalue) {
   SV* tempsv;
   if (!SvROK($input)) {
@@ -62,7 +67,6 @@
         printf("im z = %f\n", GSL_IMAG(z) );
         $1[i] = z;
     }
-    //$1[i] = GSL_NAN;
 }
 %{
     #include "/usr/local/include/gsl/gsl_nan.h"

@@ -14,6 +14,7 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     my $self = shift;
+    unlink 'permutation' if -f 'permutation';
 
     gsl_permutation_free($self->{permutation});
 }
@@ -120,7 +121,7 @@ sub GSL_PERMUTATION_PREV : Tests {
 #}
 
 sub GSL_PERMUTE_VECTOR : Tests {
-     my $self = shift;
+     my $self = shift;     
      gsl_permutation_init($self->{permutation});
      gsl_permutation_swap($self->{permutation}, 0, 1);
     
@@ -143,5 +144,38 @@ sub GSL_PERMUTE_VECTOR_INVERSE : Tests {
      is(gsl_vector_get($vec->{vector}, 0), 1);
      is(gsl_vector_get($vec->{vector}, 1), 0);
      map { is(gsl_vector_get($vec->{vector}, $_), $_) } (2..5);
-}  
+}
+
+sub GSL_PERMUTATION_MUL : Tests {
+     my $self = shift;
+     gsl_permutation_init($self->{permutation});
+     gsl_permutation_swap($self->{permutation}, 0, 1);
+
+     my $p2->{permutation} = gsl_permutation_alloc(6);
+     gsl_permutation_init($p2->{permutation});
+     gsl_permutation_swap($p2->{permutation}, 0, 5);
+
+     my $p->{permutation} = gsl_permutation_alloc(6) ;
+     gsl_permutation_mul ($p->{permutation}, $p2->{permutation}, $self->{permutation});
+     is(gsl_permutation_get($p->{permutation}, 0), 5);
+     is(gsl_permutation_get($p->{permutation}, 1), 0);
+     is(gsl_permutation_get($p->{permutation}, 5), 1);
+     map {  is(gsl_permutation_get($p->{permutation}, $_), $_)} (2..4);
+}
+
+sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
+    my $self = shift;
+    gsl_permutation_init($self->{permutation});
+    my $fh = fopen("permutation", "w");
+    gsl_permutation_fwrite($fh, $self->{permutation});
+    fclose($fh);
+
+    my $p->{permutation} = gsl_permutation_alloc(6);
+    $fh = fopen("permutation", "r");
+    gsl_permutation_fread($fh, $p->{permutation});
+    map { is(gsl_permutation_get($p->{permutation}, $_), $_) } (0..5);
+    fclose($fh);
+}
+
+
 1;

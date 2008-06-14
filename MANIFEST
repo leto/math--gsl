@@ -51,7 +51,6 @@ Multiroots.i
 NTuple.i
 ODEIV.i
 Permutation.i
-Permute.i
 Poly.i
 PowInt.i
 Precision.i

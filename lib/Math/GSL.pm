@@ -155,7 +155,7 @@ sub new
 sub subsystems
 {
     return qw/
-        BLAS         Diff         Machine       Permute   Statistics
+        BLAS         Diff         Machine       Statistics
         Block        Eigen        Matrix        Poly      Sum
         BSpline      Errno        PowInt        Sys
         CBLAS        FFT          Min           IEEEUtils

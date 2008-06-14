@@ -1,5 +1,9 @@
 =head1 TODO
 
+=head2 Stuff we realy need
+
+* tests in xt/ to test for correct Build.PL behavior when modules are missing, etc...
+
 =head2 Stuff to do SOON
 
 * port remaining test files to use Test::Class
@@ -17,5 +21,5 @@
 
 * make sure blib/ files are copied to correct place in lib/
 
-* make the interface files not be hardcoded to /usr/local/include/gsl, possibly
-  using an environment variable
+* make the interface files not be hardcoded to /usr/local/include/gsl,
+  investigate SWIG preprocessor

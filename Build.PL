@@ -112,10 +112,9 @@ sub compile_swig {
    
     push @swig_flags, $self->split_like_shell( qq{-module Math::GSL::$file_base} );
 
-    my $blib_lib =  File::Spec->catfile('blib','lib');
-    #my $blib_lib = 'blib/lib';
+    my $blib_lib =  File::Spec->catfile(qw/blib lib/);
 
-    mkdir File::Spec->catfile($blib_lib, 'Math/GSL');
+    mkdir File::Spec->catfile($blib_lib, qw/Math GSL/);
 
     print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
     $self->do_system(@swig, '-o', $c_file, '-outdir', $blib_lib . '/Math/GSL/',
@@ -124,7 +123,7 @@ sub compile_swig {
     
     my $pm_file = "${file_base}.pm";
     my $from = File::Spec->catfile($blib_lib, $pm_file);
-    my $to   = File::Spec->catfile("lib", $pm_file);
+    my $to   = File::Spec->catfile(qw/lib Math GSL/, $pm_file);
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);

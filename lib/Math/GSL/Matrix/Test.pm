@@ -265,10 +265,9 @@ sub GSL_MATRIX_MAX_INDEX : Tests {
 
 sub GSL_MATRIX_MIN_INDEX : Tests {
    my $self = shift;
-   my ($imax, $jmax);
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   ($imax, $jmax) = gsl_matrix_min_index($self->{matrix});
-   ok_similar( [ $imax, $jmax ], [ 0, 0 ], 'gsl_matrix_min_index' );
+   my ($imin, $jmin) = gsl_matrix_min_index($self->{matrix});
+   ok_similar( [ $imin, $jmin ], [ 0, 0 ], 'gsl_matrix_min_index' );
 }
 
 sub GSL_MATRIX_ISNULL : Tests {

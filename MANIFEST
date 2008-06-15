@@ -80,13 +80,19 @@ t/GSL.t
 t/Machine.t
 t/Matrix.t
 t/ODEIV.t
+t/Permutation.t
 t/Poly.t
 t/PowInt.t
 t/Randist.t
 t/Roots.t
 t/RNG.t
+t/QRNG.t
 t/SF.t
 t/Vector.t
+lib/Math/GSL/Permutation/Test.pm
+lib/Math/GSL/QRNG/Test.pm
+lib/Math/GSL/Randist/Test.pm
+GSLConfig.i
 TODO
 Types.i
 Vector.i
@@ -108,3 +114,5 @@ bin/create_export_code
 examples/sf/bessel
 examples/sf/plot_bessel.gnuplot
 examples/sf/README
+examples/rng
+

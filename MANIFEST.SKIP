@@ -4,3 +4,6 @@ tmp.*
 \.bak
 _build
 Build
+.*_wrap.*
+blib/*
+lib/Math/GSL/[A-z0-9]*\.pm

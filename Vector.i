@@ -23,7 +23,6 @@
         tv = av_fetch(tempav, i, 0);
         $1[i] = (double) SvNV(*tv);
     }
-    $1[i] = GSL_NAN;
 }
 
 FILE * fopen(char *, char *);
@@ -72,23 +71,29 @@ int fclose(FILE *);
 sub new {
     my ($class, $values) = @_;
     my $length  = $#$values;
+    my $this = {}; 
     my $vector;
-    die __PACKAGE__.'::new($x) - $x must be an int or nonempty array reference'
-        if( !(defined $values) || ($length == -1));
-
     if ( ref $values eq 'ARRAY' ){
+        die __PACKAGE__.'::new($x) - $x must a nonempty array reference' if $length == -1;
         $vector  = gsl_vector_alloc($length+1);
         map { gsl_vector_set($vector, $_, $values->[$_] ) }  (0 .. $length);
-    } elsif ( int $values == $values && $values > 0) {
-        $vector  = gsl_vector_alloc($length);
+        $this->{_length} = $length+1;
+    } elsif ( (int($values) == $values) && ($values > 0)) {
+        $vector  = gsl_vector_alloc($values);
+        $this->{_length} = $values;
     } else {
         die __PACKAGE__.'::new($x) - $x must be an int or array reference';
     }
-    my $self = {}; 
-    $self->{_vector} = $vector; 
-    bless $self, $class;
+    $this->{_vector} = $vector; 
+    bless $this, $class;
 }
 
+sub length { my $self=shift; $self->{_length} }
+
+sub get_all {
+    my $self=shift;
+    $self->get( [ 0 .. $self->length - 1  ] );
+}
 sub get {
     my ($self, $indices) = @_;
     return  map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ;

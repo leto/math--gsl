@@ -62,7 +62,6 @@ sub process_swig {
       # .swg -> .c
       $self->add_to_cleanup($c_file);
       
-      # print "+++ c_file: $c_file, file: $main_swig_file ", `pwd`, "\n";
       # If any of the swig files that the main swig depends is newer 
       # then rebuild.
       foreach my $depends_on ($main_swig_file, @$deps_ref) {
@@ -118,7 +117,6 @@ sub compile_swig {
     mkdir catfile($blib_lib, qw/Math GSL/);
     my $outdir = catfile($blib_lib, qw/Math GSL/);
 
-    print "+++swig -o $c_file -outdir $blib_lib -perl5 @swig_flags $file\n"; 
     $self->do_system(@swig, '-o', $c_file,
                      '-outdir', $outdir, 
 		             '-perl5', @swig_flags, $file)
@@ -357,7 +355,7 @@ my @Subsystems = sort qw/
             BSpline      Errno         PowInt       Sys
             CBLAS        FFT           Min          Math
             CDF          Fit           Mode         QRNG
-            Chebyshev    Function      Monte        RNG
+            Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      
             Complex      Histogram2d   Multiroots   SF         

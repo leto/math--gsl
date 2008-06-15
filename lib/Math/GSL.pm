@@ -62,7 +62,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Errno
     Math::GSL::FFT
     Math::GSL::Fit
-    Math::GSL::Function
     Math::GSL::Heapsort
     Math::GSL::Histogram
     Math::GSL::Histogram2d
@@ -154,19 +153,19 @@ sub new
 
 sub subsystems
 {
-    return qw/
+    return sort qw/
         BLAS         Diff         Machine       Statistics
-        Block        Eigen        Matrix        Poly      Sum
+        Block        Eigen        Matrix        Poly 
         BSpline      Errno        PowInt        Sys
         CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          Mode          QRNG      Types
-        Chebyshev    Function     Monte         RNG       Vector
-        Heapsort     Multifit     Randist       
-        Combination  Histogram    Multimin      Roots     Wavelet
-        Complex      Histogram2d  Multiroots    SF        Wavelet2D
-        Const        Siman         
+        CDF          Fit          Mode          QRNG
+        Chebyshev    Monte        RNG           Vector
+        Heapsort     Multifit     Randist       Roots     
+        Combination  Histogram    Multimin      Wavelet
+        Complex      Histogram2d  Multiroots    Wavelet2D
+        Const        Siman        Sum           Types 
         DFT          Integration  NTuple        Sort                  
-        DHT          Interp       ODEIV         
+        DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
     /;
 }

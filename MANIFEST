@@ -92,7 +92,6 @@ t/Vector.t
 lib/Math/GSL/Permutation/Test.pm
 lib/Math/GSL/QRNG/Test.pm
 lib/Math/GSL/Randist/Test.pm
-GSLConfig.i
 TODO
 Types.i
 Vector.i

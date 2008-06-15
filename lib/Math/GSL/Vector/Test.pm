@@ -13,6 +13,7 @@ BEGIN{ gsl_set_error_handler_off(); }
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{vector} = gsl_vector_alloc(5);
+    $self->{object} = Math::GSL::Vector->new(5);
 }
 
 sub teardown : Test(teardown) {
@@ -22,6 +23,11 @@ sub teardown : Test(teardown) {
 sub GSL_VECTOR_ALLOC : Tests {
     my $vector = gsl_vector_alloc(5);
     isa_ok($vector, 'Math::GSL::Vector');
+}
+sub GSL_VECTOR_LENGTH: Tests {
+    my $self = shift;
+    my $vector = $self->{object};
+    ok( $vector->length == 5, '$vector->length' );
 }
 sub GSL_VECTOR_SET_GET: Tests { 
     my $self = shift;
@@ -83,10 +89,13 @@ sub GSL_VECTOR_NEW: Tests {
 
     eval { Math::GSL::Vector->new([]) };
     ok( $@, 'new takes only nonempty array refs');
+
+    eval { $vec = Math::GSL::Vector->new(42) };
+    ok( $vec->length == 42 , 'new creates empty vectors of a given length');
 }
 sub GSL_VECTOR_GET: Tests {
     my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (reverse 1..10) ] );
-    my @x = $vec->get([0..9]);
+    my @x = $vec->get_all;
     is_deeply( \@x, [map { $_ ** 2 } (reverse 1..10)] );
 }
 

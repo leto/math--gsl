@@ -9,7 +9,6 @@
     I32 len;
     int i;
     SV **tv;
-    printf("typemap(in)\n");
     if (!SvROK($input))
         croak("Math::GSL : $input is not a reference!");
     if (SvTYPE(SvRV($input)) != SVt_PVAV)
@@ -28,10 +27,9 @@
     int i=0;
     AV* tempav = newAV();
 
-    printf("woohoo $result \n");
-
+    // Need to determine length of $1
     while( i<= 5 ) {
-        printf("setting stuff %f\n", $1[i]);
+        //printf("setting stuff %f\n", $1[i]);
         av_push(tempav, newSVnv((double) $1[i]));
         i++;
     }
@@ -42,9 +40,6 @@
 }
 
 %apply double * { double *data };
-
-void gsl_sort (double * data, const size_t stride, const size_t n);
-
 
 %{
     #include "/usr/local/include/gsl/gsl_nan.h"

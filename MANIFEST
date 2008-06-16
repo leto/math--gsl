@@ -103,8 +103,9 @@ lib/Math/GSL/Sort/Test.pm
 lib/Math/GSL/Min/Test.pm
 lib/Math/GSL/Wavelet/Test.pm
 lib/Math/GSL/Wavelet2D/Test.pm
-t/Function.t
+lib/Math/GSL/Linalg/Test.pm
 t/Sort.t
+t/Linalg.t
 t/Min.t
 t/Wavelet.t
 Wavelet2D.i
@@ -114,4 +115,5 @@ examples/sf/bessel
 examples/sf/plot_bessel.gnuplot
 examples/sf/README
 examples/rng
-
+Makefile.PL
+META.yml

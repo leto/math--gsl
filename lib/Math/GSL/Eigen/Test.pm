@@ -74,7 +74,8 @@ sub GSL_EIGEN_HERM : Tests {
     $x->{gsl_complex} = gsl_complex_rect(1,0);
     gsl_matrix_complex_set($m->{matrix}, 1, 1, $x->{gsl_complex});
     my $w->{eigen} = gsl_eigen_herm_alloc(2);
-    my $v->{vector} = gsl_eigen_herm($m->{matrix}, $v->{vector}, $w->{eigen});
+    my $v->{vector} = gsl_vector_alloc(2);
+    is(gsl_eigen_herm($m->{matrix}, $v->{vector}, $w->{eigen}), 0);
     is (gsl_vector_get($v->{vector}, 0), 1);
     is (gsl_vector_get($v->{vector}, 1), 3);    
 }  

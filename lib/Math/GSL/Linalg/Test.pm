@@ -20,15 +20,15 @@ sub teardown : Test(teardown) {
 
 sub GSL_LINALG_LU_DECOMP : Tests {
     my $self = shift;
-    my $line;
-    for ($line=0; $line<5; $line++){
-    map { gsl_matrix_set($self->{matrix}, $line, $_, $_) } (0..4); }
-    my $p->{permutation} = gsl_permutation_alloc(5);
-    gsl_permutation_init($p->{permutation});
-    print Dumper [ $p->{permutation} ];
-    my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $p->{permutation});
-    is ($result, 0);
-    is ($signum, 1);
+
+    for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, $_) } (0..4); 
+    }
+
+    my $permutation = gsl_permutation_alloc(5);
+    gsl_permutation_init($permutation);
+    my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
+    is_deeply( [ $result, $signum ], [ 0, 1] );
 }
 
 1;

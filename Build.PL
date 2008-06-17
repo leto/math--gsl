@@ -364,7 +364,7 @@ my @Subsystems = sort qw/
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline
 /;
-my $cleanup = qq{*.core Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build blib *.so *.orig } . 
+my $cleanup = qq{*.core Makefile Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build blib *.so *.orig } . 
               join (" ", map { qq{lib/Math/GSL/$_.pm} } @Subsystems);
 
 my $builder = $class->new( 

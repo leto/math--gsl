@@ -150,16 +150,14 @@ use Math::GSL::Poly qw/:all/;
 
 =head1 EXAMPLES
 
- use Math::GSL::Poly qw/:all/;
- $a = 1;
- $b = 6;
- $c = 9;
- $x0 = 0;
- $x1 = 0;
- $num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
- print "x**2+6x+9 contains $num_roots roots which are $x0 and $x1. \n";
- 
-=head1 AUTHOR
+    use Math::GSL::Poly qw/:all/;
+    my ($a,$b,$c) = (1,6,9);
+    my ($x0, $x1) = (0,0);
+    my $num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
+    print "${a}*x**2 + ${b}*x + $c contains $num_roots roots which are $x0 and $x1. \n";
+
+
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

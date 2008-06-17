@@ -17,8 +17,8 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_EIGEN_SYMM_ALLOC : Tests {
-    my $eigen = gsl_eigen_symm_alloc(5);
-    isa_ok($eigen, 'Math::GSL::Eigen');
+    my $self = shift;
+    isa_ok($self->{eigen}, 'Math::GSL::Eigen');
 }
 
 sub GSL_EIGEN_SYMMV_ALLOC : Tests {
@@ -64,19 +64,23 @@ sub GSL_EIGEN_SYMMV : Tests {
 }
 
 sub GSL_EIGEN_HERM : Tests {
-    my $m->{matrix} = gsl_matrix_complex_alloc (2, 2);
-    my $x->{gsl_complex} = gsl_complex_rect(3,0);
-    gsl_matrix_complex_set($m->{matrix}, 0, 0, $x->{gsl_complex});
-    $x->{gsl_complex} = gsl_complex_rect(2,1);
-    gsl_matrix_complex_set($m->{matrix}, 0, 1, $x->{gsl_complex});
-    $x->{gsl_complex} = gsl_complex_rect(2,-1);
-    gsl_matrix_complex_set($m->{matrix}, 1, 0, $x->{gsl_complex});
-    $x->{gsl_complex} = gsl_complex_rect(1,0);
-    gsl_matrix_complex_set($m->{matrix}, 1, 1, $x->{gsl_complex});
-    my $w->{eigen} = gsl_eigen_herm_alloc(2);
-    my $v->{vector} = gsl_vector_alloc(2);
-    is(gsl_eigen_herm($m->{matrix}, $v->{vector}, $w->{eigen}), 0);
-    is (gsl_vector_get($v->{vector}, 0), 1);
-    is (gsl_vector_get($v->{vector}, 1), 3);    
+    my $matrix  = gsl_matrix_complex_alloc (2, 2);
+    my $complex = gsl_complex_rect(3,0);
+    gsl_matrix_complex_set($matrix, 0, 0, $complex);
+
+    $complex = gsl_complex_rect(2,1);
+    gsl_matrix_complex_set($matrix, 0, 1, $complex);
+
+    $complex = gsl_complex_rect(2,-1);
+    gsl_matrix_complex_set($matrix, 1, 0, $complex);
+
+    $complex = gsl_complex_rect(1,0);
+    gsl_matrix_complex_set($matrix, 1, 1, $complex);
+
+    my $eigen  = gsl_eigen_herm_alloc(2);
+    my $vector = gsl_vector_alloc(2);
+    is(gsl_eigen_herm($matrix, $vector, $eigen), 0);
+    is (gsl_vector_get($vector, 0), 1);
+    is (gsl_vector_get($vector, 1), 3);    
 }  
 1;

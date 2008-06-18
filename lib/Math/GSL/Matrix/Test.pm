@@ -10,6 +10,7 @@ use strict;
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{matrix} = gsl_matrix_alloc(5,5);
+    $self->{obj}    = Math::GSL::Matrix->new(5,5);
 }
 
 sub teardown : Test(teardown) {
@@ -319,20 +320,22 @@ sub GSL_MATRIX_ISNEG : Tests {
 }
 
 sub GSL_MATRIX_ISNONNEG : Tests {
-   my $self = shift;
-   my $line;
-   
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, -1) } (0..4); }
-   is(gsl_matrix_isnonneg($self->{matrix}), 0);
-   
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, 1) } (0..4); }
-   is(gsl_matrix_isnonneg($self->{matrix}), 1);
-   
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, 0) } (0..4); }
-   is(gsl_matrix_isnonneg($self->{matrix}), 1);
+    my $self = shift;
+    for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, -1) } (0..4); 
+    }
+    is(gsl_matrix_isnonneg($self->{matrix}), 0);
+
+    for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, 1) } (0..4); 
+    }
+    is(gsl_matrix_isnonneg($self->{matrix}), 1);
+
+    for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, 0) } (0..4); 
+    }
+    is(gsl_matrix_isnonneg($self->{matrix}), 1);
+
 }
 
 sub GSL_MATRIX_GET_ROW : Tests {
@@ -356,7 +359,10 @@ sub GSL_MATRIX_SET_ROW : Tests {
    my $vector->{vector} = gsl_vector_alloc(5);
    map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
    is(gsl_matrix_set_row($self->{matrix}, 1, $vector->{vector}), 0);
-   map { is(gsl_matrix_get($self->{matrix}, 1, $_), $_**2) } (0..4);  
+
+   ok_similar( [ map { gsl_matrix_get($self->{matrix}, 1, $_) } (0..4) ],
+               [ map { $_ ** 2 } (0..4) ],
+             );
 }
 
 sub GSL_MATRIX_SET_COL : Tests {
@@ -364,8 +370,11 @@ sub GSL_MATRIX_SET_COL : Tests {
    my $vector->{vector} = gsl_vector_alloc(5);
    map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
    is(gsl_matrix_set_col($self->{matrix}, 1, $vector->{vector}), 0);
-   map { is(gsl_matrix_get($self->{matrix}, $_, 1), $_**2) } (0..4);  
-}
+
+   ok_similar( [ map { gsl_matrix_get($self->{matrix}, $_, 1) } (0..4) ],
+               [ map { $_ ** 2 } (0..4) ],
+             );
+} 
 
 sub GSL_MATRIX_FREAD_FWRITE : Tests {
    my $self = shift;
@@ -434,6 +443,16 @@ sub GSL_MATRIX_ADD_DIAGONAL : Tests {
    my $self = shift;
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_) } (0..4);
    gsl_matrix_add_diagonal($self->{matrix}, 4);
-   map { is(gsl_matrix_get($self->{matrix}, $_, $_), $_+4) } (0..4);
+   ok_similar( [ map { gsl_matrix_get($self->{matrix}, $_, $_)} (0..4) ],
+               [ 4 .. 8 ], 
+             );
+}
+
+sub GSL_MATRIX_NEW : Tests {
+   my $self = shift;
+   isa_ok( $self->{obj}, 'Math::GSL::Matrix' );
+   isa_ok( $self->{obj}->raw, 'Math::GSL::Matrix::gsl_matrix' );
+   ok( $self->{obj}->rows == 5, '->rows' );
+   ok( $self->{obj}->cols == 5, '->cols' );
 }
 1;

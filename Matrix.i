@@ -122,7 +122,254 @@ no warnings 'redefine';
         gsl_matrix_complex_add_constant gsl_matrix_complex_add_diagonal gsl_matrix_complex_get_row
         gsl_matrix_complex_get_col gsl_matrix_complex_set_row gsl_matrix_complex_set_col /;
 
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ], char => [gsl_matrix_char_alloc, gsl_matrix_char_calloc, gsl_matrix_char_alloc_from_block, gsl_matrix_char_alloc_from_matrix, gsl_vector_char_alloc_row_from_matrix, gsl_vector_char_alloc_col_from_matrix, gsl_matrix_char_free, gsl_matrix_char_submatrix, gsl_matrix_char_row,  gsl_matrix_char_column, gsl_matrix_char_diagonal, gsl_matrix_char_subdiagonal, gsl_matrix_char_superdiagonal, gsl_matrix_char_subrow, gsl_matrix_char_subcolumn, gsl_matrix_char_view_array, gsl_matrix_char_view_array_with_tda, gsl_matrix_char_view_vector, gsl_matrix_char_view_vector_with_tda, gsl_matrix_char_const_submatrix, gsl_matrix_char_const_row, gsl_matrix_char_const_column, gsl_matrix_char_const_diagonal, gsl_matrix_char_const_subdiagonal, gsl_matrix_char_const_superdiagonal, gsl_matrix_char_const_subrow, gsl_matrix_char_const_subcolumn, gsl_matrix_char_const_view_array, gsl_matrix_char_const_view_array_with_tda, gsl_matrix_char_const_view_vector, gsl_matrix_char_const_view_vector_with_tda, gsl_matrix_char_get, gsl_matrix_char_set, gsl_matrix_char_ptr, gsl_matrix_char_const_ptr, gsl_matrix_char_set_zero, gsl_matrix_char_set_identity, gsl_matrix_char_set_all,  gsl_matrix_char_fread, gsl_matrix_char_fwrite, gsl_matrix_char_fscanf, gsl_matrix_char_fprintf, gsl_matrix_char_memcpy, gsl_matrix_char_swap, gsl_matrix_char_swap_rows, gsl_matrix_char_swap_columns, gsl_matrix_char_swap_rowcol, gsl_matrix_char_transpose, gsl_matrix_char_transpose_memcpy, gsl_matrix_char_max, gsl_matrix_char_min, gsl_matrix_char_minmax,  gsl_matrix_char_max_index, gsl_matrix_char_min_index, gsl_matrix_char_minmax_index, gsl_matrix_char_isnull, gsl_matrix_char_ispos, gsl_matrix_char_isneg, gsl_matrix_char_isnonneg, gsl_matrix_char_add, gsl_matrix_char_sub, gsl_matrix_char_mul_elements, gsl_matrix_char_div_elements, gsl_matrix_char_scale, gsl_matrix_char_add_constant, gsl_matrix_char_add_diagonal], double => [ gsl_matrix_alloc, gsl_matrix_calloc, gsl_matrix_alloc_from_block, gsl_matrix_alloc_from_matrix, gsl_vector_alloc_row_from_matrix, gsl_vector_alloc_col_from_matrix, gsl_matrix_free, gsl_matrix_submatrix, gsl_matrix_row, gsl_matrix_column, gsl_matrix_diagonal, gsl_matrix_subdiagonal, gsl_matrix_superdiagonal, gsl_matrix_subrow, gsl_matrix_subcolumn, gsl_matrix_view_array, gsl_matrix_view_array_with_tda, gsl_matrix_view_vector, gsl_matrix_view_vector_with_tda, gsl_matrix_const_submatrix, gsl_matrix_const_row, gsl_matrix_const_column, gsl_matrix_const_diagonal, gsl_matrix_const_subdiagonal, gsl_matrix_const_superdiagonal, gsl_matrix_const_subrow, gsl_matrix_const_subcolumn, gsl_matrix_const_view_array, gsl_matrix_const_view_array_with_tda, gsl_matrix_const_view_vector, gsl_matrix_const_view_vector_with_tda, gsl_matrix_get, gsl_matrix_set, gsl_matrix_ptr, gsl_matrix_const_ptr, gsl_matrix_set_zero, gsl_matrix_set_identity, gsl_matrix_set_all, gsl_matrix_fread, gsl_matrix_fwrite, gsl_matrix_fscanf, gsl_matrix_fprintf, gsl_matrix_memcpy, gsl_matrix_swap, gsl_matrix_swap_rows, gsl_matrix_swap_columns, gsl_matrix_swap_rowcol, gsl_matrix_transpose, gsl_matrix_transpose_memcpy, gsl_matrix_max, gsl_matrix_minmax, gsl_matrix_max_index, gsl_matrix_min_index, gsl_matrix_minmax_index, gsl_matrix_isnull, gsl_matrix_ispos, gsl_matrix_isneg, gsl_matrix_isnonneg, gsl_matrix_add, gsl_matrix_mul_elements, gsl_matrix_div_elements, gsl_matrix_scale, gsl_matrix_add_constant, gsl_matrix_add_diagonal], int => [gsl_matrix_int_alloc, gsl_matrix_int_alloc_from_matrix, gsl_matrix_int_free, gsl_matrix_int_column, gsl_matrix_int_superdiagonal, gsl_matrix_int_view_array_with_tda, gsl_matrix_int_const_submatrix, gsl_matrix_int_const_diagonal, gsl_matrix_int_const_subrow, gsl_matrix_int_const_view_array_with_tda, gsl_matrix_int_get, gsl_matrix_int_ptr, gsl_matrix_int_set_zero, gsl_matrix_int_fread, gsl_matrix_int_fscanf, gsl_matrix_int_memcpy, gsl_matrix_int_swap_rows, gsl_matrix_int_transpose, gsl_matrix_int_max, gsl_matrix_int_max_index, gsl_matrix_int_minmax_index, gsl_matrix_int_ispos, gsl_matrix_int_add, gsl_matrix_int_mul_elements, gsl_matrix_int_add_constant], complex => [gsl_matrix_complex_alloc, gsl_matrix_complex_calloc, gsl_matrix_complex_alloc_from_block, gsl_matrix_complex_alloc_from_matrix, gsl_vector_complex_alloc_row_from_matrix, gsl_vector_complex_alloc_col_from_matrix, gsl_matrix_complex_free, gsl_matrix_complex_submatrix, gsl_matrix_complex_row, gsl_matrix_complex_column, gsl_matrix_complex_diagonal, gsl_matrix_complex_subdiagonal, gsl_matrix_complex_superdiagonal, gsl_matrix_complex_subrow, gsl_matrix_complex_subcolumn, gsl_matrix_complex_view_array, gsl_matrix_complex_view_array_with_tda, gsl_matrix_complex_view_vector, gsl_matrix_complex_view_vector_with_tda, gsl_matrix_complex_const_submatrix, gsl_matrix_complex_const_row, gsl_matrix_complex_const_column, gsl_matrix_complex_const_diagonal, gsl_matrix_complex_const_subdiagonal, gsl_matrix_complex_const_superdiagonal, gsl_matrix_complex_const_subrow, gsl_matrix_complex_const_subcolumn, gsl_matrix_complex_const_view_array, gsl_matrix_complex_const_view_array_with_tda, gsl_matrix_complex_const_view_vector, gsl_matrix_complex_const_view_vector_with_tda, gsl_matrix_complex_get, gsl_matrix_complex_set, gsl_matrix_complex_ptr, gsl_matrix_complex_const_ptr, gsl_matrix_complex_set_zero, gsl_matrix_complex_set_identity, gsl_matrix_complex_set_all, gsl_matrix_complex_fread, gsl_matrix_complex_fwrite, gsl_matrix_complex_fscanf, gsl_matrix_complex_fprintf, gsl_matrix_complex_memcpygsl_matrix_complex_swap, gsl_matrix_complex_swap_rows, gsl_matrix_complex_swap_columns, gsl_matrix_complex_swap_rowcol, gsl_matrix_complex_transpose, gsl_matrix_complex_transpose_memcpy, gsl_matrix_complex_isnull, gsl_matrix_complex_ispos, gsl_matrix_complex_isneg, gsl_matrix_complex_add, gsl_matrix_complex_sub, gsl_matrix_complex_mul_elements, gsl_matrix_complex_div_elements, gsl_matrix_complex_scale, gsl_matrix_complex_add_constant, gsl_matrix_complex_add_diagonal, gsl_matrix_complex_get_row, gsl_matrix_complex_get_col, gsl_matrix_complex_set_row, gsl_matrix_complex_set_col]);
+
+
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ], 
+                 char => [ qw/
+                    gsl_matrix_char_alloc
+                    gsl_matrix_char_calloc
+                    gsl_matrix_char_alloc_from_block
+                    gsl_matrix_char_alloc_from_matrix
+                    gsl_vector_char_alloc_row_from_matrix
+                    gsl_vector_char_alloc_col_from_matrix
+                    gsl_matrix_char_free
+                    gsl_matrix_char_submatrix
+                    gsl_matrix_char_row
+                    gsl_matrix_char_column
+                    gsl_matrix_char_diagonal
+                    gsl_matrix_char_subdiagonal
+                    gsl_matrix_char_superdiagonal
+                    gsl_matrix_char_subrow
+                    gsl_matrix_char_subcolumn
+                    gsl_matrix_char_view_array
+                    gsl_matrix_char_view_array_with_tda
+                    gsl_matrix_char_view_vector
+                    gsl_matrix_char_view_vector_with_tda
+                    gsl_matrix_char_const_submatrix
+                    gsl_matrix_char_const_row
+                    gsl_matrix_char_const_column
+                    gsl_matrix_char_const_diagonal
+                    gsl_matrix_char_const_subdiagonal
+                    gsl_matrix_char_const_superdiagonal
+                    gsl_matrix_char_const_subrow
+                    gsl_matrix_char_const_subcolumn
+                    gsl_matrix_char_const_view_array
+                    gsl_matrix_char_const_view_array_with_tda
+                    gsl_matrix_char_const_view_vector
+                    gsl_matrix_char_const_view_vector_with_tda
+                    gsl_matrix_char_get
+                    gsl_matrix_char_set
+                    gsl_matrix_char_ptr
+                    gsl_matrix_char_const_ptr
+                    gsl_matrix_char_set_zero
+                    gsl_matrix_char_set_identity
+                    gsl_matrix_char_set_all
+                    gsl_matrix_char_fread
+                    gsl_matrix_char_fwrite
+                    gsl_matrix_char_fscanf
+                    gsl_matrix_char_fprintf
+                    gsl_matrix_char_memcpy
+                    gsl_matrix_char_swap
+                    gsl_matrix_char_swap_rows
+                    gsl_matrix_char_swap_columns
+                    gsl_matrix_char_swap_rowcol
+                    gsl_matrix_char_transpose
+                    gsl_matrix_char_transpose_memcpy
+                    gsl_matrix_char_max
+                    gsl_matrix_char_min
+                    gsl_matrix_char_minmax
+                    gsl_matrix_char_max_index
+                    gsl_matrix_char_min_index
+                    gsl_matrix_char_minmax_index
+                    gsl_matrix_char_isnull
+                    gsl_matrix_char_ispos
+                    gsl_matrix_char_isneg
+                    gsl_matrix_char_isnonneg
+                    gsl_matrix_char_add
+                    gsl_matrix_char_sub
+                    gsl_matrix_char_mul_elements
+                    gsl_matrix_char_div_elements
+                    gsl_matrix_char_scale
+                    gsl_matrix_char_add_constant
+                    gsl_matrix_char_add_diagonal
+                     /],
+
+                 double => [ qw/
+                    gsl_matrix_alloc
+                    gsl_matrix_calloc
+                    gsl_matrix_alloc_from_block
+                    gsl_matrix_alloc_from_matrix
+                    gsl_vector_alloc_row_from_matrix
+                    gsl_vector_alloc_col_from_matrix
+                    gsl_matrix_free
+                    gsl_matrix_submatrix
+                    gsl_matrix_row
+                    gsl_matrix_column
+                    gsl_matrix_diagonal
+                    gsl_matrix_subdiagonal
+                    gsl_matrix_superdiagonal
+                    gsl_matrix_subrow
+                    gsl_matrix_subcolumn
+                    gsl_matrix_view_array
+                    gsl_matrix_view_array_with_tda
+                    gsl_matrix_view_vector
+                    gsl_matrix_view_vector_with_tda
+                    gsl_matrix_const_submatrix
+                    gsl_matrix_const_row
+                    gsl_matrix_const_column
+                    gsl_matrix_const_diagonal
+                    gsl_matrix_const_subdiagonal
+                    gsl_matrix_const_superdiagonal
+                    gsl_matrix_const_subrow
+                    gsl_matrix_const_subcolumn
+                    gsl_matrix_const_view_array
+                    gsl_matrix_const_view_array_with_tda
+                    gsl_matrix_const_view_vector
+                    gsl_matrix_const_view_vector_with_tda
+                    gsl_matrix_get
+                    gsl_matrix_set
+                    gsl_matrix_ptr
+                    gsl_matrix_const_ptr
+                    gsl_matrix_set_zero
+                    gsl_matrix_set_identity
+                    gsl_matrix_set_all
+                    gsl_matrix_fread
+                    gsl_matrix_fwrite
+                    gsl_matrix_fscanf
+                    gsl_matrix_fprintf
+                    gsl_matrix_memcpy
+                    gsl_matrix_swap
+                    gsl_matrix_swap_rows
+                    gsl_matrix_swap_columns
+                    gsl_matrix_swap_rowcol
+                    gsl_matrix_transpose
+                    gsl_matrix_transpose_memcpy
+                    gsl_matrix_max
+                    gsl_matrix_minmax
+                    gsl_matrix_max_index
+                    gsl_matrix_min_index
+                    gsl_matrix_minmax_index
+                    gsl_matrix_isnull
+                    gsl_matrix_ispos
+                    gsl_matrix_isneg
+                    gsl_matrix_isnonneg
+                    gsl_matrix_add
+                    gsl_matrix_mul_elements
+                    gsl_matrix_div_elements
+                    gsl_matrix_scale
+                    gsl_matrix_add_constant
+                    gsl_matrix_add_diagonal
+                    /],
+int => [ qw/
+                 gsl_matrix_int_alloc
+                 gsl_matrix_int_alloc_from_matrix
+                 gsl_matrix_int_free
+                 gsl_matrix_int_column
+                 gsl_matrix_int_superdiagonal
+                 gsl_matrix_int_view_array_with_tda
+                 gsl_matrix_int_const_submatrix
+                 gsl_matrix_int_const_diagonal
+                 gsl_matrix_int_const_subrow
+                 gsl_matrix_int_const_view_array_with_tda
+                 gsl_matrix_int_get
+                 gsl_matrix_int_ptr
+                 gsl_matrix_int_set_zero
+                 gsl_matrix_int_fread
+                 gsl_matrix_int_fscanf
+                 gsl_matrix_int_memcpy
+                 gsl_matrix_int_swap_rows
+                 gsl_matrix_int_transpose
+                 gsl_matrix_int_max
+                 gsl_matrix_int_max_index
+                 gsl_matrix_int_minmax_index
+                 gsl_matrix_int_ispos
+                 gsl_matrix_int_add
+                 gsl_matrix_int_mul_elements
+                 gsl_matrix_int_add_constant
+                 /],
+  complex => [ qw/
+                 gsl_matrix_complex_alloc
+                 gsl_matrix_complex_calloc
+                 gsl_matrix_complex_alloc_from_block
+                 gsl_matrix_complex_alloc_from_matrix
+                 gsl_vector_complex_alloc_row_from_matrix
+                 gsl_vector_complex_alloc_col_from_matrix
+                 gsl_matrix_complex_free
+                 gsl_matrix_complex_submatrix
+                 gsl_matrix_complex_row
+                 gsl_matrix_complex_column
+                 gsl_matrix_complex_diagonal
+                 gsl_matrix_complex_subdiagonal
+                 gsl_matrix_complex_superdiagonal
+                 gsl_matrix_complex_subrow
+                 gsl_matrix_complex_subcolumn
+                 gsl_matrix_complex_view_array
+                 gsl_matrix_complex_view_array_with_tda
+                 gsl_matrix_complex_view_vector
+                 gsl_matrix_complex_view_vector_with_tda
+                 gsl_matrix_complex_const_submatrix
+                 gsl_matrix_complex_const_row
+                 gsl_matrix_complex_const_column
+                 gsl_matrix_complex_const_diagonal
+                 gsl_matrix_complex_const_subdiagonal
+                 gsl_matrix_complex_const_superdiagonal
+                 gsl_matrix_complex_const_subrow
+                 gsl_matrix_complex_const_subcolumn
+                 gsl_matrix_complex_const_view_array
+                 gsl_matrix_complex_const_view_array_with_tda
+                 gsl_matrix_complex_const_view_vector
+                 gsl_matrix_complex_const_view_vector_with_tda
+                 gsl_matrix_complex_get
+                 gsl_matrix_complex_set
+                 gsl_matrix_complex_ptr
+                 gsl_matrix_complex_const_ptr
+                 gsl_matrix_complex_set_zero gsl_matrix_complex_set_identity
+                 gsl_matrix_complex_set_all
+                 gsl_matrix_complex_fread
+                 gsl_matrix_complex_fwrite
+                 gsl_matrix_complex_fscanf
+                 gsl_matrix_complex_fprintf
+                 gsl_matrix_complex_memcpygsl_matrix_complex_swap
+                 gsl_matrix_complex_swap_rows
+                 gsl_matrix_complex_swap_columns
+                 gsl_matrix_complex_swap_rowcol
+                 gsl_matrix_complex_transpose
+                 gsl_matrix_complex_transpose_memcpy
+                 gsl_matrix_complex_isnull
+                 gsl_matrix_complex_ispos
+                 gsl_matrix_complex_isneg
+                 gsl_matrix_complex_add
+                 gsl_matrix_complex_sub
+                 gsl_matrix_complex_mul_elements
+                 gsl_matrix_complex_div_elements
+                 gsl_matrix_complex_scale
+                 gsl_matrix_complex_add_constant
+                 gsl_matrix_complex_add_diagonal
+                 gsl_matrix_complex_get_row
+                 gsl_matrix_complex_get_col
+                 gsl_matrix_complex_set_row
+                 gsl_matrix_complex_set_col
+                 /]);
+
+sub new {
+    my ($class, $rows, $cols) = @_;
+    my $this = {}; 
+    my $matrix;
+    if ( defined $rows       && defined $cols && 
+        $rows > 0            && $cols > 0     && 
+        (int $rows == $rows) && (int $cols == $cols)){
+
+        $matrix  = gsl_matrix_alloc($rows,$cols);
+    } else {
+        die __PACKAGE__.'::new($x,$y) - $x and $y must be positive integers';
+    }
+    $this->{_matrix} = $matrix; 
+    ($this->{_rows}, $this->{_cols}) = ($rows,$cols);
+    bless $this, $class;
+}
+sub raw  { (shift)->{_matrix} }
+sub rows { (shift)->{_rows}   }
+sub cols { (shift)->{_cols}   }
 
 __END__
 
@@ -135,6 +382,7 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 use Math::GSL::Matrix qw/:all/;
 
 =head1 DESCRIPTION
+
 
 Here is a list of all the functions included in this module :
 

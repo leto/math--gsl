@@ -88,6 +88,8 @@ sub new {
     bless $this, $class;
 }
 
+sub raw { (shift)->{_vector} }
+
 sub length { my $self=shift; $self->{_length} }
 
 sub get_all {

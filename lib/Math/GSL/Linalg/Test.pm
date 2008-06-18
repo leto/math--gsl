@@ -245,4 +245,35 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     is(gsl_matrix_get($matrix, 2, 0), (35/29)*sqrt(29));
     is(gsl_matrix_get($matrix, 3, 0), (-1/29)*sqrt(29));
 }
+
+sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
+    my $self = shift;
+    map{ gsl_matrix_set($self->{matrix}, 0, $_, $_+1)} (0..3);
+
+    gsl_matrix_set($self->{matrix}, 1, 0, 2);
+    gsl_matrix_set($self->{matrix}, 1, 1, 5);
+    gsl_matrix_set($self->{matrix}, 1, 2, 8);
+    gsl_matrix_set($self->{matrix}, 1, 3, 11);
+
+    gsl_matrix_set($self->{matrix}, 2, 0, 3);
+    gsl_matrix_set($self->{matrix}, 2, 1, 8);
+    gsl_matrix_set($self->{matrix}, 2, 2, 14);
+    gsl_matrix_set($self->{matrix}, 2, 3, 20);
+
+    gsl_matrix_set($self->{matrix}, 3, 0, 4);
+    gsl_matrix_set($self->{matrix}, 3, 1, 11);
+    gsl_matrix_set($self->{matrix}, 3, 2, 20);
+    gsl_matrix_set($self->{matrix}, 3, 3, 30);
+   
+    is(gsl_linalg_cholesky_decomp($self->{matrix}), 0);
+    my $v = gsl_matrix_diagonal($self->{matrix});
+    map { is(gsl_vector_get($v->{vector}, $_),1) } (0..3);
+    is(gsl_matrix_get($self->{matrix}, 1, 0), 2);
+    is(gsl_matrix_get($self->{matrix}, 2, 0), 3);
+    is(gsl_matrix_get($self->{matrix}, 2, 1), 2);
+    is(gsl_matrix_get($self->{matrix}, 3, 0), 4);
+    is(gsl_matrix_get($self->{matrix}, 3, 1), 3);
+    is(gsl_matrix_get($self->{matrix}, 3, 2), 2);   
+}
+
 1;

@@ -275,5 +275,51 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
     is(gsl_matrix_get($self->{matrix}, 3, 1), 3);
     is(gsl_matrix_get($self->{matrix}, 3, 2), 2);   
 }
+sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests { 
+    my $self = shift;
+ 
+    gsl_matrix_set($self->{matrix}, 1, 0, 3);
+    gsl_matrix_set($self->{matrix}, 1, 1, 2);
+    gsl_matrix_set($self->{matrix}, 1, 2, 5);
+    gsl_matrix_set($self->{matrix}, 1, 3, -4);
 
+    gsl_matrix_set($self->{matrix}, 1, 0, 5);
+    gsl_matrix_set($self->{matrix}, 1, 1, -3);
+    gsl_matrix_set($self->{matrix}, 1, 2, 6);
+    gsl_matrix_set($self->{matrix}, 1, 3, 9);
+
+    gsl_matrix_set($self->{matrix}, 2, 0, -2);
+    gsl_matrix_set($self->{matrix}, 2, 1, 1);
+    gsl_matrix_set($self->{matrix}, 2, 2, 5);
+    gsl_matrix_set($self->{matrix}, 2, 3, 8);
+
+    gsl_matrix_set($self->{matrix}, 3, 0, -6);
+    gsl_matrix_set($self->{matrix}, 3, 1, 7);
+    gsl_matrix_set($self->{matrix}, 3, 2, 2);
+    gsl_matrix_set($self->{matrix}, 3, 3, -8);   
+    my $tau = gsl_vector_alloc(4);
+    is(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau),0);
+    my $U = gsl_matrix_alloc(4,4);
+    is(gsl_linalg_hessenberg_unpack($self->{matrix}, $tau, $U),0);
+    is(gsl_matrix_get($U, 0, 0), 1);
+    map { is(gsl_matrix_get($U, $_, 0), 0) } (1..3);
+    map { is(gsl_matrix_get($U, 0, $_), 0) } (1..3);
+    is(gsl_matrix_get($U, 1, 1), -0.620173672946042309);
+    is(gsl_matrix_get($U, 1, 2), -0.268847804615518438);
+    is(gsl_matrix_get($U, 1, 3), 0.736956900597335762);
+    is(gsl_matrix_get($U, 2, 1), 0.248069469178416908);
+    is(gsl_matrix_get($U, 2, 2), -0.958442423454322956);
+    is(gsl_matrix_get($U, 2, 3), -0.140888819231843737);
+    is(gsl_matrix_get($U, 3, 1), 0.744208407535250749);
+    is(gsl_matrix_get($U, 3, 2), 0.0954409706385089263);
+    is(gsl_matrix_get($U, 3, 3), 0.661093690241727594);
+
+    my $V = gsl_matrix_alloc(4,4);
+    is(gsl_linalg_hessenberg_unpack_accum($self->{matrix}, $tau, $V), 0); #I don't know how to test the result of this function...
+
+    is(gsl_linalg_hessenberg_set_zero($self->{matrix}), 0);
+    my $line;
+    for($line = 1; $line<4; $line++) {
+    map { is(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero") } (0..$line-1); } #the matrix should have it's lower triangle filled with zero but it doesn't, why?
+}
 1;

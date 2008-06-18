@@ -156,15 +156,15 @@ Here is a list of all the functions included in this module :
                 gsl_linalg_SV_decomp_mod 
                 gsl_linalg_SV_decomp_jacobi 
                 gsl_linalg_SV_solve 
-                gsl_linalg_LU_decomp 
-                gsl_linalg_LU_solve 
-                gsl_linalg_LU_svx 
+                gsl_linalg_LU_decomp($a, $p) - factorize the matrix $a into the LU decomposition PA = LU. On output the diagonal and upper triangular part of the input matrix A contain the matrix U. The lower triangular part of the input matrix (excluding the diagonal) contains L. The diagonal elements of L are unity, and are not stored. The function returns two value, the first is 0 if the operation succeeded, 1 otherwise, and the second is the sign of the permutation. 
+                gsl_linalg_LU_solve($LU, $p, $b, $x) - This function solves the square system A x = b using the LU decomposition of the matrix A into (LU, p) given by gsl_linalg_LU_decomp. $LU is a matrix, $p a permutation and $b and $x are vectors. The function returns 1 if the operation succeded, 0 otherwise.
+                gsl_linalg_LU_svx($LU, $p, $x) - This function solves the square system A x = b in-place using the LU decomposition of A into (LU,p). On input $x should contain the right-hand side b, which is replaced by the solution on output. $LU is a matrix, $p a permutation and $x is a vector. The function returns 1 if the operation succeded, 0 otherwise.
                 gsl_linalg_LU_refine 
-                gsl_linalg_LU_invert 
-                gsl_linalg_LU_det 
-                gsl_linalg_LU_lndet 
+                gsl_linalg_LU_invert($LU, $p, $inverse) - This function computes the inverse of a matrix A from its LU decomposition stored in the matrix $LU and the permutation $p, storing the result in the matrix $inverse. 
+                gsl_linalg_LU_det($LU, $signum) - This function returns the determinant of a matrix A from its LU decomposition stored in the $LU matrix. It needs the integer $signum which is the sign of the permutation returned by gsl_linalg_LU_decomp. 
+                gsl_linalg_LU_lndet($LU) - This function returns the logarithm of the absolute value of the determinant of a matrix A, from its LU decomposition stored in the $LU matrix. 
                 gsl_linalg_LU_sgndet 
-                gsl_linalg_complex_LU_decomp 
+                gsl_linalg_complex_LU_decomp
                 gsl_linalg_complex_LU_solve 
                 gsl_linalg_complex_LU_svx 
                 gsl_linalg_complex_LU_refine 
@@ -172,9 +172,9 @@ Here is a list of all the functions included in this module :
                 gsl_linalg_complex_LU_det 
                 gsl_linalg_complex_LU_lndet 
                 gsl_linalg_complex_LU_sgndet 
-                gsl_linalg_QR_decomp 
-                gsl_linalg_QR_solve 
-                gsl_linalg_QR_svx 
+                gsl_linalg_QR_decomp($a, $tau) - factorize the M-by-N matrix A into the QR decomposition A = Q R. On output the diagonal and upper triangular part of the input matrix $a contain the matrix R. The vector $tau and the columns of the lower triangular part of the matrix $a contain the Householder coefficients and Householder vectors which encode the orthogonal matrix Q. The vector tau must be of length k= min(M,N). 
+                gsl_linalg_QR_solve($QR, $tau, $b, $x) - This function solves the square system A x = b using the QR decomposition of A into (QR, tau) given by gsl_linalg_QR_decomp. $QR is matrix, and $tau, $b and $x are vectors. 
+                gsl_linalg_QR_svx($QR, $tau, $x) - This function solves the square system A x = b in-place using the QR decomposition of A into the matrix $QR and the vector $tau given by gsl_linalg_QR_decomp. On input, the vector $x should contain the right-hand side b, which is replaced by the solution on output.  
                 gsl_linalg_QR_lssolve 
                 gsl_linalg_QR_QRsolve 
                 gsl_linalg_QR_Rsolve 

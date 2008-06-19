@@ -63,6 +63,35 @@ sub GSL_EIGEN_SYMMV : Tests {
     is(gsl_vector_get($v1->{vector}, 0) + gsl_vector_get($v1->{vector}, 1) , 0);
 }
 
+sub GSL_EIGEN_SYMMV_SORT : Tests {
+    my $w->{eigen} = gsl_eigen_symmv_alloc(2);
+    my $m->{matrix} = gsl_matrix_alloc(2,2);
+    gsl_matrix_set($m->{matrix}, 0, 0, 2);
+    gsl_matrix_set($m->{matrix}, 0, 1, 1);
+    gsl_matrix_set($m->{matrix}, 1, 0, 1);
+    gsl_matrix_set($m->{matrix}, 1, 1, 2);
+    my $eval->{vector} = gsl_vector_alloc(2);
+    my $evec->{matrix} = gsl_matrix_alloc(2,2);
+    is(gsl_eigen_symmv($m->{matrix}, $eval->{vector}, $evec->{matrix}, $w->{eigen}),0);
+    is(gsl_eigen_symmv_sort ($eval->{vector}, $evec->{matrix}, $GSL_EIGEN_SORT_VAL_ASC),0);
+    is(gsl_vector_get($eval->{vector}, 0), 1);
+    is(gsl_vector_get($eval->{vector}, 1), 3);
+    my $x = gsl_matrix_get($evec->{matrix}, 0, 0);
+    is (gsl_matrix_get($evec->{matrix}, 0, 1), -$x);
+    is (sqrt($x**2+$x**2), 1);
+    
+    $x = gsl_matrix_get($evec->{matrix}, 1, 0);
+    is (gsl_matrix_get($evec->{matrix}, 1, 1), $x);
+    is (sqrt($x**2+$x**2), 1);
+
+    my $v1->{vector} = gsl_vector_alloc(2);
+    my $v2->{vector} = gsl_vector_alloc(2);
+    gsl_matrix_get_col($v1->{vector}, $evec->{matrix}, 0);
+    gsl_matrix_get_col($v2->{vector}, $evec->{matrix}, 1);
+    gsl_vector_mul($v1->{vector}, $v2->{vector});
+    is(gsl_vector_get($v1->{vector}, 0) + gsl_vector_get($v1->{vector}, 1) , 0);
+}
+
 sub GSL_EIGEN_HERM : Tests {
     my $matrix  = gsl_matrix_complex_alloc (2, 2);
     my $complex = gsl_complex_rect(3,0);

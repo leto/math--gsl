@@ -322,4 +322,50 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
     for($line = 1; $line<4; $line++) {
     map { is(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero") } (0..$line-1); } #the matrix should have it's lower triangle filled with zero but it doesn't, why?
 }
+
+sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
+    my $self = shift;
+    gsl_matrix_set($self->{matrix}, 1, 0, 3);
+    gsl_matrix_set($self->{matrix}, 1, 1, 2);
+    gsl_matrix_set($self->{matrix}, 1, 2, 5);
+    gsl_matrix_set($self->{matrix}, 1, 3, -4);
+
+    gsl_matrix_set($self->{matrix}, 1, 0, 5);
+    gsl_matrix_set($self->{matrix}, 1, 1, -3);
+    gsl_matrix_set($self->{matrix}, 1, 2, 6);
+    gsl_matrix_set($self->{matrix}, 1, 3, 9);
+
+    gsl_matrix_set($self->{matrix}, 2, 0, -2);
+    gsl_matrix_set($self->{matrix}, 2, 1, 1);
+    gsl_matrix_set($self->{matrix}, 2, 2, 5);
+    gsl_matrix_set($self->{matrix}, 2, 3, 8);
+
+    gsl_matrix_set($self->{matrix}, 3, 0, -6);
+    gsl_matrix_set($self->{matrix}, 3, 1, 7);
+    gsl_matrix_set($self->{matrix}, 3, 2, 2);
+    gsl_matrix_set($self->{matrix}, 3, 3, -8);   
+    my $tau_U = gsl_vector_alloc(4);
+    my $tau_V = gsl_vector_alloc(3);
+
+    is(gsl_linalg_bidiag_decomp($self->{matrix}, $tau_U, $tau_V),0);
+    my $U = gsl_matrix_alloc(4,4);
+    my $V = gsl_matrix_alloc(4,4);
+    my $diag = gsl_vector_alloc(4);
+    my $superdiag = gsl_vector_alloc(3);
+    is(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag),0);
+    is(gsl_matrix_get($V, 0, 0), 1);    
+    map { is(gsl_matrix_get($V, $_, 0), 0) } (1..3); 
+    map { is(gsl_matrix_get($V, 0, $_), 0) } (1..3);
+    is(gsl_matrix_get($U, 1, 1), -0.609437002705849772);
+    is(gsl_matrix_get($U, 1, 2), -0.758604748961341558); #doesn't fit the data I've got...
+#    is(gsl_matrix_get($U, 1, 3), );
+#    is(gsl_matrix_get($U, 2, 1), );
+#    is(gsl_matrix_get($U, 2, 2), );
+#    is(gsl_matrix_get($U, 2, 3), );
+#    is(gsl_matrix_get($U, 3, 1), );
+#    is(gsl_matrix_get($U, 3, 2), );
+#    is(gsl_matrix_get($U, 3, 3), );
+
+}
+
 1;

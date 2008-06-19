@@ -214,13 +214,13 @@ Here is a list of all the functions included in this module :
                 gsl_linalg_PTLQ_Lsolve_T 
                 gsl_linalg_PTLQ_Lsvx_T 
                 gsl_linalg_PTLQ_update 
-                gsl_linalg_cholesky_decomp 
-                gsl_linalg_cholesky_solve 
-                gsl_linalg_cholesky_svx 
+                gsl_linalg_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+                gsl_linalg_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. $b and $x are vectors. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+                gsl_linalg_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The funtcion returns 0 if the operation succeeded, 0 otherwise.   
                 gsl_linalg_cholesky_decomp_unit 
-                gsl_linalg_complex_cholesky_decomp 
-                gsl_linalg_complex_cholesky_solve 
-                gsl_linalg_complex_cholesky_svx 
+                gsl_linalg_complex_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A which contains complex numbers into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The funtcion returns 0 if the operation succeeded, 0 otherwise. 
+                gsl_linalg_complex_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. $b and $x are vectors. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+                gsl_linalg_complex_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The funtcion returns 0 if the operation succeeded, 0 otherwise.    
                 gsl_linalg_symmtd_decomp 
                 gsl_linalg_symmtd_unpack 
                 gsl_linalg_symmtd_unpack_T 

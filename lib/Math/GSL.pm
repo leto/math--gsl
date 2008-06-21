@@ -131,6 +131,21 @@ L<http://search.cpan.org/dist/Math::GSL>
 
 =back
 
+=head1 DEVELOPMENT
+
+If you would like the help develop Math::GSL, email the authors
+and do
+
+    git clone http://leto.net/code/Math-GSL.git 
+    cd Math-GSL
+    git checkout -b bleed   # create new local branch
+    git pull origin bleed   # pull in remote bleed
+
+to get the latest source, which is a two-headed beast with branches master and
+bleed. The master branch is our stable branch, which is periodically sync-ed
+with bleed. To view the latest source code online, go to
+L<http://leto.net/gitweb/>.  The latest version of Git can be found at
+L<http://git.or.cz>.
 
 =head1 ACKNOWLEDGEMENTS
 

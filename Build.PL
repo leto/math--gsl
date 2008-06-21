@@ -358,7 +358,7 @@ my @Subsystems = sort qw/
             Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      
-            Complex      Histogram2d   Multiroots   SF         
+            Complex      Histogram2D   Multiroots   SF         
             Const        Siman         IEEEUtils    Types
             DFT          Integration   NTuple       Sort                  
             DHT          Interp        ODEIV        Vector
@@ -386,7 +386,7 @@ my $builder = $class->new(
         'Test::More'            =>       0,
         'Test::Class'           =>       0,
         version                 =>       0,
-    	perl 			        => '5.8.6',
+    	perl 			        =>  '5.6.0',
     },
     sign                  => 1,
     swig_source           => [  

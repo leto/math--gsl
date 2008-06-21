@@ -21,7 +21,7 @@ use constant MAX_DOUBLE => 1.7976931348623157e+308;
 use constant MIN_DOUBLE => 2.2250738585072014e-308;
 use constant MAX_FLOAT  => 3.40282347e+38;
 use constant MIN_FLOAT  => 1.175494351e-38;
-our $VERSION = 0.043;
+our $VERSION = 0.044;
 
 =head1 NAME
 
@@ -29,7 +29,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
-Version 0.43
+Version 0.44
 
 =cut
 
@@ -39,62 +39,62 @@ Version 0.43
     use Math::GSL qw/ok_similar is_similar/;
     use Math::GSL qw/$GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX/;
 
-
 This module contains a few helper functions and global variables. Each GSL subsystem has it's own
 module. For example, the random number generator subsystem is Math::GSL::RNG .
 
 =head1 SUBSYSTEMS
 
     Math::GSL::BLAS
-    Math::GSL::BSpline
+    Math::GSL::BSpline          - BSplines
     Math::GSL::Block
     Math::GSL::CBLAS
-    Math::GSL::CDF
-    Math::GSL::Chebyshev
-    Math::GSL::Combination
-    Math::GSL::Complex
-    Math::GSL::Const
-    Math::GSL::DFT
-    Math::GSL::DHT
-    Math::GSL::Deriv
+    Math::GSL::CDF              - Cumulative Distribution Functions
+    Math::GSL::Chebyshev        - Chebyshev Polynomials
+    Math::GSL::Combination      - Combinatoric Functions
+    Math::GSL::Complex          - Complex Numbers
+    Math::GSL::Const            - Various Constants
+    Math::GSL::DFT              - Discrete Fourier Transform
+    Math::GSL::DHT              - Discrete Hilbert Transform
+    Math::GSL::Deriv            - Numerical Derivative
     Math::GSL::Diff
-    Math::GSL::Eigen
-    Math::GSL::Errno
-    Math::GSL::FFT
-    Math::GSL::Fit
-    Math::GSL::Heapsort
-    Math::GSL::Histogram
-    Math::GSL::Histogram2d
-    Math::GSL::Integration
-    Math::GSL::Interp
-    Math::GSL::Linalg
-    Math::GSL::Machine
-    Math::GSL::Matrix
-    Math::GSL::Min
-    Math::GSL::Mode
-    Math::GSL::Monte
-    Math::GSL::Multifit
-    Math::GSL::Multimin
-    Math::GSL::Multiroots
-    Math::GSL::NTuple
-    Math::GSL::ODEIV
-    Math::GSL::Permutation
-    Math::GSL::Poly
-    Math::GSL::PowInt
-    Math::GSL::QRNG
-    Math::GSL::RNG
-    Math::GSL::Randist
-    Math::GSL::Roots
-    Math::GSL::SF
-    Math::GSL::Siman
-    Math::GSL::Sort
-    Math::GSL::Spline
-    Math::GSL::Statistics
-    Math::GSL::Sum
-    Math::GSL::Sys
+    Math::GSL::Eigen            - Eigenvalues and Eigenvectors
+    Math::GSL::Errno            - Error Handling
+    Math::GSL::FFT              - Fast Fourier Transform
+    Math::GSL::Fit              - Curve Fitting
+    Math::GSL::Heapsort         - Sorting Heaps
+    Math::GSL::Histograma       - Histograms
+    Math::GSL::Histogram2D      - 2D Histograms
+    Math::GSL::Integration      - Numerical Integration
+    Math::GSL::Interp           - Interpolation
+    Math::GSL::Linalg           - Linear Algebra
+    Math::GSL::Machine          - Machine Specific Information
+    Math::GSL::Matrix           - NxM Matrices
+    Math::GSL::Min              - Minimization
+    Math::GSL::Mode             - GSL Precision Modes
+    Math::GSL::Monte            - Monte Carlo Integrations
+    Math::GSL::Multifit         - Multivariable Fitting
+    Math::GSL::Multimin         - Multivariable Minimization
+    Math::GSL::Multiroots       - Muiltvariable Root Finding
+    Math::GSL::NTuple           - N Tuples
+    Math::GSL::ODEIV            - Ordinary Differential Equation Solvers (Initial Value Problems)
+    Math::GSL::Permutation      - Permutations
+    Math::GSL::Poly             - Polynmials
+    Math::GSL::PowInt           - Integer Power Functions
+    Math::GSL::QRNG             - Quasi-Random Number Generators
+    Math::GSL::RNG              - Random Number Generators
+    Math::GSL::Randist          - Random Number Distributions
+    Math::GSL::Roots            - Root Finding Algorithms
+    Math::GSL::SF               - Special Functions
+    Math::GSL::Siman            - Simulated Annealing
+    Math::GSL::Sort             - Sorting
+    Math::GSL::Spline           - Splines
+    Math::GSL::Statistics       - Statistics Functions
+    Math::GSL::Sum              - Summation
+    Math::GSL::Sys              
     Math::GSL::Types
-    Math::GSL::Vector
-    Math::GSL::Wavelet
+    Math::GSL::Vector           - N-dimensional Vectors
+    Math::GSL::Wavelet          - Basic Wavelets
+    Math::GSL::Wavelet2D        - 2D Wavelets
 
 
 =head1 AUTHORS
@@ -103,6 +103,7 @@ Jonathan Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan
 
 =head1 BUGS
 
+This software is still in active development, we appreciate your detailed bug reports.
 Please report any bugs or feature requests to the authors directly.
 
 
@@ -162,7 +163,7 @@ sub subsystems
         Chebyshev    Monte        RNG           Vector
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet
-        Complex      Histogram2d  Multiroots    Wavelet2D
+        Complex      Histogram2D  Multiroots    Wavelet2D
         Const        Siman        Sum           Types 
         DFT          Integration  NTuple        Sort                  
         DHT          Interp       ODEIV         SF 

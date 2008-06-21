@@ -35,7 +35,6 @@
 %}
 //%import "/usr/local/include/gsl/gsl_types.h"
 
-// Grab the declarations  
 %include "/usr/local/include/gsl/gsl_mode.h"
 %include "/usr/local/include/gsl/gsl_sf.h"
 %include "/usr/local/include/gsl/gsl_sf_airy.h"
@@ -865,17 +864,20 @@ gsl_sf_eta_int_e, gsl_sf_eta_int, gsl_sf_eta_e, gsl_sf_eta
  eta
  vars
 
- For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ For more informations on the functions, we refer you to the GSL offcial
+ documentation: http://www.gnu.org/software/gsl/manual/html_node/
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
 =head1 EXAMPLES
 
- use Math::GSL::SF qw/:all/;
- $x = gsl_sf_dilog(0.1);
- print "gsl_sf_dilog(0.1) = " . $x . "\n";
+This example computes the dilogarithm of 1/10 :
 
- An example using Math::GSL::SF and gnuplot is in the examples/sf folder of the source code.
+    use Math::GSL::SF qw/dilog/;
+    my $x = gsl_sf_dilog(0.1);
+    print "gsl_sf_dilog(0.1) = $x\n";
+
+An example using Math::GSL::SF and gnuplot is in the B<examples/sf> folder of the source code.
 
 =head1 AUTHOR
 

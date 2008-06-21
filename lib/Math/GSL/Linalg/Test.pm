@@ -34,13 +34,13 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     ok_similar( [ map { gsl_matrix_get($self->{matrix}, 0, $_) } (2..3) ],
                 [ 0, 0 ]
               );
-    is (gsl_matrix_get($self->{matrix}, 3, 3),0);
-    is (gsl_matrix_get($self->{matrix}, 1, 0),5);
-    is (gsl_matrix_get($self->{matrix}, 2, 0),9);
-    is (gsl_matrix_get($self->{matrix}, 2, 1),2);
-    is (gsl_matrix_get($self->{matrix}, 3, 0),13);
-    is (gsl_matrix_get($self->{matrix}, 3, 1),3);
-    is (gsl_matrix_get($self->{matrix}, 3, 2),0);
+    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
+    is_similar (gsl_matrix_get($self->{matrix}, 1, 0),5);
+    is_similar (gsl_matrix_get($self->{matrix}, 2, 0),9);
+    is_similar (gsl_matrix_get($self->{matrix}, 2, 1),2);
+    is_similar (gsl_matrix_get($self->{matrix}, 3, 0),13);
+    is_similar (gsl_matrix_get($self->{matrix}, 3, 1),3);
+    is_similar (gsl_matrix_get($self->{matrix}, 3, 2),0);
 }
 
 sub GSL_LINALG_LU_SOLVE : Tests {
@@ -267,7 +267,9 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
    
     is(gsl_linalg_cholesky_decomp($self->{matrix}), 0);
     my $v = gsl_matrix_diagonal($self->{matrix});
-    map { is(gsl_vector_get($v->{vector}, $_),1) } (0..3);
+    ok_similar( 
+        [ map { gsl_vector_get($v->{vector}, $_)} (0..3) ], [(1)x 4 ]
+    );
     is(gsl_matrix_get($self->{matrix}, 1, 0), 2);
     is(gsl_matrix_get($self->{matrix}, 2, 0), 3);
     is(gsl_matrix_get($self->{matrix}, 2, 1), 2);

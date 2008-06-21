@@ -21,7 +21,7 @@ Fit.i
 HACKING
 Heapsort.i
 Histogram.i
-Histogram2d.i
+Histogram2D.i
 IEEEUtils.i
 Integration.i
 Interp.i

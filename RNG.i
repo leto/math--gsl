@@ -70,13 +70,14 @@ __END__
 
 =head1 NAME
 
-Math::GSL::RNG
+Math::GSL::RNG - Random Number Generators
 
 =head1 SYPNOPSIS
 
 use Math::GSL::RNG qw/:all/;
 
 =head1 DESCRIPTION
+
 Here is a list of all the functions included in this module :
 
 gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
@@ -105,6 +106,35 @@ For more informations on the functions, we refer you to the GSL offcial document
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =head1 EXAMPLES
+
+The following example will print out a list a random integers between certain
+minimum and maximum values. The command line arguments are first the number of
+random numbers wanted, the minimum and then maximum. The defaults are 10, 0 and
+100, respectively. 
+
+    use Math::GSL::RNG qw/:all/;
+    my $seed = int rand(100);
+    my $rng  = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
+    my ($num,$min,$max) = @ARGV;
+    $num ||= 10;
+    $min ||= 0;
+    $max ||= 100;
+    print join "\n", map { $min + $rng->get % ($max-$min+1)  } (1..$num);
+    print "\n";
+
+The C<$seed> argument is optional but encouraged. This program is available in
+the B<examples/> directory that comes with the source of this module.
+
+If you would like a series of random non-integer numbers, then you can generate one "scaling factor" 
+and multiple by that, such as
+
+    use Math::GSL::RNG qw/:all/;
+    my $scale= rand(10);
+    my $seed = int rand(100);
+    my $rng  = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
+    my ($num,$min,$max) = (10,0,100);
+    print join "\n", map { $scale*($min + $rng->get % ($max-$min+1))  } (1..$num);
+    print "\n";
 
 =head1 AUTHOR
 

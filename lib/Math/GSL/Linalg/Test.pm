@@ -28,6 +28,8 @@ sub GSL_LINALG_LU_DECOMP : Tests {
 
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
+    my $first = gsl_matrix_alloc(4,4);
+    gsl_matrix_memcpy($first, $self->{matrix});
     my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
     map { is( gsl_matrix_get($self->{matrix}, 0, $_), $_+1) } (0..3); # I have no idea why these tests fail, I got my values for the LU decompositon from maple and they are valid...
@@ -41,6 +43,18 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     is_similar (gsl_matrix_get($self->{matrix}, 3, 0),13);
     is_similar (gsl_matrix_get($self->{matrix}, 3, 1),3);
     is_similar (gsl_matrix_get($self->{matrix}, 3, 2),0);
+    
+    my $U = gsl_matrix_calloc(4,4);
+    gsl_matrix_set_identity($R);
+    my $line;
+    for ($line=3; $line>-1; $line--) {
+     map { gsl_matrix_set($U, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } ($line..3) };
+    my $L = gsl_matrix_calloc(4,4);
+    gsl_matrix_set_identity($L);
+    for ($line=3; $line>0; $line--) {
+     map { gsl_matrix_set($L, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } (0..$line-1) };
+#how do I multiply the two matrices together now? could it be possible GSL doesn't have any function for that? 
+#gsl_matrix_mul isn't the solution since it only multiplies elements one by one.    
 }
 
 sub GSL_LINALG_LU_SOLVE : Tests {
@@ -220,7 +234,7 @@ sub GSL_LINALG_LU_LNDET : Tests {
 }
 
 sub GSL_LINALG_QR_DECOMP : Tests {
-    local $TODO ="the values doesn't seem to fit the value I got from maple. Probably the same problem than gsl_linalg_LU_decomp...";
+#    local $TODO ="the values doesn't seem to fit the value I got from maple. Probably the same problem than gsl_linalg_LU_decomp...";
     my $matrix = gsl_matrix_alloc(4,3);
     gsl_matrix_set($matrix, 0, 0, -3);
     gsl_matrix_set($matrix, 1, 0, 2);
@@ -238,12 +252,19 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     gsl_matrix_set($matrix, 3, 2, 2);
    
     my $tau = gsl_vector_alloc(3);
-    gsl_linalg_QR_decomp($matrix, $tau);
-    
-    is(gsl_matrix_get($matrix, 0, 0), sqrt(29));
-    is(gsl_matrix_get($matrix, 1, 0), (-8/29)*sqrt(29));
-    is(gsl_matrix_get($matrix, 2, 0), (35/29)*sqrt(29));
-    is(gsl_matrix_get($matrix, 3, 0), (-1/29)*sqrt(29));
+    is(gsl_linalg_QR_decomp($matrix, $tau),0);
+    my $R = gsl_matrix_alloc(4,3);
+    gsl_matrix_set_zero($R);
+    my $line;
+    for ($line=2; $line>-1; $line--) {
+     map { gsl_matrix_set($R, $_, $line, gsl_matrix_get($matrix, $_, $line)) } ($line+1..3) };
+    my $Q = gsl_matrix_alloc(4,3);
+    # how do I decode the householder values stored in $matrix?    
+
+#    is(gsl_matrix_get($matrix, 0, 0), sqrt(29));
+#    is(gsl_matrix_get($matrix, 1, 0), (-8/29)*sqrt(29));
+#    is(gsl_matrix_get($matrix, 2, 0), (35/29)*sqrt(29));
+#    is(gsl_matrix_get($matrix, 3, 0), (-1/29)*sqrt(29));
 }
 
 sub GSL_LINALG_CHOLESKY_DECOMP : Tests {

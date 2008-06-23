@@ -3,6 +3,7 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL::Vector qw/:all/;
+use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
@@ -455,4 +456,42 @@ sub GSL_MATRIX_NEW : Tests {
    ok( $self->{obj}->rows == 5, '->rows' );
    ok( $self->{obj}->cols == 5, '->cols' );
 }
+
+sub EXAMPLE_FAILING : Tests {
+
+ my $m = gsl_matrix_complex_alloc(2,2);
+ my $m_result = gsl_matrix_complex_alloc(2,2);
+ my $complex = gsl_complex_rect(3,0);
+gsl_matrix_complex_set($m, 0, 0, $complex); 
+$complex = gsl_complex_rect(2,1);
+gsl_matrix_complex_set($m, 0, 1, $complex);
+$complex = gsl_complex_rect(2,-1);
+gsl_matrix_complex_set($m, 1, 0, $complex);
+$complex = gsl_complex_rect(1,0);
+gsl_matrix_complex_set($m, 1, 1, $complex);
+gsl_matrix_complex_memcpy($m_result, $m);
+gsl_matrix_complex_transpose($m_result);
+my $line;
+for ($line =0; $line<2; $line++) {
+ map { gsl_matrix_complex_set($m_result, $line, $_, gsl_complex_conjugate(gsl_matrix_complex_get($m_result, $line, $_))) } (0..1); }
+
+
+ my $test = 0;
+ my ($v1, $v2, @parts1, @parts2);
+for ($line =0; $line<2; $line++) {
+ map { $v1 = gsl_matrix_complex_get($m, $line, $_);
+       $v2 = gsl_matrix_complex_get($m_result, $line, $_);
+       @parts1 = gsl_parts($v1); # gsl_parts seems to fail saying $v1 is not an hash reference
+#       @parts2 = gsl_parts($v2);
+#       if(($parts1[0] != $parts2[0]) || ($parts[1] != $parts2[1]))
+#  { $test = 1;  } 
+ } (0..1);
+}
+#if ($test == 1) {
+# print "The matrix is not hermitician \n"; }
+#else {
+# print "The matrix is hermitian \n"; }
+
+}
+
 1;

@@ -26,27 +26,57 @@ __END__
 
 =head1 NAME
 
-Math::GSL::QRNG
+Math::GSL::QRNG - Quasi-random number generator
 
 =head1 SYPNOPSIS
 
 use Math::GSL::QRNG qw/:all/;
 
 =head1 DESCRIPTION
+
 Here is a list of all the functions included in this module :
 
-gsl_qrng_alloc gsl_qrng_memcpy gsl_qrng_clone
-gsl_qrng_free  gsl_qrng_init gsl_qrng_name 
-gsl_qrng_size gsl_qrng_state gsl_qrng_get
+=over
+
+=item C<gsl_qrng_alloc($T, $n)> - This function returns a pointer to a newly-created instance of a quasi-random sequence generator of type $T and dimension $d. The type $T must be one of the constants included in this module.
+
+
+=item C<gsl_qrng_clone>
+
+=item C<gsl_qrng_memcpy> - 
+
+=item C<gsl_qrng_free($q)> - This function frees all the memory associated with the generator $q. 
+
+=item C<gsl_qrng_init($q)> - This function reinitializes the generator $q to its starting point. Note that quasi-random sequences do not use a seed and always produce the same set of values. 
+
+=item C<gsl_qrng_name($q)> - This function returns a pointer to the name of the generator $q. 
+
+=item C<gsl_qrng_size>
+
+=item C<gsl_qrng_state>
+
+=item C<gsl_qrng_get>
+
+=back
 
 This module also contains the following constants : 
-$gsl_qrng_niederreiter_2 
-$gsl_qrng_sobol 
-$gsl_qrng_halton 
-$gsl_qrng_reversehalton
 
-For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+=over
+
+=item C<$gsl_qrng_niederreiter_2>
+
+=item C<$gsl_qrng_sobol> 
+
+=item C<$gsl_qrng_halton> 
+
+=item C<$gsl_qrng_reversehalton>
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
 
 =head1 EXAMPLES
 

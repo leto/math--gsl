@@ -170,7 +170,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::CBLAS - Basic Linear Algebra Subprograms
+Math::GSL::CBLAS - Basic Linear Algebra Subprograms based on C functions
 
 =head1 SYPNOPSIS
 

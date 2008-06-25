@@ -750,7 +750,7 @@ The following functions are the same as the previous enonced ones except that th
 =back
 
 You have to add the functions you want to use inside the qw /put_funtion_here /. 
-You can also write use Math::GSL::PowInt qw/:name_of_tag/ to use all avaible functions of the module. 
+You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module. 
 Other tags are also avaible, here is a complete list of all tags for this module :
 
 =over 1

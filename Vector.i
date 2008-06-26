@@ -53,9 +53,9 @@ int fclose(FILE *);
 
 
 @EXPORT_OK  = qw/fopen fclose
-                 gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_b gsl_vector_alloc_from_v
-                 gsl_vector_free gsl_vector_view_array gsl_vector_view_array_w
-                 gsl_vector_const_view_a gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
+                 gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
+                 gsl_vector_free gsl_vector_view_array gsl_vector_view_array_with_stride
+                 gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
                  gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
                  gsl_vector_set_basis gsl_vector_fread gsl_vector_fwrite gsl_vector_fscanf
@@ -64,8 +64,19 @@ int fclose(FILE *);
                  gsl_vector_max_index gsl_vector_min_index gsl_vector_minmax_index
                  gsl_vector_add gsl_vector_sub gsl_vector_mul gsl_vector_div
                  gsl_vector_scale gsl_vector_add_constant gsl_vector_isnull
-                 gsl_vector_ispos gsl_vector_isneg gsl_vector_isnonneg 
-                 /;
+                 gsl_vector_ispos gsl_vector_isneg gsl_vector_isnonneg
+                 gsl_vector_float_alloc gsl_vector_float_calloc gsl_vector_float_alloc_from_block 
+                 gsl_vector_float_alloc_from_vector gsl_vector_float_free gsl_vector_float_view_array
+                 gsl_vector_float_view_array_with_stride gsl_vector_float_const_view_array gsl_vector_float_const_view_array_with_stride
+                 gsl_vector_float_subvector gsl_vector_float_subvector_with_stride gsl_vector_float_const_subvector
+                 gsl_vector_float_const_subvector_with_stride gsl_vector_float_get gsl_vector_float_set gsl_vector_float_ptr
+                 gsl_vector_float_const_ptr gsl_vector_float_set_zero gsl_vector_float_set_all gsl_vector_float_set_basis
+                 gsl_vector_float_fread gsl_vector_float_fwrite gsl_vector_float_fscanf gsl_vector_float_fprintf
+                 gsl_vector_float_memcpy gsl_vector_float_reverse gsl_vector_float_swap gsl_vector_float_swap_elements
+                 gsl_vector_float_max gsl_vector_float_min gsl_vector_float_minmax gsl_vector_float_max_index gsl_vector_float_min_index
+                 gsl_vector_float_minmax_index gsl_vector_float_add gsl_vector_float_sub gsl_vector_float_mul gsl_vector_float_div gsl_vector_float_scale
+                 gsl_vector_float_add_constant gsl_vector_float_isnull gsl_vector_float_ispos gsl_vector_float_isneg gsl_vector_float_isnonneg                       
+/;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 sub new {
@@ -129,17 +140,17 @@ Here is a list of all the functions included in this module :
 
     gsl_vector_calloc($x) - create a vector of size $x and initializes all the elements of the vector to zero
 
-    gsl_vector_alloc_from_b
+    gsl_vector_alloc_from_block
 
-    gsl_vector_alloc_from_v
+    gsl_vector_alloc_from_vector
 
     gsl_vector_free($v) - free a previously allocated vector $v
 
     gsl_vector_view_array
 
-    gsl_vector_view_array_w
+    gsl_vector_view_array_with_stride
 
-    gsl_vector_const_view_a
+    gsl_vector_const_view_array_with_stride
 
     gsl_vector_subvector - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
 

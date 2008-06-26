@@ -15,10 +15,14 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_BLAS_SDSDOT : Tests {
- my $vec1 = Math::GSL::Vector->new( [ map { $_ ** 2 } (1..4) ] );
- my $vec2 = Math::GSL::Vector->new( [ map { $_ } (1..4) ] );
+ my $vec1 = gsl_vector_float_alloc(4);
+ my $vec2 = gsl_vector_float_alloc(4);
+ map { gsl_vector_float_set($vec1, $_, ($_+1)**2) } (0..3);
+ map { gsl_vector_float_set($vec2, $_, $_+1) } (0..3);
  my ($x, $result)= gsl_blas_sdsdot(2, $vec1, $vec2); 
-# this part fail because the vectors should be initiated with gsl_vector_float_alloc... still need to add them to Vector.i
+# this part fail because the vectors should be initiated with gsl_vector_float_alloc...
+# however, the gsl_vector_float_alloc function seems to be deprecated, how should I use BLAS level1 function then?
+# there's no test suite yet for the BLAS functions in GSL...
 } 
 
 

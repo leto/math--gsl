@@ -119,11 +119,11 @@ use Math::GSL::Poly qw/:all/;
 
  Here is a list of all the functions included in this module :
 
- gsl_poly_eval
- 
- gsl_poly_complex_eval 
+ gsl_poly_eval(@values, $length, $x) - This function evaluates a polynomial with real coefficients for the real variable $x. $length is the number of elements inside @values. The function returns a complex number. 
 
- gsl_complex_poly_complex_eval 
+ gsl_poly_complex_eval(@values, $length, $z) - This function evaluates a polynomial with real coefficients for the complex variable $z. $length is the number of elements inside @valuesi. The function returns a complex number.    
+
+ gsl_complex_poly_complex_eval(@values, $length, $z) - This function evaluates a polynomial with real coefficients for the complex variable $z. $length is the number of elements inside @values. $length is the number of elements inside @values. The function returns a complex number.
 
  gsl_poly_dd_init 
 
@@ -131,17 +131,17 @@ use Math::GSL::Poly qw/:all/;
 
  gsl_poly_dd_taylor 
 
- gsl_poly_solve_quadratic 
+ gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1) - find the real roots of the quadratic equation $a*x**2+$b*x+$c = 0, return the number of real root (either zero, one or two) and the real roots are returned by $x0, $x1 and $x2 which are deferenced.
 
- gsl_poly_complex_solve_quadratic 
+ gsl_poly_complex_solve_quadratic
 
- gsl_poly_solve_cubic($a, $b, $c, \$x0, \$x1, \$x2) - find the real roots of the cubic equation x**3+$a*x**2+$b*x+$c, return the number of real root (either one or three) and the real roots are returned bye $x0, $x1 and $x2 which are deferenced.
+ gsl_poly_solve_cubic($a, $b, $c, \$x0, \$x1, \$x2) - find the real roots of the cubic equation x**3+$a*x**2+$b*x+$c = 0, return the number of real root (either one or three) and the real roots are returned by $x0, $x1 and $x2 which are deferenced.
 
  gsl_poly_complex_solve_cubic 
 
- gsl_poly_complex_workspace_alloc 
+ gsl_poly_complex_workspace_alloc($n) - This function allocates space for a gsl_poly_complex_workspace struct and a workspace suitable for solving a polynomial with $n coefficients using the routine gsl_poly_complex_solve. 
 
- gsl_poly_complex_workspace_free 
+ gsl_poly_complex_workspace_free($w) - This function frees all the memory associated with the workspace w. 
 
  gsl_poly_complex_solve 
 
@@ -150,12 +150,19 @@ use Math::GSL::Poly qw/:all/;
 
 =head1 EXAMPLES
 
-    use Math::GSL::Poly qw/:all/;
-    my ($a,$b,$c) = (1,6,9);
-    my ($x0, $x1) = (0,0);
-    my $num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
-    print "${a}*x**2 + ${b}*x + $c contains $num_roots roots which are $x0 and $x1. \n";
+=over 1
 
+=item C<use Math::GSL::Poly qw/:all/;>
+
+=item C<my ($a,$b,$c) = (1,6,9);>
+
+=item C<my ($x0, $x1) = (0,0);>
+
+=item C<my $num_roots = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);>
+
+=item C<print "${a}*x**2 + ${b}*x + $c contains $num_roots roots which are $x0 and $x1. \n";>
+
+=back
 
 =head1 AUTHORS
 

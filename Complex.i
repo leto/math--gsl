@@ -117,162 +117,177 @@ use Math::GSL::Complex qw/:all/;
 
 Here is a list of all the functions included in this module :
 
-    gsl_complex_arg($z) - return the argument of the complex number $z 
+=over 1
 
-    gsl_complex_abs($z) - return |$z|, the magnitude of the complex number $z 
+=item C<gsl_complex_arg($z)> - return the argument of the complex number $z 
 
-    gsl_complex_rect($x,$y) - create a complex number in cartesian form $x + $y*I
+=item C<gsl_complex_abs($z)> - return |$z|, the magnitude of the complex number $z 
 
-    gsl_complex_polar($r,$theta) - create a complex number in polar form $r*exp(I*$theta) 
+=item C<gsl_complex_rect($x,$y)> - create a complex number in cartesian form $x + $y*I
 
-    gsl_complex_abs2 - return |$z|^2, the squared magnitude of the complex number $z
+=item C<gsl_complex_polar($r,$theta)> - create a complex number in polar form $r*exp(I*$theta) 
 
-    gsl_complex_logabs - return log(|$z|), the natural logarithm of the magnitude of the complex number $z 
+=item C<gsl_complex_abs2($z)> - return |$z|^2, the squared magnitude of the complex number $z
 
-    gsl_complex_add($c1, $c2) - return a complex number which is the sum of the complex numbers $c1 and $c2 
+=item C<gsl_complex_logabs($z)> - return log(|$z|), the natural logarithm of the magnitude of the complex number $z 
 
-    gsl_complex_sub($c1, $c2) - return a complex number which is the difference between $c1 and $c2 ($c1 - $c2) 
+=item C<gsl_complex_add($c1, $c2)> - return a complex number which is the sum of the complex numbers $c1 and $c2 
 
-    gsl_complex_mul($c1, $c2) - return a complex number which is the product of the complex numbers $c1 and $c2
+=item C<gsl_complex_sub($c1, $c2)> - return a complex number which is the difference between $c1 and $c2 ($c1 - $c2) 
 
-    gsl_complex_div($c1, $c2) - return a complex number which is the quotient of the complex numbers $c1 and $c2 ($c1 / $c2)
+=item C<gsl_complex_mul($c1, $c2)> - return a complex number which is the product of the complex numbers $c1 and $c2
 
-    gsl_complex_add_real($c, $x) - return the sum of the complex number $c and the real number $x 
+=item C<gsl_complex_div($c1, $c2)> - return a complex number which is the quotient of the complex numbers $c1 and $c2 ($c1 / $c2)
 
-    gsl_complex_sub_real($c, $x) - return the difference of the complex number $c and the real number $x 
+=item C<gsl_complex_add_real($c, $x)> - return the sum of the complex number $c and the real number $x 
 
-    gsl_complex_mul_real($c, $x) - return the product of the complex number $c and the real number $x 
+=item C<gsl_complex_sub_real($c, $x)> - return the difference of the complex number $c and the real number $x 
 
-    gsl_complex_div_real($c, $x) - return the quotient of the complex number $c and the real number $x  
+=item C<gsl_complex_mul_real($c, $x)> - return the product of the complex number $c and the real number $x 
 
-    gsl_complex_add_imag($c, $y) - return sum of the complex number $c and the imaginary number i*$x 
+=item C<gsl_complex_div_real($c, $x)> - return the quotient of the complex number $c and the real number $x  
 
-    gsl_complex_sub_imag($c, $y) - return the diffrence of the complex number $c and the imaginary number i*$x 
+=item C<gsl_complex_add_imag($c, $y)> - return sum of the complex number $c and the imaginary number i*$x 
 
-    gsl_complex_mul_imag($c, $y) - return the product of the complex number $c and the imaginary number i*$x  
+=item C<gsl_complex_sub_imag($c, $y)> - return the diffrence of the complex number $c and the imaginary number i*$x 
 
-    gsl_complex_div_imag($c, $y) - return the quotient of the complex number $c and the imaginary number i*$x 
+=item C<gsl_complex_mul_imag($c, $y)> - return the product of the complex number $c and the imaginary number i*$x  
 
-    gsl_complex_conjugate($c) - return the conjugate of the of the complex number $c (x - i*y)  
+=item C<gsl_complex_div_imag($c, $y)> - return the quotient of the complex number $c and the imaginary number i*$x 
 
-    gsl_complex_inverse($c) - return the inverse, or reciprocal of the complex number $c (1/$c) 
+=item C<gsl_complex_conjugate($c)> - return the conjugate of the of the complex number $c (x - i*y)  
 
-    gsl_complex_negative($c) - return the negative of the complex number $c (-x -i*y) 
+=item C<gsl_complex_inverse($c)> - return the inverse, or reciprocal of the complex number $c (1/$c) 
 
-    gsl_complex_sqrt($c) - return the square root of the complex number $c 
+=item C<gsl_complex_negative($c)> - return the negative of the complex number $c (-x -i*y) 
 
-    gsl_complex_sqrt_real($x) - return the complex square root of the real number $x, where $x may be negative
+=item C<gsl_complex_sqrt($c)> - return the square root of the complex number $c 
 
-    gsl_complex_pow($c1, $c2) - return the complex number $c1 raised to the complex power $c2 
+=item C<gsl_complex_sqrt_real($x)> - return the complex square root of the real number $x, where $x may be negative
 
-    gsl_complex_pow_real($c, $x) - return the complex number raised to the real power $x 
+=item C<gsl_complex_pow($c1, $c2)> - return the complex number $c1 raised to the complex power $c2 
 
-    gsl_complex_exp($c) - return the complex exponential of the complex number $c 
+=item C<gsl_complex_pow_real($c, $x)> - return the complex number raised to the real power $x 
 
-    gsl_complex_log($c) - return the complex natural logarithm (base e) of the complex number $c 
+=item C<gsl_complex_exp($c)> - return the complex exponential of the complex number $c 
 
-    gsl_complex_log10($c) - return the complex base-10 logarithm of the complex number $c
+=item C<gsl_complex_log($c)> - return the complex natural logarithm (base e) of the complex number $c 
 
-    gsl_complex_log_b($c, $b) - return the complex base-$b of the complex number $c 
+=item C<gsl_complex_log10($c)> - return the complex base-10 logarithm of the complex number $c
 
-    gsl_complex_sin($c) - return the complex sine of the complex number $c
+=item C<gsl_complex_log_b($c, $b)> - return the complex base-$b of the complex number $c 
 
-    gsl_complex_cos($c) - return the complex cosine of the complex number $c 
+=item C<gsl_complex_sin($c)> - return the complex sine of the complex number $c
 
-    gsl_complex_sec($c) - return the complex secant of the complex number $c 
+=item C<gsl_complex_cos($c)> - return the complex cosine of the complex number $c 
 
-    gsl_complex_csc($c) - return the complex cosecant of the complex number $c 
+=item C<gsl_complex_sec($c)> - return the complex secant of the complex number $c 
 
-    gsl_complex_tan($c) - return the complex tangent of the complex number $c 
+=item C<gsl_complex_csc($c)> - return the complex cosecant of the complex number $c 
 
-    gsl_complex_cot($c) - return the complex cotangent of the complex number $c 
+=item C<gsl_complex_tan($c)> - return the complex tangent of the complex number $c 
 
-    gsl_complex_arcsin($c) - return the complex arcsine of the complex number $c 
+=item C<gsl_complex_cot($c)> - return the complex cotangent of the complex number $c 
 
-    gsl_complex_arcsin_real($x) - return the complex arcsine of the real number $x 
+=item C<gsl_complex_arcsin($c)> - return the complex arcsine of the complex number $c 
 
-    gsl_complex_arccos($c) - return the complex arccosine of the complex number $c 
+=item C<gsl_complex_arcsin_real($x)> - return the complex arcsine of the real number $x 
 
-    gsl_complex_arccos_real($x) - return the complex arccosine of the real number $x 
+=item C<gsl_complex_arccos($c)> - return the complex arccosine of the complex number $c 
 
-    gsl_complex_arcsec($c) - return the complex arcsecant of the complex number $c 
+=item C<gsl_complex_arccos_real($x)> - return the complex arccosine of the real number $x 
 
-    gsl_complex_arcsec_real($x) - return the complex arcsecant of the real number $x
+=item C<gsl_complex_arcsec($c)> - return the complex arcsecant of the complex number $c 
 
-    gsl_complex_arccsc($c) - return the complex arccosecant of the complex number $c 
+=item C<gsl_complex_arcsec_real($x)> - return the complex arcsecant of the real number $x
 
-    gsl_complex_arccsc_real($x) - return the complex arccosecant of the real number $x
+=item C<gsl_complex_arccsc($c)> - return the complex arccosecant of the complex number $c 
 
-    gsl_complex_arctan($c) - return the complex arctangent of the complex number $c
+=item C<gsl_complex_arccsc_real($x)> - return the complex arccosecant of the real number $x
 
-    gsl_complex_arccot($c) - return the complex arccotangent of the complex number $c 
+=item C<gsl_complex_arctan($c)> - return the complex arctangent of the complex number $c
 
-    gsl_complex_sinh($c) - return the complex hyperbolic sine of the complex number $c 
+=item C<gsl_complex_arccot($c)> - return the complex arccotangent of the complex number $c 
 
-    gsl_complex_cosh($c) - return the complex hyperbolic cosine of the complex number $cy
+=item C<gsl_complex_sinh($c)> - return the complex hyperbolic sine of the complex number $c 
 
-    gsl_complex_sech($c) - return the complex hyperbolic secant of the complex number $c
+=item C<gsl_complex_cosh($c)> - return the complex hyperbolic cosine of the complex number $cy
 
-    gsl_complex_csch($c) - return the complex hyperbolic cosecant of the complex number $c
+=item C<gsl_complex_sech($c)> - return the complex hyperbolic secant of the complex number $c
 
-    gsl_complex_tanh($c) - return the complex hyperbolic tangent of the complex number $c
+=item C<gsl_complex_csch($c)> - return the complex hyperbolic cosecant of the complex number $c
 
-    gsl_complex_coth($c) - return the complex hyperbolic cotangent of the complex number $c
+=item C<gsl_complex_tanh($c)> - return the complex hyperbolic tangent of the complex number $c
 
-    gsl_complex_arcsinh($c) - return the complex hyperbolic arcsine of the complex number $c
+=item C<gsl_complex_coth($c)> - return the complex hyperbolic cotangent of the complex number $c
 
-    gsl_complex_arccosh($c) - return the complex hyperbolic arccosine of the complex number $c
+=item C<gsl_complex_arcsinh($c)> - return the complex hyperbolic arcsine of the complex number $c
 
-    gsl_complex_arccosh_real($x) - return the complex hyperbolic arccosine of the real number $x 
+=item C<gsl_complex_arccosh($c)> - return the complex hyperbolic arccosine of the complex number $c
 
-    gsl_complex_arcsech($c) - return the complex hyperbolic arcsecant of the complex number $c
+=item C<gsl_complex_arccosh_real($x)> - return the complex hyperbolic arccosine of the real number $x 
 
-    gsl_complex_arccsch($c) - return the complex hyperbolic arccosecant of the complex number $c
+=item C<gsl_complex_arcsech($c)> - return the complex hyperbolic arcsecant of the complex number $c
 
-    gsl_complex_arctanh($c) - return the complex hyperbolic arctangent of the complex number $c
+=item C<gsl_complex_arccsch($c)> - return the complex hyperbolic arccosecant of the complex number $c
 
-    gsl_complex_arctanh_real($x) - return the complex hyperbolic arctangent of the real number $x 
+=item C<gsl_complex_arctanh($c)> - return the complex hyperbolic arctangent of the complex number $c
 
-    gsl_complex_arccoth($c) - return the complex hyperbolic arccotangent of the complex number $c
+=item C<gsl_complex_arctanh_real($x)> - return the complex hyperbolic arctangent of the real number $x 
 
-    gsl_real($z) - return the real part of $z 
+=item C<gsl_complex_arccoth($c)> - return the complex hyperbolic arccotangent of the complex number $c
 
-    gsl_imag($z) - return the imaginary part of $z 
+=item C<gsl_real($z)> - return the real part of $z 
 
-    gsl_parts($z) - return a list of the real and imaginary parts of $z
+=item C<gsl_imag($z)> - return the imaginary part of $z 
 
-    gsl_complex_eq 
+=item C<gsl_parts($z)> - return a list of the real and imaginary parts of $z
 
-    gsl_set_real($z, $x) - sets the real part of $z to $x
+=item C<gsl_set_real($z, $x)> - sets the real part of $z to $x
 
-    gsl_set_imag($z, $y) - sets the imaginary part of $z to $y
+=item C<gsl_set_imag($z, $y)> - sets the imaginary part of $z to $y
 
-    gsl_set_complex($z, $x, $h) - sets the real part of $z to $x and the imaginary part to $y
+=item C<gsl_set_complex($z, $x, $h)> - sets the real part of $z to $x and the imaginary part to $y
 
- You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. 
- You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
+=back
 
- For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
- Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. 
+You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
+
+For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =head1 EXAMPLES
 
- This code defines $z as 6 + 4*I, takes the complex conjugate of that number, then prints it out.
+This code defines $z as 6 + 4*I, takes the complex conjugate of that number, then prints it out.
 
-    my $z = gsl_complex_rect(6,4);
-    my $y = gsl_complex_conjugate($z);
-    my ($real, $imag) = gsl_parts($y);
+=over 1
 
-    print "z = $real + $imag*I\n";
+=item C<my $z = gsl_complex_rect(6,4);>
 
- This code defines $z as 5 + 3*I, multiplies it by 2 and then prints it out.
+=item C<my $y = gsl_complex_conjugate($z);>
 
-    my $x = gsl_complex_rect(5,3);
-    my $z = gsl_complex_mul_real($x, 2);
-    my $real = gsl_real($z);
-    my $imag = gsl_real($z);
-    print "Re(\$z) = $real\n";
+=item C<my ($real, $imag) = gsl_parts($y);>
 
+=item C<print "z = $real + $imag*I\n";>
+
+=back
+
+This code defines $z as 5 + 3*I, multiplies it by 2 and then prints it out.
+
+=over 1
+
+=item C<my $x = gsl_complex_rect(5,3);>
+
+=item C<my $z = gsl_complex_mul_real($x, 2);>
+
+=item C<my $real = gsl_real($z);>
+
+=item C<my $imag = gsl_real($z);>
+
+=item C<print "Re(\$z) = $real\n";>
+
+=back
 
 =head1 AUTHOR
 

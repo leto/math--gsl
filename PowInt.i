@@ -36,7 +36,7 @@ raised to as the second argument.
 
 You can also write 
 
-    use Math::GSL::PowInt qw/:all/;
+C<use Math::GSL::PowInt qw/:all/;>
     
 to use all avaible functions of the module.
 
@@ -50,7 +50,6 @@ the Perl builtin exponentiation operator, '**' .
 =head1 BENCHMARKS
 
 Would someone like to submit some benchmarks?
-
 
 =head1 AUTHOR
 

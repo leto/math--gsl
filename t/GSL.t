@@ -1,9 +1,8 @@
 use Test::More 'no_plan';
-use Math::GSL;
+use Math::GSL qw/:all/;
+use Math::GSL::SF qw/:all/;
 use Data::Dumper;
 use strict;
-
-my $gsl = Math::GSL->new;
 
 my $results = { 
                 q{is_valid_double(420)}       => 1,
@@ -40,5 +39,5 @@ my $results = {
                 q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => 0, 
               };
 
-$gsl->verify_results($results);
+verify_results($results);
 

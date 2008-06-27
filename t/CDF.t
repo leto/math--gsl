@@ -1,8 +1,9 @@
 use Test::More 'no_plan';
-use Math::GSL;
+use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::CDF qw/:all/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::SF qw/:all/;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -18,7 +19,6 @@ my $TOL5 = 131072.0*$GSL_DBL_EPSILON;
 my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
 
 {
-    my $gsl = Math::GSL->new;
     my $results = { 
                     'gsl_cdf_ugaussian_P(2.0)'                      => [  0.977250, 1e-5 ],
                     'gsl_cdf_ugaussian_Q(2.0)'                      => [  0.022750, 1e-5 ],
@@ -829,5 +829,5 @@ my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
                     'gsl_cdf_tdist_Qinv (9.76799239508425455e-1, 300.0)'	=> [ -2.0, $TOL6 ],
                     q{gsl_cdf_tdist_Qinv (1.000000000000000000e0, 300.0)}	=> [  q{-inf}, $TOL6 ],
                 };
-    $gsl->verify_results($results, 'Math::GSL::CDF');
+    verify_results($results, 'Math::GSL::CDF');
 }

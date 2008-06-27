@@ -45,6 +45,7 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     is_similar (gsl_matrix_get($self->{matrix}, 3, 2),0);
     
     my $U = gsl_matrix_calloc(4,4);
+    my $R = gsl_matrix_calloc(4,4);
     gsl_matrix_set_identity($R);
     my $line;
     for ($line=3; $line>-1; $line--) {

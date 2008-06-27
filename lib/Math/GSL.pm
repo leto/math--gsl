@@ -11,7 +11,7 @@ require DynaLoader;
 require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
-our @EXPORT_OK = qw( ok_similar is_similar $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar is_similar verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
@@ -29,7 +29,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
-Version 0.44
+Version 0.044
 
 =cut
 
@@ -186,36 +186,6 @@ sub subsystems
     /;
 }
 
-sub verify_results
-{
-    my ($self,$results,$class) = @_;
-    my ($x,$val);
-
-    while (my($k,$v)=each %$results){
-        my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
-
-        defined $class ? ( $x = eval qq{${class}::$k} )
-                       : ( $x = eval $k);
-
-        print $@ if $@;
-        print "got $x for $k\n" if defined $ENV{DEBUG};
-
-        if (ref $v eq 'ARRAY'){
-            ($val, $eps)   = @$v;
-        } else {
-             $val = $v;
-        }
-        if (!defined $x ){
-            ok(0, qq{'$k' died} );
-        } elsif ($x =~ /nan|inf/i){
-                ok( $val eq $x, "'$val'?='$x'" );
-        } else { 
-            my $res = abs($x-$val);
-            $@ ? ok(0)
-            : ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
-        }
-    }
-}
 
 sub is_similar {
     my ($x,$y, $eps) = @_;
@@ -278,6 +248,43 @@ sub _has_long_doubles                 { $Config{d_longdbl}     eq 'define'      
 sub _has_long_doubles_as_default      { $Config{uselongdouble} eq 'define'             }
 sub _has_long_doubles_same_as_doubles { $Config{doublesize}    == $Config{longdblsize} }
 
+# this is a huge hack
+sub verify_results
+{
+    my ($results,$class) = @_;
+    my ($x,$val);
+
+    while (my($k,$v)=each %$results){
+        my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
+        my $r   = Math::GSL::SF::gsl_sf_result_struct->new;
+
+        defined $class ? ( $x = eval qq{${class}::$k} )
+                       : ( $x = eval $k);
+
+        print $@ if $@;
+        if (ref $v eq 'ARRAY'){
+            ($val,$eps)   = @$v;
+        } else {
+             $val = $v;
+        }
+        print "got $x for $k\n" if defined $ENV{DEBUG};
+        if ( $k =~ /\$r/) {
+            $x   = $r->{val};
+            $eps = $r->{err};
+            print "result->err: " . $r->{err} . "\n";
+            print "result->val: " . $r->{val} . "\n";
+        }
+        if (!defined $x ){
+            ok(0, qq{'$k' died} );
+        } elsif ($x =~ /nan|inf/i){
+                ok( $val eq $x, "'$val'?='$x'" );
+        } else { 
+            my $res = abs($x-$val);
+            $@ ? ok(0)
+            : ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
+        }
+    }
+}
 sub _assert_dies($;$)
 {
     my ($code,$msg) = @_;

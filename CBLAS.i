@@ -1,4 +1,5 @@
 %module CBLAS 
+
 %{
     #include "/usr/local/include/gsl/gsl_cblas.h"
 %}
@@ -164,4 +165,357 @@
                $CblasRight 
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+__END__
+
+=head1 NAME
+
+Math::GSL::CBLAS - Basic Linear Algebra Subprograms based on C functions
+
+=head1 SYPNOPSIS
+
+use Math::GSL::CBLAS qw/:all/;
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions included in this module :
+
+=over 1
+
+=item C<cblas_sdsdot>
+
+=item C<cblas_dsdot>
+
+=item C<cblas_sdot>
+
+=item C<cblas_ddot>
+
+=item C<cblas_cdotu_sub>
+
+=item C<cblas_cdotc_sub>
+
+=item C<cblas_zdotu_sub>
+
+=item C<cblas_zdotc_sub>
+
+=item C<cblas_snrm2>
+
+=item C<cblas_sasum>
+
+=item C<cblas_dnrm2>
+
+=item C<cblas_dasum>
+
+=item C<cblas_scnrm2>
+
+=item C<cblas_scasum>
+
+=item C<cblas_dznrm2>
+
+=item C<cblas_dzasum>
+
+=item C<cblas_isamax>
+
+=item C<cblas_idamax>
+
+=item C<cblas_icamax>
+
+=item C<cblas_izamax>
+
+=item C<cblas_sswap>
+
+=item C<cblas_scopy>
+
+=item C<cblas_saxpy>
+
+=item C<cblas_dswap>
+
+=item C<cblas_dcopy>
+
+=item C<cblas_daxpy>
+
+=item C<cblas_cswap>
+
+=item C<cblas_ccopy>
+
+=item C<cblas_caxpy>
+
+=item C<cblas_zswap>
+
+=item C<cblas_zcopy>
+
+=item C<cblas_zaxpy>
+
+=item C<cblas_srotg>
+
+=item C<cblas_srotmg>
+
+=item C<cblas_srot>
+
+=item C<cblas_srotm>
+
+=item C<cblas_drotg>
+
+=item C<cblas_drotmg>
+
+=item C<cblas_drot>
+
+=item C<cblas_drotm>
+
+=item C<cblas_sscal>
+
+=item C<cblas_dscal>
+
+=item C<cblas_cscal>
+
+=item C<cblas_zscal>
+
+=item C<cblas_csscal>
+
+=item C<cblas_zdscal>
+
+=item C<cblas_sgemv>
+
+=item C<cblas_sgbmv>
+
+=item C<cblas_strmv>
+
+=item C<cblas_stbmv>
+
+=item C<cblas_stpmv>
+
+=item C<cblas_strsv>
+
+=item C<cblas_stbsv>
+
+=item C<cblas_stpsv>
+
+=item C<cblas_dgemv>
+
+=item C<cblas_dgbmv>
+
+=item C<cblas_dtrmv>
+
+=item C<cblas_dtbmv>
+
+=item C<cblas_dtpmv>
+
+=item C<cblas_dtrsv>
+
+=item C<cblas_dtbsv>
+
+=item C<cblas_dtpsv>
+
+=item C<cblas_cgemv>
+
+=item C<cblas_cgbmv>
+
+=item C<cblas_ctrmv>
+
+=item C<cblas_ctbmv>
+
+=item C<cblas_ctpmv>
+
+=item C<cblas_ctrsv>
+
+=item C<cblas_ctbsv>
+
+=item C<cblas_ctpsv>
+
+=item C<cblas_zgemv>
+
+=item C<cblas_zgbmv>
+
+=item C<cblas_ztrmv>
+
+=item C<cblas_ztbmv>
+
+=item C<cblas_ztpmv>
+
+=item C<cblas_ztrsv>
+
+=item C<cblas_ztbsv>
+
+=item C<cblas_ztpsv>
+
+=item C<cblas_ssymv>
+
+=item C<cblas_ssbmv>
+
+=item C<cblas_sspmv>
+
+=item C<cblas_sger>
+
+=item C<cblas_ssyr>
+
+=item C<cblas_sspr>
+
+=item C<cblas_ssyr2>
+
+=item C<cblas_sspr2>
+
+=item C<cblas_dsymv>
+
+=item C<cblas_dsbmv>
+
+=item C<cblas_dspmv>
+
+=item C<cblas_dger>
+
+=item C<cblas_dsyr>
+
+=item C<cblas_dspr>
+
+=item C<cblas_dsyr2>
+
+=item C<cblas_dspr2>
+
+=item C<cblas_chemv>
+
+=item C<cblas_chbmv>
+
+=item C<cblas_chpmv>
+
+=item C<cblas_cgeru>
+
+=item C<cblas_cgerc>
+
+=item C<cblas_cher>
+
+=item C<cblas_chpr>
+
+=item C<cblas_cher2>
+
+=item C<cblas_chpr2>
+
+=item C<cblas_zhemv>
+
+=item C<cblas_zhbmv>
+
+=item C<cblas_zhpmv>
+
+=item C<cblas_zgeru>
+
+=item C<cblas_zgerc>
+
+=item C<cblas_zher>
+
+=item C<cblas_zhpr>
+
+=item C<cblas_zher2>
+
+=item C<cblas_zhpr2>
+
+=item C<cblas_sgemm>
+
+=item C<cblas_ssymm>
+
+=item C<cblas_ssyrk>
+
+=item C<cblas_ssyr2k>
+
+=item C<cblas_strmm>
+
+=item C<cblas_strsm>
+
+=item C<cblas_dgemm>
+
+=item C<cblas_dsymm>
+
+=item C<cblas_dsyrk>
+
+=item C<cblas_dsyr2k>
+
+=item C<cblas_dtrmm>
+
+=item C<cblas_dtrsm>
+
+=item C<cblas_cgemm>
+
+=item C<cblas_csymm>
+
+=item C<cblas_csyrk>
+
+=item C<cblas_csyr2k>
+
+=item C<cblas_ctrmm>
+
+=item C<cblas_ctrsm>
+
+=item C<cblas_zgemm>
+
+=item C<cblas_zsymm>
+
+=item C<cblas_zsyrk>
+
+=item C<cblas_zsyr2k>
+
+=item C<cblas_ztrmm>
+
+=item C<cblas_ztrsm>
+
+=item C<cblas_chemm>
+
+=item C<cblas_cherk>
+
+=item C<cblas_cher2k>
+
+=item C<cblas_zhemm>
+
+=item C<cblas_zherk>
+
+=item C<cblas_zher2k>
+
+=item C<cblas_xerbla>
+
+=back
+
+This module also contains the following constants : 
+
+=over 1
+
+=item C<$CblasRowMajor>
+               
+=item C<$CblasColMajor> 
+
+=item C<$CblasNoTrans > 
+
+=item C<$CblasTrans > 
+
+=item C<$CblasConjTrans > 
+
+=item C<$CblasUpper> 
+
+=item C<$CblasLower> 
+
+=item C<$CblasNonUnit> 
+                             
+=item C<$CblasUnit >
+ 
+=item C<$CblasLeft >
+
+=item C<$CblasRight >
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+
+=head1 EXAMPLES
+
+=head1 AUTHOR
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
 %}

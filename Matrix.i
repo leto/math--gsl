@@ -383,206 +383,392 @@ use Math::GSL::Matrix qw/:all/;
 
 =head1 DESCRIPTION
 
-
 Here is a list of all the functions included in this module :
 
- gsl_matrix_alloc($i, $j) - Return a gsl_matrix of $i rows and $j columns
- gsl_matrix_calloc($i, $j) - Return a gsl_matrix of $i rows and $j columns and initialize all of the elements of the matrix to zero
- gsl_matrix_alloc_from_block
- gsl_matrix_alloc_from_matrix
- gsl_vector_alloc_row_from_matrix
- gsl_vector_alloc_col_from_matrix
- gsl_matrix_free
- gsl_matrix_submatrix($m, $k1, $k2, $n1, $n2) - Return a matrix view of the matrix $m. The upper-left element of the submatrix is the element ($k1,$k2) of the original matrix. The submatrix has $n1 rows and $n2 columns.
- gsl_matrix_row($m , $i) - Return a vector view of the $i-th row of the matrix $m
- gsl_matrix_column($m, $j) - Return a vector view of the $j-th column of the matrix $m
- gsl_matrix_diagonal($m) - Return a vector view of the diagonal of the vector. The matrix doesn't have to be square.
- gsl_matrix_subdiagonal($m, $k) - Return a vector view of the $k-th subdiagonal of the matrix $m. The diagonal of the matrix corresponds to k=0.
- gsl_matrix_superdiagonal($m, $k) - Return a vector view of the $k-th superdiagonal of the matrix $m. The matrix doesn't have to be square.
- gsl_matrix_subrow($m, $i, $offset, $n) - Return a vector view of the $i-th row of the matrix $m beginning at offset elements and containing n elements.
- gsl_matrix_subcolumn($m, $j, $offset, $n) - Return a vector view of the $j-th column of the matrix $m beginning at offset elements and containing n elements.
- gsl_matrix_view_array
- gsl_matrix_view_array_with_tda
- gsl_matrix_view_vector
- gsl_matrix_view_vector_with_tda
- gsl_matrix_const_submatrix
- gsl_matrix_get($m, $i, $j) - Return the (i,j)-th element of the matrix $m
- gsl_matrix_set($m, $i, $j, $x) - Set the value of the (i,j)-th element of the matrix $m to $x
- gsl_matrix_ptr
- gsl_matrix_const_ptr
- gsl_matrix_set_zero($m) - Set all the elements of the matrix $m to zero
- gsl_matrix_set_identity($m) - Set the elements of the matrix $m to the corresponding elements of the identity matrix
- gsl_matrix_set_all($m, $x) - Set all the elements of the matrix $m to the value $x
- gsl_matrix_fread($fh, $m) - Read a file which has been written with gsl_matrix_fwrite from the stream $fh opened with the fopen function and stores the data inside the matrix $m
- gsl_matrix_fwrite($fh, $m) - Write the elements of the matrix $m in binary format to a stream $fh opened with the fopen function
- gsl_matrix_fscanf($fh, $m) - Read a file which has been written with gsl_matrix_fprintf from the stream $fh opened with the fopen function and stores the data inside the matrix $m
- gsl_matrix_fprintf($fh, $m, $format) - Write the elements of the matrix $m in the format $format (for example "%f" is the format for double) to a stream $fh opened with the fopen function
- gsl_matrix_memcpy($dest, $src) - Copy the elements of the matrix $src to the matrix $dest. The two matrices must have the same size.
- gsl_matrix_swap($m1, $m2) - Exchange the elements of the matrices $m1 and $m2 by copying. The two matrices must have the same size.
- gsl_matrix_swap_rows($m, $i, $j) - Exchange the $i-th and $j-th row of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
- gsl_matrix_swap_columns($m, $i, $j) - Exchange the $i-th and $j-th column of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
- gsl_matrix_swap_rowcol($m, $i, $j) - Exchange the $i-th row and the $j-th column of the matrix $m. The matrix must be square. The function returns 0 if the operation suceeded, 1 otherwise.
- gsl_matrix_transpose($m) - This function replaces the matrix m by its transpose by copying the elements of the matrix in-place. The matrix must be square for this operation to be possible.
- gsl_matrix_transpose_memcpy($dest, $src) - Make the matrix $dest the transpose of the matrix $src. This function works for all matrices provided that the dimensions of the matrix dest match the transposed dimensions of the matrix src. 
- gsl_matrix_max($m) - Return the maximum value in the matrix $m
- gsl_matrix_min($m) - Return the minimum value in the matrix $m
- gsl_matrix_minmax($m) - Return two values, the first is the minimum value of the Matrix $m and the second is the maximum of the same the same matrix.
- gsl_matrix_max_index($m) - Return two values, the first is the the i indice of the maximum value of the matrix $m and the second is the j indice of the same value.
- gsl_matrix_min_index - Return two values, the first is the the i indice of the minimum value of the matrix $m and the second is the j indice of the same value.
- gsl_matrix_minmax_index($m) - Return four values, the first is the i indice of the minimum of the matrix $m, the second is the j indice of the same value, the third is the i indice of the maximum of the matrix $m and the fourth is the j indice of the same value
- gsl_matrix_isnull($m) - Return 1 if all the elements of the matrix $m are zero, 0 otherwise
- gsl_matrix_ispos($m) - Return 1 if all the elements of the matrix $m are strictly positve, 0 otherwise
- gsl_matrix_isneg($m) - Return 1 if all the elements of the matrix $m are strictly negative, 0 otherwise
- gsl_matrix_isnonneg($m) - Return 1 if all the elements of the matrix $m are non-negatuive, 0 otherwise
- gsl_matrix_add($a, $b) - Add the elements of matrix $b to the elements of matrix $a
- gsl_matrix_sub($a, $b) - Subtract the elements of matrix $b from the elements of matrix $a
- gsl_matrix_mul_elements($a, $b) - Multiplie the elements of matrix $a by the elements of matrix $b
- gsl_matrix_div_elements($a, $b) - Divide the elements of matrix $a by the elements of matrix $b
- gsl_matrix_scale($a, $x) - Multiplie the elements of matrix $a by the constant factor $x
- gsl_matrix_add_constant($a, $x) - Add the constant value $x to the elements of the matrix $a
- gsl_matrix_add_diagonal($a, $x) - Add the constant value $x to the elements of the diagonal of the matrix $a
- gsl_matrix_get_row($v, $m, $i) - Copy the elements of the $i-th row of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
- gsl_matrix_get_col($v, $m, $i) - Copy the elements of the $j-th column of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
- gsl_matrix_set_row($m, $i, $v) - Copy the elements of vector $v into the $i-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
- gsl_matrix_set_col($m, $j, $v) - Copy the elements of vector $v into the $j-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+=over 1
 
- The following functions are specific to matrices containing complex numbers : 
+=item C<gsl_matrix_alloc($i, $j)> - Return a gsl_matrix of $i rows and $j columns
 
- gsl_matrix_complex_alloc 
- gsl_matrix_complex_calloc 
- gsl_matrix_complex_alloc_from_block 
- gsl_matrix_complex_alloc_from_matrix 
- gsl_vector_complex_alloc_row_from_matrix 
- gsl_vector_complex_alloc_col_from_matrix 
- gsl_matrix_complex_free 
- gsl_matrix_complex_submatrix 
- gsl_matrix_complex_row 
- gsl_matrix_complex_column 
- gsl_matrix_complex_diagonal 
- gsl_matrix_complex_subdiagonal 
- gsl_matrix_complex_superdiagonal 
- gsl_matrix_complex_subrow 
- gsl_matrix_complex_subcolumn 
- gsl_matrix_complex_view_array 
- gsl_matrix_complex_view_array_with_tda 
- gsl_matrix_complex_view_vector 
- gsl_matrix_complex_view_vector_with_tda 
- gsl_matrix_complex_const_submatrix 
- gsl_matrix_complex_const_row 
- gsl_matrix_complex_const_column 
- gsl_matrix_complex_const_diagonal 
- gsl_matrix_complex_const_subdiagonal 
- gsl_matrix_complex_const_superdiagonal 
- gsl_matrix_complex_const_subrow 
- gsl_matrix_complex_const_subcolumn 
- gsl_matrix_complex_const_view_array 
- gsl_matrix_complex_const_view_array_with_tda 
- gsl_matrix_complex_const_view_vector 
- gsl_matrix_complex_const_view_vector_with_tda 
- gsl_matrix_complex_get
- gsl_matrix_complex_set
- gsl_matrix_complex_ptr
- gsl_matrix_complex_const_ptr
- gsl_matrix_complex_set_zero 
- gsl_matrix_complex_set_identity 
- gsl_matrix_complex_set_all 
- gsl_matrix_complex_fread 
- gsl_matrix_complex_fwrite 
- gsl_matrix_complex_fscanf 
- gsl_matrix_complex_fprintf 
- gsl_matrix_complex_memcpy
- gsl_matrix_complex_swap
- gsl_matrix_complex_swap_rows
- gsl_matrix_complex_swap_columns
- gsl_matrix_complex_swap_rowcol
- gsl_matrix_complex_transpose 
- gsl_matrix_complex_transpose_memcpy 
- gsl_matrix_complex_isnull 
- gsl_matrix_complex_ispos 
- gsl_matrix_complex_isneg 
- gsl_matrix_complex_add 
- gsl_matrix_complex_sub 
- gsl_matrix_complex_mul_elements 
- gsl_matrix_complex_div_elements 
- gsl_matrix_complex_scale 
- gsl_matrix_complex_add_constant 
- gsl_matrix_complex_add_diagonal 
- gsl_matrix_complex_get_row
- gsl_matrix_complex_get_col
- gsl_matrix_complex_set_row
- gsl_matrix_complex_set_col 
- 
+=item C<gsl_matrix_calloc($i, $j)> - Return a gsl_matrix of $i rows and $j columns and initialize all of the elements of the matrix to zero
 
- The following functions are the same as the previous enonced ones except that they work with other data types than double.
+=item C<gsl_matrix_alloc_from_block> - 
 
- gsl_matrix_const_row gsl_matrix_const_column gsl_matrix_const_diagonal
- gsl_matrix_const_subdiagonal gsl_matrix_const_superdiagonal
- gsl_matrix_const_subrow gsl_matrix_const_subcolumn
- gsl_matrix_const_view_array gsl_matrix_const_view_array_with_tda
- gsl_matrix_const_view_vector gsl_matrix_const_view_vector_with_tda
- gsl_matrix_char_alloc gsl_matrix_char_calloc  gsl_matrix_char_alloc_from_block
- gsl_matrix_char_alloc_from_matrix gsl_vector_char_alloc_row_from_matrix gsl_vector_char_alloc_col_from_matrix 
- gsl_matrix_char_free gsl_matrix_char_submatrix 
- gsl_matrix_char_row  gsl_matrix_char_column 
- gsl_matrix_char_diagonal gsl_matrix_char_subdiagonal gsl_matrix_char_superdiagonal 
- gsl_matrix_char_subrow gsl_matrix_char_subcolumn gsl_matrix_char_view_array 
- gsl_matrix_char_view_array_with_tda gsl_matrix_char_view_vector gsl_matrix_char_view_vector_with_tda 
- gsl_matrix_char_const_submatrix gsl_matrix_char_const_row gsl_matrix_char_const_column 
- gsl_matrix_char_const_diagonal gsl_matrix_char_const_subdiagonal gsl_matrix_char_const_superdiagonal 
- gsl_matrix_char_const_subrow gsl_matrix_char_const_subcolumn gsl_matrix_char_const_view_array 
- gsl_matrix_char_const_view_array_with_tda gsl_matrix_char_const_view_vector gsl_matrix_char_const_view_vector_with_tda 
- gsl_matrix_char_get gsl_matrix_char_set gsl_matrix_char_ptr gsl_matrix_char_const_ptr 
- gsl_matrix_char_set_zero gsl_matrix_char_set_identity 
- gsl_matrix_char_set_all  gsl_matrix_char_fread 
- gsl_matrix_char_fwrite gsl_matrix_char_fscanf gsl_matrix_char_fprintf 
- gsl_matrix_char_memcpy gsl_matrix_char_swap 
- gsl_matrix_char_swap_rows gsl_matrix_char_swap_columns
- gsl_matrix_char_swap_rowcol gsl_matrix_char_transpose gsl_matrix_char_transpose_memcpy 
- gsl_matrix_char_max gsl_matrix_char_min 
- gsl_matrix_char_minmax  gsl_matrix_char_max_index 
- gsl_matrix_char_min_index gsl_matrix_char_minmax_index  
- gsl_matrix_char_isnull gsl_matrix_char_ispos gsl_matrix_char_isneg 
- gsl_matrix_char_isnonneg  gsl_matrix_char_add 
- gsl_matrix_char_sub gsl_matrix_char_mul_elements gsl_matrix_char_div_elements 
- gsl_matrix_char_scale gsl_matrix_char_add_constant gsl_matrix_char_add_diagonal 
- gsl_matrix_int_alloc gsl_matrix_int_calloc gsl_matrix_int_alloc_from_block 
- gsl_matrix_int_alloc_from_matrix gsl_vector_int_alloc_row_from_matrix gsl_vector_int_alloc_col_from_matrix 
- gsl_matrix_int_free gsl_matrix_int_submatrix gsl_matrix_int_row 
- gsl_matrix_int_column gsl_matrix_int_diagonal gsl_matrix_int_subdiagonal 
- gsl_matrix_int_superdiagonal gsl_matrix_int_subrow gsl_matrix_int_subcolumn gsl_matrix_int_view_array 
- gsl_matrix_int_view_array_with_tda gsl_matrix_int_view_vector gsl_matrix_int_view_vector_with_tda 
- gsl_matrix_int_const_submatrix gsl_matrix_int_const_row gsl_matrix_int_const_column 
- gsl_matrix_int_const_diagonal gsl_matrix_int_const_subdiagonal gsl_matrix_int_const_superdiagonal 
- gsl_matrix_int_const_subrow gsl_matrix_int_const_subcolumn gsl_matrix_int_const_view_array 
- gsl_matrix_int_const_view_array_with_tda gsl_matrix_int_const_view_vector gsl_matrix_int_const_view_vector_with_tda 
- gsl_matrix_int_get gsl_matrix_int_set 
- gsl_matrix_int_ptr gsl_matrix_int_const_ptr 
- gsl_matrix_int_set_zero gsl_matrix_int_set_identity gsl_matrix_int_set_all 
- gsl_matrix_int_fread gsl_matrix_int_fwrite 
- gsl_matrix_int_fscanf gsl_matrix_int_fprintf 
- gsl_matrix_int_memcpy gsl_matrix_int_swap 
- gsl_matrix_int_swap_rows gsl_matrix_int_swap_columns gsl_matrix_int_swap_rowcol
- gsl_matrix_int_transpose gsl_matrix_int_transpose_memcpy  
- gsl_matrix_int_max gsl_matrix_int_min gsl_matrix_int_minmax 
- gsl_matrix_int_max_index gsl_matrix_int_min_index 
- gsl_matrix_int_minmax_index  gsl_matrix_int_isnull 
- gsl_matrix_int_ispos gsl_matrix_int_isneg gsl_matrix_int_isnonneg 
- gsl_matrix_int_add gsl_matrix_int_sub 
- gsl_matrix_int_mul_elements gsl_matrix_int_div_elements gsl_matrix_int_scale 
- gsl_matrix_int_add_constant gsl_matrix_int_add_diagonal
- 
- You have to add the functions you want to use inside the qw /put_funtion_here /. 
- You can also write use Math::GSL::PowInt qw/:name_of_tag/ to use all avaible functions of the module. 
- Other tags are also avaible, here is a complete list of all tags for this module :
+=item C<gsl_matrix_free> - 
 
- all 
- int 
- double 
- char 
- complex
+=item C<gsl_matrix_alloc_from_matrix > - 
 
- For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
- Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
+=item C<gsl_vector_alloc_row_from_matrix> - 
+
+=item C<gsl_vector_alloc_col_from_matrix > - 
+
+=item C<gsl_matrix_submatrix($m, $k1, $k2, $n1, $n2)> - Return a matrix view of the matrix $m. The upper-left element of the submatrix is the element ($k1,$k2) of the original matrix. The submatrix has $n1 rows and $n2 columns.
+
+=item C<gsl_matrix_row($m , $i)> - Return a vector view of the $i-th row of the matrix $m
+
+=item C<gsl_matrix_column($m, $j)> - Return a vector view of the $j-th column of the matrix $m
+
+=item C<gsl_matrix_diagonal($m)> - Return a vector view of the diagonal of the vector. The matrix doesn't have to be square.
+
+=item C<gsl_matrix_subdiagonal($m, $k)> - Return a vector view of the $k-th subdiagonal of the matrix $m. The diagonal of the matrix corresponds to k=0.
+
+=item C<gsl_matrix_superdiagonal($m, $k)> - Return a vector view of the $k-th superdiagonal of the matrix $m. The matrix doesn't have to be square.
+
+=item C<gsl_matrix_subrow($m, $i, $offset, $n)> - Return a vector view of the $i-th row of the matrix $m beginning at offset elements and containing n elements.
+
+=item C<gsl_matrix_subcolumn($m, $j, $offset, $n)> - Return a vector view of the $j-th column of the matrix $m beginning at offset elements and containing n elements.
+
+=item C<gsl_matrix_view_array> - 
+
+=item C<gsl_matrix_view_array_with_tda > - 
+
+=item C<gsl_matrix_view_vector> - 
+
+=item C<gsl_matrix_view_vector_with_tda> - 
+
+=item C<gsl_matrix_const_submatrix> - 
+
+=item C<gsl_matrix_get($m, $i, $j)> - Return the (i,j)-th element of the matrix $m
+
+=item C<gsl_matrix_set($m, $i, $j, $x)> - Set the value of the (i,j)-th element of the matrix $m to $x
+
+=item C<gsl_matrix_ptr> - 
+
+=item C<gsl_matrix_const_ptr> - 
+
+=item C<gsl_matrix_set_zero($m)> - Set all the elements of the matrix $m to zero
+
+=item C<gsl_matrix_set_identity($m)> - Set the elements of the matrix $m to the corresponding elements of the identity matrix
+
+=item C<gsl_matrix_set_all($m, $x)> - Set all the elements of the matrix $m to the value $x
+
+=item C<gsl_matrix_fread($fh, $m)> - Read a file which has been written with gsl_matrix_fwrite from the stream $fh opened with the fopen function and stores the data inside the matrix $m
+
+=item C<gsl_matrix_fwrite($fh, $m)> - Write the elements of the matrix $m in binary format to a stream $fh opened with the fopen function
+
+=item C<gsl_matrix_fscanf($fh, $m)> - Read a file which has been written with gsl_matrix_fprintf from the stream $fh opened with the fopen function and stores the data inside the matrix $m
+
+=item C<gsl_matrix_fprintf($fh, $m, $format)> - Write the elements of the matrix $m in the format $format (for example "%f" is the format for double) to a stream $fh opened with the fopen function
+
+=item C<gsl_matrix_memcpy($dest, $src)> - Copy the elements of the matrix $src to the matrix $dest. The two matrices must have the same size.
+
+=item C<gsl_matrix_swap($m1, $m2)> - Exchange the elements of the matrices $m1 and $m2 by copying. The two matrices must have the same size.
+
+=item C<gsl_matrix_swap_rows($m, $i, $j)> - Exchange the $i-th and $j-th row of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
+
+=item C<gsl_matrix_swap_columns($m, $i, $j)> - Exchange the $i-th and $j-th column of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
+
+=item C<gsl_matrix_swap_rowcol($m, $i, $j)> - Exchange the $i-th row and the $j-th column of the matrix $m. The matrix must be square. The function returns 0 if the operation suceeded, 1 otherwise.
+
+=item C<gsl_matrix_transpose($m)> - This function replaces the matrix m by its transpose by copying the elements of the matrix in-place. The matrix must be square for this operation to be possible.
+
+=item C<gsl_matrix_transpose_memcpy($dest, $src)> - Make the matrix $dest the transpose of the matrix $src. This function works for all matrices provided that the dimensions of the matrix dest match the transposed dimensions of the matrix src. 
+
+=item C<gsl_matrix_max($m)> - Return the maximum value in the matrix $m
+
+=item C<gsl_matrix_min($m)> - Return the minimum value in the matrix $m
+
+=item C<gsl_matrix_minmax($m)> - Return two values, the first is the minimum value of the Matrix $m and the second is the maximum of the same the same matrix.
+
+=item C<gsl_matrix_max_index($m)> - Return two values, the first is the the i indice of the maximum value of the matrix $m and the second is the j indice of the same value.
+
+=item C<gsl_matrix_min_index($m)> - Return two values, the first is the the i indice of the minimum value of the matrix $m and the second is the j indice of the same value.
+
+=item C<gsl_matrix_minmax_index($m)> - Return four values, the first is the i indice of the minimum of the matrix $m, the second is the j indice of the same value, the third is the i indice of the maximum of the matrix $m and the fourth is the j indice of the same value
+
+=item C<gsl_matrix_isnull($m)> - Return 1 if all the elements of the matrix $m are zero, 0 otherwise
+
+=item C<gsl_matrix_ispos($m)> - Return 1 if all the elements of the matrix $m are strictly positve, 0 otherwise
+
+=item C<gsl_matrix_isneg($m)> - Return 1 if all the elements of the matrix $m are strictly negative, 0 otherwise
+
+=item C<gsl_matrix_isnonneg($m)> - Return 1 if all the elements of the matrix $m are non-negatuive, 0 otherwise
+
+=item C<gsl_matrix_add($a, $b)> - Add the elements of matrix $b to the elements of matrix $a
+
+=item C<gsl_matrix_sub($a, $b)> - Subtract the elements of matrix $b from the elements of matrix $a
+
+=item C<gsl_matrix_mul_elements($a, $b)> - Multiplie the elements of matrix $a by the elements of matrix $b
+
+=item C<gsl_matrix_div_elements($a, $b)> - Divide the elements of matrix $a by the elements of matrix $b
+
+=item C<gsl_matrix_scale($a, $x)> - Multiplie the elements of matrix $a by the constant factor $x
+
+=item C<gsl_matrix_add_constant($a, $x)> - Add the constant value $x to the elements of the matrix $a
+
+=item C<gsl_matrix_add_diagonal($a, $x)> - Add the constant value $x to the elements of the diagonal of the matrix $a
+
+=item C<gsl_matrix_get_row($v, $m, $i)> - Copy the elements of the $i-th row of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+
+=item C<gsl_matrix_get_col($v, $m, $i)> - Copy the elements of the $j-th column of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+
+=item C<gsl_matrix_set_row($m, $i, $v)> - Copy the elements of vector $v into the $i-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+
+=item C<gsl_matrix_set_col($m, $j, $v)> - Copy the elements of vector $v into the $j-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+
+=back
+
+The following functions are specific to matrices containing complex numbers : 
+
+=over 1
+
+=item C<gsl_matrix_complex_alloc >
+
+=item C<gsl_matrix_complex_calloc >
+
+=item C<gsl_matrix_complex_alloc_from_block >
+
+=item C<gsl_matrix_complex_alloc_from_matrix >
+
+=item C<gsl_vector_complex_alloc_row_from_matrix >
+
+=item C<gsl_vector_complex_alloc_col_from_matrix >
+
+=item C<gsl_matrix_complex_free >
+
+=item C<gsl_matrix_complex_submatrix >
+
+=item C<gsl_matrix_complex_row >
+
+=item C<gsl_matrix_complex_column >
+
+=item C<gsl_matrix_complex_diagonal >
+
+=item C<gsl_matrix_complex_subdiagonal >
+
+=item C<gsl_matrix_complex_superdiagonal >
+
+=item C<gsl_matrix_complex_subrow >
+
+=item C<gsl_matrix_complex_subcolumn >
+
+=item C<gsl_matrix_complex_view_array >
+
+=item C<gsl_matrix_complex_view_array_with_tda >
+
+=item C<gsl_matrix_complex_view_vector >
+
+=item C<gsl_matrix_complex_view_vector_with_tda >
+
+=item C<gsl_matrix_complex_const_submatrix >
+
+=item C<gsl_matrix_complex_const_row >
+
+=item C<gsl_matrix_complex_const_column >
+
+=item C<gsl_matrix_complex_const_diagonal >
+
+=item C<gsl_matrix_complex_const_subdiagonal >
+
+=item C<gsl_matrix_complex_const_superdiagonal >
+
+=item C<gsl_matrix_complex_const_subrow >
+
+=item C<gsl_matrix_complex_const_subcolumn >
+
+=item C<gsl_matrix_complex_const_view_array >
+
+=item C<gsl_matrix_complex_const_view_array_with_tda >
+
+=item C<gsl_matrix_complex_const_view_vector >
+
+=item C<gsl_matrix_complex_const_view_vector_with_tda >
+
+=item C<gsl_matrix_complex_get>
+
+=item C<gsl_matrix_complex_set>
+
+=item C<gsl_matrix_complex_ptr>
+
+=item C<gsl_matrix_complex_const_ptr>
+
+=item C<gsl_matrix_complex_set_zero >
+
+=item C<gsl_matrix_complex_set_identity >
+
+=item C<gsl_matrix_complex_set_all >
+
+=item C<gsl_matrix_complex_fread >
+
+=item C<gsl_matrix_complex_fwrite >
+
+=item C<gsl_matrix_complex_fscanf >
+
+=item C<gsl_matrix_complex_fprintf >
+
+=item C<gsl_matrix_complex_memcpy>
+
+=item C<gsl_matrix_complex_swap>
+
+=item C<gsl_matrix_complex_swap_rows>
+
+=item C<gsl_matrix_complex_swap_columns>
+
+=item C<gsl_matrix_complex_swap_rowcol>
+
+=item C<gsl_matrix_complex_transpose >
+
+=item C<gsl_matrix_complex_transpose_memcpy >
+
+=item C<gsl_matrix_complex_isnull >
+
+=item C<gsl_matrix_complex_ispos >
+
+=item C<gsl_matrix_complex_isneg >
+
+=item C<gsl_matrix_complex_add >
+
+=item C<gsl_matrix_complex_sub >
+
+=item C<gsl_matrix_complex_mul_elements >
+
+=item C<gsl_matrix_complex_div_elements >
+
+=item C<gsl_matrix_complex_scale >
+
+=item C<gsl_matrix_complex_add_constant >
+
+=item C<gsl_matrix_complex_add_diagonal >
+
+=item C<gsl_matrix_complex_get_row>
+
+=item C<gsl_matrix_complex_get_col>
+
+=item C<gsl_matrix_complex_set_row>
+
+=item C<gsl_matrix_complex_set_col>
+
+=back
+
+
+The following functions are the same as the previous enonced ones except that they work with other data types than double.
+
+=over 1
+
+=item gsl_matrix_const_row gsl_matrix_const_column gsl_matrix_const_diagonal
+
+=item gsl_matrix_const_subdiagonal gsl_matrix_const_superdiagonal
+
+=item gsl_matrix_const_subrow gsl_matrix_const_subcolumn
+
+=item gsl_matrix_const_view_array gsl_matrix_const_view_array_with_tda
+
+=item gsl_matrix_const_view_vector gsl_matrix_const_view_vector_with_tda gsl_matrix_char_alloc gsl_matrix_char_calloc  gsl_matrix_char_alloc_from_block
+
+=item gsl_matrix_char_alloc_from_matrix gsl_vector_char_alloc_row_from_matrix gsl_vector_char_alloc_col_from_matrix 
+
+=item gsl_matrix_char_free gsl_matrix_char_submatrix gsl_matrix_char_row  gsl_matrix_char_column 
+
+=item gsl_matrix_char_diagonal gsl_matrix_char_subdiagonal gsl_matrix_char_superdiagonal 
+
+=item gsl_matrix_char_subrow gsl_matrix_char_subcolumn gsl_matrix_char_view_array 
+
+=item gsl_matrix_char_view_array_with_tda gsl_matrix_char_view_vector gsl_matrix_char_view_vector_with_tda 
+
+=item gsl_matrix_char_const_submatrix gsl_matrix_char_const_row gsl_matrix_char_const_column 
+
+=item gsl_matrix_char_const_diagonal gsl_matrix_char_const_subdiagonal gsl_matrix_char_const_superdiagonal 
+
+=item gsl_matrix_char_const_subrow gsl_matrix_char_const_subcolumn gsl_matrix_char_const_view_array 
+
+=item gsl_matrix_char_const_view_array_with_tda gsl_matrix_char_const_view_vector gsl_matrix_char_const_view_vector_with_tda 
+
+=item gsl_matrix_char_get gsl_matrix_char_set gsl_matrix_char_ptr gsl_matrix_char_const_ptr 
+
+=item gsl_matrix_char_set_zero gsl_matrix_char_set_identity 
+
+=item gsl_matrix_char_set_all  gsl_matrix_char_fread 
+
+=item gsl_matrix_char_fwrite gsl_matrix_char_fscanf gsl_matrix_char_fprintf 
+
+=item gsl_matrix_char_memcpy gsl_matrix_char_swap 
+
+=item gsl_matrix_char_swap_rows gsl_matrix_char_swap_columns
+
+=item gsl_matrix_char_swap_rowcol gsl_matrix_char_transpose gsl_matrix_char_transpose_memcpy 
+
+=item gsl_matrix_char_max gsl_matrix_char_min 
+
+=item gsl_matrix_char_minmax  gsl_matrix_char_max_index 
+
+=item gsl_matrix_char_min_index gsl_matrix_char_minmax_index  
+
+=item gsl_matrix_char_isnull gsl_matrix_char_ispos gsl_matrix_char_isneg 
+
+=item gsl_matrix_char_isnonneg  gsl_matrix_char_add 
+
+=item gsl_matrix_char_sub gsl_matrix_char_mul_elements gsl_matrix_char_div_elements 
+
+=item gsl_matrix_char_scale gsl_matrix_char_add_constant gsl_matrix_char_add_diagonal 
+
+=item gsl_matrix_int_alloc gsl_matrix_int_calloc gsl_matrix_int_alloc_from_block 
+
+=item gsl_matrix_int_alloc_from_matrix gsl_vector_int_alloc_row_from_matrix gsl_vector_int_alloc_col_from_matrix 
+
+=item gsl_matrix_int_free gsl_matrix_int_submatrix gsl_matrix_int_row 
+
+=item gsl_matrix_int_column gsl_matrix_int_diagonal gsl_matrix_int_subdiagonal gsl_matrix_int_superdiagonal gsl_matrix_int_subrow gsl_matrix_int_subcolumn gsl_matrix_int_view_array gsl_matrix_int_view_array_with_tda gsl_matrix_int_view_vector gsl_matrix_int_view_vector_with_tda 
+
+=item gsl_matrix_int_const_submatrix gsl_matrix_int_const_row gsl_matrix_int_const_column 
+
+
+=item gsl_matrix_int_const_diagonal gsl_matrix_int_const_subdiagonal gsl_matrix_int_const_superdiagonal 
+
+=item gsl_matrix_int_const_subrow gsl_matrix_int_const_subcolumn gsl_matrix_int_const_view_array 
+
+=item gsl_matrix_int_const_view_array_with_tda gsl_matrix_int_const_view_vector gsl_matrix_int_const_view_vector_with_tda 
+
+=item gsl_matrix_int_get gsl_matrix_int_set 
+
+=item gsl_matrix_int_ptr gsl_matrix_int_const_ptr 
+
+=item gsl_matrix_int_set_zero gsl_matrix_int_set_identity gsl_matrix_int_set_all 
+
+=item gsl_matrix_int_fread gsl_matrix_int_fwrite 
+
+=item gsl_matrix_int_fscanf gsl_matrix_int_fprintf 
+
+=item gsl_matrix_int_memcpy gsl_matrix_int_swap 
+
+=item gsl_matrix_int_swap_rows gsl_matrix_int_swap_columns gsl_matrix_int_swap_rowcol
+
+=item gsl_matrix_int_transpose gsl_matrix_int_transpose_memcpy  
+
+=item gsl_matrix_int_max gsl_matrix_int_min gsl_matrix_int_minmax 
+
+=item gsl_matrix_int_max_index gsl_matrix_int_min_index 
+
+=item gsl_matrix_int_minmax_index  gsl_matrix_int_isnull 
+
+=item gsl_matrix_int_ispos gsl_matrix_int_isneg gsl_matrix_int_isnonneg 
+
+=item gsl_matrix_int_add gsl_matrix_int_sub 
+
+=item gsl_matrix_int_mul_elements gsl_matrix_int_div_elements gsl_matrix_int_scale 
+
+=item gsl_matrix_int_add_constant gsl_matrix_int_add_diagonal
+
+=back
+
+You have to add the functions you want to use inside the qw /put_funtion_here /. 
+You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module. 
+Other tags are also avaible, here is a complete list of all tags for this module :
+
+=over 1
+
+=item C<all>
+
+=item C<int>
+
+=item C<double> 
+
+=item C<char> 
+
+=item C<complex>
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
 =head1 EXAMPLES
 
@@ -653,4 +839,5 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
+
 %}

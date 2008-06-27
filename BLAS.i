@@ -1,4 +1,9 @@
 %module BLAS
+
+%include "typemaps.i"
+
+%apply float *OUTPUT { float *result };
+
 %{
     #include "/usr/local/include/gsl/gsl_blas.h"
     #include "/usr/local/include/gsl/gsl_blas_types.h"
@@ -46,10 +51,287 @@
                     /;
 @EXPORT_OK = (@EXPORT_OK_level1, @EXPORT_OK_level2, @EXPORT_OK_level3);
 %EXPORT_TAGS = (
-                all    => [ @EXPORT ],
+                all    => [ @EXPORT_OK ],
                 level1 => [ @EXPORT_OK_level1 ],  
                 level2 => [ @EXPORT_OK_level2 ],  
                 level3 => [ @EXPORT_OK_level3 ],  
                );
+__END__
+
+=head1 NAME
+
+Math::GSL::BLAS - Basic Linear Algebra Subprograms
+
+=head1 SYPNOPSIS
+
+use Math::GSL::QRNG qw/:all/;
+
+=head1 DESCRIPTION
+
+The functions of this module are divised into 3 levels:
+
+=head2 Level 1 - Vector operations
+
+=over 3  
+
+=item C<gsl_blas_sdsdot>
+
+=item C<gsl_blas_dsdot>
+
+=item C<gsl_blas_sdot>
+
+=item C<gsl_blas_ddot >
+
+=item C<gsl_blas_cdotu>
+
+=item C<gsl_blas_cdotc>
+
+=item C<gsl_blas_zdotu>
+
+=item C<gsl_blas_zdotc >
+
+=item C<gsl_blas_snrm2>
+
+=item C<gsl_blas_sasum>
+
+=item C<gsl_blas_dnrm2>
+
+=item C<gsl_blas_dasum >
+
+=item C<gsl_blas_scnrm2>
+
+=item C<gsl_blas_scasum>
+
+=item C<gsl_blas_dznrm2>
+
+=item C<gsl_blas_dzasum >
+
+=item C<gsl_blas_isamax>
+
+=item C<gsl_blas_idamax>
+
+=item C<gsl_blas_icamax>
+
+=item C<gsl_blas_izamax >
+
+=item C<gsl_blas_sswap>
+
+=item C<gsl_blas_scopy>
+
+=item C<gsl_blas_saxpy>
+
+=item C<gsl_blas_dswap >
+
+=item C<gsl_blas_dcopy>
+
+=item C<gsl_blas_daxpy>
+
+=item C<gsl_blas_cswap>
+
+=item C<gsl_blas_ccopy >
+
+=item C<gsl_blas_caxpy>
+
+=item C<gsl_blas_zswap>
+
+=item C<gsl_blas_zcopy>
+
+=item C<gsl_blas_zaxpy >
+
+=item C<gsl_blas_srotg>
+
+=item C<gsl_blas_srotmg>
+
+=item C<gsl_blas_srot>
+
+=item C<gsl_blas_srotm >
+
+=item C<gsl_blas_drotg>
+
+=item C<gsl_blas_drotmg>
+
+=item C<gsl_blas_drot>
+
+=item C<gsl_blas_drotm >
+
+=item C<gsl_blas_sscal>
+
+=item C<gsl_blas_dscal>
+
+=item C<gsl_blas_cscal>
+
+=item C<gsl_blas_zscal >
+
+=item C<gsl_blas_csscal>
+
+=item C<gsl_blas_zdscal>
+
+=back
+
+=head2 Level 2 - Matrix-vector operations
+
+=over 3 
+
+=item C<gsl_blas_sgemv>
+
+=item C<gsl_blas_strmv >
+
+=item C<gsl_blas_strsv>
+
+=item C<gsl_blas_dgemv>
+
+=item C<gsl_blas_dtrmv>
+
+=item C<gsl_blas_dtrsv >
+
+=item C<gsl_blas_cgemv >
+
+=item C<gsl_blas_ctrmv>
+
+=item C<gsl_blas_ctrsv>
+
+=item C<gsl_blas_zgemv >
+
+=item C<gsl_blas_ztrmv>
+
+=item C<gsl_blas_ztrsv>
+
+=item C<gsl_blas_ssymv>
+
+=item C<gsl_blas_sger >
+
+=item C<gsl_blas_ssyr>
+
+=item C<gsl_blas_ssyr2>
+
+=item C<gsl_blas_dsymv>
+
+=item C<gsl_blas_dger >
+
+=item C<gsl_blas_dsyr>
+
+=item C<gsl_blas_dsyr2>
+
+=item C<gsl_blas_chemv>
+
+=item C<gsl_blas_cgeru >
+
+=item C<gsl_blas_cgerc>
+
+=item C<gsl_blas_cher>
+
+=item C<gsl_blas_cher2>
+
+=item C<gsl_blas_zhemv >
+
+=item C<gsl_blas_zgeru>
+
+=item C<gsl_blas_zgerc>
+
+=item C<gsl_blas_zher>
+
+=item C<gsl_blas_zher2 >
+
+=back
+
+=head2 Level 3 - Matrix-matrix operations
+
+=over 3 
+
+=item C<gsl_blas_sgemm>
+
+=item C<gsl_blas_ssymm>
+
+=item C<gsl_blas_ssyrk>
+
+=item C<gsl_blas_ssyr2k >
+
+=item C<gsl_blas_strmm>
+
+=item C<gsl_blas_strsm>
+
+=item C<gsl_blas_dgemm>
+
+=item C<gsl_blas_dsymm >
+
+=item C<gsl_blas_dsyrk>
+
+=item C<gsl_blas_dsyr2k>
+
+=item C<gsl_blas_dtrmm>
+
+=item C<gsl_blas_dtrsm >
+
+=item C<gsl_blas_cgemm>
+
+=item C<gsl_blas_csymm>
+
+=item C<gsl_blas_csyrk>
+
+=item C<gsl_blas_csyr2k >
+
+=item C<gsl_blas_ctrmm>
+
+=item C<gsl_blas_ctrsm>
+
+=item C<gsl_blas_zgemm>
+
+=item C<gsl_blas_zsymm >
+
+=item C<gsl_blas_zsyrk>
+
+=item C<gsl_blas_zsyr2k>
+
+=item C<gsl_blas_ztrmm>
+
+=item C<gsl_blas_ztrsm >
+
+=item C<gsl_blas_chemm>
+
+=item C<gsl_blas_cherk>
+
+=item C<gsl_blas_cher2k>
+
+=item C<gsl_blas_zhemm >
+
+=item C<gsl_blas_zherk >
+
+=item C<gsl_blas_zher2k >
+
+=back
+
+You have to add the functions you want to use inside the qw /put_funtion_here /. 
+You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module. 
+Other tags are also avaible, here is a complete list of all tags for this module :
+
+=over 3
+
+=item C<level1>
+
+=item C<level2>
+
+=item C<level3> 
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+
+=head1 EXAMPLES
+
+=head1 AUTHOR
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
 
 %}

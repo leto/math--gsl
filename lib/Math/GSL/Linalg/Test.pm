@@ -5,6 +5,9 @@ use Math::GSL::Linalg qw/:all/;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL::Permutation qw/:all/;
 use Math::GSL::Vector qw/:all/;
+use Math::GSL::CBLAS qw/:all/;
+use Math::GSL::BLAS qw/:all/;
+use Math::GSL::Machine qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
@@ -32,6 +35,8 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     gsl_matrix_memcpy($first, $self->{matrix});
     my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
+
+    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
     map { is( gsl_matrix_get($self->{matrix}, 0, $_), $_+1) } (0..3); # I have no idea why these tests fail, I got my values for the LU decompositon from maple and they are valid...
     ok_similar( [ map { gsl_matrix_get($self->{matrix}, 0, $_) } (2..3) ],
                 [ 0, 0 ]
@@ -235,37 +240,34 @@ sub GSL_LINALG_LU_LNDET : Tests {
 }
 
 sub GSL_LINALG_QR_DECOMP : Tests {
-#    local $TODO ="the values doesn't seem to fit the value I got from maple. Probably the same problem than gsl_linalg_LU_decomp...";
-    my $matrix = gsl_matrix_alloc(4,3);
-    gsl_matrix_set($matrix, 0, 0, -3);
-    gsl_matrix_set($matrix, 1, 0, 2);
-    gsl_matrix_set($matrix, 2, 0, -5);
-    gsl_matrix_set($matrix, 3, 0, 1);
+# stolen from 
+    my $matrix = gsl_matrix_alloc(3,5);
+    my ($i, $j);
+    for($i=0; $i<3; $i++) {
+     for($j=0; $j<5; $j++) {
+       gsl_matrix_set($matrix, $i, $j, 1.0/($i+$j+1.0));
+     }
+    }
 
-    gsl_matrix_set($matrix, 0, 1, 2);
-    gsl_matrix_set($matrix, 1, 1, 1);
-    gsl_matrix_set($matrix, 2, 1, 2);
-    gsl_matrix_set($matrix, 3, 1, -3);
-
-    gsl_matrix_set($matrix, 0, 2, 4);
-    gsl_matrix_set($matrix, 1, 2, -1);
-    gsl_matrix_set($matrix, 2, 2, 4);
-    gsl_matrix_set($matrix, 3, 2, 2);
-   
     my $tau = gsl_vector_alloc(3);
-    is(gsl_linalg_QR_decomp($matrix, $tau),0);
-    my $R = gsl_matrix_alloc(4,3);
-    gsl_matrix_set_zero($R);
-    my $line;
-    for ($line=2; $line>-1; $line--) {
-     map { gsl_matrix_set($R, $_, $line, gsl_matrix_get($matrix, $_, $line)) } ($line+1..3) };
-    my $Q = gsl_matrix_alloc(4,3);
-    # how do I decode the householder values stored in $matrix?    
+    my $q = gsl_matrix_alloc(3,3);    
+    my $r = gsl_matrix_alloc(3,5);    
+    my $a = gsl_matrix_alloc(3,5);
 
-#    is(gsl_matrix_get($matrix, 0, 0), sqrt(29));
-#    is(gsl_matrix_get($matrix, 1, 0), (-8/29)*sqrt(29));
-#    is(gsl_matrix_get($matrix, 2, 0), (35/29)*sqrt(29));
-#    is(gsl_matrix_get($matrix, 3, 0), (-1/29)*sqrt(29));
+    is(gsl_linalg_QR_decomp($matrix, $tau),0);
+    is(gsl_linalg_QR_unpack($matrix, $tau, $q, $r), 0);
+  # compute a = q r 
+  gsl_blas_dgemm ($CblasNoTrans, $CblasNoTrans, 1.0, $q, $r, 0.0, $a);
+
+  my ($aij, $mij);
+  for($i=0; $i<3; $i++) {
+    for($j=0; $j<5; $j++) {
+      $aij = gsl_matrix_get($a, $i, $j);
+      $mij = gsl_matrix_get($matrix, $i, $j);
+      ok_similar($aij, $mij, "QR decomposition", 2 * 8.0 * $GSL_DBL_EPSILON);      
+    }
+  }
+
 }
 
 sub GSL_LINALG_CHOLESKY_DECOMP : Tests {

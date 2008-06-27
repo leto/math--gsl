@@ -9,11 +9,11 @@
 %typemap(in) double * (double dvalue) {
   SV* tempsv;
   if (!SvROK($input)) {
-    croak("Math::GSL::Sort : $input is not a reference!\n");
+    croak("$input is not a reference!\n");
   }
   tempsv = SvRV($input);
   if ((!SvNOK(tempsv)) && (!SvIOK(tempsv))) {
-    croak("Math::GSL::Sort : $input is not a reference to number!\n");
+    croak("$input is not a reference to number!\n");
   }
   dvalue = SvNV(tempsv);
   $1 = &dvalue;
@@ -100,10 +100,8 @@
                 $GSL_POSZERO $GSL_NEGZERO $GSL_NAN
              /;
 our $GSL_NAN = q{nan};
-#our $GSL_POSZERO = 0.0;
-#our $GSL_NEGZERO = -1*0.0;
 
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+%EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 __END__
 

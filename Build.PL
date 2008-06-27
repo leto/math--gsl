@@ -276,7 +276,7 @@ sub try_cflags ($) {
 print "Checking for GSL..";
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
-use constant MIN_GSL_VERSION => "1.10";
+use constant MIN_GSL_VERSION => "1.11";
 my $gv = $gsl_pkgcfg{'modversion'};
 
 if (defined $gv) {

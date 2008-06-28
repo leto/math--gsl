@@ -26,6 +26,56 @@ sub GSL_EIGEN_SYMMV_ALLOC : Tests {
     isa_ok($eigen, 'Math::GSL::Eigen');
 }
 
+sub GSL_EIGEN_HERM_ALLOC : Tests {
+    my $eigen = gsl_eigen_herm_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_HERMV_ALLOC : Tests {
+    my $eigen = gsl_eigen_hermv_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_NONSYMM_ALLOC : Tests {
+    my $eigen = gsl_eigen_nonsymm_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_NONSYMMV_ALLOC : Tests {
+    my $eigen = gsl_eigen_nonsymmv_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GENSYMM_ALLOC : Tests {
+    my $eigen = gsl_eigen_gensymm_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GENSYMMV_ALLOC : Tests {
+    my $eigen = gsl_eigen_gensymmv_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GENHERM_ALLOC : Tests {
+    my $eigen = gsl_eigen_genherm_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GENHERMV_ALLOC : Tests {
+    my $eigen = gsl_eigen_genhermv_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GEN_ALLOC : Tests {
+    my $eigen = gsl_eigen_gen_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
+sub GSL_EIGEN_GENV_ALLOC : Tests {
+    my $eigen = gsl_eigen_genv_alloc(5);
+    isa_ok($eigen, 'Math::GSL::Eigen');
+}
+
 sub GSL_EIGEN_SYMM : Tests {
     my $self = shift;
     my $m->{matrix} = gsl_matrix_alloc(2,2);

@@ -12,6 +12,7 @@ sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{matrix} = gsl_matrix_alloc(5,5);
     $self->{obj}    = Math::GSL::Matrix->new(5,5);
+    gsl_matrix_set_zero($self->{matrix});
 }
 
 sub teardown : Test(teardown) {
@@ -84,6 +85,7 @@ sub GSL_MATRIX_DIAGONAL : Tests {
    my $matrix = gsl_matrix_alloc(4,4);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..3);
    my $view = gsl_matrix_diagonal($matrix);
+   # better interface is needed
    my $vec = $view->swig_vector_get();
 
    my @got = map { gsl_vector_get($vec, $_) } (0..3);
@@ -233,36 +235,34 @@ sub GSL_MATRIX_ADD_CONSTANT : Tests {
 
 sub GSL_MATRIX_MAX : Tests {
    my $self = shift;
-   my $line;   
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2 ) } (0..4); } 
+   for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, $_**2 ) } (0..4); 
+   } 
    is(gsl_matrix_max($self->{matrix}), 16);
 }
 
 sub GSL_MATRIX_MIN : Tests {
    my $self = shift;
-   my $line;
-   for($line=0; $line<5; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2 ) } (0..4); } 
+   for my $row (0..4) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, $_**2 ) } (0..4); 
+   } 
    is(gsl_matrix_min($self->{matrix}), 0);
 }
 
 sub GSL_MATRIX_MINMAX : Test {
    my $self = shift;
-   my ($min, $max);
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   ($min, $max) = gsl_matrix_minmax($self->{matrix});
+   my ($min, $max) = gsl_matrix_minmax($self->{matrix});
    ok_similar( [ $min, $max ], [ 0, 16], 'gsl_matrix_minmax' );
 }
 
 sub GSL_MATRIX_MAX_INDEX : Tests {
    my $self = shift;
-   my $line;
-   my ($imax, $jmax);
-   for( $line =0; $line<4; $line++) {
-   map { gsl_matrix_set($self->{matrix}, $line, $_, $_) } (0..4); } # the matrix has to be clompletely filled or the function will return strange value... bug?
+   for my $row (0..3) {
+        map { gsl_matrix_set($self->{matrix}, $row, $_, $_) } (0..4); 
+   } 
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
-   ($imax, $jmax) = gsl_matrix_max_index($self->{matrix});
+   my ($imax, $jmax) = gsl_matrix_max_index($self->{matrix});
    ok_similar( [ $imax, $jmax ], [ 4, 4 ], 'gsl_matrix_max_index' );
 }
 
@@ -271,6 +271,7 @@ sub GSL_MATRIX_MIN_INDEX : Tests {
    map { gsl_matrix_set($self->{matrix}, $_, $_, $_**2) } (0..4); 
    my ($imin, $jmin) = gsl_matrix_min_index($self->{matrix});
    ok_similar( [ $imin, $jmin ], [ 0, 0 ], 'gsl_matrix_min_index' );
+
 }
 
 sub GSL_MATRIX_ISNULL : Tests {

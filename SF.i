@@ -572,7 +572,9 @@ push @EXPORT_misc, qw/
 @EXPORT_trig = qw/
                gsl_sf_sin_e 
                gsl_sf_sin 
+               gsl_sf_sin_pi_x_e
                gsl_sf_cos_e 
+               gsl_sf_cos_pi_x_e
                gsl_sf_cos 
                gsl_sf_hypot_e 
                gsl_sf_hypot 

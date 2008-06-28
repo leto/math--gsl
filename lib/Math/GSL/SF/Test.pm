@@ -23,11 +23,14 @@ my $TOL5 = $factor*131072.0*$GSL_DBL_EPSILON;
 my $TOL6 = $factor*1048576.0*$GSL_DBL_EPSILON;
 my $SQRT_TOL0 = 2.0*$GSL_SQRT_DBL_EPSILON;
 my $TEST_SNGL = 1.0e-06;
-my $w = 0.8*$GSL_LOG_DBL_MAX;
 my $DBL_MAX = 1.7976931348623157e+308;
-my $y = 0.2*$GSL_DBL_MAX;
 my $DELTA = 1.2246467991473531772e-16;
+my $w = 0.8*$GSL_LOG_DBL_MAX;
+my $y = 0.2*$GSL_DBL_MAX;
+
 sub make_fixture : Test(setup) {
+    my $w = 0.8*$GSL_LOG_DBL_MAX;
+    my $y = 0.2*$GSL_DBL_MAX;
 }
 sub teardown : Test(teardown) {
 }
@@ -35,12 +38,11 @@ sub teardown : Test(teardown) {
 
 sub TEST_THE_KITCHEN_SINK : Tests {
     my $results = { 
-        # GSL does not seem to have one argument versions of Ai(x)
         'gsl_sf_airy_Ai_e(-5, $Math::GSL::GSL_MODE_DEFAULT, $r)'           => 0.3507610090241142,
         'gsl_sf_airy_Ai_e(-500,$Math::GSL::GSL_MODE_DEFAULT, $r)'         => 0.0725901201040411396,
         'gsl_sf_bessel_J0_e(0.1,$r)'         => 0.99750156206604003230,
         'gsl_sf_bessel_J0_e(2.0,$r)'         => 0.22389077914123566805,
-        'gsl_sf_bessel_J0(5,$r)'                => -0.17759677131433830434739701,
+        'gsl_sf_bessel_J0_e(5,$r)'           => -0.17759677131433830434739701,
         'gsl_sf_bessel_J0_e(100,$r)'         => 0.019985850304223122424,
         'gsl_sf_bessel_J0_e(1e10,$r)'        => 2.1755917502468917269e-06,
         'gsl_sf_erf_e(5,$r)'                 => 0.999999999998463,
@@ -134,9 +136,9 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_debye_6_e(1.0,$r)'	        => [ 0.63311142583495107588,  $TOL0 ],
         'gsl_sf_debye_6_e(10.0,$r)'	        => [3.7938493294615955279e-3, $TOL0 ],
         'gsl_sf_multiply_e(-3.0,2.0,$r)'	=> [-6.0,          $TOL0 ],
-        'gsl_sf_multiply_e($y, 1.0/$y,$r)'	=> [ 1.0,          $TOL0 ],
-        'gsl_sf_multiply_e($y, 0.2,$r)'	    => [   0.04*$GSL_DBL_MAX, $TOL1 ],
-        'gsl_sf_multiply_e($y, 4.0,$r)'	    => [   0.8*$GSL_DBL_MAX,  $TOL1 ],
+        "gsl_sf_multiply_e($y, 1.0/$y,\$r)"	=> [ 1.0,          $TOL0 ],
+        "gsl_sf_multiply_e($y, 0.2,\$r)"	    => [   0.04*$GSL_DBL_MAX, $TOL1 ],
+        "gsl_sf_multiply_e($y, 4.0,\$r)"	    => [   0.8*$GSL_DBL_MAX,  $TOL1 ],
         'gsl_sf_ellint_Kcomp_e( 0.99, $Math::GSL::GSL_MODE_DEFAULT,$r)'	=> [3.3566005233611923760, $TOL0 ],
         'gsl_sf_ellint_Kcomp_e( 0.50, $Math::GSL::GSL_MODE_DEFAULT,$r)'	=> [1.6857503548125960429, $TOL0 ],
         'gsl_sf_ellint_Kcomp_e(0.010, $Math::GSL::GSL_MODE_DEFAULT,$r)'	=> [1.5708355989121522360, $TOL0 ],
@@ -397,20 +399,20 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_hazard_e(2000.0,$r)'	=> [2000.0004999997500003, $TOL0 ],
         'gsl_sf_exp_e(-10.0,$r)'	=> [exp(-10.0), $TOL0 ],
         'gsl_sf_exp_e( 10.0,$r)'	=> [exp( 10.0), $TOL0 ],
-        'gsl_sf_exp_err_e(-10.0, $TOL1,$r)'	=> [exp(-10.0), $TOL1 ],
-        'gsl_sf_exp_err_e( 10.0, $TOL1,$r)'	=> [exp( 10.0), $TOL1 ],
+        "gsl_sf_exp_err_e(-10.0, $TOL1,\$r)"	=> [exp(-10.0), $TOL1 ],
+        "gsl_sf_exp_err_e( 10.0, $TOL1,\$r)"	=> [exp( 10.0), $TOL1 ],
         'gsl_sf_exp_mult_e(-10.0,  1.0e-06,$r)'	=> [1.0e-06*exp(-10.0), $TOL0 ],
         'gsl_sf_exp_mult_e(-10.0,  2.0,$r)'	=> [    2.0*exp(-10.0),     $TOL0 ],
         'gsl_sf_exp_mult_e(-10.0, -2.0,$r)'	=> [   -2.0*exp(-10.0),     $TOL0 ],
         'gsl_sf_exp_mult_e( 10.0,  1.0e-06,$r)'	=> [1.0e-06*exp( 10.0), $TOL0 ],
         'gsl_sf_exp_mult_e( 10.0, -2.0,$r)'	=> [   -2.0*exp( 10.0),     $TOL0 ],
-        'gsl_sf_exp_mult_e($w, 1.000001,$r)'	=> [    1.000001*exp($w),    $TOL3 ],
-        'gsl_sf_exp_mult_e($w, 1.000000001,$r)'	=> [ 1.000000001*exp($w), $TOL3 ],
-        'gsl_sf_exp_mult_e($w, 100.0,$r)'	=> [       100.0*exp($w),       $TOL3 ],
-        'gsl_sf_exp_mult_e($w, 1.0e+20,$r)'	=> [     1.0e+20*exp($w),     $TOL3 ],
-        'gsl_sf_exp_mult_e($w, exp(-$w)*exp($M_LN2),$r)'	=> [2.0, $TOL4 ],
-        'gsl_sf_exp_mult_err_e(-10.0, $SQRT_TOL0, 2.0, $SQRT_TOL0,$r)'	=> [2.0*exp(-10.0), $SQRT_TOL0 ],
-        'gsl_sf_exp_mult_err_e($w, $SQRT_TOL0*$w, exp(-$w)*exp($M_LN2), $SQRT_TOL0*exp(-$w)*exp($M_LN2),$r)'	=> [2.0, $SQRT_TOL0 ],
+        "gsl_sf_exp_mult_e($w, 1.000001,\$r)"	=> [    1.000001*exp($w),    $TOL3 ],
+        "gsl_sf_exp_mult_e($w, 1.000000001,\$r)"	=> [ 1.000000001*exp($w), $TOL3 ],
+        "gsl_sf_exp_mult_e($w, 100.0,\$r)"	=> [       100.0*exp($w),       $TOL3 ],
+        "gsl_sf_exp_mult_e($w, 1.0e+20,\$r)"	=> [     1.0e+20*exp($w),     $TOL3 ],
+        "gsl_sf_exp_mult_e($w, exp(-$w)*exp($M_LN2),\$r)"	=> [2.0, $TOL4 ],
+        "gsl_sf_exp_mult_err_e(-10.0, $SQRT_TOL0, 2.0, $SQRT_TOL0,\$r)" => [2.0*exp(-10.0), $SQRT_TOL0 ],
+        "gsl_sf_exp_mult_err_e($w, $SQRT_TOL0*$w, exp(-$w)*exp($M_LN2), $SQRT_TOL0*exp(-$w)*exp($M_LN2),\$r)"	=> [2.0, $SQRT_TOL0 ],
         'gsl_sf_expm1_e(-10.0,$r)'	=> [exp(-10.0)-1.0, $TOL0 ],
         'gsl_sf_expm1_e(-0.001,$r)'	=> [-0.00099950016662500845, $TOL0 ],
         'gsl_sf_expm1_e(-1.0e-8,$r)'	=> [-1.0e-08 + 0.5e-16, $TOL0 ],
@@ -1035,31 +1037,31 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_transport_5_e(30.0,$r)'	=> [124.4313279083858954839911, $TOL0 ],
         'gsl_sf_transport_5_e(100.0,$r)'	=> [124.4313306172043911597639, $TOL0 ],
         'gsl_sf_transport_5_e(1.0e+05,$r)'	=> [124.43133061720439115976, $TOL0 ],
-        'gsl_sf_sin_e(-10.0,$r)'	=> [      0.5440211108893698134,    $TOL0 ],
-        'gsl_sf_sin_e(1.0,$r)'	=> [        0.8414709848078965067,    $TOL0 ],
-        'gsl_sf_sin_e(1000.0,$r)'	=> [     0.8268795405320025603,    $TOL0 ],
-        'gsl_sf_sin_e(1048576.75,$r)'	=> [ 0.8851545351115651914,    $TOL1 ],
-        'gsl_sf_sin_e(62831853.75,$r)'	=> [0.6273955953485000827,    $TOL3 ],
-        'gsl_sf_sin_e(1073741822.5,$r)'	=> [-0.8284043541754465988,  $SQRT_TOL0 ],
-        'gsl_sf_sin_e(1073741824.0,$r)'	=> [-0.6173264150460421708,  $SQRT_TOL0 ],
-        'gsl_sf_sin_e(1073741825.5,$r)'	=> [ 0.7410684679436226926,  $SQRT_TOL0 ],
-        'gsl_sf_sin_e(1099511627776.0,$r)'	=> [-0.4057050115328287198, 512.0*$SQRT_TOL0 ],
-        'gsl_sf_cos_e(-10.0,$r)'	    => [-0.8390715290764524523,    $TOL0 ],
-        'gsl_sf_cos_e(1.0,$r)'	        => [ 0.5403023058681397174,    $TOL0 ],
-        'gsl_sf_cos_e(1000.0,$r)'	    => [ 0.5623790762907029911,    $TOL1 ],
-        'gsl_sf_cos_e(1048576.75,$r)'	=> [ 0.4652971620066351799,    $TOL2 ],
-        'gsl_sf_cos_e(62831853.75,$r)'	=> [ 0.7787006914966116436,    $TOL2 ],
-        'gsl_sf_cos_e(1073741822.5,$r)'	=> [-0.5601305436977716102,  $SQRT_TOL0 ],
-        'gsl_sf_cos_e(1073741824.0,$r)'	=> [ 0.7867071229411881196,  $SQRT_TOL0 ],
-        'gsl_sf_cos_e(1099511627776.0,$r)'	=> [-0.9140040719915570023, 512.0*$SQRT_TOL0 ],
+        'gsl_sf_sin(-10.0)'	=> [      0.5440211108893698134,    $TOL0 ],
+        'gsl_sf_sin(1.0)'	=> [        0.8414709848078965067,    $TOL0 ],
+        'gsl_sf_sin(1000.0)'	=> [     0.8268795405320025603,    $TOL0 ],
+        'gsl_sf_sin(1048576.75)'	=> [ 0.8851545351115651914,    $TOL1 ],
+        'gsl_sf_sin(62831853.75)'	=> [0.6273955953485000827,    $TOL3 ],
+        'gsl_sf_sin(1073741822.5)'	=> [-0.8284043541754465988,  $SQRT_TOL0 ],
+        'gsl_sf_sin(1073741824.0)'	=> [-0.6173264150460421708,  $SQRT_TOL0 ],
+        'gsl_sf_sin(1073741825.5)'	=> [ 0.7410684679436226926,  $SQRT_TOL0 ],
+        'gsl_sf_sin(1099511627776.0)'	=> [-0.4057050115328287198, 512.0*$SQRT_TOL0 ],
+        'gsl_sf_cos(-10.0)'	    => [-0.8390715290764524523,    $TOL0 ],
+        'gsl_sf_cos(1.0)'	        => [ 0.5403023058681397174,    $TOL0 ],
+        'gsl_sf_cos(1000.0)'	    => [ 0.5623790762907029911,    $TOL1 ],
+        'gsl_sf_cos(1048576.75)'	=> [ 0.4652971620066351799,    $TOL2 ],
+        'gsl_sf_cos(62831853.75)'	=> [ 0.7787006914966116436,    $TOL2 ],
+        'gsl_sf_cos(1073741822.5)'	=> [-0.5601305436977716102,  $SQRT_TOL0 ],
+        'gsl_sf_cos(1073741824.0)'	=> [ 0.7867071229411881196,  $SQRT_TOL0 ],
+        'gsl_sf_cos(1099511627776.0)'	=> [-0.9140040719915570023, 512.0*$SQRT_TOL0 ],
         'gsl_sf_sinc_e(1.0/1024.0,$r)'	=> [0.9999984312693665404, $TOL0 ],
         'gsl_sf_sinc_e(1.0/2.0    ,$r)'	=> [2.0/$M_PI,              $TOL0 ],
         'gsl_sf_sinc_e(80.5       ,$r)'	=> [0.0039541600768172754, $TOL0 ],
         'gsl_sf_sinc_e(100.5      ,$r)'	=> [0.0031672625490924445, $TOL0 ],
         'gsl_sf_sinc_e(1.0e+06 + 0.5,$r)'	=> [3.18309727028927157e-07, $TOL0 ],
-        'gsl_sf_sin_pi_x_e_e(1000.5,$r)'	=> [1.0, $TOL0 ],
-        'gsl_sf_sin_pi_x_e_e(10000.0 + 1.0/65536.0,$r)'	=> [0.00004793689960306688455, $TOL0 ],
-        'gsl_sf_sin_pi_x_e_e(1099511627776.0 + 1 + 0.125,$r)'	=> [-0.3826834323650897717, $TOL0 ],
+        'gsl_sf_sin_pi_x_e(1000.5,$r)'	=> [1.0, $TOL0 ],
+        'gsl_sf_sin_pi_x_e(10000.0 + 1.0/65536.0,$r)'	=> [0.00004793689960306688455, $TOL0 ],
+        'gsl_sf_sin_pi_x_e(1099511627776.0 + 1 + 0.125,$r)'	=> [-0.3826834323650897717, $TOL0 ],
         'gsl_sf_lnsinh_e(0.1,$r)'	=> [ -2.3009189815304652235,  $TOL0 ],
         'gsl_sf_lnsinh_e(1.0,$r)'	=> [  0.16143936157119563361, $TOL0 ],
         'gsl_sf_lnsinh_e(5.0,$r)'	=> [  4.306807418479684201,   $TOL0 ],

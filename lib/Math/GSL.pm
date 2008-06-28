@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
+use Carp qw/croak/;
 use Config;
 use Data::Dumper;
 use Test::More;
@@ -252,38 +253,52 @@ sub _has_long_doubles_same_as_doubles { $Config{doublesize}    == $Config{longdb
 sub verify_results
 {
     my ($results,$class) = @_;
-    my ($x,$val);
+    my $factor = 20; # fudge factor
 
+    croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($k,$v)=each %$results){
         my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
         my $r   = Math::GSL::SF::gsl_sf_result_struct->new;
-
-        defined $class ? ( $x = eval qq{${class}::$k} )
-                       : ( $x = eval $k);
+        my $x   = eval qq{${class}::$k};
+        my $expected;
 
         print $@ if $@;
         if (ref $v eq 'ARRAY'){
-            ($val,$eps)   = @$v;
+            ($expected,$eps)   = @$v;
         } else {
-             $val = $v;
+             $expected = $v;
         }
-        print "got $x for $k\n" if defined $ENV{DEBUG};
-        if ( $k =~ /\$r/) {
+
+        if ( $k =~ /_e\(.*\$r/) {
             $x   = $r->{val};
-            $eps = $r->{err};
-            print "result->err: " . $r->{err} . "\n";
-            print "result->val: " . $r->{val} . "\n";
+            $eps = $factor*$r->{err};
+            _dump_result($r);
+            printf "expected   : %.18g\n", $expected ;
         }
+        my $res = abs($x-$expected);
+        printf "difference : %.18g\n", $res;
+        printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
+        print "got $x for $k\n" if defined $ENV{DEBUG};
+
         if (!defined $x ){
             ok(0, qq{'$k' died} );
         } elsif ($x =~ /nan|inf/i){
-                ok( $val eq $x, "'$val'?='$x'" );
+                ok( $expected eq $x, "'$expected'?='$x'" );
         } else { 
-            my $res = abs($x-$val);
-            $@ ? ok(0)
-            : ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
+            if ($@) {
+                    warn "badness: $@\n";
+                    ok(0);
+            } else { 
+                ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
+            }
         }
     }
+}
+sub _dump_result($)
+{
+    my $r=shift;
+    printf "result->err: %.18g\n", $r->{err};
+    printf "result->val: %.18g\n", $r->{val};
 }
 sub _assert_dies($;$)
 {

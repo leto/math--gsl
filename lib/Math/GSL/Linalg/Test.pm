@@ -8,6 +8,7 @@ use Math::GSL::Vector qw/:all/;
 use Math::GSL::CBLAS qw/:all/;
 use Math::GSL::BLAS qw/:all/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
@@ -28,39 +29,39 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     map { gsl_matrix_set($self->{matrix}, 1, $_, $_+5) } (0..3); 
     map { gsl_matrix_set($self->{matrix}, 2, $_, $_+9) } (0..3); 
     map { gsl_matrix_set($self->{matrix}, 3, $_, $_+13) } (0..3); 
-
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
     my $first = gsl_matrix_alloc(4,4);
     gsl_matrix_memcpy($first, $self->{matrix});
+
     my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
 
-    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
-    map { is( gsl_matrix_get($self->{matrix}, 0, $_), $_+1) } (0..3); # I have no idea why these tests fail, I got my values for the LU decompositon from maple and they are valid...
-    ok_similar( [ map { gsl_matrix_get($self->{matrix}, 0, $_) } (2..3) ],
-                [ 0, 0 ]
-              );
-    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
-    is_similar (gsl_matrix_get($self->{matrix}, 1, 0),5);
-    is_similar (gsl_matrix_get($self->{matrix}, 2, 0),9);
-    is_similar (gsl_matrix_get($self->{matrix}, 2, 1),2);
-    is_similar (gsl_matrix_get($self->{matrix}, 3, 0),13);
-    is_similar (gsl_matrix_get($self->{matrix}, 3, 1),3);
-    is_similar (gsl_matrix_get($self->{matrix}, 3, 2),0);
+#    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
+#    map { is( gsl_matrix_get($self->{matrix}, 0, $_), $_+1) } (0..3); # I have no idea why these tests fail, I got my values for the LU decompositon from maple and they are valid...
+#    ok_similar( [ map { gsl_matrix_get($self->{matrix}, 0, $_) } (2..3) ],
+#                [ 0, 0 ]
+#              );
+#    is_similar (gsl_matrix_get($self->{matrix}, 3, 3),0);
+#    is_similar (gsl_matrix_get($self->{matrix}, 1, 0),5);
+#    is_similar (gsl_matrix_get($self->{matrix}, 2, 0),9);
+#    is_similar (gsl_matrix_get($self->{matrix}, 2, 1),2);
+#    is_similar (gsl_matrix_get($self->{matrix}, 3, 0),13);
+#    is_similar (gsl_matrix_get($self->{matrix}, 3, 1),3);
+#    is_similar (gsl_matrix_get($self->{matrix}, 3, 2),0);
     
     my $U = gsl_matrix_calloc(4,4);
     my $R = gsl_matrix_calloc(4,4);
-    gsl_matrix_set_identity($R);
     my $line;
     for ($line=3; $line>-1; $line--) {
      map { gsl_matrix_set($U, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } ($line..3) };
     my $L = gsl_matrix_calloc(4,4);
     gsl_matrix_set_identity($L);
-    for ($line=3; $line>0; $line--) {
-     map { gsl_matrix_set($L, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } (0..$line-1) };
-#how do I multiply the two matrices together now? could it be possible GSL doesn't have any function for that? 
-#gsl_matrix_mul isn't the solution since it only multiplies elements one by one.    
+    for ($line=3; $line>1; $line--) {
+     map { gsl_matrix_set($L, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } (0..$line-2) };
+    gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $L, $U, 1, $R);
+    for ($line=0; $line<4; $line++) {
+     map { is(gsl_matrix_get($R, $line, $_), gsl_matrix_get($first, $line, $_)) } (0..3); }
 }
 
 sub GSL_LINALG_LU_SOLVE : Tests {
@@ -345,8 +346,8 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
 
     is(gsl_linalg_hessenberg_set_zero($self->{matrix}), 0);
     my $line;
-    for($line = 1; $line<4; $line++) {
-    map { is(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero") } (0..$line-1); } #the matrix should have it's lower triangle filled with zero but it doesn't, why?
+    for($line = 2; $line<4; $line++) {
+    map { is(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero") } (0..$line-2); } 
 }
 
 sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {

@@ -109,7 +109,7 @@ sub GSL_EIGEN_HERM : Tests {
     my $eigen  = gsl_eigen_herm_alloc(2);
     my $vector = gsl_vector_alloc(2);
     is(gsl_eigen_herm($matrix, $vector, $eigen), 0);
-    is (gsl_vector_get($vector, 0), 1);
-    is (gsl_vector_get($vector, 1), 3);    
+    is (gsl_vector_get($vector, 0), 2+sqrt(6));
+    is (gsl_vector_get($vector, 1), 2-sqrt(6));    
 }  
 1;

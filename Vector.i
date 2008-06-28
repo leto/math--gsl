@@ -75,7 +75,16 @@ int fclose(FILE *);
                  gsl_vector_float_memcpy gsl_vector_float_reverse gsl_vector_float_swap gsl_vector_float_swap_elements
                  gsl_vector_float_max gsl_vector_float_min gsl_vector_float_minmax gsl_vector_float_max_index gsl_vector_float_min_index
                  gsl_vector_float_minmax_index gsl_vector_float_add gsl_vector_float_sub gsl_vector_float_mul gsl_vector_float_div gsl_vector_float_scale
-                 gsl_vector_float_add_constant gsl_vector_float_isnull gsl_vector_float_ispos gsl_vector_float_isneg gsl_vector_float_isnonneg                       
+                 gsl_vector_float_add_constant gsl_vector_float_isnull gsl_vector_float_ispos gsl_vector_float_isneg gsl_vector_float_isnonneg
+                 gsl_vector_complex_alloc gsl_vector_complex_calloc gsl_vector_complex_alloc_from_block gsl_vector_complex_alloc_from_vector
+                 gsl_vector_complex_free gsl_vector_complex_view_array gsl_vector_complex_view_array_with_stride gsl_vector_complex_const_view_array
+                 gsl_vector_complex_const_view_array_with_stride gsl_vector_complex_subvector gsl_vector_complex_subvector_with_stride
+                 gsl_vector_complex_const_subvector gsl_vector_complex_const_subvector_with_stride gsl_vector_complex_real gsl_vector_complex_imag
+                 gsl_vector_complex_const_real gsl_vector_complex_const_imag gsl_vector_complex_get gsl_vector_complex_set
+                 gsl_vector_complex_ptr gsl_vector_complex_const_ptr gsl_vector_complex_set_zero gsl_vector_complex_set_all
+                 gsl_vector_complex_set_basis gsl_vector_complex_fread gsl_vector_complex_fwrite gsl_vector_complex_fscanf
+                 gsl_vector_complex_fprintf gsl_vector_complex_memcpy gsl_vector_complex_reverse gsl_vector_complex_swap
+                 gsl_vector_complex_swap_elements gsl_vector_complex_isnull gsl_vector_complex_ispos gsl_vector_complex_isneg                                      
 /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

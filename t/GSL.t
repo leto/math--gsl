@@ -39,5 +39,5 @@ my $results = {
                 q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => 0, 
               };
 
-verify_results($results);
+verify_results($results, 'Math::GSL');
 

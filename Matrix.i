@@ -353,7 +353,25 @@ int => [ qw/
                  gsl_matrix_complex_set_col
                  /]);
 
-sub new {
+=head1 NAME
+
+Math::GSL::Matrix - Mathematical functions concerning Matrices
+
+=head1 SYPNOPSIS
+
+    use Math::GSL::Matrix qw/:all/;
+    my $matrix1 = Math::GSL::Matrix->new(5,5);  # OO interface
+    my $matrix2 = gsl_matrix_alloc(5,5);        # standard interface
+
+
+=head1 Objected Oriented Interface to GSL Math::GSL::Matrix
+
+    my $matrix = Math::GSL::Matrix->new(10,10);
+    printf "My matrix is %d x %d\n", $matrix->rows, $matrix->cols;
+=cut
+
+sub new 
+{
     my ($class, $rows, $cols) = @_;
     my $this = {}; 
     my $matrix;
@@ -365,23 +383,65 @@ sub new {
     } else {
         die __PACKAGE__.'::new($x,$y) - $x and $y must be positive integers';
     }
+    gsl_matrix_set_zero($matrix);
     $this->{_matrix} = $matrix; 
     ($this->{_rows}, $this->{_cols}) = ($rows,$cols);
     bless $this, $class;
 }
+=head2 raw()
+
+Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
+
+    my $matrix     = Math::GSL::Matrix->new(3,3);
+    my $gsl_matrix = $matrix->raw;
+    my $stuff      = gsl_matrix_get($gsl_matrix, 1, 2);
+
+=cut
 sub raw  { (shift)->{_matrix} }
+=head2 rows()
+
+Returns the number of rows in the matrix.
+
+    my $rows = $matrix->rows;
+=cut
+
 sub rows { (shift)->{_rows}   }
+
+=head2 cols()
+
+Returns the number of columns in the matrix.
+
+    my $cols = $matrix->cols;
+=cut
+
 sub cols { (shift)->{_cols}   }
 
-__END__
+=head2  as_list() 
 
-=head1 NAME
+Get the contents of a Math::GSL::Matrix object as a Perl list.
 
-Math::GSL::Matrix - Mathematical functions concerning Matrices
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my @matrix = $matrix->as_list;
+=cut
 
-=head1 SYPNOPSIS
 
-use Math::GSL::Matrix qw/:all/;
+sub as_list 
+{
+    my $self = shift;
+    my ($r,$c) = ($self->rows,$self->cols);
+    return (map 
+    {
+        gsl_matrix_get($self->raw, _index_to_row_col($_,$r,$c)) 
+    } (0 .. $self->rows*$self->cols-1 ));
+}
+
+sub _index_to_row_col($$$)
+{
+    my ($k,$rows,$cols) = @_;
+    return ( int($k/$rows), $k % $cols );
+}
+
 
 =head1 DESCRIPTION
 

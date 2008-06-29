@@ -459,6 +459,28 @@ sub GSL_MATRIX_NEW : Tests {
    ok( $self->{obj}->cols == 5, '->cols' );
 }
 
+sub AS_LIST_SQUARE : Tests { 
+    my $matrix = Math::GSL::Matrix->new(5,5);
+    map { gsl_matrix_set($matrix->raw, $_, $_, 5 + $_**2) } (0..4);
+    is_deeply( [
+                5, 0, 0, 0, 0,
+                0, 6, 0, 0, 0,
+                0, 0, 9, 0, 0,
+                0, 0, 0,14, 0,
+                0, 0, 0, 0, 21 
+                ], 
+               [ $matrix->as_list],
+               '$matrix->as_list',
+    );
+}
+
+sub NEW_SETS_VALUES_TO_ZERO : Tests {
+    my $matrix = Math::GSL::Matrix->new(5,5);
+    my $sum;
+
+    map { $sum += $_ } $matrix->as_list;
+    ok( $sum == 0, 'new sets values to zero');
+}
 sub HERMITIAN : Tests {
     my $matrix    = gsl_matrix_complex_alloc(2,2);
     my $transpose = gsl_matrix_complex_alloc(2,2);

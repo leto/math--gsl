@@ -193,7 +193,7 @@ sub is_similar {
     $eps ||= 1e-8;
     if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
         if ( $#$x != $#$y ){
-            warn "is_similar(): argument of different length!";
+            warn "is_similar(): argument of different lengths, $#$x != $#$y !!!";
             return 0;
         } else {
             map { 
@@ -299,13 +299,6 @@ sub _dump_result($)
     my $r=shift;
     printf "result->err: %.18g\n", $r->{err};
     printf "result->val: %.18g\n", $r->{val};
-}
-sub _assert_dies($;$)
-{
-    my ($code,$msg) = @_;
-    my $status = eval { &$code };
-    print "status=||$status||\n\$\?=$?\n\$\!=$!\n" if 0;
-    $@  ?  ok(1, $msg) : ok (0, join "\n", $@,  $msg );
 }
 
 42;

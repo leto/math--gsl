@@ -5,7 +5,6 @@ CBLAS.i
 CDF.i
 Changes
 Chebyshev.i
-CheckRange.i
 Combination.i
 Complex.i
 Const.i
@@ -83,7 +82,6 @@ Roots.i
 SF.i
 Siman.i
 Sort.i
-Specfunc.i
 Spline.i
 Statistics.i
 subsystems.txt
@@ -91,7 +89,6 @@ Sum.i
 Sys.i
 t/00-load.t
 t/01-pod.t
-t/BLAS.t
 t/Block.t
 t/CBLAS.t
 t/CDF.t
@@ -123,9 +120,7 @@ t/Vector.t
 t/Wavelet.t
 TODO
 typemap_examples.i
-Types.i
 Vector.i
-Version.i
 Wavelet.i
 Wavelet2D.i
 xt/01-portability-files.t

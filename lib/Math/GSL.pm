@@ -45,7 +45,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
 
 =head1 SUBSYSTEMS
 
-    Math::GSL::BLAS
     Math::GSL::BSpline          - BSplines
     Math::GSL::Block
     Math::GSL::CBLAS
@@ -171,7 +170,7 @@ sub new
 sub subsystems
 {
     return sort qw/
-        BLAS         Diff         Machine       Statistics
+        Diff         Machine      Statistics
         Block        Eigen        Matrix        Poly 
         BSpline      Errno        PowInt        Sys
         CBLAS        FFT          Min           IEEEUtils

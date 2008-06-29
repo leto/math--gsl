@@ -110,9 +110,15 @@ sub new {
 
 sub raw { (shift)->{_vector} }
 
+sub min
+{
+    my $self=shift;
+    return gsl_vector_min($self->raw);
+}
+
 sub length { my $self=shift; $self->{_length} }
 
-sub get_all {
+sub as_list {
     my $self=shift;
     $self->get( [ 0 .. $self->length - 1  ] );
 }

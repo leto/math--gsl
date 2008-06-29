@@ -93,9 +93,9 @@ sub GSL_VECTOR_NEW: Tests {
     eval { $vec = Math::GSL::Vector->new(42) };
     ok( $vec->length == 42 , 'new creates empty vectors of a given length');
 }
-sub GSL_VECTOR_GET: Tests {
+sub GSL_VECTOR_AS_LIST: Tests {
     my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (reverse 1..10) ] );
-    my @x = $vec->get_all;
+    my @x = $vec->as_list;
     is_deeply( \@x, [map { $_ ** 2 } (reverse 1..10)] );
 }
 
@@ -107,8 +107,9 @@ sub GSL_VECTOR_SET: Tests {
 }
 sub GSL_VECTOR_MIN: Tests {
     my $self = shift;
-    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-    ok( is_similar( gsl_vector_min($self->{vector}) ,0), 'gsl_vector_min' );
+    my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (0..4) ] );
+    ok_similar( $vec->min ,0, '$vec->min' );
+    ok_similar( gsl_vector_min($self->{vector}) ,0, 'gsl_vector_min' );
 }
 
 sub GSL_VECTOR_FREAD_FWRITE: Tests { 
@@ -145,16 +146,12 @@ sub GSL_VECTOR_SUBVECTOR : Tests {
 sub GSL_VECTOR_CALLOC : Tests {
    my $vector = gsl_vector_calloc(5);
    isa_ok($vector, 'Math::GSL::Vector');
-   
-   my @got = map { gsl_vector_get($vector, $_) } (0..4);
-
-   map { is($got[$_] , 0 ) } (0..4);
 }
 
 sub GSL_VECTOR_SET_ALL : Tests {
-   my $self = shift;
-   gsl_vector_set_all($self->{vector}, 4);
-   map { is(gsl_vector_get($self->{vector} , $_ ), 4) } (0..4);
+   my $vec = Math::GSL::Vector->new(5);
+   gsl_vector_set_all($vec->raw, 4);
+   ok_similar( [ $vec->as_list ], [ (4) x 5 ] );
 }
 
 sub GSL_VECTOR_SET_ZERO : Tests {
@@ -280,10 +277,9 @@ sub GSL_VECTOR_DIV : Tests {
 }
 
 sub GSL_VECTOR_SCALE : Tests {
-   my $self = shift;
-   map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   is( gsl_vector_scale($self->{vector}, 2), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), $_ * 2 ) } (0..4); ;   
+   my $v = Math::GSL::Vector->new([0..4]);
+   is( gsl_vector_scale($v->raw, 2), 0);
+   ok_similar( [ $v->as_list ], [ 0,2,4,6,8 ] );
 }
 
 sub GSL_VECTOR_SWAP : Tests {
@@ -306,19 +302,21 @@ sub GSL_VECTOR_SWAP : Tests {
 }
 
 sub GSL_VECTOR_FPRINTF_FSCANF : Tests {  
-   my $self = shift;
-   map { gsl_vector_set($self->{vector}, $_, $_**2) } (0..4); 
+   my $vec1 = Math::GSL::Vector->new([ map { $_ ** 2 } (0..4) ]);
 
    my $fh = fopen("vector", "w");
-   is( gsl_vector_fprintf($fh, $self->{vector}, "%f"), 0);
-   fclose($fh);
+   ok( defined $fh, 'fopen -  write');
+   is( gsl_vector_fprintf($fh, $vec1->raw, "%f"), 0);
+   is( fclose($fh), 0 );
 
-   map { gsl_vector_set($self->{vector}, $_, $_**3) } (0..4);
+   my $vec2 = Math::GSL::Vector->new([ map { $_ ** 3 } (0..4) ]);
 
    $fh = fopen("vector", "r");   
+   ok( defined $fh, 'fopen  - readonly');
    
-   is(gsl_vector_fscanf($fh, $self->{vector}), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), $_**2) } (0..4);
-   fclose($fh); 
+   is(gsl_vector_fscanf($fh, $vec2->raw), 0);
+
+   ok_similar( [ $vec2->as_list ], [ map { $_ ** 2 } (0..4) ]);
+   is( fclose($fh), 0 ); 
 }
 1;

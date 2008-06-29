@@ -4,8 +4,10 @@
     #include "/usr/local/include/gsl/gsl_fft_complex.h"
     #include "/usr/local/include/gsl/gsl_fft_halfcomplex.h"
     #include "/usr/local/include/gsl/gsl_fft_real.h"
+    #include "/usr/local/include/gsl/gsl_complex.h"
 %}
 
+%include "/usr/local/include/gsl/gsl_complex.h"
 %include "/usr/local/include/gsl/gsl_fft.h"
 %include "/usr/local/include/gsl/gsl_fft_complex.h"
 %include "/usr/local/include/gsl/gsl_fft_halfcomplex.h"

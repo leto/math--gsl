@@ -14,6 +14,8 @@ sub teardown : Test(teardown) {
     unlink 'fft' if -f 'fft';
 }
 
+BEGIN { gsl_set_error_handler_off(); }
+
 sub WAVETABLE_ALLOC_FREE: Tests {
     my $wavetable = gsl_fft_complex_wavetable_alloc(42);
     isa_ok($wavetable, 'Math::GSL::FFT' );
@@ -28,4 +30,13 @@ sub WORKSPACE_ALLOC_FREE: Tests {
     ok(!$@, 'gsl_fft_complex_workspace_free');
 }
 
+sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
+{
+    local $TODO = "typemap for gsl_complex_packed_array";
+    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
+    my $status = gsl_fft_complex_radix2_forward ($data, 1, 128);
+    print Dumper [ $status , $data ];
+    ok(!$@, 'gsl_fft_complex_radix2_forward' );
+
+}
 1;

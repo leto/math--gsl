@@ -5,6 +5,8 @@ use Math::GSL::Eigen qw/:all/;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL::Complex qw/:all/;
+use Math::GSL::Machine qw/:all/;
+use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -161,5 +163,120 @@ sub GSL_EIGEN_HERM : Tests {
     is(gsl_eigen_herm($matrix, $vector, $eigen), 0);
     is (gsl_vector_get($vector, 0), 2+sqrt(6));
     is (gsl_vector_get($vector, 1), 2-sqrt(6));    
+}
+sub GSL_EIGEN_HERMV : Tests {
+    my $matrix  = gsl_matrix_complex_alloc (2, 2);
+    my $complex = gsl_complex_rect(3,0);
+    gsl_matrix_complex_set($matrix, 0, 0, $complex);
+
+    $complex = gsl_complex_rect(2,1);
+    gsl_matrix_complex_set($matrix, 0, 1, $complex);
+
+    $complex = gsl_complex_rect(2,-1);
+    gsl_matrix_complex_set($matrix, 1, 0, $complex);
+
+    $complex = gsl_complex_rect(1,0);
+    gsl_matrix_complex_set($matrix, 1, 1, $complex);
+
+    my $eigen  = gsl_eigen_hermv_alloc(2);
+    my $vector = gsl_vector_alloc(2);
+    my $evec = gsl_matrix_complex_alloc(2,2);
+    is(gsl_eigen_hermv($matrix, $vector, $evec, $eigen), 0);
+    is (gsl_vector_get($vector, 0), 2+sqrt(6));
+    is (gsl_vector_get($vector, 1), 2-sqrt(6));
+
+#    my $x = gsl_matrix_complex_get($evec, 1, 1);
+#    ok_similar( [ gsl_parts($x) ], [-0.750532688285823, 0 ], "last row");
+#    ok_similar( [ gsl_parts($x) ], [ 2/(-1+sqrt(6)), 1/(-1+sqrt(6)) ], "first value");
+
 }  
+ 
+sub GSL_EIGEN_NONSYMM : Tests {
+    my $matrix  = gsl_matrix_alloc (2, 2);
+    gsl_matrix_set($matrix, 0, 0, -12);
+    gsl_matrix_set($matrix, 1, 0, 7);
+    gsl_matrix_set($matrix, 0, 1, 65);
+    gsl_matrix_set($matrix, 1, 1, 59);
+
+    my $eigen  = gsl_eigen_nonsymm_alloc(2);
+    my $vector = gsl_vector_complex_alloc(2);
+    is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
+#    my $x = gsl_vector_complex_get($vector,0);
+#    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference
+#    is(gsl_imag($x), 0);   
+
+#    $x = gsl_vector_complex_get($vector,1);
+#    is(gsl_real($x), (47/2)-(0.5*sqrt(6861)) ); 
+#    is(gsl_imag($x), 0); 
+}
+
+sub GSL_EIGEN_NONSYMM_Z : Tests {
+    my $matrix  = gsl_matrix_alloc (2, 2);
+    gsl_matrix_set($matrix, 0, 0, -12);
+    gsl_matrix_set($matrix, 1, 0, 7);
+    gsl_matrix_set($matrix, 0, 1, 65);
+    gsl_matrix_set($matrix, 1, 1, 59);
+
+    my $eigen  = gsl_eigen_nonsymm_alloc(2);
+    my $vector = gsl_vector_complex_alloc(2);
+    my $Z = gsl_matrix_alloc(2,2);
+    is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
+    is(gsl_eigen_nonsymm_Z($matrix,$vector, $Z, $eigen), 0);  
+    ok_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, "Z matrix", 0.005);
+    ok_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1);
+    ok_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005);
+    ok_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610, "Z matrix", 0.1);
+ 
+#    my $x = gsl_vector_complex_get($vector,0);
+#    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference
+#    is(gsl_imag($x), 0);   
+
+#    $x = gsl_vector_complex_get($vector,1);
+#    is(gsl_real($x), (47/2)-(0.5*sqrt(6861)) ); 
+#    is(gsl_imag($x), 0); 
+}
+
+sub GSL_EIGEN_NONSYMMV_Z : Tests {
+    local $TODO = "gsl_eigen_nonsymmv_z doesn't seem to output the same Z matrix than gsl_eigen_nonsymm_z...";   
+    my $matrix  = gsl_matrix_alloc (2, 2);
+    gsl_matrix_set($matrix, 0, 0, -12);
+    gsl_matrix_set($matrix, 1, 0, 7);
+    gsl_matrix_set($matrix, 0, 1, 65);
+    gsl_matrix_set($matrix, 1, 1, 59);
+
+    my $evec = gsl_matrix_complex_alloc(2,2);
+    my $eigen  = gsl_eigen_nonsymmv_alloc(2);
+    my $vector = gsl_vector_complex_alloc(2);
+    my $Z = gsl_matrix_alloc(2,2);
+    is(gsl_eigen_nonsymmv_Z($matrix,$vector, $evec, $Z, $eigen), 0);  
+    ok_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, "Z matrix", 0.005);
+    ok_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1);
+    ok_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005);
+    ok_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610, "Z matrix", 0.1);
+ 
+#    my $x = gsl_vector_complex_get($vector,0);
+#    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference
+#    is(gsl_imag($x), 0);   
+
+#    $x = gsl_vector_complex_get($vector,1);
+#    is(gsl_real($x), (47/2)-(0.5*sqrt(6861)) ); 
+#    is(gsl_imag($x), 0);
+#    
+
+     my $x = gsl_matrix_complex_get($evec, 1, 0);
+     is(gsl_imag($x), 0, "evec matrix");
+     ok_similar(gsl_real($x), 7/((71/2)+(.5*sqrt(6861))), "evec matrix", 0.01);
+     
+     $x = gsl_matrix_complex_get($evec, 0, 0);
+     is(gsl_imag($x), 0, "evec matrix");
+     ok_similar(gsl_real($x), 7/((71/2)-(.5*sqrt(6861))), "evec matrix", 0.19);
+     
+     $x = gsl_matrix_complex_get($evec, 0, 1);
+     is(gsl_imag($x), 0, "evec matrix");
+     is(gsl_real($x), 1); # this is the value I get with maple
+     
+     $x = gsl_matrix_complex_get($evec, 1, 1);
+     is(gsl_imag($x), 0, "evec matrix");
+     is(gsl_real($x), 1); # this is the value I get with maple
+}
 1;

@@ -241,7 +241,6 @@ sub GSL_LINALG_LU_LNDET : Tests {
 }
 
 sub GSL_LINALG_QR_DECOMP : Tests {
-# stolen from 
     my $matrix = gsl_matrix_alloc(3,5);
     my ($i, $j);
     for($i=0; $i<3; $i++) {
@@ -254,6 +253,8 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     my $q = gsl_matrix_alloc(3,3);    
     my $r = gsl_matrix_alloc(3,5);    
     my $a = gsl_matrix_alloc(3,5);
+    my $save = gsl_matrix_alloc(3, 5);
+    gsl_matrix_memcpy($save, $matrix);
 
     is(gsl_linalg_QR_decomp($matrix, $tau),0);
     is(gsl_linalg_QR_unpack($matrix, $tau, $q, $r), 0);
@@ -264,8 +265,8 @@ sub GSL_LINALG_QR_DECOMP : Tests {
   for($i=0; $i<3; $i++) {
     for($j=0; $j<5; $j++) {
       $aij = gsl_matrix_get($a, $i, $j);
-      $mij = gsl_matrix_get($matrix, $i, $j);
-      ok_similar($aij, $mij, "QR decomposition", 2 * 8.0 * $GSL_DBL_EPSILON);      
+      $mij = gsl_matrix_get($save, $i, $j);
+      ok(is_similar_relative($aij, $mij, 2 * 8.0 * $GSL_DBL_EPSILON));      
     }
   }
 

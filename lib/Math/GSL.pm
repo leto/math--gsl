@@ -91,7 +91,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Statistics       - Statistics Functions
     Math::GSL::Sum              - Summation
     Math::GSL::Sys              
-    Math::GSL::Types
     Math::GSL::Vector           - N-dimensional Vectors
     Math::GSL::Wavelet          - Basic Wavelets
     Math::GSL::Wavelet2D        - 2D Wavelets
@@ -179,7 +178,7 @@ sub subsystems
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Types 
+        Const        Siman        Sum            
         DFT          Integration  NTuple        Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline

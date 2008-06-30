@@ -1,4 +1,7 @@
 %module CBLAS 
+%include "typemaps.i"
+
+%apply double *INPUT { const double *X };
 
 %{
     #include "/usr/local/include/gsl/gsl_cblas.h"

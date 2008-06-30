@@ -1,9 +1,3 @@
-%{
-    #include "/usr/local/include/gsl/gsl_version.h"
-%}
-
-%include "/usr/local/include/gsl/gsl_version.h"
-
 %perlcode %{
 
 our $GSL_VERSION = '1.11';

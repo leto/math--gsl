@@ -12,7 +12,7 @@ require DynaLoader;
 require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
-our @EXPORT_OK = qw( ok_similar is_similar verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar is_similar verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
@@ -255,44 +255,53 @@ sub verify_results
     my $factor = 20; # fudge factor
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
-    while (my($k,$v)=each %$results){
-        my $eps = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
-        my $r   = Math::GSL::SF::gsl_sf_result_struct->new;
-        my $x   = eval qq{${class}::$k};
-        my $expected;
+    while (my($code,$expected)=each %$results){
+        my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
+        my $r        = Math::GSL::SF::gsl_sf_result_struct->new;
+        my $status   = eval qq{${class}::$code};
+        my ($x,$res);
 
-        print $@ if $@;
-        if (ref $v eq 'ARRAY'){
-            ($expected,$eps)   = @$v;
-        } else {
-             $expected = $v;
-        }
-
-        if ( $k =~ /_e\(.*\$r/) {
+        if ( $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};
             $eps = $factor*$r->{err};
             _dump_result($r);
+            $res = abs($x-$expected);
             printf "expected   : %.18g\n", $expected ;
-        }
-        my $res = abs($x-$expected);
-        printf "difference : %.18g\n", $res;
-        printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
-        print "got $x for $k\n" if defined $ENV{DEBUG};
+            printf "difference : %.18g\n", $res;
+            printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
+            print "got $code = $x\n" if defined $ENV{DEBUG};
 
-        if (!defined $x ){
-            ok(0, qq{'$k' died} );
-        } elsif ($x =~ /nan|inf/i){
-                ok( $expected eq $x, "'$expected'?='$x'" );
-        } else { 
-            if ($@) {
-                    warn "badness: $@\n";
-                    ok(0);
+            if (!defined $status ){
+                ok(0, qq{'$code' died} );
+            } elsif ($x =~ /nan|inf/i){
+                    ok( $expected eq $x, "'$expected'?='$x'" );
             } else { 
-                ok( $res <= $eps, "$k ?= $x,\n+- $res, tol=$eps" );    
+                if ($@) {
+                        ok(0, $@);
+                } else { 
+                    ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
+                }
             }
         }
     }
 }
+sub verify
+{
+    my ($results,$class) = @_;
+    croak "Usage: verify_results(%results, \$class)" unless $class;
+    while (my($code,$result)=each %$results){
+        my ($expected,$eps)=@$result;
+        my $x = eval qq{${class}::$code};
+        ok(0, $@) if $@;
+        my $res = abs($x - $expected);
+        if ($x =~ /nan|inf/i ){
+            ok( $expected eq $x, "'$expected' ?='$x'" );
+        } else {
+            ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
+        }
+    }
+}
+
 sub _dump_result($)
 {
     my $r=shift;

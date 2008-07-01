@@ -829,5 +829,5 @@ my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
                     'gsl_cdf_tdist_Qinv (9.76799239508425455e-1, 300.0)'	=> [ -2.0, $TOL6 ],
                     q{gsl_cdf_tdist_Qinv (1.000000000000000000e0, 300.0)}	=> [  q{-inf}, $TOL6 ],
                 };
-    verify_results($results, 'Math::GSL::CDF');
+    verify($results, 'Math::GSL::CDF');
 }

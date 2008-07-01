@@ -315,14 +315,9 @@ my @swig_version = `swig -version 2>&1`;
 my $swig_installed = 0;
 if ($?) {
     my $errno = $? >> 8;
-    print "
-*** I don't see SWIG installed. I'll use the SWIG-generated file
-*** that comes with the distribution. If you want SWIG, get it
-*** from http://www.swig.org
-"; 
-    print "*** Output was:
-	@swig_version
-" if @swig_version;
+    print "I don't see SWIG installed.  Please install SWIG from  http://www.swig.org .\n";
+    print "*** Output was:\n @swig_version\n" if @swig_version;
+    exit(0);
 } else {
     $swig_installed = 1;
     print qq{Found $swig_version[1]};

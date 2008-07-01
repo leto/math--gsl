@@ -216,7 +216,7 @@ sub ok_similar {
 
 sub is_similar_relative {
     my ($x,$y, $eps) = @_;
-    return is_similar($x,$y,$eps, sub { abs( $_[0] - $_[1] ) } );
+    return is_similar($x,$y,$eps, sub { abs( ($_[0] - $_[1])/abs($_[1]) ) } );
 }
 
 # this is a huge hack

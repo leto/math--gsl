@@ -91,7 +91,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Statistics       - Statistics Functions
     Math::GSL::Sum              - Summation
     Math::GSL::Sys              
-    Math::GSL::Types
     Math::GSL::Vector           - N-dimensional Vectors
     Math::GSL::Wavelet          - Basic Wavelets
     Math::GSL::Wavelet2D        - 2D Wavelets
@@ -179,7 +178,7 @@ sub subsystems
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Types 
+        Const        Siman        Sum            
         DFT          Integration  NTuple        Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
@@ -214,6 +213,30 @@ sub is_similar {
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;
     ok(is_similar($x,$y,$eps), $msg);
+}
+
+sub is_similar_relative {
+    my ($x,$y, $eps) = @_;
+    $eps ||= 1e-8;
+    if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+        if ( $#$x != $#$y ){
+            warn "is_similar(): argument of different lengths, $#$x != $#$y !!!";
+            return 0;
+        } else {
+            map { 
+                    my $delta = abs($x->[$_] - $y->[$_]);
+                    if($delta > $eps){
+                        warn "\n\tElements start differing at index $_, delta = $delta\n";
+                        warn qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
+                        warn qq{\t\t\$y->[$_] = } . $y->[$_] . "\n";
+                        return 0;
+                    }
+                } (0..$#$x);
+            return 1;
+        }
+    } else {
+        (abs($x-$y)/abs($y)) <= $eps ? return 1 : return 0;
+    }
 }
 
 sub is_valid_double

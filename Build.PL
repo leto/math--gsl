@@ -350,7 +350,7 @@ if ('cygwin' eq $Config{osname} &&
 
 my $class = Module::Build->subclass( code => $code );
 my @Subsystems = sort qw/
-            Diff          Machine      Statistics Wavelet
+            BLAS         Diff          Machine      Statistics Wavelet
             Block        Eigen         Matrix       Poly       Wavelet2D
             BSpline      Errno         PowInt       Sys
             CBLAS        FFT           Min          Math
@@ -359,7 +359,7 @@ my @Subsystems = sort qw/
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      
             Complex      Histogram2D   Multiroots   SF         
-            Const        Siman         IEEEUtils    Types
+            Const        Siman         IEEEUtils    
             DFT          Integration   NTuple       Sort                  
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline

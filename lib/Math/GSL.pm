@@ -12,7 +12,7 @@ require DynaLoader;
 require Exporter;
 our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
-our @EXPORT_OK = qw( ok_similar is_similar verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar is_similar is_similar_relative verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
@@ -313,9 +313,15 @@ sub verify
     my ($results,$class) = @_;
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$result)=each %$results){
-        my ($expected,$eps)=@$result;
         my $x = eval qq{${class}::$code};
         ok(0, $@) if $@;
+
+        my ($expected,$eps);
+        if (ref $result){
+            ($expected,$eps)=@$result;
+        } else {
+            ($expected,$eps)=($result,1e-8);
+        }
         my $res = abs($x - $expected);
         if ($x =~ /nan|inf/i ){
             ok( $expected eq $x, "'$expected' ?='$x'" );

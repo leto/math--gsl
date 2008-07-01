@@ -17,11 +17,6 @@ our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-
-use constant MAX_DOUBLE => 1.7976931348623157e+308;
-use constant MIN_DOUBLE => 2.2250738585072014e-308;
-use constant MAX_FLOAT  => 3.40282347e+38;
-use constant MIN_FLOAT  => 1.175494351e-38;
 our $VERSION = 0.044;
 
 =head1 NAME
@@ -187,7 +182,7 @@ sub subsystems
 
 
 sub is_similar {
-    my ($x,$y, $eps) = @_;
+    my ($x,$y, $eps, $similarity_function) = @_;
     $eps ||= 1e-8;
     if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
         if ( $#$x != $#$y ){
@@ -206,7 +201,11 @@ sub is_similar {
             return 1;
         }
     } else {
-        abs($x-$y) <= $eps ? return 1 : return 0;
+        if( ref $similarity_function eq 'CODE') {
+               $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
+        } else { 
+            abs($x-$y) <= $eps ? return 1 : return 0;
+        }
     }
 }
 
@@ -217,59 +216,8 @@ sub ok_similar {
 
 sub is_similar_relative {
     my ($x,$y, $eps) = @_;
-    $eps ||= 1e-8;
-    if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
-        if ( $#$x != $#$y ){
-            warn "is_similar(): argument of different lengths, $#$x != $#$y !!!";
-            return 0;
-        } else {
-            map { 
-                    my $delta = abs($x->[$_] - $y->[$_]);
-                    if($delta > $eps){
-                        warn "\n\tElements start differing at index $_, delta = $delta\n";
-                        warn qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
-                        warn qq{\t\t\$y->[$_] = } . $y->[$_] . "\n";
-                        return 0;
-                    }
-                } (0..$#$x);
-            return 1;
-        }
-    } else {
-        (abs($x-$y)/abs($y)) <= $eps ? return 1 : return 0;
-    }
+    return is_similar($x,$y,$eps, sub { abs( $_[0] - $_[1] ) } );
 }
-
-sub is_valid_double
-{
-    my $x=shift;
-    return 0 unless ( defined $x && looks_like_number($x) );
-
-    return 1 if ($x == 0);
-
-    $x = abs $x;
-    (  
-      $x > MIN_DOUBLE && 
-      $x < MAX_DOUBLE       
-    ) ? 1 : 0;  
-}
-sub is_valid_float
-{ 
-    my $x=shift; 
-    return 0 unless ( defined $x && looks_like_number($x) );
-
-    return 1 if ($x == 0);
-
-    $x = abs $x ;
-    ( 
-      $x > MIN_FLOAT && 
-      $x < MAX_FLOAT        
-    ) ? 1 : 0;  
-}
-
-sub _has_quads          { $Config{use64bitint} eq 'define' || ($Config{longsize} >= 8) }
-sub _has_long_doubles                 { $Config{d_longdbl}     eq 'define'             }
-sub _has_long_doubles_as_default      { $Config{uselongdouble} eq 'define'             }
-sub _has_long_doubles_same_as_doubles { $Config{doublesize}    == $Config{longdblsize} }
 
 # this is a huge hack
 sub verify_results

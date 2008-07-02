@@ -1,9 +1,18 @@
 %module Deriv
 
-%typemap(in) gsl_function const * {
+%include "typemaps.i"
+%typemap(in) gsl_function * {
     printf("gsl_func \n");
 };
 
+%typemap(in) void * {
+    printf("void * \n");
+};
+/*
+%typemap(in)  double (*)(double,void *) {
+    printf("func * \n");
+};
+*/
 %apply double * OUTPUT { double *result,double *abserr };
 
 %{

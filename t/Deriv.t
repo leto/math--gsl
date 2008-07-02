@@ -1,16 +1,23 @@
 use Test::More 'no_plan';
-use Math::GSL;
+use Math::GSL qw/:all/;
 use Math::GSL::Deriv qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 use warnings;
 
-{
-    local $TODO = "gsl_function *";
-    my ($x,$h,$result,$abserr)=(5,0.01,0,0);
-    my $x_squared = sub {my $x=shift; $x ** 2};
+BEGIN{ gsl_set_error_handler_off() };
 
-    #gsl_deriv_central ( $x_squared, $x, $h, $result, $abserr);
-    ok(0, 'gsl_deriv_central');
+{
+    my ($x,$h)=(5,0.01);
+    my $func = Math::GSL::Deriv::gsl_function_struct->new;
+    isa_ok( $func, 'Math::GSL::Deriv::gsl_function_struct' );
+
+    local $TODO = "gsl_function *";
+    $func->swig_params_set(0);
+    #$func->swig_function_set( sub { $_[0] ** 2 } );
+
+    #my ($value, $abserr) = gsl_deriv_central ( $func, $x, $h); 
+    #print Dumper [ $value, $abserr ];
 }
 

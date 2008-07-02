@@ -223,7 +223,8 @@ sub is_similar_relative {
 sub verify_results
 {
     my ($results,$class) = @_;
-    my $factor = 20; # fudge factor
+    # GSL uses a factor of 100 
+    my $factor = 20; 
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$expected)=each %$results){
@@ -232,7 +233,7 @@ sub verify_results
         my $status   = eval qq{${class}::$code};
         my ($x,$res);
 
-        if ( $code =~ /_e\(.*\$r/) {
+        if ( defined $r && $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};
             $eps = $factor*$r->{err};
             _dump_result($r);

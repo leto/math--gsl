@@ -58,7 +58,6 @@ Machine.i
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
-Math.i
 Matrix.i
 Message.i
 META.yml

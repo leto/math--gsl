@@ -348,7 +348,7 @@ my @Subsystems = sort qw/
             BLAS         Diff          Machine      Statistics Wavelet
             Block        Eigen         Matrix       Poly       Wavelet2D
             BSpline      Errno         PowInt       Sys
-            CBLAS        FFT           Min          Math
+            CBLAS        FFT           Min          
             CDF          Fit           Mode         QRNG
             Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum

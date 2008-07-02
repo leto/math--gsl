@@ -672,54 +672,185 @@ use Math::GSL::SF qw /:all/;
 
 =head1 DESCRIPTION
 
+This module contains a data structure named gsl_sf_result. To create a new one use
+$r = Math::GSL::SF::gsl_sf_result_struct->new;
+You can then access the elements of the structure in this way :
+$r->{val}
+or
+$r->{err}
+
 Here is a list of all included functions:
 
-gsl_sf_airy_Ai_e, gsl_sf_airy_Ai, gsl_sf_airy_Bi_e, 
-gsl_sf_airy_Bi, gsl_sf_airy_Ai_scaled_e, gsl_sf_airy_Ai_scaled, 
-gsl_sf_airy_Bi_scaled_e, gsl_sf_airy_Bi_scaled, gsl_sf_airy_Ai_deriv_e, 
-gsl_sf_airy_Ai_deriv, gsl_sf_airy_Bi_deriv_e, gsl_sf_airy_Bi_deriv, 
-gsl_sf_airy_Ai_deriv_scaled_e, gsl_sf_airy_Ai_deriv_scaled, gsl_sf_airy_Bi_deriv_scaled_e, 
-gsl_sf_airy_Bi_deriv_scaled, gsl_sf_airy_zero_Ai_e, gsl_sf_airy_zero_Ai, 
-gsl_sf_airy_zero_Bi_e, gsl_sf_airy_zero_Bi, gsl_sf_airy_zero_Ai_deriv_e, 
-gsl_sf_airy_zero_Ai_deriv, gsl_sf_airy_zero_Bi_deriv_e, gsl_sf_airy_zero_Bi_deriv, 
-gsl_sf_bessel_J0_e, gsl_sf_bessel_J0, gsl_sf_bessel_J1_e, 
-gsl_sf_bessel_J1, gsl_sf_bessel_Jn_e, gsl_sf_bessel_Jn, 
-gsl_sf_bessel_Jn_array, gsl_sf_bessel_Y0_e, gsl_sf_bessel_Y0, 
-gsl_sf_bessel_Y1_e, gsl_sf_bessel_Y1, gsl_sf_bessel_Yn_e, 
-gsl_sf_bessel_Yn, gsl_sf_bessel_Yn_array, gsl_sf_bessel_I0_e, 
-gsl_sf_bessel_I0, gsl_sf_bessel_I1_e, gsl_sf_bessel_I1, 
-gsl_sf_bessel_In_e, gsl_sf_bessel_In, gsl_sf_bessel_In_array, 
-gsl_sf_bessel_I0_scaled_e, gsl_sf_bessel_I0_scaled, gsl_sf_bessel_I1_scaled_e, 
-gsl_sf_bessel_I1_scaled, gsl_sf_bessel_In_scaled_e, gsl_sf_bessel_In_scaled, 
-gsl_sf_bessel_In_scaled_array, gsl_sf_bessel_K0_e, gsl_sf_bessel_K0, 
-gsl_sf_bessel_K1_e, gsl_sf_bessel_K1, gsl_sf_bessel_Kn_e, 
-gsl_sf_bessel_Kn, gsl_sf_bessel_Kn_array, gsl_sf_bessel_K0_scaled_e, 
-gsl_sf_bessel_K0_scaled, gsl_sf_bessel_K1_scaled_e, gsl_sf_bessel_K1_scaled, 
-gsl_sf_bessel_Kn_scaled_e, gsl_sf_bessel_Kn_scaled, gsl_sf_bessel_Kn_scaled_array, 
-gsl_sf_bessel_j0_e, gsl_sf_bessel_j0, gsl_sf_bessel_j1_e, 
-gsl_sf_bessel_j1, gsl_sf_bessel_j2_e, gsl_sf_bessel_j2, 
-gsl_sf_bessel_jl_e, gsl_sf_bessel_jl, gsl_sf_bessel_jl_array, 
-gsl_sf_bessel_jl_steed_array, gsl_sf_bessel_y0_e, gsl_sf_bessel_y0, 
-gsl_sf_bessel_y1_e, gsl_sf_bessel_y1, gsl_sf_bessel_y2_e, 
-gsl_sf_bessel_y2, gsl_sf_bessel_yl_e, gsl_sf_bessel_yl, 
-gsl_sf_bessel_yl_array, gsl_sf_bessel_i0_scaled_e, gsl_sf_bessel_i0_scaled, 
-gsl_sf_bessel_i1_scaled_e, gsl_sf_bessel_i1_scaled, gsl_sf_bessel_i2_scaled_e, 
-gsl_sf_bessel_i2_scaled, gsl_sf_bessel_il_scaled_e, gsl_sf_bessel_il_scaled, 
-gsl_sf_bessel_il_scaled_array, gsl_sf_bessel_k0_scaled_e, gsl_sf_bessel_k0_scaled, 
-gsl_sf_bessel_k1_scaled_e, gsl_sf_bessel_k1_scaled, gsl_sf_bessel_k2_scaled_e, 
-gsl_sf_bessel_k2_scaled, gsl_sf_bessel_kl_scaled_e, gsl_sf_bessel_kl_scaled, 
-gsl_sf_bessel_kl_scaled_array, gsl_sf_bessel_Jnu_e, gsl_sf_bessel_Jnu, 
-gsl_sf_bessel_Ynu_e, gsl_sf_bessel_Ynu, gsl_sf_bessel_sequence_Jnu_e, 
-gsl_sf_bessel_Inu_scaled_e, gsl_sf_bessel_Inu_scaled, gsl_sf_bessel_Inu_e, 
-gsl_sf_bessel_Inu, gsl_sf_bessel_Knu_scaled_e, gsl_sf_bessel_Knu_scaled, 
-gsl_sf_bessel_Knu_e, gsl_sf_bessel_Knu, gsl_sf_bessel_lnKnu_e, 
-gsl_sf_bessel_lnKnu, gsl_sf_bessel_zero_J0_e, gsl_sf_bessel_zero_J0, 
-gsl_sf_bessel_zero_J1_e, gsl_sf_bessel_zero_J1, gsl_sf_bessel_zero_Jnu_e, 
-gsl_sf_bessel_zero_Jnu, gsl_sf_clausen_e, gsl_sf_clausen, 
-gsl_sf_hydrogenicR_1_e, gsl_sf_hydrogenicR_1, gsl_sf_hydrogenicR_e, 
-gsl_sf_hydrogenicR, gsl_sf_coulomb_wave_FG_e, gsl_sf_coulomb_wave_F_array, 
-gsl_sf_coulomb_wave_FG_array, gsl_sf_coulomb_wave_FGp_array, gsl_sf_coulomb_wave_sphF_array, 
-gsl_sf_coulomb_CL_e, gsl_sf_coulomb_CL_array, gsl_sf_coupling_3j_e, 
+=over 
+
+=item gsl_sf_airy_Ai_e($x, $mode)
+
+=item gsl_sf_airy_Ai($x, $mode, $result) 
+
+- These routines compute the Airy function Ai($x) with an accuracy specified by $mode. $mode should be $GSL_PREC_DOUBLE, $GSL_PREC_SINGLE or $GSL_PREC_APPROX. $result is a gsl_sf_result structure.
+
+=back 
+
+=over
+
+=item gsl_sf_airy_Bi_e($x, $mode, $result)
+
+=item gsl_sf_airy_Bi($x, $mode)
+
+- These routines compute the Airy function Bi($x) with an accuracy specified by $mode. $mode should be $GSL_PREC_DOUBLE, $GSL_PREC_SINGLE or $GSL_PREC_APPROX. $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item gsl_sf_airy_Ai_scaled_e($x, $mode, $result)
+
+=item gsl_sf_airy_Ai_scaled($x, $mode) 
+
+- These routines compute a scaled version of the Airy function S_A($x) Ai($x). For $x>0 the scaling factor S_A($x) is \exp(+(2/3) $x**(3/2)), and is 1 for $x<0. 
+
+=back
+
+=over
+
+=item gsl_sf_airy_Bi_scaled_e($x, $mode, $result)
+
+=item gsl_sf_airy_Bi_scaled($x, $mode)
+
+- These routines compute a scaled version of the Airy function S_B($x) Bi($x). For $x>0 the scaling factor S_B($x) is exp(-(2/3) $x**(3/2)), and is 1 for $x<0.
+
+=back
+
+gsl_sf_airy_Ai_deriv_e 
+gsl_sf_airy_Ai_deriv
+gsl_sf_airy_Bi_deriv_e
+gsl_sf_airy_Bi_deriv 
+gsl_sf_airy_Ai_deriv_scaled_e
+gsl_sf_airy_Ai_deriv_scaled
+gsl_sf_airy_Bi_deriv_scaled_e
+gsl_sf_airy_Bi_deriv_scaled
+gsl_sf_airy_zero_Ai_e
+gsl_sf_airy_zero_Ai
+gsl_sf_airy_zero_Bi_e
+gsl_sf_airy_zero_Bi
+gsl_sf_airy_zero_Ai_deriv_e
+gsl_sf_airy_zero_Ai_deriv
+gsl_sf_airy_zero_Bi_deriv_e
+gsl_sf_airy_zero_Bi_deriv
+gsl_sf_bessel_J0_e
+gsl_sf_bessel_J0
+gsl_sf_bessel_J1_e
+gsl_sf_bessel_J1
+gsl_sf_bessel_Jn_e
+gsl_sf_bessel_Jn
+gsl_sf_bessel_Jn_array
+gsl_sf_bessel_Y0_e
+gsl_sf_bessel_Y0
+gsl_sf_bessel_Y1_e
+gsl_sf_bessel_Y1
+gsl_sf_bessel_Yn_e
+gsl_sf_bessel_Yn
+gsl_sf_bessel_Yn_array
+gsl_sf_bessel_I0_e 
+gsl_sf_bessel_I0
+gsl_sf_bessel_I1_e
+gsl_sf_bessel_I1
+gsl_sf_bessel_In_e
+gsl_sf_bessel_In
+gsl_sf_bessel_In_array
+gsl_sf_bessel_I0_scaled_e
+gsl_sf_bessel_I0_scaled
+gsl_sf_bessel_I1_scaled_e
+gsl_sf_bessel_I1_scaled
+gsl_sf_bessel_In_scaled_e
+gsl_sf_bessel_In_scaled 
+gsl_sf_bessel_In_scaled_array
+gsl_sf_bessel_K0_e
+gsl_sf_bessel_K0 
+gsl_sf_bessel_K1_e
+gsl_sf_bessel_K1
+gsl_sf_bessel_Kn_e
+gsl_sf_bessel_Kn
+gsl_sf_bessel_Kn_array
+gsl_sf_bessel_K0_scaled_e 
+gsl_sf_bessel_K0_scaled
+gsl_sf_bessel_K1_scaled_e
+gsl_sf_bessel_K1_scaled 
+gsl_sf_bessel_Kn_scaled_e
+gsl_sf_bessel_Kn_scaled
+gsl_sf_bessel_Kn_scaled_array 
+gsl_sf_bessel_j0_e
+gsl_sf_bessel_j0
+gsl_sf_bessel_j1_e 
+gsl_sf_bessel_j1
+gsl_sf_bessel_j2_e
+gsl_sf_bessel_j2
+gsl_sf_bessel_jl_e
+gsl_sf_bessel_jl
+gsl_sf_bessel_jl_array
+gsl_sf_bessel_jl_steed_array
+gsl_sf_bessel_y0_e
+gsl_sf_bessel_y0 
+gsl_sf_bessel_y1_e
+gsl_sf_bessel_y1
+gsl_sf_bessel_y2_e 
+gsl_sf_bessel_y2
+gsl_sf_bessel_yl_e
+gsl_sf_bessel_yl 
+gsl_sf_bessel_yl_array
+gsl_sf_bessel_i0_scaled_e
+gsl_sf_bessel_i0_scaled
+gsl_sf_bessel_i1_scaled_e
+gsl_sf_bessel_i1_scaled
+gsl_sf_bessel_i2_scaled_e
+gsl_sf_bessel_i2_scaled
+gsl_sf_bessel_il_scaled_e
+gsl_sf_bessel_il_scaled
+gsl_sf_bessel_il_scaled_array
+gsl_sf_bessel_k0_scaled_e
+gsl_sf_bessel_k0_scaled 
+gsl_sf_bessel_k1_scaled_e
+gsl_sf_bessel_k1_scaled
+gsl_sf_bessel_k2_scaled_e 
+gsl_sf_bessel_k2_scaled
+gsl_sf_bessel_kl_scaled_e
+gsl_sf_bessel_kl_scaled
+gsl_sf_bessel_kl_scaled_array
+gsl_sf_bessel_Jnu_e
+gsl_sf_bessel_Jnu 
+gsl_sf_bessel_Ynu_e
+gsl_sf_bessel_Ynu
+gsl_sf_bessel_sequence_Jnu_e 
+gsl_sf_bessel_Inu_scaled_e
+gsl_sf_bessel_Inu_scaled
+gsl_sf_bessel_Inu_e 
+gsl_sf_bessel_Inu
+gsl_sf_bessel_Knu_scaled_e
+gsl_sf_bessel_Knu_scaled 
+gsl_sf_bessel_Knu_e
+gsl_sf_bessel_Knu
+gsl_sf_bessel_lnKnu_e 
+gsl_sf_bessel_lnKnu
+gsl_sf_bessel_zero_J0_e
+gsl_sf_bessel_zero_J0 
+gsl_sf_bessel_zero_J1_e
+gsl_sf_bessel_zero_J1
+gsl_sf_bessel_zero_Jnu_e
+gsl_sf_bessel_zero_Jnu
+gsl_sf_clausen_e
+gsl_sf_clausen 
+gsl_sf_hydrogenicR_1_e
+gsl_sf_hydrogenicR_1
+gsl_sf_hydrogenicR_e 
+gsl_sf_hydrogenicR
+gsl_sf_coulomb_wave_FG_e
+gsl_sf_coulomb_wave_F_array 
+gsl_sf_coulomb_wave_FG_array
+gsl_sf_coulomb_wave_FGp_array
+gsl_sf_coulomb_wave_sphF_array
+gsl_sf_coulomb_CL_e
+gsl_sf_coulomb_CL_array
+gsl_sf_coupling_3j_e
 gsl_sf_coupling_3j, gsl_sf_coupling_6j_e, gsl_sf_coupling_6j, 
 gsl_sf_coupling_RacahW_e, gsl_sf_coupling_RacahW, gsl_sf_coupling_9j_e, 
 gsl_sf_coupling_9j, gsl_sf_coupling_6j_INCORRECT_e, gsl_sf_coupling_6j_INCORRECT, 

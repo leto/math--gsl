@@ -225,34 +225,33 @@ sub verify_results
     my ($results,$class) = @_;
     # GSL uses a factor of 100 
     my $factor = 20; 
+    my ($x,$res);
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$expected)=each %$results){
         my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
         my $r        = Math::GSL::SF::gsl_sf_result_struct->new;
         my $status   = eval qq{${class}::$code};
-        my ($x,$res);
 
+        ok(0, qq{'$code' died} ) if !defined $status;
+        
         if ( defined $r && $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};
             $eps = $factor*$r->{err};
-            _dump_result($r);
             $res = abs($x-$expected);
-            printf "expected   : %.18g\n", $expected ;
-            printf "difference : %.18g\n", $res;
-            printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
-            print "got $code = $x\n" if defined $ENV{DEBUG};
 
-            if (!defined $status ){
-                ok(0, qq{'$code' died} );
-            } elsif ($x =~ /nan|inf/i){
+            if ($ENV{DEBUG} ){
+                _dump_result($r);
+                print "got $code = $x\n";
+                printf "expected   : %.18g\n", $expected ;
+                printf "difference : %.18g\n", $res;
+                printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
+            }
+
+            if ($x =~ /nan|inf/i) {
                     ok( $expected eq $x, "'$expected'?='$x'" );
             } else { 
-                if ($@) {
-                        ok(0, $@);
-                } else { 
-                    ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
-                }
+                ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
             }
         }
     }

@@ -8,11 +8,10 @@
 %typemap(in) void * {
     printf("void * \n");
 };
-/*
-%typemap(in)  double (*)(double,void *) {
-    printf("func * \n");
+
+%typemap(in) double (*)(double,void *) {
+    printf("function pointer * \n");
 };
-*/
 %apply double * OUTPUT { double *result,double *abserr };
 
 %{

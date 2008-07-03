@@ -1,21 +1,32 @@
 package Math::GSL::Const::Test;
 use base q{Test::Class};
 use Test::More;
-use Math::GSL::Const;
-use Math::GSL qw/is_similar/;
+use Math::GSL qw/:all/;
+use Math::GSL::SF qw/:all/;
+use Math::GSL::Const qw/:all/;
 use strict;
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{gsl} = Math::GSL->new;
 }
 
 sub teardown : Test(teardown) {
 }
 
-sub GSL_CONST_CGS : Test {
+sub GSL_CONST_CGS : Tests {
     my $self = shift;
-    my $results = { '$Math::GSL::Const::GSL_CONST_CGS_SPEED_OF_LIGHT' => 29979245800 };
-    $self->{gsl}->verify_results($results);
+    my $results = { 
+        'GSL_CONST_CGS_SPEED_OF_LIGHT' => 29979245800 
+    };
+    verify($results, '$Math::GSL::Const');
 }
+
+sub MATH_CONSTANTS : Tests {
+    my $self = shift;
+    ok_similar( gsl_sf_log($M_E), 1,'ln($M_E)=1');
+    ok_similar( gsl_sf_exp($M_LN2), 2,'e^($M_LN2)=2' );
+    ok_similar( gsl_sf_exp($M_LNPI), $M_PI ,'e^($M_LNPI)=$M_PI');
+    ok_similar( $M_SQRT2 ** 2, 2,'($M_SQRT2)**2=2' );
+}
+
 42;

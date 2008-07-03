@@ -179,8 +179,7 @@ sub compile_c {
 			? map {"-I$_"} (@{$p->{include_dirs}}, catdir($cf->{installarchlib}, 'CORE'))
 			: map {"-I$_"} ( catdir($cf->{installarchlib}, 'CORE') ) ;
 
-  my @extra_compiler_flags = #split / /, q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/};
-   $self->split_like_shell($p->{extra_compiler_flags});
+  my @extra_compiler_flags = $self->split_like_shell($p->{extra_compiler_flags});
 
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
 
@@ -194,9 +193,7 @@ sub compile_c {
   # I doubt optimization makes much of a difference. But if it does,
   # it can be added back via @extra_compiler_flags.
 
-  my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags,
-               @extra_compiler_flags, 
-       );
+  my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags, @extra_compiler_flags, );
   
   my @cc = $self->split_like_shell($cf->{cc});
   @cc = "gcc" unless @cc;

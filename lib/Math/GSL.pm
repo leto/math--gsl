@@ -224,12 +224,12 @@ sub verify_results
 {
     my ($results,$class) = @_;
     # GSL uses a factor of 100 
-    my $factor = 20; 
+    my $factor   = 20; 
+    my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
     my ($x,$res);
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$expected)=each %$results){
-        my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
         my $r        = Math::GSL::SF::gsl_sf_result_struct->new;
         my $status   = eval qq{${class}::$code};
 
@@ -259,7 +259,7 @@ sub verify_results
 sub verify
 {
     my ($results,$class) = @_;
-    croak "Usage: verify_results(%results, \$class)" unless $class;
+    croak "Usage: verify(%results, \$class)" unless $class;
     while (my($code,$result)=each %$results){
         my $x = eval qq{${class}::$code};
         ok(0, $@) if $@;

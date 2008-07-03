@@ -15,7 +15,7 @@ BEGIN{ gsl_set_error_handler_off() };
 
     local $TODO = "gsl_function *";
     $func->swig_params_set(0);
-    #$func->swig_function_set( sub { $_[0] ** 2 } );
+    $func->swig_function_set( sub { $_[0] ** 2 } );
 
     #my ($value, $abserr) = gsl_deriv_central ( $func, $x, $h); 
     #print Dumper [ $value, $abserr ];

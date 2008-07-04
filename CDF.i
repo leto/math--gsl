@@ -193,31 +193,57 @@ use Math::GSL::CDF qw /:all/;
 
  You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::CDF qw/:all/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
 
- geometric
- tdist
- ugaussian
- rayleigh
- pascal
- exponential
- gumbel2
- gumbel1
- exppow
- logistic
- weibull
- gaussian
- poisson
- beta
- binomial
- laplace
- lognormal
- cauchy
- fdist
- chisq
- gamma
- hypergeometric
- negative
- pareto
- flat
+=over
+
+=item geometric
+
+=item tdist
+
+=item ugaussian
+
+=item rayleigh
+
+=item pascal
+
+=item exponential
+
+=item gumbel2
+
+=item gumbel1
+
+=item exppow
+
+=item logistic
+
+=item weibull
+
+=item gaussian
+
+=item poisson
+
+=item beta
+
+=item binomial
+
+=item laplace
+
+=item lognormal
+
+=item cauchy
+
+=item fdist
+
+=item chisq
+
+=item gamma
+
+=item hypergeometric
+
+=item negative
+
+=item pareto
+
+=item flat
 
  For example the beta tag contains theses functions : gsl_cdf_beta_P, gsl_cdf_beta_Q, gsl_cdf_beta_Pinv, gsl_cdf_beta_Qinv. 
 

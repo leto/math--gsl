@@ -273,19 +273,18 @@ sub try_cflags ($) {
 print "Checking for GSL..";
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
-use constant MIN_GSL_VERSION => "1.11";
+my $MIN_GSL_VERSION = "1.11";
 my $gv = $gsl_pkgcfg{'modversion'};
 
 if (defined $gv) {
   if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
     my @current= split /\./, $1;
-    my @min= split /\./, MIN_GSL_VERSION;
+    my @min= split /\./, $MIN_GSL_VERSION;
     unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
 	    printf "
 *** 
 *** You need to have GSL %s or greater installed. (You have $gv).
-*** Get GSL at http://www.gnu.org/software/gsl
-", MIN_GSL_VERSION;
+*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
 	    exit 1;
 	} else {
 	    print "Found GSL version $gv\n";
@@ -308,6 +307,7 @@ if (defined $gv) {
 }
 
 print "Checking for SWIG...";
+my $MIN_SWIG_VERSION = "1.3.30";
 my @swig_version = `swig -version 2>&1`;
 my $swig_installed = 0;
 if ($?) {
@@ -317,7 +317,16 @@ if ($?) {
     exit 1;
 } else {
     $swig_installed = 1;
-    print qq{Found $swig_version[1]};
+    chomp $swig_version[1];
+    $swig_version[1] =~ s/[^\d\.]//g;
+    my ($big,$med,$small)=split /\./, $swig_version[1];
+    my ($big_min,$med_min,$small_min) = split /\./, $MIN_SWIG_VERSION;
+    unless ( $big >= $big_min && $med >= $med_min && $small >= $small_min ){
+        print qq{Found SWIG $swig_version[1] but $MIN_SWIG_VERSION is required\n};
+        print "Please install a more recent SWIG from  http://www.swig.org .\n";
+        exit 1;
+    }
+    print qq{Found SWIG $swig_version[1] which seems recent enough, awesome!\n};
 }
 
 my $ccflags = $gsl_pkgcfg{cflags};
@@ -380,7 +389,7 @@ my $builder = $class->new(
         'Test::Exception'       =>    0.21,
         'Test::Class'           =>    0.12,
         version                 =>       0,
-    	perl 			        =>  '5.6.0',
+    	perl 			        =>  '5.8.8',
     },
     sign                  => 1,
     swig_source           => [  

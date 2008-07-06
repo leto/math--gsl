@@ -39,7 +39,6 @@ Permutation
 Permute
 Poly
 PowInt      - done
-Precision
 QRNG        - requires typemap for double x[]
 RNG         - fread/fwrite needs to be implemented, needs docs, examples
 Randist     - needs examples

@@ -73,7 +73,6 @@ ODEIV.i
 Permutation.i
 Poly.i
 PowInt.i
-Precision.i
 QRNG.i
 Randist.i
 README

@@ -29,7 +29,6 @@ sub DHT_NEW : Tests {
 }
 
 sub DHT_SAMPLE_APPLY : Tests { 
-    local $TODO = 'need a typemap for $f_in and $f_out';
     my $f_in  = [(0) x 128 ];
     my $f_out = [(0) x 128 ];
     my $dht = gsl_dht_new(128, 1.0, 20);
@@ -41,6 +40,7 @@ sub DHT_SAMPLE_APPLY : Tests {
     ok( $#$f_in = 127, 'gsl_dht_x_sample' ); 
 
 
+    local $TODO = 'need a typemap for $f_in and $f_out';
     #gsl_dht_apply($dht, $f_in, $f_out);
     ok( $#$f_out = 127, 'gsl_dht_x_apply' ); 
 

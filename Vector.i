@@ -100,6 +100,20 @@ Math::GSL::Vector - Functions concerning vectors
 =head1 SYPNOPSIS
 
     use Math::GSL::Vector qw/:all/;
+    my $vec1 = Math::GSL::Vector->new([1, 7, 94, 15 ]);
+    my $vec2 = $vec1 * 5; 
+    my $vec3 = Math::GSL::Vector>new(10);   # 10 element zero vector 
+
+    # set the element at index 1 to 9
+    # and the element at index 3 to 8
+    $vec3->set([ 1, 3 ], [ 9, 8 ]);   
+
+    my @vec = $vec2->as_list;               # return elements as Perl list
+
+    my $dot_product = $vec1 * $vec2;
+    my $length      = $vec2->length;
+    my $first       = $vec1->get(0);
+
 
 =cut
 
@@ -131,6 +145,10 @@ sub min {
     return gsl_vector_min($self->raw);
 }
 
+sub max {
+    my $self=shift;
+    return gsl_vector_max($self->raw);
+}
 sub length { my $self=shift; $self->{_length} }
 
 sub as_list {

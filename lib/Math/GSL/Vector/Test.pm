@@ -113,6 +113,11 @@ sub GSL_VECTOR_MIN: Tests {
     ok_similar( gsl_vector_min($self->{vector}) ,0, 'gsl_vector_min' );
 }
 
+sub GSL_VECTOR_MAX: Tests {
+    my $vec = Math::GSL::Vector->new( [ 3, 567, 4200 ]);
+    ok_similar( $vec->max ,4200, '$vec->min' );
+    ok_similar( gsl_vector_max($vec->raw) ,4200, 'gsl_vector_max' );
+}
 sub GSL_VECTOR_FREAD_FWRITE: Tests { 
     my $self = shift;
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;

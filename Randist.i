@@ -32,9 +32,9 @@ void gsl_ran_bivariate_gaussian (const gsl_rng * r, double sigma_x, double sigma
 }
 
 %{
-    #include "/usr/local/include/gsl/gsl_randist.h"
+    #include "gsl/gsl_randist.h"
 %}
-%include "/usr/local/include/gsl/gsl_randist.h"
+%include "gsl/gsl_randist.h"
 
 %perlcode %{
 

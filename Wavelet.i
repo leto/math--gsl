@@ -1,13 +1,13 @@
 %module Wavelet
 %{
-    #include "/usr/local/include/gsl/gsl_types.h"
-    #include "/usr/local/include/gsl/gsl_wavelet.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_wavelet.h"
 %}
 
 typedef int size_t;
 
-%include "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_wavelet.h"
+%include "gsl/gsl_types.h"
+%include "gsl/gsl_wavelet.h"
 
 %include "carrays.i"
 %include "typemaps.i"

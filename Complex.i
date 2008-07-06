@@ -1,11 +1,11 @@
 %module Complex
 %{
-    #include "/usr/local/include/gsl/gsl_complex.h"
-    #include "/usr/local/include/gsl/gsl_complex_math.h"
+    #include "gsl/gsl_complex.h"
+    #include "gsl/gsl_complex_math.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_complex.h"
-%include "/usr/local/include/gsl/gsl_complex_math.h"
+%include "gsl/gsl_complex.h"
+%include "gsl/gsl_complex_math.h"
 
 
 %include "carrays.i"

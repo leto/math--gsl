@@ -1,10 +1,10 @@
 %module Roots
 %{
-    #include "/usr/local/include/gsl/gsl_types.h"
-    #include "/usr/local/include/gsl/gsl_roots.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_roots.h"
 %}
-%include "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_roots.h"
+%include "gsl/gsl_types.h"
+%include "gsl/gsl_roots.h"
 
 
 %perlcode %{

@@ -2,7 +2,6 @@
 
 # This script has been heavily modified from the Device::Cdio Build.PL 
 # Jonathan Leto <jonathan@leto.net>
-
 #    Copyright (C) 2006 Rocky Bernstein <rocky@cpan.org>
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -168,7 +167,8 @@ sub compile_c {
   
   # File name, minus the suffix
   (my $file_base = $file) =~ s/\.[^.]+$//;
-  my $obj_file = "$file_base.so";
+  my $obj_file = $file_base . $Config{_o};
+
   $self->add_to_cleanup($obj_file);
   return $obj_file if $self->up_to_date($file, $obj_file);
 
@@ -199,7 +199,7 @@ sub compile_c {
   @cc = "gcc" unless @cc;
   
   $self->do_system(@cc, @flags, '-o', $obj_file, $file)
-    or die "error building $cf->{obj_ext} file from '$file'";
+    or die "error building $Config{_o} file from '$file'";
 
   return $obj_file;
 }
@@ -214,7 +214,7 @@ sub try_compile {
     my $tmp = "tmp$$";
     local(*TMPC);
 
-    my $obj_ext = $Config{obj_ext} || ".o";
+    my $obj_ext = $Config{_o} || ".o";
     unlink("$tmp.c", "$tmp$obj_ext");
 
     if (open(TMPC, ">", "$tmp.c")) {
@@ -314,7 +314,7 @@ if ($?) {
     my $errno = $? >> 8;
     print "I don't see SWIG installed.  Please install SWIG from  http://www.swig.org .\n";
     print "*** Output was:\n @swig_version\n" if @swig_version;
-    exit(0);
+    exit 1;
 } else {
     $swig_installed = 1;
     print qq{Found $swig_version[1]};
@@ -330,7 +330,8 @@ $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
 my $ldflags = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags='-Wall';
+my $swig_flags='-Wall ' . $gsl_pkgcfg{cflags};
+
 if ('cygwin' eq $Config{osname} && 
     $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
@@ -367,8 +368,8 @@ my $builder = $class->new(
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	    => q{},
-    extra_linker_flags  => '-shared -I./lib -I../lib -I/usr/local/include/ ' . $ldflags,
-    extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char -I/usr/local/include/ } . $ccflags,
+    extra_linker_flags  => '-shared -I./lib -I../lib ' . $ldflags,
+    extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char } . $ccflags,
     swig_flags          => $swig_flags, 
     swig_installed      => $swig_installed,
     license             => 'gpl',

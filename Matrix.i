@@ -4,22 +4,22 @@
 
 %apply double *OUTPUT { double * min_out, double * max_out };
 %{
-    #include "/usr/local/include/gsl/gsl_matrix.h"
-    #include "/usr/local/include/gsl/gsl_complex.h"
-    #include "/usr/local/include/gsl/gsl_vector_double.h"
-    #include "/usr/local/include/gsl/gsl_matrix_double.h"
-    #include "/usr/local/include/gsl/gsl_matrix_int.h"
-    #include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
-    #include "/usr/local/include/gsl/gsl_matrix_char.h" 
+    #include "gsl/gsl_matrix.h"
+    #include "gsl/gsl_complex.h"
+    #include "gsl/gsl_vector_double.h"
+    #include "gsl/gsl_matrix_double.h"
+    #include "gsl/gsl_matrix_int.h"
+    #include "gsl/gsl_matrix_complex_double.h"
+    #include "gsl/gsl_matrix_char.h" 
 %}
 
-%include "/usr/local/include/gsl/gsl_matrix.h"
-%include "/usr/local/include/gsl/gsl_complex.h"
-%include "/usr/local/include/gsl/gsl_vector_double.h"
-%include "/usr/local/include/gsl/gsl_matrix_double.h"
-%include "/usr/local/include/gsl/gsl_matrix_int.h"
-%include "/usr/local/include/gsl/gsl_matrix_complex_double.h"
-%include "/usr/local/include/gsl/gsl_matrix_char.h"
+%include "gsl/gsl_matrix.h"
+%include "gsl/gsl_complex.h"
+%include "gsl/gsl_vector_double.h"
+%include "gsl/gsl_matrix_double.h"
+%include "gsl/gsl_matrix_int.h"
+%include "gsl/gsl_matrix_complex_double.h"
+%include "gsl/gsl_matrix_char.h"
 
  
 %perlcode %{ 

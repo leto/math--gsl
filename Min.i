@@ -1,11 +1,11 @@
 %module Min
 %{
-    #include "/usr/local/include/gsl/gsl_types.h"
-    #include "/usr/local/include/gsl/gsl_min.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_min.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_min.h"
+%include "gsl/gsl_types.h"
+%include "gsl/gsl_min.h"
 
 %perlcode %{
 

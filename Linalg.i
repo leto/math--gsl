@@ -2,12 +2,12 @@
 %apply int *OUTPUT { int *signum };
 
 %{
-    #include "/usr/local/include/gsl/gsl_linalg.h"
-    #include "/usr/local/include/gsl/gsl_permutation.h"
+    #include "gsl/gsl_linalg.h"
+    #include "gsl/gsl_permutation.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_linalg.h"
-%include "/usr/local/include/gsl/gsl_permutation.h"
+%include "gsl/gsl_linalg.h"
+%include "gsl/gsl_permutation.h"
 
 %perlcode %{
 @EXPORT_OK = qw/$GSL_LINALG_MOD_NONE $GSL_LINALG_MOD_TRANSPOSE $GSL_LINALG_MOD_CONJUGATE

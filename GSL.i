@@ -1,9 +1,9 @@
 %module "Math::GSL"
 %{
-    #include "/usr/local/include/gsl/gsl_sys.h"
+    #include "gsl/gsl_sys.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_sys.h"
+%include "gsl/gsl_sys.h"
 
 %perlcode %{
 

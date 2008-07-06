@@ -3,8 +3,7 @@
 Build
 blib
 *.bak
-*_wrap*c
-*_wrap*so
+*_wrap\.*
 \.*sw[op]
 _build
 tmp*

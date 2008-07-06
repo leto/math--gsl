@@ -1,11 +1,11 @@
 %module Wavelet2D
 %{
-    #include "/usr/local/include/gsl/gsl_types.h"
-    #include "/usr/local/include/gsl/gsl_wavelet2d.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_wavelet2d.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_wavelet2d.h"
+%include "gsl/gsl_types.h"
+%include "gsl/gsl_wavelet2d.h"
 
 %perlcode %{
 

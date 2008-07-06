@@ -4,10 +4,10 @@
 %apply double *INPUT { const double *X };
 
 %{
-    #include "/usr/local/include/gsl/gsl_cblas.h"
+    #include "gsl/gsl_cblas.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_cblas.h"
+%include "gsl/gsl_cblas.h"
 
 
 %perlcode %{

@@ -1,10 +1,10 @@
 %module ODEIV
 %{
-    #include "/usr/local/include/gsl/gsl_odeiv.h"
+    #include "gsl/gsl_odeiv.h"
 %}
 
-%import "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_odeiv.h"
+%import "gsl/gsl_types.h"
+%include "gsl/gsl_odeiv.h"
 
 %perlcode %{
 @EXPORT_OK = qw/

@@ -1,9 +1,9 @@
 %module Histogram2D
 %{
-    #include "/usr/local/include/gsl/gsl_histogram2d.h"
+    #include "gsl/gsl_histogram2d.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_histogram2d.h"
+%include "gsl/gsl_histogram2d.h"
 
 
 %perlcode %{

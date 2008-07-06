@@ -15,12 +15,12 @@
 %apply double * OUTPUT { double *result,double *abserr };
 
 %{
-    #include "/usr/local/include/gsl/gsl_math.h"
-    #include "/usr/local/include/gsl/gsl_deriv.h"
+    #include "gsl/gsl_math.h"
+    #include "gsl/gsl_deriv.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_math.h"
-%include "/usr/local/include/gsl/gsl_deriv.h"
+%include "gsl/gsl_math.h"
+%include "gsl/gsl_deriv.h"
 
 %perlcode %{
 @EXPORT_OK = qw/

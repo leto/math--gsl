@@ -1,13 +1,13 @@
 %module Statistics
 %{
-    #include "/usr/local/include/gsl/gsl_statistics_double.h"
-    #include "/usr/local/include/gsl/gsl_statistics_int.h"
-    #include "/usr/local/include/gsl/gsl_statistics_char.h"
+    #include "gsl/gsl_statistics_double.h"
+    #include "gsl/gsl_statistics_int.h"
+    #include "gsl/gsl_statistics_char.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_statistics_double.h"
-%include "/usr/local/include/gsl/gsl_statistics_int.h"
-%include "/usr/local/include/gsl/gsl_statistics_char.h"
+%include "gsl/gsl_statistics_double.h"
+%include "gsl/gsl_statistics_int.h"
+%include "gsl/gsl_statistics_char.h"
 
 
 %perlcode %{

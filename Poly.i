@@ -2,9 +2,9 @@
 %include "gsl_typemaps.i" 
 
 %{
-    #include "/usr/local/include/gsl/gsl_sys.h"
+    #include "gsl/gsl_sys.h"
 %}
-%include "/usr/local/include/gsl/gsl_sys.h"
+%include "gsl/gsl_sys.h"
 
 %typemap(in) double * (double dvalue) {
   SV* tempsv;
@@ -69,16 +69,16 @@
     }
 }
 %{
-    #include "/usr/local/include/gsl/gsl_nan.h"
-    #include "/usr/local/include/gsl/gsl_poly.h"
-    #include "/usr/local/include/gsl/gsl_complex.h"
-    #include "/usr/local/include/gsl/gsl_complex_math.h"
+    #include "gsl/gsl_nan.h"
+    #include "gsl/gsl_poly.h"
+    #include "gsl/gsl_complex.h"
+    #include "gsl/gsl_complex_math.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_nan.h"
-%include "/usr/local/include/gsl/gsl_poly.h"
-%include "/usr/local/include/gsl/gsl_complex.h"
-%include "/usr/local/include/gsl/gsl_complex_math.h"
+%include "gsl/gsl_nan.h"
+%include "gsl/gsl_poly.h"
+%include "gsl/gsl_complex.h"
+%include "gsl/gsl_complex_math.h"
 
 
 %perlcode %{

@@ -1,10 +1,10 @@
 %module RNG
 %{
-    #include "/usr/local/include/gsl/gsl_rng.h"
+    #include "gsl/gsl_rng.h"
 %}
-%import "/usr/local/include/gsl/gsl_types.h"
+%import "gsl/gsl_types.h"
 
-%include "/usr/local/include/gsl/gsl_rng.h"
+%include "gsl/gsl_rng.h"
 
 FILE *fopen(char *, char *);
 int fclose(FILE *);

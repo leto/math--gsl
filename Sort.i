@@ -42,21 +42,21 @@
 %apply double * { double *data };
 
 %{
-    #include "/usr/local/include/gsl/gsl_nan.h"
-    #include "/usr/local/include/gsl/gsl_sort.h"
-    #include "/usr/local/include/gsl/gsl_sort_double.h"
-    #include "/usr/local/include/gsl/gsl_sort_int.h"
-    #include "/usr/local/include/gsl/gsl_sort_vector.h"
-    #include "/usr/local/include/gsl/gsl_sort_vector_double.h"
-    #include "/usr/local/include/gsl/gsl_sort_vector_int.h"
+    #include "gsl/gsl_nan.h"
+    #include "gsl/gsl_sort.h"
+    #include "gsl/gsl_sort_double.h"
+    #include "gsl/gsl_sort_int.h"
+    #include "gsl/gsl_sort_vector.h"
+    #include "gsl/gsl_sort_vector_double.h"
+    #include "gsl/gsl_sort_vector_int.h"
 %}
-%include "/usr/local/include/gsl/gsl_nan.h"
-%include "/usr/local/include/gsl/gsl_sort.h"
-%include "/usr/local/include/gsl/gsl_sort_double.h"
-%include "/usr/local/include/gsl/gsl_sort_int.h"
-%include "/usr/local/include/gsl/gsl_sort_vector.h"
-%include "/usr/local/include/gsl/gsl_sort_vector_double.h"
-%include "/usr/local/include/gsl/gsl_sort_vector_int.h"
+%include "gsl/gsl_nan.h"
+%include "gsl/gsl_sort.h"
+%include "gsl/gsl_sort_double.h"
+%include "gsl/gsl_sort_int.h"
+%include "gsl/gsl_sort_vector.h"
+%include "gsl/gsl_sort_vector_double.h"
+%include "gsl/gsl_sort_vector_int.h"
 
 
 %perlcode %{

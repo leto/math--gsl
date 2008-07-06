@@ -1,7 +1,7 @@
 %{
-    #include "/usr/local/include/gsl/gsl_sys.h"
+    #include "gsl/gsl_sys.h"
 %}
-%include "/usr/local/include/gsl/gsl_sys.h"
+%include "gsl/gsl_sys.h"
 %perlcode %{
 our @EXPORT = qw();
 our @EXPORT_OK = qw/

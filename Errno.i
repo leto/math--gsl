@@ -1,9 +1,9 @@
 %module Errno
 %{
-    #include "/usr/local/include/gsl/gsl_errno.h"
+    #include "gsl/gsl_errno.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_errno.h"
+%include "gsl/gsl_errno.h"
 
 %perlcode %{ 
 @EXPORT_OK = qw/

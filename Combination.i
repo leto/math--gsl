@@ -1,11 +1,11 @@
 %module Combination
 %{
-    #include "/usr/local/include/gsl/gsl_types.h"
-    #include "/usr/local/include/gsl/gsl_combination.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_combination.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_types.h"
-%include "/usr/local/include/gsl/gsl_combination.h"
+%include "gsl/gsl_types.h"
+%include "gsl/gsl_combination.h"
 
 
 %perlcode %{

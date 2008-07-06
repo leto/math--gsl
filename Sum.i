@@ -1,9 +1,9 @@
 %module Sum
 %{
-    #include "/usr/local/include/gsl/gsl_sum.h"
+    #include "gsl/gsl_sum.h"
 %}
 
-%include "/usr/local/include/gsl/gsl_sum.h"
+%include "gsl/gsl_sum.h"
 
 %perlcode %{
 @EXPORT_OK = qw/

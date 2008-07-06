@@ -4,7 +4,8 @@ use Math::GSL::SF qw/:all/;
 use Data::Dumper;
 use strict;
 
-my $results = { 
+{
+    my $results = { 
                 q{is_similar(0.10005,0.1000501, 1e-5)}  => 1,
                 q{is_similar(0.10005,0.1000501, 1e-7)}  => 0,
                 q{is_similar([1,2,3    ], [1,2,3.001])} => 0, 
@@ -16,5 +17,5 @@ my $results = {
                 q{is_similar_relative( 1e8, 1e8 + 1e3, 1e-7) } => 0,
               };
 
-verify($results, 'Math::GSL');
-
+    verify($results, 'Math::GSL');
+}

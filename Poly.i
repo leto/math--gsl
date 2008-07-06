@@ -1,5 +1,5 @@
 %module Poly
-%include "GSL.i" 
+%include "gsl_typemaps.i" 
 
 %{
     #include "/usr/local/include/gsl/gsl_sys.h"

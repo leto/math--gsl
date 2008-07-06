@@ -1,13 +1,10 @@
-%module Sys
 %{
     #include "/usr/local/include/gsl/gsl_sys.h"
 %}
-
 %include "/usr/local/include/gsl/gsl_sys.h"
-
-
 %perlcode %{
-@EXPORT_OK = qw/
+our @EXPORT = qw();
+our @EXPORT_OK = qw/
                gsl_log1p 
                gsl_expm1 
                gsl_hypot 
@@ -29,5 +26,7 @@
                gsl_frexp 
                gsl_fcmp 
              /;
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+our %EXPORT_TAGS = ( all => \@EXPORT_OK );
+
 %}

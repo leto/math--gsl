@@ -50,6 +50,7 @@ lib/Math/GSL/RNG/Test.pm
 lib/Math/GSL/Roots/Test.pm
 lib/Math/GSL/SF/Test.pm
 lib/Math/GSL/Sort/Test.pm
+lib/Math/GSL/Sys/Test.pm
 lib/Math/GSL/Vector/Test.pm
 lib/Math/GSL/Wavelet/Test.pm
 lib/Math/GSL/Wavelet2D/Test.pm
@@ -83,9 +84,10 @@ Siman.i
 Sort.i
 Spline.i
 Statistics.i
+Sys.i
+gsl_typemaps.i
 subsystems.txt
 Sum.i
-Sys.i
 t/00-load.t
 t/01-pod.t
 t/Block.t
@@ -115,10 +117,10 @@ t/RNG.t
 t/Roots.t
 t/SF.t
 t/Sort.t
+t/Sys.t
 t/Vector.t
 t/Wavelet.t
 TODO
-typemap_examples.i
 Vector.i
 Wavelet.i
 Wavelet2D.i

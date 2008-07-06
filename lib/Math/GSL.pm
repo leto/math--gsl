@@ -1,4 +1,6 @@
 package Math::GSL;
+use base qw(Exporter);
+use base qw(DynaLoader);
 use strict;
 use warnings;
 use Math::GSL::Machine qw/:all/;
@@ -8,12 +10,11 @@ use Config;
 use Data::Dumper;
 use Test::More;
 use Scalar::Util qw/looks_like_number/;
-require DynaLoader;
-require Exporter;
-our @ISA = qw(Exporter DynaLoader);
 our @EXPORT = qw();
 our @EXPORT_OK = qw( ok_similar is_similar is_similar_relative verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
-our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+our %EXPORT_TAGS = ( 
+                     all => \@EXPORT_OK,
+                   );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
@@ -85,7 +86,7 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Spline           - Splines
     Math::GSL::Statistics       - Statistics Functions
     Math::GSL::Sum              - Summation
-    Math::GSL::Sys              
+    Math::GSL::Sys              - Sytem utility functions
     Math::GSL::Vector           - N-dimensional Vectors
     Math::GSL::Wavelet          - Basic Wavelets
     Math::GSL::Wavelet2D        - 2D Wavelets
@@ -166,14 +167,14 @@ sub subsystems
     return sort qw/
         Diff         Machine      Statistics
         Block        Eigen        Matrix        Poly 
-        BSpline      Errno        PowInt        Sys
+        BSpline      Errno        PowInt        
         CBLAS        FFT          Min           IEEEUtils
         CDF          Fit          Mode          QRNG
         Chebyshev    Monte        RNG           Vector
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum            
+        Const        Siman        Sum           Sys 
         DFT          Integration  NTuple        Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline

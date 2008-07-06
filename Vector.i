@@ -50,7 +50,12 @@ int fclose(FILE *);
 
 
 %perlcode %{
-
+use Scalar::Util 'blessed';
+use Carp qw/croak/;
+use overload 
+    '*'      => \&_multiplication,
+    fallback => 1,
+;
 
 @EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
@@ -88,6 +93,16 @@ int fclose(FILE *);
 /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+=head1 NAME
+
+Math::GSL::Vector - Functions concerning vectors
+
+=head1 SYPNOPSIS
+
+    use Math::GSL::Vector qw/:all/;
+
+=cut
+
 sub new {
     my ($class, $values) = @_;
     my $length  = $#$values;
@@ -100,6 +115,7 @@ sub new {
         $this->{_length} = $length+1;
     } elsif ( (int($values) == $values) && ($values > 0)) {
         $vector  = gsl_vector_alloc($values);
+        gsl_vector_set_zero($vector);
         $this->{_length} = $values;
     } else {
         die __PACKAGE__.'::new($x) - $x must be an int or array reference';
@@ -110,8 +126,7 @@ sub new {
 
 sub raw { (shift)->{_vector} }
 
-sub min
-{
+sub min {
     my $self=shift;
     return gsl_vector_min($self->raw);
 }
@@ -137,15 +152,30 @@ sub set {
     return;
 }
 
-__END__
+sub _multiplication {
+    my ($left,$right) = @_;
+    if ( blessed $right && $right->isa('Math::GSL::Vector') ) {
+        return $left->dot_product($right);
+    } else {
+        gsl_vector_scale($left->raw, $right);
+    }
+    return $left;
+}
 
-=head1 NAME
-
-Math::GSL::Vector - Functions concerning vectors
-
-=head1 SYPNOPSIS
-
-    use Math::GSL::Vector qw/:all/;
+sub dot_product {
+    my ($left,$right) = @_;
+    my $sum=0;
+    if ( blessed $right && $right->isa('Math::GSL::Vector') && 
+         blessed $left  && $left->isa('Math::GSL::Vector') && 
+         $left->length == $right->length ) {
+         my @l = $left->as_list;
+         my @r = $right->as_list;
+         map { $sum += $l[$_] * $r[$_]; print "sum is $sum\n"; } (0..$#l);
+        return $sum;
+    } else {
+        croak "dot_product() must be called with two vectors";
+    }
+}
 
 =head1 DESCRIPTION
 

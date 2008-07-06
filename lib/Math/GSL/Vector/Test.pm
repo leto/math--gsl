@@ -5,6 +5,7 @@ use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
+use Test::Exception;
 use strict;
 
 # This allows us to eval code
@@ -280,6 +281,30 @@ sub GSL_VECTOR_SCALE : Tests {
    my $v = Math::GSL::Vector->new([0..4]);
    is( gsl_vector_scale($v->raw, 2), 0);
    ok_similar( [ $v->as_list ], [ 0,2,4,6,8 ] );
+}
+
+sub GSL_VECTOR_SCALE_OVERLOAD : Tests {
+   my $v = Math::GSL::Vector->new([0..4]);
+   my $expected = [ map { $_*5} (0..4) ];
+   $v = 5 * $v;
+   ok_similar( [ $v->as_list ],  $expected );
+
+   my $w = Math::GSL::Vector->new([0..4]);
+   $w = $w * 5;
+   ok_similar( [ $w->as_list ], $expected );
+}
+
+sub GSL_VECTOR_DOT_PRODUCT : Tests {
+   my $v = Math::GSL::Vector->new([0..4]);
+   my $w = Math::GSL::Vector->new([0..4]);
+
+   ok_similar( $v * $w ,  4*4 + 3*3 + 2*2 + 1*1 );
+
+   my $z = Math::GSL::Vector->new([0..10]);
+   dies_ok( sub { $z * $v; }, 'dot_product checks vector length' );
+
+   my $q = Math::GSL::Vector->new(5);
+   ok_similar ( $q * $q, 0, 'newly created vectors are zero-filled');
 }
 
 sub GSL_VECTOR_SWAP : Tests {

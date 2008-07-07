@@ -61,9 +61,22 @@ int fclose(FILE *);
 sub new {
     my ($class, $value) = @_;
     my $this = {};
-    $this->{_permutation} = gsl_permutation_alloc($value);
+    $this->{_length} = $value;
+    $this->{_permutation} = gsl_permutation_calloc($value);
     bless $this, $class;
 }
+
+sub as_list {
+    my $self=shift;
+    $self->get( [ 0 .. $self->length - 1  ] );
+}
+
+sub get {
+    my ($self, $indices) = @_;
+    return  map {  gsl_permutation_get($self->{_permutation}, $_ ) } @$indices ;
+}
+
+sub raw { (shift)->{_permutation} }
 
 __END__
 

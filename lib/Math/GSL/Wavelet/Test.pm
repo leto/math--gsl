@@ -5,6 +5,7 @@ use Math::GSL::Errno qw/:all/;
 use Math::GSL::Wavelet qw/:all/;
 use Math::GSL qw/is_similar/;
 use Data::Dumper;
+use Scalar::Util qw/blessed/;
 use strict;
 
 BEGIN{ gsl_set_error_handler_off(); }
@@ -21,26 +22,35 @@ sub teardown : Test(teardown) {
     gsl_wavelet_workspace_free($self->{workspace});
 }
 
-sub GSL_WAVELET_NEW : Tests {
+sub GSL_WAVELET_ALLOC_FREE : Tests {
     my $self = shift;
     isa_ok( $self->{wavelet}, 'Math::GSL::Wavelet', 'gsl_wavelet_alloc' );
     isa_ok( $self->{workspace}, 'Math::GSL::Wavelet', 'gsl_wavelet_workspace_alloc' );
 }
 
+sub GSL_WAVELET_TYPES : Tests { 
+
+    ok( blessed $gsl_wavelet_bspline );
+    ok( blessed $gsl_wavelet_bspline_centered );
+    ok( blessed $gsl_wavelet_haar );
+    ok( blessed $gsl_wavelet_haar_centered );
+    ok( blessed $gsl_wavelet_daubechies );
+    ok( blessed $gsl_wavelet_daubechies_centered);
+
+}
 sub GSL_WAVELET_TRANSFORM_FORWARD : Tests { 
     my $self = shift;
 
-    my $array = _double_array([0..255]);
-    my $status = gsl_wavelet_transform_forward ($self->{wavelet},$array,1.0, 256, $self->{workspace} ); 
-    ok( !$status , 'gsl_wavelet_transform_forward' );
+    my $status = gsl_wavelet_transform_forward ($self->{wavelet},[0..255],
+             1.0, 256, $self->{workspace} ); 
+    ok( $status == $GSL_SUCCESS , 'gsl_wavelet_transform_forward' );
 }
 
 sub GSL_WAVELET_TRANSFORM_INVERSE : Tests { 
     my $self = shift;
 
-    my $array = _double_array([0..255]);
-    my $status = gsl_wavelet_transform_inverse ($self->{wavelet},$array,1.0, 256, $self->{workspace} ); 
-    ok( !$status , 'gsl_wavelet_transform_inverse' );
+    my $status = gsl_wavelet_transform_inverse ($self->{wavelet},[0..255],1.0, 256, $self->{workspace} ); 
+    ok( $status == $GSL_SUCCESS , 'gsl_wavelet_transform_inverse' );
 }
 
 sub GSL_WAVELET_NAME : Tests {
@@ -48,12 +58,4 @@ sub GSL_WAVELET_NAME : Tests {
     ok( gsl_wavelet_name($self->{wavelet}) eq 'daubechies', 'gsl_wavelet_name' );
 
 }
-sub _double_array {
-    my ($vals) = @_;
-    my $i=0;
-    my $array = Math::GSL::Wavelet::new_doubleArray(scalar @$vals); 
-    map { Math::GSL::Wavelet::doubleArray_setitem( $array, $i++, $_) }  @$vals; 
-    return $array;
-}
-
 1;

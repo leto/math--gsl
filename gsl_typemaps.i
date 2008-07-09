@@ -19,7 +19,3 @@
 }
 %apply double const [] { double *data };
 %apply double const [] { double x[] };
-
-%typemap(argout) double const [] {
-    printf("argout double const\n");
-}

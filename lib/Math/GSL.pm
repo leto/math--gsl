@@ -5,13 +5,15 @@ use strict;
 use warnings;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Carp qw/croak/;
 use Config;
 use Data::Dumper;
 use Test::More;
 use Scalar::Util qw/looks_like_number/;
 our @EXPORT = qw();
-our @EXPORT_OK = qw( ok_similar is_similar is_similar_relative verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar ok_status  is_similar is_similar_relative verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+
 our %EXPORT_TAGS = ( 
                      all => \@EXPORT_OK,
                    );
@@ -209,7 +211,10 @@ sub is_similar {
         }
     }
 }
-
+sub ok_status {
+    my ($got, $expected) = @_;
+    ok( $got == $expected, gsl_strerror($expected) );
+}
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;
     ok(is_similar($x,$y,$eps), $msg);

@@ -9,7 +9,7 @@
 
 %perlcode %{
 
-@EXPORT_OK = qw/gsl_min_fminimizer_alloc
+@EXPORT_OK = qw/
    gsl_min_fminimizer_alloc 
    gsl_min_fminimizer_free 
    gsl_min_fminimizer_set 

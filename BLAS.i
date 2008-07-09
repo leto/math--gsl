@@ -3,6 +3,7 @@
 %include "typemaps.i"
 
 %apply float *OUTPUT { float *result };
+%apply double *OUTPUT { double *result };
 
 %{
     #include "gsl/gsl_blas.h"

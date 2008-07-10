@@ -81,31 +81,30 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_sdot>
 
-=item C<gsl_blas_ddot >
+=item C<gsl_blas_ddot($x, $y)> - This function computes the scalar product x^T y for the vectors $x and $y. The function returns two values, the first is 0 if the operation suceeded, 1 otherwise and the second value is the result of the computation. 
 
 =item C<gsl_blas_cdotu>
 
 =item C<gsl_blas_cdotc>
 
-=item C<gsl_blas_zdotu>
+=item C<gsl_blas_zdotu($x, $y, $dotu)> - This function computes the complex scalar product x^T y for the complex vectors $x and $y, returning the result in the complex number $dotu. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_zdotc >
+=item C<gsl_blas_zdotc($x, $y, $dotc)> - This function computes the complex conjugate scalar product x^H y for the complex vectors $x and $y, returning the result in the complex number $dotc. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_snrm2>
-
+=item C<gsl_blas_snrm2> 
 =item C<gsl_blas_sasum>
 
-=item C<gsl_blas_dnrm2>
+=item C<gsl_blas_dnrm2($x)> - This function computes the Euclidean norm ||x||_2 = \sqrt {\sum x_i^2} of the vector $x. 
 
-=item C<gsl_blas_dasum >
+=item C<gsl_blas_dasum($x)> - This function computes the absolute sum \sum |x_i| of the elements of the vector $x. 
 
 =item C<gsl_blas_scnrm2>
 
 =item C<gsl_blas_scasum>
 
-=item C<gsl_blas_dznrm2>
+=item C<gsl_blas_dznrm2($x)> - This function computes the Euclidean norm of the complex vector $x, ||x||_2 = \sqrt {\sum (\Re(x_i)^2 + \Im(x_i)^2)}.
 
-=item C<gsl_blas_dzasum >
+=item C<gsl_blas_dzasum($x)> - This function computes the sum of the magnitudes of the real and imaginary parts of the complex vector $x, \sum |\Re(x_i)| + |\Im(x_i)|. 
 
 =item C<gsl_blas_isamax>
 
@@ -121,11 +120,11 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_saxpy>
 
-=item C<gsl_blas_dswap >
+=item C<gsl_blas_dswap($x, $y)> - This function exchanges the elements of the vectors $x and $y. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dcopy>
+=item C<gsl_blas_dcopy($x, $y)> - This function copies the elements of the vector $x into the vector $y. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_daxpy>
+=item C<gsl_blas_daxpy($alpha, $x, $y)> - These functions compute the sum $y = $alpha * $x + $y for the vectors $x and $y. 
 
 =item C<gsl_blas_cswap>
 
@@ -151,13 +150,13 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_drotmg>
 
-=item C<gsl_blas_drot>
+=item C<gsl_blas_drot($x, $y, $c, $s)> - This function applies a Givens rotation (x', y') = (c x + s y, -s x + c y) to the vectors $x, $y. 
 
 =item C<gsl_blas_drotm >
 
 =item C<gsl_blas_sscal>
 
-=item C<gsl_blas_dscal>
+=item C<gsl_blas_dscal($alpha, $x)> - This function rescales the vector $x by the multiplicative factor $alpha.
 
 =item C<gsl_blas_cscal>
 

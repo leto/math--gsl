@@ -103,4 +103,58 @@ sub GSL_BLAS_DSWAP : Tests {
   is($got[2], 0);
 }
 
+sub GSL_BLAS_ZSWAP : Tests { 
+  local $TODO = "Problem with the output of gsl_vector_complex_get";
+  my $vec1 = gsl_vector_complex_alloc(2);
+  my $vec2 = gsl_vector_complex_alloc(2);
+  my $c = gsl_complex_rect(5,4);
+  gsl_vector_complex_set($vec1,0,$c); 
+  $c = gsl_complex_rect(2,2);
+  gsl_vector_complex_set($vec1,1, $c);
+  $c = gsl_complex_rect(3,3);
+  print Dumper [ $c ]; 
+  gsl_vector_complex_set($vec2,0, $c);
+  $c = gsl_complex_rect(1,1); 
+  gsl_vector_complex_set($vec2,1, $c);
+
+  is(gsl_blas_zswap($vec1, $vec2), 0);
+  $c = gsl_vector_complex_get($vec1,0);
+  print Dumper [ $c ];
+#  is( gsl_real($c), 3);
+#  is( gsl_imag($x), 3);
+}
+
+sub GSL_BLAS_DCOPY : Tests {
+ my $vec1 = Math::GSL::Vector->new([0,1,2]);
+ my $vec2 = Math::GSL::Vector->new(3);
+ is(gsl_blas_dcopy($vec1->raw, $vec2->raw),0);
+ my @got = $vec2->as_list;
+ map { is($got[$_], $_) } (0..2);
+}
+
+sub GSL_BLAS_DAXPY : Tests { 
+ my $vec1 = Math::GSL::Vector->new([0,1,2]);
+ my $vec2 = Math::GSL::Vector->new([2,3,4]);
+ is(gsl_blas_daxpy(2,$vec1->raw, $vec2->raw),0);
+ my @got = $vec2->as_list;
+ is($got[0], 2);
+ is($got[1], 5); 
+ is($got[2], 8);
+}
+
+sub GSL_BLAS_DSCAL : Tests {
+ my $vec = Math::GSL::Vector->new([0,1,2]);
+ gsl_blas_dscal(4, $vec->raw);
+ my @got = $vec->as_list;
+ map { is($got[$_], $_*4) } (0..2); 
+}
+
+sub GSL_BLAS_DROT : Tests {
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $y = Math::GSL::Vector->new([0,1,2]);
+ is(gsl_blas_drot($x->raw,$y->raw,2,3),0);
+ ok_similar( $x->as_list, [2,7,12]);
+ ok_similar( $y->as_list, [-2,-1,0]);
+}
+
 1;

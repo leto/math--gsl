@@ -1,4 +1,6 @@
-%module Permutation
+%module "Math::GSL::Permutation"
+%include "typemaps.i"
+%include "gsl_typemaps.i"
 
 FILE * fopen(char *, char *);
 int fclose(FILE *);

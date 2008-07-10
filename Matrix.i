@@ -442,6 +442,16 @@ sub _index_to_row_col($$$)
     return ( int($k/$rows), $k % $cols );
 }
 
+sub as_list_row 
+{
+    my ($self, $row) = @_;
+    die (__PACKAGE__.'::as_list_row($row) - invalid $row value') 
+        unless (($row < $self->rows-1) || ($row > 0));  
+    return (map 
+    {
+        gsl_matrix_get($self->raw, $_, $row) 
+    } (0 .. $self->cols-1));
+}
 
 =head1 DESCRIPTION
 

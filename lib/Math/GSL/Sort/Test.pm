@@ -5,6 +5,7 @@ use Math::GSL::Permutation qw/:all/;
 use Math::GSL::Sort qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -17,20 +18,16 @@ sub teardown : Test(teardown) {
 sub GSL_SORT_VECTOR : Tests {
    my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
    gsl_sort_vector($vec->raw);
-   my @got = $vec->as_list;
-   for (my $n=0; $n<5; $n++){
-    is($got[$n], $n+1); }
+   ok_similar( [ $vec->as_list ], [ 1 .. 5 ] );
 } 
 
 sub GSL_SORT_VECTOR_INDEX : Tests {
-  local $TODO =  "data type problem with gsl_sort_vector_index";
+  local $TODO =  "gsl_permutation_struct vs gsl_permutation *";
   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
   my $p = Math::GSL::Permutation->new(5);
-  print Dumper [ $p ];
-#  is(gsl_sort_vector_index($p->raw, $vec->raw),0);
-#   my @got = $p->as_list;
-#  for (my $n=0; $n<5; $n++){
-#    is($got[$n], $n+1); }
+  ok(0);
+  #ok_status(gsl_sort_vector_index($p->raw, $vec->raw),$GSL_SUCCESS);
+  #ok_similar( [ $p->as_list ], [ 1 .. 5] );
 
 }
 

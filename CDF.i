@@ -46,7 +46,7 @@ __END__
 Math::GSL::CDF 
 - These functions compute the cumulative distribution functions P(x), Q(x) and their inverses for the named distributions.
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::CDF qw /:all/;
 

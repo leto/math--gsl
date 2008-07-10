@@ -127,7 +127,7 @@ __END__
 
 Math::GSL::Randist - Probability Distributions
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Randist qw/:all/;
 

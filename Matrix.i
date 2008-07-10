@@ -357,7 +357,7 @@ int => [ qw/
 
 Math::GSL::Matrix - Mathematical functions concerning Matrices
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
     use Math::GSL::Matrix qw/:all/;
     my $matrix1 = Math::GSL::Matrix->new(5,5);  # OO interface

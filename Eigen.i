@@ -38,7 +38,7 @@ __END__
 
 Math::GSL::Eigen - Functions for computing eigenvalues and eigenvectors of matrices
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Eigen qw/:all/;
 

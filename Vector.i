@@ -97,7 +97,7 @@ use overload
 
 Math::GSL::Vector - Functions concerning vectors
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
     use Math::GSL::Vector qw/:all/;
     my $vec1 = Math::GSL::Vector->new([1, 7, 94, 15 ]);

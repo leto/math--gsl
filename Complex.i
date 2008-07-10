@@ -109,7 +109,7 @@ __END__
 Math::GSL::Complex
 Functions concerning complex numbers.
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Complex qw/:all/;
 

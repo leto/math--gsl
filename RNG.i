@@ -72,7 +72,7 @@ __END__
 
 Math::GSL::RNG - Random Number Generators
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::RNG qw/:all/;
 

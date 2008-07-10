@@ -109,7 +109,7 @@ __END__
 
 Math::GSL::Poly - Functions for evaluating and solving polynomials
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Poly qw/:all/;
 

@@ -666,7 +666,7 @@ __END__
 
 Math::GSL::SF - Special Functions
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::SF qw /:all/;
 

@@ -63,7 +63,7 @@ __END__
 
 Math::GSL::BLAS - Basic Linear Algebra Subprograms
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::QRNG qw/:all/;
 

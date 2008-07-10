@@ -86,7 +86,7 @@ __END__
 
 Math::GSL::Permutation - functions for creating and manipulating permutations
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Permutation qw/:all/;
 

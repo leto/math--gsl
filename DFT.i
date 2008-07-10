@@ -21,7 +21,7 @@ __END__
 
 Math::GSL::DFT
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::DFT qw/:all/;
 

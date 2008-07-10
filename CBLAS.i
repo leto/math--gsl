@@ -176,7 +176,7 @@ __END__
 
 Math::GSL::CBLAS - Basic Linear Algebra Subprograms based on C functions
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::CBLAS qw/:all/;
 

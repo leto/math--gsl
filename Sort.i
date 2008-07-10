@@ -82,7 +82,7 @@ __END__
 
 Math::GSL::Sort - Functions for sorting data
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::Sort qw/:all/;
 

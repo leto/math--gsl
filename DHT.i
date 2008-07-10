@@ -24,7 +24,7 @@ __END__
 
 Math::GSL::DHT - Functions for performing Discrete Hankel Transforms
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::DHT qw/:all/;
 

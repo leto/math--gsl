@@ -53,4 +53,23 @@
                gsl_histogram_pdf_sample 
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+
+=head1 SYNOPSIS
+
+    use Math::GSL::Histogram qw/:all/;
+
+    my $H = gsl_histogram_alloc(100);
+    gsl_histogram_set_ranges_uniform($H,0,101);
+    gsl_histogram_increment($H, -50 );  # ignored
+    gsl_histogram_increment($H, 70 );   
+    gsl_histogram_increment($H, 85.2 );
+
+    my $G = gsl_histogram_clone($H);
+    my $value = gsl_histogram_get($G, 70);
+    my ($max,$min) = (gsl_histogram_min_val($H), gsl_histogram_max_val($H) );
+    my $sum = gsl_histogram_sum($H);
+
+=cut
+
 %}

@@ -126,7 +126,7 @@ __END__
 
 Math::GSL::Linalg - Functions for solving linear systems
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
     use Math::GSL::Linalg qw/:all/;
 

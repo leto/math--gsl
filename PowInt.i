@@ -19,7 +19,7 @@ __END__
 
 Math::GSL::PowInt - Integer Power functions
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
     use Math::GSL::PowInt qw /gsl_pow_2 gsl_pow_4 gsl_pow_int/;
     print '2**4  = ' . gsl_pow_2(4) . "\n";

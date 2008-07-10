@@ -28,7 +28,7 @@ __END__
 
 Math::GSL::QRNG - Quasi-random number generator
 
-=head1 SYPNOPSIS
+=head1 SYNOPSIS
 
 use Math::GSL::QRNG qw/:all/;
 

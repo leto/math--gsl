@@ -72,4 +72,39 @@ sub GET : Tests {
     ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
     cmp_ok(1,'==', gsl_histogram_get($self->{H}, 50 ) );
 }
+
+sub MIN_MAX : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+
+    cmp_ok(100,'==', gsl_histogram_max($self->{H}));
+    cmp_ok(0,'==', gsl_histogram_min($self->{H}));
+}
+
+sub MIN_VAL_MAX_VAL : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+
+    cmp_ok(1,'==', gsl_histogram_max_val($self->{H}));
+    cmp_ok(0,'==', gsl_histogram_min_val($self->{H}));
+}
+
+sub MEAN : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+    ok_status(gsl_histogram_increment($self->{H}, 11.5 ), $GSL_SUCCESS);
+
+    ok_similar(31, gsl_histogram_mean($self->{H}));
+}
+
+sub SUM : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+    ok_status(gsl_histogram_increment($self->{H}, 11.5 ), $GSL_SUCCESS);
+    ok_similar(2, gsl_histogram_sum($self->{H}));
+}
 42;

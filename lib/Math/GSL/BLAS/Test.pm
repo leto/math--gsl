@@ -5,6 +5,7 @@ use Math::GSL::BLAS qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Matrix qw/:all/;
+use Math::GSL::CBLAS qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;

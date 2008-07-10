@@ -4,6 +4,7 @@ use Test::More;
 use Math::GSL::BLAS qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL::Complex qw/:all/;
+use Math::GSL::Matrix qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
@@ -153,8 +154,50 @@ sub GSL_BLAS_DROT : Tests {
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $y = Math::GSL::Vector->new([0,1,2]);
  is(gsl_blas_drot($x->raw,$y->raw,2,3),0);
- ok_similar( $x->as_list, [2,7,12]);
- ok_similar( $y->as_list, [-2,-1,0]);
+ ok_similar( [$x->as_list], [ 2,7,12], 'first vector');
+ ok_similar( [$y->as_list], [-3,-4,-5], 'second vector');
 }
 
+sub GSL_BLAS_DGER : Tests { 
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $y = Math::GSL::Vector->new([0,1,2]);
+ my $A = Math::GSL::Matrix->new(3,3); 
+ gsl_matrix_set_zero($A->raw);
+ is(gsl_blas_dger(2, $x->raw, $y->raw, $A->raw),0);
+ my @got = $A->as_list_row(0);
+ map { is($got[$_], 0) } (0..2);
+ @got = $A->as_list_row(1);
+ map { is($got[$_], ($_+1)*2) } (0..2);
+ @got = $A->as_list_row(2);
+ map { is($got[$_], ($_+1)*4) } (0..2); 
+}
+
+sub GSL_BLAS_ZGERU : Tests {
+ my $x = gsl_vector_complex_alloc(2);
+ my $y = gsl_vector_complex_alloc(2);
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(2,2);
+ gsl_vector_complex_set($x, 0, $alpha);
+ $alpha = gsl_complex_rect(1,2);
+ gsl_vector_complex_set($x, 1, $alpha);
+ gsl_vector_complex_set($y, 0, $alpha);
+ $alpha = gsl_complex_rect(3,2);
+ gsl_vector_complex_set($y, 1, $alpha);
+ $alpha = gsl_complex_rect(0,0);
+ for (my $line=0; $line<2; $line++) {
+ map { gsl_matrix_complex_set($A, $line, $_, $alpha) } (0..1); }
+ $alpha = gsl_complex_rect(1,0);
+ is(gsl_blas_zgeru($alpha, $x, $y, $A),0);
+ 
+ $alpha= gsl_matrix_complex_get($A, 0,0);
+ ok_similar([gsl_parts($alpha)], [-2, 6]);
+ $alpha= gsl_matrix_complex_get($A, 1,0);
+ ok_similar([gsl_parts($alpha)], [-3, 4]);
+ $alpha= gsl_matrix_complex_get($A, 1,0);
+ ok_similar([gsl_parts($alpha)], [-3, 4]);
+ $alpha= gsl_matrix_complex_get($A, 0,1); 
+ ok_similar([gsl_parts($alpha)], [2, 10]);
+ $alpha= gsl_matrix_complex_get($A, 1,1); 
+ ok_similar([gsl_parts($alpha)], [-1, 8]);
+}
 1;

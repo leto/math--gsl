@@ -206,7 +206,7 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_dsymv>
 
-=item C<gsl_blas_dger >
+=item C<gsl_blas_dger($alpha, $x, $y, $A)> - This function computes the rank-1 update A = alpha x y^T + A of the matrix $A. $x and $y are vectors. The function returns 0 if the operation suceeded, 1 otherwise.
 
 =item C<gsl_blas_dsyr>
 
@@ -224,7 +224,7 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_zhemv >
 
-=item C<gsl_blas_zgeru>
+=item C<gsl_blas_zgeru($alpha, $x, $y, $A)> - This function computes the rank-1 update A = alpha x y^T + A of the complex matrix $A. $alpha is a complex number and $x and $y are complex vectors. The function returns 0 if the operation suceeded, 1 otherwise.
 
 =item C<gsl_blas_zgerc>
 

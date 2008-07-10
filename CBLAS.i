@@ -2,6 +2,7 @@
 %include "typemaps.i"
 
 %apply double *INPUT { const double *X };
+%apply float *INPUT { const float *X };
 
 %{
     #include "gsl/gsl_cblas.h"

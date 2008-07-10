@@ -48,4 +48,33 @@ sub CBLAS_IDAMAX : Tests {
    $k = cblas_idamax($N, $X, $incX);
    is($k, $expected);
 }
+
+sub CBLAS_ISAMAX : Tests {
+   my $N = 1;
+   my $X = -0.388;
+   my $incX = -1;
+   my $expected = 0;
+   my $k = cblas_isamax($N, $X, $incX);
+   is($k, $expected);
+}
+
+sub CBLAS_SASUM : Tests  {
+   my $N = 1;
+   my $X = 0.239;
+   my $incX = -1;
+   my $expected = 0.0; 
+   my $f = cblas_sasum($N, $X, $incX);
+   is($f, $expected);
+}
+
+
+sub CBLAS_DASUM : Tests {
+ my $N = 1;
+ my $X = -0.413;
+ my $incX = -1;
+ my $expected = 0; 
+ my $f = cblas_dasum($N, $X, $incX);
+ is($f, $expected);
+}
+
 1;

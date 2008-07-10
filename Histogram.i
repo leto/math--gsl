@@ -54,6 +54,9 @@
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+=head1 NAME
+
+Math::GSL::Histogram - Create and manipulate histograms of data
 
 =head1 SYNOPSIS
 
@@ -69,6 +72,19 @@
     my $value = gsl_histogram_get($G, 70);
     my ($max,$min) = (gsl_histogram_min_val($H), gsl_histogram_max_val($H) );
     my $sum = gsl_histogram_sum($H);
+
+=cut
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
 =cut
 

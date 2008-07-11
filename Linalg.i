@@ -361,6 +361,35 @@ Here is a list of all the functions included in this module :
 
 =head1 EXAMPLES
 
+This example shows how to compute the determinant of a matrix with the LU decomposition:
+
+ use Math::GSL::Matrix qw/:all/;
+ use Math::GSL::Permutation qw/:all/;
+ use Math::GSL::Linalg qw/:all/;
+ 
+ my $Matrix = gsl_matrix_alloc(4,4);
+ map { gsl_matrix_set($Matrix, 0, $_, $_+1) } (0..3);
+ 
+ gsl_matrix_set($Matrix,1, 0, 2);
+ gsl_matrix_set($Matrix, 1, 1, 3);
+ gsl_matrix_set($Matrix, 1, 2, 4);
+ gsl_matrix_set($Matrix, 1, 3, 1);
+
+ gsl_matrix_set($Matrix, 2, 0, 3);
+ gsl_matrix_set($Matrix, 2, 1, 4);
+ gsl_matrix_set($Matrix, 2, 2, 1);
+ gsl_matrix_set($Matrix, 2, 3, 2);
+
+ gsl_matrix_set($Matrix, 3, 0, 4);
+ gsl_matrix_set($Matrix, 3, 1, 1);
+ gsl_matrix_set($Matrix, 3, 2, 2);
+ gsl_matrix_set($Matrix, 3, 3, 3);
+    
+ my $permutation = gsl_permutation_alloc(4);
+ gsl_permutation_init($permutation);
+ my ($result, $signum) = gsl_linalg_LU_decomp($Matrix, $permutation);
+ my $det = gsl_linalg_LU_det($Matrix, $signum);
+ print "The value of the determinant of the matrix is $det \n";
 
 =head1 AUTHOR
 

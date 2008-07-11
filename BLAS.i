@@ -178,11 +178,11 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_strsv>
 
-=item C<gsl_blas_dgemv($TransA, $alpha, $A, $x, $beta, $y)> - This function computes the matrix-vector product and sum y = \alpha op(A) x + \beta y, where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans(constant values coming from the CBLAS module). $A is a matrix and $x and $y are vectors.
+=item C<gsl_blas_dgemv($TransA, $alpha, $A, $x, $beta, $y)> - This function computes the matrix-vector product and sum y = \alpha op(A) x + \beta y, where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans (constant values coming from the CBLAS module). $A is a matrix and $x and $y are vectors. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dtrmv($Uplo, $TransA, $Diag, $A, $x)> - This function computes the matrix-vector product x = op(A) x for the triangular matrix $A, where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans (constant values coming from the CBLAS module). When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of the matrix is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. 
+=item C<gsl_blas_dtrmv($Uplo, $TransA, $Diag, $A, $x)> - This function computes the matrix-vector product x = op(A) x for the triangular matrix $A, where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans (constant values coming from the CBLAS module). When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of the matrix is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dtrsv >
+=item C<gsl_blas_dtrsv($Uplo, $TransA, $Diag, $A, $x)> - This function computes inv(op(A)) x for the vector $x, where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans (constant values coming from the CBLAS module). When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of the matrix is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise.
 
 =item C<gsl_blas_cgemv >
 

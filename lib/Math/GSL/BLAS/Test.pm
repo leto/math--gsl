@@ -201,4 +201,50 @@ sub GSL_BLAS_ZGERU : Tests {
  $alpha= gsl_matrix_complex_get($A, 1,1); 
  ok_similar([gsl_parts($alpha)], [-1, 8]);
 }
+
+sub GSL_BLAS_DGEMV : Tests {
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $y = Math::GSL::Vector->new([0,1,2]);
+ my $A = Math::GSL::Matrix->new(3,3);
+ gsl_matrix_set_identity($A->raw);
+ is(gsl_blas_dgemv($CblasNoTrans, 2, $A->raw, $x->raw,2, $y->raw),0);
+ my @got = $y->as_list;
+ is($got[0], 2);
+ is($got[1], 6);
+ is($got[2], 10);
+}
+
+sub GSL_BLAS_DTRMV : Tests {
+ local $TODO = "The function seems to only multiplicates by the diagonal of the matrix, is it normal?";
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $A = Math::GSL::Matrix->new(3,3);
+ gsl_matrix_set($A->raw, 0,0,3);
+ gsl_matrix_set($A->raw, 1,1,3);
+ gsl_matrix_set($A->raw, 2,2,3);
+ gsl_matrix_set($A->raw, 0,1,2);
+ gsl_matrix_set($A->raw, 0,2,3);
+ gsl_matrix_set($A->raw, 1,2,4);
+ is(gsl_blas_dtrmv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),0);
+ my @got = $x->as_list;
+ is($got[0], 3);
+ is($got[1], 6);
+ is($got[2], 9);
+}
+
+sub GSL_BLAS_DTRSV : Tests {
+ local $TODO = "I don't understand what the result is supposed to be...";
+ my $x = Math::GSL::Vector->new([40,40,40,40]);
+ my $A = Math::GSL::Matrix->new(4,4);
+ map { gsl_matrix_set($A->raw, $_,0,$_+1); } (0..3);
+ map { gsl_matrix_set($A->raw, $_,1,$_+2); } (0..2);
+ gsl_matrix_set($A->raw, 3,1,1);
+ map { gsl_matrix_set($A->raw, $_,2,$_+3); } (0..1);
+ map { gsl_matrix_set($A->raw, $_,2,$_-1); } (2..3);
+ map { gsl_matrix_set($A->raw, $_,3,$_); } (1..3);
+ gsl_matrix_set($A->raw, 0,3,4);
+ is(gsl_blas_dtrsv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),0);
+ my @got = $A->as_list_row(0);
+}
+
+
 1;

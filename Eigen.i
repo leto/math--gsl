@@ -117,6 +117,30 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 
 =head1 EXAMPLES
 
+This example shows how to use the gsl_eigen_symmv functions to find the eigenvalues and eigenvectors of a matrix.
+
+ use Math::GSL::Vector qw/:all/;
+ use Math::GSL::Matrix qw/:all/;
+ use Math::GSL::Eigen qw/:all/;
+ my $w = gsl_eigen_symmv_alloc(2);
+ my $m = gsl_matrix_alloc(2,2);
+ gsl_matrix_set($m, 0, 0, 2);
+ gsl_matrix_set($m, 0, 1, 1);
+ gsl_matrix_set($m, 1, 0, 1);
+ gsl_matrix_set($m, 1, 1, 2);
+ my $eval = gsl_vector_alloc(2);
+ my $evec = gsl_matrix_alloc(2,2);
+ gsl_eigen_symmv($m, $eval, $evec, $w);
+ gsl_eigen_gensymmv_sort($eval, $evec, $GSL_EIGEN_SORT_ABS_ASC);
+ print "The first eigenvalue is : " . gsl_vector_get($eval, 0) . "\n";
+ print "The second eigenvalue is : " . gsl_vector_get($eval, 1) . "\n";
+ my $x = gsl_matrix_get($evec, 0, 0);
+ my $y = gsl_matrix_get($evec, 0, 1);
+ print "The first eigenvector is [$x, $y] \n";
+ $x = gsl_matrix_get($evec, 1, 0);
+ $y = gsl_matrix_get($evec, 1, 1);
+ print "The second eigenvector is [$x, $y] \n";
+
 =head1 AUTHOR
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>

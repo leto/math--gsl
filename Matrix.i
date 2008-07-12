@@ -3,6 +3,10 @@
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
 
 %apply double *OUTPUT { double * min_out, double * max_out };
+
+FILE * fopen(char *, char *);
+int fclose(FILE *);
+
 %{
     #include "gsl/gsl_matrix.h"
     #include "gsl/gsl_complex.h"

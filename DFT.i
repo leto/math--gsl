@@ -39,7 +39,7 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_dft_complex_transform> 
 
-=item For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+=item For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
 
 =item Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 

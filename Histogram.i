@@ -2,6 +2,9 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
+FILE * fopen(char *, char *);
+int fclose(FILE *);
+
 %{
     #include "gsl/gsl_histogram.h"
 %}
@@ -10,7 +13,7 @@
 
 
 %perlcode %{
-@EXPORT_OK = qw/
+@EXPORT_OK = qw/fopen fclose
                gsl_histogram_alloc 
                gsl_histogram_calloc 
                gsl_histogram_calloc_uniform 
@@ -74,6 +77,107 @@ Math::GSL::Histogram - Create and manipulate histograms of data
     my $sum = gsl_histogram_sum($H);
 
 =cut
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions included in this module :
+
+=over 1
+
+=item C<gsl_histogram_alloc($n)> - This function allocates memory for a histogram with $n bins, and returns a pointer to a newly created gsl_histogram struct. The bins and ranges are not initialized, and should be prepared using one of the range-setting functions below in order to make the histogram ready for use. 
+
+=item C<gsl_histogram_calloc >
+
+=item C<gsl_histogram_calloc_uniform >
+
+=item C<gsl_histogram_free >
+
+=item C<gsl_histogram_increment >
+
+=item C<gsl_histogram_accumulate >
+
+=item C<gsl_histogram_find >
+
+=item C<gsl_histogram_get >
+
+=item C<gsl_histogram_get_range >
+
+=item C<gsl_histogram_max >
+
+=item C<gsl_histogram_min >
+
+=item C<gsl_histogram_bins >
+
+=item C<gsl_histogram_reset >
+
+=item C<gsl_histogram_calloc_range >
+
+=item C<gsl_histogram_set_ranges >
+
+=item C<gsl_histogram_set_ranges_uniform($h, $xmin, $xmax)> - This function sets the ranges of the existing histogram $h to cover the range $xmin to $xmax uniformly. The values of the histogram bins are reset to zero. The bin ranges are shown in the table below,
+=over
+
+=item  bin[0] corresponds to xmin <= x < xmin + d
+
+=item  bin[1] corresponds to xmin + d <= x < xmin + 2 d
+
+=item  ......
+
+=item  bin[n-1] corresponds to xmin + (n-1)d <= x < xmax
+
+=back
+
+where d is the bin spacing, d = (xmax-xmin)/n. 
+
+=item C<gsl_histogram_memcpy >
+
+=item C<gsl_histogram_clone >
+
+=item C<gsl_histogram_max_val >
+
+=item C<gsl_histogram_max_bin >
+
+=item C<gsl_histogram_min_val >
+
+=item C<gsl_histogram_min_bin >
+
+=item C<gsl_histogram_equal_bins_p >
+
+=item C<gsl_histogram_add >
+
+=item C<gsl_histogram_sub >
+
+=item C<gsl_histogram_mul >
+
+=item C<gsl_histogram_div >
+
+=item C<gsl_histogram_scale >
+
+=item C<gsl_histogram_shift >
+
+=item C<gsl_histogram_sigma >
+
+=item C<gsl_histogram_mean >
+
+=item C<gsl_histogram_sum >
+
+=item C<gsl_histogram_fwrite >
+
+=item C<gsl_histogram_fread >
+
+=item C<gsl_histogram_fprintf >
+
+=item C<gsl_histogram_fscanf >
+
+=item C<gsl_histogram_pdf_alloc >
+
+=item C<gsl_histogram_pdf_init >
+
+=item C<gsl_histogram_pdf_free >
+
+=item C<gsl_histogram_pdf_sample >
+
+=back
 
 =head1 AUTHORS
 

@@ -257,5 +257,20 @@ sub GSL_BLAS_DROTG : Tests {
  is($s, 2/sqrt(5));
 }
 
-
+sub GSL_BLAS_DSYMV : Tests {
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $y = Math::GSL::Vector->new([3,2,1]);
+ my $A = Math::GSL::Matrix->new(3,3);
+ map { gsl_matrix_set($A->raw, $_,0,$_+1); } (0..2);
+ gsl_matrix_set($A->raw, 0, 1, 2); 
+ gsl_matrix_set($A->raw, 1, 1, 1); 
+ gsl_matrix_set($A->raw, 2, 1, 2); 
+ gsl_matrix_set($A->raw, 0, 2, 3); 
+ gsl_matrix_set($A->raw, 1, 2, 2); 
+ gsl_matrix_set($A->raw, 2, 2, 1); 
+ is(gsl_blas_dsymv($CblasLower, 2, $A->raw, $x->raw, 3, $y->raw),0);
+ is(gsl_vector_get($y->raw, 0), 37);
+ is(gsl_vector_get($y->raw, 1), 26);
+ is(gsl_vector_get($y->raw, 2), 23);
+}
 1;

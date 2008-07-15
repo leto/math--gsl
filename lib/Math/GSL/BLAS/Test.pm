@@ -269,8 +269,107 @@ sub GSL_BLAS_DSYMV : Tests {
  gsl_matrix_set($A->raw, 1, 2, 2); 
  gsl_matrix_set($A->raw, 2, 2, 1); 
  is(gsl_blas_dsymv($CblasLower, 2, $A->raw, $x->raw, 3, $y->raw),0);
- is(gsl_vector_get($y->raw, 0), 37);
- is(gsl_vector_get($y->raw, 1), 26);
- is(gsl_vector_get($y->raw, 2), 23);
+ my @got = $y->as_list;
+ ok_similar( [@got], [37,26,23]);
 }
+
+sub GSL_BLAS_DSYR : Tests {
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $A = Math::GSL::Matrix->new(3,3);
+ gsl_matrix_set_zero($A->raw);
+ 
+ is(gsl_blas_dsyr($CblasLower, 2, $x->raw, $A->raw),0);
+ my @got = $A->as_list_row(0);
+ ok_similar([ @got ], [2,4,6]);
+ @got = $A->as_list_row(1);
+ ok_similar([ @got ], [0,8,12]);
+ @got = $A->as_list_row(2);
+ ok_similar([ @got ], [0,0,18]);
+}
+
+sub GSL_BLAS_ZHER : Tests {
+ my $x = gsl_vector_complex_alloc(2);
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(0,0);
+ for(my $line=0; $line<2; $line++){
+ map { gsl_matrix_complex_set($A, $_, $line, $alpha) } (0..1); }  
+ $alpha = gsl_complex_rect(1,2);
+ gsl_vector_complex_set($x, 0, $alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_vector_complex_set($x, 1, $alpha);
+ $alpha = gsl_complex_rect(1,1);
+ is(gsl_blas_zher($CblasLower, 2, $x, $A),0);
+ my @got = gsl_parts(gsl_matrix_complex_get($A,0,0));
+ ok_similar([@got], [10, 0]);
+ @got = gsl_parts(gsl_matrix_complex_get($A,1,0));
+ ok_similar([@got], [12, -4]);
+ @got = gsl_parts(gsl_matrix_complex_get($A,1,1));
+ ok_similar([@got], [16, 0]);
+ @got = gsl_parts(gsl_matrix_complex_get($A,0,1));
+ ok_similar([@got], [0, 0]);
+}
+
+sub GSL_BLAS_DSYR2 : Tests {
+ my $x = Math::GSL::Vector->new([1,2,3]);
+ my $y = Math::GSL::Vector->new([3,2,1]);
+ my $A = Math::GSL::Matrix->new(3,3);
+ gsl_matrix_set_zero($A->raw);
+ map { gsl_matrix_set($A->raw, $_, 0, ($_+1)**2) } (0..2);
+ map { gsl_matrix_set($A->raw, $_, 1, ($_+1)**2) } (1..2);
+ gsl_matrix_set($A->raw, $_, 1, ($_+1)**2);
+ gsl_matrix_set($A->raw, 0, 1, 4);
+ gsl_matrix_set($A->raw, 0, 2, 9);
+ gsl_matrix_set($A->raw, 1, 2, 9);
+ gsl_matrix_set($A->raw, 2, 2, 3);
+ is(gsl_blas_dsyr2($CblasLower, 2, $x->raw, $y->raw, $A->raw),0);
+ my @got = $A->as_list_row(0);
+ ok_similar([@got], [13, 20, 29]);
+ @got = $A->as_list_row(1);
+ ok_similar([@got], [4, 20, 25]);
+ @got = $A->as_list_row(2);
+ ok_similar([@got], [9, 9, 15]);
+}
+
+sub GSL_BLAS_DGEMM : Tests {
+ local $TODO = "seem to have a problem with the output...";
+ my $A = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($A->raw, 0,0,1);
+ gsl_matrix_set($A->raw, 1,0,3);
+ gsl_matrix_set($A->raw, 0,1,4);
+ gsl_matrix_set($A->raw, 1,1,2);
+ my $B = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($B->raw, 0,0,2);
+ gsl_matrix_set($B->raw, 1,0,5);
+ gsl_matrix_set($B->raw, 0,1,1);
+ gsl_matrix_set($B->raw, 1,1,3);
+ my $C = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set_zero($C->raw);
+ is(gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $A->raw, $B->raw, 1, $C->raw),0);
+ my @got = $C->as_list_row(0);
+ ok_similar([@got], [5, 14]);
+ @got = $C->as_list_row(1);
+ ok_similar([@got], [10, 26]);
+}
+
+sub GSL_BLAS_DSYMM : Tests {
+ local $TODO = "seem to have a problem with the output...";
+ my $A = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($A->raw, 0,0,1);
+ gsl_matrix_set($A->raw, 1,0,3);
+ gsl_matrix_set($A->raw, 0,1,4);
+ gsl_matrix_set($A->raw, 1,1,2);
+ my $B = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($B->raw, 0,0,2);
+ gsl_matrix_set($B->raw, 1,0,5);
+ gsl_matrix_set($B->raw, 0,1,1);
+ gsl_matrix_set($B->raw, 1,1,3);
+ my $C = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set_zero($C->raw);
+ is(gsl_blas_dsymm($CblasLeft, $CblasUpper, 1, $A->raw, $B->raw, 1, $C->raw),0);
+ my @got = $C->as_list_row(0);
+ ok_similar([@got], [5, 14]);
+ @got = $C->as_list_row(1);
+ ok_similar([@got], [10, 26]);
+}
+
 1;

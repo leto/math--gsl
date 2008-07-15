@@ -209,9 +209,9 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_dger($alpha, $x, $y, $A)> - This function computes the rank-1 update A = alpha x y^T + A of the matrix $A. $x and $y are vectors. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsyr>
+=item C<gsl_blas_dsyr($Uplo, $alpha, $x, $A)> - This function computes the symmetric rank-1 update A = \alpha x x^T + A of the symmetric matrix $A and the vector $x. Since the matrix $A is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $A are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $A are used. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsyr2>
+=item C<gsl_blas_dsyr2($Uplo, $alpha, $x, $y, $A)> - This function computes the symmetric rank-2 update A = \alpha x y^T + \alpha y x^T + A of the symmetric matrix $A, the vector $x and vector $y. Since the matrix $A is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $A are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $A are used.
 
 =item C<gsl_blas_chemv>
 
@@ -229,7 +229,8 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_zgerc>
 
-=item C<gsl_blas_zher>
+=item C<gsl_blas_zher($Uplo, $alpha, $x, $A)> - This function computes the hermitian rank-1 update A = \alpha x x^H + A of the hermitian matrix $A and of the complex vector $x. Since the matrix $A is hermitian only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $A are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $A are used. The imaginary elements of the diagonal are automatically set to zero. The function returns 0 if the operation suceeded, 1 otherwise.
+
 
 =item C<gsl_blas_zher2 >
 
@@ -251,9 +252,9 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_strsm>
 
-=item C<gsl_blas_dgemm>
+=item C<gsl_blas_dgemm($TransA, $TransB, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha op(A) op(B) + \beta C where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans and similarly for the parameter $TransB. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsymm >
+=item C<gsl_blas_dsymm>
 
 =item C<gsl_blas_dsyrk>
 

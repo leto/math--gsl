@@ -19,3 +19,5 @@
 }
 %apply double const [] { double *data };
 %apply double const [] { double x[] };
+%apply double const [] { double a[], double b[], double c[], double s[]};
+

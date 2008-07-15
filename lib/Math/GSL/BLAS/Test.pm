@@ -246,5 +246,16 @@ sub GSL_BLAS_DTRSV : Tests {
  my @got = $A->as_list_row(0);
 }
 
+sub GSL_BLAS_DROTG : Tests {
+ local $TODO = "need a typemap for outputting arrays";
+ my $a = [1];
+ my $b = [2];
+ my $c = [0];
+ my $s = [0];
+ is(gsl_blas_drotg($a, $b, $c, $s), 0);
+ is($c, 1/sqrt(5));
+ is($s, 2/sqrt(5));
+}
+
 
 1;

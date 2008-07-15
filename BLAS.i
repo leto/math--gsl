@@ -1,6 +1,7 @@
 %module BLAS
 
 %include "typemaps.i"
+%include "gsl_typemaps.i"
 
 %apply float *OUTPUT { float *result };
 %apply double *OUTPUT { double *result };

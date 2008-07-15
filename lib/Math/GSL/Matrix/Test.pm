@@ -4,9 +4,12 @@ use Test::More;
 use Math::GSL::Matrix qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL::Complex qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
+
+BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
@@ -108,7 +111,8 @@ sub GSL_MATRIX_SWAP : Tests {
    map { gsl_matrix_set($self->{matrix}, $_,$_, $_ ** 2) } (0..4);
    my $matrix = gsl_matrix_alloc(5,5);
    map { gsl_matrix_set($matrix, $_,$_, $_) } (0..4);
-   is(gsl_matrix_swap($self->{matrix}, $matrix) ,0);
+   ok_status(gsl_matrix_swap($self->{matrix}, $matrix), $GSL_SUCCESS);
+
    my @got = map { gsl_matrix_get($self->{matrix}, $_, $_) } (0..4);
    map { is($got[$_], $_) } (0..4);
    @got = map { gsl_matrix_get($matrix, $_, $_) } (0..4);
@@ -119,7 +123,7 @@ sub GSL_MATRIX_MEMCPY : Tests {
    my $self = shift;
    my $matrix = gsl_matrix_alloc(5,5);
    map { gsl_matrix_set($self->{matrix}, $_,$_, $_ ** 2) } (0..4);
-   is(gsl_matrix_memcpy($matrix, $self->{matrix}), 0);
+   ok_status(gsl_matrix_memcpy($matrix, $self->{matrix}), $GSL_SUCCESS);
    ok_similar( [ map { gsl_matrix_get($matrix, $_, $_) } (0..4) ], 
                [ map {  $_** 2 } (0..4)                        ]
    );  
@@ -129,7 +133,7 @@ sub GSL_MATRIX_SWAP_ROWS : Tests {
    my $self = shift; 
    map { gsl_matrix_set($self->{matrix}, 0,$_, $_) } (0..4);
    map { gsl_matrix_set($self->{matrix}, 1,$_, 3) } (0..4);
-   is(gsl_matrix_swap_rows($self->{matrix}, 0, 1), 0);
+   ok_status(gsl_matrix_swap_rows($self->{matrix}, 0, 1), $GSL_SUCCESS);
    my @got = map { gsl_matrix_get($self->{matrix}, 1, $_) } (0..4);
    map { is($got[$_], $_) } (0..4);   
    @got = map { gsl_matrix_get($self->{matrix}, 0, $_) } (0..4);
@@ -140,7 +144,7 @@ sub GSL_MATRIX_SWAP_COLUMNS : Tests {
    my $self = shift;
    map { gsl_matrix_set($self->{matrix}, $_,0, $_) } (0..4);
    map { gsl_matrix_set($self->{matrix}, $_,1, 3) } (0..4);
-   is(gsl_matrix_swap_columns($self->{matrix}, 0, 1), 0);
+   ok_status(gsl_matrix_swap_columns($self->{matrix}, 0, 1), $GSL_SUCCESS);
    my @got = map { gsl_matrix_get($self->{matrix}, $_, 1) } (0..4);
    map { is($got[$_], $_) } (0..4);   
    @got = map { gsl_matrix_get($self->{matrix}, $_, 0) } (0..4);
@@ -151,7 +155,7 @@ sub GSL_MATRIX_SWAP_ROWCOL : Tests {
    my $self = shift;
    map { gsl_matrix_set($self->{matrix}, 0,$_, $_) } (0..4);
    map { gsl_matrix_set($self->{matrix}, $_,2, 2) } (0..4);
-   is(gsl_matrix_swap_rowcol($self->{matrix}, 0, 2), 0);
+   ok_status(gsl_matrix_swap_rowcol($self->{matrix}, 0, 2), $GSL_SUCCESS);
    
    my @got = map { gsl_matrix_get($self->{matrix}, $_, 2) } (0..4);
    is_deeply( [ @got ], [ qw/2 1 0 3 4/  ] );
@@ -164,7 +168,7 @@ sub GSL_MATRIX_TRANSPOSE_MEMCPY : Tests {
    my $self = shift;
    map { gsl_matrix_set($self->{matrix}, 0,$_, $_) } (0..4);
    my $matrix = gsl_matrix_alloc(5,5); 
-   is(gsl_matrix_transpose_memcpy($matrix, $self->{matrix}), 0);   
+   ok_status(gsl_matrix_transpose_memcpy($matrix, $self->{matrix}), $GSL_SUCCESS);   
    my @got = map { gsl_matrix_get($matrix, $_, 0) } (0..4);
    map { is($got[$_], $_) } (0..4);
 }
@@ -472,6 +476,29 @@ sub AS_LIST_SQUARE : Tests {
                [ $matrix->as_list],
                '$matrix->as_list',
     );
+}
+
+sub AS_LIST_ROW : Tests { 
+    my $matrix = Math::GSL::Matrix->new(1,5);
+    map { gsl_matrix_set($matrix->raw, 0 , $_, 5 + $_**2) } (0..4);
+    is_deeply( [ 5, 6, 9, 14, 21, ], 
+               [ $matrix->as_list],
+               '$matrix->as_list',
+    );
+}
+
+sub ROW : Tests {
+    my $matrix = Math::GSL::Matrix->new(5,5);
+    map { gsl_matrix_set($matrix->raw, $_, $_, 5 + $_**2) } (0..4);
+    ok_similar( [qw/0 0 9 0 0/] , [$matrix->row(3)->as_list ] );
+}
+
+sub COL : Tests {
+    local $TODO = "borked";
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    map { gsl_matrix_set($matrix->raw, $_, $_, 7 + $_**2) } (0..2);
+    print Dumper [ $matrix->col(1)->as_list ];
+    ok_similar( [ 7, 0, 0 ] , [$matrix->col(1)->as_list ] );
 }
 
 sub NEW_SETS_VALUES_TO_ZERO : Tests {

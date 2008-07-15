@@ -1,7 +1,10 @@
 %module Matrix
 
-%apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
+%include "typemaps.i"
+%include "gsl_typemaps.i"
 
+%apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
+//%apply gsl_vector *OUTPUT { gsl_vector *V };
 %apply double *OUTPUT { double * min_out, double * max_out };
 
 FILE * fopen(char *, char *);
@@ -29,6 +32,9 @@ int fclose(FILE *);
 %perlcode %{ 
 
 no warnings 'redefine';
+use Carp qw/croak/;
+use Math::GSL qw/:all/;
+use Math::GSL::Errno qw/:all/;
 
 @EXPORT_OK = qw/fopen fclose
         gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block
@@ -385,7 +391,7 @@ sub new
 
         $matrix  = gsl_matrix_alloc($rows,$cols);
     } else {
-        die __PACKAGE__.'::new($x,$y) - $x and $y must be positive integers';
+        croak( __PACKAGE__.'::new($x,$y) - $x and $y must be positive integers');
     }
     gsl_matrix_set_zero($matrix);
     $this->{_matrix} = $matrix; 
@@ -434,27 +440,52 @@ sub as_list
 {
     my $self = shift;
     my ($r,$c) = ($self->rows,$self->cols);
-    return (map 
-    {
-        gsl_matrix_get($self->raw, _index_to_row_col($_,$r,$c)) 
-    } (0 .. $self->rows*$self->cols-1 ));
+    return
+        map { 
+            gsl_matrix_get($self->raw, _index_to_row_col($_,$r,$c)) 
+        } (0 .. $self->rows*$self->cols-1 );
 }
 
+# hackish
 sub _index_to_row_col($$$)
 {
     my ($k,$rows,$cols) = @_;
-    return ( int($k/$rows), $k % $cols );
+    return ( ($rows == 1 ) ? 0 : int($k/$rows), $k % $cols );
 }
 
-sub as_list_row 
+sub row
 {
     my ($self, $row) = @_;
-    die (__PACKAGE__.'::as_list_row($row) - invalid $row value') 
-        unless (($row < $self->rows-1) || ($row > 0));  
-    return (map 
-    {
-        gsl_matrix_get($self->raw, $_, $row) 
-    } (0 .. $self->cols-1));
+    croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
+        unless (($row < $self->rows-1) and $row > 0);  
+
+    my $rowvec = gsl_vector_alloc($self->cols);
+    my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
+
+    my $status = gsl_matrix_get_row($rowvec, $self->raw, $row-1);
+    croak (__PACKAGE__.'::gsl_matrix_get_row - ' . gsl_strerror($status) ) 
+        unless ( $status == $GSL_SUCCESS );
+
+    $status = gsl_matrix_set_row($rowmat->raw, 0, $rowvec);
+
+    croak (__PACKAGE__.'::gsl_matrix_set_row - ' . gsl_strerror($status) ) 
+        unless ( $status == $GSL_SUCCESS );
+    
+    return $rowmat;
+}
+
+sub col 
+{
+    my ($self, $col) = @_;
+    croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column") 
+        unless ($col < $self->cols and $col > 0);  
+
+    my $colvec = Math::GSL::Vector->new($self->cols);
+    my $colmat = Math::GSL::Matrix->new($self->rows, 1);
+
+    my $status = gsl_matrix_get_col($colvec->raw, $self->raw, $col-1);
+    $status    = gsl_matrix_set_col($colmat->raw, 0, $colvec->raw);
+    return $colmat;
 }
 
 =head1 DESCRIPTION

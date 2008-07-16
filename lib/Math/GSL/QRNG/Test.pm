@@ -44,11 +44,11 @@ sub GSL_QRNG_NAME : Tests {
 
 sub GSL_QRNG_GET : Tests { 
     my $self = shift;
-    my ($ok, @values)= gsl_qrng_get($self->{sobol});
-    is ($ok, 0);
-    ok( defined $values[0] && $values[0] > 0 && $values[0] < 1, "first value");
-    local $TODO = "the typemaps only output one value at the moment...";
-    ok( defined $values[1] && $values[1] > 0 && $values[1] < 1, "second value"); 
-    ok( $#values = 1, 'gsl_qrng_get returns multiple values' );
+    my ($status, @values)= gsl_qrng_get($self->{sobol});
+
+    is ($status, $GSL_SUCCESS);
+    ok_similar( [ 0.5, 0.5 ], \@values, 'gsl_qrng_get returns multiple values' );
+    ($status, @values)= gsl_qrng_get($self->{sobol});
+    ok_similar( [ 0.75, 0.25 ], \@values, 'gsl_qrng_get returns correct values for sobol' );
 }
 1;

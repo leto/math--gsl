@@ -455,7 +455,7 @@ sub row
 {
     my ($self, $row) = @_;
     croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
-        unless (($row < $self->rows-1) and $row >= 0);  
+        unless (($row < $self->rows) and $row >= 0);  
 
     my $rowvec = Math::GSL::Vector->new($self->cols);
     my $rowmat = Math::GSL::Matrix->new(1,$self->cols);

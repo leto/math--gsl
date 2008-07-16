@@ -165,11 +165,11 @@ sub GSL_BLAS_DGER : Tests {
  my $A = Math::GSL::Matrix->new(3,3); 
  gsl_matrix_set_zero($A->raw);
  is(gsl_blas_dger(2, $x->raw, $y->raw, $A->raw),0);
- my @got = $A->as_list_row(0);
+ my @got = $A->row(0)->as_list;
  map { is($got[$_], 0) } (0..2);
- @got = $A->as_list_row(1);
+ @got = $A->row(1)->as_list;
  map { is($got[$_], ($_+1)*2) } (0..2);
- @got = $A->as_list_row(2);
+ @got = $A->row(2)->as_list;
  map { is($got[$_], ($_+1)*4) } (0..2); 
 }
 
@@ -243,7 +243,7 @@ sub GSL_BLAS_DTRSV : Tests {
  map { gsl_matrix_set($A->raw, $_,3,$_); } (1..3);
  gsl_matrix_set($A->raw, 0,3,4);
  is(gsl_blas_dtrsv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),0);
- my @got = $A->as_list_row(0);
+ my @got = $A->row(0)->as_list;
 }
 
 sub GSL_BLAS_DROTG : Tests {
@@ -279,11 +279,11 @@ sub GSL_BLAS_DSYR : Tests {
  gsl_matrix_set_zero($A->raw);
  
  is(gsl_blas_dsyr($CblasLower, 2, $x->raw, $A->raw),0);
- my @got = $A->as_list_row(0);
+ my @got = $A->row(0)->as_list;
  ok_similar([ @got ], [2,4,6]);
- @got = $A->as_list_row(1);
+ @got = $A->row(1)->as_list;
  ok_similar([ @got ], [0,8,12]);
- @got = $A->as_list_row(2);
+ @got = $A->row(2)->as_list;
  ok_similar([ @got ], [0,0,18]);
 }
 
@@ -322,11 +322,11 @@ sub GSL_BLAS_DSYR2 : Tests {
  gsl_matrix_set($A->raw, 1, 2, 9);
  gsl_matrix_set($A->raw, 2, 2, 3);
  is(gsl_blas_dsyr2($CblasLower, 2, $x->raw, $y->raw, $A->raw),0);
- my @got = $A->as_list_row(0);
+ my @got = $A->row(0)->as_list;
  ok_similar([@got], [13, 20, 29]);
- @got = $A->as_list_row(1);
+ @got = $A->row(1)->as_list;
  ok_similar([@got], [4, 20, 25]);
- @got = $A->as_list_row(2);
+ @got = $A->row(2)->as_list;
  ok_similar([@got], [9, 9, 15]);
 }
 
@@ -345,9 +345,9 @@ sub GSL_BLAS_DGEMM : Tests {
  my $C = Math::GSL::Matrix->new(2,2);
  gsl_matrix_set_zero($C->raw);
  is(gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $A->raw, $B->raw, 1, $C->raw),0);
- my @got = $C->as_list_row(0);
+ my @got = $C->row(0)->as_list;
  ok_similar([@got], [5, 14]);
- @got = $C->as_list_row(1);
+ @got = $C->row(1)->as_list;
  ok_similar([@got], [10, 26]);
 }
 
@@ -366,9 +366,9 @@ sub GSL_BLAS_DSYMM : Tests {
  my $C = Math::GSL::Matrix->new(2,2);
  gsl_matrix_set_zero($C->raw);
  is(gsl_blas_dsymm($CblasLeft, $CblasUpper, 1, $A->raw, $B->raw, 1, $C->raw),0);
- my @got = $C->as_list_row(0);
+ my @got = $C->row(0)->as_list;
  ok_similar([@got], [5, 14]);
- @got = $C->as_list_row(1);
+ @got = $C->row(1)->as_list;
  ok_similar([@got], [10, 26]);
 }
 

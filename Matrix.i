@@ -439,38 +439,36 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
 sub as_list 
 {
     my $self = shift;
-    my ($r,$c) = ($self->rows,$self->cols);
-    return
-        map { 
-            gsl_matrix_get($self->raw, _index_to_row_col($_,$r,$c)) 
-        } (0 .. $self->rows*$self->cols-1 );
-}
-
-# hackish
-sub _index_to_row_col($$$)
-{
-    my ($k,$rows,$cols) = @_;
-    return ( ($rows == 1 ) ? 0 : int($k/$rows), $k % $cols );
+    my $line;
+    my @part;
+    my @total;
+    for($line=0; $line<$self->rows; $line++){
+       @part = map { 
+         gsl_matrix_get($self->raw, $line, $_) 
+       } (0 .. $self->cols-1 );
+       push(@total, @part);
+    }
+    return @total;
 }
 
 sub row
 {
     my ($self, $row) = @_;
     croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
-        unless (($row < $self->rows-1) and $row > 0);  
+        unless (($row < $self->rows-1) and $row >= 0);  
 
-    my $rowvec = gsl_vector_alloc($self->cols);
+    my $rowvec = Math::GSL::Vector->new($self->cols);
     my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
 
-    my $status = gsl_matrix_get_row($rowvec, $self->raw, $row-1);
+    my $status = gsl_matrix_get_row($rowvec->raw, $self->raw, $row);
     croak (__PACKAGE__.'::gsl_matrix_get_row - ' . gsl_strerror($status) ) 
         unless ( $status == $GSL_SUCCESS );
 
-    $status = gsl_matrix_set_row($rowmat->raw, 0, $rowvec);
+    $status = gsl_matrix_set_row($rowmat->raw, 0, $rowvec->raw);
 
     croak (__PACKAGE__.'::gsl_matrix_set_row - ' . gsl_strerror($status) ) 
         unless ( $status == $GSL_SUCCESS );
-    
+
     return $rowmat;
 }
 
@@ -478,12 +476,13 @@ sub col
 {
     my ($self, $col) = @_;
     croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column") 
-        unless ($col < $self->cols and $col > 0);  
+        unless ($col < $self->cols and $col >= 0);  
 
     my $colvec = Math::GSL::Vector->new($self->cols);
     my $colmat = Math::GSL::Matrix->new($self->rows, 1);
 
-    my $status = gsl_matrix_get_col($colvec->raw, $self->raw, $col-1);
+    my $status = gsl_matrix_get_col($colvec->raw, $self->raw, $col);
+# return $colvec;
     $status    = gsl_matrix_set_col($colmat->raw, 0, $colvec->raw);
     return $colmat;
 }

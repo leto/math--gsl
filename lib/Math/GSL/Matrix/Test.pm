@@ -490,15 +490,13 @@ sub AS_LIST_ROW : Tests {
 sub ROW : Tests {
     my $matrix = Math::GSL::Matrix->new(5,5);
     map { gsl_matrix_set($matrix->raw, $_, $_, 5 + $_**2) } (0..4);
-    ok_similar( [qw/0 0 9 0 0/] , [$matrix->row(3)->as_list ] );
+    ok_similar( [qw/0 0 9 0 0/] , [$matrix->row(2)->as_list ] );
 }
 
 sub COL : Tests {
-    local $TODO = "borked";
     my $matrix = Math::GSL::Matrix->new(3,3);
     map { gsl_matrix_set($matrix->raw, $_, $_, 7 + $_**2) } (0..2);
-    print Dumper [ $matrix->col(1)->as_list ];
-    ok_similar( [ 7, 0, 0 ] , [$matrix->col(1)->as_list ] );
+    ok_similar([7,0,0], [$matrix->col(0)->as_list]);
 }
 
 sub NEW_SETS_VALUES_TO_ZERO : Tests {

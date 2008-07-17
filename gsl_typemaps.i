@@ -18,6 +18,5 @@
     }
 }
 %apply double const [] { double *data, double *f_in, double *f_out };
-%apply double const [] { double x[] };
-%apply double const [] { double a[], double b[], double c[], double s[]};
+%apply double const [] { double x[], double a[], double b[], double c[], double s[]};
 

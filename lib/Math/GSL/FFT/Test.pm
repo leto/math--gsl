@@ -7,20 +7,42 @@ use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
 use strict;
 
+BEGIN { gsl_set_error_handler_off(); }
 sub make_fixture : Test(setup) {
 }
 
 sub teardown : Test(teardown) {
     unlink 'fft' if -f 'fft';
 }
+sub FFT_REAL_RADIX2_TRANSFORM : Tests 
+{
+    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
+    local $TODO = "broken";
+    #ok_status( gsl_fft_real_radix2_transform ($data, 1, 128), $GSL_SUCCESS);
+}
 
-BEGIN { gsl_set_error_handler_off(); }
+sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
+{
+    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
+    ok_status( gsl_fft_complex_radix2_forward ($data, 1, 128), $GSL_SUCCESS);
+}
 
 sub WAVETABLE_ALLOC_FREE: Tests {
     my $wavetable = gsl_fft_complex_wavetable_alloc(42);
     isa_ok($wavetable, 'Math::GSL::FFT' );
     gsl_fft_complex_wavetable_free($wavetable);
     ok(!$@, 'gsl_fft_complex_wavetable_free');
+
+    $wavetable = gsl_fft_halfcomplex_wavetable_alloc(42);
+    isa_ok($wavetable, 'Math::GSL::FFT' );
+    gsl_fft_halfcomplex_wavetable_free($wavetable);
+    ok(!$@, 'gsl_fft_halfcomplex_wavetable_free');
+
+    $wavetable = gsl_fft_real_wavetable_alloc(42);
+    isa_ok($wavetable, 'Math::GSL::FFT' );
+    gsl_fft_real_wavetable_free($wavetable);
+    ok(!$@, 'gsl_fft_real_wavetable_free');
+
 }
 
 sub WORKSPACE_ALLOC_FREE: Tests {
@@ -28,15 +50,12 @@ sub WORKSPACE_ALLOC_FREE: Tests {
     isa_ok($workspace, 'Math::GSL::FFT' );
     gsl_fft_complex_workspace_free($workspace);
     ok(!$@, 'gsl_fft_complex_workspace_free');
-}
 
-sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
-{
-    local $TODO = "typemap for gsl_complex_packed_array";
-    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
-#    my $status = gsl_fft_complex_radix2_forward ($data, 1, 128);
-#    print Dumper [ $status , $data ];
-    ok(!$@, 'gsl_fft_complex_radix2_forward' );
+    # there are no gsl_fft_halfcomplex_workspace_* functions
 
+    $workspace = gsl_fft_real_workspace_alloc(42);
+    isa_ok($workspace, 'Math::GSL::FFT' );
+    gsl_fft_real_workspace_free($workspace);
+    ok(!$@, 'gsl_fft_real_workspace_free');
 }
 1;

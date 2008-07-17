@@ -1,10 +1,13 @@
-%module BLAS
+%module "Math::GSL::BLAS"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
+%apply double const [] { double A[], double B[], double C[], double S[]};
+
 %apply float *OUTPUT { float *result };
 %apply double *OUTPUT { double *result };
+%apply double *OUTPUT { double C[], double S[] };
 
 %{
     #include "gsl/gsl_blas.h"

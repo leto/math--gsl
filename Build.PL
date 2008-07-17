@@ -362,7 +362,7 @@ my @Subsystems = sort qw/
             Combination  Histogram     Multimin     Roots      
             Complex      Histogram2D   Multiroots   SF         
             Const        Siman         IEEEUtils    
-            DFT          Integration   NTuple       Sort                  
+            Integration  NTuple       Sort                  
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline
 /;

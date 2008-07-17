@@ -51,7 +51,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Combination      - Combinatoric Functions
     Math::GSL::Complex          - Complex Numbers
     Math::GSL::Const            - Various Constants
-    Math::GSL::DFT              - Discrete Fourier Transform
     Math::GSL::DHT              - Discrete Hilbert Transform
     Math::GSL::Deriv            - Numerical Derivative
     Math::GSL::Diff
@@ -177,7 +176,7 @@ sub subsystems
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
         Const        Siman        Sum           Sys 
-        DFT          Integration  NTuple        Sort                  
+        Integration  NTuple       Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
     /;

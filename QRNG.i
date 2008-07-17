@@ -1,5 +1,4 @@
-%module QRNG
-
+%module "Math::GSL::QRNG"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 

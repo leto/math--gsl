@@ -15,7 +15,6 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-
 sub GSL_DHT_ALLOC_FREE : Tests {
     my $dht = gsl_dht_alloc(5);
     isa_ok($dht, 'Math::GSL::DHT');
@@ -39,13 +38,15 @@ sub DHT_SAMPLE_APPLY : Tests {
     }
     ok( $#$f_in = 127, 'gsl_dht_x_sample' ); 
 
+    ok_status( gsl_dht_apply($dht, $f_in, $f_out), $GSL_SUCCESS );
+    ok( $#$f_out = 127, 'gsl_dht_apply' ); 
 
     local $TODO = 'need a typemap for $f_in and $f_out';
-    #gsl_dht_apply($dht, $f_in, $f_out);
-    ok( $#$f_out = 127, 'gsl_dht_x_apply' ); 
-
     # check that the relative error at most 2%
-    ok( ($f_out->[0]-0.181)/0.181 <= 0.02, 'gsl_dht_apply' );
+    ok(
+        is_similar_relative ($f_out->[0], 0.181, 0.02), 
+        "gsl_dht_apply output @{[$f_out->[0]]} != 0.181"
+    );
 }
 
 1;

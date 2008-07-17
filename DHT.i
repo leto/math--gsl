@@ -1,10 +1,12 @@
-%module DHT
+%module "Math::GSL::DHT"
+%include "typemaps.i"
+%include "gsl_typemaps.i"
+
 %{
     #include "gsl/gsl_dht.h"
 %}
 
 %include "gsl/gsl_dht.h"
-
 
 %perlcode %{
 @EXPORT_OK = qw/

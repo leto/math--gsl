@@ -32,7 +32,7 @@ sub GSL_BLAS_DDOT : Tests {
   my $vec1 = Math::GSL::Vector->new([1,2,3,4,5]);
   my $vec2 = Math::GSL::Vector->new([5,4,3,2,1]);
   my ($x, $result) = gsl_blas_ddot($vec1->raw, $vec2->raw);
-  is($x, 0);
+  ok_status($x,$GSL_SUCCESS);
   is($result,35);
 }
 
@@ -97,12 +97,8 @@ sub GSL_BLAS_DSWAP : Tests {
   my $vec1 = Math::GSL::Vector->new([0,1,2]);
   my $vec2 = Math::GSL::Vector->new([2,1,0]);
   gsl_blas_dswap($vec1->raw, $vec2->raw);
-  my @got = $vec2->as_list;
-  map { is($got[$_], $_) } (0..2);
-  @got = $vec1->as_list;
-  is($got[0], 2);
-  is($got[1], 1);
-  is($got[2], 0);
+  ok_similar( [0 .. 2], [ $vec2->as_list ] );
+  ok_similar( [2, 1,0], [ $vec1->as_list ] );
 }
 
 sub GSL_BLAS_ZSWAP : Tests { 
@@ -245,14 +241,13 @@ sub GSL_BLAS_DTRSV : Tests {
 }
 
 sub GSL_BLAS_DROTG : Tests {
- local $TODO = "need a typemap for outputting arrays";
  my $a = [1];
  my $b = [2];
  my $c = [0];
  my $s = [0];
- is(gsl_blas_drotg($a, $b, $c, $s), 0);
- is($c, 1/sqrt(5));
- is($s, 2/sqrt(5));
+ ok_status(gsl_blas_drotg($a, $b, $c, $s), $GSL_SUCCESS);
+ local $TODO = "need a typemap for outputting arrays";
+ ok_similar( [$c->[0], $s->[0]], [ 1/sqrt(5) , 2/sqrt(5)  ] );
 }
 
 sub GSL_BLAS_DSYMV : Tests {

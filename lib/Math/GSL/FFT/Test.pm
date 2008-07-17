@@ -24,7 +24,9 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests
 sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
 {
     my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
-    ok_status( gsl_fft_complex_radix2_forward ($data, 1, 128), $GSL_SUCCESS);
+    my ($status, $output) = gsl_fft_complex_radix2_forward ($data, 1, 128);
+    ok_status($status, $GSL_SUCCESS);
+    print Dumper [ $output ];
 }
 
 sub WAVETABLE_ALLOC_FREE: Tests {

@@ -60,8 +60,8 @@
                gsl_fft_real_unpack 
              /;
 @EXPORT_vars = qw/
-                $gsl_fft_forward,
-                $gsl_fft_backward,
+                $gsl_fft_forward
+                $gsl_fft_backward
                 /;
 @EXPORT_OK =   (
                 @EXPORT_real, 

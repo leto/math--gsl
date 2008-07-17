@@ -28,7 +28,10 @@ sub FFT_COMPLEX_RADIX2_FORWARD : Tests
     ok_status($status, $GSL_SUCCESS);
     print Dumper [ $output ];
 }
-
+sub FFT_VARS : Tests {
+    cmp_ok( $gsl_fft_forward, '==', -1, 'gsl_fft_forward' );
+    cmp_ok( $gsl_fft_backward, '==', +1, 'gsl_fft_backward' );
+}
 sub WAVETABLE_ALLOC_FREE: Tests {
     my $wavetable = gsl_fft_complex_wavetable_alloc(42);
     isa_ok($wavetable, 'Math::GSL::FFT' );

@@ -90,25 +90,25 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_histogram_calloc_uniform >
 
-=item C<gsl_histogram_free >
+=item C<gsl_histogram_free($h)> - This function frees the histogram $h and all of the memory associated with it.
 
 =item C<gsl_histogram_increment >
 
-=item C<gsl_histogram_accumulate >
+=item C<gsl_histogram_accumulate($h, $x, $weight)> - This function is similar to gsl_histogram_increment but increases the value of the appropriate bin in the histogram $h by the floating-point number weight.
 
 =item C<gsl_histogram_find >
 
-=item C<gsl_histogram_get >
+=item C<gsl_histogram_get($h, $i)> - This function returns the contents of the $i-th bin of the histogram $h. If $i lies outside the valid range of indices for the histogram then the error handler is called with an error code of GSL_EDOM and the function returns 0. 
 
 =item C<gsl_histogram_get_range >
 
-=item C<gsl_histogram_max >
+=item C<gsl_histogram_max($h)> - This function returns the maximum upper limit of the histogram $h. It provides a way of determining this value without accessing the gsl_histogram struct directly. 
 
-=item C<gsl_histogram_min >
+=item C<gsl_histogram_min($h)> - This function returns the minimum lower range limit of the histogram $h. It provides a way of determining this value without accessing the gsl_histogram struct directly. 
 
-=item C<gsl_histogram_bins >
-
-=item C<gsl_histogram_reset >
+=item C<gsl_histogram_bins($h)> - This function returns the number of bins of the histogram $h limit. It provides a way of determining this value without accessing the gsl_histogram struct directly. 
+ 
+=item C<gsl_histogram_reset($h)> - This function resets all the bins in the histogram $h to zero. 
 
 =item C<gsl_histogram_calloc_range >
 
@@ -129,7 +129,9 @@ Here is a list of all the functions included in this module :
 
 where d is the bin spacing, d = (xmax-xmin)/n. 
 
-=item C<gsl_histogram_memcpy >
+=over
+
+=item C<gsl_histogram_memcpy>
 
 =item C<gsl_histogram_clone >
 

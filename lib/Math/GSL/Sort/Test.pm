@@ -16,7 +16,7 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_SORT_VECTOR : Tests {
-   my $vec = Math::GSL::Vector->new([6, 4,2,3,1,5]);
+   my $vec = Math::GSL::Vector->new([6,4,2,3,1,5]);
    gsl_sort_vector($vec->raw);
    ok_similar( [ $vec->as_list ], [ 1 .. 6 ] );
 } 

@@ -1,34 +1,14 @@
-%module Sort
-//%include "GSL.i"
-
+%module "Math::GSL::Sort"
 /* Danger Will Robinson! */
 
 %include "typemaps.i"
-%typemap(in) double * {
-    AV *tempav;
-    I32 len;
-    int i;
-    SV **tv;
-    if (!SvROK($input))
-        croak("Math::GSL : $input is not a reference!");
-    if (SvTYPE(SvRV($input)) != SVt_PVAV)
-        croak("Math::GSL : $input is not an array ref!");
-        
-    tempav = (AV*)SvRV($input);
-    len = av_len(tempav);
-    $1 = (double *) malloc((len+1)*sizeof(double));
-    for (i = 0; i <= len; i++) {
-        tv = av_fetch(tempav, i, 0);
-        $1[i] = (double) SvNV(*tv);
-    }
-}
+%include "gsl_typemaps.i"
 
 %typemap(argout) (double * data, const size_t stride, const size_t n) {
     int i=0;
     AV* tempav = newAV();
 
     while( i < $3 ) {
-        printf("setting stuff %f\n", $1[i]);
         av_push(tempav, newSVnv((double) $1[i]));
         i++;
     }

@@ -365,4 +365,150 @@ sub GSL_BLAS_DSYMM : Tests {
  ok_similar([@got], [18, 10]);
 }
 
+sub GSL_BLAS_ZGEMM : Tests {
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(1,2);
+ gsl_matrix_complex_set($A, 0,0,$alpha);
+ $alpha = gsl_complex_rect(3,1);
+ gsl_matrix_complex_set($A, 0,1,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($A, 1,0,$alpha);
+ $alpha = gsl_complex_rect(0,2);
+ gsl_matrix_complex_set($A, 1,1,$alpha);
+
+ my $B = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(1,1);
+ gsl_matrix_complex_set($B, 0,0,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($B, 0,1,$alpha);
+ $alpha = gsl_complex_rect(1,2);
+ gsl_matrix_complex_set($B, 1,0,$alpha);
+ $alpha = gsl_complex_rect(1,3);
+ gsl_matrix_complex_set($B, 1,1,$alpha);
+
+ my $C = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(0,0);
+ map { gsl_matrix_complex_set($C, 0, $_, $alpha) } (0..1);
+ map { gsl_matrix_complex_set($C, 1, $_, $alpha) } (0..1);
+
+ $alpha = gsl_complex_rect(2,0);
+ my $beta = gsl_complex_rect(1,0);
+ is(gsl_blas_zgemm($CblasNoTrans, $CblasNoTrans, $alpha, $A, $B, $beta, $C),0);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [0,20]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [-4,32]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [-8,12]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [-12,20]);
+}
+
+sub GSL_BLAS_ZSYMM : Tests {
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(1,2);
+ gsl_matrix_complex_set($A, 0,0,$alpha);
+ $alpha = gsl_complex_rect(3,1);
+ gsl_matrix_complex_set($A, 0,1,$alpha);
+ $alpha = gsl_complex_rect(3,1);
+ gsl_matrix_complex_set($A, 1,0,$alpha);
+ $alpha = gsl_complex_rect(0,2);
+ gsl_matrix_complex_set($A, 1,1,$alpha);
+
+ my $B = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(1,1);
+ gsl_matrix_complex_set($B, 0,0,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($B, 0,1,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($B, 1,0,$alpha);
+ $alpha = gsl_complex_rect(1,3);
+ gsl_matrix_complex_set($B, 1,1,$alpha);
+
+ my $C = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(0,0);
+ map { gsl_matrix_complex_set($C, 0, $_, $alpha) } (0..1);
+ map { gsl_matrix_complex_set($C, 1, $_, $alpha) } (0..1);
+ 
+ $alpha = gsl_complex_rect(2,0);
+ my $beta = gsl_complex_rect(1,0);
+ is(gsl_blas_zsymm($CblasLeft, $CblasUpper, $alpha, $A, $B, $beta, $C),0);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [6,22]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [-4,32]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [-4,16]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [-4,20]);
+}
+sub GSL_BLAS_ZHEMM : Tests {
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(3,0);
+ gsl_matrix_complex_set($A, 0,0,$alpha);
+ $alpha = gsl_complex_rect(2,1);
+ gsl_matrix_complex_set($A, 0,1,$alpha);
+ $alpha = gsl_complex_rect(2,-1);
+ gsl_matrix_complex_set($A, 1,0,$alpha);
+ $alpha = gsl_complex_rect(1,0);
+ gsl_matrix_complex_set($A, 1,1,$alpha);
+
+ my $B = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(1,0);
+ gsl_matrix_complex_set($B, 0,0,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($B, 0,1,$alpha);
+ $alpha = gsl_complex_rect(2,-2);
+ gsl_matrix_complex_set($B, 1,0,$alpha);
+ $alpha = gsl_complex_rect(2,0);
+ gsl_matrix_complex_set($B, 1,1,$alpha);
+
+ my $C = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(0,0);
+ map { gsl_matrix_complex_set($C, 0, $_, $alpha) } (0..1);
+ map { gsl_matrix_complex_set($C, 1, $_, $alpha) } (0..1);
+ 
+ $alpha = gsl_complex_rect(2,0);
+ my $beta = gsl_complex_rect(1,0);
+ is(gsl_blas_zhemm($CblasLeft, $CblasUpper, $alpha, $A, $B, $beta, $C),0);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [18,-4]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [20,16]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [8,-6]);
+ ok_similar([ gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [16,4]);
+}
+
+sub GSL_BLAS_DTRMM : Tests {
+ my $A = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($A->raw, 0,0,1);
+ gsl_matrix_set($A->raw, 1,0,3);
+ gsl_matrix_set($A->raw, 0,1,4);
+ gsl_matrix_set($A->raw, 1,1,2);
+ my $B = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set($B->raw, 0,0,2);
+ gsl_matrix_set($B->raw, 1,0,5);
+ gsl_matrix_set($B->raw, 0,1,1);
+ gsl_matrix_set($B->raw, 1,1,3);
+ my $C = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set_zero($C->raw);
+ is(gsl_blas_dtrmm($CblasLeft, $CblasUpper, $CblasNoTrans, $CblasUnit, 1, $A->raw, $B->raw),0);
+ my @got = $B->row(0)->as_list;
+ ok_similar([@got], [22, 13]);
+ @got = $B->row(1)->as_list;
+ ok_similar([@got], [5, 3]);
+}
+
+sub GSL_BLAS_ZTRMM : Tests {
+ my $A = gsl_matrix_complex_alloc(2,2);
+ my $alpha = gsl_complex_rect(3,1);
+ gsl_matrix_complex_set($A, 0,1,$alpha);
+
+ my $B = gsl_matrix_complex_alloc(2,2);
+ $alpha = gsl_complex_rect(1,0);
+ gsl_matrix_complex_set($B, 0,0,$alpha);
+ $alpha = gsl_complex_rect(2,2);
+ gsl_matrix_complex_set($B, 0,1,$alpha);
+ $alpha = gsl_complex_rect(1,-2);
+ gsl_matrix_complex_set($B, 1,0,$alpha);
+ $alpha = gsl_complex_rect(4,2);
+ gsl_matrix_complex_set($B, 1,1,$alpha);
+ 
+ $alpha = gsl_complex_rect(1,0);
+ is(gsl_blas_ztrmm($CblasLeft, $CblasUpper, $CblasNoTrans, $CblasUnit, $alpha, $A, $B),0);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($B, 0, 0))], [6, -5]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($B, 0, 1))], [12, 12]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($B, 1, 0))], [1, -2]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($B, 1, 1))], [4, 2]);
+}
 1;

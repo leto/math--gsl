@@ -16,9 +16,9 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_SORT_VECTOR : Tests {
-   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
+   my $vec = Math::GSL::Vector->new([6, 4,2,3,1,5]);
    gsl_sort_vector($vec->raw);
-   ok_similar( [ $vec->as_list ], [ 1 .. 5 ] );
+   ok_similar( [ $vec->as_list ], [ 1 .. 6 ] );
 } 
 
 sub GSL_SORT_VECTOR_INDEX : Tests {
@@ -32,9 +32,10 @@ sub GSL_SORT_VECTOR_INDEX : Tests {
 }
 
 sub GSL_SORT : Tests {
-   my @x = [ 2**15, 1, 42, 17, 6900, 3 ];
-   my @sorted = gsl_sort(@x, 1, 6 );
-   ok_similar ( @sorted , [ 1, 3, 17 , 42, 6900, 2**15 ], 'gsl_sort' );    
+   my $x = [ 2**15, 1, 42, 17, 6900, 3 , 4242];
+   my $sorted = gsl_sort($x, 1, $#$x+1 );
+   print Dumper [ $sorted ];
+   ok_similar ( $sorted , [ 1, 3, 17 , 42, 4242, 6900, 2**15 ], 'gsl_sort' );    
 }
 
 42;

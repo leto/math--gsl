@@ -188,7 +188,7 @@ sub dot_product {
          $left->length == $right->length ) {
          my @l = $left->as_list;
          my @r = $right->as_list;
-         map { $sum += $l[$_] * $r[$_]; print "sum is $sum\n"; } (0..$#l);
+         map { $sum += $l[$_] * $r[$_] } (0..$#l);
         return $sum;
     } else {
         croak "dot_product() must be called with two vectors";

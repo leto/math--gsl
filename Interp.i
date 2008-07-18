@@ -1,4 +1,4 @@
-%module Interp
+%module "Math::GSL::Interp"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
@@ -44,7 +44,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Interp - functions for performing interpolation
+Math::GSL::Interp - Functions for performing interpolation
 
 =head1 SYNOPSIS
 

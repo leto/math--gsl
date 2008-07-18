@@ -23,13 +23,12 @@
     }
 }
 
-%typemap(argout) double * {
+%typemap(argout) (double * data, const size_t stride, const size_t n) {
     int i=0;
     AV* tempav = newAV();
 
-    // Need to determine length of $1
-    while( i<= 5 ) {
-        //printf("setting stuff %f\n", $1[i]);
+    while( i < $3 ) {
+        printf("setting stuff %f\n", $1[i]);
         av_push(tempav, newSVnv((double) $1[i]));
         i++;
     }

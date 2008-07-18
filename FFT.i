@@ -1,7 +1,10 @@
 %module "Math::GSL::FFT"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
-%apply double *OUTPUT { double data[] };
+
+%typemap(argout) double [] %{
+%}
+
 
 %{
     #include "gsl/gsl_fft.h"
@@ -16,6 +19,12 @@
 %include "gsl/gsl_fft_complex.h"
 %include "gsl/gsl_fft_halfcomplex.h"
 %include "gsl/gsl_fft_real.h"
+/*
+int gsl_fft_real_radix2_transform (double *INOUT, size_t
+          STRIDE, size_t N);
+%apply double *INOUT { double DATA[] };
+*/
+
 
 
 %perlcode %{

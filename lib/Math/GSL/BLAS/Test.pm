@@ -243,11 +243,9 @@ sub GSL_BLAS_DTRSV : Tests {
 sub GSL_BLAS_DROTG : Tests {
  my $a = [1];
  my $b = [2];
- my $c = [0];
- my $s = [0];
- ok_status(gsl_blas_drotg($a, $b, $c, $s), $GSL_SUCCESS);
- local $TODO = "need a typemap for outputting arrays";
- ok_similar( [$c->[0], $s->[0]], [ 1/sqrt(5) , 2/sqrt(5)  ] );
+
+ my ($status, $c, $s) = gsl_blas_drotg($a, $b);
+ ok_similar( [$c, $s ], [ 1/sqrt(5) , 2/sqrt(5)  ] );
 }
 
 sub GSL_BLAS_DSYMV : Tests {

@@ -3,11 +3,10 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-%apply double const [] { double A[], double B[], double C[], double S[]};
-
 %apply float *OUTPUT { float *result };
 %apply double *OUTPUT { double *result };
-%apply double *OUTPUT { double C[], double S[] };
+%apply double *OUTPUT { double c[], double s[] };
+
 
 %{
     #include "gsl/gsl_blas.h"

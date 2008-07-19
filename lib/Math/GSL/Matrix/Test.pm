@@ -538,4 +538,13 @@ sub SET_ROW_CHAINED : Tests {
  ok_similar([$m->row(1)->as_list], [4,5,6]);
  ok_similar([$m->row(2)->as_list], [9,8,7]);
 }
+
+sub SET_COL_CHAINED : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ $m->set_col(1, [4,5,6])
+   ->set_col(2, [9,8,7]);
+ ok_similar([$m->col(1)->as_list], [4,5,6]);
+ ok_similar([$m->col(2)->as_list], [9,8,7]);
+}
+
 1;

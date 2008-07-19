@@ -63,7 +63,11 @@ Math::GSL::Sort - Functions for sorting data
 
 =head1 SYNOPSIS
 
-use Math::GSL::Sort qw/:all/;
+    use Math::GSL::Sort qw/:all/;
+    my $x      = [ 2**15, 1.67, 20e5, 
+                    -17, 6900, 1/3 , 42e-10 ];
+    my $sorted = gsl_sort($x, 1, $#$x+1 );
+
 
 =head1 DESCRIPTION
 

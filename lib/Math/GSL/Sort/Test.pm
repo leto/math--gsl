@@ -32,10 +32,10 @@ sub GSL_SORT_VECTOR_INDEX : Tests {
 }
 
 sub GSL_SORT : Tests {
-   my $x = [ 2**15, 1, 42, 17, 6900, 3 , 4242];
+   my $x = [ 2**15, 1, 42.7, -17, 6900, 3e-10 , 4242, 0e0];
    my $sorted = gsl_sort($x, 1, $#$x+1 );
    print Dumper [ $sorted ];
-   ok_similar ( $sorted , [ 1, 3, 17 , 42, 4242, 6900, 2**15 ], 'gsl_sort' );    
+   ok_similar ( $sorted , [ -17, 0e0, 3e-10, 1, 42.7, 4242, 6900, 2**15 ], 'gsl_sort' );    
 }
 
 42;

@@ -1,4 +1,8 @@
 %module Multifit
+
+%include "typemaps.i"
+%apply double *OUTPUT { double * y, double * y_err };
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_multifit.h"

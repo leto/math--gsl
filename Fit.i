@@ -1,4 +1,4 @@
-%module Fit
+%module "Math::GSL::Fit"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"

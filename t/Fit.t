@@ -1,14 +1,2 @@
-use Test::More  'no_plan';
-use Test::Exception;
-use Math::GSL;
-use Math::GSL::Fit;
-use Data::Dumper;
-use strict;
-use warnings;
-
-
-# needs some more useful tests
-{
-    #RuntimeError Usage: gsl_fit_linear(x,xstride,y,ystride,n,c0,c1,cov00,cov01,cov11,sumsq);
-    dies_ok( sub { Math::GSL::Fit::gsl_fit_linear(0,0,0,0) } );
-}
+use Math::GSL::Fit::Test;
+Test::Class->runtests;

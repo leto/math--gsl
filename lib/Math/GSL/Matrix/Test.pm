@@ -526,4 +526,9 @@ sub HERMITIAN : Tests {
     ok( gsl_complex_eq( gsl_complex_conjugate($upper_right), $lower_left ), 'hermitian' );
 }
 
+sub SET_ROW : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ $m->set_row(0, [1,2,3]);
+ ok_similar([$m->row(0)->as_list], [1,2,3]);
+}
 1;

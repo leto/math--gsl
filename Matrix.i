@@ -487,6 +487,16 @@ sub col
     return $colmat;
 }
 
+sub set_row {
+ my ($self, $row, $values) = @_;
+ my $length = $#$values;
+ die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
+ die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' if ($row < 0 || $row >= $self->rows);
+ die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix' if($length != $self->cols-1);
+ map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
+ return;
+}
+
 =head1 DESCRIPTION
 
 Here is a list of all the functions included in this module :

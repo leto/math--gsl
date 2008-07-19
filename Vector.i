@@ -123,7 +123,7 @@ sub new {
     my $this = {}; 
     my $vector;
     if ( ref $values eq 'ARRAY' ){
-        die __PACKAGE__.'::new($x) - $x must a nonempty array reference' if $length == -1;
+        die __PACKAGE__.'::new($x) - $x must be a nonempty array reference' if $length == -1;
         $vector  = gsl_vector_alloc($length+1);
         map { gsl_vector_set($vector, $_, $values->[$_] ) }  (0 .. $length);
         $this->{_length} = $length+1;

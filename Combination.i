@@ -1,4 +1,4 @@
-%module Combination
+%module "Math::GSL::Combination"
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_combination.h"

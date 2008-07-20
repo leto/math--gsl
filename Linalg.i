@@ -1,4 +1,4 @@
-%module Linalg
+%module "Math::GSL::Linalg"
 %apply int *OUTPUT { int *signum };
 
 %{

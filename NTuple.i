@@ -1,4 +1,4 @@
-%module NTuple
+%module "Math::GSL::NTuple"
 %{
     #include "gsl/gsl_ntuple.h"
 %}

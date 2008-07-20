@@ -1,4 +1,4 @@
-%module Matrix
+%module "Math::GSL::Matrix"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"

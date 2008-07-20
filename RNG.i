@@ -1,4 +1,4 @@
-%module RNG
+%module "Math::GSL::RNG"
 %{
     #include "gsl/gsl_rng.h"
 %}

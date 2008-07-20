@@ -1,4 +1,4 @@
-%module CBLAS 
+%module "Math::GSL::CBLAS"
 %include "typemaps.i"
 
 %apply double *INPUT { const double *X };

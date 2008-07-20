@@ -1,4 +1,4 @@
-%module Const
+%module "Math::GSL::Const"
 %{
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_const.h"

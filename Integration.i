@@ -1,4 +1,4 @@
-%module Integration
+%module "Math::GSL::Integration"
 %{
     #include "gsl/gsl_integration.h"
 %}

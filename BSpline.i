@@ -1,4 +1,4 @@
-%module BSpline
+%module "Math::GSL::BSpline"
 %{
     #include "gsl/gsl_bspline.h"
     #include "gsl/gsl_vector.h"

@@ -1,4 +1,4 @@
-%module Chebyshev
+%module "Math::GSL::Chebyshev"
 %{
     #include "gsl/gsl_chebyshev.h"
 %}

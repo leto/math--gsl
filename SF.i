@@ -1,4 +1,5 @@
-%module SF
+%module "Math::GSL::SF"
+%include "typemaps.i"
 %{
     #include "gsl/gsl_mode.h"
     #include "gsl/gsl_sf.h"
@@ -33,7 +34,6 @@
     #include "gsl/gsl_sf_trig.h"
     #include "gsl/gsl_sf_zeta.h"
 %}
-//%import "gsl/gsl_types.h"
 
 %include "gsl/gsl_mode.h"
 %include "gsl/gsl_sf.h"
@@ -68,7 +68,6 @@
 %include "gsl/gsl_sf_trig.h"
 %include "gsl/gsl_sf_zeta.h"
 
-%include "typemaps.i"
 
 %perlcode %{
 

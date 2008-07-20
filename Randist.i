@@ -1,4 +1,4 @@
-%module Randist
+%module "Math::GSL::Randist"
 %include "typemaps.i"
 
 void gsl_ran_dir_2d (const gsl_rng * r, double *OUTPUT, double *OUTPUT);

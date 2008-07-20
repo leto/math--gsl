@@ -1,4 +1,4 @@
-%module CDF
+%module "Math::GSL::CDF"
 %{
 #include "gsl/gsl_cdf.h"
 %}

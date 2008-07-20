@@ -1,4 +1,4 @@
-%module Eigen
+%module "Math::GSL::Eigen"
 %{
     #include "gsl/gsl_eigen.h"
 %}

@@ -1,4 +1,4 @@
-%module Monte
+%module "Math::GSL::Monte"
 %{
     #include "gsl/gsl_monte.h"
     #include "gsl/gsl_monte_miser.h"

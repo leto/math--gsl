@@ -1,4 +1,4 @@
-%module Deriv
+%module "Math::GSL::Deriv"
 
 %include "typemaps.i"
 %typemap(in) gsl_function * {

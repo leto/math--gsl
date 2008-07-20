@@ -1,4 +1,4 @@
-%module IEEEUtils
+%module "Math::GSL::IEEEUtils"
 %{
     #include "gsl/gsl_ieee_utils.h"
 %}

@@ -9,7 +9,6 @@ Combination.i
 Complex.i
 Const.i
 Deriv.i
-DFT.i
 DHT.i
 Diff.i
 Eigen.i

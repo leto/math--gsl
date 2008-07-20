@@ -1,4 +1,4 @@
-%module Roots
+%module "Math::GSL::Roots"
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_roots.h"

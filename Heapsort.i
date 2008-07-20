@@ -1,4 +1,4 @@
-%module Heapsort
+%module "Math::GSL::Heapsort"
 %{
     #include "gsl/gsl_heapsort.h"
 %}

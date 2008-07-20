@@ -1,4 +1,4 @@
-%module Poly
+%module "Math::GSL::Poly"
 %include "gsl_typemaps.i" 
 
 %{

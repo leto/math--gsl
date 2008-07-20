@@ -1,4 +1,4 @@
-%module Machine
+%module "Math::GSL::Machine"
 %{
     #include "gsl/gsl_machine.h"
 %}

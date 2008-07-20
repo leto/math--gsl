@@ -109,8 +109,6 @@ sub compile_swig {
 	    @swig_flags = ();
     }
    
-    push @swig_flags, $self->split_like_shell( qq{-module Math::GSL::$file_base} );
-
     my $blib_lib =  catfile(qw/blib lib/);
 
     mkdir catfile($blib_lib, qw/Math GSL/);
@@ -354,14 +352,14 @@ my $class = Module::Build->subclass( code => $code );
 my @Subsystems = sort qw/
             BLAS         Diff          Machine      Statistics Wavelet
             Block        Eigen         Matrix       Poly       Wavelet2D
-            BSpline      Errno         PowInt       Sys
+            BSpline      Errno         PowInt       
             CBLAS        FFT           Min          
             CDF          Fit           Mode         QRNG
             Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      
             Complex      Histogram2D   Multiroots   SF         
-            Const        Siman         IEEEUtils    
+            Const        Siman         IEEEUtils    Sys
             Integration  NTuple       Sort                  
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline

@@ -1,3 +1,4 @@
+%module "Math::GSL::Sys"
 %{
     #include "gsl/gsl_sys.h"
 %}

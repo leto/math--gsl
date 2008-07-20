@@ -1,4 +1,4 @@
-%module Vector
+%module "Math::GSL::Vector"
 
 %include "typemaps.i"
 

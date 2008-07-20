@@ -1,4 +1,4 @@
-%module ODEIV
+%module "Math::GSL::ODEIV"
 %{
     #include "gsl/gsl_odeiv.h"
 %}

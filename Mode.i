@@ -1,4 +1,4 @@
-%module Mode
+%module "Math::GSL::Mode"
 %{
     #include "gsl/gsl_mode.h"
 %}

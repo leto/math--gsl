@@ -1,4 +1,4 @@
-%module Diff
+%module "Math::GSL::Diff"
 %{
     #include "gsl/gsl_diff.h"
 %}

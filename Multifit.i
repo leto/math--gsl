@@ -1,4 +1,4 @@
-%module Multifit
+%module "Math::GSL::Multifit"
 
 %include "typemaps.i"
 %apply double *OUTPUT { double * y, double * y_err };

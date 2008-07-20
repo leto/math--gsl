@@ -1,4 +1,4 @@
-%module Sum
+%module "Math::GSL::Sum"
 %{
     #include "gsl/gsl_sum.h"
 %}

@@ -1,4 +1,4 @@
-%module Min
+%module "Math::GSL::Min"
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_min.h"

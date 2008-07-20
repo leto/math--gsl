@@ -1,4 +1,4 @@
-%module Statistics
+%module "Math::GSL::Statistics"
 %{
     #include "gsl/gsl_statistics_double.h"
     #include "gsl/gsl_statistics_int.h"

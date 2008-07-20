@@ -1,4 +1,4 @@
-%module Block
+%module "Math::GSL::Block"
 %{
     #include "gsl/gsl_block.h"
     #include "gsl/gsl_block_char.h"

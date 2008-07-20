@@ -1,4 +1,4 @@
-%module Multimin
+%module "Math::GSL::Multimin"
 
 %{
     #include "gsl/gsl_types.h"

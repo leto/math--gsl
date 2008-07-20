@@ -175,7 +175,7 @@ sub subsystems
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Sys 
+        Const        Siman        Sum           Sys
         Integration  NTuple       Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline

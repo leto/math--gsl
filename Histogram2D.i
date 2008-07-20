@@ -1,4 +1,4 @@
-%module Histogram2D
+%module "Math::GSL::Histogram2D"
 %{
     #include "gsl/gsl_histogram2d.h"
 %}

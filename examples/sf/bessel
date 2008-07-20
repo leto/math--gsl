@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
-
+# Run this script in the same directory as plot_bessel.gnuplot
+# i.e         cd examples/sf ; ./bessel 
 use strict;
 use warnings;
-
 use Math::GSL::SF qw/:bessel/;
 
 my $x = [ map { $_/ 100 } ( 0 .. 2000 ) ];
@@ -15,6 +15,4 @@ for my $t (@$negx, @$x ) {
 }
 close $fh;
 
-my $cmd = "gnuplot -persist plot_bessel.gnuplot";
-
-qx{$cmd};
+qx "gnuplot -persist plot_bessel.gnuplot";

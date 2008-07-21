@@ -1,7 +1,7 @@
 %module "Math::GSL::Multifit"
 
 %include "typemaps.i"
-%apply double *OUTPUT { double * y, double * y_err };
+%apply double *OUTPUT { double * y, double * y_err, double * chisq};
 
 %{
     #include "gsl/gsl_types.h"

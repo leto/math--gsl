@@ -57,21 +57,19 @@ sub process_swig {
   (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
   my $c_file = "${file_base}_wrap.c";
 
-  if ($p->{swig_installed}) {
       # .swg -> .c
       $self->add_to_cleanup($c_file);
       
       # If any of the swig files that the main swig depends is newer 
       # then rebuild.
-      foreach my $depends_on ($main_swig_file, @$deps_ref) {
-	  unless ($self->up_to_date($depends_on, $c_file)) {
-	      $self->compile_swig($main_swig_file, $c_file);
-	      # Only need to build $c_file once no matter how many 
-	      # includes there are.
-	      last;
-	  }
-      }
-  }
+  foreach my $depends_on ($main_swig_file, @$deps_ref) {
+     unless ($self->up_to_date($depends_on, $c_file)) {
+         $self->compile_swig($main_swig_file, $c_file);
+         # Only need to build $c_file once no matter how many 
+         # includes there are.
+         last;
+     }
+   }
   
   # .c -> .o
   my $obj_file = $self->compile_c($c_file);
@@ -304,28 +302,6 @@ if (defined $gv) {
     exit 1;
 }
 
-print "Checking for SWIG...";
-my $MIN_SWIG_VERSION = "1.3.30";
-my @swig_version = `swig -version 2>&1`;
-my $swig_installed = 0;
-if ($?) {
-    my $errno = $? >> 8;
-    print "I don't see SWIG installed.  Please install SWIG from  http://www.swig.org .\n";
-    print "*** Output was:\n @swig_version\n" if @swig_version;
-    exit 1;
-} else {
-    $swig_installed = 1;
-    chomp $swig_version[1];
-    $swig_version[1] =~ s/[^\d\.]//g;
-    my ($big,$med,$small)=split /\./, $swig_version[1];
-    my ($big_min,$med_min,$small_min) = split /\./, $MIN_SWIG_VERSION;
-    unless ( $big >= $big_min && $med >= $med_min && $small >= $small_min ){
-        print qq{Found SWIG $swig_version[1] but $MIN_SWIG_VERSION is required\n};
-        print "Please install a more recent SWIG from  http://www.swig.org .\n";
-        exit 1;
-    }
-    print qq{Found SWIG $swig_version[1] which seems recent enough, awesome!\n};
-}
 
 my $ccflags = $gsl_pkgcfg{cflags};
 
@@ -364,8 +340,7 @@ my @Subsystems = sort qw/
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline
 /;
-my $cleanup = qq{*.core Makefile Math-GSL-* tmp* *_wrap.c *.pm pod2ht*.tmp _build blib *.so *.orig } . 
-              join (" ", map { qq{lib/Math/GSL/$_.pm} } @Subsystems);
+my $cleanup = qq{*.core Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
@@ -378,7 +353,6 @@ my $builder = $class->new(
     extra_linker_flags  => '-shared -I./lib -I../lib ' . $ldflags,
     extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char } . $ccflags,
     swig_flags          => $swig_flags, 
-    swig_installed      => $swig_installed,
     license             => 'gpl',
     requires => {
         'ExtUtils::PkgConfig'   =>  '1.03',

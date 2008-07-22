@@ -9,15 +9,24 @@ use warnings;
 BEGIN{ gsl_set_error_handler_off() };
 
 {
-    my ($x,$h)=(5,0.01);
-    my $func = Math::GSL::Deriv::gsl_function_struct->new;
-    isa_ok( $func, 'Math::GSL::Deriv::gsl_function_struct' );
-
     local $TODO = "gsl_function *";
-    $func->swig_params_set(0);
-    $func->swig_function_set( sub { $_[0] ** 2 } );
+    my ($x,$h)=(5,0.01);
 
-    #my ($value, $abserr) = gsl_deriv_central ( $func, $x, $h); 
-    #print Dumper [ $value, $abserr ];
+    my $gsl_func = Math::GSL::Deriv::gsl_function_struct->new;
+
+    isa_ok( $gsl_func, 'Math::GSL::Deriv::gsl_function_struct' );
+
+
+    $gsl_func->swig_function_set( sub { print "FOO\n" } );
+    my $func = $gsl_func->swig_function_get();
+    ok( ref $func eq 'CODE', 'swig_function_get works' );
+
+    my $params = $gsl_func->swig_params_set(0);
+    ok( defined $params, 'swig_params_set works' );
+
+    my ($value, $result, $abserr);
+    print "about to call deriv_central\n";
+    #($value, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h, $result, $abserr); 
+    print Dumper [ $value, $abserr ];
 }
 

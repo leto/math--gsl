@@ -2,7 +2,10 @@
 
 %include "typemaps.i"
 %typemap(in) gsl_function * {
-    printf("gsl_func \n");
+
+    fprintf(stderr,"gsl_func  \n");
+    fprintf(stderr, "HAI %d\n", (int) $1->params );
+    fprintf(stderr, "HAI %d\n", (int) $1->function );
 };
 
 %typemap(in) void * {
@@ -12,7 +15,7 @@
 %typemap(in) double (*)(double,void *) {
     printf("function pointer * \n");
 };
-%apply double * OUTPUT { double *result,double *abserr };
+//%apply double * OUTPUT { double *result,double *abserr };
 
 %{
     #include "gsl/gsl_math.h"

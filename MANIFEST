@@ -1,7 +1,6 @@
 BLAS.i
 Block.i
 BSpline.i
-callback.i
 CBLAS.i
 CDF.i
 Changes
@@ -9,7 +8,6 @@ Chebyshev.i
 Combination.i
 Complex.i
 Const.i
-core
 Deriv.i
 DHT.i
 Diff.i

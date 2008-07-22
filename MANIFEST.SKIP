@@ -9,3 +9,4 @@ blib/*
 examples/sf/bessel.data
 core
 foo*
+

@@ -1,5 +1,6 @@
 .gitignore
 *.core
+core
 Build
 blib
 *.bak
@@ -10,3 +11,5 @@ tmp*
 pod2htm*
 lib/Math/GSL/[A-z0-9]*\.pm
 Makefile
+*.data
+foo*

@@ -110,16 +110,17 @@ sub compile_swig {
     my $blib_lib =  catfile(qw/blib lib/);
 
     mkdir catfile($blib_lib, qw/Math GSL/);
-    my $outdir = catfile($blib_lib, qw/Math GSL/);
+    my $outdir  = catfile($blib_lib, qw/Math GSL/);
+    my $pm_file = "${file_base}.pm";
+    my $from    = catfile($blib_lib, qw/Math GSL/, $pm_file);
+    my $to      = catfile(qw/lib Math GSL/,$pm_file);
+    chmod 0644, $from, $to;
 
     $self->do_system(@swig, '-o', $c_file,
                      '-outdir', $outdir, 
 		             '-perl5', @swig_flags, $file)
 	or die "error building $c_file file from '$file'";
     
-    my $pm_file = "${file_base}.pm";
-    my $from    = catfile($blib_lib, qw/Math GSL/, $pm_file);
-    my $to      = catfile(qw/lib Math GSL/,$pm_file);
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);

@@ -6,3 +6,6 @@ _build
 Build
 .*_wrap.*
 blib/*
+examples/sf/bessel.data
+core
+foo*

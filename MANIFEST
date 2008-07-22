@@ -17,7 +17,6 @@ Eigen.i
 Errno.i
 examples/rng
 examples/sf/bessel
-examples/sf/bessel.data
 examples/sf/README
 FFT.i
 Fit.i

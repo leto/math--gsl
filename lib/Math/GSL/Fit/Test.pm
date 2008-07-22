@@ -32,21 +32,21 @@ sub GSL_FIT_LINEAR : Tests {
     my $xstride = 2; 
     my $wstride = 3; 
     my $ystride = 5;
-    my (@x, @w, @y);
+    my ($x, $w, $y);
     for my $i (0 .. 175)
     {
-        $x[$i] = 0;
-        $w[$i] = 0;
-        $y[$i] = 0;
+        $x->[$i] = 0;
+        $w->[$i] = 0;
+        $y->[$i] = 0;
     }
 
     for my $i (0 .. 35)
     {
-        $x[$i*$xstride] = $norris_x[$i];
-        $w[$i*$wstride] = 1.0;
-        $y[$i*$ystride] = $norris_y[$i];
+        $x->[$i*$xstride] = $norris_x[$i];
+        $w->[$i*$wstride] = 1.0;
+        $y->[$i*$ystride] = $norris_y[$i];
     }
-    my ($status, @results) = gsl_fit_linear([@x], $xstride, [@y], $ystride, 36); 
+    my ($status, @results) = gsl_fit_linear($x, $xstride, $y, $ystride, 36); 
 # this way of writing the arrays works but it complains
 # about a lot of unitialized entries even with the stride correctly set, 
 # is there any way to bypass this without having to initialize every element of the array like I do?

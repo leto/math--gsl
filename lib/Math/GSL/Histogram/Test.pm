@@ -15,6 +15,7 @@ sub make_fixture : Test(setup) {
 }
 
 sub teardown : Test(teardown) {
+    unlink 'histogram' if -f 'histogram';
 }
 
 sub ALLOC_FREE : Tests {
@@ -103,8 +104,31 @@ sub MEAN : Tests {
 sub SUM : Tests {
     my $self = shift;
     gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
-    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+    
+ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
     ok_status(gsl_histogram_increment($self->{H}, 11.5 ), $GSL_SUCCESS);
     ok_similar(2, gsl_histogram_sum($self->{H}));
 }
+
+sub SHIFT : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_shift($self->{H}, 2), $GSL_SUCCESS);
+    map { is(gsl_histogram_get($self->{H}, $_), 2, "shifted values")} (0..99); 
+}
+
+sub FWRITE_FREAD : Tests {
+    my $self = shift;
+    my $stream = fopen("histogram", "w");
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+
+    is(gsl_histogram_fwrite($stream, $self->{H}),0);  
+    fclose($stream);
+   
+    $stream = fopen("histogram", "r");
+    my $h = gsl_histogram_alloc(100);  
+    is(gsl_histogram_fread($stream, $h),0);  
+    map { is(gsl_histogram_get($h, $_), 0)} (0..99);
+    fclose($stream);
+}   
 42;

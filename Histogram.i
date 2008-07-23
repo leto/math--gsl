@@ -131,41 +131,41 @@ where d is the bin spacing, d = (xmax-xmin)/n.
 
 =over
 
-=item C<gsl_histogram_memcpy>
+=item C<gsl_histogram_memcpy($dest, $src)> - This function copies the histogram $src into the pre-existing histogram $dest, making $dest into an exact copy of $src. The two histograms must be of the same size.
 
-=item C<gsl_histogram_clone >
+=item C<gsl_histogram_clone($src)> - This function returns a pointer to a newly created histogram which is an exact copy of the histogram $src.
 
-=item C<gsl_histogram_max_val >
+=item C<gsl_histogram_max_val($h)> - This function returns the maximum value contained in the histogram bins. 
 
-=item C<gsl_histogram_max_bin >
+=item C<gsl_histogram_max_bin($h)> - This function returns the index of the bin containing the maximum value. In the case where several bins contain the same maximum value the smallest index is returned.
 
-=item C<gsl_histogram_min_val >
+=item C<gsl_histogram_min_val($h)> - This function returns the minimum value contained in the histogram bins.
 
-=item C<gsl_histogram_min_bin >
+=item C<gsl_histogram_min_bin($h)> - This function returns the index of the bin containing the minimum value. In the case where several bins contain the same maximum value the smallest index is returned.
 
 =item C<gsl_histogram_equal_bins_p >
 
-=item C<gsl_histogram_add >
+=item C<gsl_histogram_add($h1, $h2)> - This function adds the contents of the bins in histogram $h2 to the corresponding bins of histogram $h1, i.e. h'_1(i) = h_1(i) + h_2(i). The two histograms must have identical bin ranges.
 
-=item C<gsl_histogram_sub >
+=item C<gsl_histogram_sub($h1, $h2)> - This function subtracts the contents of the bins in histogram $h2 from the corresponding bins of histogram $h1, i.e. h'_1(i) = h_1(i) - h_2(i). The two histograms must have identical bin ranges.
 
-=item C<gsl_histogram_mul >
+=item C<gsl_histogram_mul($h1, $h2)> - This function multiplies the contents of the bins of histogram $h1 by the contents of the corresponding bins in histogram $h2, i.e. h'_1(i) = h_1(i) * h_2(i). The two histograms must have identical bin ranges.
 
-=item C<gsl_histogram_div >
+=item C<gsl_histogram_div($h1, $h2)> - This function divides the contents of the bins of histogram $h1 by the contents of the corresponding bins in histogram $h2, i.e. h'_1(i) = h_1(i) / h_2(i). The two histograms must have identical bin ranges.
 
-=item C<gsl_histogram_scale >
+=item C<gsl_histogram_scale($h, $scale)> - This function multiplies the contents of the bins of histogram $h by the constant $scale, i.e. h'_1(i) = h_1(i) * scale. 
 
-=item C<gsl_histogram_shift >
+=item C<gsl_histogram_shift($h, $offset)> - This function shifts the contents of the bins of histogram $h by the constant $offset, i.e. h'_1(i) = h_1(i) + offset. 
 
-=item C<gsl_histogram_sigma >
+=item C<gsl_histogram_sigma($h)> - This function returns the standard deviation of the histogrammed variable, where the histogram is regarded as a probability distribution. Negative bin values are ignored for the purposes of this calculation. The accuracy of the result is limited by the bin width.
 
-=item C<gsl_histogram_mean >
+=item C<gsl_histogram_mean($h)> - This function returns the mean of the histogrammed variable, where the histogram is regarded as a probability distribution. Negative bin values are ignored for the purposes of this calculation. The accuracy of the result is limited by the bin width. 
 
-=item C<gsl_histogram_sum >
+=item C<gsl_histogram_sum($h)> - This function returns the sum of all bin values. Negative bin values are included in the sum.
 
-=item C<gsl_histogram_fwrite >
+=item C<gsl_histogram_fwrite($stream, $h)> - This function writes the ranges and bins of the histogram $h to the stream $stream, which has been opened by the fopen function, in binary format. The return value is 0 for success and GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
 
-=item C<gsl_histogram_fread >
+=item C<gsl_histogram_fread($stream, $h)> - This function reads into the histogram $h from the open stream stream in binary format. The histogram $h must be preallocated with the correct size since the function uses the number of bins in $h to determine how many bytes to read. The return value is 0 for success and GSL_EFAILED if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
 
 =item C<gsl_histogram_fprintf >
 

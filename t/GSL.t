@@ -6,6 +6,7 @@ use strict;
 
 {
     my $results = { 
+                q{is_similar(undef, [1,2,3]) } => 0, 
                 q{is_similar(0.10005,0.1000501, 1e-5)}  => 1,
                 q{is_similar(0.10005,0.1000501, 1e-7)}  => 0,
                 q{is_similar([1,2,3    ], [1,2,3.001])} => 0, 

@@ -17,8 +17,22 @@
     //Perl_sv_dump($result);
     argvi++;
 }
+%typemap(argout) (double * dest, const size_t k, const gsl_vector * v) {
+    fprintf(stderr, "matched argout\n");
+    int i=0;
+    AV* tempav = newAV();
 
-%apply double * { double *data };
+    while( i < $2 ) {
+        av_push(tempav, newSVnv((double) $1[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+}
+
+
+%apply double * { double *data, double *dest };
 
 %{
     #include "gsl/gsl_nan.h"

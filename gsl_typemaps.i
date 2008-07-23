@@ -19,7 +19,7 @@
 }
 
 
-%apply double const [] { double *data, double *f_in, double *f_out, double data[] };
+%apply double const [] { double *data, double *dest, double *f_in, double *f_out, double data[] };
 %apply double const [] { double x[], double a[], double b[] };
 %apply double const [] { const double * x, const double * y };
 %apply double const [] { const double x_array[] };

@@ -23,7 +23,14 @@ sub GSL_SORT_VECTOR : Tests {
    ok_similar( [ $vec->as_list ], [ 1 .. 6 ] );
 } 
 
-
+sub GSL_SORT_VECTOR_LARGEST : Tests {
+   local $TODO = 'gsl_sort_vector_largest';
+   my $vec = Math::GSL::Vector->new([reverse 0..50]);
+   my $largest10 = [1..10];
+   my ($status, $stuff) = gsl_sort_vector_largest($largest10, 10, $vec->raw);
+   ok_status( $status, $GSL_SUCCESS);
+   ok_similar( $stuff, [ reverse (41 .. 50) ] );
+} 
 sub GSL_SORT_VECTOR_INDEX : Tests {
   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
   my $p = Math::GSL::Permutation->new(5);

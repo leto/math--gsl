@@ -114,21 +114,26 @@ sub SHIFT : Tests {
     my $self = shift;
     gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
     ok_status(gsl_histogram_shift($self->{H}, 2), $GSL_SUCCESS);
-    map { is(gsl_histogram_get($self->{H}, $_), 2, "shifted values")} (0..99); 
+    is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
+               [ (2) x 100 ]
+    );
 }
 
 sub FWRITE_FREAD : Tests {
     my $self = shift;
     my $stream = fopen("histogram", "w");
     gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
 
-    is(gsl_histogram_fwrite($stream, $self->{H}),0);  
+    ok_status(gsl_histogram_fwrite($stream, $self->{H}),$GSL_SUCCESS);  
     fclose($stream);
    
     $stream = fopen("histogram", "r");
     my $h = gsl_histogram_alloc(100);  
-    is(gsl_histogram_fread($stream, $h),0);  
-    map { is(gsl_histogram_get($h, $_), 0)} (0..99);
+    ok_status(gsl_histogram_fread($stream, $h),$GSL_SUCCESS);  
+    is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
+               [ (0) x 50, 1, (0) x 49 ]
+    );
     fclose($stream);
 }   
 42;

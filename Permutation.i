@@ -2,9 +2,6 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-FILE * fopen(char *, char *);
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_permute.h"
     #include "gsl/gsl_permute_double.h"
@@ -79,6 +76,10 @@ sub get {
 }
 
 sub raw { (shift)->{_permutation} }
+sub length { (shift)->{_length} }
+
+
+
 
 __END__
 

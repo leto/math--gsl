@@ -1,12 +1,15 @@
 package Math::GSL::Permutation::Test;
 use base q{Test::Class};
 use Test::More;
+use Test::Exception;
 use Math::GSL::Permutation qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 
+BEGIN { gsl_set_error_handler_off(); }
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{permutation} = gsl_permutation_alloc(6);
@@ -177,17 +180,30 @@ sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
     fclose($fh);
 }
 
-#sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
-#    my $self = shift;
-#    my $fh = fopen("permutation", "w");
-#    gsl_permutation_init($self->{permutation});
-#    gsl_permutation_fprintf($fh, $self->{permutation}, "%f");
-#    fclose($fh);
-#
-#    $fh = fopen("permutation", "r");
-#    my $p->{permutation} = gsl_permutation_alloc(6); 
-#    is(gsl_permutation_fscanf($fh, $p->{permutation}), 0); # I don't understand why gsl_permutation_fscanf fails there
-#    map { is(gsl_permutation_get($p->{permutation}, $_), $_) } (0..5);
-#    fclose($fh);
-#}
+sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
+    my $self = shift;
+    my $fh = fopen("permutation", "w");
+    gsl_permutation_init($self->{permutation});
+    ok_status( gsl_permutation_fprintf($fh, $self->{permutation}, "%f"), $GSL_SUCCESS);
+    fclose($fh);
+
+    local $TODO = "odd error with fscanf";
+    $fh = fopen("permutation", "r");
+    my $p->{permutation} = gsl_permutation_alloc(6); 
+    #ok_status(gsl_permutation_fscanf($fh, $p->{permutation}), $GSL_SUCCESS); 
+    is_deeply( [ map {gsl_permutation_get($p->{permutation}, $_) }  (0..5) ],
+               [ 0 .. 5 ],
+    );
+    fclose($fh);
+}
+
+sub NEW: Tests { 
+    my $perm = Math::GSL::Permutation->new(42);
+    isa_ok($perm, 'Math::GSL::Permutation' );
+}
+
+sub AS_LIST: Tests { 
+    my $perm = Math::GSL::Permutation->new(5);
+    is_deeply( [ $perm->as_list ] , [ 0 .. 4 ] );
+}
 1;

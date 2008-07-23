@@ -256,15 +256,15 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_dgemm($TransA, $TransB, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha op(A) op(B) + \beta C where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans and similarly for the parameter $TransB. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsymm>
+=item C<gsl_blas_dsymm($Side, $Uplo, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha A B + \beta C for $Side is $CblasLeft and C = \alpha B A + \beta C for $Side is $CblasRight, where the matrix $A is symmetric. When $Uplo is $CblasUpper then the upper triangle and diagonal of $A are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $A are used. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsyrk>
+=item C<gsl_blas_dsyrk($Uplo, $Trans, $alpha, $A, $beta, $C)> - This function computes a rank-k update of the symmetric matrix $C, C = \alpha A A^T + \beta C when $Trans is $CblasNoTrans and C = \alpha A^T A + \beta C when $Trans is $CblasTrans. Since the matrix $C is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dsyr2k>
+=item C<gsl_blas_dsyr2k($Uplo, $Trans, $alpha, $A, $B, $beta, $C)> - This function computes a rank-2k update of the symmetric matrix $C, C = \alpha A B^T + \alpha B A^T + \beta C when $Trans is $CblasNoTrans and C = \alpha A^T B + \alpha B^T A + \beta C when $Trans is $CblasTrans. Since the matrix $C is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dtrmm>
+=item C<gsl_blas_dtrmm($Side, $Uplo, $TransA, $Diag, $alpha, $A, $B)> - This function computes the matrix-matrix product B = \alpha op(A) B for $Side is $CblasLeft and B = \alpha B op(A) for $Side is $CblasRight. The matrix $A is triangular and op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans. When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of $A is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_dtrsm >
+=item C<gsl_blas_dtrsm($Side, $Uplo, $TransA, $Diag, $alpha, $A, $B)> - This function computes the inverse-matrix matrix product B = \alpha op(inv(A))B for $Side is $CblasLeft and B = \alpha B op(inv(A)) for $Side is $CblasRight. The matrix $A is triangular and op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans. When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of $A is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise.
 
 =item C<gsl_blas_cgemm>
 
@@ -278,17 +278,17 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_ctrsm>
 
-=item C<gsl_blas_zgemm>
+=item C<gsl_blas_zgemm($TransA, $TransB, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha op(A) op(B) + \beta C where op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans and similarly for the parameter $TransB. The function returns 0 if the operation suceeded, 1 otherwise. $A, $B and $C are complex matrices
 
-=item C<gsl_blas_zsymm >
+=item C<gsl_blas_zsymm($Side, $Uplo, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha A B + \beta C for $Side is $CblasLeft and C = \alpha B A + \beta C for $Side is $CblasRight, where the matrix $A is symmetric. When $Uplo is $CblasUpper then the upper triangle and diagonal of $A are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $A are used. $A, $B and $C are complex matrices. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_zsyrk>
+=item C<gsl_blas_zsyrk($Uplo, $Trans, $alpha, $A, $beta, $C)> - This function computes a rank-k update of the symmetric complex matrix $C, C = \alpha A A^T + \beta C when $Trans is $CblasNoTrans and C = \alpha A^T A + \beta C when $Trans is $CblasTrans. Since the matrix $C is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The function returns 0 if the operation suceeded, 1 otherwise.
 
-=item C<gsl_blas_zsyr2k>
+=item C<gsl_blas_zsyr2k($Uplo, $Trans, $alpha, $A, $B, $beta, $C)> - This function computes a rank-2k update of the symmetric matrix $C, C = \alpha A B^T + \alpha B A^T + \beta C when $Trans is $CblasNoTrans and C = \alpha A^T B + \alpha B^T A + \beta C when $Trans is $CblasTrans. Since the matrix $C is symmetric only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The function returns 0 if the operation suceeded, 1 otherwise. $A, $B and $C are complex matrices and $beta is a complex number.
 
-=item C<gsl_blas_ztrmm>
+=item C<gsl_blas_ztrmm($Side, $Uplo, $TransA, $Diag, $alpha, $A, $B)> - This function computes the matrix-matrix product B = \alpha op(A) B for $Side is $CblasLeft and B = \alpha B op(A) for $Side is $CblasRight. The matrix $A is triangular and op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans. When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of $A is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise. $A and $B are complex matrices and $alpha is a complex number.
 
-=item C<gsl_blas_ztrsm >
+=item C<gsl_blas_ztrsm($Side, $Uplo, $TransA, $Diag, $alpha, $A, $B)> - This function computes the inverse-matrix matrix product B = \alpha op(inv(A))B for $Side is $CblasLeft and B = \alpha B op(inv(A)) for $Side is $CblasRight. The matrix $A is triangular and op(A) = A, A^T, A^H for $TransA = $CblasNoTrans, $CblasTrans, $CblasConjTrans. When $Uplo is $CblasUpper then the upper triangle of $A is used, and when $Uplo is $CblasLower then the lower triangle of $A is used. If $Diag is $CblasNonUnit then the diagonal of $A is used, but if $Diag is $CblasUnit then the diagonal elements of the matrix $A are taken as unity and are not referenced. The function returns 0 if the operation suceeded, 1 otherwise. $A and $B are complex matrices and $alpha is a complex number.
 
 =item C<gsl_blas_chemm>
 
@@ -296,11 +296,11 @@ The functions of this module are divised into 3 levels:
 
 =item C<gsl_blas_cher2k>
 
-=item C<gsl_blas_zhemm >
+=item C<gsl_blas_zhemm($Side, $Uplo, $alpha, $A, $B, $beta, $C)> - This function computes the matrix-matrix product and sum C = \alpha A B + \beta C for $Side is $CblasLeft and C = \alpha B A + \beta C for $Side is $CblasRight, where the matrix $A is hermitian. When Uplo is CblasUpper then the upper triangle and diagonal of A are used, and when Uplo is CblasLower then the lower triangle and diagonal of A are used. The imaginary elements of the diagonal are automatically set to zero. 
 
-=item C<gsl_blas_zherk >
+=item C<gsl_blas_zherk($Uplo, $Trans, $alpha, $A, $beta, $C)> - This function computes a rank-k update of the hermitian matrix $C, C = \alpha A A^H + \beta C when $Trans is $CblasNoTrans and C = \alpha A^H A + \beta C when $Trans is $CblasTrans. Since the matrix $C is hermitian only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The imaginary elements of the diagonal are automatically set to zero. The function returns 0 if the operation suceeded, 1 otherwise. $A, $B and $C are complex matrices and $alpha and $beta are complex numbers.
 
-=item C<gsl_blas_zher2k >
+=item C<gsl_blas_zher2k($Uplo, $Trans, $alpha, $A, $B, $beta, $C)> - This function computes a rank-2k update of the hermitian matrix $C, C = \alpha A B^H + \alpha^* B A^H + \beta C when $Trans is $CblasNoTrans and C = \alpha A^H B + \alpha^* B^H A + \beta C when $Trans is $CblasConjTrans. Since the matrix $C is hermitian only its upper half or lower half need to be stored. When $Uplo is $CblasUpper then the upper triangle and diagonal of $C are used, and when $Uplo is $CblasLower then the lower triangle and diagonal of $C are used. The imaginary elements of the diagonal are automatically set to zero. The function returns 0 if the operation suceeded, 1 otherwise.
 
 =back
 

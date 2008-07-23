@@ -20,7 +20,7 @@ our %EXPORT_TAGS = (
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = 0.044;
+our $VERSION = 0.05;
 
 =head1 NAME
 
@@ -28,7 +28,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
 
 =head1 VERSION
 
-Version 0.044
+Version 0.05
 
 =cut
 

@@ -13,7 +13,10 @@
 };
 
 %typemap(in) double (*)(double,void *) {
-    printf("function pointer * \n");
+    printf("function pointer * %d \n", (int) $1);
+    printf("input * %d \n", (int) $input);
+    Perl_sv_dump( $input );
+
 };
 //%apply double * OUTPUT { double *result,double *abserr };
 

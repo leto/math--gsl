@@ -4,7 +4,7 @@ tmp.*
 \..*sw?
 \.bak
 _build
-Build
+^Build$
 blib/*
 .*\.data
 .*core

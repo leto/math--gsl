@@ -4,6 +4,7 @@ Block.i
 Block_wrap.c
 BSpline.i
 BSpline_wrap.c
+Build.PL
 CBLAS.i
 CBLAS_wrap.c
 CDF.i
@@ -136,7 +137,7 @@ Linalg_wrap.c
 Machine.i
 Machine_wrap.c
 Makefile.PL
-MANIFEST			This list of files
+MANIFEST
 MANIFEST.SKIP
 Matrix.i
 Matrix_wrap.c

@@ -1,12 +1,12 @@
 \.git*
 tmp.*
+.*\.o
 \..*sw?
 \.bak
 _build
-Build
-.*_wrap.*
+^Build$
 blib/*
-examples/sf/bessel.data
-core
+.*\.data
+.*core
 foo*
-
+.*\.gz

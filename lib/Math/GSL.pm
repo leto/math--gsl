@@ -12,7 +12,11 @@ use Data::Dumper;
 use Test::More;
 use Scalar::Util qw/looks_like_number/;
 our @EXPORT = qw();
-our @EXPORT_OK = qw( ok_similar ok_status  is_similar is_similar_relative verify verify_results $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX);
+our @EXPORT_OK = qw( ok_similar ok_status  is_similar
+                     is_similar_relative verify verify_results 
+                     $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
+                     $GSL_PREC_SINGLE $GSL_PREC_APPROX
+                   );
 
 our %EXPORT_TAGS = ( 
                      all => \@EXPORT_OK,
@@ -34,18 +38,26 @@ Version 0.05_01
 
 =head1 SYNOPSIS
 
-    use Math::GSL qw/:all/;
-    use Math::GSL qw/ok_similar is_similar/;
-    use Math::GSL qw/$GSL_MODE_DEFAULT $GSL_PREC_DOUBLE $GSL_PREC_SINGLE $GSL_PREC_APPROX/;
+    use Math::GSL::Matrix qw/:all/;
+    my $matrix = Math::GSL::Matrix->new(5,5);   # 5x5 zero matrix
+    $matrix->set_col(0, [1..5])
+           ->set_row(2, [5..9]);
+    my @matrix = $matrix->as_list;              # matrix as Perl list
+    my $gsl_matrix = $matrix->raw;              # underlying GSL object
 
-This module contains a few helper functions and global variables. Each GSL subsystem has it's own
-module. For example, the random number generator subsystem is Math::GSL::RNG .
+Each GSL subsystem has it's own module. For example, the random number generator
+subsystem is Math::GSL::RNG. Many subsystems have a more Perlish and
+object-oriented frontend which can be used, as the above example shows. The raw
+GSL object is useful for using the low-level GSL function, which in the case of
+the Matrix subsytem, would be of the form gsl_matrix_* . Each module has further
+documentation about the low-level C functions as well as using the more
+intuitive (but slightly slower) higher-level functions.
 
 =head1 SUBSYSTEMS
 
+    Math::GSL::BLAS             - Linear Algebra Functions
     Math::GSL::BSpline          - BSplines
-    Math::GSL::Block
-    Math::GSL::CBLAS
+    Math::GSL::CBLAS            - Linear Algebra Functions
     Math::GSL::CDF              - Cumulative Distribution Functions
     Math::GSL::Chebyshev        - Chebyshev Polynomials
     Math::GSL::Combination      - Combinatoric Functions
@@ -53,7 +65,6 @@ module. For example, the random number generator subsystem is Math::GSL::RNG .
     Math::GSL::Const            - Various Constants
     Math::GSL::DHT              - Discrete Hilbert Transform
     Math::GSL::Deriv            - Numerical Derivative
-    Math::GSL::Diff
     Math::GSL::Eigen            - Eigenvalues and Eigenvectors
     Math::GSL::Errno            - Error Handling
     Math::GSL::FFT              - Fast Fourier Transform

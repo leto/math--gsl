@@ -26,6 +26,12 @@
                gsl_root_test_interval 
                gsl_root_test_residual 
                gsl_root_test_delta 
+               $gsl_root_fsolver_bisection    
+               $gsl_root_fsolver_brent   
+               $gsl_root_fsolver_falsepos     
+               $gsl_root_fdfsolver_newton     
+               $gsl_root_fdfsolver_secant     
+               $gsl_root_fdfsolver_steffenson 
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 %}

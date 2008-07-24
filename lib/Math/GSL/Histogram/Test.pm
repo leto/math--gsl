@@ -135,5 +135,22 @@ sub FWRITE_FREAD : Tests {
                [ (0) x 50, 1, (0) x 49 ]
     );
     fclose($stream);
-}   
+}
+  
+sub GET_RANGE : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    my @got = gsl_histogram_get_range($self->{H}, 50);
+    ok_status($got[0], $GSL_SUCCESS);
+    is_deeply( [ $got[1], $got[2]], [50, 51]);
+}
+
+sub FIND : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    my @got = gsl_histogram_find($self->{H}, 1);
+    ok_status($got[0], $GSL_SUCCESS);
+    is($got[1], 1);
+}
+
 42;

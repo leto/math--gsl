@@ -117,6 +117,19 @@ Math::GSL::Vector - Functions concerning vectors
 
 =cut
 
+=head1 Objected Oriented Interface to GSL Math::GSL::Vector
+
+=head2 Math::GSL::Vector->new()
+
+Creates a new Vector of the given size.
+
+    my $vector = Math::GSL::Matrix->new(3);
+
+You can also create and set directly the values of the vector like this :
+
+   my $vector = Math::GSL::Vector->new([2,4,1]);
+
+=cut
 sub new {
     my ($class, $values) = @_;
     my $length  = $#$values;
@@ -137,28 +150,102 @@ sub new {
     $this->{_vector} = $vector; 
     bless $this, $class;
 }
+=head2 raw()
+
+Get the underlying GSL vector object created by SWIG, useful for using gsl_vector_* functions which do not have an OO counterpart.
+
+    my $vector    = Math::GSL::vector->new(3);
+    my $gsl_vector = $vector->raw;
+    my $stuff      = gsl_vector_get($gsl_vector, 1);
+
+=cut
 
 sub raw { (shift)->{_vector} }
+
+=head2 min()
+
+Returns the minimum value contained in the vector.
+
+   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $minimum = $vector->min;
+
+=cut 
 
 sub min {
     my $self=shift;
     return gsl_vector_min($self->raw);
 }
 
+=head2 max()
+
+Returns the minimum value contained in the vector.
+
+   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $maximum = $vector->max;
+
+=cut 
+
 sub max {
     my $self=shift;
     return gsl_vector_max($self->raw);
 }
+
+=head2 length()
+
+Returns the number of elements contained in the vector.
+
+   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $length = $vector->length;
+
+=cut 
+
 sub length { my $self=shift; $self->{_length} }
+
+=head2  as_list() 
+
+Gets the content of a Math::GSL::Vector object as a Perl list.
+
+    my $vector = Math::GSL::vector->new(3);
+    ...
+    my @values = $vector->as_list;
+=cut
 
 sub as_list {
     my $self=shift;
     $self->get( [ 0 .. $self->length - 1  ] );
 }
+
+=head2  get() 
+
+Gets the value of an of a Math::GSL::Vector object.
+
+    my $vector = Math::GSL::vector->new(3);
+    ...
+    my @values = $vector->get(2);
+
+You can also enter an array of indices to receive their corresponding values:
+
+    my $vector = Math::GSL::vector->new(3);
+    ...
+    my @values = $vector->get([0,2]);
+
+=cut
+
 sub get {
     my ($self, $indices) = @_;
     return  map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ;
 }
+
+=head2  set() 
+
+Sets values of an of a Math::GSL::Vector object.
+
+    my $vector = Math::GSL::vector->new(3);
+    $vector->set([1,2], [8,23]);
+
+This sets the second and third value to 8 and 23.
+
+=cut
 
 sub set {
     my ($self, $indices, $values) = @_;

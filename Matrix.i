@@ -376,8 +376,11 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 
 =head1 Objected Oriented Interface to GSL Math::GSL::Matrix
 
+=head2 Math::GSL::Matrix->new()
+
+Creates a new Matrix of the given size.
+
     my $matrix = Math::GSL::Matrix->new(10,10);
-    printf "My matrix is %d x %d\n", $matrix->rows, $matrix->cols;
 =cut
 
 sub new 
@@ -451,6 +454,16 @@ sub as_list
     return @total;
 }
 
+=head2 row()
+
+Returns a row matrix of the row you enter.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $matrix_row = $matrix->row(0);
+
+=cut
+
 sub row
 {
     my ($self, $row) = @_;
@@ -472,6 +485,16 @@ sub row
     return $rowmat;
 }
 
+=head2 col()
+
+Returns a col matrix of the column you enter.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $matrix_col = $matrix->col(0);
+
+=cut
+
 sub col 
 {
     my ($self, $col) = @_;
@@ -487,6 +510,21 @@ sub col
     return $colmat;
 }
 
+=head2 set_row()
+
+Sets a the values of a row with the elements of an array.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_row(0, [8, 6, 2]);
+
+You can also set multiple rows at once with chained calls:
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_row(0, [8, 6, 2]);
+           ->set_row(1, [2, 4, 1]);
+    ...
+
+=cut
+
 sub set_row {
  my ($self, $row, $values) = @_;
  my $length = $#$values;
@@ -496,6 +534,21 @@ sub set_row {
  map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
  return $self;
 }
+
+=head2 set_col()
+
+Sets a the values of a column with the elements of an array.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_col(0, [8, 6, 2]);
+
+You can also set multiple columns at once with chained calls:
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_col(0, [8, 6, 2]);
+           ->set_col(1, [2, 4, 1]);
+    ...
+
+=cut
 
 sub set_col {
  my ($self, $col, $values) = @_;

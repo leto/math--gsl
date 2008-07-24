@@ -64,7 +64,17 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_wavelet_transform>
 
-=item C<gsl_wavelet_transform_forward>
+=item C<gsl_wavelet_transform_forward($w, $data, $stride, $n, $work)> - This functions compute in-place forward discrete wavelet transforms of length $n with stride $stride on the array $data. The length of the transform $n is restricted to powers of two. For the forward transform, the elements of the original array are replaced by the discrete wavelet transform f_i -> w_{j,k} in a packed triangular storage layout, where j is the index of the level j = 0 ... J-1 and k is the index of the coefficient within each level, k = 0 ... (2^j)-1. The total number of levels is J = \log_2(n). The output data has the following form,
+
+=over
+
+=item (s_{-1,0}, d_{0,0}, d_{1,0}, d_{1,1}, d_{2,0}, ...,
+
+=item d_{j,k}, ..., d_{J-1,2^{J-1}-1})
+
+=back
+     
+where the first element is the smoothing coefficient s_{-1,0}, followed by the detail coefficients d_{j,k} for each level j. The backward transform inverts these coefficients to obtain the original data. These functions return a status of $GSL_SUCCESS upon successful completion. $GSL_EINVAL is returned if $n is not an integer power of 2 or if insufficient workspace is provided.
 
 =item C<gsl_wavelet_transform_inverse>
 
@@ -114,6 +124,4 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
-
-
 %}

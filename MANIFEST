@@ -1,3 +1,4 @@
+Build.PL
 BLAS.i
 Block.i
 BSpline.i
@@ -15,6 +16,8 @@ Eigen.i
 Errno.i
 examples/rng
 examples/sf/bessel
+examples/sf/bessel.png
+examples/sf/plot_bessel.gnuplot
 examples/sf/README
 FFT.i
 Fit.i

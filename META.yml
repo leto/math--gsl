@@ -483,6 +483,8 @@ provides:
     file: lib/Math/GSL/Sort.pm
   Math::GSL::Sort::Test:
     file: lib/Math/GSL/Sort/Test.pm
+  Math::GSL::Sort::gsl_permutation_struct:
+    file: lib/Math/GSL/Sort.pm
   Math::GSL::Sortc:
     file: lib/Math/GSL/Sort.pm
   Math::GSL::Spline:

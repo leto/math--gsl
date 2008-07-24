@@ -118,6 +118,8 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_histogram_set_ranges_uniform($h, $xmin, $xmax)> - This function sets the ranges of the existing histogram $h to cover the range $xmin to $xmax uniformly. The values of the histogram bins are reset to zero. The bin ranges are shown in the table below,
 
+=back
+
 =over
 
 =item  bin[0] corresponds to xmin <= x < xmin + d
@@ -197,6 +199,8 @@ The values of the ranges are formatted using range_format and the value of the b
 =item C<gsl_histogram_pdf_free($p)> - This function frees the probability distribution function $p and all of the memory associated with it.
 
 =item C<gsl_histogram_pdf_sample($p, $r)> -     This function uses $r, a uniform random number between zero and one, to compute a single random sample from the probability distribution $p. The algorithm used to compute the sample s is given by the following formula, s = range[i] + delta * (range[i+1] - range[i]) where i is the index which satisfies sum[i] <= r < sum[i+1] and delta is (r - sum[i])/(sum[i+1] - sum[i]).
+
+=back
 
 =head1 EXAMPLES
 

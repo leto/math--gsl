@@ -73,25 +73,17 @@ sub GSL_VECTOR_ISNEG: Tests {
     ok( gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
 }
 
-sub GSL_VECTOR_MAX: Tests {
-    my $self = shift;
-    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-    ok( is_similar( gsl_vector_max($self->{vector}) ,16), 'gsl_vector_max' );
-}
 sub GSL_VECTOR_NEW: Tests {
     my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (1..10) ] );
     isa_ok( $vec, 'Math::GSL::Vector', 'Math::GSL::Vector->new($values)' );
 
-    eval { Math::GSL::Vector->new(-1) };
-    ok( $@, 'new takes only positive indices');
+    dies_ok( sub { Math::GSL::Vector->new(-1) }, 'new takes only positive indices');
 
-    eval { Math::GSL::Vector->new(3.14) };
-    ok( $@, 'new takes only integer indices');
+    dies_ok( sub { Math::GSL::Vector->new(3.14) },  'new takes only integer indices');
 
-    eval { Math::GSL::Vector->new([]) };
-    ok( $@, 'new takes only nonempty array refs');
+    dies_ok( sub { Math::GSL::Vector->new([]) },'new takes only nonempty array refs');
 
-    eval { $vec = Math::GSL::Vector->new(42) };
+    $vec = Math::GSL::Vector->new(42);
     ok( $vec->length == 42 , 'new creates empty vectors of a given length');
 }
 sub GSL_VECTOR_AS_LIST: Tests {

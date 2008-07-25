@@ -157,25 +157,25 @@ sub GSL_LINALG_LU_INVERT : Tests {
     gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     gsl_linalg_LU_invert($self->{matrix}, $permutation, $inverse);
     
-    is (gsl_matrix_get($inverse, 0, 0), -9/40);
-    is (gsl_matrix_get($inverse, 0, 1), 1/40);
-    is (gsl_matrix_get($inverse, 0, 2), 1/40);
-    is (gsl_matrix_get($inverse, 0, 3), 11/40);
+    is_similar(gsl_matrix_get($inverse, 0, 0), -9/40);
+    is_similar(gsl_matrix_get($inverse, 0, 1), 1/40);
+    is_similar(gsl_matrix_get($inverse, 0, 2), 1/40);
+    is_similar(gsl_matrix_get($inverse, 0, 3), 11/40);
 
-    is (gsl_matrix_get($inverse, 1, 0), 1/40);
-    is (gsl_matrix_get($inverse, 1, 1), 1/40);
-    is (gsl_matrix_get($inverse, 1, 2), 11/40);
-    is (gsl_matrix_get($inverse, 1, 3), -9/40);
+    is_similar(gsl_matrix_get($inverse, 1, 0), 1/40);
+    is_similar(gsl_matrix_get($inverse, 1, 1), 1/40);
+    is_similar(gsl_matrix_get($inverse, 1, 2), 11/40);
+    is_similar(gsl_matrix_get($inverse, 1, 3), -9/40);
 
-    is (gsl_matrix_get($inverse, 2, 0), 1/40);
-    is (gsl_matrix_get($inverse, 2, 1), 11/40);
-    is (gsl_matrix_get($inverse, 2, 2), -9/40);
-    is (gsl_matrix_get($inverse, 2, 3), 1/40);
+    is_similar(gsl_matrix_get($inverse, 2, 0), 1/40);
+    is_similar(gsl_matrix_get($inverse, 2, 1), 11/40);
+    is_similar(gsl_matrix_get($inverse, 2, 2), -9/40);
+    is_similar(gsl_matrix_get($inverse, 2, 3), 1/40);
 
-    is (gsl_matrix_get($inverse, 3, 0), 11/40);
-    is (gsl_matrix_get($inverse, 3, 1), -9/40);
-    is (gsl_matrix_get($inverse, 3, 2), 1/40);
-    is (gsl_matrix_get($inverse, 3, 3), 1/40);
+    is_similar(gsl_matrix_get($inverse, 3, 0), 11/40);
+    is_similar(gsl_matrix_get($inverse, 3, 1), -9/40);
+    is_similar(gsl_matrix_get($inverse, 3, 2), 1/40);
+    is_similar(gsl_matrix_get($inverse, 3, 3), 1/40);
 }
 
 sub GSL_LINALG_LU_DET : Tests {
@@ -244,7 +244,7 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     my $save = gsl_matrix_alloc(3, 5);
     gsl_matrix_memcpy($save, $matrix);
 
-    is(gsl_linalg_QR_decomp($matrix, $tau),0);
+    ok_status(gsl_linalg_QR_decomp($matrix, $tau),$GSL_SUCCESS);
     is(gsl_linalg_QR_unpack($matrix, $tau, $q, $r), 0);
   # compute a = q r 
   gsl_blas_dgemm ($CblasNoTrans, $CblasNoTrans, 1.0, $q, $r, 0.0, $a);
@@ -279,7 +279,7 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
     gsl_matrix_set($self->{matrix}, 3, 2, 20);
     gsl_matrix_set($self->{matrix}, 3, 3, 30);
    
-    is(gsl_linalg_cholesky_decomp($self->{matrix}), 0);
+    ok_status(gsl_linalg_cholesky_decomp($self->{matrix}), $GSL_SUCCESS);
     my $v = gsl_matrix_diagonal($self->{matrix});
     ok_similar( 
         [ map { gsl_vector_get($v->{vector}, $_)} (0..3) ], [(1)x 4 ]
@@ -314,21 +314,21 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
     gsl_matrix_set($self->{matrix}, 3, 3, -8);   
     my $tau = gsl_vector_alloc(4);
-    is(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau),0);
+    ok_status(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau),$GSL_SUCCESS);
     my $U = gsl_matrix_alloc(4,4);
-    is(gsl_linalg_hessenberg_unpack($self->{matrix}, $tau, $U),0);
+    ok_status(gsl_linalg_hessenberg_unpack($self->{matrix}, $tau, $U),$GSL_SUCCESS);
     is(gsl_matrix_get($U, 0, 0), 1);
     map { is(gsl_matrix_get($U, $_, 0), 0) } (1..3);
     map { is(gsl_matrix_get($U, 0, $_), 0) } (1..3);
-    is(gsl_matrix_get($U, 1, 1), -0.620173672946042309);
-    is(gsl_matrix_get($U, 1, 2), -0.268847804615518438);
-    is(gsl_matrix_get($U, 1, 3), 0.736956900597335762);
-    is(gsl_matrix_get($U, 2, 1), 0.248069469178416908);
-    is(gsl_matrix_get($U, 2, 2), -0.958442423454322956);
-    is(gsl_matrix_get($U, 2, 3), -0.140888819231843737);
-    is(gsl_matrix_get($U, 3, 1), 0.744208407535250749);
-    is(gsl_matrix_get($U, 3, 2), 0.0954409706385089263);
-    is(gsl_matrix_get($U, 3, 3), 0.661093690241727594);
+    is_similar(gsl_matrix_get($U, 1, 1), -0.620173672946042309);
+    is_similar(gsl_matrix_get($U, 1, 2), -0.268847804615518438);
+    is_similar(gsl_matrix_get($U, 1, 3), 0.736956900597335762);
+    is_similar(gsl_matrix_get($U, 2, 1), 0.248069469178416908);
+    is_similar(gsl_matrix_get($U, 2, 2), -0.958442423454322956);
+    is_similar(gsl_matrix_get($U, 2, 3), -0.140888819231843737);
+    is_similar(gsl_matrix_get($U, 3, 1), 0.744208407535250749);
+    is_similar(gsl_matrix_get($U, 3, 2), 0.0954409706385089263);
+    is_similar(gsl_matrix_get($U, 3, 3), 0.661093690241727594);
 
     my $V = gsl_matrix_alloc(4,4);
     is(gsl_linalg_hessenberg_unpack_accum($self->{matrix}, $tau, $V), 0); #I don't know how to test the result of this function...
@@ -364,18 +364,18 @@ sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
     my $tau_U = gsl_vector_alloc(4);
     my $tau_V = gsl_vector_alloc(3);
 
-    is(gsl_linalg_bidiag_decomp($self->{matrix}, $tau_U, $tau_V),0);
+    ok_status(gsl_linalg_bidiag_decomp($self->{matrix}, $tau_U, $tau_V),$GSL_SUCCESS);
     my $U = gsl_matrix_alloc(4,4);
     my $V = gsl_matrix_alloc(4,4);
     my $diag = gsl_vector_alloc(4);
     my $superdiag = gsl_vector_alloc(3);
-    is(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag),0);
+    ok_status(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag),$GSL_SUCCESS);
     is(gsl_matrix_get($V, 0, 0), 1);    
     ok_similar( [ map { gsl_matrix_get($V, $_, 0) } (1..3) ], [ (0) x 3 ] ); 
     ok_similar( [ map { gsl_matrix_get($V, 0, $_) } (1..3) ], [ (0) x 3 ] ); 
 
-    is(gsl_matrix_get($U, 1, 1), -0.609437002705849772);
-    is(gsl_matrix_get($U, 1, 2), -0.758604748961341558); #doesn't fit the data I've got...
+    is_similar(gsl_matrix_get($U, 1, 1), -0.609437002705849772);
+    is_similar(gsl_matrix_get($U, 1, 2), -0.758604748961341558); #doesn't fit the data I've got...
 }
 
 1;

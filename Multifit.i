@@ -38,7 +38,9 @@
                gsl_multifit_fdfsolver_name 
                gsl_multifit_fdfsolver_position 
                gsl_multifit_test_delta 
-               gsl_multifit_test_gradient 
+               gsl_multifit_test_gradient
+               $gsl_multifit_fdfsolver_lmder
+               $gsl_multifit_fdfsolver_lmsder; 
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -74,13 +76,17 @@ Here is a list of all the functions in this module :
 
 =item C<gsl_multifit_linear_est($x, $c, $cov)> - This function uses the best-fit multilinear regression coefficients vector $c and their covariance matrix $cov to compute the fitted function value $y and its standard deviation $y_err for the model y = x.c at the point $x, in the form of a vector. The functions returns 3 values in this order : 0 if the operation succeeded, 1 otherwise, the fittes function value and its standard deviation. 
 
-=item C<gsl_multifit_linear_residuals($X, $y, $c, $r) > - This function computes the vector of residuals r = y - X c for the observations vector $y, coefficients vector $c and matrix of predictor variables $X. $r is also a vector.
+=item C<gsl_multifit_linear_residuals($X, $y, $c, $r)> - This function computes the vector of residuals r = y - X c for the observations vector $y, coefficients vector $c and matrix of predictor variables $X. $r is also a vector.
 
-=item C<gsl_multifit_gradient >
+=item C<gsl_multifit_gradient($J, $f, $g)> - This function computes the gradient $g of \Phi(x) = (1/2) ||F(x)||^2 from the Jacobian matrix $J and the function values $f, using the formula $g = $J^T $f. $g and $f are vectors.
+
+=item C<gsl_multifit_test_gradient($g, $epsabas)> - This function tests the residual gradient vector $g against the absolute error bound $epsabs. Mathematically, the gradient should be exactly zero at the minimum. The test returns $GSL_SUCCESS if the following condition is achieved, \sum_i |g_i| < $epsabs and returns $GSL_CONTINUE otherwise. This criterion is suitable for situations where the precise location of the minimum, x, is unimportant provided a value can be found where the gradient is small enough. 
+
+=item C<gsl_multifit_test_delta($dx, $x, $epsabs, $epsrel)> - This function tests for the convergence of the sequence by comparing the last step vector $dx with the absolute error $epsabs and relative error $epsrel to the current position x. The test returns $GSL_SUCCESS if the following condition is achieved, |dx_i| < epsabs + epsrel |x_i| for each component of x and returns $GSL_CONTINUE otherwise. 
 
 =item C<gsl_multifit_covar >
 
-=item C<gsl_multifit_fsolver_alloc >
+=item C<gsl_multifit_fsolver_alloc($T, $n, $p)>
 
 =item C<gsl_multifit_fsolver_free >
 
@@ -104,9 +110,6 @@ Here is a list of all the functions in this module :
 
 =item C<gsl_multifit_fdfsolver_position >
 
-=item C<gsl_multifit_test_delta >
-
-=item C<gsl_multifit_test_gradient >
 
 =back
 

@@ -46,11 +46,11 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Multifit - Least-squares functions for a general linear model
+Math::GSL::Multifit - Least-squares functions for a general linear model with multiple parameters
 
 =head1 SYNOPSIS
 
-use Math::GSL::SF qw /:all/;
+use Math::GSL::Multifit qw /:all/;
 
 =head1 DESCRIPTION
 
@@ -109,8 +109,6 @@ Here is a list of all the functions in this module :
 =item C<gsl_multifit_test_gradient >
 
 =back
-
- You can also write use Math::GSL::Multifit qw/:all/ to use all avaible functions of the module. 
 
  For more informations on the functions, we refer you to the GSL offcial
  documentation: http://www.gnu.org/software/gsl/manual/html_node/

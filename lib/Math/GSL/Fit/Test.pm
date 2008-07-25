@@ -105,4 +105,72 @@ sub GSL_FIT_WLINEAR : Tests {
     ok(is_similar_relative($got[5], $expected_cov11, 1e-10), "norris gsl_fit_wlinear cov11");
     ok(is_similar_relative($got[6], $expected_sumsq, 1e-10), "norris gsl_fit_wlinear sumsq");
 }
+
+sub GSL_FIT_MUL : Tests {
+    my @noint1_x = ( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70 );
+    my @noint1_y = ( 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140);
+
+    my $xstride = 2; 
+    my $wstride = 3; 
+    my $ystride = 5;
+    my ($x, $w, $y);
+    for my $i (0 .. 60)
+    {
+        $x->[$i] = 0;
+        $w->[$i] = 0;
+        $y->[$i] = 0;
+    }
+
+    for my $i (0 .. 10) 
+    {
+      $x->[$i*$xstride] = $noint1_x[$i];
+      $w->[$i*$wstride] = 1.0;
+      $y->[$i*$ystride] = $noint1_y[$i];
+    }
+ 
+    my $expected_c1 = 2.07438016528926; 
+    my $expected_cov11 = (0.165289256198347*(10**-1))**2.0;  
+    my $expected_sumsq = 127.272727272727;
+    
+    my @got = gsl_fit_mul ($x, $xstride, $y, $ystride, 11);
+  
+    ok_status($got[0], $GSL_SUCCESS );
+    ok(is_similar_relative($got[1], $expected_c1, 1e-10), "noint1 gsl_fit_mul c1");
+    ok(is_similar_relative($got[2], $expected_cov11, 1e-10), "noint1 gsl_fit_mul cov11");
+    ok(is_similar_relative($got[3], $expected_sumsq, 1e-10), "noint1 gsl_fit_mul sumsq");
+}
+
+sub GSL_FIT_WMUL : Tests {
+    my @noint1_x = ( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70 );
+    my @noint1_y = ( 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140);
+
+    my $xstride = 2; 
+    my $wstride = 3; 
+    my $ystride = 5;
+    my ($x, $w, $y);
+    for my $i (0 .. 60)
+    {
+        $x->[$i] = 0;
+        $w->[$i] = 0;
+        $y->[$i] = 0;
+    }
+
+    for my $i (0 .. 10) 
+    {
+      $x->[$i*$xstride] = $noint1_x[$i];
+      $w->[$i*$wstride] = 1.0;
+      $y->[$i*$ystride] = $noint1_y[$i];
+    }
+      
+    my $expected_c1 = 2.07438016528926; 
+    my $expected_cov11 = 2.14661371686165e-05; # computed from octave
+    my $expected_sumsq = 127.272727272727;
+    
+    my @got = gsl_fit_wmul ($x, $xstride, $w, $wstride, $y, $ystride, 11);
+
+    ok_status($got[0], $GSL_SUCCESS );
+    ok(is_similar_relative($got[1], $expected_c1, 1e-10), "noint1 gsl_fit_wmul c1");
+    ok(is_similar_relative($got[2], $expected_cov11, 1e-10), "noint1 gsl_fit_wmul cov11");
+    ok(is_similar_relative($got[3], $expected_sumsq, 1e-10), "noint1 gsl_fit_wmul sumsq");
+}
 1;

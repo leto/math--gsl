@@ -251,8 +251,9 @@ my $filip_y = [0.8116, 0.9072, 0.9052, 0.9039, 0.8053, 0.8377,
 }
 
 sub GSL_MULTIFIT_FSOLVER_ALLOC : Tests {
-   local $TODO = "The first argument comes from gsl_multifit_nlin.h and is of the right type, how to fix this?";
-#   my $fsolver = gsl_multifit_fsolver_alloc($gsl_multifit_fdfsolver_lmder, 100, 3);
-#   isa_ok($fsolver, 'Math::GSL::Multifit');
+   local $TODO = "the only gsl_multifit_fsolver_type is commented out in gsl_multifit_nlin.h";
+   ok(0);
+   #my $fsolver = gsl_multifit_fsolver_alloc($gsl_multifit_fsolver_gradient, 100, 3);
+   #isa_ok($fsolver, 'Math::GSL::Multifit');
 }
 1;

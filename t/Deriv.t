@@ -9,24 +9,25 @@ use warnings;
 BEGIN{ gsl_set_error_handler_off() };
 
 {
-    local $TODO = "gsl_function *";
-    my ($x,$h)=(5,0.01);
+    my ($x,$h)=(10,0.01);
 
     my $gsl_func = Math::GSL::Deriv::gsl_function_struct->new;
 
-    isa_ok( $gsl_func, 'Math::GSL::Deriv::gsl_function_struct' );
+    isa_ok( $gsl_func,'Math::GSL::Deriv::gsl_function_struct');
 
 
+    my ($status, $result, $abserr);
+    ($status, $result, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h); 
+    ok_status( $status, $GSL_SUCCESS);
+    ok_similar( $result, 2*$x, 'gsl_deriv_central works for a static function' );
+
+    local $TODO = "gsl_function *";
     $gsl_func->swig_function_set( sub { print "FOO\n" } );
     my $func = $gsl_func->swig_function_get();
     ok( ref $func eq 'CODE', 'swig_function_get works' );
 
-    my $params = $gsl_func->swig_params_set(0);
-    ok( defined $params, 'swig_params_set works' );
-
-    my ($value, $result, $abserr);
-    print "about to call deriv_central\n";
-    #($value, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h, $result, $abserr); 
-    print Dumper [ $value, $abserr ];
+    $gsl_func->swig_params_set(42);
+    my $params = $gsl_func->swig_params_get();
+    ok(defined $params && $params == 42, 'swig_params_get works' );
 }
 

@@ -1,24 +1,44 @@
 %module "Math::GSL::Deriv"
+/*
+struct gsl_function_struct 
+{
+  double (* function) (double x, void * params);
+  void * params;
+};
+
+typedef struct gsl_function_struct gsl_function ;
+#define GSL_FN_EVAL(F,x) (*((F)->function))(x,(F)->params)
+*/
 
 %include "typemaps.i"
 %typemap(in) gsl_function * {
-
-    fprintf(stderr,"gsl_func  \n");
-    fprintf(stderr, "HAI %d\n", (int) $1->params );
-    fprintf(stderr, "HAI %d\n", (int) $1->function );
+    gsl_function F;
+    F.params = 0;
+    F.function = &xsquared;
+    fprintf(stderr,"gsl_func;input=%d\n", (int) $input);
+    //Perl_sv_dump( $input );
+    $1 = &F;
 };
 
+%{
+    typedef struct callback_t
+    {  
+        SV * obj;
+    };
+    double xsquared(double x,void *params){
+        return x * x;
+    }
+%}
 %typemap(in) void * {
     printf("void * \n");
+    $1 = (double *) $input;
 };
-
 %typemap(in) double (*)(double,void *) {
-    printf("function pointer * %d \n", (int) $1);
-    printf("input * %d \n", (int) $input);
-    Perl_sv_dump( $input );
-
+    fprintf(stderr,"input * %d \n", (int) $input);
+    //Perl_sv_dump( $input );
 };
-//%apply double * OUTPUT { double *result,double *abserr };
+
+%apply double * OUTPUT { double *abserr, double *result };
 
 %{
     #include "gsl/gsl_math.h"

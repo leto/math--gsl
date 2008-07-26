@@ -3,6 +3,8 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
+%apply double *OUTPUT { double * y, double * d, double * d2, double * result };
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_interp.h"
@@ -70,27 +72,27 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_interp_name> 
 
-=item C<gsl_interp_min_size> 
+=item C<gsl_interp_min_size($interp)> - This function returns the minimum number of points required by the interpolation type of $interp. For example, Akima spline interpolation requires a minimum of 5 points.
 
-=item C<gsl_interp_eval_e> 
+=item C<gsl_interp_eval_e($interp, $xa, $ya, $x, $acc)> - This functions returns the interpolated value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the y value.
 
-=item C<gsl_interp_eval> 
+=item C<gsl_interp_eval($interp, $xa, $ya, $x, $acc)> - This functions returns the interpolated value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. 
 
-=item C<gsl_interp_eval_deriv_e> 
+=item C<gsl_interp_eval_deriv_e($interp, $xa, $ya, $x, $acc)> - This function computes the derivative value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the d value.
 
-=item C<gsl_interp_eval_deriv> 
+=item C<gsl_interp_eval_deriv($interp, $xa, $ya, $x, $acc)> - This function returns the derivative d of an interpolated function for a given point $x, using the interpolation object interp, data arrays $xa and $ya and the accelerator $acc.
 
-=item C<gsl_interp_eval_deriv2_e> 
+=item C<gsl_interp_eval_deriv2_e($interp, $xa, $ya, $x, $acc)> - This function computes the second derivative d2 of an interpolated function for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the d2 value.
 
-=item C<gsl_interp_eval_deriv2> 
+=item C<gsl_interp_eval_deriv2($interp, $xa, $ya, $x, $acc)> - This function returns the second derivative d2 of an interpolated function for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc.
 
-=item C<gsl_interp_eval_integ_e> 
+=item C<gsl_interp_eval_integ_e($interp, $xa, $ya, $a, $b, $acc)> - This function computes the numerical integral result of an interpolated function over the range [$a, $b], using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the result value.
 
-=item C<gsl_interp_eval_integ> 
+=item C<gsl_interp_eval_integ($interp, $xa, $ya, $a, $b, $acc)> - This function returns the numerical integral result of an interpolated function over the range [$a, $b], using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. 
 
-=item C<gsl_interp_free> 
+=item C<gsl_interp_free($interp)> - This function frees the interpolation object $interp. 
 
-=item C<gsl_interp_bsearch> 
+=item C<gsl_interp_bsearch($x_array, $x, $index_lo, $index_hi)> - This function returns the index i of the array $x_array such that $x_array[i] <= x < $x_array[i+1]. The index is searched for in the range [$index_lo,$index_hi].
 
 =back
 

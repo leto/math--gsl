@@ -18,7 +18,7 @@ requires:
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.05_01
+    version: 0.06_01
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLAS::Test:

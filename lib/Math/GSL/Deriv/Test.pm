@@ -27,6 +27,12 @@ sub TEST_FUNCTION_STRUCT : Tests {
     isa_ok( $gsl_func,'Math::GSL::Deriv::gsl_function_struct');
 }
 
+sub TEST_DERIV_CENTRAL_DIES : Tests { 
+    my ($x,$h)=(10,0.01);
+    throws_ok( sub {
+               gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
+           },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
+}
 sub TEST_DERIV_CENTRAL: Tests { 
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
@@ -36,12 +42,11 @@ sub TEST_DERIV_CENTRAL: Tests {
     ($status, $result, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h); 
     ok_status( $status, $GSL_SUCCESS);
     ok_similar( $result, 2*$x, 'gsl_deriv_central works for a static function' );
-
-    dies_ok( sub {
-               gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
-           });
-
-    local $TODO = "gsl_function *";
+}
+sub TEST_SWIG_FUNCTION : Tests { 
+    local $TODO  = "gsl_function *";
+    my $self     = shift;
+    my $gsl_func = $self->{gsl_func};
     $gsl_func->swig_function_set( sub { print "FOO\n" } );
     my $func = $gsl_func->swig_function_get();
     ok( ref $func eq 'CODE', 'swig_function_get works' );

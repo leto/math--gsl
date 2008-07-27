@@ -16,8 +16,7 @@ typedef struct gsl_function_struct gsl_function ;
     F.params = 0;
     F.function = &xsquared;
     if( !SvROK($input) ) {
-        fprintf(stderr,"not a reference value!");
-        croak("bad juju"); 
+        croak("Math::GSL : not a reference value!");
     }
        fprintf(stderr,"gsl_func;input=%d\n", (int) $input);
     Perl_sv_dump( $input );

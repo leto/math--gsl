@@ -44,10 +44,11 @@ sub TEST_DERIV_CENTRAL: Tests {
     ok_similar( $result, 2*$x, 'gsl_deriv_central works for a static function' );
 }
 sub TEST_SWIG_FUNCTION : Tests { 
-    local $TODO  = "gsl_function *";
+    local $TODO  = "swig_function_set doesn't work";
     my $self     = shift;
     my $gsl_func = $self->{gsl_func};
-    $gsl_func->swig_function_set( sub { print "FOO\n" } );
+    my ($x,$h)=(10,0.01);
+    $gsl_func->swig_function_set( sub { die "I GOT CALLED!" } );
     my $func = $gsl_func->swig_function_get();
     ok( ref $func eq 'CODE', 'swig_function_get works' );
 

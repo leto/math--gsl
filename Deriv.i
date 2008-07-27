@@ -13,13 +13,17 @@ typedef struct gsl_function_struct gsl_function ;
 %include "typemaps.i"
 %typemap(in) gsl_function * {
     gsl_function F;
+    int count;
     F.params = 0;
     F.function = &xsquared;
+   
     if( !SvROK($input) ) {
         croak("Math::GSL : not a reference value!");
     }
-       fprintf(stderr,"gsl_func;input=%d\n", (int) $input);
-    Perl_sv_dump( $input );
+    //Perl_sv_dump( $input );
+
+    // does not work
+    //count = call_sv((SV*) $input, G_ARRAY);
     $1 = &F;
 };
 

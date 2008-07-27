@@ -6,7 +6,6 @@ use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::SF qw/:all/;
 use Math::GSL::Machine qw/:all/;
-use Math::GSL::Math qw/:all/;
 use Math::GSL::Poly qw/:all/;
 use Data::Dumper;
 use strict;

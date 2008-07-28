@@ -59,7 +59,7 @@ use overload
 
 @EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
-                 gsl_vector_free gsl_vector_view_array gsl_vector_view_array_with_stride
+                 gsl_vector_free gsl_vector_view_array gsl_vector_const_view_array gsl_vector_view_array_with_stride
                  gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
                  gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
@@ -298,11 +298,13 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_vector_free($v)> - free a previously allocated vector $v
 
-=item C<gsl_vector_view_array> 
+=item C<gsl_vector_view_array($base, $n)> - This function returns a vector view of an array reference $base. The start of the new vector is given by $base and has $n elements. Mathematically, the i-th element of the new vector v' is given by, v'(i) = $base->[i] where the index i runs from 0 to $n-1. The array containing the elements of v is not owned by the new vector view. When the view goes out of scope the original array will continue to exist. The original memory can only be deallocated by freeing the original pointer base. Of course, the original array should not be deallocated while the view is still in use.  
 
-=item C<gsl_vector_view_array_with_stride> 
+=item C<gsl_vector_const_view_array($base, $n)> - This function is equivalent to gsl_vector_view_array but can be used for arrays which are declared const. 
 
-=item C<gsl_vector_const_view_array_with_stride> 
+=item C<gsl_vector_view_array_with_stride($base, $stride, $n)> - This function returns a vector view of an array reference $base with an additional $stride argument. The subvector is formed in the same way as for gsl_vector_view_array but the new vector has $n elements with a step-size of $stride from one element to the next in the original array. Mathematically, the i-th element of the new vector v' is given by, v'(i) = $base->[i*$stride] where the index i runs from 0 to $n-1. Note that the view gives direct access to the underlying elements of the original array. A vector view $view can be passed to any subroutine which takes a vector argument just as a directly allocated vector would be, using $view->{vector}. 
+
+=item C<gsl_vector_const_view_array_with_stride($base, $stride, $n)> - This function is equivalent to gsl_vector_view_array_with_stride but can be used for arrays which are declared const.
 
 =item C<gsl_vector_subvector($v, $offset, $n)> - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
 

@@ -347,25 +347,25 @@ sub GSL_MATRIX_ISNONNEG : Tests {
 
 sub GSL_MATRIX_GET_ROW : Tests {
    my $self = shift;
-   my $vector->{vector} = gsl_vector_alloc(5);
+   my $vector = gsl_vector_alloc(5);
    map { gsl_matrix_set($self->{matrix}, 0, $_, $_) } (0..4);
-   is(gsl_matrix_get_row($vector->{vector}, $self->{matrix}, 0), 0);
-   map { is(gsl_vector_get($vector->{vector}, $_), $_) } (0..4); 
+   is(gsl_matrix_get_row($vector, $self->{matrix}, 0), 0);
+   map { is(gsl_vector_get($vector, $_), $_) } (0..4); 
 }
 
 sub GSL_MATRIX_GET_COL : Tests {
    my $self = shift;
-   my $vector->{vector} = gsl_vector_alloc(5);
+   my $vector = gsl_vector_alloc(5);
    map { gsl_matrix_set($self->{matrix}, $_, 0, $_) } (0..4);
-   is(gsl_matrix_get_col($vector->{vector}, $self->{matrix}, 0), 0);
-   map { is(gsl_vector_get($vector->{vector}, $_), $_) } (0..4); 
+   is(gsl_matrix_get_col($vector, $self->{matrix}, 0), 0);
+   map { is(gsl_vector_get($vector, $_), $_) } (0..4); 
 }
 
 sub GSL_MATRIX_SET_ROW : Tests {
    my $self = shift;
-   my $vector->{vector} = gsl_vector_alloc(5);
-   map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
-   is(gsl_matrix_set_row($self->{matrix}, 1, $vector->{vector}), 0);
+   my $vector = gsl_vector_alloc(5);
+   map { gsl_vector_set($vector, $_, $_**2) } (0..4);
+   is(gsl_matrix_set_row($self->{matrix}, 1, $vector), 0);
 
    ok_similar( [ map { gsl_matrix_get($self->{matrix}, 1, $_) } (0..4) ],
                [ map { $_ ** 2 } (0..4) ],
@@ -374,9 +374,9 @@ sub GSL_MATRIX_SET_ROW : Tests {
 
 sub GSL_MATRIX_SET_COL : Tests {
    my $self = shift;
-   my $vector->{vector} = gsl_vector_alloc(5);
-   map { gsl_vector_set($vector->{vector}, $_, $_**2) } (0..4);
-   is(gsl_matrix_set_col($self->{matrix}, 1, $vector->{vector}), 0);
+   my $vector = gsl_vector_alloc(5);
+   map { gsl_vector_set($vector, $_, $_**2) } (0..4);
+   is(gsl_matrix_set_col($self->{matrix}, 1, $vector), 0);
 
    ok_similar( [ map { gsl_matrix_get($self->{matrix}, $_, 1) } (0..4) ],
                [ map { $_ ** 2 } (0..4) ],

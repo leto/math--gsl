@@ -199,20 +199,20 @@ sub GSL_VECTOR_MINMAX_INDEX : Tests {
 
 sub GSL_VECTOR_MINMAX : Tests {
    my ($min, $max);
-   my $vector->{vector} = gsl_vector_alloc(5); 
-   map { gsl_vector_set($vector->{vector}, $_, $_ ** 2 ) } (0..4); 
+   my $vector = gsl_vector_alloc(5); 
+   map { gsl_vector_set($vector, $_, $_ ** 2 ) } (0..4); 
 
-   ($min, $max) = Math::GSL::Vector::gsl_vector_minmax($vector->{vector});
+   ($min, $max) = gsl_vector_minmax($vector);
 
    ok_similar( [ 0, 16 ], [ $min, $max], 'gsl_vector_minmax' );
 }
 
 sub GSL_VECTOR_MEMCPY : Tests {
    my $self = shift;
-   my $copy->{vector} = gsl_vector_alloc(5);
+   my $copy = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   is( gsl_vector_memcpy($copy->{vector}, $self->{vector}), 0);
-   map { is(gsl_vector_get($copy->{vector}, $_), $_ ** 2 ) } (0..4); ;
+   is( gsl_vector_memcpy($copy, $self->{vector}), 0);
+   map { is(gsl_vector_get($copy, $_), $_ ** 2 ) } (0..4); ;
 }
 
 sub GSL_VECTOR_VIEW_ARRAY : Tests {
@@ -239,38 +239,38 @@ sub GSL_VECTOR_SWAP_ELEMENTS : Tests {
 
 sub GSL_VECTOR_ADD : Tests {
    my $self = shift;
-   my $second_vec->{vector} = gsl_vector_alloc(5);
+   my $second_vec = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   map { gsl_vector_set($second_vec->{vector}, $_, $_ ) } (0..4); ;
-   is(gsl_vector_reverse($second_vec->{vector}),0);
-   is( gsl_vector_add($self->{vector}, $second_vec->{vector}), 0);
+   map { gsl_vector_set($second_vec, $_, $_ ) } (0..4); ;
+   is(gsl_vector_reverse($second_vec),0);
+   is( gsl_vector_add($self->{vector}, $second_vec), 0);
    map { is(gsl_vector_get($self->{vector}, $_), 4 ) } (0..4); ;   
 }
 
 sub GSL_VECTOR_SUB : Tests {
    my $self = shift;
-   my $second_vec->{vector} = gsl_vector_alloc(5);
+   my $second_vec = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   map { gsl_vector_set($second_vec->{vector}, $_, 1) } (0..4); ;
-   is( gsl_vector_sub($self->{vector}, $second_vec->{vector}), 0);
+   map { gsl_vector_set($second_vec, $_, 1) } (0..4); ;
+   is( gsl_vector_sub($self->{vector}, $second_vec), 0);
    map { is(gsl_vector_get($self->{vector}, $_), $_ - 1 ) } (0..4); ;   
 }
 
 sub GSL_VECTOR_MUL : Tests {
    my $self = shift;
-   my $second_vec->{vector} = gsl_vector_alloc(5);
+   my $second_vec = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   map { gsl_vector_set($second_vec->{vector}, $_, 2) } (0..4); ;
-   is( gsl_vector_mul($self->{vector}, $second_vec->{vector}), 0);
+   map { gsl_vector_set($second_vec, $_, 2) } (0..4); ;
+   is( gsl_vector_mul($self->{vector}, $second_vec), 0);
    map { is(gsl_vector_get($self->{vector}, $_), $_ * 2 ) } (0..4); ;   
 }
 
 sub GSL_VECTOR_DIV : Tests {
    my $self = shift;
-   my $second_vec->{vector} = gsl_vector_alloc(5);
+   my $second_vec = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_*2 ) } (0..4); ;
-   map { gsl_vector_set($second_vec->{vector}, $_, 2) } (0..4); ;
-   is( gsl_vector_div($self->{vector}, $second_vec->{vector}), 0);
+   map { gsl_vector_set($second_vec, $_, 2) } (0..4); ;
+   is( gsl_vector_div($self->{vector}, $second_vec), 0);
    map { is(gsl_vector_get($self->{vector}, $_), $_ ) } (0..4); ;   
 }
 

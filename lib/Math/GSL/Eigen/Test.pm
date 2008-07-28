@@ -80,68 +80,68 @@ sub GSL_EIGEN_GENV_ALLOC : Tests {
 
 sub GSL_EIGEN_SYMM : Tests {
     my $self = shift;
-    my $m->{matrix} = gsl_matrix_alloc(2,2);
-    gsl_matrix_set_identity($m->{matrix});
-    my $v->{vector} = gsl_vector_alloc(2);
-    is(gsl_eigen_symm($m->{matrix}, $v->{vector}, $self->{eigen}),0);
-    map { is(gsl_vector_get($v->{vector}, $_), 1) } (0..1);
+    my $m = gsl_matrix_alloc(2,2);
+    gsl_matrix_set_identity($m);
+    my $v = gsl_vector_alloc(2);
+    is(gsl_eigen_symm($m, $v, $self->{eigen}),0);
+    map { is(gsl_vector_get($v, $_), 1) } (0..1);
 }    
 
 sub GSL_EIGEN_SYMMV : Tests {
-    my $w->{eigen} = gsl_eigen_symmv_alloc(2);
-    my $m->{matrix} = gsl_matrix_alloc(2,2);
-    gsl_matrix_set($m->{matrix}, 0, 0, 2);
-    gsl_matrix_set($m->{matrix}, 0, 1, 1);
-    gsl_matrix_set($m->{matrix}, 1, 0, 1);
-    gsl_matrix_set($m->{matrix}, 1, 1, 2);
-    my $eval->{vector} = gsl_vector_alloc(2);
-    my $evec->{matrix} = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_symmv($m->{matrix}, $eval->{vector}, $evec->{matrix}, $w->{eigen}),0);
-    is(gsl_vector_get($eval->{vector}, 0), 3);
-    is(gsl_vector_get($eval->{vector}, 1), 1);
-    my $x = gsl_matrix_get($evec->{matrix}, 0, 0);
-    is (gsl_matrix_get($evec->{matrix}, 0, 1), -$x); #this is the eigenvector for the eigenvalue 1, which is the second eigenvalue in the $eval vector, but the GSL documentation says the first eigenvector should correspond to the first eigenvalue... where'e the error?
+    my $w = gsl_eigen_symmv_alloc(2);
+    my $m = gsl_matrix_alloc(2,2);
+    gsl_matrix_set($m, 0, 0, 2);
+    gsl_matrix_set($m, 0, 1, 1);
+    gsl_matrix_set($m, 1, 0, 1);
+    gsl_matrix_set($m, 1, 1, 2);
+    my $eval = gsl_vector_alloc(2);
+    my $evec = gsl_matrix_alloc(2,2);
+    is(gsl_eigen_symmv($m, $eval, $evec, $w),0);
+    is(gsl_vector_get($eval, 0), 3);
+    is(gsl_vector_get($eval, 1), 1);
+    my $x = gsl_matrix_get($evec, 0, 0);
+    is (gsl_matrix_get($evec, 0, 1), -$x); #this is the eigenvector for the eigenvalue 1, which is the second eigenvalue in the $eval vector, but the GSL documentation says the first eigenvector should correspond to the first eigenvalue... where'e the error?
     is (sqrt($x**2+$x**2), 1);
     
-    $x = gsl_matrix_get($evec->{matrix}, 1, 0);
-    is (gsl_matrix_get($evec->{matrix}, 1, 1), $x);
+    $x = gsl_matrix_get($evec, 1, 0);
+    is (gsl_matrix_get($evec, 1, 1), $x);
     is (sqrt($x**2+$x**2), 1);
 
-    my $v1->{vector} = gsl_vector_alloc(2);
-    my $v2->{vector} = gsl_vector_alloc(2);
-    gsl_matrix_get_col($v1->{vector}, $evec->{matrix}, 0);
-    gsl_matrix_get_col($v2->{vector}, $evec->{matrix}, 1);
-    gsl_vector_mul($v1->{vector}, $v2->{vector});
-    is(gsl_vector_get($v1->{vector}, 0) + gsl_vector_get($v1->{vector}, 1) , 0);
+    my $v1 = gsl_vector_alloc(2);
+    my $v2 = gsl_vector_alloc(2);
+    gsl_matrix_get_col($v1, $evec, 0);
+    gsl_matrix_get_col($v2, $evec, 1);
+    gsl_vector_mul($v1, $v2);
+    is(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_SYMMV_SORT : Tests {
-    my $w->{eigen} = gsl_eigen_symmv_alloc(2);
-    my $m->{matrix} = gsl_matrix_alloc(2,2);
-    gsl_matrix_set($m->{matrix}, 0, 0, 2);
-    gsl_matrix_set($m->{matrix}, 0, 1, 1);
-    gsl_matrix_set($m->{matrix}, 1, 0, 1);
-    gsl_matrix_set($m->{matrix}, 1, 1, 2);
-    my $eval->{vector} = gsl_vector_alloc(2);
-    my $evec->{matrix} = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_symmv($m->{matrix}, $eval->{vector}, $evec->{matrix}, $w->{eigen}),0);
-    is(gsl_eigen_symmv_sort ($eval->{vector}, $evec->{matrix}, $GSL_EIGEN_SORT_VAL_ASC),0);
-    is(gsl_vector_get($eval->{vector}, 0), 1);
-    is(gsl_vector_get($eval->{vector}, 1), 3);
-    my $x = gsl_matrix_get($evec->{matrix}, 0, 0);
-    is (gsl_matrix_get($evec->{matrix}, 0, 1), -$x);
+    my $w = gsl_eigen_symmv_alloc(2);
+    my $m = gsl_matrix_alloc(2,2);
+    gsl_matrix_set($m, 0, 0, 2);
+    gsl_matrix_set($m, 0, 1, 1);
+    gsl_matrix_set($m, 1, 0, 1);
+    gsl_matrix_set($m, 1, 1, 2);
+    my $eval = gsl_vector_alloc(2);
+    my $evec = gsl_matrix_alloc(2,2);
+    is(gsl_eigen_symmv($m, $eval, $evec, $w),0);
+    is(gsl_eigen_symmv_sort ($eval, $evec, $GSL_EIGEN_SORT_VAL_ASC),0);
+    is(gsl_vector_get($eval, 0), 1);
+    is(gsl_vector_get($eval, 1), 3);
+    my $x = gsl_matrix_get($evec, 0, 0);
+    is (gsl_matrix_get($evec, 0, 1), -$x);
     is (sqrt($x**2+$x**2), 1);
     
-    $x = gsl_matrix_get($evec->{matrix}, 1, 0);
-    is (gsl_matrix_get($evec->{matrix}, 1, 1), $x);
+    $x = gsl_matrix_get($evec, 1, 0);
+    is (gsl_matrix_get($evec, 1, 1), $x);
     is (sqrt($x**2+$x**2), 1);
 
-    my $v1->{vector} = gsl_vector_alloc(2);
-    my $v2->{vector} = gsl_vector_alloc(2);
-    gsl_matrix_get_col($v1->{vector}, $evec->{matrix}, 0);
-    gsl_matrix_get_col($v2->{vector}, $evec->{matrix}, 1);
-    gsl_vector_mul($v1->{vector}, $v2->{vector});
-    is(gsl_vector_get($v1->{vector}, 0) + gsl_vector_get($v1->{vector}, 1) , 0);
+    my $v1 = gsl_vector_alloc(2);
+    my $v2 = gsl_vector_alloc(2);
+    gsl_matrix_get_col($v1, $evec, 0);
+    gsl_matrix_get_col($v2, $evec, 1);
+    gsl_vector_mul($v1, $v2);
+    is(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_HERM : Tests {

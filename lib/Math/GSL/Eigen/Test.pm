@@ -224,9 +224,9 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
     is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
     is(gsl_eigen_nonsymm_Z($matrix,$vector, $Z, $eigen), 0);  
     ok(is_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, 0.005));
-    ok(is_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1));
-    ok(is_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005));
-    ok(is_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610, "Z matrix", 0.1));
+    ok_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1);
+    ok_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005);
+    ok_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610, "Z matrix", 0.1);
  
 #    my $x = gsl_vector_complex_get($vector,0);
 #    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference

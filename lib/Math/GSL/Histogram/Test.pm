@@ -150,7 +150,53 @@ sub FIND : Tests {
     gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
     my @got = gsl_histogram_find($self->{H}, 1);
     ok_status($got[0], $GSL_SUCCESS);
-    is($got[1], 1);
+    cmp_ok($got[1], '==', 1);
 }
 
+sub ACCUMULATE : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+
+    ok_status(gsl_histogram_accumulate($self->{H}, 50.5, 3 ), $GSL_SUCCESS);
+    cmp_ok(3,'==', gsl_histogram_get($self->{H}, 50 ) );
+    ok_status(gsl_histogram_accumulate($self->{H}, -150.5, 3 ), $GSL_EDOM);
+}
+
+sub BINS : Tests { 
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    cmp_ok(gsl_histogram_bins($self->{H}), '==', 100);
+}
+
+sub RESET : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    gsl_histogram_shift($self->{H}, 2);
+    gsl_histogram_reset($self->{H});
+    is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
+               [ (0) x 100 ]
+    );
+}
+
+sub MIN_BIN_MAX_BIN : Tests {
+    my $self = shift;
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    ok_status(gsl_histogram_increment($self->{H}, 50.5 ), $GSL_SUCCESS);
+    cmp_ok(gsl_histogram_min_bin($self->{H}), '==', 0);
+    cmp_ok(gsl_histogram_max_bin($self->{H}), '==', 50);
+}
+
+sub GSL_HISTOGRAM_SIGMA : Tests {
+ local $TODO = "Don't know how to test this function";
+}
+
+sub EQUAL_BINS_P : Tests { 
+    my $self = shift;
+    my $h2 = gsl_histogram_alloc(100);
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 100);
+    gsl_histogram_set_ranges_uniform($h2, 0, 100);
+    cmp_ok(gsl_histogram_equal_bins_p($self->{H}, $h2), '==', 1);
+    gsl_histogram_set_ranges_uniform($self->{H}, 0, 50);
+    cmp_ok(gsl_histogram_equal_bins_p($self->{H}, $h2), '==', 0);
+}
 42;

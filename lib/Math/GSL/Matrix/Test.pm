@@ -547,4 +547,17 @@ sub SET_COL_CHAINED : Tests {
  ok_similar([$m->col(2)->as_list], [9,8,7]);
 }
 
+sub GSL_MATRIX_VIEW_ARRAY : Tests {
+ my $array = [8,4,3,7];
+ my $matrix_view = gsl_matrix_view_array ($array, 2,2);
+ ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 0, $_) } 0..1], [8, 4]);
+ ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 1, $_) } 0..1], [3, 7]);
+}
+
+sub GSL_MATRIX_VIEW_ARRAY_WITH_TDA : Tests {
+ my $array = [8,4,3,7,5];
+ my $matrix_view = gsl_matrix_view_array_with_tda ($array, 2,2, 3);
+ ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 0, $_) } 0..1], [8, 4]);
+ ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 1, $_) } 0..1], [7, 5]);
+}
 1;

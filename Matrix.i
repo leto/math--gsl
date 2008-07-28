@@ -4,7 +4,6 @@
 %include "gsl_typemaps.i"
 
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
-//%apply gsl_vector *OUTPUT { gsl_vector *V };
 %apply double *OUTPUT { double * min_out, double * max_out };
 
 FILE * fopen(char *, char *);
@@ -596,9 +595,9 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_subcolumn($m, $j, $offset, $n)> - Return a vector view of the $j-th column of the matrix $m beginning at offset elements and containing n elements.
 
-=item C<gsl_matrix_view_array> - 
+=item C<gsl_matrix_view_array($base, $n1, $n2)> - This function returns a matrix view of the array reference $base. The matrix has $n1 rows and $n2 columns. The physical number of columns in memory is also given by $n2. Mathematically, the (i,j)-th element of the new matrix is given by, m'(i,j) = $base->[i*$n2 + j] where the index i runs from 0 to $n1-1 and the index j runs from 0 to $n2-1. The new matrix is only a view of the array reference $base. When the view goes out of scope the original array reference $base will continue to exist. The original memory can only be deallocated by freeing the original array. Of course, the original array should not be deallocated while the view is still in use. 
 
-=item C<gsl_matrix_view_array_with_tda > - 
+=item C<gsl_matrix_view_array_with_tda($base, $n1, $n2, $tda)> - This function returns a matrix view of the array reference $base with a physical number of columns $tda which may differ from the corresponding dimension of the matrix. The matrix has $n1 rows and $n2 columns, and the physical number of columns in memory is given by $tda. Mathematically, the (i,j)-th element of the new matrix is given by, m'(i,j) = $base->[i*$tda + j] where the index i runs from 0 to $n1-1 and the index j runs from 0 to $n2-1. The new matrix is only a view of the array reference $base. When the view goes out of scope the original array reference $base will continue to exist. The original memory can only be deallocated by freeing the original array. Of course, the original array should not be deallocated while the view is still in use.  
 
 =item C<gsl_matrix_view_vector> - 
 

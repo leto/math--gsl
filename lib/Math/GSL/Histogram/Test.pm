@@ -288,6 +288,7 @@ sub PDF_INIT : Tests {
 }
 
 sub GSL_HISTOGRAM_PDF_SAMPLE : Tests {
- local $TODO = "Don't know how to test this function";
+    my $p = gsl_histogram_pdf_alloc(100);
+    ok_status(gsl_histogram_pdf_sample( $p, 0.5 ), $GSL_SUCCESS);
 }
 42;

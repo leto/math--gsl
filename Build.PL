@@ -341,7 +341,7 @@ my @Subsystems = sort qw/
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline
 /;
-my $cleanup = qq{*.core Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
+my $cleanup = qq{core *.core Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
 
 my $builder = $class->new( 
     module_name         => 'Math::GSL',
@@ -362,9 +362,9 @@ my $builder = $class->new(
         'Test::Exception'       =>    0.21,
         'Test::Class'           =>    0.12,
         version                 =>       0,
-    	perl 			        =>  '5.8.8',
+    	perl 			        =>  '5.8.0',
     },
-    sign                  => 1,
+    sign                  => 0,
     swig_source           => [  
                                 map { [ "$_.i" ] } @Subsystems
                              ],

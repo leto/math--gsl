@@ -18,7 +18,6 @@
     argvi++;
 }
 %typemap(argout) (double * dest, const size_t k, const gsl_vector * v) {
-    fprintf(stderr, "matched argout\n");
     int i=0;
     AV* tempav = newAV();
 

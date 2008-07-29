@@ -68,6 +68,7 @@ lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const.pm
 lib/Math/GSL/Const/Test.pm
 lib/Math/GSL/Deriv.pm
+lib/Math/GSL/Deriv/Test.pm
 lib/Math/GSL/DFT.pm
 lib/Math/GSL/DHT.pm
 lib/Math/GSL/DHT/Test.pm
@@ -83,6 +84,7 @@ lib/Math/GSL/Heapsort.pm
 lib/Math/GSL/Histogram.pm
 lib/Math/GSL/Histogram/Test.pm
 lib/Math/GSL/Histogram2D.pm
+lib/Math/GSL/Histogram2D/Test.pm
 lib/Math/GSL/IEEEUtils.pm
 lib/Math/GSL/Integration.pm
 lib/Math/GSL/Interp.pm
@@ -205,6 +207,7 @@ t/FFT.t
 t/Fit.t
 t/GSL.t
 t/Histogram.t
+t/Histogram2D.t
 t/Interp.t
 t/Linalg.t
 t/Machine.t

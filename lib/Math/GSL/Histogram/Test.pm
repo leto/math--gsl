@@ -131,7 +131,7 @@ sub FWRITE_FREAD : Tests {
     $stream = fopen("histogram", "r");
     my $h = gsl_histogram_alloc(100);  
     ok_status(gsl_histogram_fread($stream, $h),$GSL_SUCCESS);  
-    is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
+    is_deeply( [ map { gsl_histogram_get($h, $_) } (0..99) ],
                [ (0) x 50, 1, (0) x 49 ]
     );
     fclose($stream);
@@ -265,7 +265,7 @@ sub FPRINTF_FSCANF : Tests {
     $stream = fopen("histogram", "r");
     my $h = gsl_histogram_alloc(100);  
     ok_status(gsl_histogram_fscanf($stream, $h),$GSL_SUCCESS);  
-    is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
+    is_deeply( [ map { gsl_histogram_get($h, $_) } (0..99) ],
                [ (0) x 50, 1, (0) x 49 ]
     );
     fclose($stream);

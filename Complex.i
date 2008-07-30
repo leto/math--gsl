@@ -289,7 +289,7 @@ This code defines $z as 5 + 3*I, multiplies it by 2 and then prints it out.
 
 =back
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

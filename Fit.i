@@ -56,7 +56,7 @@ Here is a list of all the functions in this module :
 =back
 
  For more informations on the functions, we refer you to the GSL offcial
- documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
@@ -93,7 +93,7 @@ This example shows how to use the function gsl_fit_linear. It's important to see
     }
     my ($status, @results) = gsl_fit_linear($x, $xstride, $y, $ystride, 36); 
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

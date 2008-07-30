@@ -390,28 +390,32 @@ For example, the following code will zero the even elements of the vector $v of 
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+For more informations on the functions, we refer you to the GSL offcial documentation: 
+L<http://www.gnu.org/software/gsl/manual/html_node/>
+
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =head1 EXAMPLES
 
+Here is an example using both interfaces.
+
  use Math::GSL::Vector qw/:all/;
+
  print "We'll create this vector : [0,1,4,9,16] \n";
  my $vector = Math::GSL::Vector->new([0,1,4,9,16]);
  my ($min, $max) = gsl_vector_minmax_index($vector->raw);
+
  print "We then check the index value of the maximum and minimum values of the vector. \n";
  print "The index of the maximum should be 4 and we received $max \n";
  print "The index of the minimum should be 0 and we received $min \n";
  print "We'll then swap the first and the third elements of the vector \n";
+
  gsl_vector_swap_elements($vector->raw, 0, 3);
  my @got = $vector->as_list;
  print "The vector should now be like this : [9,1,4,0,16] \n";
- print "and we received : [";
- for (my $element=0; $element<4; $element++) {
- print "$got[$element],"; }
- print "$got[4]] \n"; 
+ print "and we received : [ @got ]\n";
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

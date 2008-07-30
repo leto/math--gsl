@@ -509,7 +509,7 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 
 =head1 EXAMPLES
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

@@ -1686,9 +1686,11 @@ Here is a list of all included functions:
 
 =back
 
- You can import the functions that you want to use by giving a space separated list to Math::GSL::SF when you use the package. 
- You can also write use Math::GSL::SF qw/:all/ to use all avaible functions of the module. Note that the tag names begin with a colon. 
- Other tags are also available, here is a complete list of all tags for this module :
+ You can import the functions that you want to use by giving a space separated
+ list to Math::GSL::SF when you use the package.  You can also write use
+ Math::GSL::SF qw/:all/ to use all avaible functions of the module. Note that
+ the tag names begin with a colon.  Other tags are also available, here is a
+ complete list of all tags for this module :
 
 =over
 
@@ -1739,7 +1741,7 @@ Here is a list of all included functions:
 =back
 
  For more informations on the functions, we refer you to the GSL offcial
- documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/name_of_the_function_you_want
 
@@ -1753,7 +1755,7 @@ This example computes the dilogarithm of 1/10 :
 
 An example using Math::GSL::SF and gnuplot is in the B<examples/sf> folder of the source code.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

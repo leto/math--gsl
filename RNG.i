@@ -37,9 +37,9 @@ Math::GSL::RNG - Random Number Generators
 
 =head1 SYNOPSIS
 
-use Math::GSL::RNG qw/:all/;
-my $rng = Math::GSL::RNG->new;
-my @random = map { $rng->get } (1..100);
+    use Math::GSL::RNG qw/:all/;
+    my $rng = Math::GSL::RNG->new;
+    my @random = map { $rng->get } (1..100);
 
 =head2 Math::GSL::RNG->new($type, $seed)
 
@@ -47,7 +47,8 @@ my @random = map { $rng->get } (1..100);
     my $rng = Math::GSL::RNG->new($gsl_rng_knuthran,5);
 
 Creates a new RNG object of type $type, seeded with $seed. Both of these
-parameters are optional.
+parameters are optional. The type $gsl_rng_default is used when no $type
+is given.
 
 =cut
  
@@ -330,7 +331,7 @@ and multiple by that, such as
     print join "\n", map { $scale*($min + $rng->get % ($max-$min+1))  } (1..$num);
     print "\n";
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

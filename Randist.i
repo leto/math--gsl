@@ -433,7 +433,7 @@ use Math::GSL::Randist qw/:all/;
     $x= Math::GSL::gsl_ran_discrete_t::new;
 
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

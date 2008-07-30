@@ -93,7 +93,7 @@ This example shows how to use the function gsl_fit_linear. It's important to see
     }
     my ($status, @results) = gsl_fit_linear($x, $xstride, $y, $ystride, 36); 
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

@@ -270,8 +270,7 @@ Example using import tags:
  use Math::GSL::CDF qw /:beta/;
  print gsl_cdf_beta_P(1,2,3) . "\n";
 
-
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

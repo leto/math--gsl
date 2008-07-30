@@ -1755,7 +1755,7 @@ This example computes the dilogarithm of 1/10 :
 
 An example using Math::GSL::SF and gnuplot is in the B<examples/sf> folder of the source code.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

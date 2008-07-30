@@ -391,7 +391,7 @@ This example shows how to compute the determinant of a matrix with the LU decomp
  my $det = gsl_linalg_LU_det($Matrix, $signum);
  print "The value of the determinant of the matrix is $det \n";
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

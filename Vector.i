@@ -401,6 +401,7 @@ Here is an example using both interfaces.
 
  use Math::GSL::Vector qw/:all/;
 
+ print "We'll create this vector : [0,1,4,9,16] \n";
  my $vector = Math::GSL::Vector->new([0,1,4,9,16]);
  my ($min, $max) = gsl_vector_minmax_index($vector->raw);
 
@@ -414,7 +415,7 @@ Here is an example using both interfaces.
  print "The vector should now be like this : [9,1,4,0,16] \n";
  print "and we received : [ @got ]\n";
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

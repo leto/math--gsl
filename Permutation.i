@@ -205,7 +205,7 @@ Here is a list of all the functions included in this module :
  print gsl_vector_get($vec->{vector}, 5) . "] \n";     
 
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

@@ -51,7 +51,7 @@ the Perl builtin exponentiation operator, '**' .
 
 Would someone like to submit some benchmarks?
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

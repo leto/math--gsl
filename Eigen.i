@@ -143,7 +143,7 @@ This example shows how to use the gsl_eigen_symmv functions to find the eigenval
  $y = gsl_matrix_get($evec, 1, 1);
  print "The second eigenvector is [$x, $y] \n";
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 

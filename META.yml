@@ -13,12 +13,12 @@ requires:
   Test::Class: 0.12
   Test::Exception: 0.21
   Test::More: 0
-  perl: 5.8.0
+  perl: 5.8.8
   version: 0
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.06_03
+    version: 0.07
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLAS::Test:

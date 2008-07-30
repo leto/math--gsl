@@ -21,14 +21,8 @@ use strict;
 use warnings;
 use Config;
 use Data::Dumper;
-
-BEGIN {
-    eval { 
-        require Module::Build;
-        require ExtUtils::PkgConfig; 
-    };
-    die "Math::GSL requires Module::Build and ExtUtils::PkgConfig, please install these first.\n" if $@;
-}
+use Module::Build;
+use ExtUtils::PkgConfig;
 
 my $code = <<'EOC';
 use Config;
@@ -362,7 +356,7 @@ my $builder = $class->new(
         'Test::Exception'       =>    0.21,
         'Test::Class'           =>    0.12,
         version                 =>       0,
-    	perl 			        =>  '5.8.0',
+    	perl 			        =>  '5.8.8',
     },
     sign                  => 0,
     swig_source           => [  

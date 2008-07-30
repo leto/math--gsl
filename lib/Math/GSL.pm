@@ -70,7 +70,7 @@ intuitive (but slightly slower) object-oriented interface.
     Math::GSL::FFT              - Fast Fourier Transform
     Math::GSL::Fit              - Curve Fitting
     Math::GSL::Heapsort         - Sorting Heaps
-    Math::GSL::Histograma       - Histograms
+    Math::GSL::Histogram        - Histograms
     Math::GSL::Histogram2D      - 2D Histograms
     Math::GSL::Integration      - Numerical Integration
     Math::GSL::Interp           - Interpolation
@@ -110,8 +110,8 @@ Jonathan Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan
 
 =head1 BUGS
 
-This software is still in active development, we appreciate your detailed bug reports.
-Please report any bugs or feature requests to the authors directly.
+This software is still in active development, we appreciate your detailed bug reports and
+documentation patches. Please report any bugs or feature requests to the authors directly.
 
 
 =head1 SUPPORT

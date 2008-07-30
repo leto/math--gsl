@@ -43,12 +43,15 @@ __END__
 
 =head1 NAME
 
-Math::GSL::CDF 
-- These functions compute the cumulative distribution functions P(x), Q(x) and their inverses for the named distributions.
+Math::GSL::CDF - Cumulative Distribution Functions
 
 =head1 SYNOPSIS
 
-use Math::GSL::CDF qw /:all/;
+    use Math::GSL::CDF qw /:all/;
+    my $x = gsl_cdf_gaussian_Pinv($P, $sigma);
+
+These functions compute the cumulative distribution functions P(x), Q(x) and
+their inverses for the named distributions.
 
 =head1 DESCRIPTION
 
@@ -191,7 +194,12 @@ use Math::GSL::CDF qw /:all/;
  - These functions compute the cumulative distribution functions P(k), Q(k) for the hypergeometric distribution with parameters $n1, $n2 and $t. 
 
 
- You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::CDF qw/:all/ to use all avaible functions of the module. Other tags are also avaible, here is a complete list of all tags for this module :
+ To import specific functions, list them in the use line. To import
+ all function exportable by Math::GSL::CDF do
+
+    use Math::GSL::CDF qw/:all/
+    
+ This is the list of available import tags:
 
 =over
 
@@ -245,27 +253,23 @@ use Math::GSL::CDF qw /:all/;
 
 =item flat
 
- For example the beta tag contains theses functions : gsl_cdf_beta_P, gsl_cdf_beta_Q, gsl_cdf_beta_Pinv, gsl_cdf_beta_Qinv. 
+ For example the beta tag contains theses functions : gsl_cdf_beta_P,
+ gsl_cdf_beta_Q, gsl_cdf_beta_Pinv, gsl_cdf_beta_Qinv. 
 
- For more informations on the functions, we refer you to the GSL offcial documentation: http://www.gnu.org/software/gsl/manual/html_node/
+ For more informations on the functions, we refer you to the GSL offcial documentation: 
+ L<http://www.gnu.org/software/gsl/manual/html_node/>
+
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =back
 
 =head1 EXAMPLES
 
-example using tag:
+Example using import tags:
 
  use Math::GSL::CDF qw /:beta/;
  print gsl_cdf_beta_P(1,2,3) . "\n";
 
-
-example using functions:
-
- use Math::GSL::CDF qw /gsl_cdf_laplace_P gsl_cdf_laplace_Q/;
-
- print gsl_cdf_laplace_P(2,3). "\n";
- print gsl_cdf_laplace_Q(2,3). "\n";
 
 =head1 AUTHOR
 

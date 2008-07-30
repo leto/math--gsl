@@ -38,7 +38,7 @@ typedef int size_t;
 
 =head1 NAME
 
-Math::GSL::Wavelet - wavelets for real data in one dimension
+Math::GSL::Wavelet - Wavelets (for 1-D real data)
 
 =head1 SYNOPSIS
 

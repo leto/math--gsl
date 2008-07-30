@@ -156,6 +156,12 @@ L<http://git.or.cz>.
 
 =head1 ACKNOWLEDGEMENTS
 
+Thanks to PDX.pm, The Perl Foundation and everyone at Google who makes
+the Summer of Code happen each year. You rock.
+
+=head1 DEDICATION
+
+This Perl module is dedicated in the memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 

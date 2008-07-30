@@ -24,7 +24,6 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_LINALG_LU_DECOMP : Tests {
-    local $TODO = "no test for this function in gsl source, unable to create one who pass at the moment";
     my $self = shift;
     map { gsl_matrix_set($self->{matrix}, 0, $_, $_+1) } (0..3); 
     map { gsl_matrix_set($self->{matrix}, 1, $_, $_+5) } (0..3); 
@@ -38,6 +37,7 @@ sub GSL_LINALG_LU_DECOMP : Tests {
     my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
  
+    local $TODO = "no test for this function in gsl source";
     my $U = gsl_matrix_calloc(4,4);
     my $R = gsl_matrix_calloc(4,4);
     my $line;
@@ -340,7 +340,6 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
 }
 
 sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
-    local $TODO = "Need to check gsl source for a test";
     my $self = shift;
     gsl_matrix_set($self->{matrix}, 1, 0, 3);
     gsl_matrix_set($self->{matrix}, 1, 1, 2);

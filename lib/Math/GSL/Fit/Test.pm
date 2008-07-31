@@ -51,7 +51,7 @@ sub GSL_FIT_LINEAR : Tests {
 # about a lot of unitialized entries even with the stride correctly set, 
 # is there any way to bypass this without having to initialize every element of the array like I do?
 
-    ok_status( $status, $GSL_SUCCESS );
+    ok_status( $status);
     ok(is_similar_relative($results[0], -0.262323073774029, 10**-10));
     ok(is_similar_relative($results[1], 1.00211681802045, 1e-10));
     ok(is_similar_relative($results[2], 0.232818234301152**2.0, 1e-10));
@@ -97,7 +97,7 @@ sub GSL_FIT_WLINEAR : Tests {
     
     my @got = gsl_fit_wlinear ($x, $xstride, $w, $wstride, $y, $ystride, 36);
   
-    ok_status($got[0], $GSL_SUCCESS );
+    ok_status($got[0]);
     ok(is_similar_relative($got[1], $expected_c0, 1e-10), "norris gsl_fit_wlinear c0");
     ok(is_similar_relative($got[2], $expected_c1, 1e-10), "norris gsl_fit_wlinear c1");
     ok(is_similar_relative($got[3], $expected_cov00, 1e-10), "norris gsl_fit_wlinear cov00");
@@ -134,7 +134,7 @@ sub GSL_FIT_MUL : Tests {
     
     my @got = gsl_fit_mul ($x, $xstride, $y, $ystride, 11);
   
-    ok_status($got[0], $GSL_SUCCESS );
+    ok_status($got[0]);
     ok(is_similar_relative($got[1], $expected_c1, 1e-10), "noint1 gsl_fit_mul c1");
     ok(is_similar_relative($got[2], $expected_cov11, 1e-10), "noint1 gsl_fit_mul cov11");
     ok(is_similar_relative($got[3], $expected_sumsq, 1e-10), "noint1 gsl_fit_mul sumsq");
@@ -168,7 +168,7 @@ sub GSL_FIT_WMUL : Tests {
     
     my @got = gsl_fit_wmul ($x, $xstride, $w, $wstride, $y, $ystride, 11);
 
-    ok_status($got[0], $GSL_SUCCESS );
+    ok_status($got[0]);
     ok(is_similar_relative($got[1], $expected_c1, 1e-10), "noint1 gsl_fit_wmul c1");
     ok(is_similar_relative($got[2], $expected_cov11, 1e-10), "noint1 gsl_fit_wmul cov11");
     ok(is_similar_relative($got[3], $expected_sumsq, 1e-10), "noint1 gsl_fit_wmul sumsq");

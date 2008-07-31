@@ -66,9 +66,9 @@ sub MULTIPLE_TESTS : Tests {
     my ($s2, $deriv) = gsl_interp_eval_deriv_e ($interp, $data_x, $data_y, $x, $a);
     my ($s3, $integ) = gsl_interp_eval_integ_e ($interp, $data_x, $data_y, $test_x->[0], $x, $a);
 
-    ok_status($s1, $GSL_SUCCESS);
-    ok_status($s2, $GSL_SUCCESS);
-    ok_status($s3, $GSL_SUCCESS);
+    ok_status($s1);
+    ok_status($s2);
+    ok_status($s3);
 
      ok_similar([$y, $deriv, $integ], [$test_y->[$i], $test_dy->[$i], $test_iy->[$i]], "eval_e, derive_e and integ_e",1e-10);
 

@@ -17,15 +17,14 @@ sub teardown : Test(teardown) {
 sub FFT_REAL_RADIX2_TRANSFORM : Tests 
 {
     my $data = [ (0) x 5, (1) x 22, (0) x 5 ];
-    ok_status( gsl_fft_real_radix2_transform ($data, 1, 32), $GSL_SUCCESS);
+    ok_status( gsl_fft_real_radix2_transform ($data, 1, 32));
     print Dumper [ $data ];
 }
 
 sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
 {
     my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
-    my $status = gsl_fft_complex_radix2_forward ($data, 1, 128);
-    ok_status($status, $GSL_SUCCESS);
+    ok_status( gsl_fft_complex_radix2_forward ($data, 1, 128) );
 }
 sub FFT_VARS : Tests {
     cmp_ok( $gsl_fft_forward, '==', -1, 'gsl_fft_forward' );

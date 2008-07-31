@@ -38,7 +38,7 @@ sub DHT_SAMPLE_APPLY : Tests {
     }
     ok( $#$f_in = 127, 'gsl_dht_x_sample' ); 
 
-    ok_status( gsl_dht_apply($dht, $f_in, $f_out), $GSL_SUCCESS );
+    ok_status( gsl_dht_apply($dht, $f_in, $f_out));
     ok( $#$f_out = 127, 'gsl_dht_apply' ); 
 
     local $TODO = 'need a typemap for $f_in and $f_out';

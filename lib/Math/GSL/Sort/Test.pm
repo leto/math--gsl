@@ -28,7 +28,7 @@ sub GSL_SORT_VECTOR_LARGEST : Tests {
    my $largest10 = [1..10];
    # $largest10 should not have to be passed in
    my ($status, $stuff) = gsl_sort_vector_largest($largest10, 10, $vec->raw);
-   ok_status( $status, $GSL_SUCCESS);
+   ok_status( $status);
    ok_similar( $stuff, [ reverse (41 .. 50) ] );
 } 
 
@@ -37,14 +37,14 @@ sub GSL_SORT_VECTOR_SMALLEST : Tests {
    my $smallest10 = [1..10];
    # $smallest10 should not have to be passed in
    my ($status, $stuff) = gsl_sort_vector_smallest($smallest10, 10, $vec->raw);
-   ok_status( $status, $GSL_SUCCESS);
+   ok_status( $status);
    ok_similar( $stuff, [ 0 .. 9 ] );
 } 
 
 sub GSL_SORT_VECTOR_INDEX : Tests {
   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
   my $p = Math::GSL::Permutation->new(5);
-  ok_status(gsl_sort_vector_index($p->raw, $vec->raw),$GSL_SUCCESS);
+  ok_status(gsl_sort_vector_index($p->raw, $vec->raw));
   # indices in ascending order
   ok_similar( [ $p->as_list ], [ 3, 1, 2, 0 , 4] );
 

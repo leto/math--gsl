@@ -32,7 +32,7 @@ sub GSL_BLAS_DDOT : Tests {
   my $vec1 = Math::GSL::Vector->new([1,2,3,4,5]);
   my $vec2 = Math::GSL::Vector->new([5,4,3,2,1]);
   my ($x, $result) = gsl_blas_ddot($vec1->raw, $vec2->raw);
-  ok_status($x,$GSL_SUCCESS);
+  ok_status($x);
   is($result,35);
 }
 

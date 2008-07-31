@@ -40,7 +40,7 @@ sub TEST_DERIV_CENTRAL: Tests {
     my $gsl_func = $self->{gsl_func};
 
     ($status, $result, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h); 
-    ok_status( $status, $GSL_SUCCESS);
+    ok_status($status);
     ok_similar( $result, 2*$x, 'gsl_deriv_central works for a static function' );
 }
 sub TEST_SWIG_FUNCTION : Tests { 

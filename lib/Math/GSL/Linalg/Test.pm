@@ -244,7 +244,7 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     my $save = gsl_matrix_alloc(3, 5);
     gsl_matrix_memcpy($save, $matrix);
 
-    ok_status(gsl_linalg_QR_decomp($matrix, $tau),$GSL_SUCCESS);
+    ok_status(gsl_linalg_QR_decomp($matrix, $tau));
     is(gsl_linalg_QR_unpack($matrix, $tau, $q, $r), 0);
   # compute a = q r 
   gsl_blas_dgemm ($CblasNoTrans, $CblasNoTrans, 1.0, $q, $r, 0.0, $a);
@@ -279,7 +279,7 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
     gsl_matrix_set($self->{matrix}, 3, 2, 20);
     gsl_matrix_set($self->{matrix}, 3, 3, 30);
    
-    ok_status(gsl_linalg_cholesky_decomp($self->{matrix}), $GSL_SUCCESS);
+    ok_status(gsl_linalg_cholesky_decomp($self->{matrix}));
     my $v = gsl_matrix_diagonal($self->{matrix});
     ok_similar( 
         [ map { gsl_vector_get($v->{vector}, $_)} (0..3) ], [(1)x 4 ]
@@ -314,9 +314,9 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
     gsl_matrix_set($self->{matrix}, 3, 3, -8);   
     my $tau = gsl_vector_alloc(4);
-    ok_status(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau),$GSL_SUCCESS);
+    ok_status(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau));
     my $U = gsl_matrix_alloc(4,4);
-    ok_status(gsl_linalg_hessenberg_unpack($self->{matrix}, $tau, $U),$GSL_SUCCESS);
+    ok_status(gsl_linalg_hessenberg_unpack($self->{matrix}, $tau, $U));
     is(gsl_matrix_get($U, 0, 0), 1);
     map { is(gsl_matrix_get($U, $_, 0), 0) } (1..3);
     map { is(gsl_matrix_get($U, 0, $_), 0) } (1..3);
@@ -363,12 +363,12 @@ sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
     my $tau_U = gsl_vector_alloc(4);
     my $tau_V = gsl_vector_alloc(3);
 
-    ok_status(gsl_linalg_bidiag_decomp($self->{matrix}, $tau_U, $tau_V),$GSL_SUCCESS);
+    ok_status(gsl_linalg_bidiag_decomp($self->{matrix}, $tau_U, $tau_V));
     my $U = gsl_matrix_alloc(4,4);
     my $V = gsl_matrix_alloc(4,4);
     my $diag = gsl_vector_alloc(4);
     my $superdiag = gsl_vector_alloc(3);
-    ok_status(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag),$GSL_SUCCESS);
+    ok_status(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag));
     is(gsl_matrix_get($V, 0, 0), 1);    
     ok_similar( [ map { gsl_matrix_get($V, $_, 0) } (1..3) ], [ (0) x 3 ] ); 
     ok_similar( [ map { gsl_matrix_get($V, 0, $_) } (1..3) ], [ (0) x 3 ] ); 

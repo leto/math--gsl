@@ -184,13 +184,13 @@ sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
     my $self = shift;
     my $fh = fopen("permutation", "w");
     gsl_permutation_init($self->{permutation});
-    ok_status( gsl_permutation_fprintf($fh, $self->{permutation}, "%f"), $GSL_SUCCESS);
+    ok_status( gsl_permutation_fprintf($fh, $self->{permutation}, "%f"));
     fclose($fh);
 
     local $TODO = "odd error with fscanf";
     $fh = fopen("permutation", "r");
     my $p = gsl_permutation_alloc(6); 
-    #ok_status(gsl_permutation_fscanf($fh, $p), $GSL_SUCCESS); 
+    #ok_status(gsl_permutation_fscanf($fh, $p)); 
     is_deeply( [ map {gsl_permutation_get($p, $_) }  (0..5) ],
                [ 0 .. 5 ],
     );

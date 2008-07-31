@@ -412,8 +412,8 @@ use Math::GSL::Randist qw/:all/;
 
  For example the beta tag contains theses functions : gsl_ran_beta, gsl_ran_beta_pdf.
 
- For more informations on the functions, we refer you to the GSL offcial documentation: 
- L<http://www.gnu.org/software/gsl/manual/html_node/>
+For more informations on the functions, we refer you to the GSL offcial documentation: 
+L<http://www.gnu.org/software/gsl/manual/html_node/>
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
  You might also want to write

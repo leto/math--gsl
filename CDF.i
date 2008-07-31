@@ -256,8 +256,8 @@ their inverses for the named distributions.
  For example the beta tag contains theses functions : gsl_cdf_beta_P,
  gsl_cdf_beta_Q, gsl_cdf_beta_Pinv, gsl_cdf_beta_Qinv. 
 
- For more informations on the functions, we refer you to the GSL offcial documentation: 
- L<http://www.gnu.org/software/gsl/manual/html_node/>
+For more informations on the functions, we refer you to the GSL offcial documentation: 
+L<http://www.gnu.org/software/gsl/manual/html_node/>
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 

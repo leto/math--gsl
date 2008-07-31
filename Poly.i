@@ -143,9 +143,10 @@ use Math::GSL::Poly qw/:all/;
 
  gsl_poly_complex_solve 
 
- For more informations on the functions, we refer you to the GSL offcial documentation: 
- L<http://www.gnu.org/software/gsl/manual/html_node/>
- Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+For more informations on the functions, we refer you to the GSL offcial documentation: 
+L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
 =head1 EXAMPLES
 

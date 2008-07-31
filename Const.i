@@ -474,4 +474,36 @@
                 num     => [ @EXPORT_num  ], 
                 math    => [ @EXPORT_math ],
                );
+
+__END__
+
+=head1 NAME
+
+Math::GSL::Const - Constants coming from various part of GSL
+
+=head1 SYNOPSIS
+
+use Math::GSL::Const qw/:all/;
+
+=head1 DESCRIPTION
+
+Here is a list of all the constants included in this module :
+
+=over
+
+=back
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
 %}

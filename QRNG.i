@@ -58,10 +58,9 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_qrng_alloc($T, $n)> - This function returns a pointer to a newly-created instance of a quasi-random sequence generator of type $T and dimension $d. The type $T must be one of the constants included in this module.
 
+=item C<gsl_qrng_clone($q)> - This function returns a pointer to a newly created generator which is an exact copy of the generator $q.
 
-=item C<gsl_qrng_clone>
-
-=item C<gsl_qrng_memcpy> - 
+=item C<gsl_qrng_memcpy($dest, $src)> - This function copies the quasi-random sequence generator $src into the pre-existing generator $dest, making $dest into an exact copy of $src. The two generators must be of the same type.
 
 =item C<gsl_qrng_free($q)> - This function frees all the memory associated with the generator $q. 
 
@@ -69,9 +68,9 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_qrng_name($q)> - This function returns a pointer to the name of the generator $q. 
 
-=item C<gsl_qrng_size>
+=item C<gsl_qrng_size($q)> - This function returns the size of the state of generator r from the generator $q. You can use this information to access the state directly.
 
-=item C<gsl_qrng_state>
+=item C<gsl_qrng_state($q)> - This function returns a pointer to the state of generator r from the generator $q. You can use this information to access the state directly.
 
 =item C<gsl_qrng_get>
 

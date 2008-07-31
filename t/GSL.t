@@ -1,6 +1,7 @@
 use Test::More 'no_plan';
 use Math::GSL qw/:all/;
 use Math::GSL::SF qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -19,4 +20,8 @@ use strict;
               };
 
     verify($results, 'Math::GSL');
+}
+{
+        ok_status(0,$GSL_SUCCESS);
+        ok_status(0);
 }

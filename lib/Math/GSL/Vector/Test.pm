@@ -99,10 +99,9 @@ sub GSL_VECTOR_SET: Tests {
     ok( $x == 5, "gsl_vector_set: $x ?= 5" );
 }
 sub GSL_VECTOR_MIN: Tests {
-    my $self = shift;
     my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (0..4) ] );
     ok_similar( $vec->min ,0, '$vec->min' );
-    ok_similar( gsl_vector_min($self->{vector}) ,0, 'gsl_vector_min' );
+    ok_similar( gsl_vector_min($vec->raw) ,0, 'gsl_vector_min' );
 }
 
 sub GSL_VECTOR_MAX: Tests {

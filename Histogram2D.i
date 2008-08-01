@@ -2,7 +2,8 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-%apply int *OUTPUT { double * xlower, double * xupper, double * ylower, double * yupper, size_t * i, size_t * j, double * x, double * y};
+%apply double *OUTPUT { double * xlower, double * xupper, double * ylower, double * yupper, double * x, double * y};
+%apply int *OUTPUT { size_t * i, size_t * j };
 
 FILE * fopen(char *, char *);
 int fclose(FILE *);

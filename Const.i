@@ -479,19 +479,78 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Const - Constants coming from various part of GSL
+Math::GSL::Const - Constants 
 
 =head1 SYNOPSIS
 
-use Math::GSL::Const qw/:all/;
+    use Math::GSL::Const qw/:all/;
+    print "The Euler–Mascheroni Constant is $M_EULER\n";
 
-=head1 DESCRIPTION
+There are many constants in this module, which are split into six subcategories a.k.a tags:
 
-Here is a list of all the constants included in this module :
+=head2 TAGS
 
-=over
+=over 2
+
+=item * cgsa 
+
+=item * cgsm
+
+=item * mks
+
+=item * mksa
+
+=item * math  - Mathematical 
 
 =back
+
+=over 4
+
+=item *   $M_E - Euler's Constant e
+
+=item *   $M_LOG2E - Log base 2 of e
+
+=item *   $M_LOG10E  - Log base 10 of e
+
+=item *   $M_SQRT2  - Square root of 2
+
+=item *   $M_SQRT1_2  - Square root of 1/2
+
+=item *   $M_SQRT3  - Square root of 3
+
+=item *   $M_PI - Pi
+
+=item *   $M_PI_2 - Pi divided by 2
+
+=item *   $M_PI_4  - Pi divided by 4
+
+=item *   $M_SQRTPI  - Square root of pi
+
+=item *   $M_2_SQRTPI - Two over the square root of pi
+
+=item *   $M_1_PI  - One over pi
+
+=item *   $M_2_PI  - Two over pi
+
+=item *   $M_LN10  - Natural log of 10
+
+=item *   $M_LN2   - Natural log of 2
+
+=item *   $M_LNPI  - Natural log of pi
+
+=item *   $M_EULER  - Euler–Mascheroni Constant 
+
+=back
+
+=over 1
+
+=item * num - Dimensionless Numbers
+
+
+=back
+
+
+Importing the tag C<all> is the same as importing all of these.
 
 =head1 AUTHORS
 

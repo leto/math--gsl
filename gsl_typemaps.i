@@ -25,4 +25,5 @@
 %apply double const [] { const double x_array[], const double xrange[], const double yrange[]};
 %apply double const [] { double * base, const double * base};
 %apply double const [] { const double xrange[], const double yrange[] };
+%apply double const [] { const double * array };
 

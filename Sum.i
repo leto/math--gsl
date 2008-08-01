@@ -32,7 +32,7 @@ Math::GSL::Sum - Functions to accelerate the convergence of a series using the L
 
 =head1 SYNOPSIS
 
-    use Math::GSL::Histogram qw/:all/;
+    use Math::GSL::Sum qw/:all/;
 
     my $w = gsl_sum_levin_u_alloc(5);
     $values = [8,2,3,4,6];

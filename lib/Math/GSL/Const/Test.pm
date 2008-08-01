@@ -27,6 +27,7 @@ sub MATH_CONSTANTS : Tests {
     ok_similar( gsl_sf_exp($M_LN2), 2,'e^($M_LN2)=2' );
     ok_similar( gsl_sf_exp($M_LNPI), $M_PI ,'e^($M_LNPI)=$M_PI');
     ok_similar( $M_SQRT2 ** 2, 2,'($M_SQRT2)**2=2' );
+    ok_similar( $M_EULER, 0.577215664901532860606512090082 );
 }
 
 42;

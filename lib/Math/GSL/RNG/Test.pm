@@ -1,8 +1,9 @@
 package Math::GSL::RNG::Test;
 use base q{Test::Class};
 use Test::More;
+use Math::GSL qw/:all/;
 use Math::GSL::RNG qw/:all/; 
-use Math::GSL qw/is_similar/;
+use Math::GSL::Errno qw/:all/; 
 use Data::Dumper;
 use strict;
 
@@ -83,15 +84,29 @@ sub GSL_RNG_NAME : Tests {
     ok($name1 eq $name2, "\$rng->name == gsl_rng_name = $name2" );
 }
 
+sub GSL_RNG_SIZE : Tests {
+    my $self  = shift;
+    my $size = gsl_rng_size($self->{rng});
+    ok( $size > 0, 'gsl_rng_size' );
+}
+
+sub GSL_RNG_MIN_AND_MAX : Tests {
+    my $self  = shift;
+    my $rng = $self->{rng};
+    my ($min,$max) = (gsl_rng_min($rng), gsl_rng_max($rng));
+    map { gsl_rng_get($rng) } (1..int(rand(100)));
+    ok( defined $min && defined $max 
+        && ($min <= $max), 'gsl_rng_min and gsl_rng_max');
+}
+
 sub GSL_RNG_NO_MORE_SECRETS : Tests {
     my $seed = 1+int 10*rand;
     my $k    = 10 + int(100*rand);
     my $rng1 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
     my $rng2 = Math::GSL::RNG->new($gsl_rng_knuthran, $seed );
 
-    # throw away the first ten values
-    map {  $rng1->get } (1..$k);
-    map {  $rng2->get } (1..$k);
+    # throw away the first $k values
+    map {  $rng1->get && $rng2->get } (1..$k);
     
     my ($n1,$n2) = ( $rng1->get , $rng2->get ); 
     ok( $n1 == $n2 , "parrallel state test: $n1 ?= $n2" );
@@ -125,12 +140,12 @@ sub GSL_RNG_FWRITE_FREAD : Tests {
     my $rng = gsl_rng_alloc($gsl_rng_default);
 
     my $fh = fopen("rng" , "w");
-    is(gsl_rng_fwrite($fh, $self->{rng}), 0);
-    fclose($fh);
+    ok_status(gsl_rng_fwrite($fh, $self->{rng}));
+    ok_status(fclose($fh));
 
     $fh = fopen("rng", "r");
     is(gsl_rng_fread($fh, $rng),0);
     is(gsl_rng_get($rng), gsl_rng_get($self->{rng}));
-    fclose($fh);
+    ok_status(fclose($fh));
 }
 1;

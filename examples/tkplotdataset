@@ -1,0 +1,39 @@
+#!/usr/bin/perl 
+use Tk;
+use Tk::PlotDataset;
+use Tk::LineGraphDataset;
+use Math::GSL::SF qw/:all/;
+use strict;
+
+my $window = MainWindow->new(
+    -title => 'Math::GSL Plot',
+);
+my @region = map { $_/10 } (-400 .. -1, 0, 1 .. 400);
+my @data1  = map { gsl_sf_bessel_J0($_) } (@region);
+my $dataset1 = LineGraphDataset->new(
+    -name => 'gsl_sf_bessel_J0',
+    -xData => \@region,
+    -yData => \@data1,
+    -yAxis => 'Y',
+    -color => 'red'
+);
+
+my @data2 = map { gsl_sf_bessel_J1($_) } (@region);
+my $dataset2 = LineGraphDataset->new(
+    -name => 'gsl_sf_bessel_J1',
+    -xData => \@region,
+    -yData => \@data2,
+    -yAxis => 'Y1',
+    -color => 'blue'
+);
+
+my $graph = $window->PlotDataset(
+    -width => 500,
+    -height => 500,
+    -background => 'snow'
+) -> pack(-fill => 'both', -expand => 1);
+
+$graph->addDatasets($dataset1, $dataset2);
+$graph->plot;
+MainLoop;
+exit(1);

@@ -37,12 +37,17 @@ typedef struct gsl_function_struct gsl_function ;
     }
 %}
 %typemap(in) void * {
-    printf("void * \n");
     $1 = (double *) $input;
 };
 %typemap(in) double (*)(double,void *) {
+    gsl_function F;
+    int k;
+    F.params = 0;
+    F.function = &xsquared;
     fprintf(stderr,"input * %d \n", (int) $input);
     //Perl_sv_dump( $input );
+    $1 = &F;
+    fprintf(stderr,"1=$1\n");
 };
 
 %apply double * OUTPUT { double *abserr, double *result };

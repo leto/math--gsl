@@ -33,7 +33,7 @@ sub TEST_DERIV_CENTRAL_DIES : Tests {
                gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
-sub TEST_DERIV_CENTRAL: Tests { 
+sub TEST_DERIV_CENTRAL : Tests { 
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
     my $self = shift;

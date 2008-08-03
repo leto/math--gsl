@@ -46,7 +46,7 @@ int gsl_deriv_central (const gsl_function *f,
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
    
     //Perl_sv_dump( $input );
-
+    // how to register callback ?
     $1 = &F;
 };
 
@@ -56,44 +56,34 @@ int gsl_deriv_central (const gsl_function *f,
     sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     double x;
 
-    if( sv == (SV**)NULL)
+    if (sv == (SV**)NULL)
         croak("Math::GSL : Missing callback!\n");
+    /*
     dSP;
     ENTER;
     SAVETMPS;
+    */
 
     PUSHMARK(SP);
     XPUSHs(sv_2mortal(newSViv((int)$input)));
     PUTBACK;
 
 
-    fprintf(stderr, "CALLBACK!\n");
-    /* The money shot */
-    call_sv(*sv, G_SCALAR);
+    fprintf(stderr, "\nCALLBACK!\n");
+    
+    call_sv(*sv, G_SCALAR);     /* The money shot */
     x = POPn;
-    fprintf(stderr,"x=%f\n", x);
-
+    $result =  &x;
+    fprintf(stderr, "x = %.8f", x);
+    /*
     FREETMPS;
     LEAVE;
+    */
 }
 
 %typemap(in) void * {
     $1 = (double *) $input;
 };
-/*
-%typemap(in) double (*)(double,void *) {
-    gsl_function F;
-    int k;
-    F.params = 0;
-    F.function = &xsquared;
-    fprintf(stderr,"input * %d \n", (int) $input);
-    //Perl_sv_dump( $input );
-    $1 = &F;
-    fprintf(stderr,"1=$1\n");
-};
-*/
-
-
 %{
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_deriv.h"

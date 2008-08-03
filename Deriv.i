@@ -11,34 +11,76 @@ typedef struct gsl_function_struct gsl_function ;
 */
 
 %include "typemaps.i"
-%typemap(in) gsl_function * {
-    gsl_function F;
-    int count;
-    F.params = 0;
-    F.function = &xsquared;
-   
-    if( !SvROK($input) ) {
-        croak("Math::GSL : not a reference value!");
-    }
-    //Perl_sv_dump( $input );
-
-    // does not work
-    //count = call_sv((SV*) $input, G_ARRAY);
-    $1 = &F;
-};
-
+%include "gsl_typemaps.i"
 %{
+    static HV * Callbacks = (HV*)NULL;
     typedef struct callback_t
     {  
         SV * obj;
     };
     double xsquared(double x,void *params){
+        fprintf(stderr,"static xsquared!!\n");
         return x * x;
     }
 %}
+%apply double * OUTPUT { double *abserr, double *result };
+/*
+int gsl_deriv_central (const gsl_function *f,
+                       double x, double h,
+                       double *result, double *abserr);
+*/
+%typemap(in) gsl_function const * {
+    fprintf(stderr,"typemap in!\n");
+    gsl_function F;
+    int count;
+    F.params = 0;
+    F.function = &xsquared;
+    SV * callback;
+
+    if (!SvROK($input)) {
+        croak("Math::GSL : not a reference value!");
+    }
+    if (Callbacks == (HV*)NULL)
+        Callbacks = newHV();
+
+    hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
+   
+    //Perl_sv_dump( $input );
+
+    $1 = &F;
+};
+
+%typemap(argout) gsl_function const * {
+    fprintf(stderr,"typemap out!\n");
+    SV ** sv;
+    sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
+    double x;
+
+    if( sv == (SV**)NULL)
+        croak("Math::GSL : Missing callback!\n");
+    dSP;
+    ENTER;
+    SAVETMPS;
+
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSViv((int)$input)));
+    PUTBACK;
+
+
+    fprintf(stderr, "CALLBACK!\n");
+    /* The money shot */
+    call_sv(*sv, G_SCALAR);
+    x = POPn;
+    fprintf(stderr,"x=%f\n", x);
+
+    FREETMPS;
+    LEAVE;
+}
+
 %typemap(in) void * {
     $1 = (double *) $input;
 };
+/*
 %typemap(in) double (*)(double,void *) {
     gsl_function F;
     int k;
@@ -49,8 +91,8 @@ typedef struct gsl_function_struct gsl_function ;
     $1 = &F;
     fprintf(stderr,"1=$1\n");
 };
+*/
 
-%apply double * OUTPUT { double *abserr, double *result };
 
 %{
     #include "gsl/gsl_math.h"

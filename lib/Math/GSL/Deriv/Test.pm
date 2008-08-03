@@ -22,9 +22,7 @@ sub teardown : Test(teardown) {
 sub TEST_FUNCTION_STRUCT : Tests {
     my $self = shift;
 
-    my $gsl_func = Math::GSL::Deriv::gsl_function_struct->new;
-
-    isa_ok( $gsl_func,'Math::GSL::Deriv::gsl_function_struct');
+    isa_ok( $self->{gsl_func},'Math::GSL::Deriv::gsl_function_struct');
 }
 
 sub TEST_DERIV_CENTRAL_DIES : Tests { 
@@ -33,29 +31,29 @@ sub TEST_DERIV_CENTRAL_DIES : Tests {
                gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
-sub TEST_DERIV_CENTRAL : Tests { 
+sub AAA_TEST_DERIV_CENTRAL : Tests { 
+    local $TODO = 'callbacks are still being worked on';
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
     my $self = shift;
-    my $gsl_func = $self->{gsl_func};
 
-    ($status, $result, $abserr) = gsl_deriv_central ( $gsl_func, $x, $h); 
+    ($status, $result, $abserr) = gsl_deriv_central ( 
+        sub { my $x=shift; print Dumper [$x] ;return $x ** 3 },
+        $x, $h, 
+    ); 
     ok_status($status);
-    ok_similar( $result, 2*$x, 'gsl_deriv_central works for a static function' );
+    ok_similar( [$result], [3*$x], 'gsl_deriv_central returns correct value for anon sub' );
 }
-sub TEST_SWIG_FUNCTION : Tests { 
-    local $TODO  = "swig_function_set doesn't work";
-    my $self     = shift;
-    my $gsl_func = $self->{gsl_func};
+sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests { 
+    my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
-    $gsl_func->swig_function_set( sub { die "I GOT CALLED!" } );
-    my $func = $gsl_func->swig_function_get();
-    ok( ref $func eq 'CODE', 'swig_function_get works' );
+    my $self = shift;
 
-    $gsl_func->swig_params_set(42);
-    my $params = $gsl_func->swig_params_get();
-    ok(defined $params && $params == 42, 'swig_params_get works' );
+    throws_ok( sub {
+                gsl_deriv_central ( sub { die "CALL ME BACK!"} , $x, $h)
+            }, qr/CALL ME BACK/, 'gsl_deriv_central can call anon sub' );
 }
+
 
 
 1;

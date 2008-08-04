@@ -7,74 +7,27 @@ use strict;
 
 my ( %sets, $graph );
 my $window = MainWindow->new( -title => 'Math::GSL Plot', );
+my @popo = ("gsl_sf_bessel_J0", "gsl_sf_bessel_J1", "gsl_sf_bessel_Y0", "gsl_sf_bessel_Y1");
 
-my $del_J0;
-$window->Button(
-    -text    => "gsl_sf_bessel_J0",
-    -command => sub {
-        &region("gsl_sf_bessel_J0");
-        $del_J0->configure( -state => "normal" );
-    }
-)->pack;
-$del_J0 = $window->Button(
-    -text    => "Remove gsl_sf_bessel_J0",
-    -state   => "disabled",
-    -command => sub {
-        delete_set("gsl_sf_bessel_J0");
-        $del_J0->configure( -state => "disabled" );
-    }
-)->pack;
-
-my $del_J1;
-$window->Button(
-    -text    => "gsl_sf_bessel_J1",
-    -command => sub { 
-      region("gsl_sf_bessel_J1"); 
-      $del_J1->configure( -state => "normal" );
-    }
-)->pack;
-$del_J1 = $window->Button(
-    -text    => "Remove gsl_sf_bessel_J1",
-    -state   => "disabled",
-    -command => sub { 
-        delete_set("gsl_sf_bessel_J1"); 
-        $del_J1->configure( -state => "disabled" );
-    }
-)->pack;
-
-my $del_Y0;
-$window->Button(
-    -text    => "gsl_sf_bessel_Y0",
-    -command => sub { 
-        region("gsl_sf_bessel_Y0");
-        $del_Y0->configure( -state => "normal" );
-    }
-)->pack;
-$del_Y0 = $window->Button(
-    -text    => "Remove gsl_sf_bessel_Y0",
-    -state   => "disabled",
-    -command => sub { 
-        delete_set("gsl_sf_bessel_Y0"); 
-        $del_Y0->configure( -state => "disabled" );
+for my $n (0..3) {
+ my $del;
+ $window->Button(
+     -text    => $popo[$n],
+     -command => sub {
+         region($popo[$n]);
+         $del->configure( -state => "normal" );
      }
-)->pack;
-
-my $del_Y1;
-$window->Button(
-    -text    => "gsl_sf_bessel_Y1",
-    -command => sub { 
-        region("gsl_sf_bessel_Y1"); 
-        $del_Y1->configure( -state => "normal" );
+ )->pack;
+ $del = $window->Button(
+     -text    => "Remove " . $popo[$n],
+     -state   => "disabled",
+     -command => sub {
+         delete_set($popo[$n]);
+         $del->configure( -state => "disabled" );
+     }
+ )->pack;
 }
-)->pack;
-$del_Y1 = $window->Button(
-    -text    => "Remove gsl_sf_bessel_Y1",
-    -state   => "disabled",
-    -command => sub { 
-        delete_set("gsl_sf_bessel_Y1");
-        $del_Y1->configure( -state => "disabled" );
- }
-)->pack;
+
 
 $window->Button( -text => "test", -command => [ \&region, "test", $window ] )
   ->pack;
@@ -98,7 +51,6 @@ sub region {
             @data1 = map { $functions{$name}->($_) } (@region2);
         }
         else {
-            @data1;
             @data1 = map { $functions{$name}->($_) } (@region);
         }
 

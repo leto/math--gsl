@@ -32,7 +32,6 @@ sub TEST_DERIV_CENTRAL_DIES : Tests {
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
 sub AAA_TEST_DERIV_CENTRAL : Tests { 
-    local $TODO = 'callbacks are still being worked on';
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
     my $self = shift;
@@ -44,6 +43,7 @@ sub AAA_TEST_DERIV_CENTRAL : Tests {
     ok_status($status);
     ok_similar( [$result], [3*$x], 'gsl_deriv_central returns correct value for anon sub' );
 }
+
 sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests { 
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);

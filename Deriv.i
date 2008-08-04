@@ -42,7 +42,7 @@ int gsl_deriv_central (const gsl_function *f,
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();
-
+    fprintf(stderr,"input =%d\n", (int)$input);
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
    
     //Perl_sv_dump( $input );
@@ -53,9 +53,9 @@ int gsl_deriv_central (const gsl_function *f,
 %typemap(argout) gsl_function const * {
     fprintf(stderr,"typemap out!\n");
     SV ** sv;
-    sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     double x;
 
+    sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     if (sv == (SV**)NULL)
         croak("Math::GSL : Missing callback!\n");
     /*
@@ -65,16 +65,20 @@ int gsl_deriv_central (const gsl_function *f,
     */
 
     PUSHMARK(SP);
+    // these are the arguments passed to the callback
+    // this is currently passing in the memory address of the callback
     XPUSHs(sv_2mortal(newSViv((int)$input)));
-    PUTBACK;
 
+    //XPUSHs(sv_2mortal(newSViv(42)));
+    //XPUSHs(sv_2mortal(newSVnv((double) (*($input)->function)()    )));
+    PUTBACK;
 
     fprintf(stderr, "\nCALLBACK!\n");
     
     call_sv(*sv, G_SCALAR);     /* The money shot */
     x = POPn;
     $result =  &x;
-    fprintf(stderr, "x = %.8f", x);
+    fprintf(stderr, "x = %.8f\n", x);
     /*
     FREETMPS;
     LEAVE;

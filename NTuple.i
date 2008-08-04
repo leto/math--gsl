@@ -1,4 +1,7 @@
 %module "Math::GSL::NTuple"
+%include "typemaps.i"
+%include "gsl_typemaps.i"
+
 %{
     #include "gsl/gsl_ntuple.h"
 %}

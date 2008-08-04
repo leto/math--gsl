@@ -5,35 +5,150 @@ use Tk::LineGraphDataset;
 use Math::GSL::SF qw/:all/;
 use strict;
 
-my $window = MainWindow->new(
-    -title => 'Math::GSL Plot',
-);
-my @region = map { $_/10 } (-400 .. -1, 0, 1 .. 400);
-my @data1  = map { gsl_sf_bessel_J0($_) } (@region);
-my $dataset1 = LineGraphDataset->new(
-    -name => 'gsl_sf_bessel_J0',
-    -xData => \@region,
-    -yData => \@data1,
-    -yAxis => 'Y',
-    -color => 'red'
-);
+my ( %sets, $graph );
+my $window = MainWindow->new( -title => 'Math::GSL Plot', );
 
-my @data2 = map { gsl_sf_bessel_J1($_) } (@region);
-my $dataset2 = LineGraphDataset->new(
-    -name => 'gsl_sf_bessel_J1',
-    -xData => \@region,
-    -yData => \@data2,
-    -yAxis => 'Y1',
-    -color => 'blue'
-);
+my $del_J0;
+$window->Button(
+    -text    => "gsl_sf_bessel_J0",
+    -command => sub {
+        &region("gsl_sf_bessel_J0");
+        $del_J0->configure( -state => "normal" );
+    }
+)->pack;
+$del_J0 = $window->Button(
+    -text    => "Remove gsl_sf_bessel_J0",
+    -state   => "disabled",
+    -command => sub {
+        delete_set("gsl_sf_bessel_J0");
+        $del_J0->configure( -state => "disabled" );
+    }
+)->pack;
 
-my $graph = $window->PlotDataset(
-    -width => 500,
-    -height => 500,
-    -background => 'snow'
-) -> pack(-fill => 'both', -expand => 1);
+my $del_J1;
+$window->Button(
+    -text    => "gsl_sf_bessel_J1",
+    -command => sub { 
+      region("gsl_sf_bessel_J1"); 
+      $del_J1->configure( -state => "normal" );
+    }
+)->pack;
+$del_J1 = $window->Button(
+    -text    => "Remove gsl_sf_bessel_J1",
+    -state   => "disabled",
+    -command => sub { 
+        delete_set("gsl_sf_bessel_J1"); 
+        $del_J1->configure( -state => "disabled" );
+    }
+)->pack;
 
-$graph->addDatasets($dataset1, $dataset2);
-$graph->plot;
+my $del_Y0;
+$window->Button(
+    -text    => "gsl_sf_bessel_Y0",
+    -command => sub { 
+        region("gsl_sf_bessel_Y0");
+        $del_Y0->configure( -state => "normal" );
+    }
+)->pack;
+$del_Y0 = $window->Button(
+    -text    => "Remove gsl_sf_bessel_Y0",
+    -state   => "disabled",
+    -command => sub { 
+        delete_set("gsl_sf_bessel_Y0"); 
+        $del_Y0->configure( -state => "disabled" );
+     }
+)->pack;
+
+my $del_Y1;
+$window->Button(
+    -text    => "gsl_sf_bessel_Y1",
+    -command => sub { 
+        region("gsl_sf_bessel_Y1"); 
+        $del_Y1->configure( -state => "normal" );
+}
+)->pack;
+$del_Y1 = $window->Button(
+    -text    => "Remove gsl_sf_bessel_Y1",
+    -state   => "disabled",
+    -command => sub { 
+        delete_set("gsl_sf_bessel_Y1");
+        $del_Y1->configure( -state => "disabled" );
+ }
+)->pack;
+
+$window->Button( -text => "test", -command => [ \&region, "test", $window ] )
+  ->pack;
+
+sub region {
+    my $name = shift;
+    if ($graph) { $graph->packForget(); }
+
+    my @region = map { $_ / 10 } ( -400 .. -1, 0, 1 .. 400 );
+    my @region2 = map { $_ / 10 } ( 1 .. 400 );
+    my %functions = (
+        "gsl_sf_bessel_J0" => \&sf_bessel_J0,
+        "gsl_sf_bessel_J1" => \&sf_bessel_J1,
+        "gsl_sf_bessel_Y0" => \&sf_bessel_Y0,
+        "gsl_sf_bessel_Y1" => \&sf_bessel_Y1,
+        "test"             => \&test,
+    );
+    my @data1;
+    if ($name) {
+        if ( $name =~ /(Y1|Y0)$/ ) {
+            @data1 = map { $functions{$name}->($_) } (@region2);
+        }
+        else {
+            @data1;
+            @data1 = map { $functions{$name}->($_) } (@region);
+        }
+
+        my $dataset1 = LineGraphDataset->new(
+            -name      => $name,
+            -plottitle => [$name],
+            -xData     => \@region,
+            -yData     => \@data1,
+            -yAxis     => 'Y',
+
+            #     -color => 'red'
+        );
+        $sets{$name} = $dataset1;
+    }
+    $graph = $window->PlotDataset(
+        -width      => 500,
+        -height     => 500,
+        -background => 'snow'
+    )->pack( -fill => 'both', -expand => 1 );
+
+    my @datasets = values %sets;
+    $graph->addDatasets(@datasets);
+    $graph->plot;
+}
+
+sub delete_set {
+    my $name = shift;
+    delete $sets{$name};
+    &region;
+}
+
+sub sf_bessel_J0 {
+    return gsl_sf_bessel_J0( $_[0] );
+}
+
+sub sf_bessel_J1 {
+    return gsl_sf_bessel_J1( $_[0] );
+}
+
+sub sf_bessel_Y0 {
+    return gsl_sf_bessel_Y0( $_[0] );
+}
+
+sub sf_bessel_Y1 {
+    return gsl_sf_bessel_Y1( $_[0] );
+}
+
+sub test {
+    return $_[0] + 2;
+}
+
 MainLoop;
 exit(1);

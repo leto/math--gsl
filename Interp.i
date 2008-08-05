@@ -114,6 +114,14 @@ This module also includes the following constants :
 
 =back
 
+=head1 EXAMPLES
+
+ use Math::GSL::Interp qw/:all/;
+ my $x_array = [ 0.0, 1.0, 2.0, 3.0, 4.0 ];
+ # check that we get the last interval if x == last value 
+ $index_result = gsl_interp_bsearch($x_array, 4.0, 0, 4);
+ print "The last interval is $index_result \n";
+
 =head1 AUTHORS
 
 Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>

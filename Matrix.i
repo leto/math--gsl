@@ -468,17 +468,14 @@ sub row
     croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
         unless (($row < $self->rows) and $row >= 0);  
 
-    my $rowvec = Math::GSL::Vector->new($self->cols);
-    my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
+   my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
 
-    my $status = gsl_matrix_get_row($rowvec->raw, $self->raw, $row);
-    croak (__PACKAGE__.'::gsl_matrix_get_row - ' . gsl_strerror($status) ) 
-        unless ( $status == $GSL_SUCCESS );
-
-    $status = gsl_matrix_set_row($rowmat->raw, 0, $rowvec->raw);
-
-    croak (__PACKAGE__.'::gsl_matrix_set_row - ' . gsl_strerror($status) ) 
-        unless ( $status == $GSL_SUCCESS );
+   my @got; 
+   for my $n (0 .. $self->cols-1) {
+    push (@got, gsl_matrix_get($self->raw, $row, $n)); 
+   }
+    for my $n (0 .. $self->cols-1) {
+	gsl_matrix_set($rowmat->raw, 0, $n, $got[$n]); }	
 
     return $rowmat;
 }
@@ -502,9 +499,13 @@ sub col
     my $colvec = Math::GSL::Vector->new($self->cols);
     my $colmat = Math::GSL::Matrix->new($self->rows, 1);
 
-    my $status = gsl_matrix_get_col($colvec->raw, $self->raw, $col);
-# return $colvec;
-    $status    = gsl_matrix_set_col($colmat->raw, 0, $colvec->raw);
+   my @got; 
+   for my $n (0 .. $self->rows-1) {
+    push (@got, gsl_matrix_get($self->raw, $n, $col)); 
+   }
+    for my $n (0 .. $self->rows-1) {
+	gsl_matrix_set($colmat->raw, $n, 0, $got[$n]); }	
+
     return $colmat;
 }
 

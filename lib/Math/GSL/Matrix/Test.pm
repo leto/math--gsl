@@ -491,6 +491,9 @@ sub ROW : Tests {
     my $matrix = Math::GSL::Matrix->new(5,5);
     map { gsl_matrix_set($matrix->raw, $_, $_, 5 + $_**2) } (0..4);
     ok_similar( [qw/0 0 9 0 0/] , [$matrix->row(2)->as_list ] );
+    map { gsl_matrix_set($matrix->raw, 0, $_, $_) } (0..4);
+    ok_similar( [qw/0 1 2 3 4/] , [$matrix->row(0)->as_list ] );
+    
 }
 
 sub COL : Tests {

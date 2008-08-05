@@ -324,6 +324,39 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ n
 
 
 =head1 EXAMPLES
+ 
+ This example shows how to do a matrix-matrix product of double numbers :
+
+ use Math::GSL::Matrix qw/:all/;
+ use Math::GSL::BLAS qw/:all/;
+ my $A = Math::GSL::Matrix->new(2,2);
+ $A->set_row(0, [1, 4]);
+   ->set_row(1, [3, 2]);
+ my $B = Math::GSL::Matrix->new(2,2);
+ $B->set_row(0, [2, 1]);
+   ->set_row(1, [5,3]);
+ my $C = Math::GSL::Matrix->new(2,2);
+ gsl_matrix_set_zero($C->raw);
+ gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $A->raw, $B->raw, 1, $C->raw);
+ my @got = $C->row(0)->as_list;
+ print "The resulting matrix is: \n[";
+ print "$got[0]  $got[1]\n";
+ @got = $C->row(1)->as_list;
+ print "$got[0]  $got[1] ]\n";
+
+
+ This example shows how to compute the scalar product of two vectors :
+
+ use Math::GSL::Vector qw/:all/;
+ use Math::GSL::CBLAS qw/:all/;
+ use Math::GSL::BLAS qw/:all/;
+ my $vec1 = Math::GSL::Vector->new([1,2,3,4,5]);
+ my $vec2 = Math::GSL::Vector->new([5,4,3,2,1]);
+ my ($status, $result) = gsl_blas_ddot($vec1->raw, $vec2->raw);
+ if($status == 0) { 
+ print "The function has succeeded. \n";
+ }
+ print "The result of the vector multiplication is $result. \n";
 
 =head1 AUTHORS
 

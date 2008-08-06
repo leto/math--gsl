@@ -33,7 +33,7 @@ examples/sf/bessel
 examples/sf/bessel.png
 examples/sf/plot_bessel.gnuplot
 examples/sf/README
-examples/tkgraphdataset
+examples/tkplotdataset
 FFT.i
 FFT_wrap.c
 Fit.i
@@ -105,6 +105,7 @@ lib/Math/GSL/Multifit/Test.pm
 lib/Math/GSL/Multimin.pm
 lib/Math/GSL/Multiroots.pm
 lib/Math/GSL/NTuple.pm
+lib/Math/GSL/NTuple/Test.pm
 lib/Math/GSL/ODEIV.pm
 lib/Math/GSL/ODEIV/Test.pm
 lib/Math/GSL/Permutation.pm
@@ -126,6 +127,7 @@ lib/Math/GSL/Siman.pm
 lib/Math/GSL/Sort.pm
 lib/Math/GSL/Sort/Test.pm
 lib/Math/GSL/Spline.pm
+lib/Math/GSL/Spline/Test.pm
 lib/Math/GSL/Statistics.pm
 lib/Math/GSL/Sum.pm
 lib/Math/GSL/Sum/Test.pm
@@ -218,6 +220,7 @@ t/Machine.t
 t/Matrix.t
 t/Min.t
 t/Multifit.t
+t/NTuple.t
 t/ODEIV.t
 t/Permutation.t
 t/Poly.t
@@ -228,6 +231,7 @@ t/RNG.t
 t/Roots.t
 t/SF.t
 t/Sort.t
+t/Spline.t
 t/Sum.t
 t/Sys.t
 t/Vector.t

@@ -24,6 +24,15 @@ sub TEST_FREE : Test {
     gsl_spline_free($self->{spline});
     ok(!$@ && !$! && !$?,'gsl_spline_free');
 }
+sub TEST_MIN_SIZE : Test {
+    my $self = shift;
+    cmp_ok(2,'==',gsl_spline_min_size($self->{spline}),'min_size');
+}
+sub TEST_NAME : Test {
+        my $self = shift;
+        my $spline = $self->{spline};
+        cmp_ok('linear', 'eq' , gsl_spline_name($spline));
+}
 sub TEST_ALLOC : Tests {
     isa_ok(gsl_spline_alloc($_,100), 'Math::GSL::Spline') for (
                $gsl_interp_linear,

@@ -1,6 +1,9 @@
 %module "Math::GSL::NTuple"
 %include "typemaps.i"
-%include "gsl_typemaps.i"
+
+%typemap(in) void * {
+    $1 = (double *) $input;
+};
 
 %{
     #include "gsl/gsl_ntuple.h"

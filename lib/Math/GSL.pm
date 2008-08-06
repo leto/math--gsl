@@ -230,7 +230,7 @@ sub is_similar {
 sub ok_status {
     my ($got, $expected) = @_;
     $expected ||= $GSL_SUCCESS;
-    ok( $got == $expected, gsl_strerror($expected) );
+    ok( $got == $expected, gsl_strerror(int($got)) );
 }
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;

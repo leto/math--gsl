@@ -26,5 +26,4 @@
 %apply double const [] { double * base, const double * base};
 %apply double const [] { const double xrange[], const double yrange[] };
 %apply double const [] { const double * array };
-%apply double const [] { void * ntuple_data };
 

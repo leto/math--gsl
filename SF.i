@@ -706,7 +706,7 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_airy_Ai_scaled($x, $mode)> 
 
-- These routines compute a scaled version of the Airy function S_A($x) Ai($x). For $x>0 the scaling factor S_A($x) is \exp(+(2/3) $x**(3/2)), and is 1 for $x<0. 
+- These routines compute a scaled version of the Airy function S_A($x) Ai($x). For $x>0 the scaling factor S_A($x) is \exp(+(2/3) $x**(3/2)), and is 1 for $x<0. $result is a gsl_sf_result structure. 
 
 =back
 
@@ -716,535 +716,1295 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_airy_Bi_scaled($x, $mode)>
 
-- These routines compute a scaled version of the Airy function S_B($x) Bi($x). For $x>0 the scaling factor S_B($x) is exp(-(2/3) $x**(3/2)), and is 1 for $x<0.
+- These routines compute a scaled version of the Airy function S_B($x) Bi($x). For $x>0 the scaling factor S_B($x) is exp(-(2/3) $x**(3/2)), and is 1 for $x<0. $result is a gsl_sf_result structure.
 
 =back
 
 =over 
 
-=item C<gsl_sf_airy_Ai_deriv_e >
+=item C<gsl_sf_airy_Ai_deriv_e($x, $mode, $result)>
 
-=item C<gsl_sf_airy_Ai_deriv>
+=item C<gsl_sf_airy_Ai_deriv($x, $mode)>
 
-=item C<gsl_sf_airy_Bi_deriv_e>
+- These routines compute the Airy function derivative Ai'($x) with an accuracy specified by $mode. $result is a gsl_sf_result structure.
 
-=item C<gsl_sf_airy_Bi_deriv >
+=back
 
-=item C<gsl_sf_airy_Ai_deriv_scaled_e>
+=over
 
-=item C<gsl_sf_airy_Ai_deriv_scaled>
+=item C<gsl_sf_airy_Bi_deriv_e($x, $mode, $result)>
 
-=item C<gsl_sf_airy_Bi_deriv_scaled_e>
+=item C<gsl_sf_airy_Bi_deriv($x, $mode)>
 
-=item C<gsl_sf_airy_Bi_deriv_scaled>
+-These routines compute the Airy function derivative Bi'($x) with an accuracy specified by $mode. $result is a gsl_sf_result structure.
 
-=item C<gsl_sf_airy_zero_Ai_e>
+=back
 
-=item C<gsl_sf_airy_zero_Ai>
+=over
 
-=item C<gsl_sf_airy_zero_Bi_e>
+=item C<gsl_sf_airy_Ai_deriv_scaled_e($x, $mode, $result)>
 
-=item C<gsl_sf_airy_zero_Bi>
+=item C<gsl_sf_airy_Ai_deriv_scaled($x, $mode)>
 
-=item C<gsl_sf_airy_zero_Ai_deriv_e>
+-These routines compute the scaled Airy function derivative S_A(x) Ai'(x). For x>0 the scaling factor S_A(x) is \exp(+(2/3) x^(3/2)), and is 1 for x<0. $result is a gsl_sf_result structure.
 
-=item C<gsl_sf_airy_zero_Ai_deriv>
+=back
 
-=item C<gsl_sf_airy_zero_Bi_deriv_e>
+=over
 
-=item C<gsl_sf_airy_zero_Bi_deriv>
+=item C<gsl_sf_airy_Bi_deriv_scaled_e($x, $mode, $result)>
 
-=item C<gsl_sf_bessel_J0_e>
+=item C<gsl_sf_airy_Bi_deriv_scaled($x, $mode)>
 
-=item C<gsl_sf_bessel_J0>
+-These routines compute the scaled Airy function derivative S_B(x) Bi'(x). For x>0 the scaling factor S_B(x) is exp(-(2/3) x^(3/2)), and is 1 for x<0. $result is a gsl_sf_result structure.
 
-=item C<gsl_sf_bessel_J1_e>
+=back
 
-=item C<gsl_sf_bessel_J1>
+=over
 
-=item C<gsl_sf_bessel_Jn_e>
+=item C<gsl_sf_airy_zero_Ai_e($s, $result)>
 
-=item C<gsl_sf_bessel_Jn>
+=item C<gsl_sf_airy_zero_Ai($s)>
 
-=item C<gsl_sf_bessel_Jn_array>
+-These routines compute the location of the s-th zero of the Airy function Ai($x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_airy_zero_Bi_e($s, $result)>
+
+=item C<gsl_sf_airy_zero_Bi($s)>
+
+-These routines compute the location of the s-th zero of the Airy function Bi($x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_airy_zero_Ai_deriv_e($s, $result)>
+
+=item C<gsl_sf_airy_zero_Ai_deriv($s)>
+
+-These routines compute the location of the s-th zero of the Airy function derivative Ai'(x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_airy_zero_Bi_deriv_e($s, $result)>
+
+=item C<gsl_sf_airy_zero_Bi_deriv($s)>
+
+- These routines compute the location of the s-th zero of the Airy function derivative Bi'(x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_J0_e($x, $result)>
+
+=item C<gsl_sf_bessel_J0($x)>
+
+-These routines compute the regular cylindrical Bessel function of zeroth order, J_0($x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_J1_e($x, $result)>
+
+=item C<gsl_sf_bessel_J1($x)>
+
+- These routines compute the regular cylindrical Bessel function of first order, J_1($x). $result is a gsl_sf_result structure.
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_Jn_e($n, $x, $result)>
+
+=item C<gsl_sf_bessel_Jn($n, $x)>
+
+-These routines compute the regular cylindrical Bessel function of order n, J_n($x).
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_Jn_array($nmin, $nmax, $x, $result_array)> - This routine computes the values of the regular cylindrical Bessel functions J_n($x) for n from $nmin to $nmax inclusive, storing the results in the array $result_array. The values are computed using recurrence relations for efficiency, and therefore may differ slightly from the exact values.
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Y0_e>
 
 =item C<gsl_sf_bessel_Y0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Y1_e>
 
 =item C<gsl_sf_bessel_Y1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Yn_e>
 
 =item C<gsl_sf_bessel_Yn>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Yn_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_I0_e >
 
 =item C<gsl_sf_bessel_I0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_I1_e>
 
 =item C<gsl_sf_bessel_I1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_In_e>
 
 =item C<gsl_sf_bessel_In>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_In_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_I0_scaled_e>
 
 =item C<gsl_sf_bessel_I0_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_I1_scaled_e>
 
 =item C<gsl_sf_bessel_I1_scaled>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_In_scaled_e>
 
 =item C<gsl_sf_bessel_In_scaled >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_In_scaled_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_K0_e>
 
 =item C<gsl_sf_bessel_K0 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_K1_e>
 
 =item C<gsl_sf_bessel_K1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Kn_e>
 
 =item C<gsl_sf_bessel_Kn>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Kn_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_K0_scaled_e >
 
 =item C<gsl_sf_bessel_K0_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_K1_scaled_e>
 
 =item C<gsl_sf_bessel_K1_scaled >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Kn_scaled_e>
 
 =item C<gsl_sf_bessel_Kn_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Kn_scaled_array >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_j0_e>
 
 =item C<gsl_sf_bessel_j0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_j1_e >
 
 =item C<gsl_sf_bessel_j1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_j2_e>
 
 =item C<gsl_sf_bessel_j2>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_jl_e>
 
 =item C<gsl_sf_bessel_jl>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_jl_array>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_jl_steed_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_y0_e>
 
 =item C<gsl_sf_bessel_y0 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_y1_e>
 
 =item C<gsl_sf_bessel_y1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_y2_e >
 
 =item C<gsl_sf_bessel_y2>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_yl_e>
 
 =item C<gsl_sf_bessel_yl >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_yl_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_i0_scaled_e>
 
 =item C<gsl_sf_bessel_i0_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_i1_scaled_e>
 
 =item C<gsl_sf_bessel_i1_scaled>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_i2_scaled_e>
 
 =item C<gsl_sf_bessel_i2_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_il_scaled_e>
 
 =item C<gsl_sf_bessel_il_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_il_scaled_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_k0_scaled_e>
 
 =item C<gsl_sf_bessel_k0_scaled >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_k1_scaled_e>
 
 =item C<gsl_sf_bessel_k1_scaled>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_k2_scaled_e >
 
 =item C<gsl_sf_bessel_k2_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_kl_scaled_e>
 
 =item C<gsl_sf_bessel_kl_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_kl_scaled_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Jnu_e>
 
 =item C<gsl_sf_bessel_Jnu >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Ynu_e>
 
 =item C<gsl_sf_bessel_Ynu>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_sequence_Jnu_e >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Inu_scaled_e>
 
 =item C<gsl_sf_bessel_Inu_scaled>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Inu_e >
 
 =item C<gsl_sf_bessel_Inu>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_Knu_scaled_e>
 
 =item C<gsl_sf_bessel_Knu_scaled >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_Knu_e>
 
 =item C<gsl_sf_bessel_Knu>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_lnKnu_e >
 
 =item C<gsl_sf_bessel_lnKnu>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_zero_J0_e>
 
 =item C<gsl_sf_bessel_zero_J0 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_bessel_zero_J1_e>
 
 =item C<gsl_sf_bessel_zero_J1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_bessel_zero_Jnu_e>
 
 =item C<gsl_sf_bessel_zero_Jnu>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_clausen_e>
 
 =item C<gsl_sf_clausen >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hydrogenicR_1_e>
 
 =item C<gsl_sf_hydrogenicR_1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hydrogenicR_e >
 
 =item C<gsl_sf_hydrogenicR>
 
-=item C<gsl_sf_coulomb_wave_FG_e>
+-
 
-=item C<gsl_sf_coulomb_wave_F_array >
+=back
 
-=item C<gsl_sf_coulomb_wave_FG_array>
+=over
 
-=item C<gsl_sf_coulomb_wave_FGp_array>
+=item C<gsl_sf_coulomb_wave_FG_e> - 
 
-=item C<gsl_sf_coulomb_wave_sphF_array>
+=item C<gsl_sf_coulomb_wave_F_array > -
 
-=item C<gsl_sf_coulomb_CL_e>
+=item C<gsl_sf_coulomb_wave_FG_array> -
 
-=item C<gsl_sf_coulomb_CL_array>
+=item C<gsl_sf_coulomb_wave_FGp_array> -
+
+=item C<gsl_sf_coulomb_wave_sphF_array> -
+
+=item C<gsl_sf_coulomb_CL_e> -
+
+=item C<gsl_sf_coulomb_CL_arrayi> - 
 
 =item C<gsl_sf_coupling_3j_e>
 
 =item C<gsl_sf_coupling_3j>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_coupling_6j_e>
 
 =item C<gsl_sf_coupling_6j>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_coupling_RacahW_e>
 
 =item C<gsl_sf_coupling_RacahW>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_coupling_9j_e>
 
 =item C<gsl_sf_coupling_9j>
 
-=item C<gsl_sf_coupling_6j_INCORRECT_e>
+-
 
-=item C<gsl_sf_coupling_6j_INCORRECT >
+=back
 
-=item C<gsl_sf_dawson_e, gsl_sf_dawson>
+=over
+
+=item C<gsl_sf_dawson_e> 
+
+=item C<gsl_sf_dawson>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_debye_1_e>
 
 =item C<gsl_sf_debye_1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_debye_2_e>
 
 =item C<gsl_sf_debye_2 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_debye_3_e>
 
 =item C<gsl_sf_debye_3>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_debye_4_e>
 
 =item C<gsl_sf_debye_4>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_debye_5_e>
 
 =item C<gsl_sf_debye_5 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_debye_6_e>
 
 =item C<gsl_sf_debye_6>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_dilog_e >
 
 =item C<gsl_sf_dilog>
 
-=item C<gsl_sf_complex_dilog_xy_e>
+-
 
-=item C<gsl_sf_complex_dilog_e >
+=back
 
-=item C<gsl_sf_complex_spence_xy_e>
+=over
 
-=item C<gsl_sf_multiply_e>
+=item C<gsl_sf_complex_dilog_xy_e> -
 
-=item C<gsl_sf_multiply>
+=item C<gsl_sf_complex_dilog_e > -
 
-=item C<gsl_sf_multiply_err_e>
+=item C<gsl_sf_complex_spence_xy_e> -
 
-=item C<gsl_sf_ellint_Kcomp_e gsl_sf_ellint_Kcomp>
+=item C<gsl_sf_multiply_e> -
+
+=item C<gsl_sf_multiply> - 
+
+=item C<gsl_sf_multiply_err_e> -
+
+=item C<gsl_sf_ellint_Kcomp_e>
+
+=item C<gsl_sf_ellint_Kcomp>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_Ecomp_e>
 
 =item C<gsl_sf_ellint_Ecomp>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_ellint_Pcomp_e >
 
 =item C<gsl_sf_ellint_Pcomp>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_Dcomp_e>
 
 =item C<gsl_sf_ellint_Dcomp >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_ellint_F_e>
 
 =item C<gsl_sf_ellint_F>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_E_e>
 
 =item C<gsl_sf_ellint_E>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_ellint_P_e>
 
 =item C<gsl_sf_ellint_P>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_D_e>
 
 =item C<gsl_sf_ellint_D>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_ellint_RC_e >
 
 =item C<gsl_sf_ellint_RC>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_RD_e>
 
 =item C<gsl_sf_ellint_RD >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_ellint_RF_e>
 
 =item C<gsl_sf_ellint_RF>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_ellint_RJ_e >
 
 =item C<gsl_sf_ellint_RJ>
 
-=item C<gsl_sf_elljac_e>
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_elljac_e> - 
 
 =item C<gsl_sf_erfc_e >
 
 =item C<gsl_sf_erfc>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_log_erfc_e>
 
 =item C<gsl_sf_log_erfc >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_erf_e>
 
 =item C<gsl_sf_erf>
 
-=item C<gsl_sf_erf_Z_e >
+-
 
-=item C<gsl_sf_erf_Q_e>
+=back
+
+=over
+
+=item C<gsl_sf_erf_Z_e >
 
 =item C<gsl_sf_erf_Z>
 
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_erf_Q_e>
+
 =item C<gsl_sf_erf_Q >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hazard_e>
 
 =item C<gsl_sf_hazard>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_exp_e >
 
 =item C<gsl_sf_exp>
 
-=item C<gsl_sf_exp_e10_e>
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_exp_e10_e> -
 
 =item C<gsl_sf_exp_mult_e >
 
 =item C<gsl_sf_exp_mult>
 
-=item C<gsl_sf_exp_mult_e10_e>
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_exp_mult_e10_e> - 
 
 =item C<gsl_sf_expm1_e >
 
 =item C<gsl_sf_expm1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_exprel_e>
 
 =item C<gsl_sf_exprel >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_exprel_2_e>
 
 =item C<gsl_sf_exprel_2>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_exprel_n_e >
 
 =item C<gsl_sf_exprel_n>
 
-=item C<gsl_sf_exp_err_e>
+-
 
-=item C<gsl_sf_exp_err_e10_e >
+=back
 
-=item C<gsl_sf_exp_mult_err_e>
+=over
 
-=item C<gsl_sf_exp_mult_err_e10_e>
+=item C<gsl_sf_exp_err_e> -
+
+=item C<gsl_sf_exp_err_e10_e > - 
+
+=item C<gsl_sf_exp_mult_err_e> - 
+
+=item C<gsl_sf_exp_mult_err_e10_e> - 
 
 =item C<gsl_sf_expint_E1_e >
 
 =item C<gsl_sf_expint_E1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_expint_E2_e>
 
 =item C<gsl_sf_expint_E2 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_expint_En_e>
 
 =item C<gsl_sf_expint_En>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_expint_E1_scaled_e >
 
 =item C<gsl_sf_expint_E1_scaled>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_expint_E2_scaled_e>
 
 =item C<gsl_sf_expint_E2_scaled >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_expint_En_scaled_e>
 
 =item C<gsl_sf_expint_En_scaled>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_expint_Ei_e >
 
 =item C<gsl_sf_expint_Ei>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_expint_Ei_scaled_e>
 
 =item C<gsl_sf_expint_Ei_scaled >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_Shi_e>
 
 =item C<gsl_sf_Shi>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_Chi_e >
 
 =item C<gsl_sf_Chi>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_expint_3_e>
 
 =item C<gsl_sf_expint_3 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_Si_e>
 
 =item C<gsl_sf_Si>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_Ci_e >
 
 =item C<gsl_sf_Ci>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_fermi_dirac_m1_e>
 
 =item C<gsl_sf_fermi_dirac_m1 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_fermi_dirac_0_e>
 
 =item C<gsl_sf_fermi_dirac_0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_fermi_dirac_1_e >
 
 =item C<gsl_sf_fermi_dirac_1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_fermi_dirac_2_e>
 
 =item C<gsl_sf_fermi_dirac_2 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_fermi_dirac_int_e>
 
 =item C<gsl_sf_fermi_dirac_int>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_fermi_dirac_mhalf_e >
 
 =item C<gsl_sf_fermi_dirac_mhalf>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_fermi_dirac_half_e>
 
 =item C<gsl_sf_fermi_dirac_half >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_fermi_dirac_3half_e>
 
 =item C<gsl_sf_fermi_dirac_3half>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_fermi_dirac_inc_0_e >
 
 =item C<gsl_sf_fermi_dirac_inc_0>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_Pl_e>
 
 =item C<gsl_sf_legendre_Pl >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_Pl_array>
 
 =item C<gsl_sf_legendre_Pl_deriv_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_P1_e >
 
@@ -1258,39 +2018,93 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_legendre_P3>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_Q0_e >
 
 =item C<gsl_sf_legendre_Q0>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_Q1_e>
 
 =item C<gsl_sf_legendre_Q1 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_Ql_e>
 
 =item C<gsl_sf_legendre_Ql>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_Plm_e >
 
 =item C<gsl_sf_legendre_Plm>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_Plm_array>
 
 =item C<gsl_sf_legendre_Plm_deriv_array >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_sphPlm_e>
 
 =item C<gsl_sf_legendre_sphPlm>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_sphPlm_array >
 
 =item C<gsl_sf_legendre_sphPlm_deriv_array>
 
-=item C<gsl_sf_legendre_array_size>
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_legendre_array_size> -
 
 =item C<gsl_sf_lngamma_e >
 
 =item C<gsl_sf_lngamma>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lngamma_sgn_e>
 
@@ -1687,8 +2501,9 @@ Here is a list of all included functions:
 =back
 
  You can import the functions that you want to use by giving a space separated
- list to Math::GSL::SF when you use the package.  You can also write use
- Math::GSL::SF qw/:all/ to use all avaible functions of the module. Note that
+ list to Math::GSL::SF when you use the package.  You can also write 
+ use Math::GSL::SF qw/:all/ 
+ to use all avaible functions of the module. Note that
  the tag names begin with a colon.  Other tags are also available, here is a
  complete list of all tags for this module :
 

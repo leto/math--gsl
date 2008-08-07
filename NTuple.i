@@ -11,6 +11,7 @@
 
 %include "gsl/gsl_ntuple.h"
 
+//%apply double * OUTPUT { 
 
 %perlcode %{
 @EXPORT_OK = qw/

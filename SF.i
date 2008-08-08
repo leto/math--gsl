@@ -667,16 +667,19 @@ Math::GSL::SF - Special Functions
 
 =head1 SYNOPSIS
 
-use Math::GSL::SF qw /:all/;
+    use Math::GSL::SF qw /:all/;
 
 =head1 DESCRIPTION
 
 This module contains a data structure named gsl_sf_result. To create a new one use
-$r = Math::GSL::SF::gsl_sf_result_struct->new;
+
+    $r = Math::GSL::SF::gsl_sf_result_struct->new;
+
 You can then access the elements of the structure in this way :
-$r->{val}
-or
-$r->{err}
+
+    my $val   = $r->{val};
+
+    my $error = $r->{err};
 
 Here is a list of all included functions:
 

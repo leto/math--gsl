@@ -1,5 +1,8 @@
 %module "Math::GSL::SF"
 %include "typemaps.i"
+
+%apply double *OUTPUT { double * sn, double * cn, double * dn };
+
 %{
     #include "gsl/gsl_mode.h"
     #include "gsl/gsl_sf.h"
@@ -841,31 +844,31 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_Y0_e>
+=item C<gsl_sf_bessel_Y0_e($x, $result)>
 
-=item C<gsl_sf_bessel_Y0>
+=item C<gsl_sf_bessel_Y0($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_Y1_e>
-
-=item C<gsl_sf_bessel_Y1>
-
--
+- These routines compute the irregular spherical Bessel function of zeroth order, y_0(x) = -\cos(x)/x.
 
 =back
 
 =over
 
-=item C<gsl_sf_bessel_Yn_e>
+=item C<gsl_sf_bessel_Y1_e($x, $result)>
 
-=item C<gsl_sf_bessel_Yn>
+=item C<gsl_sf_bessel_Y1($x)>
 
--
+-These routines compute the irregular spherical Bessel function of first order, y_1(x) = -(\cos(x)/x + \sin(x))/x. 
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_Yn_e>($n, $x, $result)
+
+=item C<gsl_sf_bessel_Yn($n, $x)>
+
+-These routines compute the irregular cylindrical Bessel function of order $n, Y_n(x), for x>0. 
 
 =back
 
@@ -879,31 +882,31 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_I0_e >
+=item C<gsl_sf_bessel_I0_e($x, $result)>
 
-=item C<gsl_sf_bessel_I0>
+=item C<gsl_sf_bessel_I0($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_I1_e>
-
-=item C<gsl_sf_bessel_I1>
-
--
+-These routines compute the regular modified cylindrical Bessel function of zeroth order, I_0(x). 
 
 =back
 
 =over
 
-=item C<gsl_sf_bessel_In_e>
+=item C<gsl_sf_bessel_I1_e($x, $result)>  
 
-=item C<gsl_sf_bessel_In>
+=item C<gsl_sf_bessel_I1($x)>
 
--
+-These routines compute the regular modified cylindrical Bessel function of first order, I_1(x). 
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_In_e($n, $x, $result)>
+
+=item C<gsl_sf_bessel_In($n, $x)>
+
+-These routines compute the regular modified cylindrical Bessel function of order $n, I_n(x). 
 
 =back
 
@@ -917,31 +920,31 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_I0_scaled_e>
+=item C<gsl_sf_bessel_I0_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_I0_scaled>
+=item C<gsl_sf_bessel_I0_scaled($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_I1_scaled_e>
-
-=item C<gsl_sf_bessel_I1_scaled>
-
--
+-These routines compute the scaled regular modified cylindrical Bessel function of zeroth order \exp(-|x|) I_0(x). 
 
 =back
 
 =over
 
-=item C<gsl_sf_bessel_In_scaled_e>
+=item C<gsl_sf_bessel_I1_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_In_scaled >
+=item C<gsl_sf_bessel_I1_scaled($x)>
 
--
+-These routines compute the scaled regular modified cylindrical Bessel function of first order \exp(-|x|) I_1(x). 
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_In_scaled_e($n, $x, $result)>
+
+=item C<gsl_sf_bessel_In_scaled($n, $x)>
+
+-These routines compute the scaled regular modified cylindrical Bessel function of order $n, \exp(-|x|) I_n(x) 
 
 =back
 
@@ -955,31 +958,31 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_K0_e>
+=item C<gsl_sf_bessel_K0_e($x, $result)>
 
-=item C<gsl_sf_bessel_K0 >
+=item C<gsl_sf_bessel_K0($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_K1_e>
-
-=item C<gsl_sf_bessel_K1>
-
--
+-These routines compute the irregular modified cylindrical Bessel function of zeroth order, K_0(x), for x > 0.
 
 =back
 
 =over
 
-=item C<gsl_sf_bessel_Kn_e>
+=item C<gsl_sf_bessel_K1_e($x, $result)>
 
-=item C<gsl_sf_bessel_Kn>
+=item C<gsl_sf_bessel_K1($x)>
 
--
+-These routines compute the irregular modified cylindrical Bessel function of first order, K_1(x), for x > 0. 
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_Kn_e($n, $x, $result)>
+
+=item C<gsl_sf_bessel_Kn($n, $x)>
+
+-These routines compute the irregular modified cylindrical Bessel function of order $n, K_n(x), for x > 0.
 
 =back
 
@@ -993,9 +996,19 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_K0_scaled_e >
+=item C<gsl_sf_bessel_K0_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_K0_scaled>
+=item C<gsl_sf_bessel_K0_scaled($x)>
+
+-These routines compute the scaled irregular modified cylindrical Bessel function of zeroth order \exp(x) K_0(x) for x>0. 
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_K1_scaled_e($x, $result)>
+
+=item C<gsl_sf_bessel_K1_scaled($x)>
 
 -
 
@@ -1003,19 +1016,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_K1_scaled_e>
+=item C<gsl_sf_bessel_Kn_scaled_e($n, $x, $result)>
 
-=item C<gsl_sf_bessel_K1_scaled >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_Kn_scaled_e>
-
-=item C<gsl_sf_bessel_Kn_scaled>
+=item C<gsl_sf_bessel_Kn_scaled($n, $x)>
 
 -
 
@@ -1031,19 +1034,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_j0_e>
+=item C<gsl_sf_bessel_j0_e($x, $result)>
 
-=item C<gsl_sf_bessel_j0>
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_j1_e >
-
-=item C<gsl_sf_bessel_j1>
+=item C<gsl_sf_bessel_j0($x)>
 
 -
 
@@ -1051,9 +1044,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_j2_e>
+=item C<gsl_sf_bessel_j1_e($x, $result)>
 
-=item C<gsl_sf_bessel_j2>
+=item C<gsl_sf_bessel_j1($x)>
 
 -
 
@@ -1061,9 +1054,19 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_jl_e>
+=item C<gsl_sf_bessel_j2_e($x, $result)>
 
-=item C<gsl_sf_bessel_jl>
+=item C<gsl_sf_bessel_j2($x)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_jl_e($l, $x, $result)>
+
+=item C<gsl_sf_bessel_jl($l, $x)>
 
 -
 
@@ -1087,19 +1090,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_y0_e>
+=item C<gsl_sf_bessel_y0_e($x, $result)>
 
-=item C<gsl_sf_bessel_y0 >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_y1_e>
-
-=item C<gsl_sf_bessel_y1>
+=item C<gsl_sf_bessel_y0($x)>
 
 -
 
@@ -1107,9 +1100,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_y2_e >
+=item C<gsl_sf_bessel_y1_e($x, $result)>
 
-=item C<gsl_sf_bessel_y2>
+=item C<gsl_sf_bessel_y1($x)>
 
 -
 
@@ -1117,9 +1110,19 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_yl_e>
+=item C<gsl_sf_bessel_y2_e($x, $result)>
 
-=item C<gsl_sf_bessel_yl >
+=item C<gsl_sf_bessel_y2($x)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_yl_e($l, $x, $result)>
+
+=item C<gsl_sf_bessel_yl($l, $x)>
 
 -
 
@@ -1135,19 +1138,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_i0_scaled_e>
+=item C<gsl_sf_bessel_i0_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_i0_scaled>
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_i1_scaled_e>
-
-=item C<gsl_sf_bessel_i1_scaled>
+=item C<gsl_sf_bessel_i0_scaled($x)>
 
 -
 
@@ -1155,9 +1148,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_i2_scaled_e>
+=item C<gsl_sf_bessel_i1_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_i2_scaled>
+=item C<gsl_sf_bessel_i1_scaled($x)>
 
 -
 
@@ -1165,9 +1158,19 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_il_scaled_e>
+=item C<gsl_sf_bessel_i2_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_il_scaled>
+=item C<gsl_sf_bessel_i2_scaled($x)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_il_scaled_e($l, $x, $result)>
+
+=item C<gsl_sf_bessel_il_scaled($x)>
 
 -
 
@@ -1183,19 +1186,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_k0_scaled_e>
+=item C<gsl_sf_bessel_k0_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_k0_scaled >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_k1_scaled_e>
-
-=item C<gsl_sf_bessel_k1_scaled>
+=item C<gsl_sf_bessel_k0_scale($x)>
 
 -
 
@@ -1203,9 +1196,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_k2_scaled_e >
+=item C<gsl_sf_bessel_k1_scaled_e($x, $result)>
 
-=item C<gsl_sf_bessel_k2_scaled>
+=item C<gsl_sf_bessel_k1_scaled($x)>
 
 -
 
@@ -1213,9 +1206,19 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_kl_scaled_e>
+=item C<gsl_sf_bessel_k2_scaled_e($x, $result) >
 
-=item C<gsl_sf_bessel_kl_scaled>
+=item C<gsl_sf_bessel_k2_scaled($x)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_kl_scaled_e($l, $x, $result)>
+
+=item C<gsl_sf_bessel_kl_scaled($l, $x)>
 
 -
 
@@ -1231,19 +1234,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_Jnu_e>
+=item C<gsl_sf_bessel_Jnu_e($nu, $x, $result)>
 
-=item C<gsl_sf_bessel_Jnu >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_Ynu_e>
-
-=item C<gsl_sf_bessel_Ynu>
+=item C<gsl_sf_bessel_Jnu($nu, $x)>
 
 -
 
@@ -1259,19 +1252,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_Inu_scaled_e>
+=item C<gsl_sf_bessel_Ynu_e($nu, $x, $result)>
 
-=item C<gsl_sf_bessel_Inu_scaled>
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_Inu_e >
-
-=item C<gsl_sf_bessel_Inu>
+=item C<gsl_sf_bessel_Ynu($nu, $x)>
 
 -
 
@@ -1279,19 +1262,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_Knu_scaled_e>
+=item C<gsl_sf_bessel_Inu_scaled_e($nu, $x, $result)>
 
-=item C<gsl_sf_bessel_Knu_scaled >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_Knu_e>
-
-=item C<gsl_sf_bessel_Knu>
+=item C<gsl_sf_bessel_Inu_scaled($nu, $x)>
 
 -
 
@@ -1299,19 +1272,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_lnKnu_e >
+=item C<gsl_sf_bessel_Inu_e($nu, $x, $result)>
 
-=item C<gsl_sf_bessel_lnKnu>
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_zero_J0_e>
-
-=item C<gsl_sf_bessel_zero_J0 >
+=item C<gsl_sf_bessel_Inu($nu, $x)>
 
 -
 
@@ -1319,19 +1282,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_bessel_zero_J1_e>
+=item C<gsl_sf_bessel_Knu_scaled_e($nu, $x, $result)>
 
-=item C<gsl_sf_bessel_zero_J1>
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_bessel_zero_Jnu_e>
-
-=item C<gsl_sf_bessel_zero_Jnu>
+=item C<gsl_sf_bessel_Knu_scaled($nu, $x)>
 
 -
 
@@ -1339,19 +1292,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_clausen_e>
+=item C<gsl_sf_bessel_Knu_e($nu, $x, $result)>
 
-=item C<gsl_sf_clausen >
-
--
-
-=back
-
-=over
-
-=item C<gsl_sf_hydrogenicR_1_e>
-
-=item C<gsl_sf_hydrogenicR_1>
+=item C<gsl_sf_bessel_Knu($nu, $x)>
 
 -
 
@@ -1359,9 +1302,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_hydrogenicR_e >
+=item C<gsl_sf_bessel_lnKnu_e($nu, $x, $result)>
 
-=item C<gsl_sf_hydrogenicR>
+=item C<gsl_sf_bessel_lnKnu($nu, $x)>
 
 -
 
@@ -1369,7 +1312,67 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_coulomb_wave_FG_e> - 
+=item C<gsl_sf_bessel_zero_J0_e($s, $result)>
+
+=item C<gsl_sf_bessel_zero_J0($s)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_zero_J1_e($s, $result)>
+
+=item C<gsl_sf_bessel_zero_J1($s)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_bessel_zero_Jnu_e($nu, $s, $result)>
+
+=item C<gsl_sf_bessel_zero_Jnu($nu, $s)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_clausen_e($x, $result)>
+
+=item C<gsl_sf_clausen($x)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_hydrogenicR_1_e($Z, $r, $result)>
+
+=item C<gsl_sf_hydrogenicR_1($Z, $r)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_hydrogenicR_e($n, $l, $Z, $r, $result)>
+
+=item C<gsl_sf_hydrogenicR($n, $l, $Z, $r)>
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_coulomb_wave_FG_e($eta, $x, $L_F, $k, $F, gsl_sf_result * Fp, gsl_sf_result * G, $Gp)> - This function computes the Coulomb wave functions F_L(\eta,x), G_{L-k}(\eta,x) and their derivatives F'_L(\eta,x), G'_{L-k}(\eta,x) with respect to $x. The parameters are restricted to L, L-k > -1/2, x > 0 and integer $k. Note that L itself is not restricted to being an integer. The results are stored in the parameters $F, $G for the function values and $Fp, $Gp for the derivative values. $F, $G, $Fp, $Gp are all gsl_result structs. If an overflow occurs, $GSL_EOVRFLW is returned and scaling exponents are returned as second and third values. 
 
 =item C<gsl_sf_coulomb_wave_F_array > -
 
@@ -1379,25 +1382,35 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_coulomb_wave_sphF_array> -
 
-=item C<gsl_sf_coulomb_CL_e> -
+=item C<gsl_sf_coulomb_CL_e($L, $eta, $result)> - This function computes the Coulomb wave function normalization constant C_L($eta) for $L > -1. 
 
 =item C<gsl_sf_coulomb_CL_arrayi> - 
-
-=item C<gsl_sf_coupling_3j_e>
-
-=item C<gsl_sf_coupling_3j>
-
--
 
 =back
 
 =over
 
-=item C<gsl_sf_coupling_6j_e>
+=item C<gsl_sf_coupling_3j_e($two_ja, $two_jb, $two_jc, $two_ma, $two_mb, $two_mc, $result)>
 
-=item C<gsl_sf_coupling_6j>
+=item C<gsl_sf_coupling_3j($two_ja, $two_jb, $two_jc, $two_ma, $two_mb, $two_mc)>
 
--
+- These routines compute the Wigner 3-j coefficient,
+   (ja jb jc
+    ma mb mc)
+ where the arguments are given in half-integer units, ja = $two_ja/2, ma = $two_ma/2, etc. 
+
+=back
+
+=over
+
+=item C<gsl_sf_coupling_6j_e($two_ja, $two_jb, $two_jc, $two_jd, $two_je, $two_jf, $result)>
+
+=item C<gsl_sf_coupling_6j($two_ja, $two_jb, $two_jc, $two_jd, $two_je, $two_jf)>
+
+- These routines compute the Wigner 6-j coefficient,
+   {ja jb jc
+    jd je jf}
+ where the arguments are given in half-integer units, ja = $two_ja/2, ma = $two_ma/2, etc. 
 
 =back
 
@@ -1413,91 +1426,96 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_coupling_9j_e>
+=item C<gsl_sf_coupling_9j_e($two_ja, $two_jb, $two_jc, $two_jd, $two_je, $two_jf, $two_jg, $two_jh, $two_ji, $result)>
 
-=item C<gsl_sf_coupling_9j>
+=item C<gsl_sf_coupling_9j($two_ja, $two_jb, $two_jc, $two_jd, $two_je, $two_jf, $two_jg, $two_jh, $two_ji)>
 
--
+-These routines compute the Wigner 9-j coefficient,
 
-=back
-
-=over
-
-=item C<gsl_sf_dawson_e> 
-
-=item C<gsl_sf_dawson>
-
--
+          {ja jb jc
+           jd je jf
+           jg jh ji}
+ where the arguments are given in half-integer units, ja = two_ja/2, ma = two_ma/2, etc. 
 
 =back
 
 =over
 
-=item C<gsl_sf_debye_1_e>
+=item C<gsl_sf_dawson_e($x, $result)> 
 
-=item C<gsl_sf_debye_1>
+=item C<gsl_sf_dawson($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_debye_2_e>
-
-=item C<gsl_sf_debye_2 >
-
--
+-These routines compute the value of Dawson's integral for $x. 
 
 =back
 
 =over
 
-=item C<gsl_sf_debye_3_e>
+=item C<gsl_sf_debye_1_e($x, $result)>
 
-=item C<gsl_sf_debye_3>
+=item C<gsl_sf_debye_1($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_debye_4_e>
-
-=item C<gsl_sf_debye_4>
-
--
+-These routines compute the first-order Debye function D_1(x) = (1/x) \int_0^x dt (t/(e^t - 1)). 
 
 =back
 
 =over
 
-=item C<gsl_sf_debye_5_e>
+=item C<gsl_sf_debye_2_e($x, $result)>
 
-=item C<gsl_sf_debye_5 >
+=item C<gsl_sf_debye_2($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_debye_6_e>
-
-=item C<gsl_sf_debye_6>
-
--
+-These routines compute the second-order Debye function D_2(x) = (2/x^2) \int_0^x dt (t^2/(e^t - 1)). 
 
 =back
 
 =over
 
-=item C<gsl_sf_dilog_e >
+=item C<gsl_sf_debye_3_e($x, $result)>
 
-=item C<gsl_sf_dilog>
+=item C<gsl_sf_debye_3($x)>
 
--
+-These routines compute the third-order Debye function D_3(x) = (3/x^3) \int_0^x dt (t^3/(e^t - 1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_debye_4_e($x, $result)>
+
+=item C<gsl_sf_debye_4($x)>
+
+-These routines compute the fourth-order Debye function D_4(x) = (4/x^4) \int_0^x dt (t^4/(e^t - 1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_debye_5_e($x, $result)>
+
+=item C<gsl_sf_debye_5($x)>
+
+-These routines compute the fifth-order Debye function D_5(x) = (5/x^5) \int_0^x dt (t^5/(e^t - 1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_debye_6_e($x, $result)>
+
+=item C<gsl_sf_debye_6($x)>
+
+-These routines compute the sixth-order Debye function D_6(x) = (6/x^6) \int_0^x dt (t^6/(e^t - 1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_dilog_e ($x, $result)>
+
+=item C<gsl_sf_dilog($x)>
+
+- These routines compute the dilogarithm for a real argument. In Lewin's notation this is Li_2(x), the real part of the dilogarithm of a real x. It is defined by the integral representation Li_2(x) = - \Re \int_0^x ds \log(1-s) / s. Note that \Im(Li_2(x)) = 0 for x <= 1, and -\pi\log(x) for x > 1. Note that Abramowitz & Stegun refer to the Spence integral S(x)=Li_2(1-x) as the dilogarithm rather than Li_2(x). 
 
 =back
 
@@ -1505,21 +1523,32 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_complex_dilog_xy_e> -
 
-=item C<gsl_sf_complex_dilog_e > -
+=item C<gsl_sf_complex_dilog_e($r, $theta, $result_re, $result_im)> - This function computes the full complex-valued dilogarithm for the complex argument z = r \exp(i \theta). The real and imaginary parts of the result are returned in the $result_re and $result_im gsl_result structs. 
 
 =item C<gsl_sf_complex_spence_xy_e> -
 
-=item C<gsl_sf_multiply_e> -
+=back
 
-=item C<gsl_sf_multiply> - 
+=over
 
-=item C<gsl_sf_multiply_err_e> -
+=item C<gsl_sf_multiply>
 
-=item C<gsl_sf_ellint_Kcomp_e>
+=item C<gsl_sf_multiply_e($x, $y, $result)> - This function multiplies $x and $y storing the product and its associated error in $result. 
 
-=item C<gsl_sf_ellint_Kcomp>
+=item C<gsl_sf_multiply_err_e($x, $dx, $y, $dy, $result)> - This function multiplies $x and $y with associated absolute errors $dx and $dy. The product xy +/- xy \sqrt((dx/x)^2 +(dy/y)^2) is stored in $result. 
 
 -
+
+=back
+
+=over
+
+
+=item C<gsl_sf_ellint_Kcomp_e($k, $mode, $result)>
+
+=item C<gsl_sf_ellint_Kcomp($k, $mode)>
+
+-These routines compute the complete elliptic integral K($k) to the accuracy specified by the mode variable mode. Note that Abramowitz & Stegun define this function in terms of the parameter m = k^2. 
 
 =back
 
@@ -1635,7 +1664,7 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_elljac_e> - 
+=item C<gsl_sf_elljac_e($u, $m)> - This function computes the Jacobian elliptic functions sn(u|m), cn(u|m), dn(u|m) by descending Landen transformations. The function returns 0 if the operation succeded, 1 otherwise and then returns the result of sn, cn and dn in this order.
 
 =item C<gsl_sf_erfc_e >
 
@@ -2500,6 +2529,18 @@ Here is a list of all included functions:
 =item C<gsl_sf_eta_e>
 
 =item C<gsl_sf_eta >
+
+=back
+
+This module also contains the following constants used as mode in various of those functions :
+
+=over
+
+=item * GSL_PREC_DOUBLE - Double-precision, a relative accuracy of approximately 2 * 10^-16.
+
+=item * GSL_PREC_SINGLE - Single-precision, a relative accuracy of approximately 10^-7.
+
+=item * GSL_PREC_APPROX - Approximate values, a relative accuracy of approximately 5 * 10^-4. 
 
 =back
 

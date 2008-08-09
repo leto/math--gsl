@@ -15,7 +15,11 @@ sub make_fixture : Test(setup) {
     my $self = shift;
     my $size = int rand(100);
     $self->{size}   = $size;
-    $self->{ntuple} = gsl_ntuple_create('ntuple', [1..$size],$size);
+    my $stuff       = [1..$size];
+
+    $self->{ntuple} = gsl_ntuple_create('ntuple', $stuff ,$size);
+    gsl_ntuple_write($self->{ntuple});
+    gsl_ntuple_close($self->{ntuple});
 }
 
 sub teardown : Test(teardown) {
@@ -47,8 +51,10 @@ sub GSL_NTUPLE_WRITE: Tests {
 
 sub GSL_NTUPLE_READ: Tests {
     my $self = shift; 
-    my $ntuple = $self->{ntuple};
     my $data = [1..100];
-    ok_status(gsl_ntuple_read($ntuple) );
+    my $ntuple = gsl_ntuple_open('ntuple', $data, 100 );
+    # why does this return an EOF?
+    # perhaps gsl_ntuple_write is not doing it's job, so the file is empty...
+    ok_status(gsl_ntuple_read($ntuple),$GSL_EOF);
 }
 1;

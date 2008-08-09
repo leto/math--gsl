@@ -1,4 +1,5 @@
 %module "Math::GSL::Deriv"
+// Danger Will Robinson, for realz!
 /*
 struct gsl_function_struct 
 {
@@ -11,7 +12,7 @@ typedef struct gsl_function_struct gsl_function ;
 */
 
 %include "typemaps.i"
-%include "gsl_typemaps.i"
+//%include "gsl_typemaps.i"
 %{
     static HV * Callbacks = (HV*)NULL;
     typedef struct callback_t
@@ -22,6 +23,13 @@ typedef struct gsl_function_struct gsl_function ;
         fprintf(stderr,"static xsquared!!\n");
         return x * x;
     }
+    //static double call_this(SV *sv, void *param){
+    static double call_this(double x, void *param){
+        double result = 17.42;
+        fprintf(stderr,"call_this: calling stuff\n");
+        fprintf(stderr, "call_this:x=%f\n", (double)x);
+        return result;
+    }
 %}
 %apply double * OUTPUT { double *abserr, double *result };
 /*
@@ -29,12 +37,20 @@ int gsl_deriv_central (const gsl_function *f,
                        double x, double h,
                        double *result, double *abserr);
 */
+/*
+%typemap(in) (const gsl_function *f,
+                       double x, double h,
+                       double *result, double *abserr ) {
+    fprintf(stderr,"XXXX\n");
+}
+*/
 %typemap(in) gsl_function const * {
     fprintf(stderr,"typemap in!\n");
     gsl_function F;
     int count;
     F.params = 0;
-    F.function = &xsquared;
+    //F.function = &xsquared;
+    F.function = &call_this;
     SV * callback;
 
     if (!SvROK($input)) {
@@ -46,12 +62,12 @@ int gsl_deriv_central (const gsl_function *f,
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
    
     //Perl_sv_dump( $input );
+    //call_sv((SV*)$input, G_SCALAR);
     // how to register callback ?
     $1 = &F;
 };
-
 %typemap(argout) gsl_function const * {
-    fprintf(stderr,"typemap out!\n");
+    fprintf(stderr,"typemap argout!\n");
     SV ** sv;
     double x;
 
@@ -68,7 +84,8 @@ int gsl_deriv_central (const gsl_function *f,
     // these are the arguments passed to the callback
     // this is currently passing in the memory address of the callback
     XPUSHs(sv_2mortal(newSViv((int)$input)));
-
+    //XPUSHs(sv_2mortal($input));
+    //XPUSHs(newSVsv($input));
     //XPUSHs(sv_2mortal(newSViv(42)));
     //XPUSHs(sv_2mortal(newSVnv((double) (*($input)->function)()    )));
     PUTBACK;
@@ -76,9 +93,13 @@ int gsl_deriv_central (const gsl_function *f,
     fprintf(stderr, "\nCALLBACK!\n");
     
     call_sv(*sv, G_SCALAR);     /* The money shot */
-    x = POPn;
-    $result =  &x;
-    fprintf(stderr, "x = %.8f\n", x);
+    //x = POPn;
+    //$result =  &x;
+    //fprintf(stderr, "argout:x = %.8f\n", x);
+    if (argvi >= items) {            
+        EXTEND(SP,1);              
+    }
+    //XPUSHs(sv_2mortal(newSVnv(x)));
     /*
     FREETMPS;
     LEAVE;

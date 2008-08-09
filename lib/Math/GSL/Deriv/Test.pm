@@ -31,15 +31,25 @@ sub TEST_DERIV_CENTRAL_DIES : Tests {
                gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
+
 sub AAA_TEST_DERIV_CENTRAL : Tests { 
     my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
     my $self = shift;
+    my @other;
 
-    ($status, $result, $abserr) = gsl_deriv_central ( 
-        sub { my $x=shift; print Dumper [$x] ;return $x ** 3 },
-        $x, $h, 
+
+    ($status, $result, $abserr, @other) = gsl_deriv_central ( 
+        sub {   my $x=shift; 
+                print "IN ANON SUB in perl\n";
+                print Dumper [$x] ;
+                return $x ** 3 
+            },
+        $x, $h,
+        $result, $abserr
     ); 
+    print Dumper [ $status , $result, $abserr, \@other ];
+
     ok_status($status);
     ok_similar( [$result], [3*$x], 'gsl_deriv_central returns correct value for anon sub' );
 }

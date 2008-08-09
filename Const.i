@@ -484,7 +484,7 @@ Math::GSL::Const - Constants
 =head1 SYNOPSIS
 
     use Math::GSL::Const qw/:all/;
-    print "The Euler–Mascheroni Constant is $M_EULER\n";
+    print "The Euler-Mascheroni Constant is $M_EULER\n";
 
 There are many constants in this module, which are split into six subcategories a.k.a tags:
 
@@ -492,13 +492,841 @@ There are many constants in this module, which are split into six subcategories 
 
 =over 2
 
-=item * cgsa 
+=item * cgs 
 
-=item * cgsm
+=back
 
-=item * mks
+=over 4
 
-=item * mksa
+=item *   $GSL_CONST_CGS_SPEED_OF_LIGHT 
+
+=item *   $GSL_CONST_CGS_GRAVITATIONAL_CONSTANT 
+
+=item *   $GSL_CONST_CGS_PLANCKS_CONSTANT_H 
+
+=item *   $GSL_CONST_CGS_PLANCKS_CONSTANT_HBAR 
+
+=item *   $GSL_CONST_CGS_ASTRONOMICAL_UNIT 
+
+=item *   $GSL_CONST_CGS_LIGHT_YEAR 
+
+=item *   $GSL_CONST_CGS_PARSEC 
+
+=item *   $GSL_CONST_CGS_GRAV_ACCEL 
+
+=item *   $GSL_CONST_CGS_ELECTRON_VOLT 
+
+=item *   $GSL_CONST_CGS_MASS_ELECTRON 
+
+=item *   $GSL_CONST_CGS_MASS_MUON 
+
+=item *   $GSL_CONST_CGS_MASS_PROTON 
+
+=item *   $GSL_CONST_CGS_MASS_NEUTRON 
+
+=item *   $GSL_CONST_CGS_RYDBERG 
+
+=item *   $GSL_CONST_CGS_BOLTZMANN 
+
+=item *   $GSL_CONST_CGS_BOHR_MAGNETON 
+
+=item *   $GSL_CONST_CGS_NUCLEAR_MAGNETON 
+
+=item *   $GSL_CONST_CGS_ELECTRON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_CGS_PROTON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_CGS_MOLAR_GAS 
+
+=item *   $GSL_CONST_CGS_STANDARD_GAS_VOLUME 
+
+=item *   $GSL_CONST_CGS_MINUTE 
+
+=item *   $GSL_CONST_CGS_HOUR 
+
+=item *   $GSL_CONST_CGS_DAY 
+
+=item *   $GSL_CONST_CGS_WEEK 
+
+=item *   $GSL_CONST_CGS_INCH 
+
+=item *   $GSL_CONST_CGS_FOOT 
+
+=item *   $GSL_CONST_CGS_YARD 
+
+=item *   $GSL_CONST_CGS_MILE 
+
+=item *   $GSL_CONST_CGS_NAUTICAL_MILE 
+
+=item *   $GSL_CONST_CGS_FATHOM 
+
+=item *   $GSL_CONST_CGS_MIL 
+
+=item *   $GSL_CONST_CGS_POINT 
+
+=item *   $GSL_CONST_CGS_TEXPOINT 
+
+=item *   $GSL_CONST_CGS_MICRON 
+
+=item *   $GSL_CONST_CGS_ANGSTROM 
+
+=item *   $GSL_CONST_CGS_HECTARE 
+
+=item *   $GSL_CONST_CGS_ACRE 
+
+=item *   $GSL_CONST_CGS_BARN 
+
+=item *   $GSL_CONST_CGS_LITER 
+
+=item *   $GSL_CONST_CGS_US_GALLON 
+
+=item *   $GSL_CONST_CGS_QUART 
+
+=item *   $GSL_CONST_CGS_PINT 
+
+=item *   $GSL_CONST_CGS_CUP 
+
+=item *   $GSL_CONST_CGS_FLUID_OUNCE 
+
+=item *   $GSL_CONST_CGS_TABLESPOON 
+
+=item *   $GSL_CONST_CGS_TEASPOON 
+
+=item *   $GSL_CONST_CGS_CANADIAN_GALLON 
+
+=item *   $GSL_CONST_CGS_UK_GALLON 
+
+=item *   $GSL_CONST_CGS_MILES_PER_HOUR 
+
+=item *   $GSL_CONST_CGS_KILOMETERS_PER_HOUR 
+
+=item *   $GSL_CONST_CGS_KNOT 
+
+=item *   $GSL_CONST_CGS_POUND_MASS 
+
+=item *   $GSL_CONST_CGS_OUNCE_MASS 
+
+=item *   $GSL_CONST_CGS_TON 
+
+=item *   $GSL_CONST_CGS_METRIC_TON 
+
+=item *   $GSL_CONST_CGS_UK_TON 
+
+=item *   $GSL_CONST_CGS_TROY_OUNCE 
+
+=item *   $GSL_CONST_CGS_CARAT 
+
+=item *   $GSL_CONST_CGS_UNIFIED_ATOMIC_MASS 
+
+=item *   $GSL_CONST_CGS_GRAM_FORCE 
+
+=item *   $GSL_CONST_CGS_POUND_FORCE 
+
+=item *   $GSL_CONST_CGS_KILOPOUND_FORCE 
+
+=item *   $GSL_CONST_CGS_POUNDAL 
+
+=item *   $GSL_CONST_CGS_CALORIE 
+
+=item *   $GSL_CONST_CGS_BTU 
+
+=item *   $GSL_CONST_CGS_THERM 
+
+=item *   $GSL_CONST_CGS_HORSEPOWER 
+
+=item *   $GSL_CONST_CGS_BAR 
+
+=item *   $GSL_CONST_CGS_STD_ATMOSPHERE 
+
+=item *   $GSL_CONST_CGS_TORR 
+
+=item *   $GSL_CONST_CGS_METER_OF_MERCURY 
+
+=item *   $GSL_CONST_CGS_INCH_OF_MERCURY 
+
+=item *   $GSL_CONST_CGS_INCH_OF_WATER 
+
+=item *   $GSL_CONST_CGS_PSI 
+
+=item *   $GSL_CONST_CGS_POISE 
+
+=item *   $GSL_CONST_CGS_STOKES 
+
+=item *   $GSL_CONST_CGS_FARADAY 
+
+=item *   $GSL_CONST_CGS_ELECTRON_CHARGE 
+
+=item *   $GSL_CONST_CGS_GAUSS 
+
+=item *   $GSL_CONST_CGS_STILB 
+
+=item *   $GSL_CONST_CGS_LUMEN 
+
+=item *   $GSL_CONST_CGS_LUX 
+
+=item *   $GSL_CONST_CGS_PHOT 
+
+=item *   $GSL_CONST_CGS_FOOTCANDLE 
+
+=item *   $GSL_CONST_CGS_LAMBERT 
+
+=item *   $GSL_CONST_CGS_FOOTLAMBERT 
+
+=item *   $GSL_CONST_CGS_CURIE 
+
+=item *   $GSL_CONST_CGS_ROENTGEN 
+
+=item *   $GSL_CONST_CGS_RAD 
+
+=item *   $GSL_CONST_CGS_SOLAR_MASS 
+
+=item *   $GSL_CONST_CGS_BOHR_RADIUS 
+
+=item *   $GSL_CONST_CGS_NEWTON 
+
+=item *   $GSL_CONST_CGS_DYNE 
+
+=item *   $GSL_CONST_CGS_JOULE 
+
+=item *   $GSL_CONST_CGS_ERG 
+
+=item *   $GSL_CONST_CGS_STEFAN_BOLTZMANN_CONSTANT 
+
+=item *   $GSL_CONST_CGS_THOMSON_CROSS_SECTION 
+
+=back
+
+=over 2
+
+=item * cgsm  - CGSM system (centimeters, grams, seconds, gauss)
+
+=back
+
+=over 4
+
+=item *   $GSL_CONST_CGSM_SPEED_OF_LIGHT 
+
+=item *   $GSL_CONST_CGSM_GRAVITATIONAL_CONSTANT 
+
+=item *   $GSL_CONST_CGSM_PLANCKS_CONSTANT_H 
+
+=item *   $GSL_CONST_CGSM_PLANCKS_CONSTANT_HBAR 
+
+=item *   $GSL_CONST_CGSM_ASTRONOMICAL_UNIT 
+
+=item *   $GSL_CONST_CGSM_LIGHT_YEAR 
+
+=item *   $GSL_CONST_CGSM_PARSEC 
+
+=item *   $GSL_CONST_CGSM_GRAV_ACCEL 
+
+=item *   $GSL_CONST_CGSM_ELECTRON_VOLT 
+
+=item *   $GSL_CONST_CGSM_MASS_ELECTRON 
+
+=item *   $GSL_CONST_CGSM_MASS_MUON 
+
+=item *   $GSL_CONST_CGSM_MASS_PROTON 
+
+=item *   $GSL_CONST_CGSM_MASS_NEUTRON 
+
+=item *   $GSL_CONST_CGSM_RYDBERG 
+
+=item *   $GSL_CONST_CGSM_BOLTZMANN 
+
+=item *   $GSL_CONST_CGSM_BOHR_MAGNETON 
+
+=item *   $GSL_CONST_CGSM_NUCLEAR_MAGNETON 
+
+=item *   $GSL_CONST_CGSM_ELECTRON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_CGSM_PROTON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_CGSM_MOLAR_GAS 
+
+=item *   $GSL_CONST_CGSM_STANDARD_GAS_VOLUME 
+
+=item *   $GSL_CONST_CGSM_MINUTE 
+
+=item *   $GSL_CONST_CGSM_HOUR 
+
+=item *   $GSL_CONST_CGSM_DAY 
+
+=item *   $GSL_CONST_CGSM_WEEK 
+
+=item *   $GSL_CONST_CGSM_INCH 
+
+=item *   $GSL_CONST_CGSM_FOOT 
+
+=item *   $GSL_CONST_CGSM_YARD 
+
+=item *   $GSL_CONST_CGSM_MILE 
+
+=item *   $GSL_CONST_CGSM_NAUTICAL_MILE 
+
+=item *   $GSL_CONST_CGSM_FATHOM 
+
+=item *   $GSL_CONST_CGSM_MIL 
+
+=item *   $GSL_CONST_CGSM_POINT 
+
+=item *   $GSL_CONST_CGSM_TEXPOINT 
+
+=item *   $GSL_CONST_CGSM_MICRON 
+
+=item *   $GSL_CONST_CGSM_ANGSTROM 
+
+=item *   $GSL_CONST_CGSM_HECTARE 
+
+=item *   $GSL_CONST_CGSM_ACRE 
+
+=item *   $GSL_CONST_CGSM_BARN 
+
+=item *   $GSL_CONST_CGSM_LITER 
+
+=item *   $GSL_CONST_CGSM_US_GALLON 
+
+=item *   $GSL_CONST_CGSM_QUART 
+
+=item *   $GSL_CONST_CGSM_PINT 
+
+=item *   $GSL_CONST_CGSM_CUP 
+
+=item *   $GSL_CONST_CGSM_FLUID_OUNCE 
+
+=item *   $GSL_CONST_CGSM_TABLESPOON 
+
+=item *   $GSL_CONST_CGSM_TEASPOON 
+
+=item *   $GSL_CONST_CGSM_CANADIAN_GALLON 
+
+=item *   $GSL_CONST_CGSM_UK_GALLON 
+
+=item *   $GSL_CONST_CGSM_MILES_PER_HOUR 
+
+=item *   $GSL_CONST_CGSM_KILOMETERS_PER_HOUR 
+
+=item *   $GSL_CONST_CGSM_KNOT 
+
+=item *   $GSL_CONST_CGSM_POUND_MASS 
+
+=item *   $GSL_CONST_CGSM_OUNCE_MASS 
+
+=item *   $GSL_CONST_CGSM_TON 
+
+=item *   $GSL_CONST_CGSM_METRIC_TON 
+
+=item *   $GSL_CONST_CGSM_UK_TON 
+
+=item *   $GSL_CONST_CGSM_TROY_OUNCE 
+
+=item *   $GSL_CONST_CGSM_CARAT 
+
+=item *   $GSL_CONST_CGSM_UNIFIED_ATOMIC_MASS 
+
+=item *   $GSL_CONST_CGSM_GRAM_FORCE 
+
+=item *   $GSL_CONST_CGSM_POUND_FORCE 
+
+=item *   $GSL_CONST_CGSM_KILOPOUND_FORCE 
+
+=item *   $GSL_CONST_CGSM_POUNDAL 
+
+=item *   $GSL_CONST_CGSM_CALORIE 
+
+=item *   $GSL_CONST_CGSM_BTU 
+
+=item *   $GSL_CONST_CGSM_THERM 
+
+=item *   $GSL_CONST_CGSM_HORSEPOWER 
+
+=item *   $GSL_CONST_CGSM_BAR 
+
+=item *   $GSL_CONST_CGSM_STD_ATMOSPHERE 
+
+=item *   $GSL_CONST_CGSM_TORR 
+
+=item *   $GSL_CONST_CGSM_METER_OF_MERCURY 
+
+=item *   $GSL_CONST_CGSM_INCH_OF_MERCURY 
+
+=item *   $GSL_CONST_CGSM_INCH_OF_WATER 
+
+=item *   $GSL_CONST_CGSM_PSI 
+
+=item *   $GSL_CONST_CGSM_POISE 
+
+=item *   $GSL_CONST_CGSM_STOKES 
+
+=item *   $GSL_CONST_CGSM_FARADAY 
+
+=item *   $GSL_CONST_CGSM_ELECTRON_CHARGE 
+
+=item *   $GSL_CONST_CGSM_GAUSS 
+
+=item *   $GSL_CONST_CGSM_STILB 
+
+=item *   $GSL_CONST_CGSM_LUMEN 
+
+=item *   $GSL_CONST_CGSM_LUX 
+
+=item *   $GSL_CONST_CGSM_PHOT 
+
+=item *   $GSL_CONST_CGSM_FOOTCANDLE 
+
+=item *   $GSL_CONST_CGSM_LAMBERT 
+
+=item *   $GSL_CONST_CGSM_FOOTLAMBERT 
+
+=item *   $GSL_CONST_CGSM_CURIE 
+
+=item *   $GSL_CONST_CGSM_ROENTGEN 
+
+=item *   $GSL_CONST_CGSM_RAD 
+
+=item *   $GSL_CONST_CGSM_SOLAR_MASS 
+
+=item *   $GSL_CONST_CGSM_BOHR_RADIUS 
+
+=item *   $GSL_CONST_CGSM_NEWTON 
+
+=item *   $GSL_CONST_CGSM_DYNE 
+
+=item *   $GSL_CONST_CGSM_JOULE 
+
+=item *   $GSL_CONST_CGSM_ERG 
+
+=item *   $GSL_CONST_CGSM_STEFAN_BOLTZMANN_CONSTANT 
+
+=item *   $GSL_CONST_CGSM_THOMSON_CROSS_SECTION 
+
+=back
+
+=over 2
+
+=item * mks  
+
+=back
+
+=over 4
+
+=item *   $GSL_CONST_MKS_SPEED_OF_LIGHT 
+
+=item *   $GSL_CONST_MKS_GRAVITATIONAL_CONSTANT 
+
+=item *   $GSL_CONST_MKS_PLANCKS_CONSTANT_H 
+
+=item *   $GSL_CONST_MKS_PLANCKS_CONSTANT_HBAR 
+
+=item *   $GSL_CONST_MKS_ASTRONOMICAL_UNIT 
+
+=item *   $GSL_CONST_MKS_LIGHT_YEAR 
+
+=item *   $GSL_CONST_MKS_PARSEC 
+
+=item *   $GSL_CONST_MKS_GRAV_ACCEL 
+
+=item *   $GSL_CONST_MKS_ELECTRON_VOLT 
+
+=item *   $GSL_CONST_MKS_MASS_ELECTRON 
+
+=item *   $GSL_CONST_MKS_MASS_MUON 
+
+=item *   $GSL_CONST_MKS_MASS_PROTON 
+
+=item *   $GSL_CONST_MKS_MASS_NEUTRON 
+
+=item *   $GSL_CONST_MKS_RYDBERG 
+
+=item *   $GSL_CONST_MKS_BOLTZMANN 
+
+=item *   $GSL_CONST_MKS_BOHR_MAGNETON 
+
+=item *   $GSL_CONST_MKS_NUCLEAR_MAGNETON 
+
+=item *   $GSL_CONST_MKS_ELECTRON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_MKS_PROTON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_MKS_MOLAR_GAS 
+
+=item *   $GSL_CONST_MKS_STANDARD_GAS_VOLUME 
+
+=item *   $GSL_CONST_MKS_MINUTE 
+
+=item *   $GSL_CONST_MKS_HOUR 
+
+=item *   $GSL_CONST_MKS_DAY 
+
+=item *   $GSL_CONST_MKS_WEEK 
+
+=item *   $GSL_CONST_MKS_INCH 
+
+=item *   $GSL_CONST_MKS_FOOT 
+
+=item *   $GSL_CONST_MKS_YARD 
+
+=item *   $GSL_CONST_MKS_MILE 
+
+=item *   $GSL_CONST_MKS_NAUTICAL_MILE 
+
+=item *   $GSL_CONST_MKS_FATHOM 
+
+=item *   $GSL_CONST_MKS_MIL 
+
+=item *   $GSL_CONST_MKS_POINT 
+
+=item *   $GSL_CONST_MKS_TEXPOINT 
+
+=item *   $GSL_CONST_MKS_MICRON 
+
+=item *   $GSL_CONST_MKS_ANGSTROM 
+
+=item *   $GSL_CONST_MKS_HECTARE 
+
+=item *   $GSL_CONST_MKS_ACRE 
+
+=item *   $GSL_CONST_MKS_BARN 
+
+=item *   $GSL_CONST_MKS_LITER 
+
+=item *   $GSL_CONST_MKS_US_GALLON 
+
+=item *   $GSL_CONST_MKS_QUART 
+
+=item *   $GSL_CONST_MKS_PINT 
+
+=item *   $GSL_CONST_MKS_CUP 
+
+=item *   $GSL_CONST_MKS_FLUID_OUNCE 
+
+=item *   $GSL_CONST_MKS_TABLESPOON 
+
+=item *   $GSL_CONST_MKS_TEASPOON 
+
+=item *   $GSL_CONST_MKS_CANADIAN_GALLON 
+
+=item *   $GSL_CONST_MKS_UK_GALLON 
+
+=item *   $GSL_CONST_MKS_MILES_PER_HOUR 
+
+=item *   $GSL_CONST_MKS_KILOMETERS_PER_HOUR 
+
+=item *   $GSL_CONST_MKS_KNOT 
+
+=item *   $GSL_CONST_MKS_POUND_MASS 
+
+=item *   $GSL_CONST_MKS_OUNCE_MASS 
+
+=item *   $GSL_CONST_MKS_TON 
+
+=item *   $GSL_CONST_MKS_METRIC_TON 
+
+=item *   $GSL_CONST_MKS_UK_TON 
+
+=item *   $GSL_CONST_MKS_TROY_OUNCE 
+
+=item *   $GSL_CONST_MKS_CARAT 
+
+=item *   $GSL_CONST_MKS_UNIFIED_ATOMIC_MASS 
+
+=item *   $GSL_CONST_MKS_GRAM_FORCE 
+
+=item *   $GSL_CONST_MKS_POUND_FORCE 
+
+=item *   $GSL_CONST_MKS_KILOPOUND_FORCE 
+
+=item *   $GSL_CONST_MKS_POUNDAL 
+
+=item *   $GSL_CONST_MKS_CALORIE 
+
+=item *   $GSL_CONST_MKS_BTU 
+
+=item *   $GSL_CONST_MKS_THERM 
+
+=item *   $GSL_CONST_MKS_HORSEPOWER 
+
+=item *   $GSL_CONST_MKS_BAR 
+
+=item *   $GSL_CONST_MKS_STD_ATMOSPHERE 
+
+=item *   $GSL_CONST_MKS_TORR 
+
+=item *   $GSL_CONST_MKS_METER_OF_MERCURY 
+
+=item *   $GSL_CONST_MKS_INCH_OF_MERCURY 
+
+=item *   $GSL_CONST_MKS_INCH_OF_WATER 
+
+=item *   $GSL_CONST_MKS_PSI 
+
+=item *   $GSL_CONST_MKS_POISE 
+
+=item *   $GSL_CONST_MKS_STOKES 
+
+=item *   $GSL_CONST_MKS_FARADAY 
+
+=item *   $GSL_CONST_MKS_ELECTRON_CHARGE 
+
+=item *   $GSL_CONST_MKS_GAUSS 
+
+=item *   $GSL_CONST_MKS_STILB 
+
+=item *   $GSL_CONST_MKS_LUMEN 
+
+=item *   $GSL_CONST_MKS_LUX 
+
+=item *   $GSL_CONST_MKS_PHOT 
+
+=item *   $GSL_CONST_MKS_FOOTCANDLE 
+
+=item *   $GSL_CONST_MKS_LAMBERT 
+
+=item *   $GSL_CONST_MKS_FOOTLAMBERT 
+
+=item *   $GSL_CONST_MKS_CURIE 
+
+=item *   $GSL_CONST_MKS_ROENTGEN 
+
+=item *   $GSL_CONST_MKS_RAD 
+
+=item *   $GSL_CONST_MKS_SOLAR_MASS 
+
+=item *   $GSL_CONST_MKS_BOHR_RADIUS 
+
+=item *   $GSL_CONST_MKS_NEWTON 
+
+=item *   $GSL_CONST_MKS_DYNE 
+
+=item *   $GSL_CONST_MKS_JOULE 
+
+=item *   $GSL_CONST_MKS_ERG 
+
+=item *   $GSL_CONST_MKS_STEFAN_BOLTZMANN_CONSTANT 
+
+=item *   $GSL_CONST_MKS_THOMSON_CROSS_SECTION 
+
+=item *   $GSL_CONST_MKS_VACUUM_PERMITTIVITY 
+
+=item *   $GSL_CONST_MKS_VACUUM_PERMEABILITY 
+
+=item *   $GSL_CONST_MKS_DEBYE 
+
+=back
+
+=over 2
+ 
+=item * mksa  - Standard MKSA system (meters, kilograms, seconds, amperes)
+
+=back
+
+=over 4
+
+=item *   $GSL_CONST_MKSA_SPEED_OF_LIGHT 
+
+=item *   $GSL_CONST_MKSA_GRAVITATIONAL_CONSTANT 
+
+=item *   $GSL_CONST_MKSA_PLANCKS_CONSTANT_H 
+
+=item *   $GSL_CONST_MKSA_PLANCKS_CONSTANT_HBAR 
+
+=item *   $GSL_CONST_MKSA_ASTRONOMICAL_UNIT 
+
+=item *   $GSL_CONST_MKSA_LIGHT_YEAR 
+
+=item *   $GSL_CONST_MKSA_PARSEC 
+
+=item *   $GSL_CONST_MKSA_GRAV_ACCEL 
+
+=item *   $GSL_CONST_MKSA_ELECTRON_VOLT 
+
+=item *   $GSL_CONST_MKSA_MASS_ELECTRON 
+
+=item *   $GSL_CONST_MKSA_MASS_MUON 
+
+=item *   $GSL_CONST_MKSA_MASS_PROTON 
+
+=item *   $GSL_CONST_MKSA_MASS_NEUTRON 
+
+=item *   $GSL_CONST_MKSA_RYDBERG 
+
+=item *   $GSL_CONST_MKSA_BOLTZMANN 
+
+=item *   $GSL_CONST_MKSA_BOHR_MAGNETON 
+
+=item *   $GSL_CONST_MKSA_NUCLEAR_MAGNETON 
+
+=item *   $GSL_CONST_MKSA_ELECTRON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_MKSA_PROTON_MAGNETIC_MOMENT 
+
+=item *   $GSL_CONST_MKSA_MOLAR_GAS 
+
+=item *   $GSL_CONST_MKSA_STANDARD_GAS_VOLUME 
+
+=item *   $GSL_CONST_MKSA_MINUTE 
+
+=item *   $GSL_CONST_MKSA_HOUR 
+
+=item *   $GSL_CONST_MKSA_DAY 
+
+=item *   $GSL_CONST_MKSA_WEEK 
+
+=item *   $GSL_CONST_MKSA_INCH 
+
+=item *   $GSL_CONST_MKSA_FOOT 
+
+=item *   $GSL_CONST_MKSA_YARD 
+
+=item *   $GSL_CONST_MKSA_MILE 
+
+=item *   $GSL_CONST_MKSA_NAUTICAL_MILE 
+
+=item *   $GSL_CONST_MKSA_FATHOM 
+
+=item *   $GSL_CONST_MKSA_MIL 
+
+=item *   $GSL_CONST_MKSA_POINT 
+
+=item *   $GSL_CONST_MKSA_TEXPOINT 
+
+=item *   $GSL_CONST_MKSA_MICRON 
+
+=item *   $GSL_CONST_MKSA_ANGSTROM 
+
+=item *   $GSL_CONST_MKSA_HECTARE 
+
+=item *   $GSL_CONST_MKSA_ACRE 
+
+=item *   $GSL_CONST_MKSA_BARN 
+
+=item *   $GSL_CONST_MKSA_LITER 
+
+=item *   $GSL_CONST_MKSA_US_GALLON 
+
+=item *   $GSL_CONST_MKSA_QUART 
+
+=item *   $GSL_CONST_MKSA_PINT 
+
+=item *   $GSL_CONST_MKSA_CUP 
+
+=item *   $GSL_CONST_MKSA_FLUID_OUNCE 
+
+=item *   $GSL_CONST_MKSA_TABLESPOON 
+
+=item *   $GSL_CONST_MKSA_TEASPOON 
+
+=item *   $GSL_CONST_MKSA_CANADIAN_GALLON 
+
+=item *   $GSL_CONST_MKSA_UK_GALLON 
+
+=item *   $GSL_CONST_MKSA_MILES_PER_HOUR 
+
+=item *   $GSL_CONST_MKSA_KILOMETERS_PER_HOUR 
+
+=item *   $GSL_CONST_MKSA_KNOT 
+
+=item *   $GSL_CONST_MKSA_POUND_MASS 
+
+=item *   $GSL_CONST_MKSA_OUNCE_MASS 
+
+=item *   $GSL_CONST_MKSA_TON 
+
+=item *   $GSL_CONST_MKSA_METRIC_TON 
+
+=item *   $GSL_CONST_MKSA_UK_TON 
+
+=item *   $GSL_CONST_MKSA_TROY_OUNCE 
+
+=item *   $GSL_CONST_MKSA_CARAT 
+
+=item *   $GSL_CONST_MKSA_UNIFIED_ATOMIC_MASS 
+
+=item *   $GSL_CONST_MKSA_GRAM_FORCE 
+
+=item *   $GSL_CONST_MKSA_POUND_FORCE 
+
+=item *   $GSL_CONST_MKSA_KILOPOUND_FORCE 
+
+=item *   $GSL_CONST_MKSA_POUNDAL 
+
+=item *   $GSL_CONST_MKSA_CALORIE 
+
+=item *   $GSL_CONST_MKSA_BTU 
+
+=item *   $GSL_CONST_MKSA_THERM 
+
+=item *   $GSL_CONST_MKSA_HORSEPOWER 
+
+=item *   $GSL_CONST_MKSA_BAR 
+
+=item *   $GSL_CONST_MKSA_STD_ATMOSPHERE 
+
+=item *   $GSL_CONST_MKSA_TORR 
+
+=item *   $GSL_CONST_MKSA_METER_OF_MERCURY 
+
+=item *   $GSL_CONST_MKSA_INCH_OF_MERCURY 
+
+=item *   $GSL_CONST_MKSA_INCH_OF_WATER 
+
+=item *   $GSL_CONST_MKSA_PSI 
+
+=item *   $GSL_CONST_MKSA_POISE 
+
+=item *   $GSL_CONST_MKSA_STOKES 
+
+=item *   $GSL_CONST_MKSA_FARADAY 
+
+=item *   $GSL_CONST_MKSA_ELECTRON_CHARGE 
+
+=item *   $GSL_CONST_MKSA_GAUSS 
+
+=item *   $GSL_CONST_MKSA_STILB 
+
+=item *   $GSL_CONST_MKSA_LUMEN 
+
+=item *   $GSL_CONST_MKSA_LUX 
+
+=item *   $GSL_CONST_MKSA_PHOT 
+
+=item *   $GSL_CONST_MKSA_FOOTCANDLE 
+
+=item *   $GSL_CONST_MKSA_LAMBERT 
+
+=item *   $GSL_CONST_MKSA_FOOTLAMBERT 
+
+=item *   $GSL_CONST_MKSA_CURIE 
+
+=item *   $GSL_CONST_MKSA_ROENTGEN 
+
+=item *   $GSL_CONST_MKSA_RAD 
+
+=item *   $GSL_CONST_MKSA_SOLAR_MASS 
+
+=item *   $GSL_CONST_MKSA_BOHR_RADIUS 
+
+=item *   $GSL_CONST_MKSA_NEWTON 
+
+=item *   $GSL_CONST_MKSA_DYNE 
+
+=item *   $GSL_CONST_MKSA_JOULE 
+
+=item *   $GSL_CONST_MKSA_ERG 
+
+=item *   $GSL_CONST_MKSA_STEFAN_BOLTZMANN_CONSTANT 
+
+=item *   $GSL_CONST_MKSA_THOMSON_CROSS_SECTION 
+
+=item *   $GSL_CONST_MKSA_VACUUM_PERMITTIVITY 
+
+=item *   $GSL_CONST_MKSA_VACUUM_PERMEABILITY 
+
+=item *   $GSL_CONST_MKSA_DEBYE 
+
+=back
+
+=over 2
 
 =item * math  - Mathematical 
 
@@ -538,17 +1366,55 @@ There are many constants in this module, which are split into six subcategories 
 
 =item *   $M_LNPI  - Natural log of pi
 
-=item *   $M_EULER  - Euler–Mascheroni Constant 
+=item *   $M_EULER  - Euler-Mascheroni Constant 
 
 =back
 
-=over 1
+=over 2
 
-=item * num - Dimensionless Numbers
-
+=item *   num - Dimensionless Numbers
 
 =back
 
+=over 4
+
+=item *   $GSL_CONST_NUM_FINE_STRUCTURE 
+
+=item *   $GSL_CONST_NUM_AVOGADRO 
+
+=item *   $GSL_CONST_NUM_YOTTA 
+
+=item *   $GSL_CONST_NUM_ZETTA 
+
+=item *   $GSL_CONST_NUM_EXA 
+
+=item *   $GSL_CONST_NUM_PETA 
+
+=item *   $GSL_CONST_NUM_TERA 
+
+=item *   $GSL_CONST_NUM_GIGA 
+
+=item *   $GSL_CONST_NUM_MEGA 
+
+=item *   $GSL_CONST_NUM_KILO 
+
+=item *   $GSL_CONST_NUM_MILLI 
+
+=item *   $GSL_CONST_NUM_MICRO 
+
+=item *   $GSL_CONST_NUM_NANO 
+
+=item *   $GSL_CONST_NUM_PICO 
+
+=item *   $GSL_CONST_NUM_FEMTO 
+
+=item *   $GSL_CONST_NUM_ATTO 
+
+=item *   $GSL_CONST_NUM_ZEPTO 
+
+=item *   $GSL_CONST_NUM_YOCTO 
+
+=back
 
 Importing the tag C<all> is the same as importing all of these.
 

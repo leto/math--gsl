@@ -44,13 +44,13 @@ Math::GSL::Errno - Error Handling
 
 =item * $GSL_CONTINUE
 
-=item * $GSL_EDOM
+=item * $GSL_EDOM - Domain error; used by mathematical functions when an argument value does not fall into the domain over which the function is defined (like EDOM in the C library)
 
-=item * $GSL_ERANGE
+=item * $GSL_ERANGE - Range error; used by mathematical functions when the result value is not representable because of overflow or underflow (like ERANGE in the C library) 
 
 =item * $GSL_EFAULT
 
-=item * $GSL_EINVAL
+=item * $GSL_EINVAL - Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library).Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library). 
 
 =item * $GSL_EFAILED
 
@@ -58,7 +58,7 @@ Math::GSL::Errno - Error Handling
 
 =item * $GSL_ESANITY
 
-=item * $GSL_ENOMEM
+=item * $GSL_ENOMEM - No memory available. The system cannot allocate more virtual memory because its capacity is full (like ENOMEM in the C library). This error is reported when a GSL routine encounters problems when trying to allocate memory with malloc.
 
 =item * $GSL_EBADFUNC
 
@@ -107,6 +107,26 @@ Math::GSL::Errno - Error Handling
 =item * $GSL_ETOLG
 
 =item * $GSL_EOF 
+
+=back
+
+=head1 FUNCTIONS
+
+=over
+
+=item * gsl_error
+
+=item * gsl_stream_printf
+
+=item * gsl_strerror($gsl_errno) - This function returns a pointer to a string describing the error code gsl_errno. For example, print ("error: gsl_strerror ($status)\n"); would print an error message like error: output range error for a status value of GSL_ERANGE.
+
+=item * gsl_set_error_handler 
+
+=item * gsl_set_error_handler_off() - This function turns off the error handler by defining an error handler which does nothing. This will cause the program to continue after any error, so the return values from any library routines must be checked. This is the recommended behavior for production programs. The previous handler is returned (so that you can restore it later).
+
+=item * gsl_set_stream_handler
+
+=item * gsl_set_stream 
 
 =back
 

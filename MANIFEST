@@ -1,7 +1,5 @@
 BLAS.i
 BLAS_wrap.c
-Block.i
-Block_wrap.c
 BSpline.i
 BSpline_wrap.c
 Build.PL
@@ -56,8 +54,6 @@ Interp_wrap.c
 lib/Math/GSL.pm
 lib/Math/GSL/BLAS.pm
 lib/Math/GSL/BLAS/Test.pm
-lib/Math/GSL/Block.pm
-lib/Math/GSL/Block/Test.pm
 lib/Math/GSL/BSpline.pm
 lib/Math/GSL/BSpline/Test.pm
 lib/Math/GSL/CBLAS.pm
@@ -65,6 +61,7 @@ lib/Math/GSL/CBLAS/Test.pm
 lib/Math/GSL/CDF.pm
 lib/Math/GSL/Chebyshev.pm
 lib/Math/GSL/Combination.pm
+lib/Math/GSL/Combination/Test.pm
 lib/Math/GSL/Complex.pm
 lib/Math/GSL/Complex/Test.pm
 lib/Math/GSL/Const.pm
@@ -199,10 +196,10 @@ Sys_wrap.c
 t/00-load.t
 t/01-pod.t
 t/BLAS.t
-t/Block.t
 t/BSpline.t
 t/CBLAS.t
 t/CDF.t
+t/Combination.t
 t/Complex.t
 t/Const.t
 t/Deriv.t

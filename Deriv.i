@@ -1,4 +1,5 @@
 %module "Math::GSL::Deriv"
+// Danger Will Robinson, for realz!
 /*
 struct gsl_function_struct 
 {
@@ -11,42 +12,95 @@ typedef struct gsl_function_struct gsl_function ;
 */
 
 %include "typemaps.i"
-%typemap(in) gsl_function * {
-    gsl_function F;
-    int count;
-    F.params = 0;
-    F.function = &xsquared;
-   
-    if( !SvROK($input) ) {
-        croak("Math::GSL : not a reference value!");
-    }
-    //Perl_sv_dump( $input );
-
-    // does not work
-    //count = call_sv((SV*) $input, G_ARRAY);
-    $1 = &F;
-};
-
+//%include "gsl_typemaps.i"
 %{
+    static HV * Callbacks = (HV*)NULL;
     typedef struct callback_t
     {  
         SV * obj;
     };
     double xsquared(double x,void *params){
+        fprintf(stderr,"static xsquared!!\n");
         return x * x;
     }
 %}
+%apply double * OUTPUT { double *abserr, double *result };
+/*
+int gsl_deriv_central (const gsl_function *f,
+                       double x, double h,
+                       double *result, double *abserr);
+*/
+/*
+%typemap(in) (const gsl_function *f,
+                       double x, double h,
+                       double *result, double *abserr ) {
+    fprintf(stderr,"XXXX\n");
+}
+*/
+%typemap(in) gsl_function const * {
+    fprintf(stderr,"typemap in!\n");
+    gsl_function F;
+    int count;
+    F.params = 0;
+    F.function = &xsquared;
+    SV * callback;
+
+    if (!SvROK($input)) {
+        croak("Math::GSL : not a reference value!");
+    }
+    if (Callbacks == (HV*)NULL)
+        Callbacks = newHV();
+    fprintf(stderr,"input =%d\n", (int)$input);
+    hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
+   
+    //Perl_sv_dump( $input );
+    //call_sv((SV*)$input, G_SCALAR);
+    // how to register callback ?
+    $1 = &F;
+};
+%typemap(argout) gsl_function const * {
+    fprintf(stderr,"typemap argout!\n");
+    SV ** sv;
+    double x;
+
+    sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
+    if (sv == (SV**)NULL)
+        croak("Math::GSL : Missing callback!\n");
+    dSP;
+    ENTER;
+    SAVETMPS;
+
+    PUSHMARK(SP);
+    // these are the arguments passed to the callback
+    // this is currently passing in the memory address of the callback
+    XPUSHs(sv_2mortal(newSViv((int)$input)));
+    //XPUSHs(sv_2mortal($input));
+    //XPUSHs(newSVsv($input));
+    //XPUSHs(sv_2mortal(newSViv(42)));
+    //XPUSHs(sv_2mortal(newSVnv((double) (*($input)->function)()    )));
+    PUTBACK;
+
+    fprintf(stderr, "\nCALLBACK!\n");
+   
+    /* This actually calls the perl subroutine */
+    call_sv(*sv, G_SCALAR);    
+
+    //x = POPn;
+    //$result =  &x;
+    //fprintf(stderr, "argout:x = %.8f\n", x);
+    if (argvi >= items) {            
+        EXTEND(SP,1);              
+    }
+    argvi++;
+    //XPUSHs(sv_2mortal(newSVnv(x)));
+
+    FREETMPS;
+    LEAVE;
+}
+
 %typemap(in) void * {
-    printf("void * \n");
     $1 = (double *) $input;
 };
-%typemap(in) double (*)(double,void *) {
-    fprintf(stderr,"input * %d \n", (int) $input);
-    //Perl_sv_dump( $input );
-};
-
-%apply double * OUTPUT { double *abserr, double *result };
-
 %{
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_deriv.h"

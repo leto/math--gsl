@@ -23,13 +23,6 @@ typedef struct gsl_function_struct gsl_function ;
         fprintf(stderr,"static xsquared!!\n");
         return x * x;
     }
-    //static double call_this(SV *sv, void *param){
-    static double call_this(double x, void *param){
-        double result = 17.42;
-        fprintf(stderr,"call_this: calling stuff\n");
-        fprintf(stderr, "call_this:x=%f\n", (double)x);
-        return result;
-    }
 %}
 %apply double * OUTPUT { double *abserr, double *result };
 /*
@@ -49,8 +42,7 @@ int gsl_deriv_central (const gsl_function *f,
     gsl_function F;
     int count;
     F.params = 0;
-    //F.function = &xsquared;
-    F.function = &call_this;
+    F.function = &xsquared;
     SV * callback;
 
     if (!SvROK($input)) {
@@ -74,11 +66,9 @@ int gsl_deriv_central (const gsl_function *f,
     sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     if (sv == (SV**)NULL)
         croak("Math::GSL : Missing callback!\n");
-    /*
     dSP;
     ENTER;
     SAVETMPS;
-    */
 
     PUSHMARK(SP);
     // these are the arguments passed to the callback
@@ -91,19 +81,21 @@ int gsl_deriv_central (const gsl_function *f,
     PUTBACK;
 
     fprintf(stderr, "\nCALLBACK!\n");
-    
-    call_sv(*sv, G_SCALAR);     /* The money shot */
+   
+    /* This actually calls the perl subroutine */
+    call_sv(*sv, G_SCALAR);    
+
     //x = POPn;
     //$result =  &x;
     //fprintf(stderr, "argout:x = %.8f\n", x);
     if (argvi >= items) {            
         EXTEND(SP,1);              
     }
+    argvi++;
     //XPUSHs(sv_2mortal(newSVnv(x)));
-    /*
+
     FREETMPS;
     LEAVE;
-    */
 }
 
 %typemap(in) void * {

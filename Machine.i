@@ -66,4 +66,146 @@
                $GSL_LOG_MACH_EPS 
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+__END__
+
+=head1 NAME
+
+Math::GSL::Machine - Machine constants 
+
+=head1 SYNOPSIS
+
+    use Math::GSL::Machine qw/:all/;
+    print "The GSL_DBL_EPSILON Constant is $GSL_DBL_EPSILON\n";
+
+Here is a list of all the constants included in this module :
+
+=over
+
+=item *   $GSL_DBL_EPSILON 
+
+=item *   $GSL_SQRT_DBL_EPSILON 
+
+=item *   $GSL_ROOT3_DBL_EPSILON 
+
+=item *   $GSL_ROOT4_DBL_EPSILON 
+
+=item *   $GSL_ROOT5_DBL_EPSILON 
+
+=item *   $GSL_ROOT6_DBL_EPSILON 
+
+=item *   $GSL_LOG_DBL_EPSILON 
+
+=item *   $GSL_DBL_MIN 
+
+=item *   $GSL_SQRT_DBL_MIN 
+
+=item *   $GSL_ROOT3_DBL_MIN 
+
+=item *   $GSL_ROOT4_DBL_MIN 
+
+=item *   $GSL_ROOT5_DBL_MIN 
+
+=item *   $GSL_ROOT6_DBL_MIN 
+
+=item *   $GSL_LOG_DBL_MIN 
+
+=item *   $GSL_DBL_MAX 
+
+=item *   $GSL_SQRT_DBL_MAX 
+
+=item *   $GSL_ROOT3_DBL_MAX 
+
+=item *   $GSL_ROOT4_DBL_MAX 
+
+=item *   $GSL_ROOT5_DBL_MAX 
+
+=item *   $GSL_ROOT6_DBL_MAX 
+
+=item *   $GSL_LOG_DBL_MAX 
+
+=item *   $GSL_FLT_EPSILON 
+
+=item *   $GSL_SQRT_FLT_EPSILON 
+
+=item *   $GSL_ROOT3_FLT_EPSILON 
+
+=item *   $GSL_ROOT4_FLT_EPSILON 
+
+=item *   $GSL_ROOT5_FLT_EPSILON 
+
+=item *   $GSL_ROOT6_FLT_EPSILON 
+
+=item *   $GSL_LOG_FLT_EPSILON 
+
+=item *   $GSL_FLT_MIN 
+
+=item *   $GSL_SQRT_FLT_MIN 
+
+=item *   $GSL_ROOT3_FLT_MIN 
+
+=item *   $GSL_ROOT4_FLT_MIN 
+
+=item *   $GSL_ROOT5_FLT_MIN 
+
+=item *   $GSL_ROOT6_FLT_MIN 
+
+=item *   $GSL_LOG_FLT_MIN 
+
+=item *   $GSL_FLT_MAX 
+
+=item *   $GSL_SQRT_FLT_MAX 
+
+=item *   $GSL_ROOT3_FLT_MAX 
+
+=item *   $GSL_ROOT4_FLT_MAX 
+
+=item *   $GSL_ROOT5_FLT_MAX 
+
+=item *   $GSL_ROOT6_FLT_MAX 
+
+=item *   $GSL_LOG_FLT_MAX 
+
+=item *   $GSL_SFLT_EPSILON 
+
+=item *   $GSL_SQRT_SFLT_EPSILON 
+
+=item *   $GSL_ROOT3_SFLT_EPSILON 
+
+=item *   $GSL_ROOT4_SFLT_EPSILON 
+
+=item *   $GSL_ROOT5_SFLT_EPSILON 
+
+=item *   $GSL_ROOT6_SFLT_EPSILON 
+
+=item *   $GSL_LOG_SFLT_EPSILON 
+
+=item *   $GSL_MACH_EPS 
+
+=item *   $GSL_SQRT_MACH_EPS 
+
+=item *   $GSL_ROOT3_MACH_EPS 
+
+=item *   $GSL_ROOT4_MACH_EPS 
+
+=item *   $GSL_ROOT5_MACH_EPS 
+
+=item *   $GSL_ROOT6_MACH_EPS 
+
+=item *   $GSL_LOG_MACH_EPS 
+
+=back
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
 %}

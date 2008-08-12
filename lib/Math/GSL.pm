@@ -8,9 +8,7 @@ use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Carp qw/croak/;
 use Config;
-use Data::Dumper;
 use Test::More;
-use Scalar::Util qw/looks_like_number/;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
@@ -24,15 +22,15 @@ our %EXPORT_TAGS = (
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 =head1 NAME
 
-Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
+Math::GSL - Perl interface to the  GNU Scientific Library (GSL) 
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 

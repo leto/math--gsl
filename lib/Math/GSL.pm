@@ -160,7 +160,7 @@ the Summer of Code happen each year. You rock.
 
 =head1 DEDICATION
 
-This Perl module is dedicated in the memory of Nick Ing-Simmons.
+This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 

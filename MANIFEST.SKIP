@@ -10,3 +10,4 @@ blib/*
 .*core
 foo*
 .*\.gz
+^tags

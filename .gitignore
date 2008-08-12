@@ -13,3 +13,4 @@ lib/Math/GSL/[A-z0-9]*\.pm
 Makefile
 *.data
 foo*
+tags

@@ -75,6 +75,7 @@ lib/Math/GSL/Diff.pm
 lib/Math/GSL/Eigen.pm
 lib/Math/GSL/Eigen/Test.pm
 lib/Math/GSL/Errno.pm
+lib/Math/GSL/Errno/Test.pm
 lib/Math/GSL/FFT.pm
 lib/Math/GSL/FFT/Test.pm
 lib/Math/GSL/Fit.pm
@@ -109,6 +110,7 @@ lib/Math/GSL/Permutation/Test.pm
 lib/Math/GSL/Poly.pm
 lib/Math/GSL/Poly/Test.pm
 lib/Math/GSL/PowInt.pm
+lib/Math/GSL/PowInt/Test.pm
 lib/Math/GSL/QRNG.pm
 lib/Math/GSL/QRNG/Test.pm
 lib/Math/GSL/Randist.pm

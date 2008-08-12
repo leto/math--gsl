@@ -58,10 +58,10 @@
         if( *helem == NULL)
             croak("Structure does not contain 'dat' element\n");
         printf("helem is:\n");
-        Perl_sv_dump(*helem);
+        //Perl_sv_dump(*helem);
         if( i == 0){
             svtmp = (SV*)SvRV(*helem);
-            Perl_sv_dump(svtmp);
+            //Perl_sv_dump(svtmp);
         }
         printf("re z = %f\n", GSL_REAL(z) );
         printf("im z = %f\n", GSL_IMAG(z) );

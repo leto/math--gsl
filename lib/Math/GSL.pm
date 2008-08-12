@@ -8,9 +8,7 @@ use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Carp qw/croak/;
 use Config;
-use Data::Dumper;
 use Test::More;
-use Scalar::Util qw/looks_like_number/;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
@@ -24,15 +22,15 @@ our %EXPORT_TAGS = (
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 =head1 NAME
 
-Math::GSL - Perl interface to the  GNU Scientific Library (GSL) using SWIG
+Math::GSL - Perl interface to the  GNU Scientific Library (GSL) 
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
@@ -78,7 +76,6 @@ intuitive (but slightly slower) object-oriented interface.
     Math::GSL::Machine          - Machine Specific Information
     Math::GSL::Matrix           - NxM Matrices
     Math::GSL::Min              - Minimization
-    Math::GSL::Mode             - GSL Precision Modes
     Math::GSL::Monte            - Monte Carlo Integrations
     Math::GSL::Multifit         - Multivariable Fitting
     Math::GSL::Multimin         - Multivariable Minimization
@@ -161,7 +158,7 @@ the Summer of Code happen each year. You rock.
 
 =head1 DEDICATION
 
-This Perl module is dedicated in the memory of Nick Ing-Simmons.
+This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 
@@ -187,7 +184,7 @@ sub subsystems
         Block        Eigen        Matrix        Poly 
         BSpline      Errno        PowInt        
         CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          Mode          QRNG
+        CDF          Fit          QRNG
         Chebyshev    Monte        RNG           Vector
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet

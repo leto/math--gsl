@@ -120,24 +120,23 @@ sub compile_swig {
     copy($from,$to);
     return $c_file;
 }
+sub _is_windows { $^O =~ /MSWin32/i }
 
-# From Base.pm but modified for a SWIG conventions.
-# We just pass a $obj_file parameter
-# SWIG objects have a get created with _wrap added. For example
-# perlcdio.swg produces perlcdio_wrap.c, and perlcdio_wrap.o.
-# But the shared object is still perlcdio.so.
-# Also we modified the die to report the full file name.
+# Windows fixes courtesy of <sisyphus@cpan.org>
 sub link_c {
   my ($self, $to, $file_base, $obj_file) = @_;
   my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
-  my $lib_file = catfile($to, File::Basename::basename("$file_base.so"));
+  my $lib_file = catfile($to, File::Basename::basename("$file_base.$Config{dlext}"));
 
   $self->add_to_cleanup($lib_file);
   my $objects = $p->{objects} || [];
   
   unless ($self->up_to_date([$obj_file, @$objects], $lib_file)) {
     my @linker_flags = $self->split_like_shell($p->{extra_linker_flags});
+
+    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl} if _is_windows();
+
     my @lddlflags = $self->split_like_shell($cf->{lddlflags}); 
     my @shrp = $self->split_like_shell($cf->{shrpenv});
     my @ld = $self->split_like_shell($cf->{ld}) || "gcc";
@@ -321,17 +320,17 @@ if ('cygwin' eq $Config{osname} &&
 
 my $class = Module::Build->subclass( code => $code );
 my @Subsystems = sort qw/
-            BLAS         Diff          Machine      Statistics Wavelet
-                         Eigen         Matrix       Poly       Wavelet2D
-            BSpline      Errno         PowInt       
+            BLAS         Diff          Machine    Statistics
+            Eigen        Matrix        Poly       Wavelet2D
+            BSpline      Errno         PowInt     Wavelet
             CBLAS        FFT           Min          
-            CDF          Fit           Mode         QRNG
+            CDF          Fit           QRNG
             Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      
             Complex      Histogram2D   Multiroots   SF         
             Const        Siman         IEEEUtils    Sys
-            Integration  NTuple       Sort                  
+            Integration  NTuple        Sort                  
             DHT          Interp        ODEIV        Vector
             Deriv        Linalg        Permutation  Spline
 /;

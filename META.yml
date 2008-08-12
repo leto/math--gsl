@@ -1,6 +1,6 @@
 ---
 name: Math-GSL
-version: 0.07
+version: 0.08
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
@@ -18,7 +18,7 @@ requires:
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.07
+    version: 0.08
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLAS::Test:
@@ -31,40 +31,6 @@ provides:
     file: lib/Math/GSL/BSpline.pm
   Math::GSL::BSplinec:
     file: lib/Math/GSL/BSpline.pm
-  Math::GSL::Block:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::Test:
-    file: lib/Math/GSL/Block/Test.pm
-  Math::GSL::Block::gsl_block_char_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_complex_float_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_complex_long_double_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_complex_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_float_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_int_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_long_double_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_long_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_short_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_uchar_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_uint_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_ulong_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Block::gsl_block_ushort_struct:
-    file: lib/Math/GSL/Block.pm
-  Math::GSL::Blockc:
-    file: lib/Math/GSL/Block.pm
   Math::GSL::CBLAS:
     file: lib/Math/GSL/CBLAS.pm
   Math::GSL::CBLAS::Test:
@@ -83,6 +49,8 @@ provides:
     file: lib/Math/GSL/Chebyshev.pm
   Math::GSL::Combination:
     file: lib/Math/GSL/Combination.pm
+  Math::GSL::Combination::Test:
+    file: lib/Math/GSL/Combination/Test.pm
   Math::GSL::Combination::gsl_combination_struct:
     file: lib/Math/GSL/Combination.pm
   Math::GSL::Combinationc:
@@ -173,6 +141,8 @@ provides:
     file: lib/Math/GSL/Eigen.pm
   Math::GSL::Errno:
     file: lib/Math/GSL/Errno.pm
+  Math::GSL::Errno::Test:
+    file: lib/Math/GSL/Errno/Test.pm
   Math::GSL::Errnoc:
     file: lib/Math/GSL/Errno.pm
   Math::GSL::FFT:
@@ -301,10 +271,6 @@ provides:
     file: lib/Math/GSL/Min.pm
   Math::GSL::Minc:
     file: lib/Math/GSL/Min.pm
-  Math::GSL::Mode:
-    file: lib/Math/GSL/Mode.pm
-  Math::GSL::Modec:
-    file: lib/Math/GSL/Mode.pm
   Math::GSL::Monte:
     file: lib/Math/GSL/Monte.pm
   Math::GSL::Monte::gsl_monte_function_struct:
@@ -371,6 +337,8 @@ provides:
     file: lib/Math/GSL/Multiroots.pm
   Math::GSL::NTuple:
     file: lib/Math/GSL/NTuple.pm
+  Math::GSL::NTuple::Test:
+    file: lib/Math/GSL/NTuple/Test.pm
   Math::GSL::NTuple::gsl_ntuple:
     file: lib/Math/GSL/NTuple.pm
   Math::GSL::NTuple::gsl_ntuple_select_fn:
@@ -421,6 +389,8 @@ provides:
     file: lib/Math/GSL/Poly.pm
   Math::GSL::PowInt:
     file: lib/Math/GSL/PowInt.pm
+  Math::GSL::PowInt::Test:
+    file: lib/Math/GSL/PowInt/Test.pm
   Math::GSL::PowIntc:
     file: lib/Math/GSL/PowInt.pm
   Math::GSL::QRNG:
@@ -493,6 +463,8 @@ provides:
     file: lib/Math/GSL/Sort.pm
   Math::GSL::Spline:
     file: lib/Math/GSL/Spline.pm
+  Math::GSL::Spline::Test:
+    file: lib/Math/GSL/Spline/Test.pm
   Math::GSL::Spline::gsl_spline:
     file: lib/Math/GSL/Spline.pm
   Math::GSL::Splinec:
@@ -503,6 +475,8 @@ provides:
     file: lib/Math/GSL/Statistics.pm
   Math::GSL::Sum:
     file: lib/Math/GSL/Sum.pm
+  Math::GSL::Sum::Test:
+    file: lib/Math/GSL/Sum/Test.pm
   Math::GSL::Sum::gsl_sum_levin_u_workspace:
     file: lib/Math/GSL/Sum.pm
   Math::GSL::Sum::gsl_sum_levin_utrunc_workspace:

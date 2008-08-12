@@ -95,7 +95,6 @@ lib/Math/GSL/Matrix.pm
 lib/Math/GSL/Matrix/Test.pm
 lib/Math/GSL/Min.pm
 lib/Math/GSL/Min/Test.pm
-lib/Math/GSL/Mode.pm
 lib/Math/GSL/Monte.pm
 lib/Math/GSL/Multifit.pm
 lib/Math/GSL/Multifit/Test.pm
@@ -145,12 +144,9 @@ MANIFEST
 MANIFEST.SKIP
 Matrix.i
 Matrix_wrap.c
-Message.i
 META.yml
 Min.i
 Min_wrap.c
-Mode.i
-Mode_wrap.c
 Monte.i
 Monte_wrap.c
 Multifit.i

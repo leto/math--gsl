@@ -78,7 +78,6 @@ intuitive (but slightly slower) object-oriented interface.
     Math::GSL::Machine          - Machine Specific Information
     Math::GSL::Matrix           - NxM Matrices
     Math::GSL::Min              - Minimization
-    Math::GSL::Mode             - GSL Precision Modes
     Math::GSL::Monte            - Monte Carlo Integrations
     Math::GSL::Multifit         - Multivariable Fitting
     Math::GSL::Multimin         - Multivariable Minimization
@@ -187,7 +186,7 @@ sub subsystems
         Block        Eigen        Matrix        Poly 
         BSpline      Errno        PowInt        
         CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          Mode          QRNG
+        CDF          Fit          QRNG
         Chebyshev    Monte        RNG           Vector
         Heapsort     Multifit     Randist       Roots     
         Combination  Histogram    Multimin      Wavelet

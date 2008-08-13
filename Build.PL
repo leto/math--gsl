@@ -120,7 +120,7 @@ sub compile_swig {
     copy($from,$to);
     return $c_file;
 }
-sub _is_windows { $^O =~ /MSWin32/i }
+sub is_windows { $^O =~ /MSWin32/i }
 
 # Windows fixes courtesy of <sisyphus@cpan.org>
 sub link_c {
@@ -135,7 +135,7 @@ sub link_c {
   unless ($self->up_to_date([$obj_file, @$objects], $lib_file)) {
     my @linker_flags = $self->split_like_shell($p->{extra_linker_flags});
 
-    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl} if _is_windows();
+    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl} if is_windows();
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags}); 
     my @shrp = $self->split_like_shell($cf->{shrpenv});

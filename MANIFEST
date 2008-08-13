@@ -186,7 +186,6 @@ Spline.i
 Spline_wrap.c
 Statistics.i
 Statistics_wrap.c
-subsystems.txt
 Sum.i
 Sum_wrap.c
 Sys.i

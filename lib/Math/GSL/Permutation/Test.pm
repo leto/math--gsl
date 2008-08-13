@@ -169,12 +169,14 @@ sub GSL_PERMUTATION_MUL : Tests {
 sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
     my $self = shift;
     gsl_permutation_init($self->{permutation});
-    my $fh = fopen("permutation", "w");
+    my $write = is_windows() ? "w + b" : "w";
+    my $read  = is_windows() ? "r + b" : "r";
+    my $fh = fopen("permutation", $write);
     gsl_permutation_fwrite($fh, $self->{permutation});
     fclose($fh);
 
     my $p = gsl_permutation_alloc(6);
-    $fh = fopen("permutation", "r");
+    $fh = fopen("permutation", $read);
     gsl_permutation_fread($fh, $p);
     map { is(gsl_permutation_get($p, $_), $_) } (0..5);
     fclose($fh);
@@ -182,13 +184,15 @@ sub GSL_PERMUTATION_FWRITE_FREAD : Tests {
 
 sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
     my $self = shift;
-    my $fh = fopen("permutation", "w");
+    my $write = is_windows() ? "w + b" : "w";
+    my $read  = is_windows() ? "r + b" : "r";
+    my $fh = fopen("permutation", $write);
     gsl_permutation_init($self->{permutation});
     ok_status( gsl_permutation_fprintf($fh, $self->{permutation}, "%f"));
     fclose($fh);
 
     local $TODO = "odd error with fscanf";
-    $fh = fopen("permutation", "r");
+    $fh = fopen("permutation", $read);
     my $p = gsl_permutation_alloc(6); 
     #ok_status(gsl_permutation_fscanf($fh, $p)); 
     is_deeply( [ map {gsl_permutation_get($p, $_) }  (0..5) ],

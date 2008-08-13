@@ -64,9 +64,6 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_coupling_3j_e(4, 4, 8, 0,  0,  0,$r)'	=> sqrt(2.0/35.0),
         'gsl_sf_coupling_3j_e(4, 4, 8, 2, -2,  0,$r)'	=> 2.0/3.0*sqrt(2.0/35.0),
         'gsl_sf_coupling_3j_e(4, 4, 8, 4, -4,  0,$r)'	=> 1.0/(3.0*sqrt(70.0)),
-        'gsl_sf_coupling_3j_e(-1, 1, 2, 1, -1, 0,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_3j_e(1, -1, 2, 1, -1, 0,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_3j_e(1, 1, -2, 1, -1, 0,$r)'	=> $GSL_NAN,
         'gsl_sf_coupling_3j_e(1, 1, 2, 2, -1, 0,$r)'	=> 0,
         'gsl_sf_coupling_3j_e(1, 1, 2, 1, -2, 0,$r)'	=> 0,
         'gsl_sf_coupling_3j_e(1, 1, 2, 1, -1, 3,$r)'	=> 0,
@@ -80,12 +77,6 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_coupling_6j_e(4, 4, 4, 2, 2, 2,$r)'	=>  sqrt(7.0/3.0)/10.0,
         'gsl_sf_coupling_6j_e(6, 6, 6, 4, 4, 4,$r)'	=> -sqrt(3.0/5.0)/14.0,
         'gsl_sf_coupling_6j_e(6, 6, 6, 4, 4, 2,$r)'	=> -sqrt(3.0/5.0)/7.0,
-        'gsl_sf_coupling_6j_e(-2, 2, 4, 2, 2, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_6j_e(2, -2, 4, 2, 2, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_6j_e(2, 2, -4, 2, 2, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_6j_e(2, 2, 4, -2, 2, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_6j_e(2, 2, 4, 2, -2, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_6j_e(2, 2, 4, 2, 2, -2,$r)'	=> $GSL_NAN,
         'gsl_sf_coupling_6j_e(2, 2, 4, 2, 2, 7,$r)'	=> 0,
         'gsl_sf_coupling_6j_e(2, 2, 4, 2, 7, 2,$r)'	=> 0,
         'gsl_sf_coupling_6j_e(2, 2, 4, 7, 2, 2,$r)'	=> 0,
@@ -94,15 +85,6 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_coupling_6j_e(7, 2, 4, 2, 2, 2,$r)'	=> 0,
         'gsl_sf_coupling_9j_e(4, 2,  4, 3, 3, 2, 1, 1, 2,$r)'	=> -sqrt(1.0/6.0)/10.0,
         'gsl_sf_coupling_9j_e(8, 4, 10, 7, 3, 8, 1, 1, 2,$r)'	=>  sqrt(7.0/3.0)/60.0,
-        'gsl_sf_coupling_9j_e(-4, 2, 4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, -2, 4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, -4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, -3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, 3, -3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, -2, 1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, -1, 1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, 1, -1, 2,$r)'	=> $GSL_NAN,
-        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, 1, 1, -2,$r)'	=> $GSL_NAN,
         'gsl_sf_coupling_9j_e(10, 2, 4, 3, 3, 2, 1, 1, 2,$r)'	=> 0,
         'gsl_sf_coupling_9j_e(4, 10, 4, 3, 3, 2, 1, 1, 2,$r)'	=> 0,
         'gsl_sf_coupling_9j_e(4, 2, 10, 3, 3, 2, 1, 1, 2,$r)'	=> 0,
@@ -1165,6 +1147,33 @@ sub TEST_THE_KITCHEN_SINK : Tests {
 
     verify_results($results, 'Math::GSL::SF');
 
+}
+sub TEST_NAN : Tests 
+{
+    my $self = shift;
+    $self->builder->skip('Skipping NAN-related tests on Windows') if is_windows();
+    my $results = {
+        'gsl_sf_gamma_e(-1,$r)'                                 => 'nan',
+        'gsl_sf_coupling_3j_e(-1, 1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_3j_e(1, -1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_3j_e(1, 1, -2, 1, -1, 0,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(-2, 2, 4, 2, 2, 2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(2, -2, 4, 2, 2, 2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(2, 2, -4, 2, 2, 2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(2, 2, 4, -2, 2, 2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(2, 2, 4, 2, -2, 2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_6j_e(2, 2, 4, 2, 2, -2,$r)'	        => $GSL_NAN,
+        'gsl_sf_coupling_9j_e(-4, 2, 4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, -2, 4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, -4, 3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, -3, 3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, 3, -3, 2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, -2, 1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, -1, 1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, 1, -1, 2,$r)'	=> $GSL_NAN,
+        'gsl_sf_coupling_9j_e(4, 2, 4, 3, 3, 2, 1, 1, -2,$r)'	=> $GSL_NAN,
+    };
+    verify_results($results, 'Math::GSL::SF');
 }
 sub TEST_FISHY_RESULTS
 {

@@ -1,6 +1,9 @@
-0.05_xx
-    - most subsystems work
-
+0.08
+    - Large documentation improvements
+    - Cygwin support thanks to testing and feedback from <sisyphus@cpan.org>
+0.07 
+    - Initial CPAN release
+    
 0.042
     - Started change to Test::Class
 

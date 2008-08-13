@@ -182,7 +182,7 @@ sub subsystems
 {
     return sort qw/
         Diff         Machine      Statistics
-        Block        Eigen        Matrix        Poly 
+        Eigen        Matrix       Poly 
         BSpline      Errno        PowInt        
         CBLAS        FFT          Min           IEEEUtils
         CDF          Fit          QRNG

@@ -14,7 +14,7 @@ our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
-                     is_windows
+                     is_windows gsl_inf
                    );
 
 our %EXPORT_TAGS = ( 
@@ -268,7 +268,6 @@ sub verify_results
                 printf "difference : %.18g\n", $res;
                 printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
             }
-
             if ($x =~ /nan|inf/i) {
                     ok( $expected eq $x, "'$expected'?='$x'" );
             } else { 
@@ -299,6 +298,8 @@ sub verify
         }
     }
 }
+
+sub gsl_inf    { is_windows() ?  '1.\#INF' : 'inf' }
 
 sub _dump_result($)
 {

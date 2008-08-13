@@ -84,7 +84,6 @@ sub GSL_COMPLEX_LOG_B : Tests {
 sub GSL_COMPLEX_EXP : Tests {      
     my $z = gsl_complex_rect(2, 5);
     $z    = gsl_complex_exp($z);
-    print Dumper [ gsl_parts($z) ] ;
     ok_similar( [ gsl_parts($z)                   ], 
                 [ $M_E**2*cos(5), $M_E**2*sin(5)  ]
     );

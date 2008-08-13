@@ -119,14 +119,16 @@ sub SHIFT : Tests {
 
 sub FWRITE_FREAD : Tests {
     my $H = gsl_histogram2d_alloc(5,5);
-    my $stream = fopen("histogram2d", "w");
+    my $write = is_windows() ? "w + b" : "w";
+    my $read  = is_windows() ? "r + b" : "r";
+    my $stream = fopen("histogram2d", $write);
     gsl_histogram2d_set_ranges_uniform($H, 0, 5, 0, 5);
     ok_status(gsl_histogram2d_increment($H, 0.5, 1.5 ));
 
     ok_status(gsl_histogram2d_fwrite($stream, $H));  
     fclose($stream);
    
-    $stream = fopen("histogram2d", "r");
+    $stream = fopen("histogram2d", $read);
     my $h = gsl_histogram2d_alloc(5, 5);  
     ok_status(gsl_histogram2d_fread($stream, $h));  
     is_deeply( [ map { gsl_histogram2d_get($h, 0, $_) } (0..4) ],
@@ -263,14 +265,16 @@ sub SCALE : Tests {
 
 sub FPRINTF_FSCANF : Tests {
     my $H = gsl_histogram2d_alloc(5,5);
-    my $stream = fopen("histogram2d", "w");
+    my $write = is_windows() ? "w + b" : "w";
+    my $read  = is_windows() ? "r + b" : "r";
+    my $stream = fopen("histogram2d", $write);
     gsl_histogram2d_set_ranges_uniform($H, 0, 5, 0, 5);
     ok_status(gsl_histogram2d_increment($H, 0.5, 0.5 ));
 
     ok_status(gsl_histogram2d_fprintf($stream, $H, "%e", "%e"));  
     fclose($stream);
    
-    $stream = fopen("histogram2d", "r");
+    $stream = fopen("histogram2d", $read);
     my $h = gsl_histogram2d_alloc(5,5);  
     ok_status(gsl_histogram2d_fscanf($stream, $h));  
     is_deeply( [ map { gsl_histogram2d_get($h, 0, $_) } (0..4) ],

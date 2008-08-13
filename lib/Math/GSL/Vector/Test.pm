@@ -113,7 +113,9 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
     my $self = shift;
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
-    my $fh = fopen("vector", "w");
+    my $write = is_windows() ? "w + b" : "w";
+    my $read  = is_windows() ? "r + b" : "r";
+    my $fh = fopen("vector", $write);
     my $status = gsl_vector_fwrite($fh, $self->{vector} );
     ok( ! $status, 'gsl_vector_fwrite' );
     ok( -f "vector", 'gsl_vector_fwrite' );
@@ -121,7 +123,7 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
 
     map { gsl_vector_set($self->{vector}, $_, $_ ** 3 ) } (0..4); 
 
-    $fh = fopen("vector", "r");
+    $fh = fopen("vector", $read);
 
     ok_status(gsl_vector_fread($fh, $self->{vector} ));
     is_deeply( [ map { gsl_vector_get($self->{vector}, $_) } (0..4) ],
@@ -324,14 +326,16 @@ sub GSL_VECTOR_SWAP : Tests {
 sub GSL_VECTOR_FPRINTF_FSCANF : Tests {  
    my $vec1 = Math::GSL::Vector->new([ map { $_ ** 2 } (0..4) ]);
 
-   my $fh = fopen("vector", "w");
+   my $write = is_windows() ? "w + b" : "w";
+   my $read  = is_windows() ? "r + b" : "r";
+   my $fh = fopen("vector", $write);
    ok( defined $fh, 'fopen -  write');
    ok_status(gsl_vector_fprintf($fh, $vec1->raw, "%f"));
    ok_status(fclose($fh));
 
    my $vec2 = Math::GSL::Vector->new([ map { $_ ** 3 } (0..4) ]);
 
-   $fh = fopen("vector", "r");   
+   $fh = fopen("vector", $read);   
    ok( defined $fh, 'fopen  - readonly');
    
    ok_status(gsl_vector_fscanf($fh, $vec2->raw));

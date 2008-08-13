@@ -6,7 +6,6 @@ use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 
-sub _is_windows() { $^O =~ /MSWin32/i }
 sub make_fixture : Test(setup) {
 }
 
@@ -38,7 +37,7 @@ sub TEST_NAN_INF : Tests {
                 q{gsl_pow_2('nan')} => 'nan',
                 q{gsl_pow_2('inf')} => 'inf',
     );
-    if (_is_windows()) {
+    if (is_windows()) {
         $self->builder->skip('skipping nan/inf checking on windows');
     } else {
         verify(\%results,'Math::GSL::PowInt');

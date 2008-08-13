@@ -14,6 +14,7 @@ our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
+                     is_windows
                    );
 
 our %EXPORT_TAGS = ( 
@@ -305,5 +306,6 @@ sub _dump_result($)
     printf "result->err: %.18g\n", $r->{err};
     printf "result->val: %.18g\n", $r->{val};
 }
+sub is_windows() { $^O =~ /MSWin32/i }
 
 42;

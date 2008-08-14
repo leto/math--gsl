@@ -63,6 +63,8 @@ sub parts {
     gsl_parts($self->{_complex}->{dat});
 }
 
+sub raw  { (shift)->{_complex} }
+
 ### end wrapper interface ###
 
 ### some important macros that are in gsl_complex.h
@@ -111,7 +113,15 @@ Functions concerning complex numbers.
 
 =head1 SYNOPSIS
 
-use Math::GSL::Complex qw/:all/;
+ use Math::GSL::Complex qw/:all/;
+ my $complex = Math::GSL::Complex->new([3,2]); # creates a complex number 3+2*i
+ my $real = $complex->real; # returns the real value of the complex number
+ my $imag = $complex->imag; # returns the imaginary value of the complex number
+ $complex->gsl_set_real(5); # changes the real value of the complex number to 5
+ $complex->gsl_set_imag(4); # changes the imaginary value of the complex number to 4
+ $complex->gsl_set_complex(7,6); # changes the real value of the complex number to 7 and the imaginary value to 6
+ ($real, $imag) = $complex->parts; # returns the real and imaginary values of the complex number
+ my $abs = gsl_complex_abs2($complex->raw); # the raw method gives access to the underlying gsl_complex structure, it is needed for the functions below.
 
 =head1 DESCRIPTION
 

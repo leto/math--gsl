@@ -2,6 +2,7 @@ package Math::GSL::Vector::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::Vector qw/:all/;
+use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use Math::GSL::Errno qw/:all/;
@@ -342,5 +343,27 @@ sub GSL_VECTOR_FPRINTF_FSCANF : Tests {
 
    ok_similar( [ $vec2->as_list ], [ map { $_ ** 2 } (0..4) ]);
    ok_status( fclose($fh) ); 
+}
+
+sub GSL_VECTOR_COMPLEX_ALLOC : Tests {
+  my $vec = gsl_vector_complex_alloc(5);
+  isa_ok($vec, 'Math::GSL::Vector');
+}
+
+sub GSL_VECTOR_COMPLEX_CALLOC : Tests {
+  my $vec = gsl_vector_complex_calloc(5);
+  isa_ok($vec, 'Math::GSL::Vector');
+}
+
+sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
+  my $vec = gsl_vector_complex_calloc(5);
+  my $complex = gsl_complex_rect(2,1);
+  gsl_vector_complex_set($vec, 0, $complex);
+  my $result = gsl_complex_rect(5,5);
+  $result = gsl_vector_complex_get($vec, 0);
+  isa_ok($result, 'Math::GSL::Complex');
+  print Dumper [ $result ];
+  local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
+#  my @got = gsl_parts($result);
 }
 1;

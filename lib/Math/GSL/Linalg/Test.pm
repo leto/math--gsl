@@ -24,32 +24,34 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_LINALG_LU_DECOMP : Tests {
-    my $self = shift;
-    map { gsl_matrix_set($self->{matrix}, 0, $_, $_+1) } (0..3); 
-    map { gsl_matrix_set($self->{matrix}, 1, $_, $_+5) } (0..3); 
-    map { gsl_matrix_set($self->{matrix}, 2, $_, $_+9) } (0..3); 
-    map { gsl_matrix_set($self->{matrix}, 3, $_, $_+13) } (0..3); 
+    my $base = Math::GSL::Matrix->new(4,4);
+    $base->set_row(0, [0,1,2,3])
+         ->set_row(1, [5,6,7,8])
+         ->set_row(2, [9,10,11,12])
+         ->set_row(3, [13,14,15,16]);
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
-    my $first = gsl_matrix_alloc(4,4);
-    gsl_matrix_memcpy($first, $self->{matrix});
+    my $first = Math::GSL::Matrix->new(4,4);
+    gsl_matrix_memcpy($first->raw, $base->raw);
 
-    my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
+    my ($result, $signum) = gsl_linalg_LU_decomp($base->raw, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
  
-    local $TODO = "no test for this function in gsl source";
-    my $U = gsl_matrix_calloc(4,4);
-    my $R = gsl_matrix_calloc(4,4);
+    my $U = Math::GSL::Matrix->new(4,4);
+    my $R = Math::GSL::Matrix->new(4,4);
+    my $L = Math::GSL::Matrix->new(4,4);
+    gsl_matrix_set_identity($L->raw);
     my $line;
     for ($line=3; $line>-1; $line--) {
-     map { gsl_matrix_set($U, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } ($line..3) };
-    my $L = gsl_matrix_calloc(4,4);
-    gsl_matrix_set_identity($L);
+     map { gsl_matrix_set($U->raw, $line, $_, gsl_matrix_get($base->raw, $line, $_)) } ($line..3) };
     for ($line=3; $line>1; $line--) {
-     map { gsl_matrix_set($L, $_, $line, gsl_matrix_get($self->{matrix}, $_, $line)) } (0..$line-2) };
-    gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $L, $U, 1, $R);
-    for ($line=0; $line<4; $line++) {
-     map { ok(is_similar_relative(gsl_matrix_get($R, $line, $_), gsl_matrix_get($first, $line, $_), 2 * 64 * $GSL_DBL_EPSILON)) } (0..3); }
+     map { gsl_matrix_set($L->raw, $line, $_, gsl_matrix_get($base->raw, $line, $_)) } (0..$line-1) };
+    gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $L->raw, $U->raw, 1, $R->raw);
+    my @permutations = map { gsl_permutation_get($permutation, $_) } (0..3);
+    map {
+    my @got = $first->row($permutations[$_])->as_list;
+    my @results = $R->row($_)->as_list;
+    ok_similar([@got], [@results], "resulting row $_"); } (0..3);
 }
 
 sub GSL_LINALG_LU_SOLVE : Tests {

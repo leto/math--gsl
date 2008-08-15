@@ -3,6 +3,10 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
+%apply double *OUTPUT { double * min, double * max };
+
+%apply int *OUTPUT { size_t * min_index, size_t * max_index };
+
 %{
     #include "gsl/gsl_statistics_double.h"
     #include "gsl/gsl_statistics_int.h"
@@ -152,91 +156,91 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_stats_variance($data, $stride, $n)>
 
-=item * C<gsl_stats_sd >
+=item * C<gsl_stats_sd($data, $stride, $n)>
 
-=item * C<gsl_stats_sd_m >
+=item * C<gsl_stats_sd_m($data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_variance_with_fixed_mean >
+=item * C<gsl_stats_variance_with_fixed_mean($data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_sd_with_fixed_mean >
+=item * C<gsl_stats_sd_with_fixed_mean($data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_tss >
+=item * C<gsl_stats_tss($data, $stride, $n)>
 
-=item * C<gsl_stats_tss_m >
+=item * C<gsl_stats_tss_m($data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_absdev >
+=item * C<gsl_stats_absdev($data, $stride, $n)>
 
-=item * C<gsl_stats_skew >
+=item * C<gsl_stats_skew($data, $stride, $n)>
 
-=item * C<gsl_stats_kurtosis >
+=item * C<gsl_stats_skew_m_sd($data, $stride, $n, $mean, $sd)>
 
-=item * C<gsl_stats_lag1_autocorrelation >
+=item * C<gsl_stats_kurtosis($data, $stride, $n)>
 
-=item * C<gsl_stats_covariance >
+=item * C<gsl_stats_kurtosis_m_sd($data, $stride, $n, $mean, $sd)>
 
-=item * C<gsl_stats_correlation >
+=item * C<gsl_stats_lag1_autocorrelation($data, $stride, $n)>
+
+=item * C<gsl_stats_lag1_autocorrelation_m($data, $stride, $n, $mean)>
+
+=item * C<gsl_stats_covariance($data1, $stride1, $data2, $stride2, $n)>
+
+=item * C<gsl_stats_covariance_m($data1, $stride1, $data2, $stride2, $n, $mean1, $mean2)>
+
+=item * C<gsl_stats_correlation($data1, $stride1, $data2, $stride2, $n)>
 
 =item * C<gsl_stats_variance_m($data, $stride, $n, $mean)>
 
 =item * C<gsl_stats_absdev_m >
 
-=item * C<gsl_stats_skew_m_sd >
+=item * C<gsl_stats_wmean($w, $wstride, $data, $stride, $n)> - This function returns the weighted mean of the dataset $data array reference with stride $stride and length $n, using the set of weights $w, which is an array reference, with stride $wstride and length $n. The weighted mean is defined as, \Hat\mu = (\sum w_i x_i) / (\sum w_i)
 
-=item * C<gsl_stats_kurtosis_m_sd >
+=item * C<gsl_stats_wvariance($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_lag1_autocorrelation_m >
+=item * C<gsl_stats_wsd($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_covariance_m >
+=item * C<gsl_stats_wsd_m($w, $wstride, $data, $stride, $n, $wmean)>
 
-=item * C<gsl_stats_wmean >
+=item * C<gsl_stats_wvariance_with_fixed_mean($w, $wstride, $data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_wvariance >
+=item * C<gsl_stats_wsd_with_fixed_mean($w, $wstride, $data, $stride, $n, $mean)>
 
-=item * C<gsl_stats_wsd >
+=item * C<gsl_stats_wtss($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_wvariance_with_fixed_mean >
+=item * C<gsl_stats_wtss_m($w, $wstride, $data, $stride, $n, $wmean)>
 
-=item * C<gsl_stats_wsd_with_fixed_mean >
+=item * C<gsl_stats_wabsdev($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_wtss >
+=item * C<gsl_stats_wabsdev_m($w, $wstride, $data, $stride, $n, $wmean)>
 
-=item * C<gsl_stats_wtss_m >
+=item * C<gsl_stats_wskew($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_wabsdev >
+=item * C<gsl_stats_wskew_m_sd($w, $wstride, $data, $stride, $n, $wmean, $wsd)>
 
-=item * C<gsl_stats_wskew >
+=item * C<gsl_stats_wkurtosis($w, $wstride, $data, $stride, $n)>
 
-=item * C<gsl_stats_wkurtosis >
+=item * C<gsl_stats_wvariance_m($w, $wstride, $data, $stride, $n, $wmean, $wsd)>
 
-=item * C<gsl_stats_wvariance_m >
-
-=item * C<gsl_stats_wsd_m >
-
-=item * C<gsl_stats_wabsdev_m >
-
-=item * C<gsl_stats_wskew_m_sd >
-
-=item * C<gsl_stats_wkurtosis_m_sd >
+=item * C<gsl_stats_wkurtosis_m_sd($w, $wstride, $data, $stride, $n, $wmean, $wsd)>
 
 =item * C<gsl_stats_pvariance >
 
 =item * C<gsl_stats_ttest >
 
-=item * C<gsl_stats_max >
+=item * C<gsl_stats_max($data, $stride, $n)> - This function returns the maximum value in the $data array reference, a dataset of length $n with stride $stride. The maximum value is defined as the value of the element x_i which satisfies x_i >= x_j for all j. If you want instead to find the element with the largest absolute magnitude you will need to apply fabs or abs to your data before calling this function. 
 
-=item * C<gsl_stats_min >
+=item * C<gsl_stats_min($data, $stride, $n)>
 
-=item * C<gsl_stats_minmax >
+=item * C<gsl_stats_minmax($data, $stride, $n)> - This function finds both the minimum and maximum values in $data, which is an array reference, in a single pass and returns them in this order.
 
-=item * C<gsl_stats_max_index >
+=item * C<gsl_stats_max_index($data, $stride, $n)>
 
-=item * C<gsl_stats_min_index >
+=item * C<gsl_stats_min_index($data, $stride, $n)>
 
-=item * C<gsl_stats_minmax_index >
+=item * C<gsl_stats_minmax_index($data, $stride, $n)>
 
-=item * C<gsl_stats_median_from_sorted_data >
+=item * C<gsl_stats_median_from_sorted_data($data, $stride, $n)>
 
-=item * C<gsl_stats_quantile_from_sorted_data >
+=item * C<gsl_stats_quantile_from_sorted_data($data, $stride, $n, $f)>
 
 =back
 

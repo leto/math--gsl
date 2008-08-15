@@ -11,6 +11,8 @@ use strict;
 
 BEGIN{ gsl_set_error_handler_off(); }
 
+END { warn "This is the end" }
+
 sub make_fixture : Test(setup) {
     my $self = shift;
     my $size = int rand(100);
@@ -56,5 +58,6 @@ sub GSL_NTUPLE_READ: Tests {
     # why does this return an EOF?
     # perhaps gsl_ntuple_write is not doing it's job, so the file is empty...
     ok_status(gsl_ntuple_read($ntuple),$GSL_EOF);
+    ok_status(gsl_ntuple_close($ntuple));
 }
 1;

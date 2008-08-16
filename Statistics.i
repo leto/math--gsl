@@ -222,7 +222,7 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_stats_wkurtosis_m_sd($w, $wstride, $data, $stride, $n, $wmean, $wsd)>
 
-=item * C<gsl_stats_pvariance >
+=item * C<gsl_stats_pvariance($data, $stride, $n, $data2, $stride2, $n2)>
 
 =item * C<gsl_stats_ttest >
 

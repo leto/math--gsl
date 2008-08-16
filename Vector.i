@@ -57,7 +57,7 @@ use overload
     fallback => 1,
 ;
 
-@EXPORT_OK  = qw/
+@EXPORT_OK  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
                  gsl_vector_free gsl_vector_view_array gsl_vector_const_view_array gsl_vector_view_array_with_stride
                  gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride

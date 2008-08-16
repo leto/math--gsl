@@ -126,7 +126,7 @@ sub FWRITE_FREAD : Tests {
     ok_status(gsl_histogram2d_fwrite($stream, $H));  
     gsl_fclose($stream);
    
-    $stream = fopen("histogram2d", 'r');
+    $stream = gsl_fopen("histogram2d", 'r');
     my $h = gsl_histogram2d_alloc(5, 5);  
     ok_status(gsl_histogram2d_fread($stream, $h));  
     is_deeply( [ map { gsl_histogram2d_get($h, 0, $_) } (0..4) ],

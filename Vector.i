@@ -57,7 +57,7 @@ use overload
     fallback => 1,
 ;
 
-@EXPORT_OK  = qw/fopen fclose
+@EXPORT_all  = qw/fopen fclose
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
                  gsl_vector_free gsl_vector_view_array gsl_vector_const_view_array gsl_vector_view_array_with_stride
                  gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
@@ -91,8 +91,9 @@ use overload
                  gsl_vector_complex_fprintf gsl_vector_complex_memcpy gsl_vector_complex_reverse gsl_vector_complex_swap
                  gsl_vector_complex_swap_elements gsl_vector_complex_isnull gsl_vector_complex_ispos gsl_vector_complex_isneg                                      
 /;
-@EXPORT_fopen_flocse =qw/ fopen fclose/;
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ], fopen_fclose => [@EXPORT_fopen_flose] );
+@EXPORT_file =qw/ fopen fclose/;
+@EXPORT_OK = (@EXPORT_all, @EXPORT_file);
+%EXPORT_TAGS = ( file => \@EXPORT_file, all => \@EXPORT_all );
 
 =head1 NAME
 

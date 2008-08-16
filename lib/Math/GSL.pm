@@ -6,7 +6,7 @@ use warnings;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;
-use Math::GSL::Vector qw/fopen fclose/;
+use Math::GSL::Vector qw/:file/;
 use Carp qw/croak/;
 use Config;
 use Test::More;
@@ -306,13 +306,13 @@ sub gsl_fopen
 {
     my ($file, $mode) = @_;
     $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
-    return fopen($file, $mode);
+    return Math::GSL::Vector::fopen($file, $mode);
 }
 
 sub gsl_fclose
 {
     my $file = shift;
-    return fclose($file);
+    return Math::GSL::Vector::fclose($file);
 }
 
 

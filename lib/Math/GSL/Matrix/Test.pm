@@ -389,17 +389,15 @@ sub GSL_MATRIX_FREAD_FWRITE : Tests {
         map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); 
    }
 
-   my $write = is_windows() ? "w + b" : "w";
-   my $read  = is_windows() ? "r + b" : "r";
-   my $fh = fopen("matrix", $write);
+   my $fh = gsl_fopen("matrix", 'w');
    is( gsl_matrix_fwrite($fh, $self->{matrix}), 0);
-   fclose($fh);
+   gsl_fclose($fh);
 
    for my $line (0..4) {
         map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); 
    }
 
-   $fh = fopen("matrix", $read);   
+   $fh = gsl_fopen("matrix", 'r');   
    
    is(gsl_matrix_fread($fh, $self->{matrix}), 0);
    for my $line (0..4) {
@@ -408,7 +406,7 @@ sub GSL_MATRIX_FREAD_FWRITE : Tests {
                     [ map { $_**2 } (0..4) ],
                   );
    }
-   fclose($fh); 
+   gsl_fclose($fh); 
 }
 
 sub GSL_MATRIX_FPRINTF_FSCANF : Tests {

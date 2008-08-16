@@ -1,6 +1,5 @@
 %module "Math::GSL::Combination"
 
-FILE * fopen(char *, char *);
 int fclose(FILE *);
 
 %{
@@ -13,7 +12,7 @@ int fclose(FILE *);
 
 
 %perlcode %{
-@EXPORT_OK = qw/fopen fclose
+@EXPORT_OK = qw/fclose
                gsl_combination_alloc 
                gsl_combination_calloc 
                gsl_combination_init_first 
@@ -64,11 +63,11 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_combination_get($c, $i)> - This function returns the value of the i-th element of the combination $c. If $i lies outside the allowed range of 0 to k-1 then the error handler is invoked and 0 is returned.
 
-=item * C<gsl_combination_fwrite($stream, $c)> - This function writes the elements of the combination $c to the stream $stream, opened with the fopen function, in binary format. The function returns $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
+=item * C<gsl_combination_fwrite($stream, $c)> - This function writes the elements of the combination $c to the stream $stream, opened with the gsl_fopen function from the Math::GSL module, in binary format. The function returns $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
 
-=item * C<gsl_combination_fread($stream, $c)> - This function reads elements from the open stream $stream, opened with the fopen function into the combination $c in binary format. The combination $c must be preallocated with correct values of n and k since the function uses the size of $c to determine how many bytes to read. The function returns $GSL_EFAILED if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
+=item * C<gsl_combination_fread($stream, $c)> - This function reads elements from the open stream $stream, opened with the gsl_fopen function from the Math::GSL module, into the combination $c in binary format. The combination $c must be preallocated with correct values of n and k since the function uses the size of $c to determine how many bytes to read. The function returns $GSL_EFAILED if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
 
-=item * C<gsl_combination_fprintf($stream, $c, $format)> - This function writes the elements of the combination $c line-by-line to the stream $stream, opened with the fopen function, using the format specifier $format, which should be suitable for a type of size_t. In ISO C99 the type modifier z represents size_t, so "%zu\n" is a suitable format. The function returns $GSL_EFAILED if there was a problem writing to the file.
+=item * C<gsl_combination_fprintf($stream, $c, $format)> - This function writes the elements of the combination $c line-by-line to the stream $stream, opened with the gsl_fopen function from the Math::GSL module, using the format specifier $format, which should be suitable for a type of size_t. In ISO C99 the type modifier z represents size_t, so "%zu\n" is a suitable format. The function returns $GSL_EFAILED if there was a problem writing to the file.
 
 =item * C<gsl_combination_fscanf($stream, $c)> -This function reads formatted data from the stream $stream into the combination $c. The combination $c must be preallocated with correct values of n and k since the function uses the size of $c to determine how many numbers to read. The function returns $GSL_EFAILED if there was a problem reading from the file.
 

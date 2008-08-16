@@ -4,7 +4,6 @@
 
 %apply double *OUTPUT { double * lower, double * upper, size_t * i};
 
-FILE * fopen(char *, char *);
 int fclose(FILE *);
 
 %{
@@ -15,7 +14,7 @@ int fclose(FILE *);
 
 
 %perlcode %{
-@EXPORT_OK = qw/fopen fclose
+@EXPORT_OK = qw/fclose
                gsl_histogram_alloc 
                gsl_histogram_calloc 
                gsl_histogram_calloc_uniform 
@@ -168,11 +167,11 @@ where d is the bin spacing, d = (xmax-xmin)/n.
 
 =item C<gsl_histogram_sum($h)> - This function returns the sum of all bin values. Negative bin values are included in the sum.
 
-=item C<gsl_histogram_fwrite($stream, $h)> - This function writes the ranges and bins of the histogram $h to the stream $stream, which has been opened by the fopen function, in binary format. The return value is 0 for success and $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
+=item C<gsl_histogram_fwrite($stream, $h)> - This function writes the ranges and bins of the histogram $h to the stream $stream, which has been opened by the gsl_fopen function from the Math::GSL module, in binary format. The return value is 0 for success and $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
 
-=item C<gsl_histogram_fread($stream, $h)> - This function reads into the histogram $h from the open stream stream in binary format. The histogram $h must be preallocated with the correct size since the function uses the number of bins in $h to determine how many bytes to read. The return value is 0 for success and $GSL_EFAILED if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
+=item C<gsl_histogram_fread($stream, $h)> - This function reads into the histogram $h from the open stream $stream, which has been opened by the gsl_fopen function from the Math::GSL module,  in binary format. The histogram $h must be preallocated with the correct size since the function uses the number of bins in $h to determine how many bytes to read. The return value is 0 for success and $GSL_EFAILED if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
 
-=item C<gsl_histogram_fprintf($stream, $h, $range_format, $bin_format)> - This function writes the ranges and bins of the histogram $h line-by-line to the stream $stream (from the fopen function) using the format specifiers $range_format and $bin_format. These should be one of the %g, %e or %f formats for floating point numbers. The function returns 0 for success and $GSL_EFAILED if there was a problem writing to the file. The histogram output is formatted in three columns, and the columns are separated by spaces, like this,
+=item C<gsl_histogram_fprintf($stream, $h, $range_format, $bin_format)> - This function writes the ranges and bins of the histogram $h line-by-line to the stream $stream (from the gsl_fopen function from the Math::GSL module) using the format specifiers $range_format and $bin_format. These should be one of the %g, %e or %f formats for floating point numbers. The function returns 0 for success and $GSL_EFAILED if there was a problem writing to the file. The histogram output is formatted in three columns, and the columns are separated by spaces, like this,
 
 =over
 
@@ -190,7 +189,7 @@ where d is the bin spacing, d = (xmax-xmin)/n.
 
 The values of the ranges are formatted using range_format and the value of the bins are formatted using bin_format. Each line contains the lower and upper limit of the range of the bins and the value of the bin itself. Since the upper limit of one bin is the lower limit of the next there is duplication of these values between lines but this allows the histogram to be manipulated with line-oriented tools. 
 
-=item C<gsl_histogram_fscanf($stream, $h)> - This function reads formatted data from the stream $stream into the histogram $h. The data is assumed to be in the three-column format used by gsl_histogram_fprintf. The histogram $h must be preallocated with the correct length since the function uses the size of $h to determine how many numbers to read. The function returns 0 for success and $GSL_EFAILED if there was a problem reading from the file.
+=item C<gsl_histogram_fscanf($stream, $h)> - This function reads formatted data from the stream $stream, which has been opened by the gsl_fopen function from the Math::GSL module, into the histogram $h. The data is assumed to be in the three-column format used by gsl_histogram_fprintf. The histogram $h must be preallocated with the correct length since the function uses the size of $h to determine how many numbers to read. The function returns 0 for success and $GSL_EFAILED if there was a problem reading from the file.
 
 =item C<gsl_histogram_pdf_alloc($n)> - This function allocates memory for a probability distribution with $n bins and returns a pointer to a newly initialized gsl_histogram_pdf struct. If insufficient memory is available a null pointer is returned and the error handler is invoked with an error code of $GSL_ENOMEM.
 

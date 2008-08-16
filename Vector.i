@@ -57,7 +57,7 @@ use overload
     fallback => 1,
 ;
 
-@EXPORT_OK  = qw/fopen fclose
+@EXPORT_OK  = qw/
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
                  gsl_vector_free gsl_vector_view_array gsl_vector_const_view_array gsl_vector_view_array_with_stride
                  gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
@@ -91,7 +91,8 @@ use overload
                  gsl_vector_complex_fprintf gsl_vector_complex_memcpy gsl_vector_complex_reverse gsl_vector_complex_swap
                  gsl_vector_complex_swap_elements gsl_vector_complex_isnull gsl_vector_complex_ispos gsl_vector_complex_isneg                                      
 /;
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+@EXPORT_fopen_flocse =qw/ fopen fclose/;
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ], fopen_fclose => [@EXPORT_fopen_flose] );
 
 =head1 NAME
 
@@ -326,13 +327,13 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_vector_set_basis($v, $i)> - set all the elements of $v to 0 except for the $i-th element which is set to 1 and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_fread($file, $v)> - This function reads into the vector $v from the open stream $file opened with fopen in binary format. The vector $v must be preallocated with the correct length since the function uses the size of $v to determine how many bytes to read. The return value is 0 for success and 1 if there was a problem reading from the file.
+=item C<gsl_vector_fread($file, $v)> - This function reads into the vector $v from the open stream $file opened with gsl_fopen function from the Math::GSL module in binary format. The vector $v must be preallocated with the correct length since the function uses the size of $v to determine how many bytes to read. The return value is 0 for success and 1 if there was a problem reading from the file.
 
-=item C<gsl_vector_fwrite($file, $v)> - This function writes the elements of the vector $v to the stream $file opened with fopen in binary format. The return value is 0 for success and 1 if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures. 
+=item C<gsl_vector_fwrite($file, $v)> - This function writes the elements of the vector $v to the stream $file opened with gsl_fopen function from the Math::GSL module in binary format. The return value is 0 for success and 1 if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures. 
 
-=item C<gsl_vector_fscanf($file, $v)> This function reads formatted data from the stream $file opened with fopen into the vector $v. The vector $v must be preallocated with the correct length since the function uses the size of $v to determine how many numbers to read. The function returns 0 for success and 1 if there was a problem reading from the file. 
+=item C<gsl_vector_fscanf($file, $v)> This function reads formatted data from the stream $file opened with gsl_fopen function from the Math::GSL module into the vector $v. The vector $v must be preallocated with the correct length since the function uses the size of $v to determine how many numbers to read. The function returns 0 for success and 1 if there was a problem reading from the file. 
 
-=item C<gsl_vector_fprintf($file, $v, $format)> -This function writes the elements of the vector $v line-by-line to the stream $file opened with fopen using the format specifier format, which should be one of the "%g", "%e" or "%f" formats for floating point numbers and "%d" for integers. The function returns 0 for success and 1 if there was a problem writing to the file.  
+=item C<gsl_vector_fprintf($file, $v, $format)> -This function writes the elements of the vector $v line-by-line to the stream $file opened with gsl_fopen function from the Math::GSL module using the format specifier $format, which should be one of the "%g", "%e" or "%f" formats for floating point numbers and "%d" for integers. The function returns 0 for success and 1 if there was a problem writing to the file.  
 
 =item C<gsl_vector_memcpy($dest, $src)> - This function copies the elements of the vector $src into the vector $dest and return 0 if the opertaion succeded, 1 otherwise. The two vectors must have the same length.  
 

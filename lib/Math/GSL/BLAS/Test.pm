@@ -156,15 +156,14 @@ sub GSL_BLAS_DROT : Tests {
 }
 
 sub GSL_BLAS_DGER : Tests { 
-local $TODO = "how do you compute a rank-1 update?";
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $y = Math::GSL::Vector->new([0,1,2]);
  my $A = Math::GSL::Matrix->new(3,3); 
  gsl_matrix_set_zero($A->raw);
  is(gsl_blas_dger(2, $x->raw, $y->raw, $A->raw),0);
-# ok_similar([$A->row(0)->as_list], [0,2,4]);
-# ok_similar([$A->row(1)->as_list], [0,4,8]);
-# ok_similar([$A->row(2)->as_list], [0,6,12]);
+ ok_similar([$A->row(0)->as_list], [0,2,4]);
+ ok_similar([$A->row(1)->as_list], [0,4,8]);
+ ok_similar([$A->row(2)->as_list], [0,6,12]);
 }
 
 sub GSL_BLAS_ZGERU : Tests {
@@ -226,7 +225,6 @@ sub GSL_BLAS_DTRMV : Tests {
 }
 
 sub GSL_BLAS_DTRSV : Tests {
- local $TODO = "I don't understand what the result is supposed to be...";
  my $x = Math::GSL::Vector->new([40,40,40,40]);
  my $A = Math::GSL::Matrix->new(4,4);
  map { gsl_matrix_set($A->raw, $_,0,$_+1); } (0..3);
@@ -236,8 +234,9 @@ sub GSL_BLAS_DTRSV : Tests {
  map { gsl_matrix_set($A->raw, $_,2,$_-1); } (2..3);
  map { gsl_matrix_set($A->raw, $_,3,$_); } (1..3);
  gsl_matrix_set($A->raw, 0,3,4);
- is(gsl_blas_dtrsv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),0);
- my @got = $A->row(0)->as_list;
+ ok_status(gsl_blas_dtrsv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),$GSL_SUCCESS);
+ my @got = $x->as_list;
+ ok_similar([@got], [40,-40/3,-80/3,-160/9]);
 }
 
 sub GSL_BLAS_DROTG : Tests {
@@ -265,18 +264,17 @@ sub GSL_BLAS_DSYMV : Tests {
 }
 
 sub GSL_BLAS_DSYR : Tests {
- local $TODO = "How do you compute a rank 1 update?";
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $A = Math::GSL::Matrix->new(3,3);
  gsl_matrix_set_zero($A->raw);
  
  is(gsl_blas_dsyr($CblasLower, 2, $x->raw, $A->raw),0);
  my @got = $A->row(0)->as_list;
-# ok_similar([ @got ], [2,4,6]);
+ ok_similar([ @got ], [2,0,0]);
  @got = $A->row(1)->as_list;
-# ok_similar([ @got ], [0,8,12]);
+ ok_similar([ @got ], [4,8,0]);
  @got = $A->row(2)->as_list;
-# ok_similar([ @got ], [0,0,18]);
+ ok_similar([ @got ], [6,12,18]);
 }
 
 sub GSL_BLAS_ZHER : Tests {
@@ -302,7 +300,6 @@ sub GSL_BLAS_ZHER : Tests {
 }
 
 sub GSL_BLAS_DSYR2 : Tests {
- local $TODO = "How do you compute a rank 2 update?";
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $y = Math::GSL::Vector->new([3,2,1]);
  my $A = Math::GSL::Matrix->new(3,3);
@@ -316,11 +313,11 @@ sub GSL_BLAS_DSYR2 : Tests {
  gsl_matrix_set($A->raw, 2, 2, 3);
  is(gsl_blas_dsyr2($CblasLower, 2, $x->raw, $y->raw, $A->raw),0);
  my @got = $A->row(0)->as_list;
-# ok_similar([@got], [13, 20, 29]);
+ ok_similar([@got], [13, 4, 9]);
  @got = $A->row(1)->as_list;
-# ok_similar([@got], [4, 20, 25]);
+ ok_similar([@got], [20, 20, 9]);
  @got = $A->row(2)->as_list;
-# ok_similar([@got], [9, 9, 15]);
+ ok_similar([@got], [29, 25, 15]);
 }
 
 sub GSL_BLAS_DGEMM : Tests {
@@ -599,11 +596,11 @@ sub GSL_BLAS_ZHER2K : Tests {
  $alpha = gsl_complex_rect(1,0);
 
  is(gsl_blas_zher2k($CblasUpper, $CblasNoTrans, $alpha, $A, $B, 1, $C),0);
- local $TODO = "Don't know what's wrong with my results...";
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [50, 2]);
+ local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
+# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [50, 0]);
 # ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
  ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [0, 0]);
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 4]);
+# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 0]);
 }
 
 sub GSL_BLAS_DSYR2K : Tests {
@@ -654,7 +651,7 @@ sub GSL_BLAS_ZSYR2K : Tests {
  my $beta = gsl_complex_rect(1,0);
 
  is(gsl_blas_zsyr2k($CblasUpper, $CblasNoTrans, $alpha, $A, $B, $beta, $C),0);
- local $TODO = "Don't know what's wrong with my results...";
+ local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
 # ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [46, 10]);
 # ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
  ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [0, 0]);

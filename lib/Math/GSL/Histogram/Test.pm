@@ -113,21 +113,19 @@ sub SHIFT : Tests {
 
 sub FWRITE_FREAD : Tests {
     my $self = shift;
-    my $write = is_windows() ? "w + b" : "w";
-    my $read  = is_windows() ? "r + b" : "r";
-    my $stream = fopen("histogram", $write);
+    my $stream = gsl_fopen("histogram", 'w');
     ok_status(gsl_histogram_increment($self->{H}, 50.5 ));
 
     ok_status(gsl_histogram_fwrite($stream, $self->{H}));  
-    ok_status(fclose($stream));
+    ok_status(gsl_fclose($stream));
    
-    $stream = fopen("histogram", $read);
+    $stream = gsl_fopen("histogram", 'r');
     my $h = gsl_histogram_alloc(100);  
     ok_status(gsl_histogram_fread($stream, $h));  
     is_deeply( [ map { gsl_histogram_get($h, $_) } (0..99) ],
                [ (0) x 50, 1, (0) x 49 ]
     );
-    ok_status(fclose($stream));
+    ok_status(gsl_fclose($stream));
 }
   
 sub GET_RANGE : Tests {
@@ -239,21 +237,19 @@ sub SCALE : Tests {
 
 sub FPRINTF_FSCANF : Tests {
     my $self = shift;
-    my $write = is_windows() ? "w + b" : "w";
-    my $read  = is_windows() ? "r + b" : "r";
-    my $stream = fopen("histogram", $write);
+    my $stream = gsl_fopen("histogram", 'w');
     ok_status(gsl_histogram_increment($self->{H}, 50.5 ));
 
     ok_status(gsl_histogram_fprintf($stream, $self->{H}, "%e", "%e"));  
-    ok_status(fclose($stream));
+    ok_status(gsl_fclose($stream));
    
-    $stream = fopen("histogram", $read);
+    $stream = gsl_fopen("histogram", 'r');
     my $h = gsl_histogram_alloc(100);  
     ok_status(gsl_histogram_fscanf($stream, $h));  
     is_deeply( [ map { gsl_histogram_get($h, $_) } (0..99) ],
                [ (0) x 50, 1, (0) x 49 ]
     );
-    ok_status(fclose($stream));
+    ok_status(gsl_fclose($stream));
 }
 
 sub PDF_ALLOC : Tests {

@@ -137,17 +137,15 @@ sub GSL_RNG_DEFAULT : Tests {
 
 sub GSL_RNG_FWRITE_FREAD : Tests {
     my $self = shift;
-    my $write = is_windows() ? "w + b" : "w";
-    my $read  = is_windows() ? "r + b" : "r";
     my $rng = gsl_rng_alloc($gsl_rng_default);
 
-    my $fh = fopen("rng" , $write);
+    my $fh = gsl_fopen("rng" , 'w');
     ok_status(gsl_rng_fwrite($fh, $self->{rng}));
     ok_status(fclose($fh));
 
-    $fh = fopen("rng", $read);
+    $fh = gsl_fopen("rng", 'r');
     is(gsl_rng_fread($fh, $rng),0);
     is(gsl_rng_get($rng), gsl_rng_get($self->{rng}));
-    ok_status(fclose($fh));
+    ok_status(gsl_fclose($fh));
 }
 1;

@@ -6,6 +6,7 @@ use warnings;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use Math::GSL::Vector qw/fopen fclose/;
 use Carp qw/croak/;
 use Config;
 use Test::More;
@@ -14,7 +15,7 @@ our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
-                     is_windows gsl_inf
+                     is_windows gsl_inf gsl_fopen gsl_fclose
                    );
 
 our %EXPORT_TAGS = ( 
@@ -300,6 +301,20 @@ sub verify
 }
 
 sub gsl_inf    { is_windows() ?  '1.\#INF' : 'inf' }
+
+sub gsl_fopen
+{
+    my ($file, $mode) = @_;
+    $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
+    return fopen($file, $mode);
+}
+
+sub gsl_fclose
+{
+    my $file = shift;
+    return fclose($file);
+}
+
 
 sub _dump_result($)
 {

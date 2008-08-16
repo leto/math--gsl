@@ -25,3 +25,13 @@ use strict;
         ok_status(0,$GSL_SUCCESS);
         ok_status(0);
 }
+{
+    my $fh = gsl_fopen('mrfuji','w');
+    ok(defined $fh, 'gsl_fopen can create files');
+    ok_status(gsl_fclose($fh));
+}
+{
+    my $fh = gsl_fopen('mrfuji','r');
+    ok(defined $fh, 'gsl_fopen can read files');
+    ok_status(gsl_fclose($fh));
+}

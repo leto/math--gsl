@@ -2847,7 +2847,7 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_complex_psi_e 
+=item C<gsl_sf_complex_psi_e>
 
 -
 

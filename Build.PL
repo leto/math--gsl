@@ -345,7 +345,7 @@ my $builder = $class->new(
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	    => q{},
     extra_linker_flags  => '-shared -I./lib -I../lib ' . $ldflags,
-    extra_compiler_flags=> q{-shared -Wall -fpic -Dbool=char } . $ccflags,
+    extra_compiler_flags=> q{-shared -fpic } . $ccflags,
     swig_flags          => $swig_flags, 
     license             => 'gpl',
     requires => {

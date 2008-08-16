@@ -1,7 +1,7 @@
 %module "Math::GSL::SF"
 %include "typemaps.i"
 
-%apply double *OUTPUT { double * sn, double * cn, double * dn };
+%apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
 %{
     #include "gsl/gsl_mode.h"
@@ -1554,9 +1554,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_ellint_Ecomp_e>
+=item C<gsl_sf_ellint_Ecomp_e($k, $mode, $result)>
 
-=item C<gsl_sf_ellint_Ecomp>
+=item C<gsl_sf_ellint_Ecomp($k, $mode)>
 
 -
 
@@ -1564,9 +1564,9 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_ellint_Pcomp_e >
+=item C<gsl_sf_ellint_Pcomp_e($k, $n, $mode, $result)>
 
-=item C<gsl_sf_ellint_Pcomp>
+=item C<gsl_sf_ellint_Pcomp($k, $n, $mode)>
 
 -
 
@@ -1584,81 +1584,81 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_ellint_F_e>
+=item C<gsl_sf_ellint_F_e($phi, $k, $mode, $result)>
 
-=item C<gsl_sf_ellint_F>
+=item C<gsl_sf_ellint_F($phi, $k, $mode)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_ellint_E_e>
-
-=item C<gsl_sf_ellint_E>
-
--
+-These routines compute the incomplete elliptic integral F($phi,$k) to the accuracy specified by the mode variable mode. Note that Abramowitz & Stegun define this function in terms of the parameter m = k^2.
 
 =back
 
 =over
 
-=item C<gsl_sf_ellint_P_e>
+=item C<gsl_sf_ellint_E_e($phi, $k, $mode, $result)>
 
-=item C<gsl_sf_ellint_P>
+=item C<gsl_sf_ellint_E($phi, $k, $mode)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_ellint_D_e>
-
-=item C<gsl_sf_ellint_D>
-
--
+-These routines compute the incomplete elliptic integral E($phi,$k) to the accuracy specified by the mode variable mode. Note that Abramowitz & Stegun define this function in terms of the parameter m = k^2.
 
 =back
 
 =over
 
-=item C<gsl_sf_ellint_RC_e >
+=item C<gsl_sf_ellint_P_e($phi, $k, $n, $mode, $result)>
 
-=item C<gsl_sf_ellint_RC>
+=item C<gsl_sf_ellint_P($phi, $k, $n, $mode)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_ellint_RD_e>
-
-=item C<gsl_sf_ellint_RD >
-
--
+-These routines compute the incomplete elliptic integral \Pi(\phi,k,n) to the accuracy specified by the mode variable mode. Note that Abramowitz & Stegun define this function in terms of the parameters m = k^2 and \sin^2(\alpha) = k^2, with the change of sign n \to -n.
 
 =back
 
 =over
 
-=item C<gsl_sf_ellint_RF_e>
+=item C<gsl_sf_ellint_D_e($phi, $k, $n, $mode, $result)>
 
-=item C<gsl_sf_ellint_RF>
+=item C<gsl_sf_ellint_D($phi, $k, $n, $mode)>
 
--
+-These functions compute the incomplete elliptic integral D(\phi,k) which is defined through the Carlson form RD(x,y,z) by the following relation, D(\phi,k,n) = (1/3)(\sin(\phi))^3 RD (1-\sin^2(\phi), 1-k^2 \sin^2(\phi), 1). The argument $n is not used and will be removed in a future release.
 
 =back
 
 =over
 
-=item C<gsl_sf_ellint_RJ_e >
+=item C<gsl_sf_ellint_RC_e($x, $y, $mode, $result)>
 
-=item C<gsl_sf_ellint_RJ>
+=item C<gsl_sf_ellint_RC($x, $y, $mode)>
 
--
+- These routines compute the incomplete elliptic integral RC($x,$y) to the accuracy specified by the mode variable $mode. 
+
+=back
+
+=over
+
+=item C<gsl_sf_ellint_RD_e($x, $y, $z, $mode, $result)>
+
+=item C<gsl_sf_ellint_RD($x, $y, $z, $mode)>
+
+- These routines compute the incomplete elliptic integral RD($x,$y,$z) to the accuracy specified by the mode variable $mode.
+
+=back
+
+=over
+
+=item C<gsl_sf_ellint_RF_e($x, $y, $z, $mode, $result)>
+
+=item C<gsl_sf_ellint_RF($x, $y, $z, $mode)>
+
+- These routines compute the incomplete elliptic integral RF($x,$y,$z) to the accuracy specified by the mode variable $mode. 
+
+=back
+
+=over
+
+=item C<gsl_sf_ellint_RJ_e($x, $y, $z, $p, $mode, $result)>
+
+=item C<gsl_sf_ellint_RJ($x, $y, $z, $p, $mode)>
+
+- These routines compute the incomplete elliptic integral RJ($x,$y,$z,$p) to the accuracy specified by the mode variable $mode. 
 
 =back
 
@@ -1666,77 +1666,81 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_elljac_e($u, $m)> - This function computes the Jacobian elliptic functions sn(u|m), cn(u|m), dn(u|m) by descending Landen transformations. The function returns 0 if the operation succeded, 1 otherwise and then returns the result of sn, cn and dn in this order.
 
-=item C<gsl_sf_erfc_e >
+=item C<gsl_sf_erfc_e($x, $result)>
 
-=item C<gsl_sf_erfc>
+=item C<gsl_sf_erfc($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_log_erfc_e>
-
-=item C<gsl_sf_log_erfc >
-
--
+-These routines compute the complementary error function erfc(x) = 1 - erf(x) = (2/\sqrt(\pi)) \int_x^\infty \exp(-t^2). 
 
 =back
 
 =over
 
-=item C<gsl_sf_erf_e>
+=item C<gsl_sf_log_erfc_e($x, $result)>
 
-=item C<gsl_sf_erf>
+=item C<gsl_sf_log_erfc($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_erf_Z_e >
-
-=item C<gsl_sf_erf_Z>
-
--
+-These routines compute the logarithm of the complementary error function \log(\erfc(x)).
 
 =back
 
 =over
 
-=item C<gsl_sf_erf_Q_e>
+=item C<gsl_sf_erf_e($x, $result)>
 
-=item C<gsl_sf_erf_Q >
+=item C<gsl_sf_erf($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_hazard_e>
-
-=item C<gsl_sf_hazard>
-
--
+-These routines compute the error function erf(x), where erf(x) = (2/\sqrt(\pi)) \int_0^x dt \exp(-t^2).
 
 =back
 
 =over
 
-=item C<gsl_sf_exp_e >
+=item C<gsl_sf_erf_Z_e($x, $result)>
 
-=item C<gsl_sf_exp>
+=item C<gsl_sf_erf_Z($x)>
 
--
+-These routines compute the Gaussian probability density function Z(x) = (1/\sqrt{2\pi}) \exp(-x^2/2).
+
+=back
+
+=over
+
+=item C<gsl_sf_erf_Q_e($x, $result)>
+
+=item C<gsl_sf_erf_Q($x)>
+
+- These routines compute the upper tail of the Gaussian probability function Q(x) = (1/\sqrt{2\pi}) \int_x^\infty dt \exp(-t^2/2). The hazard function for the normal distribution, also known as the inverse Mill's ratio, is defined as, h(x) = Z(x)/Q(x) = \sqrt{2/\pi} \exp(-x^2 / 2) / \erfc(x/\sqrt 2) It decreases rapidly as x approaches -\infty and asymptotes to h(x) \sim x as x approaches +\infty. 
+
+=back
+
+=over
+
+=item C<gsl_sf_hazard_e($x, $result)>
+
+=item C<gsl_sf_hazard($x)>
+
+- These routines compute the hazard function for the normal distribution.
+
+=back
+
+=over
+
+=item C<gsl_sf_exp_e($x, $result)>
+
+=item C<gsl_sf_exp($x)>
+
+- These routines provide an exponential function \exp(x) using GSL semantics and error checking. 
 
 =back
 
 =over
 
 =item C<gsl_sf_exp_e10_e> -
+
+=back
+
+=over
 
 =item C<gsl_sf_exp_mult_e >
 
@@ -1750,79 +1754,94 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_exp_mult_e10_e> - 
 
-=item C<gsl_sf_expm1_e >
+=back
 
-=item C<gsl_sf_expm1>
+=over
 
--
+=item C<gsl_sf_expm1_e($x, $result)>
+
+=item C<gsl_sf_expm1($x)>
+
+-These routines compute the quantity \exp(x)-1 using an algorithm that is accurate for small x. 
 
 =back
 
 =over
 
-=item C<gsl_sf_exprel_e>
+=item C<gsl_sf_exprel_e($x, $result)>
 
-=item C<gsl_sf_exprel >
+=item C<gsl_sf_exprel($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_exprel_2_e>
-
-=item C<gsl_sf_exprel_2>
-
--
+-These routines compute the quantity (\exp(x)-1)/x using an algorithm that is accurate for small x. For small x the algorithm is based on the expansion (\exp(x)-1)/x = 1 + x/2 + x^2/(2*3) + x^3/(2*3*4) + \dots. 
 
 =back
 
 =over
 
-=item C<gsl_sf_exprel_n_e >
+=item C<gsl_sf_exprel_2_e($x, $result)>
 
-=item C<gsl_sf_exprel_n>
+=item C<gsl_sf_exprel_2($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_exp_err_e> -
-
-=item C<gsl_sf_exp_err_e10_e > - 
-
-=item C<gsl_sf_exp_mult_err_e> - 
-
-=item C<gsl_sf_exp_mult_err_e10_e> - 
-
-=item C<gsl_sf_expint_E1_e >
-
-=item C<gsl_sf_expint_E1>
-
--
+-These routines compute the quantity 2(\exp(x)-1-x)/x^2 using an algorithm that is accurate for small x. For small x the algorithm is based on the expansion 2(\exp(x)-1-x)/x^2 = 1 + x/3 + x^2/(3*4) + x^3/(3*4*5) + \dots.
 
 =back
 
 =over
 
-=item C<gsl_sf_expint_E2_e>
+=item C<gsl_sf_exprel_n_e($x, $result)>
 
-=item C<gsl_sf_expint_E2 >
+=item C<gsl_sf_exprel_n($x)>
 
--
+-These routines compute the N-relative exponential, which is the n-th generalization of the functions gsl_sf_exprel and gsl_sf_exprel2. The N-relative exponential is given by, 
+ exprel_N(x) = N!/x^N (\exp(x) - \sum_{k=0}^{N-1} x^k/k!)
+  = 1 + x/(N+1) + x^2/((N+1)(N+2)) + ...
+  = 1F1 (1,1+N,x)    
 
 =back
 
 =over
 
-=item C<gsl_sf_expint_En_e>
+=item C<gsl_sf_exp_err_e($x, $dx, $result)> - This function exponentiates $x with an associated absolute error $dx. 
 
-=item C<gsl_sf_expint_En>
+=item C<gsl_sf_exp_err_e10_e> - 
 
--
+=item C<gsl_sf_exp_mult_err_e($x, $dx, $y, $dy, $result)> - 
+
+=item C<gsl_sf_exp_mult_err_e10_e> -
+
+=back
+
+=over 
+
+=item C<gsl_sf_expint_E1_e($x, $result)>
+
+=item C<gsl_sf_expint_E1($x)>
+
+-These routines compute the exponential integral E_1(x), E_1(x) := \Re \int_1^\infty dt \exp(-xt)/t.
+
+=back
+
+=over
+
+=item C<gsl_sf_expint_E2_e($x, $result)>
+
+=item C<gsl_sf_expint_E2($x)>
+
+-These routines compute the second-order exponential integral E_2(x),
+  E_2(x) := \Re \int_1^\infty dt \exp(-xt)/t^2.
+     
+
+=back
+
+=over
+
+=item C<gsl_sf_expint_En_e($n, $x, $result)>
+
+=item C<gsl_sf_expint_En($n, $x)>
+
+-These routines compute the exponential integral E_n(x) of order n,
+  E_n(x) := \Re \int_1^\infty dt \exp(-xt)/t^n.
+     
 
 =back
 
@@ -1858,11 +1877,11 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_expint_Ei_e >
+=item C<gsl_sf_expint_Ei_e($x, $result)>
 
-=item C<gsl_sf_expint_Ei>
+=item C<gsl_sf_expint_Ei($x)>
 
--
+-These routines compute the exponential integral Ei(x), Ei(x) := - PV(\int_{-x}^\infty dt \exp(-t)/t) where PV denotes the principal value of the integral. 
 
 =back
 
@@ -1878,151 +1897,151 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_Shi_e>
+=item C<gsl_sf_Shi_e($x, $result)>
 
-=item C<gsl_sf_Shi>
+=item C<gsl_sf_Shi($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_Chi_e >
-
-=item C<gsl_sf_Chi>
-
--
+-These routines compute the integral Shi(x) = \int_0^x dt \sinh(t)/t. 
 
 =back
 
 =over
 
-=item C<gsl_sf_expint_3_e>
+=item C<gsl_sf_Chi_e($x, $result)>
 
-=item C<gsl_sf_expint_3 >
+=item C<gsl_sf_Chi($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_Si_e>
-
-=item C<gsl_sf_Si>
-
--
+-These routines compute the integral Chi(x) := \Re[ \gamma_E + \log(x) + \int_0^x dt (\cosh[t]-1)/t] , where \gamma_E is the Euler constant (available as $M_EULER from the Math::GSL::Const module).
 
 =back
 
 =over
 
-=item C<gsl_sf_Ci_e >
+=item C<gsl_sf_expint_3_e($x, $result)>
 
-=item C<gsl_sf_Ci>
+=item C<gsl_sf_expint_3($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_fermi_dirac_m1_e>
-
-=item C<gsl_sf_fermi_dirac_m1 >
-
--
+-These routines compute the third-order exponential integral Ei_3(x) = \int_0^xdt \exp(-t^3) for x >= 0.
 
 =back
 
 =over
 
-=item C<gsl_sf_fermi_dirac_0_e>
+=item C<gsl_sf_Si_e($x, $result)>
 
-=item C<gsl_sf_fermi_dirac_0>
+=item C<gsl_sf_Si($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_fermi_dirac_1_e >
-
-=item C<gsl_sf_fermi_dirac_1>
-
--
+-These routines compute the Sine integral Si(x) = \int_0^x dt \sin(t)/t.
 
 =back
 
 =over
 
-=item C<gsl_sf_fermi_dirac_2_e>
+=item C<gsl_sf_Ci_e($x, $result)>
 
-=item C<gsl_sf_fermi_dirac_2 >
+=item C<gsl_sf_Ci($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_fermi_dirac_int_e>
-
-=item C<gsl_sf_fermi_dirac_int>
-
--
+-These routines compute the Cosine integral Ci(x) = -\int_x^\infty dt \cos(t)/t for x > 0.
 
 =back
 
 =over
 
-=item C<gsl_sf_fermi_dirac_mhalf_e >
+=item C<gsl_sf_fermi_dirac_m1_e($x, $result)>
 
-=item C<gsl_sf_fermi_dirac_mhalf>
+=item C<gsl_sf_fermi_dirac_m1($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_fermi_dirac_half_e>
-
-=item C<gsl_sf_fermi_dirac_half >
-
--
+-These routines compute the complete Fermi-Dirac integral with an index of -1. This integral is given by F_{-1}(x) = e^x / (1 + e^x).
 
 =back
 
 =over
 
-=item C<gsl_sf_fermi_dirac_3half_e>
+=item C<gsl_sf_fermi_dirac_0_e($x, $result)>
 
-=item C<gsl_sf_fermi_dirac_3half>
+=item C<gsl_sf_fermi_dirac_0($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_fermi_dirac_inc_0_e >
-
-=item C<gsl_sf_fermi_dirac_inc_0>
-
--
+-These routines compute the complete Fermi-Dirac integral with an index of 0. This integral is given by F_0(x) = \ln(1 + e^x).
 
 =back
 
 =over
 
-=item C<gsl_sf_legendre_Pl_e>
+=item C<gsl_sf_fermi_dirac_1_e($x, $result)>
 
-=item C<gsl_sf_legendre_Pl >
+=item C<gsl_sf_fermi_dirac_1($x)>
 
--
+-These routines compute the complete Fermi-Dirac integral with an index of 1, F_1(x) = \int_0^\infty dt (t /(\exp(t-x)+1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_2_e($x, $result)>
+
+=item C<gsl_sf_fermi_dirac_2($x)>
+
+-These routines compute the complete Fermi-Dirac integral with an index of 2, F_2(x) = (1/2) \int_0^\infty dt (t^2 /(\exp(t-x)+1)). 
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_int_e($j, $x, $result)>
+
+=item C<gsl_sf_fermi_dirac_int($j, $x)>
+
+-These routines compute the complete Fermi-Dirac integral with an integer index of j, F_j(x) = (1/\Gamma(j+1)) \int_0^\infty dt (t^j /(\exp(t-x)+1)).
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_mhalf_e($x, $result)>
+
+=item C<gsl_sf_fermi_dirac_mhalf($x)>
+
+-These routines compute the complete Fermi-Dirac integral F_{-1/2}(x).
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_half_e($x, $result)>
+
+=item C<gsl_sf_fermi_dirac_half($x)>
+
+-These routines compute the complete Fermi-Dirac integral F_{1/2}(x). 
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_3half_e($x, $result)>
+
+=item C<gsl_sf_fermi_dirac_3half($x)>
+
+-These routines compute the complete Fermi-Dirac integral F_{3/2}(x). 
+
+=back
+
+=over
+
+=item C<gsl_sf_fermi_dirac_inc_0_e($x, $b, $result)>
+
+=item C<gsl_sf_fermi_dirac_inc_0($x, $b, $result)>
+
+-These routines compute the incomplete Fermi-Dirac integral with an index of zero, F_0(x,b) = \ln(1 + e^{b-x}) - (b-x). 
+
+=back
+
+=over
+
+=item C<gsl_sf_legendre_Pl_e($l, $x, $result)>
+
+=item C<gsl_sf_legendre_Pl($l, $x)>
+
+-These functions evaluate the Legendre polynomial P_l(x) for a specific value of l, x subject to l >= 0, |x| <= 1 
 
 =back
 
@@ -2038,59 +2057,59 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_legendre_P1_e >
+=item C<gsl_sf_legendre_P1_e($x, $result)>
 
-=item C<gsl_sf_legendre_P2_e>
+=item C<gsl_sf_legendre_P2_e($x, $result)>
 
-=item C<gsl_sf_legendre_P3_e>
+=item C<gsl_sf_legendre_P3_e($x, $result)>
 
-=item C<gsl_sf_legendre_P1 >
+=item C<gsl_sf_legendre_P1($x)>
 
-=item C<gsl_sf_legendre_P2>
+=item C<gsl_sf_legendre_P2($x)>
 
-=item C<gsl_sf_legendre_P3>
+=item C<gsl_sf_legendre_P3($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_legendre_Q0_e >
-
-=item C<gsl_sf_legendre_Q0>
-
--
+-These functions evaluate the Legendre polynomials P_l(x) using explicit representations for l=1, 2, 3. 
 
 =back
 
 =over
 
-=item C<gsl_sf_legendre_Q1_e>
+=item C<gsl_sf_legendre_Q0_e($x, $result)>
 
-=item C<gsl_sf_legendre_Q1 >
+=item C<gsl_sf_legendre_Q0($x)>
 
--
-
-=back
-
-=over
-
-=item C<gsl_sf_legendre_Ql_e>
-
-=item C<gsl_sf_legendre_Ql>
-
--
+-These routines compute the Legendre function Q_0(x) for x > -1, x != 1.
 
 =back
 
 =over
 
-=item C<gsl_sf_legendre_Plm_e >
+=item C<gsl_sf_legendre_Q1_e($x, $result)>
 
-=item C<gsl_sf_legendre_Plm>
+=item C<gsl_sf_legendre_Q1($x)>
 
--
+-These routines compute the Legendre function Q_1(x) for x > -1, x != 1.
+
+=back
+
+=over
+
+=item C<gsl_sf_legendre_Ql_e($l, $x, $result)>
+
+=item C<gsl_sf_legendre_Ql($l, $x)>
+
+-These routines compute the Legendre function Q_l(x) for x > -1, x != 1 and l >= 0.
+
+=back
+
+=over
+
+=item C<gsl_sf_legendre_Plm_e($l, $m, $x, $result)>
+
+=item C<gsl_sf_legendre_Plm($l, $m, $x)>
+
+-These routines compute the associated Legendre polynomial P_l^m(x) for m >= 0, l >= m, |x| <= 1.
 
 =back
 
@@ -2106,11 +2125,11 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_legendre_sphPlm_e>
+=item C<gsl_sf_legendre_sphPlm_e($l, $m, $x, $result)>
 
-=item C<gsl_sf_legendre_sphPlm>
+=item C<gsl_sf_legendre_sphPlm($l, $m, $x)>
 
--
+-These routines compute the normalized associated Legendre polynomial $\sqrt{(2l+1)/(4\pi)} \sqrt{(l-m)!/(l+m)!} P_l^m(x)$ suitable for use in spherical harmonics. The parameters must satisfy m >= 0, l >= m, |x| <= 1. Theses routines avoid the overflows that occur for the standard normalization of P_l^m(x).
 
 =back
 
@@ -2128,9 +2147,29 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_legendre_array_size> -
 
-=item C<gsl_sf_lngamma_e >
+=back
 
-=item C<gsl_sf_lngamma>
+=over
+
+=item C<gsl_sf_lngamma_e($x, $result)>
+
+=item C<gsl_sf_lngamma($x)>
+
+-These routines compute the logarithm of the Gamma function, \log(\Gamma(x)), subject to x not being a negative integer or zero. For x<0 the real part of \log(\Gamma(x)) is returned, which is equivalent to \log(|\Gamma(x)|). The function is computed using the real Lanczos method.
+
+=back
+
+=over
+
+=item C<gsl_sf_lngamma_sgn_e($x, $result_lg)> - This routine returns the sign of the gamma function and the logarithm of its magnitude into this order, subject to $x not being a negative integer or zero. The function is computed using the real Lanczos method. The value of the gamma function can be reconstructed using the relation \Gamma(x) = sgn * \exp(resultlg).
+
+=back
+
+=over
+
+=item C<gsl_sf_gamma_e >
+
+=item C<gsl_sf_gamma>
 
 -
 
@@ -2138,89 +2177,209 @@ Here is a list of all included functions:
 
 =over
 
-=item C<gsl_sf_lngamma_sgn_e>
-
-=item C<gsl_sf_gamma_e >
-
-=item C<gsl_sf_gamma>
-
 =item C<gsl_sf_gammastar_e>
 
 =item C<gsl_sf_gammastar >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_gammainv_e>
 
 =item C<gsl_sf_gammainv>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lngamma_complex_e >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_gamma_inc_Q_e>
 
 =item C<gsl_sf_gamma_inc_Q>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_gamma_inc_P_e >
 
 =item C<gsl_sf_gamma_inc_P>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_gamma_inc_e>
 
 =item C<gsl_sf_gamma_inc >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_taylorcoeff_e>
 
 =item C<gsl_sf_taylorcoeff>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_fact_e >
 
 =item C<gsl_sf_fact>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_doublefact_e>
 
 =item C<gsl_sf_doublefact >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lnfact_e>
 
 =item C<gsl_sf_lnfact>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lndoublefact_e >
 
 =item C<gsl_sf_lndoublefact>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lnchoose_e>
 
 =item C<gsl_sf_lnchoose >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_choose_e>
 
 =item C<gsl_sf_choose>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lnpoch_e >
 
 =item C<gsl_sf_lnpoch>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lnpoch_sgn_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_poch_e >
 
 =item C<gsl_sf_poch>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_pochrel_e>
 
 =item C<gsl_sf_pochrel >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lnbeta_e>
 
 =item C<gsl_sf_lnbeta>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lnbeta_sgn_e >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_beta_e>
 
 =item C<gsl_sf_beta>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_beta_inc_e >
 
 =item C<gsl_sf_beta_inc>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_gegenpoly_1_e>
 
@@ -2234,9 +2393,21 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_gegenpoly_3>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_gegenpoly_n_e>
 
 =item C<gsl_sf_gegenpoly_n >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_gegenpoly_array>
 
@@ -2244,45 +2415,117 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_hyperg_0F1 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_1F1_int_e>
 
 =item C<gsl_sf_hyperg_1F1_int>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hyperg_1F1_e >
 
 =item C<gsl_sf_hyperg_1F1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_U_int_e>
 
 =item C<gsl_sf_hyperg_U_int >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_U_int_e10_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hyperg_U_e>
 
 =item C<gsl_sf_hyperg_U >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_U_e10_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hyperg_2F1_e>
 
 =item C<gsl_sf_hyperg_2F1 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_2F1_conj_e>
 
 =item C<gsl_sf_hyperg_2F1_conj>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hyperg_2F1_renorm_e >
 
 =item C<gsl_sf_hyperg_2F1_renorm>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_2F1_conj_renorm_e>
 
 =item C<gsl_sf_hyperg_2F1_conj_renorm >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_hyperg_2F0_e>
 
 =item C<gsl_sf_hyperg_2F0>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_laguerre_1_e >
 
@@ -2296,213 +2539,563 @@ Here is a list of all included functions:
 
 =item C<gsl_sf_laguerre_3>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_laguerre_n_e >
 
 =item C<gsl_sf_laguerre_n>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lambert_W0_e>
 
 =item C<gsl_sf_lambert_W0 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lambert_Wm1_e>
 
 =item C<gsl_sf_lambert_Wm1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_conicalP_half_e >
 
 =item C<gsl_sf_conicalP_half>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_conicalP_mhalf_e>
 
 =item C<gsl_sf_conicalP_mhalf >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_conicalP_0_e>
 
 =item C<gsl_sf_conicalP_0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_conicalP_1_e >
 
 =item C<gsl_sf_conicalP_1>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_conicalP_sph_reg_e>
 
 =item C<gsl_sf_conicalP_sph_reg >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_conicalP_cyl_reg_e>
 
 =item C<gsl_sf_conicalP_cyl_reg>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_H3d_0_e >
 
 =item C<gsl_sf_legendre_H3d_0>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_H3d_1_e>
 
 =item C<gsl_sf_legendre_H3d_1 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_legendre_H3d_e>
 
 =item C<gsl_sf_legendre_H3d>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_legendre_H3d_array >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_log_e>
 
 =item C<gsl_sf_log>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_log_abs_e >
 
 =item C<gsl_sf_log_abs>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_complex_log_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_log_1plusx_e >
 
 =item C<gsl_sf_log_1plusx>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_log_1plusx_mx_e>
 
 =item C<gsl_sf_log_1plusx_mx >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_mathieu_a_array>
 
 =item C<gsl_sf_mathieu_b_array>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_mathieu_a >
 
 =item C<gsl_sf_mathieu_b>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_mathieu_a_coeff>
 
 =item C<gsl_sf_mathieu_b_coeff >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_mathieu_alloc>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_mathieu_free>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_mathieu_ce >
 
 =item C<gsl_sf_mathieu_se>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_mathieu_ce_array>
 
 =item C<gsl_sf_mathieu_se_array >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_mathieu_Mc>
 
 =item C<gsl_sf_mathieu_Ms>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_mathieu_Mc_array >
 
 =item C<gsl_sf_mathieu_Ms_array>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_pow_int_e>
 
 =item C<gsl_sf_pow_int >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_psi_int_e>
 
 =item C<gsl_sf_psi_int>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_psi_e >
 
 =item C<gsl_sf_psi>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_psi_1piy_e>
 
 =item C<gsl_sf_psi_1piy >
 
-=item C<gsl_sf_complex_psi_e gsl_sf_psi_1_int_e>
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_complex_psi_e 
+
+-
+
+=back
+
+=over
+
+=item C<gsl_sf_psi_1_int_e>
 
 =item C<gsl_sf_psi_1_int >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_psi_1_e >
 
 =item C<gsl_sf_psi_1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_psi_n_e >
 
 =item C<gsl_sf_psi_n>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_result_smash_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_synchrotron_1_e >
 
 =item C<gsl_sf_synchrotron_1>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_synchrotron_2_e>
 
 =item C<gsl_sf_synchrotron_2 >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_transport_2_e>
 
 =item C<gsl_sf_transport_2>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_transport_3_e >
 
 =item C<gsl_sf_transport_3>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_transport_4_e>
 
 =item C<gsl_sf_transport_4 >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_transport_5_e>
 
 =item C<gsl_sf_transport_5>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_sin_e >
 
 =item C<gsl_sf_sin>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_cos_e>
 
 =item C<gsl_sf_cos >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_hypot_e>
 
 =item C<gsl_sf_hypot>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_complex_sin_e >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_complex_cos_e>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_complex_logsin_e>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_sinc_e >
 
 =item C<gsl_sf_sinc>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_lnsinh_e>
 
 =item C<gsl_sf_lnsinh >
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_lncosh_e>
 
 =item C<gsl_sf_lncosh>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_polar_to_rect >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_rect_to_polar>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_sin_err_e>
 
 =item C<gsl_sf_cos_err_e >
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_angle_restrict_symm_e>
 
 =item C<gsl_sf_angle_restrict_symm>
+
+-
+
+=back
+
+=over
 
 =item C<gsl_sf_angle_restrict_pos_e >
 
 =item C<gsl_sf_angle_restrict_pos>
 
+-
+
+=back
+
+=over
+
 =item C<gsl_sf_angle_restrict_symm_err_e>
 
 =item C<gsl_sf_angle_restrict_pos_err_e >
 
+=over
+
 =item C<gsl_sf_atanint_e>
 
 =item C<gsl_sf_atanint>
+
+-These routines compute the Arctangent integral, which is defined as AtanInt(x) = \int_0^x dt \arctan(t)/t.
+
+=back
 
 =item C<gsl_sf_zeta_int_e >
 

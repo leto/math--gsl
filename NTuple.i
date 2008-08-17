@@ -1,10 +1,12 @@
 %module "Math::GSL::NTuple"
 
-%typemap(in) void * {
-    $1 = (double *) $input;
+%typemap(in) void *ntuple_data {
+    fprintf(stderr,"symname=$symname\n");
+    if ($input) 
+        $1 = (double *) $input;
 };
 
-%typemap(argout) void * {
+%typemap(argout) void *ntuple_data {
     //Perl_sv_dump($1);
 }
 
@@ -18,7 +20,7 @@
 %perlcode %{
 
 # Intermittent failure happens *after* this
-END { warn "This is the end" }
+# END { warn "This is the end" }
 
 
 @EXPORT_OK = qw/

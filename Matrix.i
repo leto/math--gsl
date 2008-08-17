@@ -5,8 +5,6 @@
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
 %apply double *OUTPUT { double * min_out, double * max_out };
 
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_matrix.h"
     #include "gsl/gsl_complex.h"
@@ -28,12 +26,11 @@ int fclose(FILE *);
  
 %perlcode %{ 
 
-no warnings 'redefine';
 use Carp qw/croak/;
 use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
 
-@EXPORT_OK = qw/fclose
+@EXPORT_OK = qw/
         gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block
         gsl_matrix_alloc_from_matrix gsl_vector_alloc_row_from_matrix
         gsl_vector_alloc_col_from_matrix gsl_matrix_free gsl_matrix_submatrix
@@ -1156,11 +1153,11 @@ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/na
 
  my $out = gsl_fopen("test.dat", "wb");
  gsl_matrix_fwrite ($out, $m);
- fclose ($out);
+ gsl_fclose ($out);
 
  my $in = gsl_fopen("test.dat", "rb");
  gsl_matrix_fread ($in, $a);
- fclose($in);
+ gsl_fclose($in);
 
  my $k=0;
  for my $i (0..99){

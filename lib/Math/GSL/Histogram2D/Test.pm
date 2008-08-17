@@ -124,7 +124,7 @@ sub FWRITE_FREAD : Tests {
     ok_status(gsl_histogram2d_increment($H, 0.5, 1.5 ));
 
     ok_status(gsl_histogram2d_fwrite($stream, $H));  
-    gsl_fclose($stream);
+    ok_status(gsl_fclose($stream));
    
     $stream = gsl_fopen("histogram2d", 'r');
     my $h = gsl_histogram2d_alloc(5, 5);  
@@ -136,7 +136,7 @@ sub FWRITE_FREAD : Tests {
     is_deeply( [ map { gsl_histogram2d_get($h, $i, $_) } (0..4) ],
                [ (0) x 5 ]
     );}
-    gsl_fclose($stream);
+    ok_status(gsl_fclose($stream));
 }
 
 sub GET_XRANGE_YRANGE : Tests {
@@ -268,7 +268,7 @@ sub FPRINTF_FSCANF : Tests {
     ok_status(gsl_histogram2d_increment($H, 0.5, 0.5 ));
 
     ok_status(gsl_histogram2d_fprintf($stream, $H, "%e", "%e"));  
-    fclose($stream);
+    ok_status(gsl_fclose($stream));
    
     $stream = gsl_fopen("histogram2d", 'r');
     my $h = gsl_histogram2d_alloc(5,5);  
@@ -280,7 +280,7 @@ sub FPRINTF_FSCANF : Tests {
     is_deeply( [ map { gsl_histogram2d_get($h, $i, $_) } (0..4) ],
                [ (0) x 5 ]
     );}
-    gsl_fclose($stream);
+    ok_status(gsl_fclose($stream));
 }
 
 sub PDF_ALLOC : Tests {

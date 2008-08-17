@@ -141,7 +141,7 @@ sub GSL_RNG_FWRITE_FREAD : Tests {
 
     my $fh = gsl_fopen("rng" , 'w');
     ok_status(gsl_rng_fwrite($fh, $self->{rng}));
-    ok_status(fclose($fh));
+    ok_status(gsl_fclose($fh));
 
     $fh = gsl_fopen("rng", 'r');
     is(gsl_rng_fread($fh, $rng),0);

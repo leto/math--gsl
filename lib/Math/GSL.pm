@@ -181,8 +181,6 @@ sub new
 
 sub subsystems
 {
-    # causing havoc to cpantesters
-    my @disable = qw(NTuple);
     return sort qw/
         Diff         Machine      Statistics
         Eigen        Matrix       Poly 
@@ -194,7 +192,7 @@ sub subsystems
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
         Const        Siman        Sum           Sys
-        Integration  Sort                  
+        NTuple       Integration  Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
     /;

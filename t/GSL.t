@@ -34,4 +34,5 @@ use strict;
     my $fh = gsl_fopen('mrfuji','r');
     ok(defined $fh, 'gsl_fopen can read files');
     ok_status(gsl_fclose($fh));
+    unlink 'mrfuji' if -e 'mrfuji';
 }

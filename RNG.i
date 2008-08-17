@@ -6,10 +6,8 @@
 
 %include "gsl/gsl_rng.h"
 
-int fclose(FILE *);
-
 %perlcode %{
-@EXPORT_OK = qw/ fclose
+@EXPORT_OK = qw/
                  gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
                  gsl_rng_name gsl_rng_size gsl_rng_state gsl_rng_print_state gsl_rng_uniform gsl_rng_uniform_pos gsl_rng_uniform_int 

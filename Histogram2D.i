@@ -5,8 +5,6 @@
 %apply double *OUTPUT { double * xlower, double * xupper, double * ylower, double * yupper, double * x, double * y};
 %apply int *OUTPUT { size_t * i, size_t * j };
 
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_histogram2d.h"
 %}
@@ -15,7 +13,7 @@ int fclose(FILE *);
 
 
 %perlcode %{
-@EXPORT_OK = qw/fclose
+@EXPORT_OK = qw/
                gsl_histogram2d_alloc 
                gsl_histogram2d_calloc 
                gsl_histogram2d_calloc_uniform 

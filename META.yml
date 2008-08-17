@@ -471,6 +471,8 @@ provides:
     file: lib/Math/GSL/Spline.pm
   Math::GSL::Statistics:
     file: lib/Math/GSL/Statistics.pm
+  Math::GSL::Statistics::Test:
+    file: lib/Math/GSL/Statistics/Test.pm
   Math::GSL::Statisticsc:
     file: lib/Math/GSL/Statistics.pm
   Math::GSL::Sum:

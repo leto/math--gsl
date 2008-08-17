@@ -1,7 +1,5 @@
 %module "Math::GSL::Combination"
 
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_combination.h"
@@ -12,7 +10,7 @@ int fclose(FILE *);
 
 
 %perlcode %{
-@EXPORT_OK = qw/fclose
+@EXPORT_OK = qw/
                gsl_combination_alloc 
                gsl_combination_calloc 
                gsl_combination_init_first 

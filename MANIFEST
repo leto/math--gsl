@@ -127,6 +127,7 @@ lib/Math/GSL/Sort/Test.pm
 lib/Math/GSL/Spline.pm
 lib/Math/GSL/Spline/Test.pm
 lib/Math/GSL/Statistics.pm
+lib/Math/GSL/Statistics/Test.pm
 lib/Math/GSL/Sum.pm
 lib/Math/GSL/Sum/Test.pm
 lib/Math/GSL/Sys.pm
@@ -214,7 +215,6 @@ t/Machine.t
 t/Matrix.t
 t/Min.t
 t/Multifit.t
-t/NTuple.t
 t/ODEIV.t
 t/Permutation.t
 t/Poly.t
@@ -226,6 +226,7 @@ t/Roots.t
 t/SF.t
 t/Sort.t
 t/Spline.t
+t/Statistics.t
 t/Sum.t
 t/Sys.t
 t/Vector.t
@@ -238,3 +239,4 @@ Wavelet2D.i
 Wavelet2D_wrap.c
 Wavelet_wrap.c
 xt/01-portability-files.t
+t/NTuple.disabled

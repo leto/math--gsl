@@ -2,8 +2,6 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_permute.h"
     #include "gsl/gsl_permute_double.h"
@@ -22,7 +20,7 @@ int fclose(FILE *);
 %include "gsl/gsl_permutation.h"
 
 %perlcode %{ 
-@EXPORT_OK = qw/fclose
+@EXPORT_OK = qw/
                 gsl_permutation_alloc 
                 gsl_permutation_calloc 
                 gsl_permutation_init 

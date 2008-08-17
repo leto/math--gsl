@@ -819,7 +819,7 @@ my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
                     'gsl_cdf_tdist_Pinv (8.279313675556272534e-21, 300.0)'	=> [ -10.0, $TOL6 ],
                     'gsl_cdf_tdist_Pinv (1.93159812815803978e-57, 300.0)'	=> [ -20.0, $TOL6 ],
                     'gsl_cdf_tdist_Pinv (1.02557519997736154e-232, 300.0)'	=> [ -100.0, $TOL6 ],
-                    q{gsl_cdf_tdist_Pinv (0.0, 300.0)}	                    => [  q{-inf}, $TOL6 ],
+                    q{gsl_cdf_tdist_Pinv (0.0, 300.0)}	                    => [  -gsl_inf(), $TOL6 ],
                     'gsl_cdf_tdist_Qinv (5.00398609900942949e-1, 300.0)'	=> [ -0.001, $TOL6 ],
                     'gsl_cdf_tdist_Qinv (5.03986033020559088e-1, 300.0)'	=> [ -0.01, $TOL6 ],
                     'gsl_cdf_tdist_Qinv (5.39794441177768194e-1, 300.0)'	=> [ -0.1, $TOL6 ],
@@ -827,7 +827,7 @@ my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
                     'gsl_cdf_tdist_Qinv (8.40941797784686862e-1, 300.0)'	=> [ -1.0, $TOL6 ],
                     'gsl_cdf_tdist_Qinv (9.32666983425369137e-1, 300.0)'	=> [ -1.5, $TOL6 ],
                     'gsl_cdf_tdist_Qinv (9.76799239508425455e-1, 300.0)'	=> [ -2.0, $TOL6 ],
-                    q{gsl_cdf_tdist_Qinv (1.000000000000000000e0, 300.0)}	=> [  q{-inf}, $TOL6 ],
+                    q{gsl_cdf_tdist_Qinv (1.000000000000000000e0, 300.0)}	=> [  -gsl_inf(), $TOL6 ],
                 };
     verify($results, 'Math::GSL::CDF');
 }

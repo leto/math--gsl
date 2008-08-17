@@ -22,7 +22,19 @@ use warnings;
 use Config;
 use Data::Dumper;
 use Module::Build;
-use ExtUtils::PkgConfig;
+
+BEGIN {
+    eval { require ExtUtils::PkgConfig };
+    if ($@) {
+        print "\nI see that you are a CPANTester, you really should install ExtUtils::PkgConfig !\n"
+            if $ENV{AUTOMATED_TESTING};
+        print <<EXIT;
+ExtUtils::PkgConfig is currently needed to find GSL for the compilation of this module.
+It may be bundled with Math::GSL in the future.
+EXIT
+        exit 0;
+    }
+}
 
 my $code = <<'EOC';
 use Config;

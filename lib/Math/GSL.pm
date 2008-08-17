@@ -15,7 +15,7 @@ our @EXPORT_OK = qw( ok_similar ok_status  is_similar
                      is_similar_relative verify verify_results 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
-                     is_windows gsl_inf gsl_fopen gsl_fclose
+                     is_windows gsl_inf gsl_fopen gsl_fclose gsl_nan
                    );
 
 our %EXPORT_TAGS = ( 
@@ -181,6 +181,8 @@ sub new
 
 sub subsystems
 {
+    # causing havoc to cpantesters
+    my @disable = qw(NTuple);
     return sort qw/
         Diff         Machine      Statistics
         Eigen        Matrix       Poly 
@@ -192,7 +194,7 @@ sub subsystems
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
         Const        Siman        Sum           Sys
-        Integration  NTuple       Sort                  
+        Integration  Sort                  
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
     /;
@@ -300,8 +302,16 @@ sub verify
     }
 }
 
-sub gsl_inf    { is_windows() ?  '1.\#INF' : 'inf' }
-
+sub gsl_inf
+{ 
+    is_windows() ?  unpack 'd', scalar reverse pack 'H*', '7FF0000000000000' 
+                 : q{inf}
+}
+sub gsl_nan
+{
+    is_windows() ? unpack 'd', scalar reverse pack 'H*', '7FF8000000000000' 
+                 : q{nan}
+             }
 sub gsl_fopen
 {
     my ($file, $mode) = @_;

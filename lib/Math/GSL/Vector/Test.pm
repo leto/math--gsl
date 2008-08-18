@@ -33,7 +33,7 @@ sub GSL_VECTOR_LENGTH: Tests {
 }
 sub GSL_VECTOR_SET_GET: Tests { 
     my $self = shift;
-    ok_status(gsl_vector_set($self->{vector}, 0, 42 ));
+    ok_status(gsl_vector_set($self->{vector}, 0, 42 ), $GSL_SUCCESS);
     my $elem   = gsl_vector_get($self->{vector}, 0);
     ok( $elem == 42, 'gsl_vector_set/gsl_vector_get' );
 }
@@ -69,7 +69,7 @@ sub GSL_VECTOR_ISNEG: Tests {
     map { gsl_vector_set($self->{vector}, $_, -$_ ) } (0..4); 
     ok( !gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
 
-    ok_status(gsl_vector_set($self->{vector}, 0, -1 ));
+    ok_status(gsl_vector_set($self->{vector}, 0, -1 ), $GSL_SUCCESS);
 
     ok( gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
 }
@@ -148,13 +148,13 @@ sub GSL_VECTOR_CALLOC : Tests {
 
 sub GSL_VECTOR_SET_ALL : Tests {
    my $vec = Math::GSL::Vector->new(5);
-   ok_status(gsl_vector_set_all($vec->raw, 4));
+   ok_status(gsl_vector_set_all($vec->raw, 4), $GSL_SUCCESS);
    ok_similar( [ $vec->as_list ], [ (4) x 5 ] );
 }
 
 sub GSL_VECTOR_SET_ZERO : Tests {
    my $self = shift;
-   ok_status(gsl_vector_set_zero($self->{vector}));
+   ok_status(gsl_vector_set_zero($self->{vector}), $GSL_SUCCESS);
    map { is(gsl_vector_get($self->{vector} , $_ ), 0) } (0..4);
 }
 
@@ -260,7 +260,7 @@ sub GSL_VECTOR_MUL : Tests {
    my $second_vec = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
    map { gsl_vector_set($second_vec, $_, 2) } (0..4); ;
-   ok_status( gsl_vector_mul($self->{vector}, $second_vec));
+   ok_status( gsl_vector_mul($self->{vector}, $second_vec), $GSL_SUCCESS);
    map { is(gsl_vector_get($self->{vector}, $_), $_ * 2 ) } (0..4); ;   
 }
 

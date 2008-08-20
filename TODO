@@ -10,4 +10,6 @@
 
 * Add tests in xt/ to test for correct Build.PL behavior when modules are missing, etc...
 
+* Investigate static linking issues
+
 * Use Math::GSL in your calculations and tell people about it!

@@ -31,6 +31,46 @@
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+### wrapper interface ###
+
+sub new {
+    my ($class, $n, $k) = @_;
+    my $this = {};
+    $this->{_length} = $n;
+    $this->{_combination} = gsl_combination_calloc($n, $k);
+    bless $this, $class;
+}
+
+sub as_list {
+    my $self=shift;
+    $self->get( [ 0 .. $self->elements - 1  ] );
+}
+
+sub get {
+    my ($self, $indices) = @_;
+    return  map {  gsl_combination_get($self->{_combination}, $_ ) } @$indices ;
+}
+
+sub raw { (shift)->{_combination} }
+sub length { (shift)->{_length} }
+
+sub elements { 
+    my $self = shift;
+    return gsl_combination_k($self->{_combination});
+}
+
+sub next {
+    my $self = shift;
+    my $status = gsl_combination_next($self->{_combination});
+    return ($self, $status);
+}
+
+sub prev {
+    my $self = shift;
+    my $status = gsl_combination_prev($self->{_combination});
+    return $status;
+}
+
 __END__
 
 =head1 NAME

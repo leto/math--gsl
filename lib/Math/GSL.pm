@@ -26,6 +26,9 @@ our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
 our $VERSION = '0.10';
 
+use constant GSL_IS_WINDOWS =>  ($^O =~ /MSWin32/i)  ?  1 : 0 ;
+
+
 =head1 NAME
 
 Math::GSL - Perl interface to the  GNU Scientific Library (GSL) 
@@ -330,6 +333,6 @@ sub _dump_result($)
     printf "result->err: %.18g\n", $r->{err};
     printf "result->val: %.18g\n", $r->{val};
 }
-sub is_windows() { $^O =~ /MSWin32/i }
+sub is_windows() { GSL_IS_WINDOWS }
 
 42;

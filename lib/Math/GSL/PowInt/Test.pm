@@ -30,17 +30,12 @@ sub TEST_BASIC: Tests {
     verify(\%results, 'Math::GSL::PowInt');
 }
 
-# libc is scary on Windows
 sub TEST_NAN_INF : Tests {
     my $self = shift; 
     my %results = (
-                q{gsl_pow_2('nan')} => 'nan',
-                q{gsl_pow_2('inf')} => 'inf',
+        q{gsl_pow_2('nan')} => gsl_nan(),
+        q{gsl_pow_2('inf')} => gsl_inf(),
     );
-    if (is_windows()) {
-        $self->builder->skip('skipping nan/inf checking on windows');
-    } else {
-        verify(\%results,'Math::GSL::PowInt');
-    }
+    verify(\%results,'Math::GSL::PowInt');
 }
 42;

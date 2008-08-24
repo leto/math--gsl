@@ -416,17 +416,15 @@ sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
         map { gsl_matrix_set($self->{matrix}, $line, $_, $_**2) } (0..4); 
    }
 
-   my $write = is_windows() ? "w + b" : "w";
-   my $read  = is_windows() ? "r + b" : "r";
-   my $fh = fopen("matrix", $write);
+   my $fh = gsl_fopen("matrix", 'w');
    is( gsl_matrix_fprintf($fh, $self->{matrix}, "%f"), 0);
-   fclose($fh);
+   ok_status(gsl_fclose($fh));
 
    for my $line (0..4) {
         map { gsl_matrix_set($self->{matrix}, $line, $_, $_**3) } (0..4); 
    }
 
-   $fh = fopen("matrix", $read);   
+   $fh = gsl_fopen("matrix", 'r');   
    
    is(gsl_matrix_fscanf($fh, $self->{matrix}), 0);
    for my $line (0..4) {
@@ -435,7 +433,7 @@ sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
                     [ map { $_**2 } (0..4) ],
                   );
    }
-   fclose($fh); 
+   ok_status(gsl_fclose($fh)); 
 }
 
 sub GSL_MATRIX_MINMAX_INDEX : Tests { 

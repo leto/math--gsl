@@ -110,14 +110,12 @@ sub GSL_BLAS_ZSWAP : Tests {
   $c = gsl_complex_rect(2,2);
   gsl_vector_complex_set($vec1,1, $c);
   $c = gsl_complex_rect(3,3);
-  print Dumper [ $c ]; 
   gsl_vector_complex_set($vec2,0, $c);
   $c = gsl_complex_rect(1,1); 
   gsl_vector_complex_set($vec2,1, $c);
 
   is(gsl_blas_zswap($vec1, $vec2), 0);
   $c = gsl_vector_complex_get($vec1,0);
-  print Dumper [ $c ];
 #  is( gsl_real($c), 3);
 #  is( gsl_imag($x), 3);
 }
@@ -306,7 +304,7 @@ sub GSL_BLAS_DSYR2 : Tests {
  gsl_matrix_set_zero($A->raw);
  map { gsl_matrix_set($A->raw, $_, 0, ($_+1)**2) } (0..2);
  map { gsl_matrix_set($A->raw, $_, 1, ($_+1)**2) } (1..2);
- gsl_matrix_set($A->raw, $_, 1, ($_+1)**2);
+ gsl_matrix_set($A->raw, 0, 1, (1)**2);
  gsl_matrix_set($A->raw, 0, 1, 4);
  gsl_matrix_set($A->raw, 0, 2, 9);
  gsl_matrix_set($A->raw, 1, 2, 9);

@@ -224,8 +224,10 @@ sub is_similar {
     } else {
         if( ref $similarity_function eq 'CODE') {
                $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
-        } else { 
+        } elsif( defined $x && defined $y) { 
             abs($x-$y) <= $eps ? return 1 : return 0;
+        } else {
+            return 0;
         }
     }
 }

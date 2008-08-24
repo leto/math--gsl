@@ -157,8 +157,8 @@ sub BINS : Tests {
 
 sub RESET : Tests {
     my $self = shift;
-    ok_status(gsl_histogram_shift($self->{H}, 2));
-    ok_status(gsl_histogram_reset($self->{H}));
+    gsl_histogram_shift($self->{H}, 2);
+    gsl_histogram_reset($self->{H});
     is_deeply( [ map { gsl_histogram_get($self->{H}, $_) } (0..99) ],
                [ (0) x 100 ]
     );

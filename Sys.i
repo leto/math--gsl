@@ -20,7 +20,6 @@ our @EXPORT_OK = qw/
                gsl_isnan 
                gsl_isinf 
                gsl_finite 
-               gsl_nan 
                gsl_posinf 
                gsl_neginf 
                gsl_fdiv 
@@ -68,8 +67,6 @@ Here is a list of all the functions in this module :
 =item * C<gsl_isinf($x)> - This function returns +1 if $x is positive infinity, -1 if $x is negative infinity and 0 otherwise.
 
 =item * C<gsl_finite($x)> - This function returns 1 if $x is a real number, and 0 if it is infinite or not-a-number.
-
-=item * C<gsl_nan >
 
 =item * C<gsl_posinf >
 

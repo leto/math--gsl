@@ -42,7 +42,7 @@ Math::GSL::Monte - Routines for multidimensional Monte Carlo integration
 
 This module is not yet implemented. Patches Welcome!
 
-use Math::GSL::Monte qw /:all/;
+    use Math::GSL::Monte qw /:all/;
 
 =head1 DESCRIPTION
 

@@ -1,5 +1,6 @@
 0.12 
     - Make platform check compile time constants for performance
+    - Initial Monte tests
 
 0.10 
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues

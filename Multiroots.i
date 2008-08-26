@@ -1,7 +1,7 @@
 %module "Math::GSL::Multiroots"
 %{
-#include "gsl/gsl_types.h"
-#include "gsl/gsl_multiroots.h"
+    #include "gsl/gsl_types.h"
+    #include "gsl/gsl_multiroots.h"
 %}
 
 %include "gsl/gsl_types.h"
@@ -29,6 +29,14 @@
                gsl_multiroot_fdfsolver_f 
                gsl_multiroot_test_delta 
                gsl_multiroot_test_residual 
+               $gsl_multiroot_fsolver_dnewton
+               $gsl_multiroot_fsolver_broyden
+               $gsl_multiroot_fsolver_hybrid
+               $gsl_multiroot_fsolver_hybrids
+               $gsl_multiroot_fdfsolver_newton
+               $gsl_multiroot_fdfsolver_gnewton
+               $gsl_multiroot_fdfsolver_hybridj
+               $gsl_multiroot_fdfsolver_hybridsj
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

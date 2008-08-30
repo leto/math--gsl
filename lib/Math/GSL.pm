@@ -41,7 +41,9 @@ Version 0.11_01
 
     use Math::GSL::Matrix qw/:all/;
     my $matrix = Math::GSL::Matrix->new(5,5);   # 5x5 zero matrix
-    $matrix->set_col(0, [1..5]) ->set_row(2, [5..9]); my @matrix = $matrix->as_list;              # matrix as Perl list
+    $matrix->set_col(0, [1..5])
+           ->set_row(2, [5..9]);
+    my @matrix = $matrix->as_list;              # matrix as Perl list
     my $gsl_matrix = $matrix->raw;              # underlying GSL object
 
 Each GSL subsystem has it's own module. For example, the random number generator

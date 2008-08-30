@@ -18,7 +18,6 @@
     }
 }
 
-
 %apply double const [] { double *data, double *dest, double *f_in, double *f_out, double data[] };
 %apply double const [] { double x[], double a[], double b[] };
 %apply double const [] { const double * x, const double * y, const double * w };
@@ -27,3 +26,4 @@
 %apply double const [] { const double xrange[], const double yrange[] };
 %apply double const [] { const double * array };
 %apply double const [] { const double data2[], const double w[] };
+%apply double const [] { float const *A, float const *B, float const *C, float *C};

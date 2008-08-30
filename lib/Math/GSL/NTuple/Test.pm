@@ -1,4 +1,5 @@
 package Math::GSL::NTuple::Test;
+use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More;
 use Test::Exception;

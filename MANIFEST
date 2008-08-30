@@ -26,6 +26,7 @@ Eigen.i
 Eigen_wrap.c
 Errno.i
 Errno_wrap.c
+examples/correlation
 examples/rng
 examples/sf/bessel
 examples/sf/bessel.png
@@ -97,10 +98,12 @@ lib/Math/GSL/Matrix/Test.pm
 lib/Math/GSL/Min.pm
 lib/Math/GSL/Min/Test.pm
 lib/Math/GSL/Monte.pm
+lib/Math/GSL/Monte/Test.pm
 lib/Math/GSL/Multifit.pm
 lib/Math/GSL/Multifit/Test.pm
 lib/Math/GSL/Multimin.pm
 lib/Math/GSL/Multiroots.pm
+lib/Math/GSL/Multiroots/Test.pm
 lib/Math/GSL/NTuple.pm
 lib/Math/GSL/NTuple/Test.pm
 lib/Math/GSL/ODEIV.pm
@@ -132,6 +135,7 @@ lib/Math/GSL/Sum.pm
 lib/Math/GSL/Sum/Test.pm
 lib/Math/GSL/Sys.pm
 lib/Math/GSL/Sys/Test.pm
+lib/Math/GSL/Test.pm
 lib/Math/GSL/Vector.pm
 lib/Math/GSL/Vector/Test.pm
 lib/Math/GSL/Wavelet.pm
@@ -214,7 +218,9 @@ t/Linalg.t
 t/Machine.t
 t/Matrix.t
 t/Min.t
+t/Monte.t
 t/Multifit.t
+t/Multiroots.t
 t/ODEIV.t
 t/Permutation.t
 t/Poly.t

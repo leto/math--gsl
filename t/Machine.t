@@ -1,6 +1,7 @@
 use Test::More tests=>2;
-use Math::GSL;
+use Math::GSL qw/:all/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::Test qw/:all/;
 use Data::Dumper;
 use strict;
 use warnings;

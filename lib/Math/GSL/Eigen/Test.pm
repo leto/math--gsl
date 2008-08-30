@@ -135,6 +135,7 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     $x = gsl_matrix_get($evec, 1, 0);
     ok_similar(gsl_matrix_get($evec, 1, 1), $x);
     ok_similar(sqrt($x**2+$x**2), 1);
+    use Math::GSL::Test qw/:all/;
 
     my $v1 = gsl_vector_alloc(2);
     my $v2 = gsl_vector_alloc(2);

@@ -1,6 +1,7 @@
 use Test::More 'no_plan';
 use Math::GSL qw/:all/;
 use Math::GSL::SF qw/:all/;
+use Math::GSL::Test qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;

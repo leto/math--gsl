@@ -1,5 +1,6 @@
 use Test::More 'no_plan';
 use Math::GSL qw/:all/;
+use Math::GSL::Test qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::CDF qw/:all/;
 use Math::GSL::Machine qw/:all/;

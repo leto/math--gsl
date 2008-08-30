@@ -1,4 +1,5 @@
 package Math::GSL::SF::Test;
+use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More 'no_plan';
 use Math::GSL qw/:all/;

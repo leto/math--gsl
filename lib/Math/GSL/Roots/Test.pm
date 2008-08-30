@@ -1,9 +1,10 @@
 package Math::GSL::Roots::Test;
+use strict;
 use base q{Test::Class};
 use Test::More;
+use Math::GSL        qw/:all/;
 use Math::GSL::Roots qw/:all/;
-use Math::GSL qw/is_similar/;
-use strict;
+use Math::GSL::Test  qw/:all/;
 
 sub make_fixture : Test(setup) {
     my $self = shift;

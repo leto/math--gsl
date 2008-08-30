@@ -141,6 +141,7 @@ sub is_similar_relative {
 
 sub ok_similar_relative {
     my ($x,$y, $msg, $eps,) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     ok(is_similar_relative($x,$y,$eps), $msg );
 }
 

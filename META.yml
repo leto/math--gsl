@@ -111,6 +111,12 @@ provides:
     file: lib/Math/GSL/Eigen.pm
   Math::GSL::Eigen::Test:
     file: lib/Math/GSL/Eigen/Test.pm
+  Math::GSL::Eigen::gsl_complex:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_complex_float:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_complex_long_double:
+    file: lib/Math/GSL/Eigen.pm
   Math::GSL::Eigen::gsl_eigen_francis_workspace:
     file: lib/Math/GSL/Eigen.pm
   Math::GSL::Eigen::gsl_eigen_gen_workspace:

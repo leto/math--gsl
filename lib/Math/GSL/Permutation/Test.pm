@@ -190,11 +190,11 @@ sub GSL_PERMUTATION_FPRINTF_FSCANF : Tests {
     local $TODO = "odd error with fscanf";
     $fh = gsl_fopen("permutation", 'r');
     my $p = gsl_permutation_alloc(6); 
-    #ok_status(gsl_permutation_fscanf($fh, $p)); 
+    ok_status(gsl_permutation_fscanf($fh, $p)); 
     is_deeply( [ map {gsl_permutation_get($p, $_) }  (0..5) ],
                [ 0 .. 5 ],
     );
-    ok_status(gsl_fclose($fh));
+    #ok_status(gsl_fclose($fh));
 }
 
 sub NEW: Tests { 

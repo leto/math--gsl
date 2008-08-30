@@ -45,7 +45,7 @@ sub GSL_BLAS_ZDOTU : Tests {
   $c = gsl_complex_rect(1,1);
   gsl_vector_complex_set($vec1,1,$c); 
   gsl_vector_complex_set($vec2,1,$c);
-  is(gsl_blas_zdotu($vec1, $vec2, $c),0);
+  ok_status(gsl_blas_zdotu($vec1, $vec2, $c));
   is(gsl_real($c), 3); 
   is(gsl_imag($c), 6);
 }
@@ -59,7 +59,7 @@ sub GSL_BLAS_ZDOTC : Tests {
   $c = gsl_complex_rect(1,1);
   gsl_vector_complex_set($vec1,1,$c); 
   gsl_vector_complex_set($vec2,1,$c);
-  is(gsl_blas_zdotc($vec1, $vec2, $c),0);
+  ok_status(gsl_blas_zdotc($vec1, $vec2, $c));
   is(gsl_real($c), 7); 
   is(gsl_imag($c), 0);
 }
@@ -102,7 +102,6 @@ sub GSL_BLAS_DSWAP : Tests {
 }
 
 sub GSL_BLAS_ZSWAP : Tests { 
-  local $TODO = "Problem with the output of gsl_vector_complex_get";
   my $vec1 = gsl_vector_complex_alloc(2);
   my $vec2 = gsl_vector_complex_alloc(2);
   my $c = gsl_complex_rect(5,4);
@@ -114,16 +113,17 @@ sub GSL_BLAS_ZSWAP : Tests {
   $c = gsl_complex_rect(1,1); 
   gsl_vector_complex_set($vec2,1, $c);
 
-  is(gsl_blas_zswap($vec1, $vec2), 0);
+  ok_status(gsl_blas_zswap($vec1, $vec2));
   $c = gsl_vector_complex_get($vec1,0);
-#  is( gsl_real($c), 3);
-#  is( gsl_imag($x), 3);
+  local $TODO = "Problem with the output of gsl_vector_complex_get";
+  #is( gsl_real($c), 3);
+  #is( gsl_imag($c), 3);
 }
 
 sub GSL_BLAS_DCOPY : Tests {
  my $vec1 = Math::GSL::Vector->new([0,1,2]);
  my $vec2 = Math::GSL::Vector->new(3);
- is(gsl_blas_dcopy($vec1->raw, $vec2->raw),0);
+ ok_status(gsl_blas_dcopy($vec1->raw, $vec2->raw));
  my @got = $vec2->as_list;
  map { is($got[$_], $_) } (0..2);
 }
@@ -131,11 +131,8 @@ sub GSL_BLAS_DCOPY : Tests {
 sub GSL_BLAS_DAXPY : Tests { 
  my $vec1 = Math::GSL::Vector->new([0,1,2]);
  my $vec2 = Math::GSL::Vector->new([2,3,4]);
- is(gsl_blas_daxpy(2,$vec1->raw, $vec2->raw),0);
- my @got = $vec2->as_list;
- is($got[0], 2);
- is($got[1], 5); 
- is($got[2], 8);
+ ok_status(gsl_blas_daxpy(2,$vec1->raw, $vec2->raw));
+ is_similar( [ $vec2->as_list ], [ 2, 5, 8 ] );
 }
 
 sub GSL_BLAS_DSCAL : Tests {
@@ -148,7 +145,7 @@ sub GSL_BLAS_DSCAL : Tests {
 sub GSL_BLAS_DROT : Tests {
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $y = Math::GSL::Vector->new([0,1,2]);
- is(gsl_blas_drot($x->raw,$y->raw,2,3),0);
+ ok_status(gsl_blas_drot($x->raw,$y->raw,2,3));
  ok_similar( [$x->as_list], [ 2,7,12], 'first vector');
  ok_similar( [$y->as_list], [-3,-4,-5], 'second vector');
 }
@@ -158,7 +155,7 @@ sub GSL_BLAS_DGER : Tests {
  my $y = Math::GSL::Vector->new([0,1,2]);
  my $A = Math::GSL::Matrix->new(3,3); 
  gsl_matrix_set_zero($A->raw);
- is(gsl_blas_dger(2, $x->raw, $y->raw, $A->raw),0);
+ ok_status(gsl_blas_dger(2, $x->raw, $y->raw, $A->raw));
  ok_similar([$A->row(0)->as_list], [0,2,4]);
  ok_similar([$A->row(1)->as_list], [0,4,8]);
  ok_similar([$A->row(2)->as_list], [0,6,12]);
@@ -179,7 +176,7 @@ sub GSL_BLAS_ZGERU : Tests {
  for (my $line=0; $line<2; $line++) {
  map { gsl_matrix_complex_set($A, $line, $_, $alpha) } (0..1); }
  $alpha = gsl_complex_rect(1,0);
- is(gsl_blas_zgeru($alpha, $x, $y, $A),0);
+ ok_status(gsl_blas_zgeru($alpha, $x, $y, $A));
  
  $alpha= gsl_matrix_complex_get($A, 0,0);
  ok_similar([gsl_parts($alpha)], [-2, 6]);
@@ -198,15 +195,11 @@ sub GSL_BLAS_DGEMV : Tests {
  my $y = Math::GSL::Vector->new([0,1,2]);
  my $A = Math::GSL::Matrix->new(3,3);
  gsl_matrix_set_identity($A->raw);
- is(gsl_blas_dgemv($CblasNoTrans, 2, $A->raw, $x->raw,2, $y->raw),0);
- my @got = $y->as_list;
- is($got[0], 2);
- is($got[1], 6);
- is($got[2], 10);
+ ok_status(gsl_blas_dgemv($CblasNoTrans, 2, $A->raw, $x->raw,2, $y->raw));
+ ok_similar( [ $y->as_list ], [  2, 6, 10 ] );
 }
 
 sub GSL_BLAS_DTRMV : Tests {
- local $TODO = "Problem with the output of gsl_vector_complex_get";
  my $x = Math::GSL::Vector->new([1,2,3]);
  my $A = Math::GSL::Matrix->new(3,3);
  gsl_matrix_set($A->raw, 0,0,3);
@@ -216,10 +209,7 @@ sub GSL_BLAS_DTRMV : Tests {
  gsl_matrix_set($A->raw, 0,2,3);
  gsl_matrix_set($A->raw, 1,2,4);
  is(gsl_blas_dtrmv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),0);
- my @got = $x->as_list;
- is($got[0], 3);
- is($got[1], 6);
- is($got[2], 9);
+ is_similar( [ $x->as_list ], [ 3, 6, 9 ] );
 }
 
 sub GSL_BLAS_DTRSV : Tests {
@@ -233,8 +223,7 @@ sub GSL_BLAS_DTRSV : Tests {
  map { gsl_matrix_set($A->raw, $_,3,$_); } (1..3);
  gsl_matrix_set($A->raw, 0,3,4);
  ok_status(gsl_blas_dtrsv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw),$GSL_SUCCESS);
- my @got = $x->as_list;
- ok_similar([@got], [40,-40/3,-80/3,-160/9]);
+ ok_similar([$x->as_list], [40,-40/3,-80/3,-160/9]);
 }
 
 sub GSL_BLAS_DROTG : Tests {
@@ -256,23 +245,19 @@ sub GSL_BLAS_DSYMV : Tests {
  gsl_matrix_set($A->raw, 0, 2, 3); 
  gsl_matrix_set($A->raw, 1, 2, 2); 
  gsl_matrix_set($A->raw, 2, 2, 1); 
- is(gsl_blas_dsymv($CblasLower, 2, $A->raw, $x->raw, 3, $y->raw),0);
- my @got = $y->as_list;
- ok_similar( [@got], [37,26,23]);
+ ok_status(gsl_blas_dsymv($CblasLower, 2, $A->raw, $x->raw, 3, $y->raw));
+ ok_similar( [$y->as_list], [37,26,23]);
 }
 
 sub GSL_BLAS_DSYR : Tests {
- my $x = Math::GSL::Vector->new([1,2,3]);
- my $A = Math::GSL::Matrix->new(3,3);
- gsl_matrix_set_zero($A->raw);
- 
- is(gsl_blas_dsyr($CblasLower, 2, $x->raw, $A->raw),0);
- my @got = $A->row(0)->as_list;
- ok_similar([ @got ], [2,0,0]);
- @got = $A->row(1)->as_list;
- ok_similar([ @got ], [4,8,0]);
- @got = $A->row(2)->as_list;
- ok_similar([ @got ], [6,12,18]);
+    my $x = Math::GSL::Vector->new([1,2,3]);
+    my $A = Math::GSL::Matrix->new(3,3);
+    gsl_matrix_set_zero($A->raw);
+
+    ok_status(gsl_blas_dsyr($CblasLower, 2, $x->raw, $A->raw));
+    ok_similar([ $A->row(0)->as_list ], [2,0,0]);
+    ok_similar([ $A->row(1)->as_list ], [4,8,0]);
+    ok_similar([ $A->row(2)->as_list ], [6,12,18]);
 }
 
 sub GSL_BLAS_ZHER : Tests {
@@ -594,11 +579,11 @@ sub GSL_BLAS_ZHER2K : Tests {
  $alpha = gsl_complex_rect(1,0);
 
  is(gsl_blas_zher2k($CblasUpper, $CblasNoTrans, $alpha, $A, $B, 1, $C),0);
- local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [50, 0]);
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
  ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [0, 0]);
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 0]);
+ local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [50, 0]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 0]);
 }
 
 sub GSL_BLAS_DSYR2K : Tests {
@@ -648,12 +633,12 @@ sub GSL_BLAS_ZSYR2K : Tests {
  $alpha = gsl_complex_rect(1,0);
  my $beta = gsl_complex_rect(1,0);
 
- is(gsl_blas_zsyr2k($CblasUpper, $CblasNoTrans, $alpha, $A, $B, $beta, $C),0);
- local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [46, 10]);
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
+ ok_status(gsl_blas_zsyr2k($CblasUpper, $CblasNoTrans, $alpha, $A, $B, $beta, $C));
  ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 0))], [0, 0]);
-# ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 4]);
+ local $TODO = "These results follow the formula given by the documentation, don't know why it fails";
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 0))], [46, 10]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 0, 1))], [34, 15]);
+ ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 4]);
 
 
 }

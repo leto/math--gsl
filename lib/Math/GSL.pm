@@ -12,6 +12,7 @@ use Config;
 use Test::More;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( ok_similar ok_status  is_similar
+                     ok_similar_relative
                      is_similar_relative verify verify_results 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
@@ -233,17 +234,24 @@ sub is_similar {
 }
 sub ok_status {
     my ($got, $expected) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     $expected ||= $GSL_SUCCESS;
     ok( $got == $expected, gsl_strerror(int($got)) );
 }
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     ok(is_similar($x,$y,$eps), $msg);
 }
 
 sub is_similar_relative {
     my ($x,$y, $eps) = @_;
     return is_similar($x,$y,$eps, sub { abs( ($_[0] - $_[1])/abs($_[1]) ) } );
+}
+
+sub ok_similar_relative {
+    my ($x,$y, $msg, $eps,) = @_;
+    ok(is_similar_relative($x,$y,$eps), $msg );
 }
 
 # this is a huge hack
@@ -254,6 +262,7 @@ sub verify_results
     my $factor   = 20; 
     my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
     my ($x,$res);
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$expected)=each %$results){
@@ -285,6 +294,7 @@ sub verify_results
 sub verify
 {
     my ($results,$class) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     croak "Usage: verify(%results, \$class)" unless $class;
     while (my($code,$result)=each %$results){
         my $x = eval qq{${class}::$code};

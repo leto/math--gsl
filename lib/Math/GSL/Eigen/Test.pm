@@ -201,13 +201,13 @@ sub GSL_EIGEN_NONSYMM : Tests {
     my $eigen  = gsl_eigen_nonsymm_alloc(2);
     my $vector = gsl_vector_complex_alloc(2);
     is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
-#    my $x = gsl_vector_complex_get($vector,0);
-#    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference
-#    is(gsl_imag($x), 0);   
 
-#    $x = gsl_vector_complex_get($vector,1);
-#    is(gsl_real($x), (47/2)-(0.5*sqrt(6861)) ); 
-#    is(gsl_imag($x), 0); 
+    my $x = gsl_vector_complex_real($vector);
+    my $y = gsl_vector_complex_imag($vector);
+
+    # this interface seems hokey
+    is_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
+    is_similar( gsl_vector_get($y->{vector}, 1), 0 );
 }
 
 sub GSL_EIGEN_NONSYMM_Z : Tests {
@@ -236,7 +236,6 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
 }
 
 sub GSL_EIGEN_NONSYMMV_Z : Tests {
-    local $TODO = "gsl_eigen_nonsymmv_z doesn't seem to output the same Z matrix than gsl_eigen_nonsymm_z...";   
     my $matrix  = gsl_matrix_alloc (2, 2);
     gsl_matrix_set($matrix, 0, 0, -12);
     gsl_matrix_set($matrix, 1, 0, 7);
@@ -247,35 +246,36 @@ sub GSL_EIGEN_NONSYMMV_Z : Tests {
     my $eigen  = gsl_eigen_nonsymmv_alloc(2);
     my $vector = gsl_vector_complex_alloc(2);
     my $Z = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_nonsymmv_Z($matrix,$vector, $evec, $Z, $eigen), 0);  
-    ok(is_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, 0.005));
-    ok(is_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, 0.1));
-    ok(is_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, 0.005));
-    ok(is_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610,0.1));
- 
-#    my $x = gsl_vector_complex_get($vector,0);
-#    is(gsl_real($x), (47/2)+(0.5*sqrt(6861)) ); # got an error here saying $x is not an hash reference
-#    is(gsl_imag($x), 0);   
+    ok_status(gsl_eigen_nonsymmv_Z($matrix,$vector, $evec, $Z, $eigen));  
 
-#    $x = gsl_vector_complex_get($vector,1);
-#    is(gsl_real($x), (47/2)-(0.5*sqrt(6861)) ); 
-#    is(gsl_imag($x), 0);
-#    
+    #ok_similar([ gsl_matrix_get($Z, 0, 0)], [0.9958842418254068860784291] );
+    #ok_similar([ gsl_matrix_get($Z, 0, 1)], [0.09063430301952179629793610] );
+    #ok_similar([ gsl_matrix_get($Z, 1, 1)], [0.9958842418254068860784291] );
+    #ok_similar([ gsl_matrix_get($Z, 1, 0)], [0.09063430301952179629793610] );
 
-     my $x = gsl_matrix_complex_get($evec, 1, 0);
-     is(gsl_imag($x), 0, "evec matrix");
-     ok_similar(gsl_real($x), 7/((71/2)+(.5*sqrt(6861))), "evec matrix", 0.01);
-     
-     $x = gsl_matrix_complex_get($evec, 0, 0);
-     is(gsl_imag($x), 0, "evec matrix");
-     ok_similar(gsl_real($x), 7/((71/2)-(.5*sqrt(6861))), "evec matrix", 0.19);
-     
-     $x = gsl_matrix_complex_get($evec, 0, 1);
-     is(gsl_imag($x), 0, "evec matrix");
-     is(gsl_real($x), 1); # this is the value I get with maple
-     
-     $x = gsl_matrix_complex_get($evec, 1, 1);
-     is(gsl_imag($x), 0, "evec matrix");
-     is(gsl_real($x), 1); # this is the value I get with maple
+    my $x = gsl_vector_complex_real($vector);
+    my $y = gsl_vector_complex_imag($vector);
+
+    # this interface seems hokey
+    is_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
+    is_similar( gsl_vector_get($y->{vector}, 1), 0 );
+
+    local $TODO = "matlab differences";
+
+    $x = gsl_matrix_complex_get($evec, 1, 0);
+    is(gsl_imag($x), 0, "evec matrix");
+    ok_similar(gsl_real($x), 7/((71/2)+(.5*sqrt(6861))), "evec matrix", 0.01);
+
+    $x = gsl_matrix_complex_get($evec, 0, 0);
+    is(gsl_imag($x), 0, "evec matrix");
+    ok_similar(gsl_real($x), 7/((71/2)-(.5*sqrt(6861))), "evec matrix", 0.19);
+
+    $x = gsl_matrix_complex_get($evec, 0, 1);
+    is(gsl_imag($x), 0, "evec matrix");
+    is(gsl_real($x), 1); # this is the value I get with maple
+
+    $x = gsl_matrix_complex_get($evec, 1, 1);
+    is(gsl_imag($x), 0, "evec matrix");
+    is(gsl_real($x), 1); # this is the value I get with maple
 }
 1;

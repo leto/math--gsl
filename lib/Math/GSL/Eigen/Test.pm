@@ -1,12 +1,13 @@
 package Math::GSL::Eigen::Test;
 use base q{Test::Class};
 use Test::More;
-use Math::GSL::Eigen qw/:all/;
-use Math::GSL::Matrix qw/:all/;
-use Math::GSL::Vector qw/:all/;
+use Math::GSL          qw/:all/;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Eigen   qw/:all/;
+use Math::GSL::Matrix  qw/:all/;
+use Math::GSL::Vector  qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Machine qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -135,7 +136,6 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     $x = gsl_matrix_get($evec, 1, 0);
     ok_similar(gsl_matrix_get($evec, 1, 1), $x);
     ok_similar(sqrt($x**2+$x**2), 1);
-    use Math::GSL::Test qw/:all/;
 
     my $v1 = gsl_vector_alloc(2);
     my $v2 = gsl_vector_alloc(2);

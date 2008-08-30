@@ -83,7 +83,7 @@ sub GSL_EIGEN_SYMM : Tests {
     my $m = gsl_matrix_alloc(2,2);
     gsl_matrix_set_identity($m);
     my $v = gsl_vector_alloc(2);
-    is(gsl_eigen_symm($m, $v, $self->{eigen}),0);
+    ok_status(gsl_eigen_symm($m, $v, $self->{eigen}));
     map { is(gsl_vector_get($v, $_), 1) } (0..1);
 }    
 
@@ -96,7 +96,7 @@ sub GSL_EIGEN_SYMMV : Tests {
     gsl_matrix_set($m, 1, 1, 2);
     my $eval = gsl_vector_alloc(2);
     my $evec = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_symmv($m, $eval, $evec, $w),0);
+    ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
     is(gsl_vector_get($eval, 0), 3);
     is(gsl_vector_get($eval, 1), 1);
     my $x = gsl_matrix_get($evec, 0, 0);
@@ -124,17 +124,17 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     gsl_matrix_set($m, 1, 1, 2);
     my $eval = gsl_vector_alloc(2);
     my $evec = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_symmv($m, $eval, $evec, $w),0);
-    is(gsl_eigen_symmv_sort ($eval, $evec, $GSL_EIGEN_SORT_VAL_ASC),0);
+    ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
+    ok_status(gsl_eigen_symmv_sort ($eval, $evec, $GSL_EIGEN_SORT_VAL_ASC));
     is(gsl_vector_get($eval, 0), 1);
     is(gsl_vector_get($eval, 1), 3);
     my $x = gsl_matrix_get($evec, 0, 0);
-    is (gsl_matrix_get($evec, 0, 1), -$x);
-    is (sqrt($x**2+$x**2), 1);
+    ok_similar(gsl_matrix_get($evec, 0, 1), -$x);
+    ok_similar(sqrt($x**2+$x**2), 1);
     
     $x = gsl_matrix_get($evec, 1, 0);
-    is (gsl_matrix_get($evec, 1, 1), $x);
-    is (sqrt($x**2+$x**2), 1);
+    ok_similar(gsl_matrix_get($evec, 1, 1), $x);
+    ok_similar(sqrt($x**2+$x**2), 1);
 
     my $v1 = gsl_vector_alloc(2);
     my $v2 = gsl_vector_alloc(2);

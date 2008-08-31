@@ -82,4 +82,18 @@ sub GSL_SORT_INDEX : Tests {
     ok_similar( $sorted, [ 3, 7, 5, 1, 2, 6, 4, 0 ] );
 }
 
+sub GSL_SORT_SMALLEST_INDEX : Tests {
+    my $self = shift;
+    my $p = [ 1 .. $#{$self->{data}} ];
+    my $sorted = gsl_sort_smallest_index($p, 3, $self->{data}, 1, $#{$self->{data}}+1 );
+    ok_similar( $sorted, [ 3, 7, 5 ] );
+}
+
+sub GSL_SORT_LARGEST_INDEX : Tests {
+    my $self = shift;
+    my $p = [ 1 .. $#{$self->{data}} ];
+    my $sorted = gsl_sort_largest_index($p, 3, $self->{data}, 1, $#{$self->{data}}+1 );
+    ok_similar( $sorted, [ 0,4,6 ] );
+}
+
 42;

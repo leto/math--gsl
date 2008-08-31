@@ -55,6 +55,19 @@
     argvi++;
 }
 
+%typemap(argout) (size_t * p, const size_t k, const double * src, const size_t stride, const size_t n)
+{
+    int i=0;
+    AV* tempav = newAV();
+    while( i < $2 ) {
+        av_push(tempav, newSVnv((size_t) $1[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+} 
+
 %apply double * { double *data, double *dest };
 
 %{

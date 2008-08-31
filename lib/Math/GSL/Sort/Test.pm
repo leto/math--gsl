@@ -64,7 +64,6 @@ sub GSL_SORT_SMALLEST : Tests {
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_smallest($out, 3, $x, 1, $#$x+1 );
    ok_status($status);
-   local $TODO = "gsl_sort_smallest doesn't output an array";
    ok_similar ( $sorted , [ -17, 0e0, 3e-10 ], 'gsl_sort_smallest' );     
 }
 
@@ -74,8 +73,7 @@ sub GSL_SORT_LARGEST : Tests {
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_largest($out, 3, $x, 1, $#$x+1 );
    ok_status($status);
-   local $TODO = "gsl_sort_largest doesn't output an array";
-   ok_similar ( $sorted , [ 4242, 6900, 2**15 ], 'gsl_sort_largest' );     
+   ok_similar ( $sorted , [ 2**15,  6900, 4242 ], 'gsl_sort_largest' );     
 }
 
 42;

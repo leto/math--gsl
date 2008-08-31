@@ -41,6 +41,18 @@
     $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
     argvi++;
 }
+%typemap(argout) (size_t * p, const size_t k, const gsl_vector * v)
+{
+    int i=0;
+    AV* tempav = newAV();
+    while( i < $2 ) {
+        av_push(tempav, newSVnv((double) $1[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+}
 
 %typemap(argout) (size_t * p, const double * data, const size_t stride, const size_t n)
 {

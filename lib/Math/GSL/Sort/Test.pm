@@ -50,7 +50,24 @@ sub GSL_SORT_VECTOR_INDEX : Tests {
   ok_status(gsl_sort_vector_index($p->raw, $vec->raw));
   # indices in ascending order
   ok_similar( [ $p->as_list ], [ 3, 1, 2, 0 , 4] );
+}
 
+sub GSL_SORT_VECTOR_SMALLEST_INDEX : Tests {
+    my $self   = shift;
+    my $p      = [ 1 .. $#{$self->{data}} ];
+    my $vector = Math::GSL::Vector->new([4,2,3,1,5]);
+    my ($status, $stuff) = gsl_sort_vector_smallest_index($p, 3, $vector->raw);
+    ok_status($status);
+    ok_similar( $stuff , [ 3, 1, 2] );
+}
+
+sub GSL_SORT_VECTOR_LARGEST_INDEX : Tests {
+    my $self   = shift;
+    my $p      = [ 1 .. $#{$self->{data}} ];
+    my $vector = Math::GSL::Vector->new([4,2,3,1,5]);
+    my ($status, $stuff) = gsl_sort_vector_largest_index($p, 3, $vector->raw);
+    ok_status($status);
+    ok_similar( $stuff , [ 4,0,2] );
 }
 
 sub GSL_SORT : Tests {

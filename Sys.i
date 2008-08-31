@@ -29,6 +29,9 @@ our @EXPORT_OK = qw/
                gsl_ldexp 
                gsl_frexp 
                gsl_fcmp 
+               gsl_nan
+               gsl_isnan
+               gsl_inf
              /;
 
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );

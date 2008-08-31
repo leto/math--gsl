@@ -13,7 +13,7 @@ use Config;
 use Test::More;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( 
-                     gsl_inf gsl_fopen gsl_fclose gsl_nan
+                     gsl_fopen gsl_fclose 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
                    );
@@ -198,16 +198,6 @@ sub subsystems
         Deriv        Linalg       Permutation   Spline
     /;
 }
-sub gsl_inf
-{ 
-    is_windows() ?  unpack 'd', scalar reverse pack 'H*', '7FF0000000000000' 
-                 : q{inf}
-}
-sub gsl_nan
-{
-    is_windows() ? unpack 'd', scalar reverse pack 'H*', '7FF8000000000000' 
-                 : q{nan}
-             }
 sub gsl_fopen
 {
     my ($file, $mode) = @_;

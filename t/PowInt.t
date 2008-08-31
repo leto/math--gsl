@@ -3,6 +3,7 @@ use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL::PowInt qw/:all/;
+use Math::GSL::Sys qw/gsl_posinf gsl_nan/; 
 use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
@@ -30,10 +31,13 @@ sub TEST_BASIC: Tests {
 
 sub TEST_NAN_INF : Tests {
     my $self = shift; 
+    $main::nan    = gsl_nan();
+    $main::posinf = gsl_posinf();
     my %results = (
-        q{gsl_pow_2('nan')} => gsl_nan(),
-        q{gsl_pow_2('inf')} => gsl_inf(),
+        q{gsl_pow_2($main::nan)}    => gsl_nan(),
+        q{gsl_pow_2($main::posinf)} => gsl_posinf(),
     );
     verify(\%results,'Math::GSL::PowInt');
 }
+
 Test::Class->runtests;

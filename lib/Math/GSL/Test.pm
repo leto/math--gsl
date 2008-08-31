@@ -7,6 +7,7 @@ use Test::More;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
+use Math::GSL::Sys qw/gsl_nan gsl_isnan gsl_isinf/;
 use Carp qw/croak/;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( 
@@ -41,7 +42,7 @@ sub is_similar {
             return 0;
         } else {
             map { 
-                    my $delta = abs($x->[$_] - $y->[$_]);
+                    my $delta = (gsl_isnan($x->[$_]) or gsl_isnan($y->[$_])) ? gsl_nan() : abs($x->[$_] - $y->[$_]);
                     if($delta > $eps){
                         warn "\n\tElements start differing at index $_, delta = $delta\n";
                         warn qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
@@ -55,7 +56,8 @@ sub is_similar {
         if( ref $similarity_function eq 'CODE') {
                $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
         } elsif( defined $x && defined $y) { 
-            abs($x-$y) <= $eps ? return 1 : return 0;
+            my $delta = (gsl_isnan($x) or gsl_isnan($y)) ? gsl_nan() : abs($x-$y);
+            $delta > $eps ? return 0 : return 1;
         } else {
             return 0;
         }
@@ -91,9 +93,11 @@ sub verify_results
                 printf "difference : %.18g\n", $res;
                 printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
             }
-            if ($x =~ /nan|inf/i) {
-                    ok( $expected eq $x, "'$expected'?='$x'" );
-            } else { 
+            if (gsl_isnan($x)) {
+                    ok( gsl_isnan($expected), "'$expected'?='$x'" );
+            } elsif(gsl_isinf($x)) { 
+                    ok( gsl_isinf($expected), "'$expected'?='$x'" );
+            } else {
                 ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
             }
         }

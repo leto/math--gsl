@@ -2,6 +2,8 @@
 
 =head2 List of Things that you can do to help Math::GSL
 
+* Move tests out of lib/Math/GSL/*/Test.pm and put directly in t/*.t
+
 * Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris
 
 * Submit examples showing the use of Math::GSL to do everyday calculations

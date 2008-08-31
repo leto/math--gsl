@@ -1,12 +1,21 @@
 0.12 
     - Make platform check compile time constants for performance
+        aka The Wilhelm Speedup (thanks to Eric Wilhelm <scratchcomputing@gmail.com>)
     - Initial Monte tests
+    - Initial Multiroots tests
+    - More nan/inf fixes on MSWin32 from <sisyphus@cpan.org>
+    - Stripping of binaries on Windows, which significantly reduces size
+        from <sisyphus@cpan.org>
+    - Full support and tests for all functions in the Sort subsystem
+    - Added 'examples/benchmark/sort' to show performance of gsl_sort()
 
 0.10 
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues
+
 0.08
     - Large documentation improvements
     - MSWin32 support thanks to testing and feedback from <sisyphus@cpan.org>
+
 0.07 
     - Initial CPAN release
     

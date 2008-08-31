@@ -26,6 +26,7 @@ Eigen.i
 Eigen_wrap.c
 Errno.i
 Errno_wrap.c
+examples/benchmark/sort
 examples/correlation
 examples/rng
 examples/sf/bessel
@@ -113,7 +114,6 @@ lib/Math/GSL/Permutation/Test.pm
 lib/Math/GSL/Poly.pm
 lib/Math/GSL/Poly/Test.pm
 lib/Math/GSL/PowInt.pm
-lib/Math/GSL/PowInt/Test.pm
 lib/Math/GSL/QRNG.pm
 lib/Math/GSL/QRNG/Test.pm
 lib/Math/GSL/Randist.pm
@@ -245,4 +245,3 @@ Wavelet2D.i
 Wavelet2D_wrap.c
 Wavelet_wrap.c
 xt/01-portability-files.t
-t/NTuple.disabled

@@ -13,7 +13,7 @@ requires:
   Test::Class: 0.12
   Test::Exception: 0.21
   Test::More: 0
-  perl: 5.8.8
+  perl: 5.8.0
   version: 0
 provides:
   Math::GSL:
@@ -279,6 +279,8 @@ provides:
     file: lib/Math/GSL/Min.pm
   Math::GSL::Monte:
     file: lib/Math/GSL/Monte.pm
+  Math::GSL::Monte::Test:
+    file: lib/Math/GSL/Monte/Test.pm
   Math::GSL::Monte::gsl_monte_function_struct:
     file: lib/Math/GSL/Monte.pm
   Math::GSL::Monte::gsl_monte_miser_state:
@@ -327,6 +329,8 @@ provides:
     file: lib/Math/GSL/Multimin.pm
   Math::GSL::Multiroots:
     file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::Test:
+    file: lib/Math/GSL/Multiroots/Test.pm
   Math::GSL::Multiroots::gsl_multiroot_fdfsolver:
     file: lib/Math/GSL/Multiroots.pm
   Math::GSL::Multiroots::gsl_multiroot_fdfsolver_type:
@@ -395,8 +399,6 @@ provides:
     file: lib/Math/GSL/Poly.pm
   Math::GSL::PowInt:
     file: lib/Math/GSL/PowInt.pm
-  Math::GSL::PowInt::Test:
-    file: lib/Math/GSL/PowInt/Test.pm
   Math::GSL::PowIntc:
     file: lib/Math/GSL/PowInt.pm
   Math::GSL::QRNG:
@@ -497,6 +499,8 @@ provides:
     file: lib/Math/GSL/Sys/Test.pm
   Math::GSL::Sysc:
     file: lib/Math/GSL/Sys.pm
+  Math::GSL::Test:
+    file: lib/Math/GSL/Test.pm
   Math::GSL::Vector:
     file: lib/Math/GSL/Vector.pm
   Math::GSL::Vector::Test:

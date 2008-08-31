@@ -13,6 +13,8 @@ use strict;
 BEGIN { gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
+    my $self = shift;
+    $self->{data} = [ 2**15, 1, 42.7, -17, 6900, 3e-10 , 4242, 0e0];
 }
 
 sub teardown : Test(teardown) {
@@ -52,28 +54,32 @@ sub GSL_SORT_VECTOR_INDEX : Tests {
 }
 
 sub GSL_SORT : Tests {
-   my $x = [ 2**15, 1, 42.7, -17, 6900, 3e-10 , 4242, 0e0];
-   # size of $x should not have to be passed in
-   my $sorted = gsl_sort($x, 1, $#$x+1 );
+   my $self = shift;
+   my $sorted = gsl_sort($self->{data}, 1, $#{$self->{data}} + 1 );
    ok_similar ( $sorted , [ -17, 0e0, 3e-10, 1, 42.7, 4242, 6900, 2**15 ], 'gsl_sort' );    
 }
 
 sub GSL_SORT_SMALLEST : Tests {
-   my $x = [ 2**15, 1, 42.7, -17, 6900, 3e-10 , 4242, 0e0];
-   # size of $x should not have to be passed in
+   my $self = shift;
    my $out = [1..10];
-   my ($status, $sorted) = gsl_sort_smallest($out, 3, $x, 1, $#$x+1 );
+   my ($status, $sorted) = gsl_sort_smallest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
    ok_status($status);
    ok_similar ( $sorted , [ -17, 0e0, 3e-10 ], 'gsl_sort_smallest' );     
 }
 
 sub GSL_SORT_LARGEST : Tests {
-   my $x = [ 2**15, 1, 42.7, -17, 6900, 3e-10 , 4242, 0e0];
-   # size of $x should not have to be passed in
+   my $self = shift;
    my $out = [1..10];
-   my ($status, $sorted) = gsl_sort_largest($out, 3, $x, 1, $#$x+1 );
+   my ($status, $sorted) = gsl_sort_largest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
    ok_status($status);
    ok_similar ( $sorted , [ 2**15,  6900, 4242 ], 'gsl_sort_largest' );     
+}
+
+sub GSL_SORT_INDEX : Tests {
+    my $self = shift;
+    my $p = [ 1 .. $#{$self->{data}} ];
+    my $sorted = gsl_sort_index($p, $self->{data}, 1, $#{$self->{data}}+1 );
+    ok_similar( $sorted, [ 3, 7, 5, 1, 2, 6, 4, 0 ] );
 }
 
 42;

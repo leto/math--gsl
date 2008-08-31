@@ -152,6 +152,10 @@ sub link_c {
     my @lddlflags = $self->split_like_shell($cf->{lddlflags}); 
     my @shrp = $self->split_like_shell($cf->{shrpenv});
     my @ld = $self->split_like_shell($cf->{ld}) || "gcc";
+
+    # Strip binaries if we are compiling on windows
+    push @ld, "-s" if (is_windows() && $Config{cc} eq 'gcc');
+
     $self->do_system(@shrp, @ld, @lddlflags, @user_libs, '-o', $lib_file,
 		     $obj_file, @$objects, @linker_flags)
       or die "error building $lib_file file from '$obj_file'";
@@ -367,7 +371,7 @@ my $builder = $class->new(
         'Test::Exception'       =>    0.21,
         'Test::Class'           =>    0.12,
         version                 =>       0,
-    	perl 			        =>  '5.8.8',
+    	perl 			        =>  '5.8.0',
     },
     sign                  => 0,
     swig_source           => [  

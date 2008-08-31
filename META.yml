@@ -21,8 +21,6 @@ provides:
     version: 0.11_01
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
-  Math::GSL::BLAS::Test:
-    file: lib/Math/GSL/BLAS/Test.pm
   Math::GSL::BLASc:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BSpline:
@@ -33,8 +31,6 @@ provides:
     file: lib/Math/GSL/BSpline.pm
   Math::GSL::CBLAS:
     file: lib/Math/GSL/CBLAS.pm
-  Math::GSL::CBLAS::Test:
-    file: lib/Math/GSL/CBLAS/Test.pm
   Math::GSL::CBLASc:
     file: lib/Math/GSL/CBLAS.pm
   Math::GSL::CDF:
@@ -49,16 +45,12 @@ provides:
     file: lib/Math/GSL/Chebyshev.pm
   Math::GSL::Combination:
     file: lib/Math/GSL/Combination.pm
-  Math::GSL::Combination::Test:
-    file: lib/Math/GSL/Combination/Test.pm
   Math::GSL::Combination::gsl_combination_struct:
     file: lib/Math/GSL/Combination.pm
   Math::GSL::Combinationc:
     file: lib/Math/GSL/Combination.pm
   Math::GSL::Complex:
     file: lib/Math/GSL/Complex.pm
-  Math::GSL::Complex::Test:
-    file: lib/Math/GSL/Complex/Test.pm
   Math::GSL::Complex::gsl_complex:
     file: lib/Math/GSL/Complex.pm
   Math::GSL::Complex::gsl_complex_float:
@@ -69,8 +61,6 @@ provides:
     file: lib/Math/GSL/Complex.pm
   Math::GSL::Const:
     file: lib/Math/GSL/Const.pm
-  Math::GSL::Const::Test:
-    file: lib/Math/GSL/Const/Test.pm
   Math::GSL::Const::gsl_function_fdf_struct:
     file: lib/Math/GSL/Const.pm
   Math::GSL::Const::gsl_function_struct:
@@ -85,16 +75,12 @@ provides:
     file: lib/Math/GSL/DFT.pm
   Math::GSL::DHT:
     file: lib/Math/GSL/DHT.pm
-  Math::GSL::DHT::Test:
-    file: lib/Math/GSL/DHT/Test.pm
   Math::GSL::DHT::gsl_dht_struct:
     file: lib/Math/GSL/DHT.pm
   Math::GSL::DHTc:
     file: lib/Math/GSL/DHT.pm
   Math::GSL::Deriv:
     file: lib/Math/GSL/Deriv.pm
-  Math::GSL::Deriv::Test:
-    file: lib/Math/GSL/Deriv/Test.pm
   Math::GSL::Deriv::gsl_function_fdf_struct:
     file: lib/Math/GSL/Deriv.pm
   Math::GSL::Deriv::gsl_function_struct:
@@ -109,8 +95,6 @@ provides:
     file: lib/Math/GSL/Diff.pm
   Math::GSL::Eigen:
     file: lib/Math/GSL/Eigen.pm
-  Math::GSL::Eigen::Test:
-    file: lib/Math/GSL/Eigen/Test.pm
   Math::GSL::Eigen::gsl_complex:
     file: lib/Math/GSL/Eigen.pm
   Math::GSL::Eigen::gsl_complex_float:
@@ -147,14 +131,10 @@ provides:
     file: lib/Math/GSL/Eigen.pm
   Math::GSL::Errno:
     file: lib/Math/GSL/Errno.pm
-  Math::GSL::Errno::Test:
-    file: lib/Math/GSL/Errno/Test.pm
   Math::GSL::Errnoc:
     file: lib/Math/GSL/Errno.pm
   Math::GSL::FFT:
     file: lib/Math/GSL/FFT.pm
-  Math::GSL::FFT::Test:
-    file: lib/Math/GSL/FFT/Test.pm
   Math::GSL::FFT::gsl_complex:
     file: lib/Math/GSL/FFT.pm
   Math::GSL::FFT::gsl_complex_float:
@@ -175,8 +155,6 @@ provides:
     file: lib/Math/GSL/FFT.pm
   Math::GSL::Fit:
     file: lib/Math/GSL/Fit.pm
-  Math::GSL::Fit::Test:
-    file: lib/Math/GSL/Fit/Test.pm
   Math::GSL::Fitc:
     file: lib/Math/GSL/Fit.pm
   Math::GSL::Heapsort:
@@ -187,16 +165,12 @@ provides:
     file: lib/Math/GSL/Histogram.pm
   Math::GSL::Histogram2D:
     file: lib/Math/GSL/Histogram2D.pm
-  Math::GSL::Histogram2D::Test:
-    file: lib/Math/GSL/Histogram2D/Test.pm
   Math::GSL::Histogram2D::gsl_histogram2d:
     file: lib/Math/GSL/Histogram2D.pm
   Math::GSL::Histogram2D::gsl_histogram2d_pdf:
     file: lib/Math/GSL/Histogram2D.pm
   Math::GSL::Histogram2Dc:
     file: lib/Math/GSL/Histogram2D.pm
-  Math::GSL::Histogram::Test:
-    file: lib/Math/GSL/Histogram/Test.pm
   Math::GSL::Histogram::gsl_histogram:
     file: lib/Math/GSL/Histogram.pm
   Math::GSL::Histogram::gsl_histogram_pdf:
@@ -223,8 +197,6 @@ provides:
     file: lib/Math/GSL/Integration.pm
   Math::GSL::Interp:
     file: lib/Math/GSL/Interp.pm
-  Math::GSL::Interp::Test:
-    file: lib/Math/GSL/Interp/Test.pm
   Math::GSL::Interp::gsl_interp:
     file: lib/Math/GSL/Interp.pm
   Math::GSL::Interp::gsl_interp_accel:
@@ -235,8 +207,6 @@ provides:
     file: lib/Math/GSL/Interp.pm
   Math::GSL::Linalg:
     file: lib/Math/GSL/Linalg.pm
-  Math::GSL::Linalg::Test:
-    file: lib/Math/GSL/Linalg/Test.pm
   Math::GSL::Linalg::gsl_permutation_struct:
     file: lib/Math/GSL/Linalg.pm
   Math::GSL::Linalgc:
@@ -247,8 +217,6 @@ provides:
     file: lib/Math/GSL/Machine.pm
   Math::GSL::Matrix:
     file: lib/Math/GSL/Matrix.pm
-  Math::GSL::Matrix::Test:
-    file: lib/Math/GSL/Matrix/Test.pm
   Math::GSL::Matrix::gsl_complex:
     file: lib/Math/GSL/Matrix.pm
   Math::GSL::Matrix::gsl_complex_float:
@@ -269,8 +237,6 @@ provides:
     file: lib/Math/GSL/Matrix.pm
   Math::GSL::Min:
     file: lib/Math/GSL/Min.pm
-  Math::GSL::Min::Test:
-    file: lib/Math/GSL/Min/Test.pm
   Math::GSL::Min::gsl_min_fminimizer:
     file: lib/Math/GSL/Min.pm
   Math::GSL::Min::gsl_min_fminimizer_type:
@@ -279,8 +245,6 @@ provides:
     file: lib/Math/GSL/Min.pm
   Math::GSL::Monte:
     file: lib/Math/GSL/Monte.pm
-  Math::GSL::Monte::Test:
-    file: lib/Math/GSL/Monte/Test.pm
   Math::GSL::Monte::gsl_monte_function_struct:
     file: lib/Math/GSL/Monte.pm
   Math::GSL::Monte::gsl_monte_miser_state:
@@ -293,8 +257,6 @@ provides:
     file: lib/Math/GSL/Monte.pm
   Math::GSL::Multifit:
     file: lib/Math/GSL/Multifit.pm
-  Math::GSL::Multifit::Test:
-    file: lib/Math/GSL/Multifit/Test.pm
   Math::GSL::Multifit::gsl_multifit_fdfsolver:
     file: lib/Math/GSL/Multifit.pm
   Math::GSL::Multifit::gsl_multifit_fdfsolver_type:
@@ -329,8 +291,6 @@ provides:
     file: lib/Math/GSL/Multimin.pm
   Math::GSL::Multiroots:
     file: lib/Math/GSL/Multiroots.pm
-  Math::GSL::Multiroots::Test:
-    file: lib/Math/GSL/Multiroots/Test.pm
   Math::GSL::Multiroots::gsl_multiroot_fdfsolver:
     file: lib/Math/GSL/Multiroots.pm
   Math::GSL::Multiroots::gsl_multiroot_fdfsolver_type:
@@ -347,8 +307,6 @@ provides:
     file: lib/Math/GSL/Multiroots.pm
   Math::GSL::NTuple:
     file: lib/Math/GSL/NTuple.pm
-  Math::GSL::NTuple::Test:
-    file: lib/Math/GSL/NTuple/Test.pm
   Math::GSL::NTuple::gsl_ntuple:
     file: lib/Math/GSL/NTuple.pm
   Math::GSL::NTuple::gsl_ntuple_select_fn:
@@ -359,8 +317,6 @@ provides:
     file: lib/Math/GSL/NTuple.pm
   Math::GSL::ODEIV:
     file: lib/Math/GSL/ODEIV.pm
-  Math::GSL::ODEIV::Test:
-    file: lib/Math/GSL/ODEIV/Test.pm
   Math::GSL::ODEIV::gsl_odeiv_control:
     file: lib/Math/GSL/ODEIV.pm
   Math::GSL::ODEIV::gsl_odeiv_control_type:
@@ -377,16 +333,12 @@ provides:
     file: lib/Math/GSL/ODEIV.pm
   Math::GSL::Permutation:
     file: lib/Math/GSL/Permutation.pm
-  Math::GSL::Permutation::Test:
-    file: lib/Math/GSL/Permutation/Test.pm
   Math::GSL::Permutation::gsl_permutation_struct:
     file: lib/Math/GSL/Permutation.pm
   Math::GSL::Permutationc:
     file: lib/Math/GSL/Permutation.pm
   Math::GSL::Poly:
     file: lib/Math/GSL/Poly.pm
-  Math::GSL::Poly::Test:
-    file: lib/Math/GSL/Poly/Test.pm
   Math::GSL::Poly::gsl_complex:
     file: lib/Math/GSL/Poly.pm
   Math::GSL::Poly::gsl_complex_float:
@@ -403,8 +355,6 @@ provides:
     file: lib/Math/GSL/PowInt.pm
   Math::GSL::QRNG:
     file: lib/Math/GSL/QRNG.pm
-  Math::GSL::QRNG::Test:
-    file: lib/Math/GSL/QRNG/Test.pm
   Math::GSL::QRNG::gsl_qrng:
     file: lib/Math/GSL/QRNG.pm
   Math::GSL::QRNG::gsl_qrng_type:
@@ -413,8 +363,6 @@ provides:
     file: lib/Math/GSL/QRNG.pm
   Math::GSL::RNG:
     file: lib/Math/GSL/RNG.pm
-  Math::GSL::RNG::Test:
-    file: lib/Math/GSL/RNG/Test.pm
   Math::GSL::RNG::gsl_rng:
     file: lib/Math/GSL/RNG.pm
   Math::GSL::RNG::gsl_rng_type:
@@ -423,16 +371,12 @@ provides:
     file: lib/Math/GSL/RNG.pm
   Math::GSL::Randist:
     file: lib/Math/GSL/Randist.pm
-  Math::GSL::Randist::Test:
-    file: lib/Math/GSL/Randist/Test.pm
   Math::GSL::Randist::gsl_ran_discrete_t:
     file: lib/Math/GSL/Randist.pm
   Math::GSL::Randistc:
     file: lib/Math/GSL/Randist.pm
   Math::GSL::Roots:
     file: lib/Math/GSL/Roots.pm
-  Math::GSL::Roots::Test:
-    file: lib/Math/GSL/Roots/Test.pm
   Math::GSL::Roots::gsl_root_fdfsolver:
     file: lib/Math/GSL/Roots.pm
   Math::GSL::Roots::gsl_root_fdfsolver_type:
@@ -445,8 +389,6 @@ provides:
     file: lib/Math/GSL/Roots.pm
   Math::GSL::SF:
     file: lib/Math/GSL/SF.pm
-  Math::GSL::SF::Test:
-    file: lib/Math/GSL/SF/Test.pm
   Math::GSL::SF::gsl_sf_mathieu_workspace:
     file: lib/Math/GSL/SF.pm
   Math::GSL::SF::gsl_sf_result_e10_struct:
@@ -463,30 +405,22 @@ provides:
     file: lib/Math/GSL/Siman.pm
   Math::GSL::Sort:
     file: lib/Math/GSL/Sort.pm
-  Math::GSL::Sort::Test:
-    file: lib/Math/GSL/Sort/Test.pm
   Math::GSL::Sort::gsl_permutation_struct:
     file: lib/Math/GSL/Sort.pm
   Math::GSL::Sortc:
     file: lib/Math/GSL/Sort.pm
   Math::GSL::Spline:
     file: lib/Math/GSL/Spline.pm
-  Math::GSL::Spline::Test:
-    file: lib/Math/GSL/Spline/Test.pm
   Math::GSL::Spline::gsl_spline:
     file: lib/Math/GSL/Spline.pm
   Math::GSL::Splinec:
     file: lib/Math/GSL/Spline.pm
   Math::GSL::Statistics:
     file: lib/Math/GSL/Statistics.pm
-  Math::GSL::Statistics::Test:
-    file: lib/Math/GSL/Statistics/Test.pm
   Math::GSL::Statisticsc:
     file: lib/Math/GSL/Statistics.pm
   Math::GSL::Sum:
     file: lib/Math/GSL/Sum.pm
-  Math::GSL::Sum::Test:
-    file: lib/Math/GSL/Sum/Test.pm
   Math::GSL::Sum::gsl_sum_levin_u_workspace:
     file: lib/Math/GSL/Sum.pm
   Math::GSL::Sum::gsl_sum_levin_utrunc_workspace:
@@ -495,16 +429,10 @@ provides:
     file: lib/Math/GSL/Sum.pm
   Math::GSL::Sys:
     file: lib/Math/GSL/Sys.pm
-  Math::GSL::Sys::Test:
-    file: lib/Math/GSL/Sys/Test.pm
   Math::GSL::Sysc:
     file: lib/Math/GSL/Sys.pm
-  Math::GSL::Test:
-    file: lib/Math/GSL/Test.pm
   Math::GSL::Vector:
     file: lib/Math/GSL/Vector.pm
-  Math::GSL::Vector::Test:
-    file: lib/Math/GSL/Vector/Test.pm
   Math::GSL::Vector::gsl_vector:
     file: lib/Math/GSL/Vector.pm
   Math::GSL::Vector::gsl_vector_char:
@@ -519,12 +447,8 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Wavelet2D:
     file: lib/Math/GSL/Wavelet2D.pm
-  Math::GSL::Wavelet2D:Test:
-    file: lib/Math/GSL/Wavelet2D/Test.pm
   Math::GSL::Wavelet2Dc:
     file: lib/Math/GSL/Wavelet2D.pm
-  Math::GSL::Wavelet::Test:
-    file: lib/Math/GSL/Wavelet/Test.pm
   Math::GSL::Wavelet::gsl_wavelet:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Wavelet::gsl_wavelet_type:

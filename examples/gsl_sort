@@ -1,0 +1,8 @@
+#!/usr/bin/perl -w
+use strict;
+use Math::GSL::Sort qw/gsl_sort/;
+my @lines;
+push @lines, $_ while (<>);
+
+my $sorted = gsl_sort(\@lines,1, $#lines +1 );
+print join("\n", @$sorted) . "\n";

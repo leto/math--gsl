@@ -2,51 +2,7 @@
 // Danger Will Robinson, for realz!
 
 %include "typemaps.i"
-%{
-    static HV * Callbacks = (HV*)NULL;
-    /* this function returns the value 
-        of evaluating the function pointer
-        stored in func
-    */
-    double callthis(double x , int func, void *params){
-        SV ** sv;
-        double y;
-        //fprintf(stderr, "LOOKUP CALLBACK\n");
-        sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
-        if (sv == (SV**)NULL)
-            croak("Math::GSL(callthis) : Missing callback!\n");
-
-        dSP;
-        PUSHMARK(SP);
-        XPUSHs(sv_2mortal(newSVnv((double)x)));
-        PUTBACK;
-        call_sv(*sv, G_SCALAR);
-        y = POPn;
-        //fprintf(stderr,"y=%f\n", y);
-        return y;
-    }
-%}
-%apply double * OUTPUT { double *abserr, double *result };
-%typemap(in) gsl_function const * {
-    fprintf(stderr,"typemap in!\n");
-    gsl_function F;
-    int count;
-    F.params = &$input;
-    F.function = &callthis;
-    SV ** callback;
-    double x;
-
-    if (!SvROK($input)) {
-        croak("Math::GSL : not a reference value!");
-    }
-    if (Callbacks == (HV*)NULL)
-        Callbacks = newHV();
-    //fprintf(stderr,"STORE CALLBACK\n");
-    hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
-
-    //Perl_sv_dump( $input );
-    $1 = &F;
-};
+%include "gsl_typemaps.i"
 %typemap(argout) (const gsl_function *f,
                        double x, double h,
                        double *result, double *abserr) {

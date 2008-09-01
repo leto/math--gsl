@@ -28,6 +28,7 @@ Errno.i
 Errno_wrap.c
 examples/benchmark/sort
 examples/correlation
+examples/gsl_sort
 examples/rng
 examples/sf/bessel
 examples/sf/bessel.png
@@ -175,6 +176,7 @@ t/Fit.t
 t/GSL.t
 t/Histogram.t
 t/Histogram2D.t
+t/Integration.t
 t/Interp.t
 t/Linalg.t
 t/Machine.t

@@ -29,3 +29,50 @@
 %apply double const [] { const double * array };
 %apply double const [] { const double data2[], const double w[] };
 %apply double const [] { float const *A, float const *B, float const *C, float *C};
+
+%apply double * OUTPUT { double *abserr, double *result };
+%{
+    static HV * Callbacks = (HV*)NULL;
+    /* this function returns the value 
+        of evaluating the function pointer
+        stored in func
+    */
+    double callthis(double x , int func, void *params){
+        SV ** sv;
+        double y;
+        //fprintf(stderr, "LOOKUP CALLBACK\n");
+        sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
+        if (sv == (SV**)NULL)
+            croak("Math::GSL(callthis) : Missing callback!\n");
+
+        dSP;
+        PUSHMARK(SP);
+        XPUSHs(sv_2mortal(newSVnv((double)x)));
+        PUTBACK;
+        call_sv(*sv, G_SCALAR);
+        y = POPn;
+        //fprintf(stderr,"y=%f\n", y);
+        return y;
+    }
+%}
+%typemap(in) gsl_function const * {
+    fprintf(stderr,"typemap in!\n");
+    gsl_function F;
+    int count;
+    F.params = &$input;
+    F.function = &callthis;
+    SV ** callback;
+    double x;
+
+    if (!SvROK($input)) {
+        croak("Math::GSL : not a reference value!");
+    }
+    if (Callbacks == (HV*)NULL)
+        Callbacks = newHV();
+    //fprintf(stderr,"STORE CALLBACK\n");
+    hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
+
+    //Perl_sv_dump( $input );
+    $1 = &F;
+};
+

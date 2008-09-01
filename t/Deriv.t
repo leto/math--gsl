@@ -40,20 +40,12 @@ sub AAA_TEST_DERIV_CENTRAL : Tests {
     my @other;
 
 
-    ($status, $result, $abserr, @other) = gsl_deriv_central ( 
-        sub {   my $x=shift; 
-                print "IN ANON SUB in perl\n";
-                print Dumper [$x] ;
-                return $x ** 3 
-            },
-        $x, $h,
-#       $result, $abserr
+    ($status, $result) = gsl_deriv_central ( 
+                            sub { $_[0] ** 3 },
+                            $x, $h,
     ); 
-    warn Dumper [ $status , $result, $abserr, \@other ];
-
     ok_status($status);
-    local $TODO = 'return value is not correct';
-    ok_similar( [$result], [3*$x], 'gsl_deriv_central returns correct value for anon sub' );
+    ok_similar( [$result->[0]], [3*$x**2], 'gsl_deriv_central returns correct value for anon sub' );
 }
 
 sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests { 

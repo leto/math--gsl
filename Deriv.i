@@ -1,101 +1,79 @@
 %module "Math::GSL::Deriv"
 // Danger Will Robinson, for realz!
-/*
-struct gsl_function_struct 
-{
-  double (* function) (double x, void * params);
-  void * params;
-};
-
-typedef struct gsl_function_struct gsl_function ;
-#define GSL_FN_EVAL(F,x) (*((F)->function))(x,(F)->params)
-*/
 
 %include "typemaps.i"
-//%include "gsl_typemaps.i"
 %{
     static HV * Callbacks = (HV*)NULL;
-    typedef struct callback_t
-    {  
-        SV * obj;
-    };
-    double xsquared(double x,void *params){
-        fprintf(stderr,"static xsquared!!\n");
-        return x * x;
+    /* this function returns the value 
+        of evaluating the function pointer
+        stored in func
+    */
+    double callthis(double x , int func, void *params){
+        SV ** sv;
+        double y;
+        //fprintf(stderr, "LOOKUP CALLBACK\n");
+        sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
+        if (sv == (SV**)NULL)
+            croak("Math::GSL(callthis) : Missing callback!\n");
+
+        dSP;
+        PUSHMARK(SP);
+        XPUSHs(sv_2mortal(newSVnv((double)x)));
+        PUTBACK;
+        call_sv(*sv, G_SCALAR);
+        y = POPn;
+        //fprintf(stderr,"y=%f\n", y);
+        return y;
     }
 %}
 %apply double * OUTPUT { double *abserr, double *result };
-/*
-int gsl_deriv_central (const gsl_function *f,
-                       double x, double h,
-                       double *result, double *abserr);
-*/
-/*
-%typemap(in) (const gsl_function *f,
-                       double x, double h,
-                       double *result, double *abserr ) {
-    fprintf(stderr,"XXXX\n");
-}
-*/
 %typemap(in) gsl_function const * {
     fprintf(stderr,"typemap in!\n");
     gsl_function F;
     int count;
-    F.params = 0;
-    F.function = &xsquared;
-    SV * callback;
+    F.params = &$input;
+    F.function = &callthis;
+    SV ** callback;
+    double x;
 
     if (!SvROK($input)) {
         croak("Math::GSL : not a reference value!");
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();
-    fprintf(stderr,"input =%d\n", (int)$input);
+    //fprintf(stderr,"STORE CALLBACK\n");
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
-   
+
     //Perl_sv_dump( $input );
-    //call_sv((SV*)$input, G_SCALAR);
-    // how to register callback ?
     $1 = &F;
 };
-%typemap(argout) gsl_function const * {
-    fprintf(stderr,"typemap argout!\n");
+%typemap(argout) (const gsl_function *f,
+                       double x, double h,
+                       double *result, double *abserr) {
     SV ** sv;
-    double x;
+    AV* av = newAV();
 
     sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     if (sv == (SV**)NULL)
-        croak("Math::GSL : Missing callback!\n");
+        croak("Math::GSL(argout) : Missing callback!\n");
     dSP;
-    ENTER;
-    SAVETMPS;
 
     PUSHMARK(SP);
     // these are the arguments passed to the callback
-    // this is currently passing in the memory address of the callback
-    XPUSHs(sv_2mortal(newSViv((int)$input)));
-    //XPUSHs(sv_2mortal($input));
-    //XPUSHs(newSVsv($input));
-    //XPUSHs(sv_2mortal(newSViv(42)));
-    //XPUSHs(sv_2mortal(newSVnv((double) (*($input)->function)()    )));
+    XPUSHs(sv_2mortal(newSViv((int)$2)));
     PUTBACK;
 
-    fprintf(stderr, "\nCALLBACK!\n");
-   
     /* This actually calls the perl subroutine */
     call_sv(*sv, G_SCALAR);    
 
-    //x = POPn;
-    //$result =  &x;
-    //fprintf(stderr, "argout:x = %.8f\n", x);
+    av_push(av, newSVnv((double) *$4));
+    av_push(av, newSVnv((double) *$5));
+    $result = sv_2mortal( newRV_noinc( (SV*) av) );
     if (argvi >= items) {            
         EXTEND(SP,1);              
     }
     argvi++;
-    //XPUSHs(sv_2mortal(newSVnv(x)));
 
-    FREETMPS;
-    LEAVE;
 }
 
 %typemap(in) void * {

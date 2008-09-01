@@ -49,11 +49,11 @@ sub GSL_VECTOR_ISNONNEG: Tests {
 
 sub GSL_VECTOR_ISNULL: Tests {
     my $self = shift;
-    ok( !gsl_vector_isnull($self->{vector}), 'gsl_vector_isnull' );
+    ok( !gsl_vector_isnull($self->{vector}), 'non-null vector returns false' );
     map { gsl_vector_set($self->{vector}, $_, 0 ) } (0..4); 
-    ok( gsl_vector_isnull($self->{vector}),'gsl_vector_isnull' );
+    ok( gsl_vector_isnull($self->{vector}),'null vector returns true' );
     gsl_vector_set($self->{vector}, 0, 5 );
-    ok( !gsl_vector_isnull($self->{vector}), 'gsl_vector_isnull' );
+    ok( !gsl_vector_isnull($self->{vector}), 'changed non-null vector returns false' );
 }
 
 sub GSL_VECTOR_ISPOS: Tests {

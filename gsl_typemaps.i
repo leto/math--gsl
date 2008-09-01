@@ -55,7 +55,7 @@
         return y;
     }
 %}
-%typemap(in) gsl_function const * {
+%typemap(in) gsl_function * {
     gsl_function F;
     int count;
     F.params = &$input;

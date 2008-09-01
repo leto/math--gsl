@@ -32,7 +32,23 @@ sub TEST_QAGS : Tests {
                            );
     ok_status($status);
     my $res = abs($result - 1/3);
-    ok( $res <= $abserr, sprintf('gsl_integration_qags: res=%.18f, abserr=%.18f',$res,$abserr) );
+    ok_similar( 
+        [$result], [1/3], 
+        sprintf('gsl_integration_qags: res=%.18f, abserr=%.18f',$res,$abserr),
+        $abserr
+    );
+
+    ($status, $result, $abserr) = gsl_integration_qags (
+                                sub { 1/$_[0] } , 
+                                1, 10, 0, 1e-7, 1000,
+                                $self->{wspace}, 
+                           );
+    $res = abs($result - log 10);
+    ok_similar( 
+        [$result],[log 10], 
+        sprintf('gsl_integration_qags: res=%.18f, abserr=%.18f',$res,$abserr),
+        $abserr
+    );
 
 }
 sub TEST_WORKSPACE_ALLOC : Tests { 

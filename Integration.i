@@ -2,6 +2,7 @@
 %{
     #include "gsl/gsl_integration.h"
 %}
+
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 %include "gsl/gsl_integration.h"

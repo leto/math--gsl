@@ -56,7 +56,6 @@
     }
 %}
 %typemap(in) gsl_function const * {
-    fprintf(stderr,"typemap in!\n");
     gsl_function F;
     int count;
     F.params = &$input;

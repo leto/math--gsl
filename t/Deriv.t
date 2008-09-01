@@ -33,23 +33,40 @@ sub TEST_DERIV_CENTRAL_DIES : Tests {
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
 
-sub AAA_TEST_DERIV_CENTRAL : Tests { 
-    my ($status, $result, $abserr);
+sub TEST_DERIV_CENTRAL : Tests { 
     my ($x,$h)=(10,0.01);
     my $self = shift;
-    my @other;
+    my ($status, $result);
 
-
-    ($status, $result) = gsl_deriv_central ( 
-                            sub { $_[0] ** 3 },
-                            $x, $h,
-    ); 
+    ($status, $result) = gsl_deriv_central ( sub { $_[0] ** 3 }, $x, $h,); 
     ok_status($status);
-    ok_similar( [$result->[0]], [3*$x**2], 'gsl_deriv_central returns correct value for anon sub' );
+    my $res = abs($result->[0]-3*$x**2);
+    ok( $res < $result->[1] , sprintf ("gsl_deriv_forward: res=%.18f, abserr=%.18f",$res, $result->[1] ));
+}
+
+sub TEST_DERIV_FORWARD : Tests { 
+    my ($x,$h)=(10,0.01);
+    my $self = shift;
+    my ($status, $result);
+
+    ($status, $result) = gsl_deriv_forward ( sub { 2 * $_[0] ** 2 }, $x, $h,); 
+    ok_status($status);
+    my $res = abs($result->[0]-4*$x);
+    ok( $res < $result->[1] , sprintf ("gsl_deriv_forward: res=%.18f, abserr=%.18f",$res, $result->[1] ));
+}
+
+sub TEST_DERIV_BACKWARD : Tests { 
+    my ($x,$h)=(10,0.01);
+    my $self = shift;
+    my ($status, $result);
+
+    ($status, $result) = gsl_deriv_backward ( sub { log $_[0] }, $x, $h,); 
+    ok_status($status);
+    my $res = abs($result->[0]-1/$x);
+    ok( $res < $result->[1] , sprintf ("gsl_deriv_backward: res=%.18f, abserr=%.18f",$res, $result->[1] ));
 }
 
 sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests { 
-    my ($status, $result, $abserr);
     my ($x,$h)=(10,0.01);
     my $self = shift;
 

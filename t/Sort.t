@@ -4,6 +4,7 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Permutation qw/:all/;
 use Math::GSL::Sort qw/:all/;
+use Math::GSL::RNG qw/:all/;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
@@ -111,6 +112,14 @@ sub GSL_SORT_LARGEST_INDEX : Tests {
     my $p = [ 1 .. $#{$self->{data}} ];
     my $sorted = gsl_sort_largest_index($p, 3, $self->{data}, 1, $#{$self->{data}}+1 );
     ok_similar( $sorted, [ 0,4,6 ] );
+}
+
+sub GSL_SORT_AGREES_WITH_PERL_SORT : Tests {
+    my $self = shift;
+    my $rng = Math::GSL::RNG->new;
+    my @data = map { (-1) ** $_ * $rng->get } (1..100);
+    my @sorted = sort { $a <=> $b } @data;
+    ok_similar( gsl_sort([@data], 1, $#data+1) , \@sorted , 'gsl_sort agrees with sort');
 }
 
 Test::Class->runtests;

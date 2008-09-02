@@ -9,17 +9,17 @@ my $count  = shift || 1000;
 my $length = shift || 5000;
 my $rng    = Math::GSL::RNG->new;
 my @data1   = map { (-1)**$_ * $rng->get        } (1..$length);
-my @data2   = map { (-1)**$_ * int(rand(2**20)) } (1..$length);
+my @data2   = map { (-1)**$_ * int(rand(2**30)) } (1..$length);
 my @stuff;
 
 print "Benchmarking for Math::GSL::RNG data\n";
 timethese($count, {
-            'perl sort     ' => sub { @stuff = sort @data1 },
+            'perl sort     ' => sub { @stuff = sort { $a <=> $b } @data1 },
             'Math::GSL sort' => sub { @stuff = gsl_sort(\@data1,1,$#data1+1) },
 });
 
 print "Benchmarking for rand() data\n";
 timethese($count, {
-            'perl sort     ' => sub { @stuff = sort @data2 },
+            'perl sort     ' => sub { @stuff = sort { $a <=> $b } @data2 },
             'Math::GSL sort' => sub { @stuff = gsl_sort(\@data2,1,$#data2+1) },
 });

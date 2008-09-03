@@ -53,7 +53,6 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_dilog_e(0.1,$r)'             => 0.1026177910993911,        
         'gsl_sf_dilog_e(0.7,$r)'             => 0.8893776242860387386,     
         'gsl_sf_dilog_e(1.0,$r)'             => 1.6449340668482260,        
-        'gsl_sf_gamma_e(-1,$r)'              => "nan",
         'gsl_sf_clausen_e($M_PI/20.0,$r)'	=> 0.4478882448133546,
         'gsl_sf_clausen_e($M_PI/6.0,$r)'	=> 0.8643791310538927,
         'gsl_sf_clausen_e($M_PI/3.0,$r)'	=> 1.0149416064096535,
@@ -1149,12 +1148,19 @@ sub TEST_THE_KITCHEN_SINK : Tests {
     verify_results($results, 'Math::GSL::SF');
 
 }
+sub TEST_NAN_STRING : Tests
+{
+    my $self = shift;
+    $self->builder->skip('Skipping stringy-NAN tests on Windows') if is_windows();
+    my $results = {
+        'gsl_sf_gamma_e(-1,$r)'                                 => 'nan',
+    };
+    verify_results($results, 'Math::GSL::SF');
+}    
 sub TEST_NAN : Tests 
 {
     my $self = shift;
-    $self->builder->skip('Skipping NAN-related tests on Windows') if is_windows();
     my $results = {
-        'gsl_sf_gamma_e(-1,$r)'                                 => 'nan',
         'gsl_sf_coupling_3j_e(-1, 1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
         'gsl_sf_coupling_3j_e(1, -1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
         'gsl_sf_coupling_3j_e(1, 1, -2, 1, -1, 0,$r)'	        => $GSL_NAN,

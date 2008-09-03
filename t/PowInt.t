@@ -34,8 +34,8 @@ sub TEST_NAN_INF : Tests {
     $main::nan    = gsl_nan();
     $main::posinf = gsl_posinf();
     my %results = (
-        q{gsl_pow_2($main::nan)}    => gsl_nan(),
-        q{gsl_pow_2($main::posinf)} => gsl_posinf(),
+        q{gsl_pow_2($main::nan)}    => $main::nan,
+        q{gsl_pow_2($main::posinf)} => $main::posinf,
     );
     verify(\%results,'Math::GSL::PowInt');
 }

@@ -119,8 +119,11 @@ sub verify
             ($expected,$eps)=($result,1e-8);
         }
         my $res = abs($x - $expected);
-        if ($x =~ /nan|inf/i ){
-            ok( $expected eq $x, "'$expected' ?='$x'" );
+
+        if (gsl_isnan($x)) {
+               ok( gsl_isnan($expected), "'$expected'?='$x'" );
+        } elsif(gsl_isinf($x)) {
+               ok( gsl_isinf($expected), "'$expected'?='$x'" );
         } else {
             ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
         }

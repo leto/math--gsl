@@ -64,7 +64,7 @@
     double x;
 
     if (!SvROK($input)) {
-        croak("Math::GSL : not a reference value!");
+        croak("Math::GSL : %s is not a reference value!", $1_name);
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();

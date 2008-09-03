@@ -2,8 +2,19 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-%typemap(argout) double [] %{
-%}
+
+%typemap(argout) (double data[], const size_t stride, const size_t n) {
+    int i=0;
+    AV* tempav = newAV();
+
+    while( i < $3 ) {
+        av_push(tempav, newSVnv((double) $1[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+}
 
 
 %{
@@ -19,13 +30,6 @@
 %include "gsl/gsl_fft_complex.h"
 %include "gsl/gsl_fft_halfcomplex.h"
 %include "gsl/gsl_fft_real.h"
-/*
-int gsl_fft_real_radix2_transform (double *INOUT, size_t
-          STRIDE, size_t N);
-%apply double *INOUT { double DATA[] };
-*/
-
-
 
 %perlcode %{
 @EXPORT_complex = qw/

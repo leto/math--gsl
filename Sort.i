@@ -134,31 +134,6 @@ Math::GSL::Sort - Functions for sorting data
     my $array = [2,3];
     my ($status, $smallest) = gsl_sort_smallest($array, 2, $x, 1, $#$x+1);
 
-=head1 PERFORMANCE
-
-In the source code of Math::GSL, the file "examples/benchmark/sort" sorts a 5000 elements random array by Perl's internal sort() function and compares it to Math::GSL's gsl_sort(). This is what it outputs on a T42 IBM laptop:
-
-Benchmark: timing 1000 iterations of Math::GSL sort, perl sort     ...
-Math::GSL sort:  3 wallclock secs ( 2.42 usr +  0.05 sys =  2.47 CPU)
-@ 404.86/s (n=1000)
-perl sort     : 15 wallclock secs (10.94 usr +  0.01 sys = 10.95 CPU)
-@ 91.32/s (n=1000)
-
-So it looks like for arrays of this length, Math::GSL's gsl_sort is
-about 4.5 times faster that sort()!
-
-You can also use this command : ./examples/benchmark/sort 1000 50000
-to sort a 50000 elements random array for 1000 iterations 
-
- which gave these results on the same computer:
-
-Benchmark: timing 1000 iterations of Math::GSL sort, perl sort     ...
-Math::GSL sort: 39 wallclock secs (29.50 usr +  0.36 sys = 29.86 CPU)
-@ 33.49/s (n=1000)
-perl sort     : 221 wallclock secs (163.62 usr +  0.19 sys = 163.81
-CPU) @  6.10/s (n=1000)
-
-This performance ratio is 5.5, so at first glance it seems that gsl_sort() gets increasingly faster than sort() for larger arrays. This will of course have to be proved out with some rigorous benchmarks, that are yet to come.
 
 =head1 DESCRIPTION
 
@@ -210,6 +185,21 @@ For more informations on the functions, we refer you to the GSL offcial document
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+=head1 PERFORMANCE
+
+In the source code of Math::GSL, the file "examples/benchmark/sort" compares
+the performance of gsl_sort() to Perl's builtin sort() function. It's first
+argument is the number of iterations and the second is the size of the array
+of numbers to sort. For example, to see a benchmark of 1000 iterations for 
+arrays of size 50000 you would type
+
+    ./examples/benchmark/sort 1000 50000
+
+Initial benchmarks indicate just slightly above a 2x performance increase
+over sort() for arrays of between 5000 and 50000 elements. This may mostly
+be due to the fact that gsl_sort() takes and returns a reference while sort()
+takes and returns a plain list.
 
 =head1 AUTHORS
 

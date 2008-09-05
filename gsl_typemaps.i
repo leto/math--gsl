@@ -44,8 +44,10 @@
 
         //fprintf(stderr, "LOOKUP CALLBACK\n");
         sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
-        if (sv == (SV**)NULL)
-            croak("Math::GSL(callthis) : Missing callback!\n");
+        if (sv == (SV**)NULL) {
+            fprintf(stderr, "Math::GSL(callthis): %d not in Callbacks!\n", func);
+            return;
+        }
 
         PUSHMARK(SP);
         XPUSHs(sv_2mortal(newSVnv((double)x)));
@@ -68,7 +70,7 @@
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();
-    //fprintf(stderr,"STORE CALLBACK\n");
+    fprintf(stderr,"STORE CALLBACK: %d\n", (int)$input);
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
 
     //Perl_sv_dump( $input );

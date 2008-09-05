@@ -35,23 +35,23 @@
     static HV * Callbacks = (HV*)NULL;
     /* this function returns the value 
         of evaluating the function pointer
-        stored in func
+        stored in func with argument x
     */
     double callthis(double x , int func, void *params){
         SV ** sv;
         double y;
+        dSP;
+
         //fprintf(stderr, "LOOKUP CALLBACK\n");
         sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
         if (sv == (SV**)NULL)
             croak("Math::GSL(callthis) : Missing callback!\n");
 
-        dSP;
         PUSHMARK(SP);
         XPUSHs(sv_2mortal(newSVnv((double)x)));
         PUTBACK;
         call_sv(*sv, G_SCALAR);
         y = POPn;
-        //fprintf(stderr,"y=%f\n", y);
         return y;
     }
 %}

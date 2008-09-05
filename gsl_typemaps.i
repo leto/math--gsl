@@ -60,8 +60,6 @@
 %typemap(in) gsl_function * {
     gsl_function F;
     int count;
-    F.params = &$input;
-    F.function = &callthis;
     SV ** callback;
     double x;
 
@@ -70,10 +68,11 @@
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();
-    fprintf(stderr,"STORE CALLBACK: %d\n", (int)$input);
+    //fprintf(stderr,"STORE CALLBACK: %d\n", (int)$input);
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
 
-    //Perl_sv_dump( $input );
-    $1 = &F;
+    F.params   = &$input;
+    F.function = &callthis;
+    $1         = &F;
 };
 

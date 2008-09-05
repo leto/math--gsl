@@ -190,6 +190,8 @@ sub compile_c {
   my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
 
   my @ccflags  = $self->split_like_shell($cf->{ccflags});
+  push @ccflags, $self->split_like_shell($Config{cppflags});
+
   my @optimize = $self->split_like_shell($cf->{optimize});
 
   # Whoah! There seems to be a bug in gcc 4.1.0 and optimization

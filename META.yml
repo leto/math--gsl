@@ -389,8 +389,6 @@ provides:
     file: lib/Math/GSL/Roots.pm
   Math::GSL::SF:
     file: lib/Math/GSL/SF.pm
-  Math::GSL::SF::gsl_sf_mathieu_workspace:
-    file: lib/Math/GSL/SF.pm
   Math::GSL::SF::gsl_sf_result_e10_struct:
     file: lib/Math/GSL/SF.pm
   Math::GSL::SF::gsl_sf_result_struct:
@@ -431,6 +429,8 @@ provides:
     file: lib/Math/GSL/Sys.pm
   Math::GSL::Sysc:
     file: lib/Math/GSL/Sys.pm
+  Math::GSL::Test:
+    file: lib/Math/GSL/Test.pm
   Math::GSL::Vector:
     file: lib/Math/GSL/Vector.pm
   Math::GSL::Vector::gsl_vector:

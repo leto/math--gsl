@@ -1,4 +1,5 @@
 0.12 
+    - Minimum Perl version changed to 5.8.0
     - Make platform check compile time constants for performance
         aka The Wilhelm Speedup (thanks to Eric Wilhelm <scratchcomputing@gmail.com>)
     - FFT for real data
@@ -9,6 +10,7 @@
         from <sisyphus@cpan.org>
     - Full support and tests for all functions in the Sort subsystem
     - Added 'examples/benchmark/sort' to show performance of gsl_sort()
+    - Compile support for GSL's as old as 1.8 (test suite still needs to be properly guarded)
 
 0.10 
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues

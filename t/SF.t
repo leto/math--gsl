@@ -1151,7 +1151,7 @@ sub TEST_THE_KITCHEN_SINK : Tests {
 sub TEST_NAN_STRING : Tests
 {
     my $self = shift;
-    $self->builder->skip('Skipping stringy-NAN tests on Windows') if is_windows();
+    return if is_windows();
     my $results = {
         'gsl_sf_gamma_e(-1,$r)'                                 => 'nan',
     };

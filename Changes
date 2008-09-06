@@ -3,6 +3,8 @@
     - Make platform check compile time constants for performance
         aka The Wilhelm Speedup (thanks to Eric Wilhelm <scratchcomputing@gmail.com>)
     - FFT for real data
+    - Numerical derivatives fully implemented
+    - Integration subsystem, gsl_integrate_qags()
     - Initial Monte tests
     - Initial Multiroots tests
     - More nan/inf fixes on MSWin32 from <sisyphus@cpan.org>

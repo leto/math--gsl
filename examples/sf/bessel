@@ -5,12 +5,12 @@ use strict;
 use warnings;
 use Math::GSL::SF qw/:bessel/;
 
-my $x = [ map { $_/ 100 } ( 0 .. 2000 ) ];
+my @x    = map { $_/ 100 } ( 0 .. 2000 ) ;
+my @negx = map { -$_ } reverse @x ;
 
-open my $fh, ">", 'bessel.data' or die $!;
+open my $fh, '>', 'bessel.data' or die $!;
 
-my $negx = [map { -$_ } reverse @$x ];
-for my $t (@$negx, @$x ) {
+for my $t (@negx, @x ) {
    print $fh join (" ", $t,  map { gsl_sf_bessel_Jn( $_, $t) } (0..5)) . "\n";
 }
 close $fh;

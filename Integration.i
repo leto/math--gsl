@@ -58,7 +58,7 @@ Math::GSL::Integration - Routines for performing numerical integration (quadratu
 
 This module is not yet implemented. Patches Welcome!
 
-use Math::GSL::Integration qw /:all/;
+    use Math::GSL::Integration qw /:all/;
 
 =head1 DESCRIPTION
 
@@ -110,7 +110,19 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_integration_qagil >
 
-=item * C<gsl_integration_qags >
+=item * C<gsl_integration_qags($func,$a,$b,$epsabs,$epsrel,$limit,$workspace)>
+
+    ($status, $result, $abserr) = gsl_integration_qags (
+                            sub { 1/$_[0]} , 
+                            1, 10, 0, 1e-7, 1000,
+                            $workspace,
+                        );
+
+ This function applies the Gauss-Kronrod 21-point integration rule
+ adaptively until an estimate of the integral of $func over ($a,$b) is
+ achieved within the desired absolute and relative error limits,
+ $epsabs and $epsrel. 
+
 
 =item * C<gsl_integration_qagp >
 

@@ -38,22 +38,32 @@ sub TEST_QAG : Tests {
         $abserr
     );
 }
+
+sub verify_integral {
+    my ($integrator,$func,$actual,$epsabs,$epsrel,$lower,$upper,$key) = @_;
+    my $wspace = gsl_integration_workspace_alloc(1000);
+    my $format = "$integrator: actual=%.9f res=%.18f abserr=%.18f";
+    my ($status, $result, $abserr, @params);
+    if ( $integrator eq 'gsl_integration_qag' ) {
+         push @params, $func, $lower, $upper, $epsabs, $epsrel, 1000, $key, $wspace;
+    } elsif ($integrator eq 'gsl_integration_qags' ) {
+         push @params, $func, $lower, $upper, $epsabs, $epsrel, 1000, $wspace;
+    } elsif ($integrator eq 'gsl_integration_qagi' ) {
+         push @params, $func, $epsabs, $epsrel, 1000, $wspace;
+    }
+    { no strict 'refs'; ($status, $result, $abserr) = $integrator->( @params ) }
+    ok_status($status);
+    ok_similar( [$result], [$actual], 
+        sprintf($format,abs($result-$actual),$actual,$abserr), $abserr
+    );
+}
+
 sub TEST_QAGI : Tests {
-    my $self = shift;
-    my ($status, $result, $abserr);
     my $integrator = 'gsl_integration_qagi';
     my $func = sub { my $x=shift; exp( -$x **2) };
-    my $format = "$integrator: res=%.18f, abserr=%.18f";
-
-    {
-    no strict 'refs';
-    ($status, $result, $abserr) = $integrator->( $func, 0, 1e-7, 1000, $self->{wspace});
-    }
-    ok_status($status);
-    my $actual = sqrt($M_PI);
-    ok_similar( [$result], [$actual], 
-        sprintf($format,abs($result-$actual),$abserr), $abserr
-    );
+    verify_integral($integrator, $func, sqrt($M_PI), 0, 1e-7);
+    $func = sub { my $x = shift; 1/($x**2 + 1) };
+    verify_integral($integrator, $func, $M_PI, 0, 1e-7);
 }
 
 sub TEST_QAG2 : Tests {

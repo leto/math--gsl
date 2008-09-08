@@ -18,22 +18,21 @@
     }
 }
 
-%apply double const [] { size_t *p };
-
-%apply double const [] { double *data, double *dest, double *f_in, double *f_out, double data[], const double * src };
-%apply double const [] { double x[], double a[], double b[] };
-%apply double const [] { const double * x, const double * y, const double * w };
-%apply double const [] { const double x_array[], const double xrange[], const double yrange[]};
-%apply double const [] { double * base, const double * base};
-%apply double const [] { const double xrange[], const double yrange[] };
-%apply double const [] { const double * array };
-%apply double const [] { const double data2[], const double w[] };
-%apply double const [] { float const *A, float const *B, float const *C, float *C, double *v};
+%apply double const [] { 
+    size_t *p ,double *data, double *dest, double *f_in, double *f_out,
+    double data[], const double * src, double x[], double a[], double b[] , 
+    const double * x, const double * y, const double * w , const double x_array[],
+    const double xrange[], const double yrange[], double * base,
+    const double * base, const double xrange[], const double yrange[] ,
+    const double * array , const double data2[], const double w[] ,
+    float const *A, float const *B, float const *C, float *C, double *v
+};
 
 %apply int *OUTPUT { size_t *imin, size_t *imax };
-%apply double *OUTPUT { double * min_out, double * max_out };
-
-%apply double * OUTPUT { double *abserr, double *result };
+%apply double * OUTPUT {
+    double * min_out, double * max_out, 
+    double *abserr, double *result 
+};
 %{
     static HV * Callbacks = (HV*)NULL;
     /* this function returns the value 

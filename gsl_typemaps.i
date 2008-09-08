@@ -28,7 +28,10 @@
 %apply double const [] { const double xrange[], const double yrange[] };
 %apply double const [] { const double * array };
 %apply double const [] { const double data2[], const double w[] };
-%apply double const [] { float const *A, float const *B, float const *C, float *C};
+%apply double const [] { float const *A, float const *B, float const *C, float *C, double *v};
+
+%apply int *OUTPUT { size_t *imin, size_t *imax };
+%apply double *OUTPUT { double * min_out, double * max_out };
 
 %apply double * OUTPUT { double *abserr, double *result };
 %{

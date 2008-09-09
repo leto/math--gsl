@@ -28,10 +28,10 @@
     float const *A, float const *B, float const *C, float *C, double *v
 };
 
-%apply int *OUTPUT { size_t *imin, size_t *imax };
+%apply int *OUTPUT { size_t *imin, size_t *imax, size_t *neval };
 %apply double * OUTPUT {
     double * min_out, double * max_out, 
-    double *abserr, double *result 
+    double *abserr, double *result
 };
 %{
     static HV * Callbacks = (HV*)NULL;

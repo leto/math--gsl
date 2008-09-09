@@ -21,6 +21,8 @@ sub GSL_ROOTS_ALLOC_FREE : Tests {
     my $self = shift;
     my $x = $self->{solver};
     isa_ok($x, 'Math::GSL::Roots', 'gsl_root_fsolver_alloc' );
+    gsl_root_fsolver_free($x);
+    ok(!$@, 'gsl_root_fsolver_free');
 }
 
 sub GSL_ROOTS_SET : Tests {
@@ -39,6 +41,11 @@ sub SOlVER_TYPES : Tests {
     cmp_ok( $gsl_root_fdfsolver_newton->{name}    ,'eq','newton'     );    
     cmp_ok( $gsl_root_fdfsolver_secant->{name}    ,'eq','secant'     );   
     cmp_ok( $gsl_root_fdfsolver_steffenson->{name},'eq','steffenson' ); 
+}
+
+sub GSL_ROOTFSOLVER_NAME : Tests {
+    my $self = shift;
+    cmp_ok( gsl_root_fsolver_name($self->{solver})   ,'eq','bisection'  ); 
 }
 
 Test::Class->runtests;

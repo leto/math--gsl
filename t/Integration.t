@@ -72,20 +72,18 @@ sub TEST_QAGIU : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qagiu (
                                 sub { my $x=shift; log($x)/(1+100+$x**2) } , 
-                                 0.0, 0.0, 1.0E-3, 1000,
+                                    0.0, 0.0, 1.0E-3, 1000,
                                 $self->{wspace} 
-                           );
-   ok_status($status);
-   local $TODO = "Testing with the data from gsl tests, don't know where's the error";
-#   ok_similar_relative($result, -3.616892186127022568E-01, "gsl_integration_qagiu",1e-14);
-#   ok_similar_relative($abserr, 3.016716913328831851E-06, "gsl_integration_qagiu absolute error",1e-5);
+                            );
+    ok_status($status);
+    ok_similar([$abserr],[ 3.016716913328831851E-06], "gsl_integration_qagiu absolute error",1e-5);
 
+    local $TODO = "Testing with the data from gsl tests, don't know where's the error";
+    my $integrator = 'gsl_integration_qagiu';    
+    my $func = sub { my $x=shift; log($x)/(1+100+$x**2) };
+    verify_integral($integrator, $func, -3.616892186127022568E-01, 0, 1.0e-3, 0);
 
-
-
-#    my $integrator = 'gsl_integration_qagiu';    
-#    my $func = sub { my $x=shift; log($x)/(1+100+$x**2) };
-#    verify_integral($integrator, $func, -3.616892186127022568E-01, 0, 1.0e-3, 0);
+    ok_similar([$result],[ -3.616892186127022568E-01], "gsl_integration_qagiu",1e-14);
 }
 
 sub TEST_QAG2 : Tests {

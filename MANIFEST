@@ -26,6 +26,8 @@ Eigen.i
 Eigen_wrap.c
 Errno.i
 Errno_wrap.c
+examples/clicker/chart
+examples/gsl_repl
 examples/benchmark/sort
 examples/correlation
 examples/gsl_sort

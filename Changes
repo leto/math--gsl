@@ -12,6 +12,8 @@
         from <sisyphus@cpan.org>
     - Full support and tests for all functions in the Sort subsystem
     - Added 'examples/benchmark/sort' to show performance of gsl_sort()
+    - Added 'examples/clicker/chart' to show graphing of functions
+    - Added 'examples/gsl_repl' which is a rapid protyping tool/interactive interpreter
     - Compile support for GSL's as old as 1.8 (test suite still needs to be properly guarded)
 
 0.10 

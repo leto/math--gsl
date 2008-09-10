@@ -1,0 +1,26 @@
+#!/usr/bin/perl -w
+use strict;
+use Devel::REPL;
+
+package Devel::REPL::Plugin::GSL;
+use Devel::REPL::Plugin;
+sub BEFORE_PLUGIN 
+{
+    package Devel::REPL::Plugin::Packages::DefaultScratchpad;
+    use aliased 'Math::GSL::Matrix';
+    use aliased 'Math::GSL::Vector';
+    use aliased 'Math::GSL::RNG';
+    use aliased 'Math::GSL::QRNG';
+    use Math::GSL::SF qw/:all/;
+    use Math::GSL::CDF qw/:all/;
+    use Math::GSL::Statistics qw/:all/;
+    use Math::GSL::Const qw/:all/;
+    use Data::Dumper;
+    package Devel::REPL::Plugin::GSL;
+}
+
+# FancyPrompt
+my @plugins = qw(GSL History LexEnv Colors Packages Timing); 
+my $repl = Devel::REPL->new;
+$repl->load_plugin($_) for @plugins;
+$repl->run;

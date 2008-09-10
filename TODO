@@ -2,7 +2,7 @@
 
 =head2 List of Things that you can do to help Math::GSL
 
-* Move tests out of lib/Math/GSL/*/Test.pm and put directly in t/*.t
+* Add overloading to normal arithmetic operators (like Math::MatrixReal) in Vector, Matrix, possibly others
 
 * Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris
 

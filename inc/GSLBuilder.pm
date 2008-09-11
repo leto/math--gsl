@@ -19,55 +19,47 @@ sub process_swig_files {
 # produce a xxx_wrap.c C file.
 
 sub process_swig {
-  my ($self, $main_swig_file, $deps_ref) = @_;
-  my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
+    my ($self, $main_swig_file, $deps_ref) = @_;
+    my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
-  # File name. e.g, perlcdio.swg -> perlcdio_wrap.c
-  (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
-  my $c_file = "${file_base}_wrap.c";
+    # File name. e.g, perlcdio.swg -> perlcdio_wrap.c
+    (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
+    my $c_file = "${file_base}_wrap.c";
 
-      # .swg -> .c
-      $self->add_to_cleanup($c_file);
-      
-      # If any of the swig files that the main swig depends is newer 
-      # then rebuild.
-  $self->compile_swig($main_swig_file, $c_file) 
+    $self->compile_swig($main_swig_file, $c_file) 
     unless($self->up_to_date( [$main_swig_file, @$deps_ref ],$c_file)); 
-  
-  # .c -> .o
-  my $obj_file = $self->compile_c($c_file);
-  $self->add_to_cleanup($obj_file);
 
-  # The .so files don't go in blib/lib/, they go in blib/arch/auto/.
-  # Unfortunately we have to pre-compute the whole path.
-  my $archdir;
-  {
-    my @dirs = splitdir($file_base);
-    $archdir = catdir($self->blib,'arch', @dirs[1..$#dirs]);
-  }
-  
-  # .o -> .so
-  $self->link_c($archdir, $file_base, $obj_file);
+    # .c -> .o
+    my $obj_file = $self->compile_c($c_file);
+    $self->add_to_cleanup($obj_file);
+
+    # The .so files don't go in blib/lib/, they go in blib/arch/auto/.
+    # Unfortunately we have to pre-compute the whole path.
+    my $archdir;
+    {
+        my @dirs = splitdir($file_base);
+        $archdir = catdir($self->blib,'arch', @dirs[1..$#dirs]);
+    }
+
+    # .o -> .so
+    $self->link_c($archdir, $file_base, $obj_file);
 }
 
 # Invoke swig with -perl -outdir and other options.
 sub compile_swig {
     my ($self, $file, $c_file) = @_;
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
-    
+    my  @swig_flags = ();
+
     # File name, minus the suffix
     (my $file_base = $file) =~ s/\.[^.]+$//;
     
-    my @swig;
+    my @swig = qw/ swig /;
     if (defined($p->{swig})) {
 	    @swig = $self->split_like_shell($p->{swig});
-    } else {
-	    @swig = ('swig');
     }
     if (defined($p->{swig_flags})) {
 	    @swig_flags = $self->split_like_shell($p->{swig_flags});
-    } else {
-	    @swig_flags = ();
     }
    
     my $blib_lib =  catfile(qw/blib lib/);
@@ -82,7 +74,7 @@ sub compile_swig {
     $self->do_system(@swig, '-o', $c_file,
                      '-outdir', $outdir, 
 		             '-perl5', @swig_flags, $file)
-	or die "error building $c_file file from '$file'";
+	    or die "error building $c_file file from '$file'";
     
 
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
@@ -169,4 +161,4 @@ sub compile_c {
   return $obj_file;
 }
 
-EOC
+3.14;

@@ -5,8 +5,6 @@ author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
-resources:
-  license: http://opensource.org/licenses/gpl-license.php
 requires:
   ExtUtils::PkgConfig: 1.03
   Scalar::Util: 0
@@ -15,10 +13,14 @@ requires:
   Test::More: 0
   perl: 5.8.0
   version: 0
+generated_by: Module::Build version 0.2806
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.11_02
+    version: 0.12
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLASc:
@@ -69,10 +71,6 @@ provides:
     file: lib/Math/GSL/Const.pm
   Math::GSL::Constc:
     file: lib/Math/GSL/Const.pm
-  Math::GSL::DFT:
-    file: lib/Math/GSL/DFT.pm
-  Math::GSL::DFTc:
-    file: lib/Math/GSL/DFT.pm
   Math::GSL::DHT:
     file: lib/Math/GSL/DHT.pm
   Math::GSL::DHT::gsl_dht_struct:
@@ -457,7 +455,5 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Waveletc:
     file: lib/Math/GSL/Wavelet.pm
-generated_by: Module::Build version 0.280801
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+resources:
+  license: http://www.opensource.org/licenses/gpl-license.php

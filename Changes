@@ -1,10 +1,14 @@
 0.12 
+    - Darwin support! 
     - Minimum Perl version changed to 5.8.0
     - Make platform check compile time constants for performance
         aka The Wilhelm Speedup (thanks to Eric Wilhelm <scratchcomputing@gmail.com>)
     - FFT for real data
     - Numerical derivatives fully implemented
-    - Integration subsystem, gsl_integrate_qags()
+    - Integration subsystem, gsl_integrate_qags() and gsl_integrate_qagi(), etc..
+        - QNG    : Non-adaptive Gaussian (uses fixed number of sample points in interval)
+        - QAG(S) : Adaptive Gaussian (Singluar) (slices interval up based on properties of the function)
+        - QAGI   : Adaptive Gaussian with infinite integration range
     - Initial Monte tests
     - Initial Multiroots tests
     - More nan/inf fixes on MSWin32 from <sisyphus@cpan.org>

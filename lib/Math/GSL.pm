@@ -24,7 +24,7 @@ our %EXPORT_TAGS = (
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.11_02';
+our $VERSION = '0.12';
 
 
 =head1 NAME
@@ -33,7 +33,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.11_02
+Version 0.12
 
 =cut
 
@@ -183,8 +183,8 @@ sub new
 sub subsystems
 {
     return sort qw/
-        Diff         Machine      Statistics
-        Eigen        Matrix       Poly 
+        Diff         Machine      Statistics   
+        Eigen        Matrix       Poly      
         BSpline      Errno        PowInt        
         CBLAS        FFT          Min           IEEEUtils
         CDF          Fit          QRNG

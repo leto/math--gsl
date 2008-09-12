@@ -56,6 +56,7 @@ Integration.i
 Integration_wrap.c
 Interp.i
 Interp_wrap.c
+inc/GSLBuilder.pm
 lib/Math/GSL.pm
 lib/Math/GSL/BLAS.pm
 lib/Math/GSL/BSpline.pm
@@ -66,7 +67,6 @@ lib/Math/GSL/Combination.pm
 lib/Math/GSL/Complex.pm
 lib/Math/GSL/Const.pm
 lib/Math/GSL/Deriv.pm
-lib/Math/GSL/DFT.pm
 lib/Math/GSL/DHT.pm
 lib/Math/GSL/Diff.pm
 lib/Math/GSL/Eigen.pm

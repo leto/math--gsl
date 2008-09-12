@@ -1,6 +1,6 @@
 ---
 name: Math-GSL
-version: 0.11_02
+version: 0.12
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG

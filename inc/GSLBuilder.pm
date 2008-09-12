@@ -27,7 +27,7 @@ sub process_swig {
     my $c_file = "${file_base}_wrap.c";
 
     $self->compile_swig($main_swig_file, $c_file) 
-    unless($self->up_to_date( [$main_swig_file, @$deps_ref ],$c_file)); 
+    unless($self->up_to_date( [$main_swig_file,defined $deps_ref ?  @$deps_ref : () ],$c_file)); 
 
     # .c -> .o
     my $obj_file = $self->compile_c($c_file);
@@ -59,7 +59,7 @@ sub compile_swig {
    
     my $blib_lib = catfile(qw/blib lib/);
     my $gsldir   = catfile($blib_lib, qw/Math GSL/);
-    mkdir $gsldir or die $!;
+    mkdir $gsldir unless -e $gsldir;
 
     my $from    = catfile($gsldir, $pm_file);
     my $to      = catfile(qw/lib Math GSL/,$pm_file);

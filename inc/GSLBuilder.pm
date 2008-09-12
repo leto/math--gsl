@@ -49,34 +49,26 @@ sub process_swig {
 sub compile_swig {
     my ($self, $file, $c_file) = @_;
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
-    my  @swig_flags = ();
 
     # File name, minus the suffix
     (my $file_base = $file) =~ s/\.[^.]+$//;
-    
-    my @swig = qw/ swig /;
-    if (defined($p->{swig})) {
-	    @swig = $self->split_like_shell($p->{swig});
-    }
-    if (defined($p->{swig_flags})) {
-	    @swig_flags = $self->split_like_shell($p->{swig_flags});
-    }
-   
-    my $blib_lib =  catfile(qw/blib lib/);
-
-    mkdir catfile($blib_lib, qw/Math GSL/);
-    my $outdir  = catfile($blib_lib, qw/Math GSL/);
     my $pm_file = "${file_base}.pm";
-    my $from    = catfile($blib_lib, qw/Math GSL/, $pm_file);
+    
+    my @swig       = qw/swig/, defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
+    my @swig_flags = defined($p->{swig_flags}) ? $self->split_like_shell($p->{swig_flags}) : ();
+   
+    my $blib_lib = catfile(qw/blib lib/);
+    my $gsldir   = catfile($blib_lib, qw/Math GSL/);
+    mkdir $gsldir or die $!;
+
+    my $from    = catfile($gsldir, $pm_file);
     my $to      = catfile(qw/lib Math GSL/,$pm_file);
     chmod 0644, $from, $to;
 
     $self->do_system(@swig, '-o', $c_file,
-                     '-outdir', $outdir, 
+                     '-outdir', $gsldir, 
 		             '-perl5', @swig_flags, $file)
 	    or die "error building $c_file file from '$file'";
-    
-
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);
     return $c_file;

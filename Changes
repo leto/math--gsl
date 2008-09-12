@@ -9,6 +9,7 @@
         - QNG    : Non-adaptive Gaussian (uses fixed number of sample points in interval)
         - QAG(S) : Adaptive Gaussian (Singluar) (slices interval up based on properties of the function)
         - QAGI   : Adaptive Gaussian with infinite integration range
+        - other are supported but not tested
     - Initial Monte tests
     - Initial Multiroots tests
     - More nan/inf fixes on MSWin32 from <sisyphus@cpan.org>

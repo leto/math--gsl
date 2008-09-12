@@ -152,7 +152,7 @@ $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
 my $ldflags = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags='-Wall ' . $gsl_pkgcfg{cflags};
+my $swig_flags= "-Wall $gsl_pkgcfg{cflags}";
 
 if ('cygwin' eq $Config{osname} && 
     $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
@@ -192,8 +192,8 @@ my $builder = GSLBuilder->new(
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	    => q{},
-    extra_linker_flags  => '-shared ' . $ldflags,
-    extra_compiler_flags=> q{-shared -fpic } . $ccflags,
+    extra_linker_flags  => $ldflags,
+    extra_compiler_flags=> $ccflags,
     swig_flags          => $swig_flags, 
     license             => 'gpl',
     requires => {

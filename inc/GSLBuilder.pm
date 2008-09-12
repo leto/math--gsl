@@ -88,7 +88,7 @@ sub link_c {
   unless ($self->up_to_date([$obj_file, @$objects], $lib_file)) {
     my @linker_flags = $self->split_like_shell($p->{extra_linker_flags});
 
-    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl} if is_windows();
+    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl};
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags}); 
     my @shrp = $self->split_like_shell($cf->{shrpenv});

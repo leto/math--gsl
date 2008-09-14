@@ -1,0 +1,459 @@
+---
+name: Math-GSL
+version: 0.12
+author:
+  - 'Jonathan Leto <jonathan@leto.net>'
+abstract: Interface to the GNU Scientific Library using SWIG
+license: gpl
+requires:
+  ExtUtils::PkgConfig: 1.03
+  Scalar::Util: 0
+  Test::Class: 0.12
+  Test::Exception: 0.21
+  Test::More: 0
+  perl: 5.8.0
+  version: 0
+generated_by: Module::Build version 0.2806
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
+provides:
+  Math::GSL:
+    file: lib/Math/GSL.pm
+    version: 0.12
+  Math::GSL::BLAS:
+    file: lib/Math/GSL/BLAS.pm
+  Math::GSL::BLASc:
+    file: lib/Math/GSL/BLAS.pm
+  Math::GSL::BSpline:
+    file: lib/Math/GSL/BSpline.pm
+  Math::GSL::BSpline::gsl_bspline_workspace:
+    file: lib/Math/GSL/BSpline.pm
+  Math::GSL::BSplinec:
+    file: lib/Math/GSL/BSpline.pm
+  Math::GSL::CBLAS:
+    file: lib/Math/GSL/CBLAS.pm
+  Math::GSL::CBLASc:
+    file: lib/Math/GSL/CBLAS.pm
+  Math::GSL::CDF:
+    file: lib/Math/GSL/CDF.pm
+  Math::GSL::CDFc:
+    file: lib/Math/GSL/CDF.pm
+  Math::GSL::Chebyshev:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Chebyshev::gsl_cheb_series_struct:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Chebyshevc:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Combination:
+    file: lib/Math/GSL/Combination.pm
+  Math::GSL::Combination::gsl_combination_struct:
+    file: lib/Math/GSL/Combination.pm
+  Math::GSL::Combinationc:
+    file: lib/Math/GSL/Combination.pm
+  Math::GSL::Complex:
+    file: lib/Math/GSL/Complex.pm
+  Math::GSL::Complex::gsl_complex:
+    file: lib/Math/GSL/Complex.pm
+  Math::GSL::Complex::gsl_complex_float:
+    file: lib/Math/GSL/Complex.pm
+  Math::GSL::Complex::gsl_complex_long_double:
+    file: lib/Math/GSL/Complex.pm
+  Math::GSL::Complexc:
+    file: lib/Math/GSL/Complex.pm
+  Math::GSL::Const:
+    file: lib/Math/GSL/Const.pm
+  Math::GSL::Const::gsl_function_fdf_struct:
+    file: lib/Math/GSL/Const.pm
+  Math::GSL::Const::gsl_function_struct:
+    file: lib/Math/GSL/Const.pm
+  Math::GSL::Const::gsl_function_vec_struct:
+    file: lib/Math/GSL/Const.pm
+  Math::GSL::Constc:
+    file: lib/Math/GSL/Const.pm
+  Math::GSL::DHT:
+    file: lib/Math/GSL/DHT.pm
+  Math::GSL::DHT::gsl_dht_struct:
+    file: lib/Math/GSL/DHT.pm
+  Math::GSL::DHTc:
+    file: lib/Math/GSL/DHT.pm
+  Math::GSL::Deriv:
+    file: lib/Math/GSL/Deriv.pm
+  Math::GSL::Deriv::gsl_function_fdf_struct:
+    file: lib/Math/GSL/Deriv.pm
+  Math::GSL::Deriv::gsl_function_struct:
+    file: lib/Math/GSL/Deriv.pm
+  Math::GSL::Deriv::gsl_function_vec_struct:
+    file: lib/Math/GSL/Deriv.pm
+  Math::GSL::Derivc:
+    file: lib/Math/GSL/Deriv.pm
+  Math::GSL::Diff:
+    file: lib/Math/GSL/Diff.pm
+  Math::GSL::Diffc:
+    file: lib/Math/GSL/Diff.pm
+  Math::GSL::Eigen:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_complex:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_complex_float:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_complex_long_double:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_francis_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_gen_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_genherm_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_genhermv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_gensymm_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_gensymmv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_genv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_herm_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_hermv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_nonsymm_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_nonsymmv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_symm_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigen::gsl_eigen_symmv_workspace:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Eigenc:
+    file: lib/Math/GSL/Eigen.pm
+  Math::GSL::Errno:
+    file: lib/Math/GSL/Errno.pm
+  Math::GSL::Errnoc:
+    file: lib/Math/GSL/Errno.pm
+  Math::GSL::FFT:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_complex:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_complex_float:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_complex_long_double:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_fft_complex_wavetable:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_fft_complex_workspace:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_fft_halfcomplex_wavetable:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_fft_real_wavetable:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFT::gsl_fft_real_workspace:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::FFTc:
+    file: lib/Math/GSL/FFT.pm
+  Math::GSL::Fit:
+    file: lib/Math/GSL/Fit.pm
+  Math::GSL::Fitc:
+    file: lib/Math/GSL/Fit.pm
+  Math::GSL::Heapsort:
+    file: lib/Math/GSL/Heapsort.pm
+  Math::GSL::Heapsortc:
+    file: lib/Math/GSL/Heapsort.pm
+  Math::GSL::Histogram:
+    file: lib/Math/GSL/Histogram.pm
+  Math::GSL::Histogram2D:
+    file: lib/Math/GSL/Histogram2D.pm
+  Math::GSL::Histogram2D::gsl_histogram2d:
+    file: lib/Math/GSL/Histogram2D.pm
+  Math::GSL::Histogram2D::gsl_histogram2d_pdf:
+    file: lib/Math/GSL/Histogram2D.pm
+  Math::GSL::Histogram2Dc:
+    file: lib/Math/GSL/Histogram2D.pm
+  Math::GSL::Histogram::gsl_histogram:
+    file: lib/Math/GSL/Histogram.pm
+  Math::GSL::Histogram::gsl_histogram_pdf:
+    file: lib/Math/GSL/Histogram.pm
+  Math::GSL::Histogramc:
+    file: lib/Math/GSL/Histogram.pm
+  Math::GSL::IEEEUtils:
+    file: lib/Math/GSL/IEEEUtils.pm
+  Math::GSL::IEEEUtils::gsl_ieee_double_rep:
+    file: lib/Math/GSL/IEEEUtils.pm
+  Math::GSL::IEEEUtils::gsl_ieee_float_rep:
+    file: lib/Math/GSL/IEEEUtils.pm
+  Math::GSL::IEEEUtilsc:
+    file: lib/Math/GSL/IEEEUtils.pm
+  Math::GSL::Integration:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_integration_qawo_table:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_integration_qaws_table:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_integration_workspace:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integrationc:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Interp:
+    file: lib/Math/GSL/Interp.pm
+  Math::GSL::Interp::gsl_interp:
+    file: lib/Math/GSL/Interp.pm
+  Math::GSL::Interp::gsl_interp_accel:
+    file: lib/Math/GSL/Interp.pm
+  Math::GSL::Interp::gsl_interp_type:
+    file: lib/Math/GSL/Interp.pm
+  Math::GSL::Interpc:
+    file: lib/Math/GSL/Interp.pm
+  Math::GSL::Linalg:
+    file: lib/Math/GSL/Linalg.pm
+  Math::GSL::Linalg::gsl_permutation_struct:
+    file: lib/Math/GSL/Linalg.pm
+  Math::GSL::Linalgc:
+    file: lib/Math/GSL/Linalg.pm
+  Math::GSL::Machine:
+    file: lib/Math/GSL/Machine.pm
+  Math::GSL::Machinec:
+    file: lib/Math/GSL/Machine.pm
+  Math::GSL::Matrix:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_complex:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_complex_float:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_complex_long_double:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_matrix:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_matrix_char:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_matrix_complex:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_matrix_int:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrix::gsl_vector:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Matrixc:
+    file: lib/Math/GSL/Matrix.pm
+  Math::GSL::Min:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Min::gsl_min_fminimizer:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Min::gsl_min_fminimizer_type:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Minc:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Monte:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Monte::gsl_monte_function_struct:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Monte::gsl_monte_miser_state:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Monte::gsl_monte_plain_state:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Monte::gsl_monte_vegas_state:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Montec:
+    file: lib/Math/GSL/Monte.pm
+  Math::GSL::Multifit:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_fdfsolver:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_fdfsolver_type:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_fsolver:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_fsolver_type:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_function_fdf_struct:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_function_struct:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifit::gsl_multifit_linear_workspace:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multifitc:
+    file: lib/Math/GSL/Multifit.pm
+  Math::GSL::Multimin:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_fdfminimizer:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_fdfminimizer_type:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_fminimizer:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_fminimizer_type:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_function_fdf_struct:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multimin::gsl_multimin_function_struct:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multiminc:
+    file: lib/Math/GSL/Multimin.pm
+  Math::GSL::Multiroots:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_fdfsolver:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_fdfsolver_type:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_fsolver:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_fsolver_type:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_function_fdf_struct:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multiroots::gsl_multiroot_function_struct:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::Multirootsc:
+    file: lib/Math/GSL/Multiroots.pm
+  Math::GSL::NTuple:
+    file: lib/Math/GSL/NTuple.pm
+  Math::GSL::NTuple::gsl_ntuple:
+    file: lib/Math/GSL/NTuple.pm
+  Math::GSL::NTuple::gsl_ntuple_select_fn:
+    file: lib/Math/GSL/NTuple.pm
+  Math::GSL::NTuple::gsl_ntuple_value_fn:
+    file: lib/Math/GSL/NTuple.pm
+  Math::GSL::NTuplec:
+    file: lib/Math/GSL/NTuple.pm
+  Math::GSL::ODEIV:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_control:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_control_type:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_evolve:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_step:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_step_type:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIV::gsl_odeiv_system:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::ODEIVc:
+    file: lib/Math/GSL/ODEIV.pm
+  Math::GSL::Permutation:
+    file: lib/Math/GSL/Permutation.pm
+  Math::GSL::Permutation::gsl_permutation_struct:
+    file: lib/Math/GSL/Permutation.pm
+  Math::GSL::Permutationc:
+    file: lib/Math/GSL/Permutation.pm
+  Math::GSL::Poly:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::Poly::gsl_complex:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::Poly::gsl_complex_float:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::Poly::gsl_complex_long_double:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::Poly::gsl_poly_complex_workspace:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::Polyc:
+    file: lib/Math/GSL/Poly.pm
+  Math::GSL::PowInt:
+    file: lib/Math/GSL/PowInt.pm
+  Math::GSL::PowIntc:
+    file: lib/Math/GSL/PowInt.pm
+  Math::GSL::QRNG:
+    file: lib/Math/GSL/QRNG.pm
+  Math::GSL::QRNG::gsl_qrng:
+    file: lib/Math/GSL/QRNG.pm
+  Math::GSL::QRNG::gsl_qrng_type:
+    file: lib/Math/GSL/QRNG.pm
+  Math::GSL::QRNGc:
+    file: lib/Math/GSL/QRNG.pm
+  Math::GSL::RNG:
+    file: lib/Math/GSL/RNG.pm
+  Math::GSL::RNG::gsl_rng:
+    file: lib/Math/GSL/RNG.pm
+  Math::GSL::RNG::gsl_rng_type:
+    file: lib/Math/GSL/RNG.pm
+  Math::GSL::RNGc:
+    file: lib/Math/GSL/RNG.pm
+  Math::GSL::Randist:
+    file: lib/Math/GSL/Randist.pm
+  Math::GSL::Randist::gsl_ran_discrete_t:
+    file: lib/Math/GSL/Randist.pm
+  Math::GSL::Randistc:
+    file: lib/Math/GSL/Randist.pm
+  Math::GSL::Roots:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::Roots::gsl_root_fdfsolver:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::Roots::gsl_root_fdfsolver_type:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::Roots::gsl_root_fsolver:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::Roots::gsl_root_fsolver_type:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::Rootsc:
+    file: lib/Math/GSL/Roots.pm
+  Math::GSL::SF:
+    file: lib/Math/GSL/SF.pm
+  Math::GSL::SF::gsl_sf_result_e10_struct:
+    file: lib/Math/GSL/SF.pm
+  Math::GSL::SF::gsl_sf_result_struct:
+    file: lib/Math/GSL/SF.pm
+  Math::GSL::SFc:
+    file: lib/Math/GSL/SF.pm
+  Math::GSL::Siman:
+    file: lib/Math/GSL/Siman.pm
+  Math::GSL::Siman::gsl_siman_params_t:
+    file: lib/Math/GSL/Siman.pm
+  Math::GSL::Simanc:
+    file: lib/Math/GSL/Siman.pm
+  Math::GSL::Sort:
+    file: lib/Math/GSL/Sort.pm
+  Math::GSL::Sort::gsl_permutation_struct:
+    file: lib/Math/GSL/Sort.pm
+  Math::GSL::Sortc:
+    file: lib/Math/GSL/Sort.pm
+  Math::GSL::Spline:
+    file: lib/Math/GSL/Spline.pm
+  Math::GSL::Spline::gsl_spline:
+    file: lib/Math/GSL/Spline.pm
+  Math::GSL::Splinec:
+    file: lib/Math/GSL/Spline.pm
+  Math::GSL::Statistics:
+    file: lib/Math/GSL/Statistics.pm
+  Math::GSL::Statisticsc:
+    file: lib/Math/GSL/Statistics.pm
+  Math::GSL::Sum:
+    file: lib/Math/GSL/Sum.pm
+  Math::GSL::Sum::gsl_sum_levin_u_workspace:
+    file: lib/Math/GSL/Sum.pm
+  Math::GSL::Sum::gsl_sum_levin_utrunc_workspace:
+    file: lib/Math/GSL/Sum.pm
+  Math::GSL::Sumc:
+    file: lib/Math/GSL/Sum.pm
+  Math::GSL::Sys:
+    file: lib/Math/GSL/Sys.pm
+  Math::GSL::Sysc:
+    file: lib/Math/GSL/Sys.pm
+  Math::GSL::Test:
+    file: lib/Math/GSL/Test.pm
+  Math::GSL::Vector:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Vector::gsl_vector:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Vector::gsl_vector_char:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Vector::gsl_vector_complex:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Vector::gsl_vector_int:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Vectorc:
+    file: lib/Math/GSL/Vector.pm
+  Math::GSL::Wavelet:
+    file: lib/Math/GSL/Wavelet.pm
+  Math::GSL::Wavelet2D:
+    file: lib/Math/GSL/Wavelet2D.pm
+  Math::GSL::Wavelet2Dc:
+    file: lib/Math/GSL/Wavelet2D.pm
+  Math::GSL::Wavelet::gsl_wavelet:
+    file: lib/Math/GSL/Wavelet.pm
+  Math::GSL::Wavelet::gsl_wavelet_type:
+    file: lib/Math/GSL/Wavelet.pm
+  Math::GSL::Wavelet::gsl_wavelet_workspace:
+    file: lib/Math/GSL/Wavelet.pm
+  Math::GSL::Waveletc:
+    file: lib/Math/GSL/Wavelet.pm
+resources:
+  license: http://www.opensource.org/licenses/gpl-license.php

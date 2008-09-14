@@ -88,9 +88,9 @@ The function returns a pointer to the newly allocated table gsl_integration_qaws
 
 =item * C<gsl_integration_qawo_table_set($t, $omega, $L, $sine, $n)> - This function changes the parameters omega, L and sine of the existing workspace $t.
 
-=item * C<gsl_integration_qawo_table_set_length >
+=item * C<gsl_integration_qawo_table_set_length($t, $L)> - This function allows the length parameter $L of the workspace $t to be changed.
 
-=item * C<gsl_integration_qawo_table_free >
+=item * C<gsl_integration_qawo_table_free($t)> - This function frees all the memory associated with the workspace $t.
 
 =item * C<gsl_integration_qk15 >
 
@@ -164,6 +164,20 @@ This module also includes the following constants :
 
 =item * $GSL_INTEG_GAUSS61 
 
+=back
+
+The following errors constants are part of the Math::GSL::Errno module and can be returned by the gsl_integration functions :
+
+=over
+
+=item * $GSL_EMAXITER - the maximum number of subdivisions was exceeded.
+
+=item * $GSL_EROUND - cannot reach tolerance because of roundoff error, or roundoff error was detected in the extrapolation table. 
+
+=item * GSL_ESING - a non-integrable singularity or other bad integrand behavior was found in the integration interval.
+
+=item * GSL_EDIVERGE - the integral is divergent, or too slowly convergent to be integrated numerically. 
+ 
 =back
 
 For more informations on the functions, we refer you to the GSL offcial

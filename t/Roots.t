@@ -10,6 +10,7 @@ use Data::Dumper;
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{solver} =gsl_root_fsolver_alloc($gsl_root_fsolver_bisection);
+    $self->{fdfsolver} =gsl_root_fdfsolver_alloc($gsl_root_fdfsolver_newton);
 }
 
 sub teardown : Test(teardown) {
@@ -46,6 +47,11 @@ sub SOlVER_TYPES : Tests {
 sub GSL_ROOTFSOLVER_NAME : Tests {
     my $self = shift;
     cmp_ok( gsl_root_fsolver_name($self->{solver})   ,'eq','bisection'  ); 
+}
+
+sub GSL_FDFSOLVER_NAME : Tests {
+    my $self = shift;
+    cmp_ok( gsl_root_fdfsolver_name($self->{fdfsolver})   ,'eq','newton'  ); 
 }
 
 Test::Class->runtests;

@@ -1,5 +1,6 @@
 0.14
     - Improved Roots docs
+    - Fix location of shared objects (Sisyphus)
 
 0.12 
     - Darwin support! 

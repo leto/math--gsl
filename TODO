@@ -4,6 +4,8 @@
 
 * Add overloading to normal arithmetic operators (like Math::MatrixReal) in Vector, Matrix, possibly others
 
+* Make passing parameters to function references work properly
+
 * Investigate serialization of Math::GSL::Vector/Matrix objects
 
 * PDL interoperability : 

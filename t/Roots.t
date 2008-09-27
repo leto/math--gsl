@@ -9,13 +9,12 @@ use Data::Dumper;
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{solver} =gsl_root_fsolver_alloc($gsl_root_fsolver_bisection);
-    $self->{fdfsolver} =gsl_root_fdfsolver_alloc($gsl_root_fdfsolver_newton);
+    $self->{solver}    = gsl_root_fsolver_alloc($gsl_root_fsolver_bisection);
+    $self->{fdfsolver} = gsl_root_fdfsolver_alloc($gsl_root_fdfsolver_newton);
 }
 
 sub teardown : Test(teardown) {
     my $self = shift;
-    #gsl_root_fsolver_free($self->{solver});
 }
 
 sub GSL_ROOTS_ALLOC_FREE : Tests {
@@ -35,6 +34,19 @@ sub GSL_ROOTS_SET : Tests {
     ));
     ok_similar( [$solver->{root} ], [2.5], 'bisection starts of with midpoint as initial guess' );
 }
+
+sub GSL_ROOT_ITERATE : Tests {
+    my $self = shift;
+    local $TODO = q{???};
+    my $solver = gsl_root_fsolver_alloc($gsl_root_fsolver_brent);
+    ok_status(gsl_root_fsolver_set($solver,
+        sub { my $x=shift; ($x-3.2)**3 },
+        0, 5
+    ));
+    # This currently blows up
+    #ok_status( gsl_root_fsolver_iterate($solver) );
+}
+
 sub SOlVER_TYPES : Tests {
     cmp_ok( $gsl_root_fsolver_bisection->{name}   ,'eq','bisection'  );
     cmp_ok( $gsl_root_fsolver_brent->{name}       ,'eq','brent'      );

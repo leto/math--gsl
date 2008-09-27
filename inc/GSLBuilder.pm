@@ -1,6 +1,7 @@
 package GSLBuilder;
 use Config;
 use File::Copy;
+use File::Path qw/mkpath/;
 use File::Spec::Functions qw/:ALL/;
 use base 'Module::Build';
 
@@ -22,7 +23,6 @@ sub process_swig {
     my ($self, $main_swig_file, $deps_ref) = @_;
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
-    # File name. e.g, perlcdio.swg -> perlcdio_wrap.c
     (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
     my $c_file = "${file_base}_wrap.c";
 
@@ -33,13 +33,8 @@ sub process_swig {
     my $obj_file = $self->compile_c($c_file);
     $self->add_to_cleanup($obj_file);
 
-    # The .so files don't go in blib/lib/, they go in blib/arch/auto/.
-    # Unfortunately we have to pre-compute the whole path.
-    my $archdir;
-    {
-        my @dirs = splitdir($file_base);
-        $archdir = catdir($self->blib,'arch', @dirs[1..$#dirs]);
-    }
+    my $archdir = catdir($self->blib,'arch','auto','Math','GSL', $file_base);
+    mkpath $archdir unless -d $archdir;
 
     # .o -> .so
     $self->link_c($archdir, $file_base, $obj_file);

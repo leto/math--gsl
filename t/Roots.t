@@ -5,7 +5,10 @@ use Test::More;
 use Math::GSL        qw/:all/;
 use Math::GSL::Roots qw/:all/;
 use Math::GSL::Test  qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
+
+BEGIN { gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
@@ -17,6 +20,15 @@ sub teardown : Test(teardown) {
     my $self = shift;
 }
 
+sub GSL_FDFSOLVER_BASIC : Tests {
+    my $self = shift;
+    local $TODO = 'this blows up';
+    #ok_status(gsl_root_fdfsolver_set($self->{fdfsolver},
+    #    sub { my $x=shift; ($x-3.2)**3 },
+    #    5
+    #));
+
+}
 sub GSL_ROOTS_ALLOC_FREE : Tests {
     my $self = shift;
     my $x = $self->{solver};
@@ -37,14 +49,16 @@ sub GSL_ROOTS_SET : Tests {
 
 sub GSL_ROOT_ITERATE : Tests {
     my $self = shift;
-    local $TODO = q{???};
     my $solver = gsl_root_fsolver_alloc($gsl_root_fsolver_brent);
     ok_status(gsl_root_fsolver_set($solver,
         sub { my $x=shift; ($x-3.2)**3 },
         0, 5
     ));
     # This currently blows up
-    #ok_status( gsl_root_fsolver_iterate($solver) );
+    #local $TODO = q{???};
+    #ok_status( gsl_root_fsolver_iterate($solver));
+    my $root = gsl_root_fsolver_root($solver);
+    ok_similar([$root], [2.5], 'gsl_root_fsolver_root');
 }
 
 sub SOlVER_TYPES : Tests {

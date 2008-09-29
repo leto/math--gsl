@@ -78,3 +78,7 @@
     $1         = &F;
 };
 
+%typemap(in) gsl_function_fdf * {
+    fprintf(stderr, 'FDF_FUNC');    
+
+}

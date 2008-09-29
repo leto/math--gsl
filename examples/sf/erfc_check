@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+# interfc
+#   v0.2   Keith Lofstrom   2008 Sept 18 
+#         with tweaks by Jonathan Leto
+#
+# Compare the results of numerical integration of 
+# (2.0/sqrt(PI)*integral[x,inf](e^(-x^2) ) with the
+# erfc() function.   
+#
+# The results are pretty good, within 1e-14 or better
+# for the examples tried
+
+use Math::GSL::SF qw/:all/;
+use Math::GSL::Integration qw/:all/;
+use Math::GSL::Const qw/:all/;
+use strict;
+
+my $workspace  = gsl_integration_workspace_alloc(101);
+my $maxdiff = 0;
+
+printf " arg         erfc             int()             difference\n";
+
+for( my $i=-5.2 ; $i<=5.201 ; $i += 0.1 ) {
+   my $e  = gsl_sf_erfc($i);
+   my ($status, $result, $abserr ) = gsl_integration_qagiu(
+                     sub { exp( -($_[0]**2) ) },
+                     $i, 0, 1e-9, 100, $workspace );
+
+   my $yy = $M_2_SQRTPI * $result ;
+   my $diff=$yy-$e ;
+   $maxdiff = abs($diff) > $maxdiff ? abs($diff) : $maxdiff;
+
+   printf "%4.1f%18.12f%18.12f %.18g\n", $i, $e, $yy, $diff ;
+}
+printf "Maximum local error: %.12g\n", $maxdiff;

@@ -1,4 +1,3 @@
-
 %typemap(in) double const [] {
     AV *tempav;
     I32 len;
@@ -60,6 +59,24 @@
         return y;
     }
 %}
+%typemap(in) gsl_monte_function * {
+    croak("FOOBAR!");
+    gsl_monte_function MF;
+    int count;
+    SV ** callback;
+    double x;
+    if (!SvROK($input)) {
+        croak("Math::GSL : $$1_name is not a reference value!");
+    }
+    if (Callbacks == (HV*)NULL)
+        Callbacks = newHV();
+    fprintf(stderr,"STORE gsl_monte_function CALLBACK: %d\n", (int)$input);
+    hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
+
+    MF.params   = &$input;
+    MF.function = &callthis;
+    $1         = &MF;
+};
 %typemap(in) gsl_function * {
     gsl_function F;
     int count;
@@ -67,7 +84,7 @@
     double x;
 
     if (!SvROK($input)) {
-        croak("Math::GSL : $1_name is not a reference value!");
+        croak("Math::GSL : $$1_name is not a reference value!");
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();

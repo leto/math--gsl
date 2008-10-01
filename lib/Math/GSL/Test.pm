@@ -133,7 +133,7 @@ sub ok_status {
     my ($got, $expected) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     $expected ||= $GSL_SUCCESS;
-    ok( $got == $expected, gsl_strerror(int($got)) );
+    ok( defined $got && $got == $expected, gsl_strerror(int($got)) );
 }
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;

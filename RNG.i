@@ -118,6 +118,19 @@ sub get {
     gsl_rng_get($self->{_rng});
 }
 
+=head2 raw()
+
+    my $raw = $rng->raw();
+
+Return the raw GSL RNG object, useful for functions which take a RNG, such as the Monte Carlo integration functions.
+
+=cut
+
+sub raw {
+    my $self = shift;
+    return $self->{_rng};
+}
+
 __END__
 
 

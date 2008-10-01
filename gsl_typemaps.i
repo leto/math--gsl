@@ -25,7 +25,8 @@
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,
     const double * array , const double data2[], const double w[] ,
-    float const *A, float const *B, float const *C, float *C, double *v
+    float const *A, float const *B, float const *C, float *C, double *v,
+    gsl_complex_packed_array data
 };
 
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *neval };

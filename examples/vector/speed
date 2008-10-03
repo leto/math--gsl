@@ -1,0 +1,26 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use Math::GSL::Vector qw/:all/;
+use Benchmark;
+use Math::GSL::RNG qw/:all/;
+
+my $min;
+my $rng = Math::GSL::RNG->new;
+my $num = 1000000;
+my @stuff = map { $rng->get() } (1..$num);
+my $vector = Math::GSL::Vector->new([@stuff]);
+
+
+timethese(5000, {
+    'perl array        ' => sub { $min = min(@stuff) },
+    'Math::GSL vector  ' => sub { $min = $vector->min() }, 
+});
+
+sub min 
+{
+    $min = $_[0] < $min ? $_[0] : $min;
+}
+
+

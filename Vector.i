@@ -213,7 +213,10 @@ You can also enter an array of indices to receive their corresponding values:
 
 sub get {
     my ($self, $indices) = @_;
-    return  map {  gsl_vector_get($self->{_vector}, $_ ) } @$indices ;
+    use Data::Dumper;
+    print "getting @$indices\n";
+    print Dumper [ $self->raw ];
+    return  map {  print "get idx $_\n"; gsl_vector_get($self->raw, $_ ) } @$indices ;
 }
 
 =head2  set() 

@@ -352,6 +352,11 @@ sub GSL_VECTOR_COMPLEX_CALLOC : Tests {
   isa_ok($vec, 'Math::GSL::Vector');
 }
 
+sub GSL_VECTOR_RAW : Tests {
+    my $vec = Math::GSL::Vector->new(10);
+    isa_ok($vec->raw, 'Math::GSL::Vector::gsl_vector');
+}
+
 sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   my $vec = gsl_vector_complex_calloc(5);
   my $complex = gsl_complex_rect(2,1);
@@ -359,8 +364,7 @@ sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   my $result = gsl_complex_rect(5,5);
   $result = gsl_vector_complex_get($vec, 0);
   isa_ok($result, 'Math::GSL::Complex');
-  #print Dumper [ $result ];
+  print Dumper [ $result ];
   local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
-  #my @got = gsl_parts($result);
 }
 Test::Class->runtests;

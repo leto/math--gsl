@@ -140,7 +140,10 @@ Get the underlying GSL vector object created by SWIG, useful for using gsl_vecto
 
 =cut
 
-sub raw { (shift)->{_vector} }
+sub raw { 
+    my $self = shift;
+    return $self->{_vector};
+}
 
 =head2 min()
 

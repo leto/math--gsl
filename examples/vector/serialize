@@ -11,6 +11,7 @@ if ( -e 'data' ) {
     my $thawed = retrieve('data') or die $!;
     print "Got thawed data\n";
     my $v = $thawed->{vector};
+    print Dumper [ $v ];
     print "Thawed vector of length " . $v->length . "\n";
     # The next line coredumps my box
     print Dumper [ $v->as_list ];

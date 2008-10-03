@@ -29,6 +29,7 @@ int fclose(FILE *);
 
 %perlcode %{
 use Scalar::Util 'blessed';
+use Data::Dumper;
 use Carp qw/croak/;
 use overload 
     '*'      => \&_multiplication,
@@ -216,10 +217,7 @@ You can also enter an array of indices to receive their corresponding values:
 
 sub get {
     my ($self, $indices) = @_;
-    use Data::Dumper;
-    print "getting @$indices\n";
-    print Dumper [ $self->raw ];
-    return  map {  print "get idx $_\n"; gsl_vector_get($self->raw, $_ ) } @$indices ;
+    return  map {  gsl_vector_get($self->raw, $_ ) } @$indices ;
 }
 
 =head2  set() 

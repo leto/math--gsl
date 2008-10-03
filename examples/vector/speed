@@ -2,25 +2,22 @@
 
 use strict;
 use warnings;
-use Math::GSL::Vector qw/:all/;
 use Benchmark;
-use Math::GSL::RNG qw/:all/;
+use Math::GSL::Vector;
+use Math::GSL::RNG;
+use List::Util qw/max min/;
 
-my $min;
 my $rng = Math::GSL::RNG->new;
-my $num = 1000000;
-my @stuff = map { $rng->get() } (1..$num);
+my $num = shift || 10000;
+my @stuff  = map { $rng->get() } (1..$num);
 my $vector = Math::GSL::Vector->new([@stuff]);
 
-
-timethese(5000, {
-    'perl array        ' => sub { $min = min(@stuff) },
-    'Math::GSL vector  ' => sub { $min = $vector->min() }, 
+my $runs = shift || 50_000;
+timethese($runs, {
+    'min - List::Util         ' => sub { min(@stuff) },
+    'min of Math::GSL vector  ' => sub { $vector->min }, 
 });
-
-sub min 
-{
-    $min = $_[0] < $min ? $_[0] : $min;
-}
-
-
+timethese($runs, {
+    'max - List::Util         ' => sub { max(@stuff) },
+    'max of Math::GSL vector  ' => sub { $vector->max }, 
+});

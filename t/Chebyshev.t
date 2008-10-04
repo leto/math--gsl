@@ -1,11 +1,11 @@
 package Math::GSL::Chebyshev::Test;
-use Math::GSL::Test qw/:all/;
-use base q{Test::Class};
-use Test::More;
-use Math::GSL::Chebyshev qw/:all/;
-use Math::GSL qw/:all/;
-use Data::Dumper;
 use strict;
+use warnings;
+use base q{Test::Class};
+use Math::GSL::Chebyshev qw/:all/;
+use Math::GSL::Test      qw/:all/;
+use Math::GSL            qw/:all/;
+use Test::More;
 
 sub make_fixture : Test(setup) {
     my $self = shift;
@@ -17,6 +17,8 @@ sub teardown : Test(teardown) {
 
 sub GSL_CHEB_ALLOC : Tests {
     my $self = shift;
-    isa_ok($self, 'Math::GSL::Chebyshev');
+    isa_ok($self->{cheb}, 'Math::GSL::Chebyshev');
 }
+Test::Class->runtests;
+
 1;

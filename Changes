@@ -2,6 +2,7 @@
     - Improved Roots docs
     - Fix location of shared objects (Sisyphus)
     - Added raw() method to RNG objects
+    - Chebyshev tests
 
 0.12 
     - Darwin support! 

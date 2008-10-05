@@ -57,6 +57,15 @@ sub GSL_CHEB_CALC_DERIV : Tests {
     ok_status(gsl_cheb_calc_deriv($deriv, $self->{cheb} ));
     isa_ok($deriv, 'Math::GSL::Chebyshev');
 }
+
+sub GSL_CHEB_CALC_INTEGRAL : Tests {
+    my $self = shift;
+    my $integral = gsl_cheb_alloc(40);
+    my $func = sub { my $x = shift; return sin(cos($x)) };
+    gsl_cheb_init( $self->{cheb}, $func, 0, 1);
+    ok_status(gsl_cheb_calc_integ($integral, $self->{cheb} ));
+    isa_ok($integral, 'Math::GSL::Chebyshev');
+}
 Test::Class->runtests;
 
 1;

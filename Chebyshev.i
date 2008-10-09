@@ -31,13 +31,20 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Chebyshev - Routines for computing Chebyshev approximations to univariate functions 
+Math::GSL::Chebyshev - Univariate Chebyshev Series Approximation
 
 =head1 SYNOPSIS
 
-This module is not yet implemented. Patches Welcome!
+    use Math::GSL::Chebyshev qw /:all/;
 
-use Math::GSL::Chebyshev qw /:all/;
+    my $cheb             = gsl_cheb_alloc(40);
+    my $function         = sub { sin(cos($_[0])) };
+
+    gsl_cheb_init($cheb, $function, 0, 10);
+
+    my $x                = gsl_cheb_eval($cheb, 5.5 );
+    my ($status,$y,$err) = gsl_cheb_eval_err($cheb, 7.5 );
+    gsl_cheb_free($cheb);
 
 =head1 DESCRIPTION
 
@@ -45,15 +52,35 @@ Here is a list of all the functions in this module :
 
 =over
 
-=item * C<gsl_cheb_alloc >
+=item * C<gsl_cheb_alloc($size)>
 
-=item * C<gsl_cheb_free >
+    my $cheb = gsl_cheb_alloc(50);
 
-=item * C<gsl_cheb_init >
+Allocates a new Chebyshev object with $size sample points.
 
-=item * C<gsl_cheb_eval >
+=item * C<gsl_cheb_free($cheb)>
 
-=item * C<gsl_cheb_eval_err >
+Deallocates memory associated to $cheb. Returns void.
+
+=item * C<gsl_cheb_init($cheb,$function, $lower, $upper)>
+
+    gsl_cheb_init($cheb, sub { sin(cos($_[0])) }, 0, 10 );
+
+Initiate a Chebyshev object with a function and upper and lower bounds.
+Returns void.
+
+=item * C<gsl_cheb_eval($function, $value)>
+
+    my $evaluated = gsl_cheb_eval($cheb, 5 );
+
+Returns a Perl scalar of the Chebyshev object $cheb evaluated at $value.
+
+=item * C<gsl_cheb_eval_err($cheb, $value)>
+
+    my ($status,$evaluated,$err) = gsl_cheb_eval($cheb, 5 );
+
+Returns a list consisting of a GSL status code, the evaluate value and
+the estimated error of the evaluation.
 
 =item * C<gsl_cheb_eval_n >
 
@@ -63,9 +90,19 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_cheb_eval_mode_e >
 
-=item * C<gsl_cheb_calc_deriv >
+=item * C<gsl_cheb_calc_deriv($deriv,$cheb) >
 
-=item * C<gsl_cheb_calc_integ >
+   my $status = gsl_cheb_calc_deriv( $deriv, $cheb ); 
+
+This will calculate the derivative of $cheb and stores it
+in $deriv, which must be pre-allocated. Returns a GSL status code.
+
+=item * C<gsl_cheb_calc_integ($integ,$cheb) >
+
+   my $status = gsl_cheb_calc_integ( $deriv, $cheb ); 
+
+This will calculate the derivative of $cheb and stores it
+in $deriv, which must be pre-allocated. Returns a GSL status code.
 
 =back
 

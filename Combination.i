@@ -1,5 +1,6 @@
 %module "Math::GSL::Combination"
-
+%include "typemaps.i"
+%include "gsl_typemaps.i"
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_combination.h"
@@ -7,7 +8,6 @@
 
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_combination.h"
-
 
 %perlcode %{
 @EXPORT_OK = qw/
@@ -59,15 +59,29 @@ sub elements {
     return gsl_combination_k($self->{_combination});
 }
 
+sub status {
+    my ($self,$status) = @_;
+    if (defined $status) {
+        warn 'setting status';
+        $self->{status} = $status;
+        return $self;
+    } else {
+        warn 'reading status';
+        return $self->{status};
+   }
+}
+
 sub next {
     my $self = shift;
     my $status = gsl_combination_next($self->{_combination});
-    return ($self, $status);
+    $self->status($status);
+    return $self;
 }
 
 sub prev {
     my $self = shift;
     my $status = gsl_combination_prev($self->{_combination});
+    $self->status($status);
     return $status;
 }
 

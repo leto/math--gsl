@@ -7,7 +7,7 @@
                        double x, double h,
                        double *result, double *abserr) {
     SV ** sv;
-    AV* av = newAV();
+    //AV* av = newAV();
 
     sv = hv_fetch(Callbacks, (char*)&$input, sizeof($input), FALSE );
     if (sv == (SV**)NULL)
@@ -22,13 +22,18 @@
     /* This actually calls the perl subroutine */
     call_sv(*sv, G_SCALAR);    
 
-    av_push(av, newSVnv((double) *$4));
-    av_push(av, newSVnv((double) *$5));
-    $result = sv_2mortal( newRV_noinc( (SV*) av) );
+    //av_push(av, newSVnv((double) *$4));
+    //av_push(av, newSVnv((double) *$5));
+    //$result = sv_2mortal( newRV_noinc( (SV*) av) );
+    $result = sv_newmortal();
+    sv_setnv($result, (double) *$4);
+    argvi++;
+    sv_setnv($result, (double) *$5);
+    argvi++;
+
     if (argvi >= items) {            
         EXTEND(SP,1);              
     }
-    argvi++;
 
 }
 
@@ -55,11 +60,10 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Deriv - Functions to compute numerical derivatives by finite differencing
+Math::GSL::Deriv - Numerical Derivatives
 
 =head1 SYNOPSIS
 
-This module is not yet implemented. Patches Welcome!
 
 use Math::GSL::Deriv qw /:all/;
 

@@ -1,5 +1,7 @@
 0.14
     - Improved Roots docs
+    - Improved introduction examples in Math::GSL
+    - Fixed return signature of gsl_deriv_* functions to return a flat list
     - Fix location of shared objects (Sisyphus)
     - Added raw() method to RNG objects
     - Chebyshev Series Approximation, with tests and docs

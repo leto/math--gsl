@@ -39,12 +39,21 @@ Version 0.13_01
 
 =head1 SYNOPSIS
 
-    use Math::GSL::Matrix qw/:all/;
+    use Math::GSL::Matrix;
     my $matrix = Math::GSL::Matrix->new(5,5);   # 5x5 zero matrix
-    $matrix->set_col(0, [1..5])
-           ->set_row(2, [5..9]);
+    # note that columns and rows are zero-based
+    $matrix->set_col(0, [1..5])                 # set *first* column to 1,2,3,4,5
+           ->set_row(2, [5..9]);                # set *third* column to 5,6,7,8,9   
     my @matrix = $matrix->as_list;              # matrix as Perl list
     my $gsl_matrix = $matrix->raw;              # underlying GSL object
+
+    use Math::GSL::RNG;
+    my $rng = Math::GSL::RNG->new;
+    my @random_numbers = map { $rng->get } (1 .. 1000);
+
+    use Math::GSL::Deriv qw/:all/;
+    my $function = sub { my $x=shift; sin($x**2) };
+    my ($status,$val,$err) = gsl_deriv_central($function, 5, 0.01 );
 
 Each GSL subsystem has it's own module. For example, the random number generator
 subsystem is Math::GSL::RNG. Many subsystems have a more Perlish and

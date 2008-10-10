@@ -62,11 +62,9 @@ sub elements {
 sub status {
     my ($self,$status) = @_;
     if (defined $status) {
-        warn 'setting status';
         $self->{status} = $status;
         return $self;
     } else {
-        warn 'reading status';
         return $self->{status};
    }
 }

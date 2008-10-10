@@ -9,12 +9,14 @@ use Data::Dumper;
 use strict;
 
 sub make_fixture : Test(setup) {
-  my $self = shift;
-  $self->{comb} = gsl_combination_calloc(10,5);
-  $self->{obj} = Math::GSL::Combination->new(10,5);
+    my $self = shift;
+    $self->{comb} = gsl_combination_calloc(10,5);
+    $self->{obj} = Math::GSL::Combination->new(10,5);
 }
 
 sub teardown : Test(teardown) {
+    my $self = shift;
+    unlink 'combo.txt' if -e 'combo.txt';
 }
 
 sub GSL_COMBINATION_ALLOC : Tests { 
@@ -42,7 +44,8 @@ sub GSL_COMBINATION_NEXT : Tests {
 sub NEW : Tests { 
     my $c = Math::GSL::Combination->new(5,5);
     isa_ok($c, 'Math::GSL::Combination');
-    map {ok(gsl_combination_get($c->raw, $_) eq $_) } (0..4);   
+    is_deeply( [ map { gsl_combination_get($c->raw, $_) } (0..4) ],
+        [ 0 .. 4 ] );   
 }
 
 sub AS_LIST: Tests { 
@@ -71,6 +74,17 @@ sub PREV_STATUS : Tests {
     $c->next();
     $c->prev();
     ok( $c->status() == 0 );    
+}
+
+sub FWRITE : Tests {
+    my $c   = Math::GSL::Combination->new(6,3);
+    my $new = Math::GSL::Combination->new(6,3);
+    my $fd = gsl_fopen('combo.txt', 'w') or die $!;
+    ok_status( gsl_combination_fwrite($fd, $c->raw) );
+    gsl_fclose($fd);
+    $fd = gsl_fopen('combo.txt', 'r') or die $!;
+    ok_status(gsl_combination_fread($fd, $new->raw));
+    is_deeply ( [ $c->as_list ], [ $new->as_list ] );
 }
 
 sub NEXT : Tests {

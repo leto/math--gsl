@@ -219,8 +219,10 @@ A non-integrable singularity or other bad integrand behavior was found in the in
 =item * GSL_EDIVERGE 
 
 The integral is divergent, or too slowly convergent to be integrated numerically. 
- 
+
 =back
+ 
+=head1 MORE INFO
 
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>

@@ -11,9 +11,11 @@ use Data::Dumper;
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{min} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
+    $self->{brent} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_brent);
 }
 
 sub teardown : Test(teardown) {
+    my $self = shift;
 }
 
 sub GSL_MIN_TYPES : Tests { 
@@ -23,6 +25,12 @@ sub GSL_MIN_TYPES : Tests {
 
     my $n = gsl_min_fminimizer_alloc($gsl_min_fminimizer_brent);
     isa_ok($n, 'Math::GSL::Min');
+}
+
+sub GSL_MIN_NAME : Tests {
+    my $self = shift;
+    cmp_ok( 'goldensection', 'eq', gsl_min_fminimizer_name($self->{min}) );
+    cmp_ok( 'brent', 'eq', gsl_min_fminimizer_name($self->{brent}) );
 }
 
 sub GSL_MIN_SET : Tests {
@@ -37,8 +45,19 @@ sub GSL_MIN_SET : Tests {
     cmp_ok( $mini->{x_lower}, '==', 0 );
     ok_similar([$mini->{x_upper}], [2*$M_PI] );
     ok_similar([$mini->{f_minimum}], [cos(3)] );
+    ok_similar([$mini->{f_lower}], [cos(0)] );
+    ok_similar([$mini->{f_upper}], [cos(2*$M_PI)] );
 }
 
+sub GSL_MIN_ITERATE : Tests {
+    my $self = shift;
+    my $mini = $self->{min};
+    ok_status(gsl_min_fminimizer_set($mini, 
+        sub { cos($_[0]) }, 3, 0, 2*$M_PI     
+    ));
+    # This blows up
+    #ok_status(gsl_min_fminimizer_iterate($mini));
+}
 
 sub GSL_MIN_NEW_FREE : Tests {
     my $self = shift;

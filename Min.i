@@ -36,7 +36,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Min - Routines for finding minima of arbitrary one-dimensional functions
+Math::GSL::Min - One-dimensional Minimization
 
 =head1 SYNOPSIS
 

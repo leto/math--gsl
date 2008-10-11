@@ -1,12 +1,31 @@
-0.14
-    - Improved Roots docs
+=head1 Math::GSL Changes
+
+=head1 v0.14 - October ?? 2008
+
+    - Chebyshev Series Approximation, with tests and docs
+    - Improved Deriv, Integration, Chebyshev, Combination and Roots docs
     - Improved introduction examples in Math::GSL
+    - Added example/deriv/basic
+
+        This shows the simple fact that d/dx(sin(x)) = cos(x)
+
+    - Added example/sf/erfc_check
+
+        Script which tests the erfc() special function against computing
+        the integral definition with gsl_integration_qagiu()
+
+    - Added example/vector/speed 
+    
+        This shows a considerable performance boost using Math::GSL::Vectors
+        instead of List::Util when searching for the min and max elements of
+        large sets of random numbers.
+
     - Fixed return signature of gsl_deriv_* functions to return a flat list
     - Fix location of shared objects (Sisyphus)
     - Added raw() method to RNG objects
-    - Chebyshev Series Approximation, with tests and docs
 
-0.12 
+=head1 v0.12 - September 14 2008
+
     - Darwin support! 
     - Minimum Perl version changed to 5.8.0
     - Make platform check compile time constants for performance
@@ -29,20 +48,25 @@
     - Added 'examples/gsl_repl' which is a rapid protyping tool/interactive interpreter
     - Compile support for GSL's as old as 1.8 (test suite still needs to be properly guarded)
 
-0.10 
+=head1 v0.10 
+
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues
 
-0.08
+=head1 v0.08
+
     - Large documentation improvements
     - MSWin32 support thanks to testing and feedback from <sisyphus@cpan.org>
 
-0.07 
+=head1 v0.07 
+
     - Initial CPAN release
     
-0.042
+=head1 v0.042 
+
     - Started change to Test::Class
 
-0.01
+=head1 v0.01 
+
     - Added swig interface files and swig-ified build script
     - initial tests for special function library gsl_sf <--> Math::GSL::Sf
     - Proof Of Concept: makegsl and testgsl

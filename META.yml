@@ -1,10 +1,12 @@
 ---
 name: Math-GSL
-version: 0.12
+version: 0.13_01
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
+resources:
+  license: http://www.opensource.org/licenses/gpl-license.php
 requires:
   ExtUtils::PkgConfig: 1.03
   Scalar::Util: 0
@@ -13,14 +15,10 @@ requires:
   Test::More: 0
   perl: 5.8.0
   version: 0
-generated_by: Module::Build version 0.2806
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.12
+    version: 0.13_01
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLASc:
@@ -42,6 +40,12 @@ provides:
   Math::GSL::Chebyshev:
     file: lib/Math/GSL/Chebyshev.pm
   Math::GSL::Chebyshev::gsl_cheb_series_struct:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Chebyshev::gsl_function_fdf_struct:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Chebyshev::gsl_function_struct:
+    file: lib/Math/GSL/Chebyshev.pm
+  Math::GSL::Chebyshev::gsl_function_vec_struct:
     file: lib/Math/GSL/Chebyshev.pm
   Math::GSL::Chebyshevc:
     file: lib/Math/GSL/Chebyshev.pm
@@ -185,6 +189,12 @@ provides:
     file: lib/Math/GSL/IEEEUtils.pm
   Math::GSL::Integration:
     file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_function_fdf_struct:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_function_struct:
+    file: lib/Math/GSL/Integration.pm
+  Math::GSL::Integration::gsl_function_vec_struct:
+    file: lib/Math/GSL/Integration.pm
   Math::GSL::Integration::gsl_integration_qawo_table:
     file: lib/Math/GSL/Integration.pm
   Math::GSL::Integration::gsl_integration_qaws_table:
@@ -234,6 +244,12 @@ provides:
   Math::GSL::Matrixc:
     file: lib/Math/GSL/Matrix.pm
   Math::GSL::Min:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Min::gsl_function_fdf_struct:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Min::gsl_function_struct:
+    file: lib/Math/GSL/Min.pm
+  Math::GSL::Min::gsl_function_vec_struct:
     file: lib/Math/GSL/Min.pm
   Math::GSL::Min::gsl_min_fminimizer:
     file: lib/Math/GSL/Min.pm
@@ -455,5 +471,7 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Waveletc:
     file: lib/Math/GSL/Wavelet.pm
-resources:
-  license: http://www.opensource.org/licenses/gpl-license.php
+generated_by: Module::Build version 0.2808
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

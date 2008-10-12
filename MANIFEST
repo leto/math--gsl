@@ -46,7 +46,6 @@ FFT.i
 FFT_wrap.c
 Fit.i
 Fit_wrap.c
-GSL.i
 gsl_typemaps.i
 HACKING
 Heapsort.i

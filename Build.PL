@@ -194,6 +194,8 @@ my $builder = GSLBuilder->new(
     include_dirs	    => q{},
     extra_linker_flags  => '-shared ' . $ldflags,
     extra_compiler_flags=> $ccflags,
+    # Set to true for CPAN releases to prevent breakage
+    swig_disabled       => 1,
     swig_flags          => $swig_flags, 
     license             => 'gpl',
     requires => {

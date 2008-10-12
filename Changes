@@ -6,6 +6,7 @@
     - Improved Deriv, Integration, Chebyshev, Combination and Roots docs
     - Improved introduction examples in Math::GSL
     - Improved Minimization subsystem tests, but it is not functional
+    - Added examples/fft/forward_real
     - Added example/deriv/basic
 
         This shows the simple fact that d/dx(sin(x)) = cos(x)

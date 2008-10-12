@@ -1,0 +1,78 @@
+#!/usr/bin/perl -w
+use strict;
+use Chart::Clicker;
+use Chart::Clicker::Axis;
+use Chart::Clicker::Data::DataSet;
+use Chart::Clicker::Data::Series;
+use Chart::Clicker::Decoration::Grid;
+use Chart::Clicker::Decoration::Legend;
+use Chart::Clicker::Decoration::Plot;
+use Chart::Clicker::Drawing qw(:positions);
+use Chart::Clicker::Drawing::Insets;
+use Chart::Clicker::Renderer::Area qw/:options/;
+use Math::GSL::SF qw/:bessel/;
+use Math::Complex;
+
+sub hump{
+    my $x=shift;
+    2*sech($x)**2 + sech($x-2)**2 +
+    2*exp(-0.1*$x**2)*cos($x)
+    - gsl_sf_bessel_j1($x)
+}
+
+my $function = sub { my $x=shift; 3*hump($x+5)+ hump($x) + 0.5*hump($x-10) + 2*hump($x-14) };
+
+my $name     = shift || "";
+my $filename = shift || 'chart.png';
+my $chart    = new Chart::Clicker({ format => 'png', width => 400, height => 300 });
+my @x        = map { $_/ 100 } ( 0 .. 3000 ) ;
+my @negx     = map { -$_ } reverse @x ;
+my $series;
+
+{ 
+    no strict 'refs';
+    $series = new Chart::Clicker::Data::Series({
+        keys    => [@negx, @x],
+        values  => [map { $function->($_) } (@negx,@x) ],
+        #name    => $name,
+    });
+}
+
+my $dataset = new Chart::Clicker::Data::DataSet({ series => [ $series ] });
+$chart->datasets([ $dataset ]);
+
+my $legend = new Chart::Clicker::Decoration::Legend({
+    margins => new Chart::Clicker::Drawing::Insets({
+        top => 3
+})
+});
+$chart->add($legend, $CC_BOTTOM);
+
+my $daxis = new Chart::Clicker::Axis({
+    orientation => $CC_HORIZONTAL,
+    position    => $CC_BOTTOM,
+    format      => '%d',
+    tick_values => [-25,-20,-15,-10,-5,0,5,10,15,20,25],
+});
+$chart->add($daxis, $CC_AXIS_BOTTOM);
+my $raxis = new Chart::Clicker::Axis({
+    orientation => $CC_VERTICAL,
+    position    => $CC_LEFT,
+    format      => '%0.2f'
+});
+$chart->add($raxis, $CC_AXIS_LEFT);
+$chart->range_axes([ $raxis ]);
+$chart->domain_axes([ $daxis ]);
+
+my $grid = new Chart::Clicker::Decoration::Grid();
+$chart->add($grid, $CC_CENTER, 0);
+
+my $renderer = new Chart::Clicker::Renderer::Area( { fade => 1 });
+my $plot = new Chart::Clicker::Decoration::Plot();
+
+$plot->renderers([$renderer]);
+$chart->plot($plot);
+$chart->add($plot, $CC_CENTER);
+$chart->prepare();
+$chart->draw();
+$chart->write($filename);

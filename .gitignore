@@ -14,3 +14,4 @@ Makefile
 *.data
 foo*
 tags
+.DS_Store

@@ -4,8 +4,10 @@
 
 %{
     #include "gsl/gsl_integration.h"
+    #include "gsl/gsl_math.h"
 %}
 %include "gsl/gsl_integration.h"
+%include "gsl/gsl_math.h"
 
 %perlcode %{
 @EXPORT_OK = qw/
@@ -125,31 +127,31 @@ errors were detected, and 0 in the case of error.
 
  This function frees all the memory associated with the workspace $t.
 
-=item * C<gsl_integration_qk15 >
+=item * C<gsl_integration_qk15($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qk21 >
+=item * C<gsl_integration_qk21($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qk31 >
+=item * C<gsl_integration_qk31($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qk41 >
+=item * C<gsl_integration_qk41($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qk51 >
+=item * C<gsl_integration_qk51($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qk61 >
+=item * C<gsl_integration_qk61($function,$a,$b,$resabs,$resasc) >
 
-=item * C<gsl_integration_qcheb >
+=item * C<gsl_integration_qcheb($function, $a, $b, $cheb12, $cheb24) >
 
 =item * C<gsl_integration_qk >
 
-=item * C<gsl_integration_qng >
+=item * C<gsl_integration_qng($function,$a,$b,$epsabs,$epsrel,$num_evals) >
 
-=item * C<gsl_integration_qag >
+=item * C<gsl_integration_qag($function,$a,$b,$epsabs,$epsrel,$limit,$key,$workspace) >
 
-=item * C<gsl_integration_qagi >
+=item * C<gsl_integration_qagi($function,$epsabs,$epsrel,$limit,$workspace) >
 
-=item * C<gsl_integration_qagiu >
+=item * C<gsl_integration_qagiu($function,$a,$epsabs,$epsrel,$limit,$workspace) >
 
-=item * C<gsl_integration_qagil >
+=item * C<gsl_integration_qagil($function,$b,$epsabs,$epsrel,$limit,$workspace) >
 
 =item * C<gsl_integration_qags($func,$a,$b,$epsabs,$epsrel,$limit,$workspace)>
 
@@ -165,15 +167,15 @@ errors were detected, and 0 in the case of error.
  $epsabs and $epsrel. 
 
 
-=item * C<gsl_integration_qagp >
+=item * C<gsl_integration_qagp($function, $pts, $npts, $epsbs, $epsrel, $limit, $workspace) >
 
-=item * C<gsl_integration_qawc >
+=item * C<gsl_integration_qawc($function, $a, $b, $c, $epsabs, $epsrel, $limit, $workspace) >
 
-=item * C<gsl_integration_qaws >
+=item * C<gsl_integration_qaws($function, $a, $b, $qaws_table, $epsabs, $epsrel, $limit, $workspace) >
 
-=item * C<gsl_integration_qawo >
+=item * C<gsl_integration_qawo($function, $a, $epsabs, $epsrel, $limit, $workspace, $qawo_table) >
 
-=item * C<gsl_integration_qawf >
+=item * C<gsl_integration_qawf($function, $a, $epsabs, $limit, $workspace, $cycle_workspace, $qawo_table) >
 
 =back
 

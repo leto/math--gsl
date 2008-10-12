@@ -22,7 +22,17 @@ sub teardown : Test(teardown) {
     my $self = shift;
     gsl_integration_workspace_free($self->{wspace});
 }
- 
+sub TEST_CONSTANTS : Tests {
+    ok(defined $GSL_INTEG_COSINE  , '$GSL_INTEG_COSINE');
+    ok(defined $GSL_INTEG_SINE    , '$GSL_INTEG_SINE');
+    ok(defined $GSL_INTEG_GAUSS15 , '$GSL_INTEG_GAUSS15'); 
+    ok(defined $GSL_INTEG_GAUSS21 , '$GSL_INTEG_GAUSS21');
+    ok(defined $GSL_INTEG_GAUSS31 , '$GSL_INTEG_GAUSS31');
+    ok(defined $GSL_INTEG_GAUSS41 , '$GSL_INTEG_GAUSS41');
+    ok(defined $GSL_INTEG_GAUSS51 , '$GSL_INTEG_GAUSS51');
+    ok(defined $GSL_INTEG_GAUSS61 , '$GSL_INTEG_GAUSS61');
+}
+
 sub TEST_QAG : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qag (

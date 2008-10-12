@@ -70,7 +70,11 @@ Math::GSL::Integration - Routines for performing numerical integration (quadratu
 
 =head1 DESCRIPTION
 
-Here is a list of all the functions in this module :
+This module allows you to numerically integrate a Perl subroutine. Depending
+on the properties of your function (singularities, smoothness) and the type
+of integration range (finite, infinite, semi-infinite), you will need to 
+choose a quadrature routine that fits your needs.
+
 
 =over 
 
@@ -145,7 +149,16 @@ errors were detected, and 0 in the case of error.
 
 =item * C<gsl_integration_qng($function,$a,$b,$epsabs,$epsrel,$num_evals) >
 
+This routine QNG (Quadrature Non-Adaptive Gaussian) is inexpensive is the sense
+that it will evaluate the function much fewer times than the adaptive routines.
+Because of this it does not need any workspaces, so it is also more memory
+efficient. It should be perfectly fine for well-behaved functions (smooth and
+nonsingular), but will not be able to get the required accuracy or may not
+converge for more complicated functions.
+
 =item * C<gsl_integration_qag($function,$a,$b,$epsabs,$epsrel,$limit,$key,$workspace) >
+
+This routine QAG (Quadrature Adaptive Gaussian) ...
 
 =item * C<gsl_integration_qagi($function,$epsabs,$epsrel,$limit,$workspace) >
 
@@ -222,7 +235,7 @@ A non-integrable singularity or other bad integrand behavior was found in the in
 
 The integral is divergent, or too slowly convergent to be integrated numerically. 
 
-=back
+=back 
  
 =head1 MORE INFO
 

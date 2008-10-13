@@ -117,7 +117,7 @@ Here is a list of all the functions in this module :
 
 =over
 
-=item * C<gsl_fft_complex_radix2_forward >
+=item * C<gsl_fft_complex_radix2_forward($data, $stride, $n) > - This function computes the forward FFTs of length $n with stride $stride, on the array reference $data using an in-place radix-2 decimation-in-time algorithm. The length of the transform $n is restricted to powers of two. For the transform version of the function the sign argument can be either forward (-1) or backward (+1). The functions return a value of $GSL_SUCCESS if no errors were detected, or $GSL_EDOM if the length of the data $n is not a power of two. The complex functions of the FFT module are not yet fully implemented. 
 
 =item * C<gsl_fft_complex_radix2_backward >
 
@@ -133,13 +133,13 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_fft_complex_radix2_dif_transform >
 
-=item * C<gsl_fft_complex_wavetable_alloc >
+=item * C<gsl_fft_complex_wavetable_alloc($n)> - This function prepares a trigonometric lookup table for a complex FFT of length $n. The function returns a pointer to the newly allocated gsl_fft_complex_wavetable if no errors were detected, and a null pointer in the case of error. The length $n is factorized into a product of subtransforms, and the factors and their trigonometric coefficients are stored in the wavetable. The trigonometric coefficients are computed using direct calls to sin and cos, for accuracy. Recursion relations could be used to compute the lookup table faster, but if an application performs many FFTs of the same length then this computation is a one-off overhead which does not affect the final throughput. The wavetable structure can be used repeatedly for any transform of the same length. The table is not modified by calls to any of the other FFT functions. The same wavetable can be used for both forward and backward (or inverse) transforms of a given length. 
 
-=item * C<gsl_fft_complex_wavetable_free >
+=item * C<gsl_fft_complex_wavetable_free($wavetable)> - This function frees the memory associated with the wavetable $wavetable. The wavetable can be freed if no further FFTs of the same length will be needed.
 
-=item * C<gsl_fft_complex_workspace_alloc >
+=item * C<gsl_fft_complex_workspace_alloc($n)> - This function allocates a workspace for a complex transform of length $n. 
 
-=item * C<gsl_fft_complex_workspace_free >
+=item * C<gsl_fft_complex_workspace_free($workspace) > - This function frees the memory associated with the workspace $workspace. The workspace can be freed if no further FFTs of the same length will be needed.
 
 =item * C<gsl_fft_complex_memcpy >
 
@@ -151,15 +151,16 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_fft_complex_transform >
 
-=item * C<gsl_fft_halfcomplex_radix2_backward >
+=item * C<gsl_fft_halfcomplex_radix2_backward($data, $stride, $n)> - This function computes the backwards in-place radix-2 FFT of length $n and stride $stride on the half-complex sequence data stored according the output scheme used by gsl_fft_real_radix2. The result is a real array stored in natural order.
 
-=item * C<gsl_fft_halfcomplex_radix2_inverse >
+=item * C<gsl_fft_halfcomplex_radix2_inverse($data, $stride, $n)> - This function computes the inverse in-place radix-2 FFT of length $n and stride $stride on the half-complex sequence data stored according the output scheme used by gsl_fft_real_radix2. The result is a real array stored in natural order.
 
-=item * C<gsl_fft_halfcomplex_radix2_transform >
+=item * C<gsl_fft_halfcomplex_radix2_transform>
 
-=item * C<gsl_fft_halfcomplex_wavetable_alloc >
+=item * C<gsl_fft_halfcomplex_wavetable_alloc($n)> - This function prepares trigonometric lookup tables for an FFT of size $n real elements. The functions return a pointer to the newly allocated struct if no errors were detected, and a null pointer in the case of error. The length $n is factorized into a product of subtransforms, and the factors and their trigonometric coefficients are stored in the wavetable. The trigonometric coefficients are computed using direct calls to sin and cos, for accuracy. Recursion relations could be used to compute the lookup table faster, but if an application performs many FFTs of the same length then computing the wavetable is a one-off overhead which does not affect the final throughput.
+    The wavetable structure can be used repeatedly for any transform of the same length. The table is not modified by calls to any of the other FFT functions. The appropriate type of wavetable must be used for forward real or inverse half-complex transforms. 
 
-=item * C<gsl_fft_halfcomplex_wavetable_free >
+=item * C<gsl_fft_halfcomplex_wavetable_free($wavetable)> - This function frees the memory associated with the wavetable $wavetable. The wavetable can be freed if no further FFTs of the same length will be needed. 
 
 =item * C<gsl_fft_halfcomplex_backward >
 
@@ -171,15 +172,35 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_fft_halfcomplex_radix2_unpack >
 
-=item * C<gsl_fft_real_radix2_transform >
+=item * C<gsl_fft_real_radix2_transform($data, $stride, $n) > - This function computes an in-place radix-2 FFT of length $n and stride $stride on the real array reference $data. The output is a half-complex sequence, which is stored in-place. The arrangement of the half-complex terms uses the following scheme: for k < N/2 the real part of the k-th term is stored in location k, and the corresponding imaginary part is stored in location N-k. Terms with k > N/2 can be reconstructed using the symmetry z_k = z^*_{N-k}. The terms for k=0 and k=N/2 are both purely real, and count as a special case. Their real parts are stored in locations 0 and N/2 respectively, while their imaginary parts which are zero are not stored. The following table shows the correspondence between the output data and the equivalent results obtained by considering the input data as a complex sequence with zero imaginary part,
 
-=item * C<gsl_fft_real_wavetable_alloc >
+          complex[0].real    =    data[0]
+          complex[0].imag    =    0
+          complex[1].real    =    data[1]
+          complex[1].imag    =    data[N-1]
+          ...............         ................
+          complex[k].real    =    data[k]
+          complex[k].imag    =    data[N-k]
+          ...............         ................
+          complex[N/2].real  =    data[N/2]
+          complex[N/2].imag  =    0
+          ...............         ................
+          complex[k'].real   =    data[k]        k' = N - k
+          complex[k'].imag   =   -data[N-k]
+          ...............         ................
+          complex[N-1].real  =    data[1]
+          complex[N-1].imag  =   -data[N-1]
+     
+Note that the output data can be converted into the full complex sequence using the function gsl_fft_halfcomplex_unpack.
 
-=item * C<gsl_fft_real_wavetable_free >
+=item * C<gsl_fft_real_wavetable_alloc($n)> - This function prepares trigonometric lookup tables for an FFT of size $n real elements. The functions return a pointer to the newly allocated struct if no errors were detected, and a null pointer in the case of error. The length $n is factorized into a product of subtransforms, and the factors and their trigonometric coefficients are stored in the wavetable. The trigonometric coefficients are computed using direct calls to sin and cos, for accuracy. Recursion relations could be used to compute the lookup table faster, but if an application performs many FFTs of the same length then computing the wavetable is a one-off overhead which does not affect the final throughput.
+    The wavetable structure can be used repeatedly for any transform of the same length. The table is not modified by calls to any of the other FFT functions. The appropriate type of wavetable must be used for forward real or inverse half-complex transforms. 
 
-=item * C<gsl_fft_real_workspace_alloc >
+=item * C<gsl_fft_real_wavetable_free($wavetable)> - This function frees the memory associated with the wavetable $wavetable. The wavetable can be freed if no further FFTs of the same length will be needed. 
 
-=item * C<gsl_fft_real_workspace_free >
+=item * C<gsl_fft_real_workspace_alloc($n)> - This function allocates a workspace for a real transform of length $n. The same workspace can be used for both forward real and inverse halfcomplex transforms.
+
+=item * C<gsl_fft_real_workspace_free($workspace)> - This function frees the memory associated with the workspace $workspace. The workspace can be freed if no further FFTs of the same length will be needed.
 
 =item * C<gsl_fft_real_transform >
 
@@ -202,6 +223,14 @@ documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
+=head1 EXAMPLE
+
+This is a very simple example of how to format the array reference needed by various functions in this module:
+
+    use Math::GSL::FFT;
+    use Math::GSL::Errno qw/:all/;
+    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
+    my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, 1, 128);
 
 =head1 AUTHORS
 

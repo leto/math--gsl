@@ -28,7 +28,7 @@ sub process_swig {
 
     my @deps = defined $deps_ref ?  @$deps_ref : (); 
 
-    if ( !$p->{swig_disabled} && $self->up_to_date( [$main_swig_file,@deps ], $c_file) ) { 
+    if ( $self->up_to_date( [$main_swig_file,@deps ], $c_file) ) { 
             $self->compile_swig($main_swig_file, $c_file);
     }
 

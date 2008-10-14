@@ -23,7 +23,7 @@ sub hump{
 my $function = sub { my $x=shift; 3*hump($x+5)+ hump($x) + 0.5*hump($x-10) + 2*hump($x-14) };
 
 my $name     = shift || "";
-my $filename = shift || 'chart.png';
+my $filename = shift || 'logo.png';
 my $chart    = new Chart::Clicker({ format => 'png', width => 400, height => 300 });
 my @x        = map { $_/ 100 } ( 0 .. 3000 ) ;
 my @negx     = map { -$_ } reverse @x ;

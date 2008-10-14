@@ -82,10 +82,10 @@ sub GSL_EIGEN_GENV_ALLOC : Tests {
 sub GSL_EIGEN_SYMM : Tests {
     my $self = shift;
     my $m = gsl_matrix_alloc(2,2);
+    my $v = Math::GSL::Vector->new(2);
     gsl_matrix_set_identity($m);
-    my $v = gsl_vector_alloc(2);
-    ok_status(gsl_eigen_symm($m, $v, $self->{eigen}));
-    map { is(gsl_vector_get($v, $_), 1) } (0..1);
+    ok_status(gsl_eigen_symm($m, $v->raw, $self->{eigen}));
+    ok_similar( [ sort $v->as_list ], [ 1, 1 ] );
 }    
 
 sub GSL_EIGEN_SYMMV : Tests {
@@ -98,22 +98,28 @@ sub GSL_EIGEN_SYMMV : Tests {
     my $eval = gsl_vector_alloc(2);
     my $evec = gsl_matrix_alloc(2,2);
     ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
-    is(gsl_vector_get($eval, 0), 3);
-    is(gsl_vector_get($eval, 1), 1);
+    is_similar(gsl_vector_get($eval, 0), 3);
+    is_similar(gsl_vector_get($eval, 1), 1);
     my $x = gsl_matrix_get($evec, 0, 0);
-    is (gsl_matrix_get($evec, 0, 1), -$x); #this is the eigenvector for the eigenvalue 1, which is the second eigenvalue in the $eval vector, but the GSL documentation says the first eigenvector should correspond to the first eigenvalue... where'e the error?
-    is (sqrt($x**2+$x**2), 1);
+
+    #this is the eigenvector for the eigenvalue 1, which is the second
+    #eigenvalue in the $eval vector, but the GSL documentation says the first
+    #eigenvector should correspond to the first eigenvalue... where'e the error?
+
+    is_similar(gsl_matrix_get($evec, 0, 1), -$x); 
+
+    is_similar (sqrt($x**2+$x**2), 1);
     
     $x = gsl_matrix_get($evec, 1, 0);
-    is (gsl_matrix_get($evec, 1, 1), $x);
-    is (sqrt($x**2+$x**2), 1);
+    is_similar(gsl_matrix_get($evec, 1, 1), $x);
+    is_similar(sqrt($x**2+$x**2), 1);
 
     my $v1 = gsl_vector_alloc(2);
     my $v2 = gsl_vector_alloc(2);
     gsl_matrix_get_col($v1, $evec, 0);
     gsl_matrix_get_col($v2, $evec, 1);
     gsl_vector_mul($v1, $v2);
-    is(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
+    is_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_SYMMV_SORT : Tests {
@@ -127,8 +133,8 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     my $evec = gsl_matrix_alloc(2,2);
     ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
     ok_status(gsl_eigen_symmv_sort ($eval, $evec, $GSL_EIGEN_SORT_VAL_ASC));
-    is(gsl_vector_get($eval, 0), 1);
-    is(gsl_vector_get($eval, 1), 3);
+    is_similar(gsl_vector_get($eval, 0), 1);
+    is_similar(gsl_vector_get($eval, 1), 3);
     my $x = gsl_matrix_get($evec, 0, 0);
     ok_similar(gsl_matrix_get($evec, 0, 1), -$x);
     ok_similar(sqrt($x**2+$x**2), 1);
@@ -142,7 +148,7 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     gsl_matrix_get_col($v1, $evec, 0);
     gsl_matrix_get_col($v2, $evec, 1);
     gsl_vector_mul($v1, $v2);
-    is(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
+    is_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_HERM : Tests {
@@ -161,9 +167,9 @@ sub GSL_EIGEN_HERM : Tests {
 
     my $eigen  = gsl_eigen_herm_alloc(2);
     my $vector = gsl_vector_alloc(2);
-    is(gsl_eigen_herm($matrix, $vector, $eigen), 0);
-    is (gsl_vector_get($vector, 0), 2+sqrt(6));
-    is (gsl_vector_get($vector, 1), 2-sqrt(6));    
+    ok_status(gsl_eigen_herm($matrix, $vector, $eigen));
+    is_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
+    is_similar(gsl_vector_get($vector, 1), 2-sqrt(6));    
 }
 sub GSL_EIGEN_HERMV : Tests {
     my $matrix  = gsl_matrix_complex_alloc (2, 2);
@@ -182,9 +188,9 @@ sub GSL_EIGEN_HERMV : Tests {
     my $eigen  = gsl_eigen_hermv_alloc(2);
     my $vector = gsl_vector_alloc(2);
     my $evec = gsl_matrix_complex_alloc(2,2);
-    is(gsl_eigen_hermv($matrix, $vector, $evec, $eigen), 0);
-    is (gsl_vector_get($vector, 0), 2+sqrt(6));
-    is (gsl_vector_get($vector, 1), 2-sqrt(6));
+    ok_status(gsl_eigen_hermv($matrix, $vector, $evec, $eigen));
+    is_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
+    is_similar(gsl_vector_get($vector, 1), 2-sqrt(6));
 
 #    my $x = gsl_matrix_complex_get($evec, 1, 1);
 #    ok_similar( [ gsl_parts($x) ], [-0.750532688285823, 0 ], "last row");
@@ -201,7 +207,7 @@ sub GSL_EIGEN_NONSYMM : Tests {
 
     my $eigen  = gsl_eigen_nonsymm_alloc(2);
     my $vector = gsl_vector_complex_alloc(2);
-    is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
+    ok_status(gsl_eigen_nonsymm($matrix, $vector, $eigen));
 
     my $x = gsl_vector_complex_real($vector);
     my $y = gsl_vector_complex_imag($vector);
@@ -221,8 +227,8 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
     my $eigen  = gsl_eigen_nonsymm_alloc(2);
     my $vector = gsl_vector_complex_alloc(2);
     my $Z = gsl_matrix_alloc(2,2);
-    is(gsl_eigen_nonsymm($matrix, $vector, $eigen), 0);
-    is(gsl_eigen_nonsymm_Z($matrix,$vector, $Z, $eigen), 0);  
+    ok_status(gsl_eigen_nonsymm($matrix, $vector, $eigen));
+    ok_status(gsl_eigen_nonsymm_Z($matrix,$vector, $Z, $eigen));  
     ok(is_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, 0.005));
     ok_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1);
     ok_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005);

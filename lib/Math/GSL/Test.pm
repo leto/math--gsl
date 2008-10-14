@@ -57,7 +57,7 @@ sub is_similar {
                $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
         } elsif( defined $x && defined $y) { 
             my $delta = (gsl_isnan($x) or gsl_isnan($y)) ? gsl_nan() : abs($x-$y);
-            $delta > $eps ? return 0 : return 1;
+            $delta > $eps ? warn qq{\t\t\$x=$x\n\t\t\$y=$y\n\t\tdelta=$delta\n} && return 0 : return 1;
         } else {
             return 0;
         }

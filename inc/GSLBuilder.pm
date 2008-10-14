@@ -3,6 +3,7 @@ use Config;
 use File::Copy;
 use File::Path qw/mkpath/;
 use File::Spec::Functions qw/:ALL/;
+use Data::Dumper;
 use base 'Module::Build';
 
 sub process_swig_files {
@@ -28,7 +29,9 @@ sub process_swig {
 
     my @deps = defined $deps_ref ?  @$deps_ref : (); 
 
-    if ( $self->up_to_date( [$main_swig_file,@deps ], $c_file) ) { 
+    # Something is rotten ...
+    #warn Dumper [ "swigfile=$main_swig_file", 'deps=', @deps,'and c file', $c_file ];
+    if ( $self->up_to_date( [$main_swig_file, @deps] , [$c_file]) ) { 
             $self->compile_swig($main_swig_file, $c_file);
     }
 

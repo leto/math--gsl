@@ -29,11 +29,8 @@ sub process_swig {
 
     my @deps = defined $deps_ref ?  @$deps_ref : (); 
 
-    # Something is rotten ...
-    #warn Dumper [ "swigfile=$main_swig_file", 'deps=', @deps,'and c file', $c_file ];
-    if ( $self->up_to_date( [$main_swig_file, @deps] , [$c_file]) ) { 
-            $self->compile_swig($main_swig_file, $c_file);
-    }
+    $self->compile_swig($main_swig_file, $c_file) 
+            unless($self->up_to_date( [$main_swig_file, @deps],$c_file)); 
 
     # .c -> .o
     my $obj_file = $self->compile_c($c_file);

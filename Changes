@@ -23,6 +23,7 @@
         large sets of random numbers.
 
     - Fixed return signature of gsl_deriv_* functions to return a flat list
+    - Fixed some failing tests relating to  -Duselongdouble (Sisyphus)
     - Fix location of shared objects (Sisyphus)
     - Added raw() method to RNG objects
 

@@ -18,6 +18,29 @@
   dvalue = SvNV(tempsv);
   $1 = &dvalue;
 }
+
+#gsl_complex gsl_complex_poly_complex_eval (const gsl_complex c [], const int len, const gsl_complex z);
+
+%typemap(argout) gsl_complex {
+    AV* tempav = newAV();
+    double x,y;
+    if (argvi >= items) {            
+        EXTEND(sp,1);              
+    }
+    //fprintf(stderr,"--> %g <--\n", GSL_REAL($1));
+    //fprintf(stderr,"--> %g <--\n", GSL_IMAG($1));
+
+    $result = sv_newmortal();
+   
+    x = GSL_REAL($1); 
+    y = GSL_IMAG($1);
+
+    /* the next 2 lines blow up
+    sv_setnv($result, x);
+    argvi++;
+    */
+};
+
 %typemap(argout) double * {
   SV *tempsv;
   tempsv = SvRV($input);

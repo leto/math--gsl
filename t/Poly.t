@@ -27,40 +27,40 @@ sub GSL_POLY_SOLVE_QUADRATIC : Tests {
     my ($x0,$x1)=(0,0);
 
     my ($num_roots) = gsl_poly_solve_quadratic( $a, $b, $c, \$x0, \$x1);
-    is_deeply ( [ $num_roots, $x0, $x1], [ 2, -3, -3 ] );
+    ok_similar( [ $num_roots, $x0, $x1], [ 2, -3, -3 ] );
 }
 
-sub GSL_POLY_COMPLEX_EVAL : Tests {
+sub GSL_POLY_COMPLEX_EVAL : Tests(1) {
     my $z   = gsl_complex_rect(2,1);                      # 2+i
     my $got = gsl_poly_complex_eval( [ 1, 4 ], 2, $z);    # 1 + 4 x
 
-    is_deeply( [ gsl_parts($got) ] , [ 9, 4 ], 'gsl_poly_complex_eval' );
+    ok_similar( [ gsl_parts($got) ] , [ 9, 4 ], 'gsl_poly_complex_eval' );
 }
 
-sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests { 
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests(1) { 
     local $TODO = "typemap for array of gsl_complex objects is needed";
     my $z    = gsl_complex_rect(2,1);                      # 2+i
     my $c1   = gsl_complex_rect(3,2);                      # 3+2i
     my $c2   = gsl_complex_rect(0,5);                      # 5i
 
     my $got = gsl_complex_poly_complex_eval( [ $c2, $c1 ], 2, $z );
-    is_deeply( [ gsl_parts($got) ], [ 4, 16 ],'gsl_complex_poly_complex_eval' );
+    ok_similar( [ gsl_parts($got) ], [ 4, 16 ],'gsl_complex_poly_complex_eval' );
 }
 
-sub GSL_COMPLEX_POLY_COMPLEX_EVAL2 : Tests {
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL2 : Tests(1) {
     local $TODO = "typemap for array of gsl_complex objects is needed";
     my $z   = gsl_complex_rect(0.674,-1.423);
     my $w   = gsl_complex_rect(-1.44, 9.55);
 
     my $got = gsl_complex_poly_complex_eval ([ $z ], 1, $w);
-    is_deeply( [ gsl_parts($got) ] , [0.674,-1.423], 'gsl_complex_poly_eval2' );
+    ok_similar( [ gsl_parts($got) ] , [0.674,-1.423], 'gsl_complex_poly_eval2' );
 }
 
 sub GSL_POLY_SOLVE_CUBIC : Tests {
     my ($x0, $x1, $x2) = (0, 0, 0);
     my ($num_roots) = gsl_poly_solve_cubic (-51.0, 867.0, -4913.0, \$x0, \$x1, \$x2);
 
-    is_deeply ( [ $num_roots, $x0, $x1, $x2], [ 3, 17.0, 17.0, 17.0] );
+    ok_similar ( [ $num_roots, $x0, $x1, $x2], [ 3, 17.0, 17.0, 17.0] );
 }
 
 sub GSL_POLY_COMPLEX_SOLVE_QUADRATIC : Tests {

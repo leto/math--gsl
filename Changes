@@ -1,9 +1,9 @@
 =head1 Math::GSL Changes
 
 =head1 v0.14 - October ?? 2008
-
     - Chebyshev Series Approximation, with tests and docs
     - Improved Deriv, Integration, Chebyshev, Combination and Roots docs
+    - Beginning of documentation for Math::GSL::Test 
     - Improved introduction examples in Math::GSL
     - Improved Minimization subsystem tests, but it is not functional
     - Added examples/fft/forward_real

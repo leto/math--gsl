@@ -20,6 +20,18 @@ our @EXPORT_OK = qw(
 );
 use constant GSL_IS_WINDOWS =>  ($^O =~ /MSWin32/i)  ?  1 : 0 ;
 
+=head1 NAME
+
+Math::GSL::Test - Assertions and such
+
+=head1 SYNOPSIS
+
+
+    use Math::GSL::Test qw/:all/;
+    ok_similar($x,$y, $msg, $eps);
+
+=cut
+
 our %EXPORT_TAGS = ( 
                      all => \@EXPORT_OK,
                    );
@@ -31,7 +43,32 @@ sub _dump_result($)
     printf "result->val: %.18g\n", $r->{val};
 }
 
+=head2 is_windows()
+
+Returns true if current system is Windows-like.
+
+=cut
+
 sub is_windows() { GSL_IS_WINDOWS }
+
+=head2 is_similar($x,$y;$eps,$similarity_function)
+    
+    is_similar($x,$y);
+    is_similar($x, $y, 1e-7);
+    is_similar($x,$y, 1e-3, sub { ... } );
+
+Return true if $x and $y are within $eps of each other, i.e. 
+
+    abs($x-$y) <= $eps 
+
+If passed a code reference $similarity_function, it will pass $x and $y as parameters to it and 
+will check to see if 
+
+    $similarity_function->($x,$y_) <= $eps
+
+The default value of $eps is 1e-8. Don't try sending anything to the moon with this value...
+
+=cut
 
 sub is_similar {
     my ($x,$y, $eps, $similarity_function) = @_;
@@ -129,12 +166,35 @@ sub verify
         }
     }
 }
+
+=head2 ok_status( $got_status; $expected_status )
+
+    ok_status( $status );                  # defaults to checking for $GSL_SUCCESS
+
+    ok_status( $status, $GSL_ECONTINUE );
+
+Pass a test if the GSL status codes match, with a default expected status of $GSL_SUCCESS. This
+function also stringifies the status codes into meaningful messages when it fails.
+
+=cut
+
 sub ok_status {
     my ($got, $expected) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     $expected ||= $GSL_SUCCESS;
     ok( defined $got && $got == $expected, gsl_strerror(int($got)) );
 }
+
+=head2 ok_similar( $x, $y, $msg, $eps)
+
+    ok_similar( $x, $y);
+    ok_similar( $x, $y, 'reason');
+    ok_similar( $x, $y, 'reason', 1e-4);
+
+Pass a test if is_similar($x,$y,$msg,$eps) is true, otherwise fail.
+
+=cut
+
 sub ok_similar {
     my ($x,$y, $msg, $eps) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;

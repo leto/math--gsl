@@ -201,10 +201,28 @@ sub ok_similar {
     ok(is_similar($x,$y,$eps), $msg);
 }
 
+=head2 is_similar_relative( $x, $y, $msg, $eps )
+
+    is_similar_relative($x, $y, $eps );
+
+Returns true if $x has a relative error with repect to $y less than $eps. The
+current default for $eps is the same as is_similar(), i.e. 1e-8. This doesn't
+seem very useful. What should the default be?
+
+=cut
+
 sub is_similar_relative {
     my ($x,$y, $eps) = @_;
     return is_similar($x,$y,$eps, sub { abs( ($_[0] - $_[1])/abs($_[1]) ) } );
 }
+
+=head2 ok_similar_relative( $x, $y, $msg, $eps )
+
+    ok_similar_relative($x, $y, $msg, $eps );
+
+Pass a test if $x has a relative error with repect to $y less than $eps.
+
+=cut
 
 sub ok_similar_relative {
     my ($x,$y, $msg, $eps,) = @_;

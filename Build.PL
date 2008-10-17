@@ -160,8 +160,8 @@ if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $swig_flags = '-DNEED_LONG';
 } elsif ( $^O eq 'darwin' ) {
     $ldflags .= ' -bundle -flat_namespace ';
-} elsif ($Config{archname} =~ /x86_64/ ) { # for AMD boxen
-    $ldflags .= ' -fPIC ';
+} elsif ($Config{archname} =~ /x86_64/ ) { 
+    $ldflags .= ' -fPIC '; 
     $ccflags .= ' -fPIC ';
 }
 my @Subsystems = sort qw/

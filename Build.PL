@@ -151,16 +151,17 @@ $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
-my $ldflags = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags= "-Wall $gsl_pkgcfg{cflags}";
+my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
+my $swig_flags = "$gsl_pkgcfg{cflags}"; # -Wall is a bit much
 
-if ('cygwin' eq $Config{osname} && 
-    $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
+if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
     # Should we check the 32-ness?
     $swig_flags = '-DNEED_LONG';
-} elsif ('darwin' eq $Config{osname}) {
-    $ldflags .= " -bundle -flat_namespace";
+} elsif ( $^O eq 'darwin' ) {
+    $ldflags .= ' -bundle -flat_namespace ';
+} elsif ($Config{archname} =~ /x86_64/ ) { # for AMD boxen
+    $ldflags .= ' -fPIC ';
 }
 my @Subsystems = sort qw/
             BLAS         Diff          Machine    Statistics

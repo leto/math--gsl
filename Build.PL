@@ -162,6 +162,7 @@ if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= ' -bundle -flat_namespace ';
 } elsif ($Config{archname} =~ /x86_64/ ) { # for AMD boxen
     $ldflags .= ' -fPIC ';
+    $ccflags .= ' -fPIC ';
 }
 my @Subsystems = sort qw/
             BLAS         Diff          Machine    Statistics

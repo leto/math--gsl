@@ -16,10 +16,7 @@ sub teardown : Test(teardown) {
 
 sub GSL_CONST_CGS : Tests {
     my $self = shift;
-    my $results = { 
-        'GSL_CONST_CGS_SPEED_OF_LIGHT' => 29979245800 
-    };
-    verify($results, '$Math::GSL::Const');
+    cmp_ok( $GSL_CONST_CGS_SPEED_OF_LIGHT ,'==',   29979245800  );
 }
 
 sub MATH_CONSTANTS : Tests {

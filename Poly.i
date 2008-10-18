@@ -1,4 +1,6 @@
 %module "Math::GSL::Poly"
+// this brakes stuff
+// %include "typemaps.i"
 %include "gsl_typemaps.i" 
 
 %{

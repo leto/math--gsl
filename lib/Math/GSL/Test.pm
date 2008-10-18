@@ -140,6 +140,28 @@ sub verify_results
         }
     }
 }
+
+=head2 verify( $results, $class) 
+
+Takes a hash reference of key/value pairs where the keys are bits of code, which when evaluated should
+be within some tolerance of the value. For example:
+
+    my $results = { 
+                    'gsl_cdf_ugaussian_P(2.0)'        => [ 0.977250, 1e-5 ],
+                    'gsl_cdf_ugaussian_Q(2.0)'        => [ 0.022750, 1e-7 ],
+                    'gsl_cdf_ugaussian_Pinv(0.977250)'=> [ 2.000000 ],
+                  };
+    verify($results, 'Math::GSL::CDF');
+
+When no tolerance is given, a value of 1e-8 = 0.00000001 is used. One
+may use $GSL_NAN and $GSL_INF in comparisons and this routine will
+use the gsl_isnan() and gsl_isinf() routines to compare them.
+
+
+Note: Needing to pass in the class name is honky. This may change.
+
+=cut
+
 sub verify
 {
     my ($results,$class) = @_;
@@ -149,19 +171,16 @@ sub verify
         my $x = eval qq{${class}::$code};
         ok(0, $@) if $@;
 
-        my ($expected,$eps);
-        if (ref $result){
-            ($expected,$eps)=@$result;
-        } else {
-            ($expected,$eps)=($result,1e-8);
-        }
-        my $res = abs($x - $expected);
+        croak(__PACKAGE__." : $result is not an array reference!") unless ref $result;
+        my($expected,$eps)=@$result;
+        $eps ||= 1e-8;
 
         if (gsl_isnan($x)) {
                ok( gsl_isnan($expected), "'$expected'?='$x'" );
         } elsif(gsl_isinf($x)) {
                ok( gsl_isinf($expected), "'$expected'?='$x'" );
         } else {
+            my $res = abs($x - $expected);
             ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
         }
     }

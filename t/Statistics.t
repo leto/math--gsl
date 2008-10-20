@@ -182,4 +182,12 @@ sub GSL_STATS_LAG1_AUTOCORRELATION : Tests {
     ok_similar_relative($sd, $expected_sd);
     ok_similar_relative($lag1, $expected_lag1);
 }
+
+sub GSL_STATS_WMEAN : Tests {
+    my $w = [4, 4, 2, 2];
+    my $data = [2, 3, 4, 5];
+    my $mean = gsl_stats_wmean($w, 1, $data, 1, 4);
+    ok_similar ($mean, 19/6);    
+}
+
 Test::Class->runtests;

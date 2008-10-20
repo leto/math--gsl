@@ -144,7 +144,21 @@ Math::GSL::Statistics - Statistical functions
 
 =head1 SYNOPSIS
 
-use Math::GSL::Statistics qw /:all/;
+    use Math::GSL::Statistics qw /:all/;
+        
+    my $data     = [17.2, 18.1, 16.5, 18.3, 12.6];
+    my $mean     = gsl_stats_mean($data, 1, 5);
+    my $variance = gsl_stats_variance($data, 1, 5);
+    my $largest  = gsl_stats_max($data, 1, 5);
+    my $smallest = gsl_stats_min($data, 1, 5);
+    print qq{
+    Dataset : @$data
+    Sample mean           $mean 
+    Estimated variance    $variance
+    Largest value         $largest
+    Smallest value        $smallest
+    };
+
 
 =head1 DESCRIPTION
 
@@ -401,23 +415,6 @@ documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
  Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
 
-=head1 EXAMPLES
-
-Here is a very simple example on how to use some of the functions in this module :
-
- use Math::GSL qw/:all/;
- use Math::GSL::Statistics qw/:all/;
-     
- my $data = [17.2, 18.1, 16.5, 18.3, 12.6];
- my $mean     = gsl_stats_mean($data, 1, 5);
- my $variance = gsl_stats_variance($data, 1, 5);
- my $largest  = gsl_stats_max($data, 1, 5);
- my $smallest = gsl_stats_min($data, 1, 5);
- print "The dataset is $data->[0], $data->[1], $data->[2], $data->[3], $data->[4] \n";
- print "The sample mean is $mean \n";
- print "The estimated variance is $variance \n";
- print "The largest value is $largest \n";
- print "The smallest value is $smallest \n";
 
 =head1 AUTHORS
 

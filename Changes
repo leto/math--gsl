@@ -1,7 +1,8 @@
 =head1 Math::GSL Changes
 
-=head1 v0.14 - October 19 2008
+=head1 v0.14 - October 21 2008
     - Chebyshev Series Approximation, with tests and docs
+    - Examples and new documentation in Statistics, as well as tests (Thierry)
     - Bugfixes relating to compiling on 64bit Red Hat Linux, reported by Michael Roberge
     - Improved FFT, Deriv, Integration, Chebyshev, Combination and Roots docs
     - Documentation for Math::GSL::Test 

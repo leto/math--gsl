@@ -24,7 +24,7 @@ our %EXPORT_TAGS = (
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0..2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.13_03';
+our $VERSION = '0.14';
 
 
 =head1 NAME
@@ -33,7 +33,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.13_03
+Version 0.14
 
 =cut
 

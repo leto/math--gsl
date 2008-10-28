@@ -33,7 +33,8 @@ use Data::Dumper;
 use Carp qw/croak/;
 use overload 
     '*'      => \&_multiplication,
-    fallback => 1,
+    '+'      => \&_addition,
+#    fallback => 1, # commenting out because 1 is not a good fallback for the newly added addition
 ;
 
 @EXPORT_all  = qw/fopen fclose
@@ -84,6 +85,7 @@ Math::GSL::Vector - Functions concerning vectors
     my $vec1 = Math::GSL::Vector->new([1, 7, 94, 15 ]);
     my $vec2 = $vec1 * 5; 
     my $vec3 = Math::GSL::Vector>new(10);   # 10 element zero vector 
+    my $vec4 = $vec1 + $vec2;
 
     # set the element at index 1 to 9
     # and the element at index 3 to 8
@@ -247,6 +249,22 @@ sub _multiplication {
         return $left->dot_product($right);
     } else {
         gsl_vector_scale($left->raw, $right);
+    }
+    return $left;
+}
+
+sub _addition {
+   my ($left, $right) = @_; 
+  if ( blessed $right && $right->isa('Math::GSL::Vector') && blessed $left && $left->isa('Math::GSL::Vector') ) {
+        if ( $left->length == $right->length ) {
+		gsl_vector_add($left->raw, $right->raw);
+	}
+        else {
+        	croak "addition of vectors must be called with two objects vectors and must have the same length";
+        }
+    }
+    else {
+    	gsl_vector_add_constant($left->raw, $right);
     }
     return $left;
 }

@@ -302,6 +302,7 @@ sub GSL_VECTOR_DOT_PRODUCT : Tests {
 
    my $q = Math::GSL::Vector->new(5);
    ok_similar ( $q * $q, 0, 'newly created vectors are zero-filled');
+
 }
 
 sub GSL_VECTOR_SWAP : Tests {
@@ -366,5 +367,32 @@ sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   isa_ok($result, 'Math::GSL::Complex');
   print Dumper [ $result ];
   local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
+}
+
+sub GSL_ADDITION : Tests {
+  my $vec1 = Math::GSL::Vector->new([1,2,3]);
+  my $vec2 = Math::GSL::Vector->new([2,3,4]);
+  my $vec3 = $vec1 + $vec2;
+  ok_similar([$vec3->as_list], [3,5,7]);
+
+
+  my $vec4 = $vec2 + 5;
+  ok_similar([$vec4->as_list], [7,8,9]);
+   
+  my $z = Math::GSL::Vector->new([0..10]);
+  dies_ok( sub { $z + $vec1; }, 'addition checks vector length' );
+  local $TODO = "the left vector of the addition changes of value after the addition is complete, we should find a way to make sure it stays the same";
+  ok_similar([$vec1->as_list], [1,2,3]);
+
+}
+
+sub GSL_MULTIPLICATION : Tests {
+  my $v = Math::GSL::Vector->new([1,2,3]);
+  my $v2 = $v * 5;
+  ok_similar ( [$v2->as_list], [5,10,15]);
+  
+  
+  local $TODO = "the left vector of the multiplication changes of value after the operation is complete, we should find a way to make sure it stays the same";
+  ok_similar ( [$v->as_list], [1,2,3]);
 }
 Test::Class->runtests;

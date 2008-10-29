@@ -389,15 +389,22 @@ sub GSL_ADDITION : Tests {
 }
 
 sub GSL_MULTIPLICATION : Tests {
-  my $v = Math::GSL::Vector->new([1,2,3]);
-  my $v2 = $v * 5;
-  my $v3 = 5 * $v;
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $v2 = $v * 5;
 
-  # check that original is not modified each time
-  ok_similar ( [$v2->as_list], [5,10,15]);
-  ok_similar ( [$v->as_list],  [1,2,3]);
+    # check that original is not modified each time
+    ok_similar ( [$v2->as_list], [5,10,15]);
+    ok_similar ( [$v->as_list],  [1,2,3]);
 
-  ok_similar ( [$v3->as_list], [5,10,15]);
-  ok_similar ( [$v->as_list],  [1,2,3]);
+    my $v3 = 5 * $v;
+    ok_similar ( [$v3->as_list], [5,10,15]);
+    ok_similar ( [$v->as_list],  [1,2,3]);
+    
+    my $w = $v3 * 0;
+    ok_similar( [ $w->as_list ], [0,0,0], 'right overloaded zero-ify' );
+
+    my $z = 0 * $v3;
+    ok_similar( [ $w->as_list ], [0,0,0], 'left overloaded zero-ify' );
 }
+
 Test::Class->runtests;

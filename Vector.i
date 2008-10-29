@@ -245,28 +245,32 @@ sub set {
 
 sub _multiplication {
     my ($left,$right) = @_;
+    my $lcopy = Math::GSL::Vector->new( $left->length );
+
+    gsl_vector_memcpy($lcopy->raw, $left->raw);
     if ( blessed $right && $right->isa('Math::GSL::Vector') ) {
-        return $left->dot_product($right);
+        return $lcopy->dot_product($right);
     } else {
-        gsl_vector_scale($left->raw, $right);
+        gsl_vector_scale($lcopy->raw, $right);
     }
-    return $left;
+    return $lcopy;
 }
 
 sub _addition {
-   my ($left, $right) = @_; 
-  if ( blessed $right && $right->isa('Math::GSL::Vector') && blessed $left && $left->isa('Math::GSL::Vector') ) {
+    my ($left, $right) = @_; 
+    my $lcopy = Math::GSL::Vector->new( $left->length );
+
+    gsl_vector_memcpy($lcopy->raw, $left->raw);
+    if ( blessed $right && $right->isa('Math::GSL::Vector') && blessed $left && $left->isa('Math::GSL::Vector') ) {
         if ( $left->length == $right->length ) {
-		gsl_vector_add($left->raw, $right->raw);
-	}
-        else {
-        	croak "addition of vectors must be called with two objects vectors and must have the same length";
+            gsl_vector_add($lcopy->raw, $right->raw);
+        } else {
+            croak "Math::GSL - addition of vectors must be called with two objects vectors and must have the same length";
         }
+    } else {
+        gsl_vector_add_constant($lcopy->raw, $right);
     }
-    else {
-    	gsl_vector_add_constant($left->raw, $right);
-    }
-    return $left;
+    return $lcopy;
 }
 
 sub dot_product {

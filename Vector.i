@@ -34,7 +34,7 @@ use Carp qw/croak/;
 use overload 
     '*'      => \&_multiplication,
     '+'      => \&_addition,
-#    fallback => 1, # commenting out because 1 is not a good fallback for the newly added addition
+    fallback => 1, 
 ;
 
 @EXPORT_all  = qw/fopen fclose

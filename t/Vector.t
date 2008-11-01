@@ -387,12 +387,23 @@ sub GSL_ADDITION : Tests {
   ok_similar([$vec1->as_list], [1,2,3]);
 
 }
+sub COPY : Tests {
+    my $v1 = Math::GSL::Vector->new( [ 55 .. 65 ] );
+    isa_ok( $v1->copy, 'Math::GSL::Vector' );
+    ok_similar( [ $v1->copy->as_list ], [ $v1->as_list ] );
 
+}
 sub GSL_SUBTRACTION : Tests { 
     my $v1 = Math::GSL::Vector->new( [ 1 .. 5 ]);
     my $v2 = Math::GSL::Vector->new( [ 5 .. 9 ]);
 
     ok_similar( [($v2-$v1)->as_list], [ (4) x 5 ] );
+    
+    my $v3 = $v2 - 3;
+    ok_similar( [ $v3->as_list  ], [ 2 .. 6 ] );
+
+    my $v4 = 4 - $v3;
+    ok_similar( [ $v4->as_list ], [ 2, 1, 0, -1, -2 ] );
 }
 
 sub GSL_MULTIPLICATION : Tests {

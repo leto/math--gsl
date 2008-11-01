@@ -1,5 +1,10 @@
 =head1 Math::GSL Changes
 
+=head1 v0.16 - November ?? 2008
+    - Operator overloading for addition and subtraction with vectors
+    - Added copy() method to vectors
+    - Improved Vector docs
+
 =head1 v0.14 - October 21 2008
     - Chebyshev Series Approximation, with tests and docs
     - Examples and new documentation in Statistics, as well as tests (Thierry)

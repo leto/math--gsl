@@ -31,6 +31,7 @@ int fclose(FILE *);
 use Scalar::Util 'blessed';
 use Data::Dumper;
 use Carp qw/croak/;
+use Math::GSL::Errno qw/:all/;
 use overload 
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -138,7 +139,7 @@ sub new {
 
 Get the underlying GSL vector object created by SWIG, useful for using gsl_vector_* functions which do not have an OO counterpart.
 
-    my $vector    = Math::GSL::vector->new(3);
+    my $vector    = Math::GSL::Vector->new(3);
     my $gsl_vector = $vector->raw;
     my $stuff      = gsl_vector_get($gsl_vector, 1);
 
@@ -192,7 +193,7 @@ sub length { my $self=shift; $self->{_length} }
 
 Gets the content of a Math::GSL::Vector object as a Perl list.
 
-    my $vector = Math::GSL::vector->new(3);
+    my $vector = Math::GSL::Vector->new(3);
     ...
     my @values = $vector->as_list;
 =cut
@@ -206,13 +207,13 @@ sub as_list {
 
 Gets the value of an of a Math::GSL::Vector object.
 
-    my $vector = Math::GSL::vector->new(3);
+    my $vector = Math::GSL::Vector->new(3);
     ...
     my @values = $vector->get(2);
 
 You can also enter an array of indices to receive their corresponding values:
 
-    my $vector = Math::GSL::vector->new(3);
+    my $vector = Math::GSL::Vector->new(3);
     ...
     my @values = $vector->get([0,2]);
 
@@ -227,7 +228,7 @@ sub get {
 
 Sets values of an of a Math::GSL::Vector object.
 
-    my $vector = Math::GSL::vector->new(3);
+    my $vector = Math::GSL::Vector->new(3);
     $vector->set([1,2], [8,23]);
 
 This sets the second and third value to 8 and 23.
@@ -244,11 +245,29 @@ sub set {
     return;
 }
 
+=head2 copy() 
+
+Returns a copy of the vector, which has the same length and values but resides at a different location in memory.
+
+    my $vector = Math::GSL::Vector->new([10 .. 20]);
+    my $copy   = $vector->copy;
+
+=cut
+
+
+sub copy {
+    my $self = shift;
+    my $copy = Math::GSL::Vector->new( $self->length );
+    if ( gsl_vector_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
+        croak "Math::GSL - error copying memory, aborting";
+    }
+    return $copy;
+}
+
 sub _multiplication {
     my ($left,$right) = @_;
-    my $lcopy = Math::GSL::Vector->new( $left->length );
+    my $lcopy = $left->copy;
 
-    gsl_vector_memcpy($lcopy->raw, $left->raw);
     if ( blessed $right && $right->isa('Math::GSL::Vector') ) {
         return $lcopy->dot_product($right);
     } else {
@@ -258,15 +277,23 @@ sub _multiplication {
 }
 
 sub _subtract {
-    my ($left, $right) = @_;
-    return _addition($left, -1.0 * $right );
+    my ($left, $right, $flip) = @_;
+
+    if ($flip) {
+        my $lcopy = $left->copy;
+        gsl_vector_scale($lcopy->raw, -1 );
+        gsl_vector_add_constant($lcopy->raw, $right);
+        return $lcopy;
+    } else { 
+        return _addition($left, -1.0*$right);
+    }
 }
 
 sub _addition {
-    my ($left, $right) = @_; 
-    my $lcopy = Math::GSL::Vector->new( $left->length );
+    my ($left, $right, $flip) = @_; 
 
-    gsl_vector_memcpy($lcopy->raw, $left->raw);
+    my $lcopy = $left->copy;
+
     if ( blessed $right && $right->isa('Math::GSL::Vector') && blessed $left && $left->isa('Math::GSL::Vector') ) {
         if ( $left->length == $right->length ) {
             gsl_vector_add($lcopy->raw, $right->raw);

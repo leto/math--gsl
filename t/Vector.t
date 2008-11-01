@@ -10,13 +10,12 @@ use Math::GSL::Errno qw/:all/;
 use Test::Exception;
 use strict;
 
-# This allows us to eval code
 BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{vector} = gsl_vector_alloc(5);
-    $self->{object} = Math::GSL::Vector->new(5);
+    $self->{object} = Math::GSL::Vector->new([1 .. 5 ]);
 }
 
 sub teardown : Test(teardown) {
@@ -211,7 +210,7 @@ sub GSL_VECTOR_MEMCPY : Tests {
    my $self = shift;
    my $copy = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   is( gsl_vector_memcpy($copy, $self->{vector}), 0);
+   ok_status( gsl_vector_memcpy($copy, $self->{vector}) );
    map { is(gsl_vector_get($copy, $_), $_ ** 2 ) } (0..4); ;
 }
 
@@ -229,22 +228,21 @@ sub GSL_VECTOR_REVERSE : Tests {
 }
 
 sub GSL_VECTOR_SWAP_ELEMENTS : Tests {
-   my $self = shift;
-   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   ok_status( gsl_vector_swap_elements($self->{vector}, 0, 4));
-   is(gsl_vector_get($self->{vector}, 0), 16);
-   is(gsl_vector_get($self->{vector}, 4), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), $_ ** 2 ) } (1..3); ;   
+   my $v1 = Math::GSL::Vector->new( [ map { $_ ** 2 } (0 .. 4) ] );
+   ok_status( gsl_vector_swap_elements($v1->raw, 0, 4));
+
+   is(gsl_vector_get($v1->raw, 0), 16);
+   is(gsl_vector_get($v1->raw, 4), 0);
+
+   is_deeply( [ 16, 1, 4, 9, 0 ], [ $v1->as_list ] );
 }
 
 sub GSL_VECTOR_ADD : Tests {
-   my $self = shift;
-   my $second_vec = gsl_vector_alloc(5);
-   map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   map { gsl_vector_set($second_vec, $_, $_ ) } (0..4); ;
-   ok_status(gsl_vector_reverse($second_vec));
-   is( gsl_vector_add($self->{vector}, $second_vec), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), 4 ) } (0..4); ;   
+   my $v1 = Math::GSL::Vector->new([0 .. 4]);
+   my $v2 = $v1->copy;
+   ok_status( gsl_vector_reverse($v2->raw) );
+   ok_status( gsl_vector_add($v1->raw, $v2->raw) );
+   is_deeply( [ $v1->as_list ], [ (4) x 5 ] );
 }
 
 sub GSL_VECTOR_SUB : Tests {

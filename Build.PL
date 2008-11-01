@@ -184,7 +184,7 @@ my @Subsystems = sort qw/
 if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
-my $cleanup = qq{core *.core Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
+my $cleanup = qq{core *.core swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
 
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',
@@ -209,7 +209,7 @@ my $builder = GSLBuilder->new(
     },
     sign                  => 0,
     swig_source           => [  
-                                map { [ "$_.i" ] } @Subsystems
+                                map { [ "swig/$_.i" ] } @Subsystems
                              ],
 );
 $builder->add_build_element('swig');

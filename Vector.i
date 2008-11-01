@@ -34,6 +34,7 @@ use Carp qw/croak/;
 use overload 
     '*'      => \&_multiplication,
     '+'      => \&_addition,
+    '-'      => \&_subtract,
     fallback => 1, 
 ;
 
@@ -254,6 +255,11 @@ sub _multiplication {
         gsl_vector_scale($lcopy->raw, $right);
     }
     return $lcopy;
+}
+
+sub _subtract {
+    my ($left, $right) = @_;
+    return _addition($left, -1.0 * $right );
 }
 
 sub _addition {

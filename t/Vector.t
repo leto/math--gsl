@@ -388,6 +388,13 @@ sub GSL_ADDITION : Tests {
 
 }
 
+sub GSL_SUBTRACTION : Tests { 
+    my $v1 = Math::GSL::Vector->new( [ 1 .. 5 ]);
+    my $v2 = Math::GSL::Vector->new( [ 5 .. 9 ]);
+
+    ok_similar( [($v2-$v1)->as_list], [ (4) x 5 ] );
+}
+
 sub GSL_MULTIPLICATION : Tests {
     my $v = Math::GSL::Vector->new([1,2,3]);
     my $v2 = $v * 5;

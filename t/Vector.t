@@ -293,7 +293,7 @@ sub GSL_VECTOR_DOT_PRODUCT : Tests {
    my $v = Math::GSL::Vector->new([0..4]);
    my $w = Math::GSL::Vector->new([0..4]);
 
-   ok_similar( $v * $w ,  4*4 + 3*3 + 2*2 + 1*1 );
+   ok_similar( $v * $w ,  4*4 + 3*3 + 2*2 + 1*1, 'basic dot product');
 
    my $z = Math::GSL::Vector->new([0..10]);
    dies_ok( sub { $z * $v; }, 'dot_product checks vector length' );

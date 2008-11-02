@@ -32,6 +32,7 @@ use Scalar::Util 'blessed';
 use Data::Dumper;
 use Carp qw/croak/;
 use Math::GSL::Errno qw/:all/;
+use Math::GSL::BLAS qw/gsl_blas_ddot/;
 use overload 
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -306,11 +307,10 @@ sub _addition {
     return $lcopy;
 }
 
-sub dot_product {
+sub dot_product_pp {
     my ($left,$right) = @_;
     my $sum=0;
     if ( blessed $right && $right->isa('Math::GSL::Vector') && 
-         blessed $left  && $left->isa('Math::GSL::Vector') && 
          $left->length == $right->length ) {
          my @l = $left->as_list;
          my @r = $right->as_list;
@@ -319,6 +319,14 @@ sub dot_product {
     } else {
         croak "dot_product() must be called with two vectors";
     }
+}
+
+sub dot_product {
+    my ($left,$right) = @_;
+    
+    my ($status, $product) = gsl_blas_ddot($left->raw,$right->raw);
+    croak sprintf "Math::GSL::dot_product - %s", gsl_strerror($status) if ($status != $GSL_SUCCESS);  
+    return $product;
 }
 
 =head1 DESCRIPTION

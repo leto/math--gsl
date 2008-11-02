@@ -20,20 +20,20 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub TEST_FUNCTION_STRUCT : Tests {
+sub TEST_FUNCTION_STRUCT : Tests(1) {
     my $self = shift;
 
     isa_ok( $self->{gsl_func},'Math::GSL::Deriv::gsl_function_struct');
 }
 
-sub TEST_DERIV_CENTRAL_DIES : Tests { 
+sub TEST_DERIV_CENTRAL_DIES : Tests(1) { 
     my ($x,$h)=(10,0.01);
     throws_ok( sub {
                gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
            },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
 }
 
-sub TEST_DERIV_CENTRAL : Tests { 
+sub TEST_DERIV_CENTRAL : Tests(2) { 
     my $self = shift;
     my ($x,$h)=(10,0.01);
 
@@ -43,7 +43,7 @@ sub TEST_DERIV_CENTRAL : Tests {
     ok( $res <= $err  , sprintf ("gsl_deriv_forward: res=%.18f, abserr=%.18f",$res, $err ));
 }
 
-sub TEST_DERIV_FORWARD : Tests { 
+sub TEST_DERIV_FORWARD : Tests(2) { 
     my $self = shift;
 
     my ($x,$h)=(10,0.01);
@@ -53,7 +53,7 @@ sub TEST_DERIV_FORWARD : Tests {
     ok( $res <= $err , sprintf ("gsl_deriv_forward: res=%.18f, abserr=%.18f",$res, $err ));
 }
 
-sub TEST_DERIV_BACKWARD : Tests { 
+sub TEST_DERIV_BACKWARD : Tests(2) { 
     my $self = shift;
     my ($x,$h)=(10,0.01);
     my ($status, $val, $err) = gsl_deriv_backward ( sub { log $_[0] }, $x, $h,); 
@@ -62,7 +62,7 @@ sub TEST_DERIV_BACKWARD : Tests {
     ok( $res <= $err , sprintf ("gsl_deriv_backward: res=%.18f, abserr=%.18f",$res, $err ));
 }
 
-sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests { 
+sub TEST_DERIV_CENTRAL_CALLS_THE_SUB : Tests(1) { 
     my $self = shift;
     my ($x,$h)=(10,0.01);
 

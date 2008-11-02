@@ -160,9 +160,10 @@ if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $swig_flags = '-DNEED_LONG';
 } elsif ( $^O eq 'darwin' ) {
     $ldflags .= ' -bundle -flat_namespace ';
-} elsif ($Config{archname} =~ /x86_64/ ) { 
-    $ldflags .= ' -fPIC '; 
-    $ccflags .= ' -fPIC ';
+}
+if ($Config{archname} =~ /x86_64/ ) { 
+    $ldflags .= ' -fPIC  -fno-omit-frame-pointer '; 
+    $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 my @Subsystems = sort qw/
             BLAS         Diff          Machine    Statistics
@@ -184,7 +185,7 @@ my @Subsystems = sort qw/
 if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
-my $cleanup = qq{core *.core swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
+my $cleanup = qq{core *.core swig/*wrap.c swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build lib/Math/GSL/[A-z]+/* blib *.so *.orig };
 
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',

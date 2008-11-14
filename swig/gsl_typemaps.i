@@ -100,3 +100,5 @@
     fprintf(stderr, 'FDF_FUNC');    
 
 }
+
+typedef int size_t;

@@ -229,7 +229,7 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
     my $Z = gsl_matrix_alloc(2,2);
     ok_status(gsl_eigen_nonsymm($matrix, $vector, $eigen));
     ok_status(gsl_eigen_nonsymm_Z($matrix,$vector, $Z, $eigen));  
-    ok(is_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, 0.005));
+    ok_similar(gsl_matrix_get($Z, 0, 0), 0.9958842418254068860784291, "Z matrix", 0.005);
     ok_similar(gsl_matrix_get($Z, 0, 1), 0.09063430301952179629793610, "Z matrix", 0.1);
     ok_similar(gsl_matrix_get($Z, 1, 1), 0.9958842418254068860784291, "Z matrix", 0.005);
     ok_similar(gsl_matrix_get($Z, 1, 0), 0.09063430301952179629793610, "Z matrix", 0.1);
@@ -278,7 +278,6 @@ sub GSL_EIGEN_NONSYMMV_Z : Tests {
     ok_similar(gsl_imag($y), 0, "evec matrix");
 
     local $TODO = "matlab differences";
-
     ok_similar(gsl_real($x), 1); # this is the value I get with maple
     ok_similar(gsl_real($y), 1); # this is the value I get with maple
 

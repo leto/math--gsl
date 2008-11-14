@@ -210,7 +210,7 @@ my $builder = GSLBuilder->new(
     },
     sign                  => 0,
     swig_source           => [  
-                                map { [ "swig/$_.i" ] } @Subsystems
+                                map { [ "swig/$_.i" ] } @Subsystems ,
                              ],
 );
 $builder->add_build_element('swig');

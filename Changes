@@ -7,6 +7,9 @@
     - Sped up vector dot products by 15x using BLAS function gsl_blas_ddot
         NOTE: using gsl_blas_ddot($x->raw,$y->raw) directly is still about 10 times faster 
               than $x * $y due to error checking and function call overhead
+    - Separated POD and Perl code out of SWIG interface files, yay for proper syntax
+        highlighting
+    - Added stub test files for Heapsort, IEEEUtils, Multimin, Siman, Wavelet2D
 
 
 =head1 v0.14 - October 21 2008

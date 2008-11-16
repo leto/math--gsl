@@ -66,7 +66,7 @@ sub compile_swig {
     $self->do_system(@swig, '-o', $c_file,
                      '-outdir', $gsldir, 
 		             '-perl5', @swig_flags, $file)
-	    or die "error building $c_file file from '$file'";
+	    or die "error : $! while building $c_file file from '$file'";
     print "Copying from: $from, to: $to; it makes the CPAN indexer happy.\n";
     copy($from,$to);
     return $c_file;

@@ -1,0 +1,6 @@
+#!/usr/bin/perl -w
+
+use strict;
+use aliased 'Math::GSL::Matrix' => 'Matrix';
+
+my $matrix = Matrix->new(4,4);

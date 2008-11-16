@@ -4,8 +4,11 @@ use base q{Test::Class};
 use Test::More;
 use Math::GSL::Monte qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use Math::GSL::RNG qw/:all/;
 use Math::GSL qw/:all/;
 use strict;
+
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
@@ -28,6 +31,21 @@ sub TEST_INIT  : Tests {
     ok_status( gsl_monte_plain_init($self->{plain}) );
     ok_status( gsl_monte_vegas_init($self->{vegas}) );
     ok_status( gsl_monte_miser_init($self->{miser}) );
+}
+
+sub TEST_MONTE_VEGAS_INTEGRATE : Tests {
+    my $self = shift;
+    my $state = gsl_monte_vegas_alloc(1);
+    my $rng   = Math::GSL::RNG->new;
+    my $result = [];
+    my $err = [];
+    local $TODO = 'gsl_monte_function is broke';
+    my $status;
+    eval {
+          $status =  gsl_monte_vegas_integrate( sub { $_[0] ** 2 },
+        [ 0 ], [ 1 ], 1, 500_000, $rng->raw, $state, $result, $err)
+    };
+    ok_status($status);
 
 }
 sub TEST_ALLOC : Tests {

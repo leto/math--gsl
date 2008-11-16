@@ -1,0 +1,27 @@
+---
+name: Math-GSL
+version: 0.15_02
+author:
+  - 'Jonathan Leto <jonathan@leto.net>'
+abstract: Interface to the GNU Scientific Library using SWIG
+license: gpl
+resources:
+  license: http://www.opensource.org/licenses/gpl-license.php
+requires:
+  ExtUtils::PkgConfig: 1.03
+  Scalar::Util: 0
+  Test::Class: 0.12
+  Test::Exception: 0.21
+  Test::More: 0
+  perl: 5.8.0
+  version: 0
+provides:
+  Math::GSL:
+    file: lib/Math/GSL.pm
+    version: 0.15_02
+  Math::GSL::Test:
+    file: lib/Math/GSL/Test.pm
+generated_by: Module::Build version 0.2808
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

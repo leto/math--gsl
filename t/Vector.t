@@ -10,13 +10,12 @@ use Math::GSL::Errno qw/:all/;
 use Test::Exception;
 use strict;
 
-# This allows us to eval code
 BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{vector} = gsl_vector_alloc(5);
-    $self->{object} = Math::GSL::Vector->new(5);
+    $self->{object} = Math::GSL::Vector->new([1 .. 5 ]);
 }
 
 sub teardown : Test(teardown) {
@@ -211,7 +210,7 @@ sub GSL_VECTOR_MEMCPY : Tests {
    my $self = shift;
    my $copy = gsl_vector_alloc(5);
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   is( gsl_vector_memcpy($copy, $self->{vector}), 0);
+   ok_status( gsl_vector_memcpy($copy, $self->{vector}) );
    map { is(gsl_vector_get($copy, $_), $_ ** 2 ) } (0..4); ;
 }
 
@@ -229,22 +228,21 @@ sub GSL_VECTOR_REVERSE : Tests {
 }
 
 sub GSL_VECTOR_SWAP_ELEMENTS : Tests {
-   my $self = shift;
-   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
-   ok_status( gsl_vector_swap_elements($self->{vector}, 0, 4));
-   is(gsl_vector_get($self->{vector}, 0), 16);
-   is(gsl_vector_get($self->{vector}, 4), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), $_ ** 2 ) } (1..3); ;   
+   my $v1 = Math::GSL::Vector->new( [ map { $_ ** 2 } (0 .. 4) ] );
+   ok_status( gsl_vector_swap_elements($v1->raw, 0, 4));
+
+   is(gsl_vector_get($v1->raw, 0), 16);
+   is(gsl_vector_get($v1->raw, 4), 0);
+
+   is_deeply( [ 16, 1, 4, 9, 0 ], [ $v1->as_list ] );
 }
 
 sub GSL_VECTOR_ADD : Tests {
-   my $self = shift;
-   my $second_vec = gsl_vector_alloc(5);
-   map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
-   map { gsl_vector_set($second_vec, $_, $_ ) } (0..4); ;
-   ok_status(gsl_vector_reverse($second_vec));
-   is( gsl_vector_add($self->{vector}, $second_vec), 0);
-   map { is(gsl_vector_get($self->{vector}, $_), 4 ) } (0..4); ;   
+   my $v1 = Math::GSL::Vector->new([0 .. 4]);
+   my $v2 = $v1->copy;
+   ok_status( gsl_vector_reverse($v2->raw) );
+   ok_status( gsl_vector_add($v1->raw, $v2->raw) );
+   is_deeply( [ $v1->as_list ], [ (4) x 5 ] );
 }
 
 sub GSL_VECTOR_SUB : Tests {
@@ -295,13 +293,14 @@ sub GSL_VECTOR_DOT_PRODUCT : Tests {
    my $v = Math::GSL::Vector->new([0..4]);
    my $w = Math::GSL::Vector->new([0..4]);
 
-   ok_similar( $v * $w ,  4*4 + 3*3 + 2*2 + 1*1 );
+   ok_similar( $v * $w ,  4*4 + 3*3 + 2*2 + 1*1, 'basic dot product');
 
    my $z = Math::GSL::Vector->new([0..10]);
    dies_ok( sub { $z * $v; }, 'dot_product checks vector length' );
 
    my $q = Math::GSL::Vector->new(5);
    ok_similar ( $q * $q, 0, 'newly created vectors are zero-filled');
+
 }
 
 sub GSL_VECTOR_SWAP : Tests {
@@ -352,6 +351,11 @@ sub GSL_VECTOR_COMPLEX_CALLOC : Tests {
   isa_ok($vec, 'Math::GSL::Vector');
 }
 
+sub GSL_VECTOR_RAW : Tests {
+    my $vec = Math::GSL::Vector->new(10);
+    isa_ok($vec->raw, 'Math::GSL::Vector::gsl_vector');
+}
+
 sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   my $vec = gsl_vector_complex_calloc(5);
   my $complex = gsl_complex_rect(2,1);
@@ -359,8 +363,64 @@ sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   my $result = gsl_complex_rect(5,5);
   $result = gsl_vector_complex_get($vec, 0);
   isa_ok($result, 'Math::GSL::Complex');
-  #print Dumper [ $result ];
+  print Dumper [ $result ];
   local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
-  #my @got = gsl_parts($result);
 }
+
+sub GSL_ADDITION : Tests {
+  my $vec1 = Math::GSL::Vector->new([1,2,3]);
+  my $vec2 = Math::GSL::Vector->new([2,3,4]);
+  my $vec3 = $vec1 + $vec2;
+  ok_similar([$vec3->as_list], [3,5,7]);
+
+
+  my $vec4 = $vec2 + 5;
+  ok_similar([$vec4->as_list], [7,8,9]);
+
+  my $vec5 = 5 + $vec2;
+  ok_similar([$vec5->as_list], [7,8,9]);
+   
+  my $z = Math::GSL::Vector->new([0..10]);
+  dies_ok( sub { $z + $vec1; }, 'addition checks vector length' );
+  ok_similar([$vec1->as_list], [1,2,3]);
+
+}
+sub COPY : Tests {
+    my $v1 = Math::GSL::Vector->new( [ 55 .. 65 ] );
+    isa_ok( $v1->copy, 'Math::GSL::Vector' );
+    ok_similar( [ $v1->copy->as_list ], [ $v1->as_list ] );
+
+}
+sub GSL_SUBTRACTION : Tests { 
+    my $v1 = Math::GSL::Vector->new( [ 1 .. 5 ]);
+    my $v2 = Math::GSL::Vector->new( [ 5 .. 9 ]);
+
+    ok_similar( [($v2-$v1)->as_list], [ (4) x 5 ] );
+    
+    my $v3 = $v2 - 3;
+    ok_similar( [ $v3->as_list  ], [ 2 .. 6 ] );
+
+    my $v4 = 4 - $v3;
+    ok_similar( [ $v4->as_list ], [ 2, 1, 0, -1, -2 ] );
+}
+
+sub GSL_MULTIPLICATION : Tests {
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $v2 = $v * 5;
+
+    # check that original is not modified each time
+    ok_similar ( [$v2->as_list], [5,10,15]);
+    ok_similar ( [$v->as_list],  [1,2,3]);
+
+    my $v3 = 5 * $v;
+    ok_similar ( [$v3->as_list], [5,10,15]);
+    ok_similar ( [$v->as_list],  [1,2,3]);
+    
+    my $w = $v3 * 0;
+    ok_similar( [ $w->as_list ], [0,0,0], 'right overloaded zero-ify' );
+
+    my $z = 0 * $v3;
+    ok_similar( [ $w->as_list ], [0,0,0], 'left overloaded zero-ify' );
+}
+
 Test::Class->runtests;

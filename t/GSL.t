@@ -1,39 +1,59 @@
-use Test::More 'no_plan';
-use Math::GSL qw/:all/;
-use Math::GSL::SF qw/:all/;
+package Math::GSL::GSL::Test;
+use base q{Test::Class};
+use Test::More;
+use Math::GSL::SF      qw/:all/;
+use Math::GSL::BLAS    qw/:all/;
+use Math::GSL::Vector  qw/:all/;
+use Math::GSL::Complex qw/:all/;
+use Math::GSL::Matrix  qw/:all/;
+use Math::GSL::CBLAS   qw/:all/;
+use Math::GSL          qw/:all/;
 use Math::GSL::Test qw/:all/;
-use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
+use Math::GSL::Errno qw/:all/;
 use strict;
 
-{
-    my $results = { 
-                q{is_similar(undef, [1,2,3]) } => 0 ,
-                q{is_similar(0.10005,0.1000501, 1e-5)}  => 1,
-                q{is_similar(0.10005,0.1000501, 1e-7)}  => 0,
-                q{is_similar([1,2,3    ], [1,2,3.001])} => 0, 
-                q{is_similar([1,2,3.001], [1,2,3.001])} => 1, 
-                q{is_similar([1,2,3.001], [1,2,3.001],1e-2)} => 1, 
-                q{is_similar([1,2,3.0010001], [1,2,3.0010002], 1e-5)} => 1, 
-                q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => 0, 
-                q{is_similar_relative( 1e8, 1e8 + 1, 1e-7) } => 1,
-                q{is_similar_relative( 1e8, 1e8 + 1e3, 1e-7) } => 0,
-    };
+BEGIN { gsl_set_error_handler_off(); }
 
-    verify($results, 'Math::GSL');
+sub make_fixture : Test(setup) {
 }
-{
-        ok_status(0,$GSL_SUCCESS);
-        ok_status(0);
+
+sub teardown : Test(teardown) {
 }
-{
-    my $fh = gsl_fopen('mrfuji','w');
-    ok(defined $fh, 'gsl_fopen can create files');
-    ok_status(gsl_fclose($fh));
+
+sub TEST_STUFF : Tests { 
+    {
+        my $results = { 
+                    q{is_similar(undef, [1,2,3]) }                        => [ 0 ],
+                    q{is_similar(0.10005,0.1000501, 1e-5)}                => [ 1 ],
+                    q{is_similar(0.10005,0.1000501, 1e-7)}                => [ 0 ],
+                    q{is_similar([1,2,3    ], [1,2,3.001])}               => [ 0 ], 
+                    q{is_similar([1,2,3.001], [1,2,3.001])}               => [ 1 ], 
+                    q{is_similar([1,2,3.001], [1,2,3.001],1e-2)}          => [ 1 ], 
+                    q{is_similar([1,2,3.0010001], [1,2,3.0010002], 1e-5)} => [ 1 ], 
+                    q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => [ 0 ], 
+                    q{is_similar_relative( 1e8, 1e8 + 1, 1e-7) }          => [ 1 ],
+                    q{is_similar_relative( 1e8, 1e8 + 1e3, 1e-7) }        => [ 0 ],
+        };
+
+        verify($results, 'Math::GSL');
+    }
+    {
+            ok_status(0,$GSL_SUCCESS);
+            ok_status(0);
+    }
+    {
+        my $fh = gsl_fopen('mrfuji','w');
+        ok(defined $fh, 'gsl_fopen can create files');
+        ok_status(gsl_fclose($fh));
+    }
+    {
+        my $fh = gsl_fopen('mrfuji','r');
+        ok(defined $fh, 'gsl_fopen can read files');
+        ok_status(gsl_fclose($fh));
+        unlink 'mrfuji' if -e 'mrfuji';
+    }
+
 }
-{
-    my $fh = gsl_fopen('mrfuji','r');
-    ok(defined $fh, 'gsl_fopen can read files');
-    ok_status(gsl_fclose($fh));
-    unlink 'mrfuji' if -e 'mrfuji';
-}
+
+Test::Class->runtests;

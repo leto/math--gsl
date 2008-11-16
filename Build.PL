@@ -151,16 +151,19 @@ $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
-my $ldflags = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags= "-Wall $gsl_pkgcfg{cflags}";
+my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
+my $swig_flags = "$gsl_pkgcfg{cflags}"; # -Wall is a bit much
 
-if ('cygwin' eq $Config{osname} && 
-    $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
+if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
     # Should we check the 32-ness?
     $swig_flags = '-DNEED_LONG';
-} elsif ('darwin' eq $Config{osname}) {
-    $ldflags .= " -bundle -flat_namespace";
+} elsif ( $^O eq 'darwin' ) {
+    $ldflags .= ' -bundle -flat_namespace ';
+}
+if ($Config{archname} =~ /x86_64/ ) { 
+    $ldflags .= ' -fPIC  -fno-omit-frame-pointer '; 
+    $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 my @Subsystems = sort qw/
             BLAS         Diff          Machine    Statistics
@@ -182,7 +185,7 @@ my @Subsystems = sort qw/
 if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
-my $cleanup = qq{core *.core Makefile Math-GSL-* tmp* pod2ht*.tmp _build blib *.so *.orig };
+my $cleanup = qq{core *.core swig/*wrap.c swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build lib/Math/GSL/[A-z]+/* blib *.so *.orig };
 
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',
@@ -207,7 +210,7 @@ my $builder = GSLBuilder->new(
     },
     sign                  => 0,
     swig_source           => [  
-                                map { [ "$_.i" ] } @Subsystems
+                                map { [ "swig/$_.i" ] } @Subsystems ,
                              ],
 );
 $builder->add_build_element('swig');

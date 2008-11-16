@@ -1,0 +1,28 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use Data::Dumper;
+use Math::GSL::Vector qw/:all/;
+use Math::GSL::RNG qw/:all/;
+use Storable;
+
+if ( -e 'data' ) {
+    my $thawed = retrieve('data') or die $!;
+    print "Got thawed data\n";
+    my $v = $thawed->{vector};
+    print Dumper [ $v ];
+    print "Thawed vector of length " . $v->length . "\n";
+    # The next line coredumps my box
+    print Dumper [ $v->as_list ];
+    print join (" ", $v->as_list ) . "\n";
+} else { 
+    my %data;
+    my $rng    = Math::GSL::RNG->new;
+    my @stuff  = map { $rng->get } (1..10) ;
+    my $vector = Math::GSL::Vector->new( \@stuff );
+    print "Serialized vector of length " . $vector->length . "\n";
+    print "Vector: " . join(" ", $vector->as_list) . "\n";
+    $data{vector} = $vector;
+    store \%data, 'data' or die $!;
+}

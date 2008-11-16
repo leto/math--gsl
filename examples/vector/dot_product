@@ -1,0 +1,43 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use Benchmark;
+use Math::GSL::Vector qw/:all/;
+use Math::GSL::Errno  qw/:all/;
+use Math::GSL::RNG  qw/:all/;
+use Math::GSL::BLAS qw/:all/;
+use Data::Dumper;
+
+my $count = shift || 500_000;
+my $dim   = shift || 10;
+my $rng   = Math::GSL::RNG->new;
+my @nums  = map { $rng->get % 100 } (1..$dim);
+
+my $x = Math::GSL::Vector->new( \@nums );
+my $y = $x->copy + int(rand(100));
+
+warn Dumper [ $x->as_list ];
+warn Dumper [ $y->as_list ];
+
+warn Dumper [ pp_dot($x,$y) ];
+warn Dumper [ gsl_dot($x,$y) ];
+
+timethese(
+    $count, {
+        'pp_dot       ' => sub { pp_dot($x,$y) },
+        'gsl_dot      ' => sub { gsl_dot($x,$y) },
+        'overload_dot ' => sub { $x * $y },
+    });
+
+sub gsl_dot {
+    my ($x,$y) = @_;
+    my ($status,$dot) = gsl_blas_ddot($x->raw,$y->raw);
+    return $dot;
+}
+
+
+sub pp_dot {
+    my ($x,$y) = @_;
+    return Math::GSL::Vector::dot_product_pp($x,$y);
+}

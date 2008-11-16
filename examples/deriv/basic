@@ -1,0 +1,23 @@
+#!/usr/bin/perl -w
+use strict;
+use Math::GSL::Deriv qw/:all/;
+use Math::GSL::Errno qw/:all/;
+
+# This is a numerical verification of the mathematical fact
+# that the derivative of sin(x) is cos(x), i.e.
+#
+#  d
+#  -( sin(x) ) = cos(x)
+#  dx
+
+my ($x, $h) = (1.5, 0.01);
+my ($status, $val,$err) = gsl_deriv_central ( sub {  sin($_[0]) }, $x, $h);
+my $res = abs($val - cos($x));
+if ($status == $GSL_SUCCESS) {
+    printf "deriv(sin((%g)) = %.18g, max error=%.18g\n", $x, $val, $err;
+    printf "       cos(%g)) = %.18g, residue=  %.18g\n"  , $x, cos($x), $res;
+} else {
+    my $gsl_error = gsl_strerror($status);
+    print "Numerical Derivative FAILED, reason:\n $gsl_error\n\n";
+}
+

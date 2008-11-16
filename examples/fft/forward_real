@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Math::GSL::FFT qw/:all/;
+use Math::GSL::Errno qw/:all/;
+use Data::Dumper;
+
+my $data = [ (0) x 5, (1) x 22, (0) x 5 ];
+my ($status, $fft ) = gsl_fft_real_radix2_transform ($data, 1, 32);
+print Dumper $fft;
+

@@ -1,0 +1,105 @@
+%perlcode %{
+our @EXPORT = qw();
+our @EXPORT_OK = qw/
+               gsl_log1p 
+               gsl_expm1 
+               gsl_hypot 
+               gsl_hypot3 
+               gsl_acosh 
+               gsl_asinh 
+               gsl_atanh 
+               gsl_isnan 
+               gsl_isinf 
+               gsl_finite 
+               gsl_posinf 
+               gsl_neginf 
+               gsl_fdiv 
+               gsl_coerce_double 
+               gsl_coerce_float 
+               gsl_coerce_long_double 
+               gsl_ldexp 
+               gsl_frexp 
+               gsl_fcmp 
+               gsl_nan
+               gsl_isnan
+               gsl_inf
+             /;
+
+our %EXPORT_TAGS = ( all => \@EXPORT_OK );
+
+__END__
+
+=head1 NAME
+
+Math::GSL::Sys - 
+
+=head1 SYNOPSIS
+
+use Math::GSL::Sys qw /:all/;
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions in this module :
+
+=over
+
+=item * C<gsl_log1p($x)> - This function computes the value of \log(1+$x) in a way that is accurate for small $x. It provides an alternative to the BSD math function log1p(x).
+=item * C<gsl_expm1($x)> - This function computes the value of \exp($x)-1 in a way that is accurate for small $x. It provides an alternative to the BSD math function expm1(x).
+
+=item * C<gsl_hypot($x, $y)> - This function computes the value of \sqrt{$x^2 + $y^2} in a way that avoids overflow. It provides an alternative to the BSD math function hypot($x,$y).
+
+=item * C<gsl_hypot3($x, $y, $z)> - This function computes the value of \sqrt{$x^2 + $y^2 + $z^2} in a way that avoids overflow. 
+
+=item * C<gsl_acosh($x)> - This function computes the value of \arccosh($x). It provides an alternative to the standard math function acosh($x).
+
+=item * C<gsl_asinh($x)> - This function computes the value of \arcsinh($x). It provides an alternative to the standard math function asinh($x).
+
+=item * C<gsl_atanh($x)> - This function computes the value of \arctanh($x). It provides an alternative to the standard math function atanh($x).
+
+=item * C<gsl_isnan($x)> - This function returns 1 if $x is not-a-number.
+
+=item * C<gsl_isinf($x)> - This function returns +1 if $x is positive infinity, -1 if $x is negative infinity and 0 otherwise.
+
+=item * C<gsl_finite($x)> - This function returns 1 if $x is a real number, and 0 if it is infinite or not-a-number.
+
+=item * C<gsl_posinf >
+
+=item * C<gsl_neginf >
+
+=item * C<gsl_fdiv >
+
+=item * C<gsl_coerce_double >
+
+=item * C<gsl_coerce_float >
+
+=item * C<gsl_coerce_long_double >
+
+=item * C<gsl_ldexp($x, $e)> - This function computes the value of $x * 2**$e. It provides an alternative to the standard math function ldexp($x,$e). 
+
+=item * C<gsl_frexp($x)> - This function splits the number $x into its normalized fraction f and exponent e, such that $x = f * 2^e and 0.5 <= f < 1. The function returns f and then the exponent in e. If $x is zero, both f and e are set to zero. This function provides an alternative to the standard math function frexp(x, e).
+
+=item * C<gsl_fcmp($x, $y, $epsilon)> - This function determines whether $x and $y are approximately equal to a relative accuracy $epsilon. The relative accuracy is measured using an interval of size 2 \delta, where \delta = 2^k \epsilon and k is the maximum base-2 exponent of $x and $y as computed by the function frexp. If $x and $y lie within this interval, they are considered approximately equal and the function returns 0. Otherwise if $x < $y, the function returns -1, or if $x > $y, the function returns +1. Note that $x and $y are compared to relative accuracy, so this function is not suitable for testing whether a value is approximately zero. The implementation is based on the package fcmp by T.C. Belding.  
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial
+documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+%}
+

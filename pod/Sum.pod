@@ -1,0 +1,76 @@
+%perlcode %{
+@EXPORT_OK = qw/
+               gsl_sum_levin_u_alloc 
+               gsl_sum_levin_u_free 
+               gsl_sum_levin_u_accel 
+               gsl_sum_levin_u_minmax 
+               gsl_sum_levin_u_step 
+               gsl_sum_levin_utrunc_alloc 
+               gsl_sum_levin_utrunc_free 
+               gsl_sum_levin_utrunc_accel 
+               gsl_sum_levin_utrunc_minmax 
+               gsl_sum_levin_utrunc_step 
+             /;
+%EXPORT_TAGS = ( all => \@EXPORT_OK );
+
+__END__
+
+=head1 NAME
+
+Math::GSL::Sum - Functions to accelerate the convergence of a series using the Levin u-transform.
+
+=head1 SYNOPSIS
+
+    use Math::GSL::Sum qw/:all/;
+
+    my $w = gsl_sum_levin_u_alloc(5);
+    $values = [8,2,3,4,6];
+    my ($status, $sum_accel, $abserr) = gsl_sum_levin_u_accel($values, 5, $w); 
+    gsl_sum_levin_u_free($w);
+
+    my $w2 = gsl_sum_levin_utrunc_alloc(5);
+    my ($status2, $sum_accel2, $abserr_trunc) = gsl_sum_levin_utrunc_accel($values, 5, $w2);
+    gsl_sum_levin_utrunc_free($w);
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions included in this module :
+
+=over
+
+=item * gsl_sum_levin_u_alloc($n) - This function allocates a workspace for a Levin u-transform of $n terms.
+
+=item * gsl_sum_levin_u_free($w) - This function frees the memory associated with the workspace $w. 
+
+=item * gsl_sum_levin_u_accel($array, $array_size, $w) - This function takes the terms of a series in the array reference $array of size $array_size and computes the extrapolated limit of the series using a Levin u-transform. Additional working space must be provided in $w. The function returns multiple values in this order : 0 if the operation succeeded, 1 otherwise, the extrapolated sum and an estimate of the absolute error. The actual term-by-term sum is returned in $w->{sum_plain}. The algorithm calculates the truncation error (the difference between two successive extrapolations) and round-off error (propagated from the individual terms) to choose an optimal number of terms for the extrapolation. All the terms of the series passed in through array should be non-zero. 
+
+=item * gsl_sum_levin_u_minmax 
+
+=item * gsl_sum_levin_u_step 
+
+=item * gsl_sum_levin_utrunc_alloc($n) - This function allocates a workspace for a Levin u-transform of $n terms, without error estimation. 
+
+=item * gsl_sum_levin_utrunc_free($w) - This function frees the memory associated with the workspace $w. 
+
+=item * gsl_sum_levin_utrunc_accel($array, $array_size, $w) - This function takes the terms of a series in the array reference $array of size $array_size and computes the extrapolated limit of the series using a Levin u-transform. Additional working space must be provided in $w. The function returns multiple values in this order : 0 if the operation succeeded, 1 otherwise, the extrapolated sum and an estimate of the error. The actual term-by-term sum is returned in $w->{sum_plain}. The algorithm terminates when the difference between two successive extrapolations reaches a minimum or is sufficiently small. To improve the reliability of the algorithm the extrapolated values are replaced by moving averages when calculating the truncation error, smoothing out any fluctuations.
+
+=item * gsl_sum_levin_utrunc_minmax 
+
+=item * gsl_sum_levin_utrunc_step 
+
+=back
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+%}

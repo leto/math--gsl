@@ -1,4 +1,48 @@
-0.12 
+=head1 Math::GSL Changes
+
+=head1 v0.16 - November ?? 2008
+    - Operator overloading for addition and subtraction with vectors
+    - Added copy() method to vectors
+    - Improved Vector docs
+    - Sped up vector dot products by 15x using BLAS function gsl_blas_ddot
+        NOTE: using gsl_blas_ddot($x->raw,$y->raw) directly is still about 10 times faster 
+              than $x * $y due to error checking and function call overhead
+    - Separated POD and Perl code out of SWIG interface files, yay for proper syntax
+        highlighting
+    - Added stub test files for Heapsort, IEEEUtils, Multimin, Siman, Wavelet2D
+
+
+=head1 v0.14 - October 21 2008
+    - Chebyshev Series Approximation, with tests and docs
+    - Examples and new documentation in Statistics, as well as tests (Thierry)
+    - Bugfixes relating to compiling on 64bit Red Hat Linux, reported by Michael Roberge
+    - Improved FFT, Deriv, Integration, Chebyshev, Combination and Roots docs
+    - Documentation for Math::GSL::Test 
+    - Improved introduction examples in Math::GSL
+    - Improved Minimization subsystem tests, but it is not functional
+    - Added examples/fft/forward_real
+    - Added example/deriv/basic
+
+        This shows the simple fact that d/dx(sin(x)) = cos(x)
+
+    - Added example/sf/erfc_check (thanks to Keith Lofstrom)
+
+        Script which tests the erfc() special function against computing
+        the integral definition with gsl_integration_qagiu()
+
+    - Added example/vector/speed 
+    
+        This shows a considerable performance boost using Math::GSL::Vectors
+        instead of List::Util when searching for the min and max elements of
+        large sets of random numbers.
+
+    - Fixed return signature of gsl_deriv_* functions to return a flat list
+    - Fixed some failing tests relating to  -Duselongdouble (Sisyphus)
+    - Fix location of shared objects (Sisyphus)
+    - Added raw() method to RNG objects
+
+=head1 v0.12 - September 14 2008
+
     - Darwin support! 
     - Minimum Perl version changed to 5.8.0
     - Make platform check compile time constants for performance
@@ -9,6 +53,7 @@
         - QNG    : Non-adaptive Gaussian (uses fixed number of sample points in interval)
         - QAG(S) : Adaptive Gaussian (Singluar) (slices interval up based on properties of the function)
         - QAGI   : Adaptive Gaussian with infinite integration range
+        - other are supported but not tested
     - Initial Monte tests
     - Initial Multiroots tests
     - More nan/inf fixes on MSWin32 from <sisyphus@cpan.org>
@@ -20,20 +65,25 @@
     - Added 'examples/gsl_repl' which is a rapid protyping tool/interactive interpreter
     - Compile support for GSL's as old as 1.8 (test suite still needs to be properly guarded)
 
-0.10 
+=head1 v0.10 
+
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues
 
-0.08
+=head1 v0.08
+
     - Large documentation improvements
     - MSWin32 support thanks to testing and feedback from <sisyphus@cpan.org>
 
-0.07 
+=head1 v0.07 
+
     - Initial CPAN release
     
-0.042
+=head1 v0.042 
+
     - Started change to Test::Class
 
-0.01
+=head1 v0.01 
+
     - Added swig interface files and swig-ified build script
     - initial tests for special function library gsl_sf <--> Math::GSL::Sf
     - Proof Of Concept: makegsl and testgsl

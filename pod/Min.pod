@@ -1,0 +1,105 @@
+%perlcode %{
+
+@EXPORT_OK = qw/
+   gsl_min_fminimizer_alloc 
+   gsl_min_fminimizer_free 
+   gsl_min_fminimizer_set 
+   gsl_min_fminimizer_set_with_values
+   gsl_min_fminimizer_iterate 
+   gsl_min_fminimizer_name 
+   gsl_min_fminimizer_x_minimum
+   gsl_min_fminimizer_x_lower 
+   gsl_min_fminimizer_x_upper 
+   gsl_min_fminimizer_f_minimum
+   gsl_min_fminimizer_f_lower 
+   gsl_min_fminimizer_f_upper 
+   gsl_min_fminimizer_minimum 
+   gsl_min_test_interval 
+   gsl_min_find_bracket 
+   $gsl_min_fminimizer_brent
+   $gsl_min_fminimizer_goldensection
+/;
+
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+__END__
+
+=head1 NAME
+
+Math::GSL::Min - One-dimensional Minimization
+
+=head1 SYNOPSIS
+
+This module is not yet implemented. Patches Welcome!
+
+use Math::GSL::Min qw /:all/;
+
+=head1 DESCRIPTION
+
+Here is a list of all the functions in this module :
+
+=over
+
+=item * C<gsl_min_fminimizer_alloc >
+
+=item * C<gsl_min_fminimizer_free >
+
+=item * C<gsl_min_fminimizer_set >
+
+=item * C<gsl_min_fminimizer_set_with_values>
+
+=item * C<gsl_min_fminimizer_iterate >
+
+=item * C<gsl_min_fminimizer_name >
+
+=item * C<gsl_min_fminimizer_x_minimum>
+
+=item * C<gsl_min_fminimizer_x_lower >
+
+=item * C<gsl_min_fminimizer_x_upper >
+
+=item * C<gsl_min_fminimizer_f_minimum>
+
+=item * C<gsl_min_fminimizer_f_lower >
+
+=item * C<gsl_min_fminimizer_f_upper >
+
+=item * C<gsl_min_fminimizer_minimum >
+
+=item * C<gsl_min_test_interval >
+
+=item * C<gsl_min_find_bracket >
+
+=back
+
+This module also includes the following constants :
+
+=over
+
+=item * C<$gsl_min_fminimizer_brent>
+
+=item * C<$gsl_min_fminimizer_goldensection> 
+
+=back
+
+For more informations on the functions, we refer you to the GSL offcial
+documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+ Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
+
+
+=head1 AUTHORS
+
+Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+%}
+

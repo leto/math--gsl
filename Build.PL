@@ -166,11 +166,11 @@ if ($Config{archname} =~ /x86_64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 my @Subsystems = sort qw/
-            BLAS         Diff          Machine    Statistics
-            Eigen        Matrix        Poly       Wavelet2D
-            BSpline      Errno         PowInt     Wavelet
-            CBLAS        FFT           Min          
-            CDF          Fit           QRNG
+            BLAS         Diff          Machine      Statistics
+            Eigen        Matrix        Poly         Wavelet2D
+            BSpline      Errno         PowInt       Wavelet
+            CBLAS        FFT           Min          MatrixComplex
+            CDF          Fit           QRNG         VectorComplex
             Chebyshev    Monte         RNG
             Heapsort     Multifit      Randist      Sum
             Combination  Histogram     Multimin     Roots      

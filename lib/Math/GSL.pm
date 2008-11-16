@@ -190,8 +190,8 @@ sub subsystems
 {
     return sort qw/
         Diff         Machine      Statistics   
-        Eigen        Matrix       Poly      
-        BSpline      Errno        PowInt        
+        Eigen        Matrix       Poly          MatrixComplex
+        BSpline      Errno        PowInt        VectorComplex
         CBLAS        FFT          Min           IEEEUtils
         CDF          Fit          QRNG
         Chebyshev    Monte        RNG           Vector

@@ -50,6 +50,7 @@ pod/Interp.pod
 pod/Linalg.pod
 pod/Machine.pod
 pod/Matrix.pod
+pod/MatrixComplex.pod
 pod/Min.pod
 pod/Monte.pod
 pod/Multifit.pod
@@ -72,6 +73,7 @@ pod/Statistics.pod
 pod/Sum.pod
 pod/Sys.pod
 pod/Vector.pod
+pod/VectorComplex.pod
 pod/Wavelet.pod
 pod/Wavelet2D.pod
 README

@@ -1,5 +1,7 @@
 use Test::More 'no_plan';
 use Config;
+use File::Spec::Functions;
+use lib catfile 'blib', 'lib';
 
 BEGIN {
 	use_ok( 'Math::GSL' );

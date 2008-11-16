@@ -50,6 +50,10 @@ sub compile_swig {
 
     # File name, minus the suffix
     (my $file_base = $file) =~ s/\.[^.]+$//;
+
+    # get rid of the swig name
+    $file_base =~ s!swig/!!g;
+
     my $pm_file = "${file_base}.pm";
     
     my @swig       = qw/swig/, defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
@@ -59,6 +63,7 @@ sub compile_swig {
     my $gsldir   = catfile($blib_lib, qw/Math GSL/);
     mkdir $gsldir unless -e $gsldir;
 
+    
     my $from    = catfile($gsldir, $pm_file);
     my $to      = catfile(qw/lib Math GSL/,$pm_file);
     chmod 0644, $from, $to;

@@ -1,5 +1,6 @@
 Build.PL
 Changes
+examples/aliased
 examples/benchmark/sort
 examples/clicker/chart
 examples/clicker/logo
@@ -7,6 +8,7 @@ examples/correlation
 examples/deriv/basic
 examples/gsl_repl
 examples/gsl_sort
+examples/matrix/nonsymmetric_eigen
 examples/rng
 examples/sf/bessel
 examples/sf/bessel.png
@@ -122,6 +124,7 @@ swig/Machine.i
 swig/Machine_wrap.c
 swig/Matrix.i
 swig/Matrix_wrap.c
+swig/MatrixComplex.i
 swig/Min.i
 swig/Min_wrap.c
 swig/Monte.i
@@ -166,6 +169,7 @@ swig/Sys.i
 swig/Sys_wrap.c
 swig/Vector.i
 swig/Vector_wrap.c
+swig/VectorComplex.i
 swig/Wavelet.i
 swig/Wavelet2D.i
 swig/Wavelet2D_wrap.c
@@ -196,6 +200,7 @@ t/Interp.t
 t/Linalg.t
 t/Machine.t
 t/Matrix.t
+t/MatrixComplex.t
 t/Min.t
 t/Monte.t
 t/Multifit.t
@@ -217,6 +222,7 @@ t/Statistics.t
 t/Sum.t
 t/Sys.t
 t/Vector.t
+t/VectorComplex.t
 t/Wavelet.t
 t/Wavelet2D.t
 TODO

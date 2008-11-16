@@ -1,7 +1,12 @@
 %module "Math::GSL::FFT"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
-
+%include "gsl/gsl_complex.h"
+%include "gsl/gsl_fft.h"
+%include "gsl/gsl_fft_complex.h"
+%include "gsl/gsl_fft_halfcomplex.h"
+%include "gsl/gsl_fft_real.h"
+%include "../pod/FFT.pod"
 
 %typemap(argout) (double data[], const size_t stride, const size_t n) {
     int i=0;
@@ -20,6 +25,7 @@
     int i=0;
     AV* tempav = newAV();
 
+    /* is this tested? */
     while( i < 2*$3 ) {
         av_push(tempav, newSVnv((double) $1[i]));
         i++;
@@ -37,9 +43,3 @@
     #include "gsl/gsl_complex.h"
 %}
 
-%include "gsl/gsl_complex.h"
-%include "gsl/gsl_fft.h"
-%include "gsl/gsl_fft_complex.h"
-%include "gsl/gsl_fft_halfcomplex.h"
-%include "gsl/gsl_fft_real.h"
-%include "../pod/FFT.pod"

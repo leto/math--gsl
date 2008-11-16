@@ -242,7 +242,7 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
     is_similar( gsl_vector_get($y->{vector}, 1), 0 );
 }
 
-sub GSL_EIGEN_NONSYMMV_Z : Tests {
+sub GSL_EIGEN_NONSYMMV : Tests {
     my $matrix  = gsl_matrix_alloc (2, 2);
     gsl_matrix_set($matrix, 0, 0, -12);
     gsl_matrix_set($matrix, 1, 0, 7);
@@ -252,8 +252,7 @@ sub GSL_EIGEN_NONSYMMV_Z : Tests {
     my $evec = gsl_matrix_complex_alloc(2,2);
     my $eigen  = gsl_eigen_nonsymmv_alloc(2);
     my $vector = gsl_vector_complex_alloc(2);
-    my $Z = gsl_matrix_alloc(2,2);
-    ok_status(gsl_eigen_nonsymmv_Z($matrix,$vector, $evec, $Z, $eigen));  
+    ok_status(gsl_eigen_nonsymmv($matrix,$vector, $evec, $eigen));  
 
 
     my $x = gsl_vector_complex_real($vector);
@@ -281,10 +280,6 @@ sub GSL_EIGEN_NONSYMMV_Z : Tests {
     ok_similar(gsl_real($x), 1); # this is the value I get with maple
     ok_similar(gsl_real($y), 1); # this is the value I get with maple
 
-    ok_similar([ gsl_matrix_get($Z, 0, 0)], [0.9958842418254068860784291] );
-    ok_similar([ gsl_matrix_get($Z, 0, 1)], [0.09063430301952179629793610] );
-    ok_similar([ gsl_matrix_get($Z, 1, 1)], [0.9958842418254068860784291] );
-    ok_similar([ gsl_matrix_get($Z, 1, 0)], [0.09063430301952179629793610] );
 
 }
 Test::Class->runtests;

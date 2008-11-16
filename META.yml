@@ -1,6 +1,6 @@
 ---
 name: Math-GSL
-version: 0.15_01
+version: 0.15_02
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
@@ -18,7 +18,7 @@ requires:
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.15_01
+    version: 0.15_02
   Math::GSL::Test:
     file: lib/Math/GSL/Test.pm
 generated_by: Module::Build version 0.2808

@@ -1,12 +1,12 @@
 package Math::GSL::VectorComplex::Test;
-use Math::GSL::Test qw/:all/;
+use Math::GSL::Test          qw/:all/;
 use base q{Test::Class};
 use Test::More;
+use Math::GSL                qw/:all/;
 use Math::GSL::VectorComplex qw/:all/;
-use Math::GSL::Complex qw/:all/;
-use Math::GSL qw/:all/;
+use Math::GSL::Complex       qw/:all/;
+use Math::GSL::Errno         qw/:all/;
 use Data::Dumper;
-use Math::GSL::Errno qw/:all/;
 use Test::Exception;
 use strict;
 
@@ -14,12 +14,10 @@ BEGIN{ gsl_set_error_handler_off(); }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{vector} = gsl_vector_alloc(5);
-    $self->{object} = Math::GSL::VectorComplex->new([1 .. 5 ]);
 }
 
 sub teardown : Test(teardown) {
-    unlink 'vector' if -f 'vector';
+    unlink 'vector' if -f 'vectorcomplex';
 }
 
 sub GSL_VECTOR_COMPLEX : Tests {

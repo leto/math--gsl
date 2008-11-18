@@ -25,7 +25,8 @@ sub process_swig {
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
     (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
-    my $c_file = "${file_base}_wrap.c";
+    $file_base =~ s!swig/!!g;
+    my $c_file = catdir('xs',"${file_base}_wrap.c");
 
     my @deps = defined $deps_ref ?  @$deps_ref : (); 
 
@@ -68,7 +69,7 @@ sub compile_swig {
     my $to      = catfile(qw/lib Math GSL/,$pm_file);
     chmod 0644, $from, $to;
 
-    $self->do_system(@swig, '-o', $c_file,
+    $self->do_system(@swig, '-o', $c_file ,
                      '-outdir', $gsldir, 
 		             '-perl5', @swig_flags, $file)
 	    or die "error : $! while building $c_file file from '$file'";
@@ -85,6 +86,8 @@ sub link_c {
   my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
   my $lib_file = catfile($to, File::Basename::basename("$file_base.$Config{dlext}"));
+  # this is so Perl can look for things in the standard directories
+  $lib_file =~ s!swig/!!g;
 
   $self->add_to_cleanup($lib_file);
   my $objects = $p->{objects} || [];
@@ -101,7 +104,7 @@ sub link_c {
     # Strip binaries if we are compiling on windows
     push @ld, "-s" if (is_windows() && $Config{cc} eq 'gcc');
 
-    $self->do_system(@shrp, @ld, @lddlflags, @user_libs, '-o', $lib_file,
+    $self->do_system(@shrp, @ld, @lddlflags, @user_libs, '-o', $lib_file ,
 		     $obj_file, @$objects, @linker_flags)
       or die "error building $lib_file file from '$obj_file'";
   }

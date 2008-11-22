@@ -16,9 +16,11 @@ our @EXPORT_OK = qw(
                      gsl_fopen gsl_fclose 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
+                     subsystems
                    );
 
-our @Subsystems = sort qw/
+sub subsystems {   
+    sort qw/
         Diff         Machine      Statistics   
         Eigen        Matrix       Poly          MatrixComplex
         BSpline      Errno        PowInt        VectorComplex
@@ -33,6 +35,7 @@ our @Subsystems = sort qw/
         DHT          Interp       ODEIV         SF 
         Deriv        Linalg       Permutation   Spline
     /;
+}
 
 our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 

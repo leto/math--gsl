@@ -168,17 +168,17 @@ if ($Config{archname} =~ /x86_64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 
-my @Subsystems;
-{
-    no warnings 'once';
-    @Subsystems = grep { ! /^Test$/ } @Math::GSL::Subsystems;
-}
+my @Subsystems = grep { ! /^Test$/ } Math::GSL::subsystems;
 
 # BSplines appeared in 1.9
 if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
-my $cleanup = qq{xs/*_wrap.c core *.core swig/*wrap.c swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build lib/Math/GSL/[A-z]+/* blib *.so *.orig };
+my $cleanup = qq{
+                 xs/*_wrap.c core *.core swig/*wrap.c
+                 swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build 
+                 lib/Math/GSL/[A-z]+/* blib *.so *.orig 
+                 } . join " ", map { "lib/Math/GSL/$_.pm" } @Subsystems;
 
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',

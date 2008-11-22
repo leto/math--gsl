@@ -18,11 +18,27 @@ our @EXPORT_OK = qw(
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
                    );
 
+our @Subsystems = sort qw/
+        Diff         Machine      Statistics   
+        Eigen        Matrix       Poly          MatrixComplex
+        BSpline      Errno        PowInt        VectorComplex
+        CBLAS        FFT          Min           IEEEUtils
+        CDF          Fit          QRNG
+        Chebyshev    Monte        RNG           Vector
+        Heapsort     Multifit     Randist       Roots     
+        Combination  Histogram    Multimin      Wavelet
+        Complex      Histogram2D  Multiroots    Wavelet2D
+        Const        Siman        Sum           Sys
+        NTuple       Integration  Sort          Test        
+        DHT          Interp       ODEIV         SF 
+        Deriv        Linalg       Permutation   Spline
+    /;
+
 our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.15_03';
+our $VERSION = '0.15_04';
 
 =head1 NAME
 
@@ -30,7 +46,7 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.15_03
+Version 0.15_04
 
 =cut
 
@@ -184,25 +200,6 @@ sub new
     my $class = ref $self || $self || 'Math::GSL';
     my $this = { };
     bless $this, $class;
-}
-
-sub subsystems
-{
-    return sort qw/
-        Diff         Machine      Statistics   
-        Eigen        Matrix       Poly          MatrixComplex
-        BSpline      Errno        PowInt        VectorComplex
-        CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          QRNG
-        Chebyshev    Monte        RNG           Vector
-        Heapsort     Multifit     Randist       Roots     
-        Combination  Histogram    Multimin      Wavelet
-        Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Sys
-        NTuple       Integration  Sort          Test        
-        DHT          Interp       ODEIV         SF 
-        Deriv        Linalg       Permutation   Spline
-    /;
 }
 sub gsl_fopen
 {

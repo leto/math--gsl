@@ -5,7 +5,7 @@ use lib catfile 'blib', 'lib';
 
 BEGIN {
 	use_ok( 'Math::GSL' );
-    map { use_ok("Math::GSL::$_") } Math::GSL->new->subsystems;
+    map { use_ok("Math::GSL::$_") } @Math::GSL::Subsystems
 }
 
 

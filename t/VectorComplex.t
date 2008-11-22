@@ -20,8 +20,9 @@ sub teardown : Test(teardown) {
     unlink 'vector' if -f 'vectorcomplex';
 }
 
-sub GSL_VECTOR_COMPLEX : Tests {
-    local $TODO = 'make it work, fool';
-    ok(0);
+sub GSL_VECTOR_COMPLEX_NEW : Tests {
+    my $u = Math::GSL::VectorComplex->new(10);
+    isa_ok($u, 'Math::GSL::VectorComplex');
+    ok( $u->length ==  10, 'length');
 }
 Test::Class->runtests;

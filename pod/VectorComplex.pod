@@ -57,11 +57,11 @@ Math::GSL::VectorComplex - Complex Vectors
 
 Creates a new Vector of the given size.
 
-    my $vector = Math::GSL::Matrix->new(3);
+    my $vector = Math::GSL::VectorComplex->new(3);
 
 You can also create and set directly the values of the vector like this :
 
-   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $vector = Math::GSL::VectorComplex->new([2,4,1]);
 
 =cut
 sub new {
@@ -71,12 +71,12 @@ sub new {
     my $vector;
     if ( ref $values eq 'ARRAY' ){
         die __PACKAGE__.'::new($x) - $x must be a nonempty array reference' if $length == -1;
-        $vector  = gsl_vector_alloc($length+1);
-        map { gsl_vector_set($vector, $_, $values->[$_] ) }  (0 .. $length);
+        $vector  = gsl_vector_complex_alloc($length+1);
+        map { gsl_vector_complex_set($vector, $_, $values->[$_] ) }  (0 .. $length);
         $this->{_length} = $length+1;
     } elsif ( (int($values) == $values) && ($values > 0)) {
-        $vector  = gsl_vector_alloc($values);
-        gsl_vector_set_zero($vector);
+        $vector  = gsl_vector_complex_alloc($values);
+        gsl_vector_complex_set_zero($vector);
         $this->{_length} = $values;
     } else {
         die __PACKAGE__.'::new($x) - $x must be an int or array reference';
@@ -88,7 +88,7 @@ sub new {
 
 Get the underlying GSL vector object created by SWIG, useful for using gsl_vector_* functions which do not have an OO counterpart.
 
-    my $vector    = Math::GSL::Vector->new(3);
+    my $vector    = Math::GSL::VectorComplex->new(3);
     my $gsl_vector = $vector->raw;
     my $stuff      = gsl_vector_get($gsl_vector, 1);
 
@@ -103,7 +103,7 @@ sub raw {
 
 Returns the minimum value contained in the vector.
 
-   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $vector = Math::GSL::VectorComplex->new([2,4,1]);
    my $minimum = $vector->min;
 
 =cut 
@@ -117,7 +117,7 @@ sub min {
 
 Returns the minimum value contained in the vector.
 
-   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $vector = Math::GSL::VectorComplex->new([2,4,1]);
    my $maximum = $vector->max;
 
 =cut 
@@ -131,7 +131,7 @@ sub max {
 
 Returns the number of elements contained in the vector.
 
-   my $vector = Math::GSL::Vector->new([2,4,1]);
+   my $vector = Math::GSL::VectorComplex->new([2,4,1]);
    my $length = $vector->length;
 
 =cut 
@@ -142,7 +142,7 @@ sub length { my $self=shift; $self->{_length} }
 
 Gets the content of a Math::GSL::Vector object as a Perl list.
 
-    my $vector = Math::GSL::Vector->new(3);
+    my $vector = Math::GSL::VectorComplex->new(3);
     ...
     my @values = $vector->as_list;
 =cut
@@ -156,13 +156,13 @@ sub as_list {
 
 Gets the value of an of a Math::GSL::Vector object.
 
-    my $vector = Math::GSL::Vector->new(3);
+    my $vector = Math::GSL::VectorComplex->new(3);
     ...
     my @values = $vector->get(2);
 
 You can also enter an array of indices to receive their corresponding values:
 
-    my $vector = Math::GSL::Vector->new(3);
+    my $vector = Math::GSL::VectorComplex->new(3);
     ...
     my @values = $vector->get([0,2]);
 
@@ -177,7 +177,7 @@ sub get {
 
 Sets values of an of a Math::GSL::Vector object.
 
-    my $vector = Math::GSL::Vector->new(3);
+    my $vector = Math::GSL::VectorComplex->new(3);
     $vector->set([1,2], [8,23]);
 
 This sets the second and third value to 8 and 23.
@@ -198,7 +198,7 @@ sub set {
 
 Returns a copy of the vector, which has the same length and values but resides at a different location in memory.
 
-    my $vector = Math::GSL::Vector->new([10 .. 20]);
+    my $vector = Math::GSL::VectorComplex->new([10 .. 20]);
     my $copy   = $vector->copy;
 
 =cut
@@ -206,7 +206,7 @@ Returns a copy of the vector, which has the same length and values but resides a
 
 sub copy {
     my $self = shift;
-    my $copy = Math::GSL::Vector->new( $self->length );
+    my $copy = Math::GSL::VectorComplex->new( $self->length );
     if ( gsl_vector_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
         croak "Math::GSL - error copying memory, aborting";
     }
@@ -286,7 +286,7 @@ Here is an example using both interfaces.
  use Math::GSL::Vector qw/:all/;
 
  print "We'll create this vector : [0,1,4,9,16] \n";
- my $vector = Math::GSL::Vector->new([0,1,4,9,16]);
+ my $vector = Math::GSL::VectorComplex->new([0,1,4,9,16]);
  my ($min, $max) = gsl_vector_minmax_index($vector->raw);
 
  print "We then check the index value of the maximum and minimum values of the vector. \n";

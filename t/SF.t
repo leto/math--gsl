@@ -1,7 +1,7 @@
 package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More 'no_plan';
+use Test::More tests => 1108;
 use Math::GSL qw/:all/;
 use Math::GSL::Const qw/:all/;
 use Math::GSL::Errno qw/:all/;

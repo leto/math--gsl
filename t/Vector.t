@@ -1,7 +1,7 @@
 package Math::GSL::Vector::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 122;
 use Math::GSL::Vector qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL qw/:all/;

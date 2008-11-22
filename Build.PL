@@ -23,6 +23,7 @@ use Config;
 use Data::Dumper;
 use Module::Build;
 use lib 'inc';
+use Math::GSL;
 use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
@@ -167,9 +168,6 @@ if ($Config{archname} =~ /x86_64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 
-# pull in list of subsystems
-my $libgsl = catfile qw/lib Math GSL.pm/ ;
-require "$libgsl";
 my @Subsystems;
 {
     no warnings 'once';

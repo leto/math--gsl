@@ -178,7 +178,7 @@ my $cleanup = qq{
                  xs/*_wrap.c core *.core swig/*wrap.c
                  swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build 
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig 
-                 } . join " ", map { "lib/Math/GSL/$_.pm" } @Subsystems;
+                 } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;
 
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',

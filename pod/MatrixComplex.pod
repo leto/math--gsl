@@ -3,6 +3,7 @@
 use Carp qw/croak/;
 use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use Math::Complex qw/:all/;
 
 @EXPORT_OK = qw/
                 gsl_matrix_complex_alloc
@@ -114,7 +115,7 @@ sub new
 
 Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
 
-    my $matrix     = Math::GSL::Matrix->new(3,3);
+    my $matrix     = Math::GSL::MatrixComplex->new(3,3);
     my $gsl_matrix = $matrix->raw;
     my $stuff      = gsl_matrix_get($gsl_matrix, 1, 2);
 
@@ -142,7 +143,7 @@ sub cols { (shift)->{_cols}   }
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
 
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     ...
     my @matrix = $matrix->as_list;
 =cut
@@ -167,7 +168,7 @@ sub as_list
 
 Returns a row matrix of the row you enter.
 
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     ...
     my $matrix_row = $matrix->row(0);
 
@@ -179,7 +180,7 @@ sub row
     croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
         unless (($row < $self->rows) and $row >= 0);  
 
-   my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
+   my $rowmat = Math::GSL::MatrixComplex->new(1,$self->cols);
 
    my @got; 
    for my $n (0 .. $self->cols-1) {
@@ -195,7 +196,7 @@ sub row
 
 Returns a col matrix of the column you enter.
 
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     ...
     my $matrix_col = $matrix->col(0);
 
@@ -208,7 +209,7 @@ sub col
         unless ($col < $self->cols and $col >= 0);  
 
     my $colvec = Math::GSL::Vector->new($self->cols);
-    my $colmat = Math::GSL::Matrix->new($self->rows, 1);
+    my $colmat = Math::GSL::MatrixComplex->new($self->rows, 1);
 
    my @got; 
    for my $n (0 .. $self->rows-1) {
@@ -224,11 +225,11 @@ sub col
 
 Sets a the values of a row with the elements of an array.
 
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     $matrix->set_row(0, [8, 6, 2]);
 
 You can also set multiple rows at once with chained calls:
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     $matrix->set_row(0, [8, 6, 2])
            ->set_row(1, [2, 4, 1]);
     ...
@@ -249,11 +250,11 @@ sub set_row {
 
 Sets a the values of a column with the elements of an array.
 
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     $matrix->set_col(0, [8, 6, 2]);
 
 You can also set multiple columns at once with chained calls:
-    my $matrix = Math::GSL::Matrix->new(3,3);
+    my $matrix = Math::GSL::MatrixComplex->new(3,3);
     $matrix->set_col(0, [8, 6, 2])
            ->set_col(1, [2, 4, 1]);
     ...

@@ -25,4 +25,5 @@ sub GSL_MATRIX_COMPLEX_NEW: Tests {
     ok( $u->rows ==  10, 'rows');
     ok( $u->cols ==  20, 'cols');
 }
+
 Test::Class->runtests;

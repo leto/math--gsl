@@ -24,5 +24,9 @@ sub GSL_VECTOR_COMPLEX_NEW : Tests {
     my $u = Math::GSL::VectorComplex->new(10);
     isa_ok($u, 'Math::GSL::VectorComplex');
     ok( $u->length ==  10, 'length');
+
+    my $z = Math::Complex->make(2,5);
+    my $v = Math::GSL::VectorComplex->new([ $z, $z ** 2 ] );
+    isa_ok($v, 'Math::GSL::VectorComplex');
 }
 Test::Class->runtests;

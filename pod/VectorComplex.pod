@@ -4,6 +4,8 @@ use Data::Dumper;
 use Carp qw/croak/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
+use Math::GSL::Complex qw/:all/;
+use Math::Complex;
 use overload 
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -64,11 +66,16 @@ You can also create and set directly the values of the vector like this :
    my $vector = Math::GSL::VectorComplex->new([2,4,1]);
 
 =cut
+
 sub new {
     my ($class, $values) = @_;
     my $length  = $#$values;
     my $this = {}; 
     my $vector;
+
+    # we expected $values to have Math::Complex objects
+    @$values = map { gsl_complex_rect(Re($_), Im($_)) } @$values;
+
     if ( ref $values eq 'ARRAY' ){
         die __PACKAGE__.'::new($x) - $x must be a nonempty array reference' if $length == -1;
         $vector  = gsl_vector_complex_alloc($length+1);

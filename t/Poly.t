@@ -1,11 +1,10 @@
 package Math::GSL::Poly::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL qw/:all/;
-use Math::GSL::Poly qw/:all/;
+use Test::More tests => 7;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Poly    qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Complex qw/:all/;
-use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 

@@ -1,7 +1,7 @@
 package Math::GSL::ODEIV::Test;
 use strict;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 4;
 use Math::GSL        qw/:all/;
 use Math::GSL::ODEIV qw/:all/;
 use Math::GSL::Errno qw/:all/;

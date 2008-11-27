@@ -1,14 +1,13 @@
 package Math::GSL::Multifit::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 164;
+use Math::GSL::BLAS     qw/:all/;
+use Math::GSL::Test     qw/:all/;
+use Math::GSL::Errno    qw/:all/;
+use Math::GSL::Matrix   qw/:all/;
+use Math::GSL::Vector   qw/:all/;
+use Math::GSL::Machine  qw/:all/;
 use Math::GSL::Multifit qw/:all/;
-use Math::GSL::Matrix qw/:all/;
-use Math::GSL::Vector qw/:all/;
-use Math::GSL::BLAS qw/:all/;
-use Math::GSL::Machine qw/:all/;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 

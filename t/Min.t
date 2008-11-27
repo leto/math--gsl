@@ -1,7 +1,7 @@
 package Math::GSL::Min::Test;
 use base q{Test::Class};
 use strict;
-use Test::More;
+use Test::More tests => 23;
 use Math::GSL        qw/:all/;
 use Math::GSL::Min   qw/:all/;
 use Math::GSL::Test  qw/:all/;

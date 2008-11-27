@@ -1,18 +1,18 @@
 package Math::GSL::Linalg::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Linalg qw/:all/;
-use Math::GSL::Matrix qw/:all/;
+use Test::More tests => 53;
+use Math::GSL              qw/:all/;
+use Math::GSL::BLAS        qw/:all/;
+use Math::GSL::Test        qw/:all/;
+use Math::GSL::CBLAS       qw/:all/;
+use Math::GSL::Errno       qw/:all/;
+use Math::GSL::Linalg      qw/:all/;
+use Math::GSL::Matrix      qw/:all/;
+use Math::GSL::Vector      qw/:all/;
+use Math::GSL::Machine     qw/:all/;
+use Math::GSL::Complex     qw/:all/;
 use Math::GSL::Permutation qw/:all/;
-use Math::GSL::Vector qw/:all/;
-use Math::GSL::CBLAS qw/:all/;
-use Math::GSL::BLAS qw/:all/;
-use Math::GSL::Machine qw/:all/;
-use Math::GSL::Complex qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
-use Math::GSL::Errno qw/:all/;
 use strict;
 
 sub make_fixture : Test(setup) {

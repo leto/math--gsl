@@ -1,11 +1,10 @@
 package Math::GSL::MatrixComplex::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Matrix qw/:all/;
+use Test::More tests => 3;
+use Math::GSL                qw/:all/;
+use Math::GSL::Test          qw/:all/;
+use Math::GSL::Errno         qw/:all/;
 use Math::GSL::MatrixComplex qw/:all/;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 

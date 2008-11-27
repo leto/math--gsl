@@ -1,6 +1,6 @@
 package Math::GSL::Multimin::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 1;
 use Math::GSL           qw/:all/;
 use Math::GSL::Multimin qw/:all/;
 use Math::GSL::Test     qw/:all/;

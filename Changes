@@ -1,6 +1,7 @@
 =head1 Math::GSL Changes
 
 =head1 v0.16 - November ?? 2008
+    - New subsytems: VectorComplex and MatrixComplex
     - Operator overloading for addition and subtraction with vectors
     - Added copy() method to vectors
     - Improved Vector docs

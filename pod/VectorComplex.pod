@@ -214,7 +214,7 @@ Returns a copy of the vector, which has the same length and values but resides a
 sub copy {
     my $self = shift;
     my $copy = Math::GSL::VectorComplex->new( $self->length );
-    if ( gsl_vector_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
+    if ( gsl_vector_complex_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
         croak "Math::GSL - error copying memory, aborting";
     }
     return $copy;
@@ -224,10 +224,11 @@ sub _multiplication {
     my ($left,$right) = @_;
     my $lcopy = $left->copy;
 
-    if ( blessed $right && $right->isa('Math::GSL::Vector') ) {
+    if ( blessed $right && $right->isa(__PACKAGE__) ) {
         return $lcopy->dot_product($right);
     } else {
-        gsl_vector_scale($lcopy->raw, $right);
+        # will be in upcoming gsl 1.12
+        # gsl_vector_complex_scale($lcopy->raw, $right);
     }
     return $lcopy;
 }

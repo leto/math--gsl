@@ -9,6 +9,7 @@ use Math::GSL::Errno         qw/:all/;
 use Math::GSL::Const         qw/:all/;
 use Test::Exception;
 use Data::Dumper;
+use Math::Complex;
 use strict;
 
 BEGIN{ gsl_set_error_handler_off(); }
@@ -21,7 +22,7 @@ sub teardown : Test(teardown) {
     unlink 'vector' if -f 'vectorcomplex';
 }
 
-sub GSL_VECTOR_COMPLEX_NEW : Tests {
+sub GSL_VECTOR_COMPLEX_NEW : Tests(7) {
     my $u = Math::GSL::VectorComplex->new(10);
     isa_ok($u, 'Math::GSL::VectorComplex');
     ok( $u->length ==  10, 'length');
@@ -38,4 +39,5 @@ sub GSL_VECTOR_COMPLEX_NEW : Tests {
     ok_similar( gsl_complex_abs($e1), 4, '2nd element: new get abs correct');
     ok_similar( gsl_complex_arg($e1), $M_PI, '2nd element: new get arg correct');
 }
+
 Test::Class->runtests;

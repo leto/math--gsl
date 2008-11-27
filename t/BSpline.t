@@ -1,7 +1,7 @@
 package Math::GSL::Poly::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 1;
 use Math::GSL qw/:all/;
 use Math::GSL::BSpline qw/:all/;
 use Math::GSL::Errno qw/:all/;

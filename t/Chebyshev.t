@@ -5,7 +5,7 @@ use base q{Test::Class};
 use Math::GSL::Chebyshev qw/:all/;
 use Math::GSL::Test      qw/:all/;
 use Math::GSL            qw/:all/;
-use Test::More;
+use Test::More tests => 10;
 use Data::Dumper;
 
 sub make_fixture : Test(setup) {

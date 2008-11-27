@@ -1,11 +1,11 @@
 package Math::GSL::CBLAS::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 5;
+use Math::GSL::Test  qw/:all/;
 use Math::GSL::CBLAS qw/:all/;
-use Math::GSL qw/:all/;
-use Data::Dumper;
+use Math::GSL        qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use Data::Dumper;
 use strict;
 
 BEGIN{ gsl_set_error_handler_off() }

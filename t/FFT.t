@@ -1,11 +1,11 @@
 package Math::GSL::FFT::Test;
 use base q{Test::Class};
+use Test::More tests => 16;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::FFT   qw/:all/;
 use Math::GSL        qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
-use Test::More tests => 16;
 use strict;
 
 BEGIN { gsl_set_error_handler_off() }

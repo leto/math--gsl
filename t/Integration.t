@@ -1,12 +1,12 @@
 package Math::GSL::Integration::Test;
-use Math::GSL::Test qw/:all/;
 use base 'Test::Class';
-use Test::More 'no_plan';
-use Math::GSL qw/:all/;
-use Math::GSL::Integration qw/:all/;
-use Math::GSL::Errno qw/:all/;
+use Test::More tests => 29;
 use Test::Exception;
-use Math::GSL::Const qw/:all/;
+use Math::GSL              qw/:all/;
+use Math::GSL::Test        qw/:all/;
+use Math::GSL::Errno       qw/:all/;
+use Math::GSL::Const       qw/:all/;
+use Math::GSL::Integration qw/:all/;
 use Data::Dumper;
 use strict;
 use warnings;

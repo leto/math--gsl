@@ -1,10 +1,10 @@
 package Math::GSL::Fit::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 23;
 use Test::Exception;
-use Math::GSL::Fit qw/:all/; 
-use Math::GSL qw/:all/;
+use Math::GSL        qw/:all/;
+use Math::GSL::Test  qw/:all/;
+use Math::GSL::Fit   qw/:all/; 
 use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
@@ -30,15 +30,12 @@ sub GSL_FIT_LINEAR : Tests {
                         448.9, 10.8, 557.7, 228.3, 998.0, 888.8, 119.6, 0.3, 
                         0.6, 557.6, 339.3, 888.0, 998.5, 778.9, 10.2, 117.6,
                         228.9, 668.4, 449.2, 0.2);
-    my $xstride = 2; 
-    my $wstride = 3; 
-    my $ystride = 5;
+
+    my ($xstride, $wstride, $ystride )= (2,3,5); 
     my ($x, $w, $y);
     for my $i (0 .. 175)
     {
-        $x->[$i] = 0;
-        $w->[$i] = 0;
-        $y->[$i] = 0;
+        $x->[$i] = $w->[$i] = $y->[$i] = 0;
     }
 
     for my $i (0 .. 35)

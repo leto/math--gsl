@@ -1,6 +1,6 @@
 package Math::GSL::Eigen::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 39;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Eigen   qw/:all/;

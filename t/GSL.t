@@ -1,6 +1,6 @@
 package Math::GSL::GSL::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 16;
 use Math::GSL::SF      qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -8,9 +8,9 @@ use Math::GSL::Complex qw/:all/;
 use Math::GSL::Matrix  qw/:all/;
 use Math::GSL::CBLAS   qw/:all/;
 use Math::GSL          qw/:all/;
-use Math::GSL::Test qw/:all/;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Data::Dumper;
-use Math::GSL::Errno qw/:all/;
 use strict;
 
 BEGIN { gsl_set_error_handler_off(); }

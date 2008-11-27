@@ -1,10 +1,10 @@
 package Math::GSL::IEEEUtils::Test;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL           qw/:all/;
+use Test::More tests => 1;
+use Math::GSL            qw/:all/;
+use Math::GSL::Test      qw/:all/;
+use Math::GSL::Errno     qw/:all/;
 use Math::GSL::IEEEUtils qw/:all/;
-use Math::GSL::Test     qw/:all/;
-use Math::GSL::Errno    qw/:all/;
 use Data::Dumper;
 use strict;
 

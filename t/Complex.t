@@ -1,10 +1,10 @@
 package Math::GSL::Complex::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 59;
 use Math::GSL::Complex qw/:all/;
-use Math::GSL::Const qw/:all/;
-use Math::GSL qw/:all/;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Const   qw/:all/;
+use Math::GSL          qw/:all/;
 use Data::Dumper;
 use strict;
 

@@ -1,14 +1,13 @@
 package Math::GSL::Deriv::Test;
-use Math::GSL::Test qw/:all/;
 use base 'Test::Class';
-use Test::More 'no_plan';
-use Math::GSL qw/:all/;
+use Test::More tests => 9;
+use Math::GSL        qw/:all/;
+use Math::GSL::Test  qw/:all/;
 use Math::GSL::Deriv qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Test::Exception;
 use Data::Dumper;
 use strict;
-use warnings;
 
 BEGIN{ gsl_set_error_handler_off() };
 

@@ -1,10 +1,10 @@
 package Math::GSL::Interp::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 35;
+use Math::GSL         qw/:all/;
 use Math::GSL::Interp qw/:all/;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL qw/:all/;
+use Math::GSL::Errno  qw/:all/;
+use Math::GSL::Test   qw/:all/;
 use Data::Dumper;
 use strict;
 

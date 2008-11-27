@@ -1,10 +1,10 @@
 package Math::GSL::Combination::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 23;
+use Math::GSL::Test        qw/:all/;
 use Math::GSL::Combination qw/:all/;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL qw/:all/;
+use Math::GSL::Errno       qw/:all/;
+use Math::GSL              qw/:all/;
 use Data::Dumper;
 use strict;
 

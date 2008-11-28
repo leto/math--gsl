@@ -1,12 +1,11 @@
 package Math::GSL::Sum::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL::Const qw/:all/;
+use Test::More tests => 14;
+use Math::GSL::Sum     qw/:all/;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Errno   qw/:all/;
+use Math::GSL::Const   qw/:all/;
 use Math::GSL::Machine qw/:all/;
-use Math::GSL::Sum qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 

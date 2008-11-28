@@ -1,12 +1,11 @@
 package Math::GSL::Wavelet::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL::Wavelet qw/:all/;
-use Math::GSL qw/:all/;
-use Data::Dumper;
+use Test::More tests => 11;
+use Math::GSL::Test     qw/:all/;
+use Math::GSL::Errno    qw/:all/;
+use Math::GSL::Wavelet  qw/:all/;
 use Scalar::Util qw/blessed/;
+use Data::Dumper;
 use strict;
 
 BEGIN{ gsl_set_error_handler_off(); }

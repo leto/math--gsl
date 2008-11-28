@@ -1,10 +1,9 @@
 package Math::GSL::Statistics::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Statistics qw/:all/;
+use Test::More tests => 28;
+use Math::GSL::Test qw/:all/;
 use Math::GSL::Sort qw/:all/;
-use Math::GSL qw/:all/;
+use Math::GSL::Statistics qw/:all/;
 use strict;
 
 sub make_fixture : Test(setup) {

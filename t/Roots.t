@@ -1,7 +1,7 @@
 package Math::GSL::Roots::Test;
 use strict;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 14;
 use Math::GSL        qw/:all/;
 use Math::GSL::Roots qw/:all/;
 use Math::GSL::Test  qw/:all/;

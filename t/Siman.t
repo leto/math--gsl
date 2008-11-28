@@ -1,8 +1,8 @@
 package Math::GSL::Siman::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 1;
 use Math::GSL           qw/:all/;
-use Math::GSL::Siman qw/:all/;
+use Math::GSL::Siman    qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Data::Dumper;

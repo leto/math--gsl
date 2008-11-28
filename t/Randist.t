@@ -1,12 +1,11 @@
 package Math::GSL::Randist::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 1;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::RNG     qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Randist qw/:all/;
-use Math::GSL::RNG qw/:all/;
-use Math::GSL qw/:all/;
 use Data::Dumper;
-use Math::GSL::Errno qw/:all/;
 use strict;
 
 sub make_fixture : Test(setup) {
@@ -18,7 +17,6 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_RAN_BERNOULLI_PDF : Tests {
-    my $x = gsl_ran_bernoulli_pdf(2, 0.5);
-    is($x, 0);
+    ok_similar( 0, gsl_ran_bernoulli_pdf(2, 0.5), '=0 at (2,0.5)' );
 } 
 Test::Class->runtests;

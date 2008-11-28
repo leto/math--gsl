@@ -1,10 +1,9 @@
 package Math::GSL::PowInt::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 14;
+use Math::GSL::Sys    qw/gsl_posinf gsl_nan/; 
+use Math::GSL::Test   qw/:all/;
 use Math::GSL::PowInt qw/:all/;
-use Math::GSL::Sys qw/gsl_posinf gsl_nan/; 
-use Math::GSL qw/:all/;
 use Data::Dumper;
 use strict;
 

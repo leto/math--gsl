@@ -1,9 +1,8 @@
 package Math::GSL::Sys::Test;
-use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
-use Math::GSL::Sys qw/:all/;
-use Math::GSL qw/:all/;
+use Test::More tests => 13;
+use Math::GSL::Sys  qw/:all/;
+use Math::GSL::Test qw/:all/;
 use Data::Dumper;
 use strict;
 

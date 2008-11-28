@@ -1,13 +1,12 @@
 package Math::GSL::Sort::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 20;
+use Math::GSL::RNG         qw/:all/;
+use Math::GSL::Sort        qw/:all/;
+use Math::GSL::Errno       qw/:all/;
+use Math::GSL::Vector      qw/:all/;
 use Math::GSL::Permutation qw/:all/;
-use Math::GSL::Sort qw/:all/;
-use Math::GSL::RNG qw/:all/;
-use Math::GSL::Vector qw/:all/;
-use Math::GSL qw/:all/;
-use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
 use strict;
 

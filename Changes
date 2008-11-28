@@ -11,6 +11,7 @@
     - Separated POD and Perl code out of SWIG interface files, yay for proper syntax
         highlighting
     - Added stub test files for Heapsort, IEEEUtils, Multimin, Siman, Wavelet2D
+    - All test files now keep track of how many tests should run
 
 
 =head1 v0.14 - October 21 2008

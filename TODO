@@ -2,6 +2,8 @@
 
 =head2 List of Things that you can do to help Math::GSL
 
+* Fix something in KNOWN_BUGS
+
 * Add overloading to normal arithmetic operators (like Math::MatrixReal) in Vector, Matrix, possibly others
 
 * Make passing parameters to function references work properly

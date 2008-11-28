@@ -1,0 +1,8 @@
+
+=head1 List of Known Bugs in Math::GSL
+
+* gsl_set_error_handler_off() does not return a gsl_error_handler_t
+
+* gsl_histogram2d_clone() does not return a gsl_histogram_t
+
+=cut

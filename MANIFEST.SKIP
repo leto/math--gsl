@@ -11,3 +11,5 @@ blib/*
 foo*
 .*\.gz
 ^tags
+xs/.*
+lib/Math/GSL/[^T]*.*\.pm

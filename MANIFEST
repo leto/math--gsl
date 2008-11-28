@@ -181,3 +181,4 @@ t/Wavelet.t
 t/Wavelet2D.t
 TODO
 xt/01-portability-files.t
+KNOWN_BUGS

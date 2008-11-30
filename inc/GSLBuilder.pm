@@ -62,7 +62,7 @@ sub process_swig {
     my $obj_file = $self->compile_c($c_file);
     $self->add_to_cleanup($obj_file);
 
-    my $archdir = catdir($self->blib,'arch','auto','Math','GSL', $file_base);
+    my $archdir = catdir($self->blib, qw/arch auto Math GSL/, $file_base);
     mkpath $archdir unless -d $archdir;
 
     # .o -> .so

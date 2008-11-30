@@ -6,6 +6,9 @@ use File::Spec::Functions qw/:ALL/;
 use Data::Dumper;
 use base 'Module::Build';
 
+sub is_release {
+    return -e '.git' ? 0 : 1;
+}
 sub subsystems {   
     sort qw/
         Diff         Machine      Statistics    BLAS
@@ -27,6 +30,8 @@ sub subsystems {
 sub process_swig_files {
     my $self = shift;
     my $p = $self->{properties};
+
+
     return unless $p->{swig_source};
     my $files_ref = $p->{swig_source};
     foreach my $file (@$files_ref) {
@@ -40,7 +45,7 @@ sub process_swig_files {
 
 sub process_swig {
     my ($self, $main_swig_file, $deps_ref) = @_;
-    my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
+    my ($cf, $p) = ($self->{config}, $self->{properties});
 
     (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
     $file_base =~ s!swig/!!g;
@@ -48,9 +53,11 @@ sub process_swig {
 
     my @deps = defined $deps_ref ?  @$deps_ref : (); 
 
-    $self->compile_swig($main_swig_file, $c_file) 
-            unless($self->up_to_date( [$main_swig_file, @deps],$c_file)); 
-
+    # don't bother with swig if this is a CPAN release
+    unless ( is_release() ) {
+        $self->compile_swig($main_swig_file, $c_file) 
+                unless($self->up_to_date( [$main_swig_file, @deps],$c_file)); 
+    }
     # .c -> .o
     my $obj_file = $self->compile_c($c_file);
     $self->add_to_cleanup($obj_file);

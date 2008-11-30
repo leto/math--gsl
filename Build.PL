@@ -174,7 +174,7 @@ if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
 my $cleanup = qq{
-                 xs/*_wrap.c core *.core swig/*wrap.c
+                 xs/*_wrap.c core *.core 
                  swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build 
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig 
                  } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;

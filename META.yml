@@ -19,8 +19,6 @@ provides:
   Math::GSL:
     file: lib/Math/GSL.pm
     version: 0.15_04
-  Math::GSL::Test:
-    file: lib/Math/GSL/Test.pm
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

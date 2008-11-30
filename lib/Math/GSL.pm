@@ -16,26 +16,8 @@ our @EXPORT_OK = qw(
                      gsl_fopen gsl_fclose 
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
-                     subsystems
                    );
 
-sub subsystems {   
-    sort qw/
-        Diff         Machine      Statistics   
-        Eigen        Matrix       Poly          MatrixComplex
-        BSpline      Errno        PowInt        VectorComplex
-        CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          QRNG
-        Chebyshev    Monte        RNG           Vector
-        Heapsort     Multifit     Randist       Roots     
-        Combination  Histogram    Multimin      Wavelet
-        Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Sys
-        NTuple       Integration  Sort          Test        
-        DHT          Interp       ODEIV         SF 
-        Deriv        Linalg       Permutation   Spline
-    /;
-}
 
 our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
@@ -50,8 +32,6 @@ Math::GSL - Perl interface to the  GNU Scientific Library (GSL)
 =head1 VERSION
 
 Version 0.15_04
-
-=cut
 
 =head1 SYNOPSIS
 

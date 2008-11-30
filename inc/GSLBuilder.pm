@@ -6,6 +6,24 @@ use File::Spec::Functions qw/:ALL/;
 use Data::Dumper;
 use base 'Module::Build';
 
+sub subsystems {   
+    sort qw/
+        Diff         Machine      Statistics    BLAS
+        Eigen        Matrix       Poly          MatrixComplex
+        BSpline      Errno        PowInt        VectorComplex
+        CBLAS        FFT          Min           IEEEUtils
+        CDF          Fit          QRNG
+        Chebyshev    Monte        RNG           Vector
+        Heapsort     Multifit     Randist       Roots     
+        Combination  Histogram    Multimin      Wavelet
+        Complex      Histogram2D  Multiroots    Wavelet2D
+        Const        Siman        Sum           Sys
+        NTuple       Integration  Sort          Test        
+        DHT          Interp       ODEIV         SF 
+        Deriv        Linalg       Permutation   Spline
+    /;
+}
+
 sub process_swig_files {
     my $self = shift;
     my $p = $self->{properties};

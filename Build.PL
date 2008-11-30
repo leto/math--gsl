@@ -23,7 +23,6 @@ use Config;
 use Data::Dumper;
 use Module::Build;
 use lib 'inc';
-use Math::GSL;
 use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
@@ -168,7 +167,7 @@ if ($Config{archname} =~ /x86_64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 
-my @Subsystems = grep { ! /^Test$/ } Math::GSL::subsystems;
+my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems;
 
 # BSplines appeared in 1.9
 if ($current_minor_version < 9 ) {

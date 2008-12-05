@@ -1,8 +1,14 @@
 =head1 Math::GSL Changes
 
 =head1 v0.16 - November ?? 2008
+    - as_list() and get() now work on VectorComplex objects
+        as_list() returns a list of Math::Complex objects
+        get() returns a list of Math::GSL::Complex objects
+
     - New subsytems: VectorComplex and MatrixComplex
     - Operator overloading for addition and subtraction with vectors
+    - Added example: examples/matrix/nonsymmetric_eigen
+        Shows how to find the eigenvalues of a nonsymmetric matrix
     - Added copy() method to vectors
     - Improved Vector docs
     - Sped up vector dot products by 15x using BLAS function gsl_blas_ddot

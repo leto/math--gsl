@@ -1,10 +1,10 @@
 =head1 Math::GSL Changes
 
-=head1 v0.16 - November ?? 2008
+=head1 v0.16 - December ?? 2008
     - as_list() and get() now work on VectorComplex objects
         as_list() returns a list of Math::Complex objects
         get() returns a list of Math::GSL::Complex objects
-
+    - Math::GSL::Test::ok_status() now takes an optional message argument
     - New subsytems: VectorComplex and MatrixComplex
     - Operator overloading for addition and subtraction with vectors
     - Added example: examples/matrix/nonsymmetric_eigen

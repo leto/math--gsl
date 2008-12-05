@@ -8,6 +8,7 @@ use Math::GSL::Errno qw/:all/;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Const qw/:all/;
 use Math::GSL::Sys qw/gsl_nan gsl_isnan gsl_isinf/;
+use Data::Dumper;
 use Carp qw/croak/;
 our @EXPORT = qw();
 our @EXPORT_OK = qw( 
@@ -198,10 +199,13 @@ function also stringifies the status codes into meaningful messages when it fail
 =cut
 
 sub ok_status {
-    my ($got, $expected) = @_;
+    my ($got, $expected, $msg ) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     $expected ||= $GSL_SUCCESS;
-    ok( defined $got && $got == $expected, gsl_strerror(int($got)) );
+    my $strerr = gsl_strerror(int($got));
+    $msg       = $msg ? "$msg: " . $strerr : $strerr;
+
+    ok( defined $got && $got == $expected, $msg );
 }
 
 =head2 ok_similar( $x, $y, $msg, $eps)

@@ -1,6 +1,6 @@
 package Math::GSL::GSL::Test;
 use base q{Test::Class};
-use Test::More tests => 16;
+use Test::More tests => 18;
 use Math::GSL::SF      qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -34,6 +34,8 @@ sub TEST_STUFF : Tests {
                     q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => [ 0 ], 
                     q{is_similar_relative( 1e8, 1e8 + 1, 1e-7) }          => [ 1 ],
                     q{is_similar_relative( 1e8, 1e8 + 1e3, 1e-7) }        => [ 0 ],
+                    q{is_status_ok($GSL_SUCCESS)}                         => [ 1 ],
+                    q{is_status_ok($GSL_EDOM)}                            => [ 0 ],
         };
 
         verify($results, 'Math::GSL');

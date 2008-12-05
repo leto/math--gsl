@@ -5,6 +5,7 @@ use Carp qw/croak/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
 use Math::GSL::Complex qw/:all/;
+use Math::GSL::Test qw/is_status_ok/;
 use Math::Complex;
 use overload 
     '*'      => \&_multiplication,
@@ -195,7 +196,7 @@ Returns the a vector with the elements in reversed order.
 sub reverse {
     my $self = shift;
     my $copy = $self->copy();
-    if ( my $status = gsl_vector_complex_reverse( $copy->raw ) != 0 ) {
+    unless ( is_status_ok( gsl_vector_complex_reverse( $copy->raw )) ) {
         die( __PACKAGE__.": error reversing vector " . gsl_strerror($status) );
     }
     return $copy;

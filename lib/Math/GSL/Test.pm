@@ -17,7 +17,7 @@ our @EXPORT_OK = qw(
                      is_similar_relative 
                      verify verify_results 
                      is_windows 
-                     ok_status
+                     ok_status is_status_ok
 );
 use constant GSL_IS_WINDOWS =>  ($^O =~ /MSWin32/i)  ?  1 : 0 ;
 
@@ -206,6 +206,19 @@ sub ok_status {
     $msg       = $msg ? "$msg: " . $strerr : $strerr;
 
     ok( defined $got && $got == $expected, $msg );
+}
+
+=head2 is_status_ok($status)
+
+    is_status_ok( $status );
+
+Return true if $status is $GSL_SUCCESS, false otherwise.
+
+=cut
+
+sub is_status_ok {
+    my ($got) = shift;
+    return ( defined $got && $got == $GSL_SUCCESS ) ? 1 : 0 ;
 }
 
 =head2 ok_similar( $x, $y, $msg, $eps)

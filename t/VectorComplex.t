@@ -1,6 +1,6 @@
 package Math::GSL::VectorComplex::Test;
 use base q{Test::Class};
-use Test::More tests => 15;
+use Test::More tests => 17;
 use Math::GSL::Test          qw/:all/;
 use Math::GSL                qw/:all/;
 use Math::GSL::VectorComplex qw/:all/;
@@ -48,13 +48,19 @@ sub GSL_VECTOR_COMPLEX_NEW : Tests(12) {
     ok_similar( gsl_complex_arg($e1), $M_PI, '2nd element: new get arg correct');
 }
 
-sub GSL_VECTOR_COMPLEX_REVERSE : Tests(3) {
+sub GSL_VECTOR_COMPLEX_REVERSE : Tests(5) {
     my $self = shift;
     my $vector = $self->{vector};
     ok_status( gsl_vector_complex_reverse($vector->raw), $GSL_SUCCESS,  'vector_complex_reverse' );
     my @elements = $vector->as_list;
     ok_similar( [ map { Re($_) } @elements ], [ 3, -9, 0 ], 'real parts of vector get reversed');
     ok_similar( [ map { Im($_) } @elements ], [ 0,  0, 3 ], 'imag parts of vector get reversed');
+
+    my @reversed = $vector->reverse->as_list;
+
+    ok_similar( [ map { Re($_) } @reversed ], [ 0, -9, 3 ], 'real parts of vector get reversed');
+    ok_similar( [ map { Im($_) } @reversed ], [ 3,  0, 0 ], 'imag parts of vector get reversed');
+
 }
 
 Test::Class->runtests;

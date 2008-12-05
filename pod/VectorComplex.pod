@@ -182,6 +182,25 @@ sub get {
     return  map {  gsl_vector_complex_get($self->raw, $_ ) } @$indices ;
 }
 
+=head2 reverse()
+
+Returns the a vector with the elements in reversed order.
+
+    use Math::Complex;
+    my $v1 = Math::GSL::VectorComplex->new([ 1, 2, 3*i]);
+    my $v2 = $v1->reverse;
+
+=cut
+
+sub reverse {
+    my $self = shift;
+    my $copy = $self->copy();
+    if ( my $status = gsl_vector_complex_reverse( $copy->raw ) != 0 ) {
+        die( __PACKAGE__.": error reversing vector " . gsl_strerror($status) );
+    }
+    return $copy;
+}
+
 =head2  set() 
 
 Sets values of an of a Math::GSL::Vector object.

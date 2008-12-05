@@ -192,12 +192,13 @@ my $builder = GSLBuilder->new(
     swig_flags          => $swig_flags, 
     license             => 'gpl',
     requires => {
+        'ExtUtils::PkgConfig'   => '1.03',
         'Scalar::Util'          =>       0,
         'Test::More'            =>       0,
         'Test::Exception'       =>    0.21,
         'Test::Class'           =>    0.12,
         version                 =>       0,
-    	perl 			        =>  '5.8.0',
+        perl                    =>  '5.8.0',
     },
     sign                  => 0,
     configure_requires => {

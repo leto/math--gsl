@@ -1,12 +1,14 @@
 ---
 name: Math-GSL
-version: 0.15_04
+version: 0.15_05
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
 resources:
   license: http://opensource.org/licenses/gpl-license.php
+configure_requires:
+  ExtUtils::PkgConfig: 1.03
 requires:
   ExtUtils::PkgConfig: 1.03
   Scalar::Util: 0
@@ -18,7 +20,7 @@ requires:
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.15_04
+    version: 0.15_05
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLASc:

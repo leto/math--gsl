@@ -4,7 +4,8 @@
 
 * Fix something in KNOWN_BUGS
 
-* Add overloading to normal arithmetic operators (like Math::MatrixReal) in Vector, Matrix, possibly others
+* Add overloading to normal arithmetic operators (like Math::MatrixReal) in
+  Vector, VectorComplex, Matrix, MatrixComplex, possibly others
 
 * Make passing parameters to function references work properly
 

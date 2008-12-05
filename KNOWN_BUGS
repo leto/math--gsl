@@ -5,4 +5,14 @@
 
 * gsl_histogram2d_clone() does not return a gsl_histogram_t
 
+* gsl_vector_complex_scale() does not exist in underlying GSL library (maybe in 1.12 ?)
+
+* gsl_monte_function is b0rked
+
+* gsl_min_fminimizer_iterate = exploding hamster
+
+* gsl_root_fsolver_iterate = exploding hamster
+
+* gsl_fft_real_radix2_transform is b0rked (it worked at one point...)
+
 =cut

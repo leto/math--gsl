@@ -7,6 +7,7 @@
         as_list() returns a list of Math::Complex objects
         get() returns a list of Math::GSL::Complex objects
     - Math::GSL::Test::ok_status() now takes an optional message argument
+    - Added KNOWN_BUGS
     - Added Math::GSL::Test::is_status_ok()
     - New subsytems: VectorComplex and MatrixComplex
     - Operator overloading for addition and subtraction with vectors

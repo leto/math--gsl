@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 122;
+use Test::More tests => 121;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -46,9 +46,8 @@ sub GSL_VECTOR_ISNONNEG: Tests {
     ok( gsl_vector_isnonneg($self->{vector}),'gsl_vector_isnonneg' );
 }
 
-sub GSL_VECTOR_ISNULL: Tests {
+sub GSL_VECTOR_ISNULL: Tests(2) {
     my $self = shift;
-    ok( !gsl_vector_isnull($self->{vector}), 'non-null vector returns false' );
     map { gsl_vector_set($self->{vector}, $_, 0 ) } (0..4); 
     ok( gsl_vector_isnull($self->{vector}),'null vector returns true' );
     gsl_vector_set($self->{vector}, 0, 5 );

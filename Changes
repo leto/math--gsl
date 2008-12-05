@@ -1,7 +1,8 @@
 =head1 Math::GSL Changes
 
 =head1 v0.16 - December ?? 2008
-    - addeded reverse() method to VectorComplex objects with tests and docs
+    - Fixed RT#40947: configure_requires ExtUtils::PkgConfig bug
+    - Added reverse() method to VectorComplex objects with tests and docs
     - as_list() and get() now work on VectorComplex objects
         as_list() returns a list of Math::Complex objects
         get() returns a list of Math::GSL::Complex objects

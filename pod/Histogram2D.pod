@@ -231,5 +231,4 @@ under the same terms as Perl itself.
 =cut
 
 %}
-%include "../pod/Histogram2D.pod"
 

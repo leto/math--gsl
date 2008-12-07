@@ -1,8 +1,13 @@
 %perlcode %{ 
 
+use Scalar::Util 'blessed';
 use Carp qw/croak/;
 use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use overload 
+    '+'      => \&_addition,
+    '-'      => \&_subtract,
+    fallback => 1, 
 
 @EXPORT_OK = qw/
         gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block
@@ -331,6 +336,8 @@ int => [ qw/
                  gsl_matrix_complex_set_col
                  /]);
 
+
+
 =head1 NAME
 
 Math::GSL::Matrix - Mathematical functions concerning Matrices
@@ -339,7 +346,10 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 
     use Math::GSL::Matrix qw/:all/;
     my $matrix1 = Math::GSL::Matrix->new(5,5);  # OO interface
-    my $matrix2 = gsl_matrix_alloc(5,5);        # standard interface
+    my $matrix2 = $matrix1 + 4;                 # You can add or substract values or matrices to OO matrices
+    my $matrix3 = $matrix1 - 4;
+    my $matrix4 = $matrix2 + $matrix1;
+    my $matrix5 = gsl_matrix_alloc(5,5);        # standard interface
 
 
 =head1 Objected Oriented Interface to GSL Math::GSL::Matrix
@@ -379,6 +389,26 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 
 =cut
 sub raw  { (shift)->{_matrix} }
+
+=head2 copy() 
+
+Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
+
+    my $matrix = Math::GSL::Matrix->new(5,5);
+    my $copy   = $matrix->copy;
+
+=cut
+
+sub copy {
+    my $self = shift;
+    my $copy = Math::GSL::Matrix->new( $self->rows, $self->cols );
+    if ( gsl_matrix_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
+        croak "Math::GSL - error copying memory, aborting";
+    }
+    return $copy;
+}
+
+
 =head2 rows()
 
 Returns the number of rows in the matrix.
@@ -527,6 +557,40 @@ sub set_col {
  die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix' if($length != $self->rows-1);
  map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
  return $self;
+}
+
+sub _addition {
+    my ($left, $right) = @_; 
+
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::Matrix') && blessed $left && $left->isa('Math::GSL::Matrix') ) {
+        if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
+            gsl_matrix_add($lcopy->raw, $right->raw);
+        } else {
+            croak "Math::GSL - addition of matrices must be called with two objects matrices and must have the same number of columnss and rows";
+        }
+    } else {
+        gsl_matrix_add_constant($lcopy->raw, $right);
+    }
+    return $lcopy;
+}
+
+sub _subtract {
+    my ($left, $right) = @_; 
+
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::Matrix') && blessed $left && $left->isa('Math::GSL::Matrix') ) {
+        if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
+            gsl_matrix_sub($lcopy->raw, $right->raw);
+        } else {
+            croak "Math::GSL - addition of matrices must be called with two objects matrices and must have the same number of columnss and rows";
+        }
+    } else {
+        gsl_matrix_add_constant($lcopy->raw, $right*-1);
+    }
+    return $lcopy;
 }
 
 =head1 DESCRIPTION

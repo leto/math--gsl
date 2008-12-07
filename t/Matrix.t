@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 167;
+use Test::More tests => 191;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -563,5 +563,69 @@ sub GSL_MATRIX_VIEW_ARRAY_WITH_TDA : Tests {
  my $matrix_view = gsl_matrix_view_array_with_tda ($array, 2,2, 3);
  ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 0, $_) } 0..1], [8, 4]);
  ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 1, $_) } 0..1], [7, 5]);
+}
+
+sub GSL_MATRIX_OO_ADDITION_CONSTANT : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ $m->set_col(1, [4,5,6])
+   ->set_col(2, [9,8,7]);
+ my $m2 = $m + 4;
+ ok_similar([$m->col(2)->as_list], [9,8,7]);
+ ok_similar([$m->col(1)->as_list], [4,5,6]);
+ ok_similar([$m->col(0)->as_list], [0,0,0]);
+ 
+ ok_similar([$m2->col(1)->as_list], [8,9,10]);
+ ok_similar([$m2->col(2)->as_list], [13,12,11]);
+ ok_similar([$m2->col(0)->as_list], [4,4,4]);
+}
+
+sub GSL_MATRIX_OO_ADDITION_MATRICES : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ $m->set_col(1, [4,5,6])
+   ->set_col(2, [9,8,7])
+   ->set_col(0, [1,2,3]);
+ my $m2 = $m + $m;
+ ok_similar([$m->col(0)->as_list], [1,2,3]);
+ ok_similar([$m->col(2)->as_list], [9,8,7]);
+ ok_similar([$m->col(1)->as_list], [4,5,6]);
+
+
+ ok_similar([$m2->col(0)->as_list], [2,4,6]);
+ ok_similar([$m2->col(1)->as_list], [8,10,12]);
+ ok_similar([$m2->col(2)->as_list], [18,16,14]);
+}
+
+sub GSL_MATRIX_OO_SUBSTRACTION_CONSTANT : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ $m->set_col(1, [4,5,6])
+   ->set_col(2, [9,8,7]);
+ my $m2 = $m - 4;
+ ok_similar([$m->col(2)->as_list], [9,8,7]);
+ ok_similar([$m->col(1)->as_list], [4,5,6]);
+ ok_similar([$m->col(0)->as_list], [0,0,0]);
+ 
+ ok_similar([$m2->col(1)->as_list], [0,1,2]);
+ ok_similar([$m2->col(2)->as_list], [5,4,3]);
+ ok_similar([$m2->col(0)->as_list], [-4,-4,-4]);
+}
+
+sub GSL_MATRIX_OO_SUBSTRACTION_MATRICES : Tests {
+ my $m = Math::GSL::Matrix->new(3,3);
+ my $m3 = Math::GSL::Matrix->new(3,3);
+ $m->set_col(1, [4,5,6])
+   ->set_col(2, [9,8,7])
+   ->set_col(0, [1,2,3]);
+ $m3->set_col(1, [1,2,3])
+   ->set_col(2, [9,8,7])
+   ->set_col(0, [1,2,3]);
+ my $m2 = $m - $m3;
+ ok_similar([$m->col(0)->as_list], [1,2,3]);
+ ok_similar([$m->col(2)->as_list], [9,8,7]);
+ ok_similar([$m->col(1)->as_list], [4,5,6]);
+
+
+ ok_similar([$m2->col(0)->as_list], [0,0,0]);
+ ok_similar([$m2->col(1)->as_list], [3,3,3]);
+ ok_similar([$m2->col(2)->as_list], [0,0,0]);
 }
 Test::Class->runtests;

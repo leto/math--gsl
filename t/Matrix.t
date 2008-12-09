@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 191;
+use Test::More tests => 209;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -576,6 +576,11 @@ sub GSL_MATRIX_OO_ADDITION_CONSTANT : Tests {
     ok_similar([$m2->col(1)->as_list], [8,9,10]);
     ok_similar([$m2->col(2)->as_list], [13,12,11]);
     ok_similar([$m2->col(0)->as_list], [4,4,4]);
+    
+    my $m3 = 4 + $m; 
+    ok_similar([$m3->col(1)->as_list], [8,9,10]);
+    ok_similar([$m3->col(2)->as_list], [13,12,11]);
+    ok_similar([$m3->col(0)->as_list], [4,4,4]);
 }
 
 sub GSL_MATRIX_OO_ADDITION_MATRICES : Tests {
@@ -626,4 +631,41 @@ sub GSL_MATRIX_OO_SUBSTRACTION_MATRICES : Tests {
     ok_similar([$m2->col(2)->as_list], [0,0,0]);
 }
 
+sub GSL_MATRIX_OO_MULTIPLICATION_CONSTANT : Tests {
+    my $m = Math::GSL::Matrix->new(3,3);
+    $m->set_col(1, [4,5,6])
+      ->set_col(2, [9,8,7]);
+    my $m2 = $m * 4;
+    ok_similar([$m->col(2)->as_list], [9,8,7]);
+    ok_similar([$m->col(1)->as_list], [4,5,6]);
+    ok_similar([$m->col(0)->as_list], [0,0,0]);
+
+    ok_similar([$m2->col(1)->as_list], [16,20,24]);
+    ok_similar([$m2->col(2)->as_list], [36,32,28]);
+    ok_similar([$m2->col(0)->as_list], [0,0,0]);
+    
+    my $m3 = 4 * $m; 
+    ok_similar([$m3->col(1)->as_list], [16,20,24]);
+    ok_similar([$m3->col(2)->as_list], [36,32,28]);
+    ok_similar([$m3->col(0)->as_list], [0,0,0]);
+}
+
+sub GSL_MATRIX_OO_MULTIPLICATION_MATRICES : Tests {
+    my $m = Math::GSL::Matrix->new(3,3);
+    my $m3 = Math::GSL::Matrix->new(3,3);
+    $m->set_col(1, [4,5,6])
+      ->set_col(2, [9,8,7])
+      ->set_col(0, [1,2,3]);
+    $m3->set_col(1, [1,2,3])
+       ->set_col(2, [9,8,7])
+       ->set_col(0, [1,2,3]);
+    my $m2 = $m * $m3;
+    ok_similar([$m->col(0)->as_list], [1,2,3]);
+    ok_similar([$m->col(2)->as_list], [9,8,7]);
+    ok_similar([$m->col(1)->as_list], [4,5,6]);
+
+    ok_similar([$m2->col(0)->as_list], [1,4,9]);
+    ok_similar([$m2->col(1)->as_list], [4,10,18]);
+    ok_similar([$m2->col(2)->as_list], [81,64,49]);
+}
 Test::Class->runtests;

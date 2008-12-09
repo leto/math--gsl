@@ -24,6 +24,7 @@
     - All test files now keep track of how many tests should run
     - Fix an include bug in Histogram2D which caused the build to fail
     - Operator overloading for addition and subtraction with matrices
+    - Operator overloading for multiplication with matrices
 
 
 =head1 v0.14 - October 21 2008

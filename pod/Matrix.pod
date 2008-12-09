@@ -5,6 +5,7 @@ use Carp qw/croak/;
 use Math::GSL qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use overload
+    '*'      => \&_multiplication,
     '+'      => \&_addition,
     '-'      => \&_subtract,
     fallback => 1,
@@ -349,7 +350,12 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     my $matrix2 = $matrix1 + 4;                 # You can add or substract values or matrices to OO matrices
     my $matrix3 = $matrix1 - 4;
     my $matrix4 = $matrix2 + $matrix1;
-    my $matrix5 = gsl_matrix_alloc(5,5);        # standard interface
+    my $matrix5 = $matrix2 * $matrix1;          # This is NOT a scalar product, it simply multiply each element
+						# with the element of $matrix1 that have the same position
+    						# See Math::GSL::BLAS if you want scalar product
+
+    my $matrix6 = $matrix2 * 8;                 # Multiply every elements of $matrix2 by 8
+    my $matrix7 = gsl_matrix_alloc(5,5);        # standard interface
 
 
 =head1 Objected Oriented Interface to GSL Math::GSL::Matrix
@@ -568,7 +574,7 @@ sub _addition {
         if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
             gsl_matrix_add($lcopy->raw, $right->raw);
         } else {
-            croak "Math::GSL - addition of matrices must be called with two objects matrices and must have the same number of columnss and rows";
+            croak "Math::GSL - addition of matrices must be called with two objects matrices and must have the same number of columns and rows";
         }
     } else {
         gsl_matrix_add_constant($lcopy->raw, $right);
@@ -585,10 +591,26 @@ sub _subtract {
         if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
             gsl_matrix_sub($lcopy->raw, $right->raw);
         } else {
-            croak "Math::GSL - subtraction of matrices must be called with two objects matrices and must have the same number of columnss and rows";
+            croak "Math::GSL - subtraction of matrices must be called with two objects matrices and must have the same number of columns and rows";
         }
     } else {
         gsl_matrix_add_constant($lcopy->raw, $right*-1);
+    }
+    return $lcopy;
+}
+
+sub _multiplication {
+    my ($left,$right) = @_;
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::Matrix') ) {
+        if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
+            gsl_matrix_mul_elements($lcopy->raw, $right->raw);
+        } else {
+        croak "Math::GSL - multiplication of elements of matrices must be called with two objects matrices and must have the same number of columns and rows";
+        } } 
+    else {
+        gsl_matrix_scale($lcopy->raw, $right);
     }
     return $lcopy;
 }

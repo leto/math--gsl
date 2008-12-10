@@ -11,8 +11,8 @@
 
 * Investigate serialization of Math::GSL::Vector/Matrix objects
 
-* PDL interoperability : 
-                      my $matrix = Math::GSL::Matrix->new(50,50);  
+* PDL interoperability :
+                      my $matrix = Math::GSL::Matrix->new(50,50);
                       my $pdl = $matrix->as_pdl();
 
 * Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris

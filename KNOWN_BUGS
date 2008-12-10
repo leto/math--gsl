@@ -1,11 +1,21 @@
 
 =head1 List of Known Bugs in Math::GSL
 
+* The implementation of callbacks in Math::GSL is duct tape and paper clips. It is very sensitive
+
+ to new and exotic platforms and compilers. 
+
+* Math::GSL subclasses Module::Build and generates compile flags based on system characteristics,
+
+ shouldn't this be in Module::Build ?
+
+* FFT's stopped working! We need some good unit tests, the current one does not use trusted data
+
 * gsl_set_error_handler_off() does not return a gsl_error_handler_t
 
 * gsl_histogram2d_clone() does not return a gsl_histogram_t
 
-* gsl_vector_complex_scale() does not exist in underlying GSL library (maybe in 1.12 ?)
+* gsl_vector_complex_scale() does not exist in underlying GSL library (will be in GSL 1.12 )
 
 * gsl_monte_function is b0rked
 

@@ -296,7 +296,7 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
 }
 sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests { 
     my $self = shift;
- 
+
     gsl_matrix_set($self->{matrix}, 1, 0, 3);
     gsl_matrix_set($self->{matrix}, 1, 1, 2);
     gsl_matrix_set($self->{matrix}, 1, 2, 5);
@@ -334,12 +334,12 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
     is_similar(gsl_matrix_get($U, 3, 3), 0.661093690241727594);
 
     my $V = gsl_matrix_alloc(4,4);
-    is(gsl_linalg_hessenberg_unpack_accum($self->{matrix}, $tau, $V), 0); #I don't know how to test the result of this function...
+    ok_status( gsl_linalg_hessenberg_unpack_accum($self->{matrix}, $tau, $V), 0); #I don't know how to test the result of this function...
 
-    is(gsl_linalg_hessenberg_set_zero($self->{matrix}), 0);
+    ok_status( gsl_linalg_hessenberg_set_zero($self->{matrix}) );
     for(my $line = 2; $line<4; $line++) {
-        map { is(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero") } (0..$line-2); 
-    } 
+        map { ok_similar(gsl_matrix_get($self->{matrix}, $line, $_), 0, 1e-8, "Set zero") } (0..$line-2);
+    }
 }
 
 sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {

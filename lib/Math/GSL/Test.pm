@@ -33,9 +33,7 @@ Math::GSL::Test - Assertions and such
 
 =cut
 
-our %EXPORT_TAGS = ( 
-                     all => \@EXPORT_OK,
-                   );
+our %EXPORT_TAGS = ( all => \@EXPORT_OK,);
 
 sub _dump_result($)
 {
@@ -67,7 +65,7 @@ will check to see if
 
     $similarity_function->($x,$y_) <= $eps
 
-The default value of $eps is 1e-8. Don't try sending anything to the moon with this value...
+The default value of $eps is 1e-8. Don't try sending anything to the Moon with this value...
 
 =cut
 
@@ -76,7 +74,7 @@ sub is_similar {
     $eps ||= 1e-8;
     if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
         if ( $#$x != $#$y ){
-            warn "is_similar(): argument of different lengths, $#$x != $#$y !!!";
+            warn "is_similar(): items differ in length, $#$x != $#$y !!!";
             return 0;
         } else {
             map { 
@@ -218,6 +216,7 @@ Return true if $status is $GSL_SUCCESS, false otherwise.
 
 sub is_status_ok {
     my ($got) = shift;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     return ( defined $got && $got == $GSL_SUCCESS ) ? 1 : 0 ;
 }
 
@@ -249,6 +248,7 @@ seem very useful. What should the default be?
 
 sub is_similar_relative {
     my ($x,$y, $eps) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     return is_similar($x,$y,$eps, sub { abs( ($_[0] - $_[1])/abs($_[1]) ) } );
 }
 

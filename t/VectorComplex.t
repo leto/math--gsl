@@ -1,6 +1,6 @@
 package Math::GSL::VectorComplex::Test;
 use base q{Test::Class};
-use Test::More tests => 17;
+use Test::More tests => 23;
 use Math::GSL::Test          qw/:all/;
 use Math::GSL                qw/:all/;
 use Math::GSL::VectorComplex qw/:all/;
@@ -60,6 +60,28 @@ sub GSL_VECTOR_COMPLEX_REVERSE : Tests(5) {
 
     ok_similar( [ map { Re($_) } @reversed ], [ 0, -9, 3 ], 'real parts of vector get reversed');
     ok_similar( [ map { Im($_) } @reversed ], [ 3,  0, 0 ], 'imag parts of vector get reversed');
+
+}
+
+sub GSL_VECTOR_COMPLEX_SWAP : Tests(6) {
+    my $self   = shift;
+    my $y = Math::Complex->make(1,1);
+    my $z = Math::Complex->make(0,3);
+    my $v = $self->{vector};
+    my $w = Math::GSL::VectorComplex->new([ $y , 1 , 3 ]);
+
+    ok_status( gsl_vector_complex_swap( $v->raw, $w->raw ) );
+    ok_similar ( [ map { Re $_ } $v->as_list     ],
+                 [ map { Re $_ } $y ,     1 ,  3 ] );
+    ok_similar ( [ map { Im $_ } $w->as_list     ],
+                 [ map { Im $_ } $z , $z ** 2, 3 ] );
+
+    isa_ok( $v->swap( $w ), 'Math::GSL::VectorComplex' );
+
+    ok_similar ( [ map { Re $_ } $w->as_list     ],
+                 [ map { Re $_ } $y ,     1 ,  3 ] );
+    ok_similar ( [ map { Im $_ } $v->as_list     ],
+                 [ map { Im $_ } $z , $z ** 2, 3 ] );
 
 }
 

@@ -237,8 +237,9 @@ Returns a copy of the vector, which has the same length and values but resides a
 sub copy {
     my $self = shift;
     my $copy = Math::GSL::VectorComplex->new( $self->length );
-    if ( gsl_vector_complex_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
-        croak "Math::GSL - error copying memory, aborting";
+    my $status = gsl_vector_complex_memcpy($copy->raw, $self->raw);
+    if ( $status != $GSL_SUCCESS ) {
+        croak "Math::GSL - error copying memory, aborting. $! status=$status";
     }
     return $copy;
 }
@@ -255,7 +256,7 @@ Exchanges the values in the vectors $v with $w by copying.
 
 sub swap() {
     my ($self,$other) = @_;
-    croak "Math::GSL::swap : other object must be a Math::GSL::VectorComplex"
+    croak "Math::GSL::VectorComplex : \$v->swap(\$w) - \$w must be a Math::GSL::VectorComplex"
         unless ref $other eq 'Math::GSL::VectorComplex';
     gsl_vector_complex_swap( $self->raw, $other->raw );
     return $self;

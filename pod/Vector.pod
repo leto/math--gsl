@@ -117,10 +117,29 @@ Get the underlying GSL vector object created by SWIG, useful for using gsl_vecto
 
 =cut
 
-sub raw { 
+sub raw {
     my $self = shift;
     return $self->{_vector};
 }
+
+=head2 swap()
+
+Exchanges the values in the vectors $v with $w by copying.
+
+    my $v = Math::GSL::Vector->new([1..5]);
+    my $w = Math::GSL::Vector->new([3..7]);
+    $v->swap( $w );
+
+=cut
+
+sub swap() {
+    my ($self,$other) = @_;
+    croak "Math::GSL::Vector: \$v->swap(\$w) : \$w must be a Math::GSL::Vector"
+        unless ref $other eq 'Math::GSL::Vector';
+    gsl_vector_swap( $self->raw, $other->raw );
+    return $self;
+}
+
 
 =head2 min()
 
@@ -393,9 +412,6 @@ Here is a list of all the functions included in this module :
 =item C<gsl_vector_isnonneg($v)> - verify if all the elements the vector $v are not negative, return 0 if it's the case, 1 otherwise.
 
 =back
-
-You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
-
 
 Precision on the vector_view type : every modification you'll make on a vector_view will also modify the original vector. 
 For example, the following code will zero the even elements of the vector $v of length $size, while leaving the odd elements untouched :

@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 121;
+use Test::More tests => 124;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -390,7 +390,7 @@ sub COPY : Tests {
     ok_similar( [ $v1->copy->as_list ], [ $v1->as_list ] );
 
 }
-sub GSL_SUBTRACTION : Tests { 
+sub GSL_SUBTRACTION : Tests(3) {
     my $v1 = Math::GSL::Vector->new( [ 1 .. 5 ]);
     my $v2 = Math::GSL::Vector->new( [ 5 .. 9 ]);
 
@@ -403,7 +403,7 @@ sub GSL_SUBTRACTION : Tests {
     ok_similar( [ $v4->as_list ], [ 2, 1, 0, -1, -2 ] );
 }
 
-sub GSL_MULTIPLICATION : Tests {
+sub GSL_MULTIPLICATION : Tests(6) {
     my $v = Math::GSL::Vector->new([1,2,3]);
     my $v2 = $v * 5;
 
@@ -414,12 +414,23 @@ sub GSL_MULTIPLICATION : Tests {
     my $v3 = 5 * $v;
     ok_similar ( [$v3->as_list], [5,10,15]);
     ok_similar ( [$v->as_list],  [1,2,3]);
-    
+
     my $w = $v3 * 0;
     ok_similar( [ $w->as_list ], [0,0,0], 'right overloaded zero-ify' );
 
     my $z = 0 * $v3;
     ok_similar( [ $w->as_list ], [0,0,0], 'left overloaded zero-ify' );
+}
+
+sub GSL_VECTOR_SWAP_OBJECTS : Tests(3) {
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $w = Math::GSL::Vector->new([42,69,18]);
+
+    isa_ok( $v->swap($w), 'Math::GSL::Vector' );
+
+    ok_similar( [ $v->as_list ], [ 42, 69, 18 ] );
+    ok_similar( [ $w->as_list ], [ 1, 2, 3    ] );
+
 }
 
 Test::Class->runtests;

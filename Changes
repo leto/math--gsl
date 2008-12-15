@@ -1,5 +1,9 @@
 =head1 Math::GSL Changes
 
+=head1 v0.18 - ???
+
+    - Added swap() to Vector objects with tests and docs
+
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 
     - Fixed RT#40947: configure_requires ExtUtils::PkgConfig bug

@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 124;
+use Test::More tests => 128;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -430,7 +430,16 @@ sub GSL_VECTOR_SWAP_OBJECTS : Tests(3) {
 
     ok_similar( [ $v->as_list ], [ 42, 69, 18 ] );
     ok_similar( [ $w->as_list ], [ 1, 2, 3    ] );
+}
 
+sub GSL_VECTOR_REVERSE_OBJECTS : Tests(4) {
+    my @elements = map { int(rand(100)) } (1..10);
+    my $v        = Math::GSL::Vector->new([@elements]);
+
+    ok_similar( [ $v->reverse->as_list ], [ reverse @elements ] );
+    isa_ok($v->reverse, 'Math::GSL::Vector');
+    ok_similar( [ $v->as_list ], [ @elements ] );
+    ok_similar( [ $v->reverse->reverse->as_list ], [ $v->as_list ] );
 }
 
 Test::Class->runtests;

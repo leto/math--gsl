@@ -140,6 +140,19 @@ sub swap() {
     return $self;
 }
 
+=head2 reverse()
+
+Reverse the elements in the vector.
+
+    $v->reverse;
+
+=cut
+
+sub reverse() {
+    my $self = shift;
+    gsl_vector_reverse($self->raw);
+    return $self;
+}
 
 =head2 min()
 

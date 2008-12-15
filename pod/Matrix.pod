@@ -8,7 +8,7 @@ use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
     '-'      => \&_subtract,
-    fallback => 1,
+    fallback => 1;
 
 @EXPORT_OK = qw/
         gsl_matrix_alloc gsl_matrix_calloc gsl_matrix_alloc_from_block

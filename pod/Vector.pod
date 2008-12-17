@@ -193,13 +193,54 @@ Returns the number of elements contained in the vector.
 
 sub length { my $self=shift; $self->{_length} }
 
-=head2  as_list() 
+=head2 $v->norm($p)
+
+Returns the p-norm of $v, which defaults to the Euclidean (p=2) norm when no argument is given.
+
+    my $euclidean_distance = $v->norm;
+
+=cut
+
+sub norm($;$)
+{
+    my ($self,$p) = @_;
+    my $norm = 0;
+    $p ||= 2;
+
+    map { $norm += $_ ** $p } $self->as_list;
+    return $norm ** (1 / $p );
+}
+
+=head2 normalize($p)
+
+Divide each element of a vector by it's norm, hence creating a unit vector. Returns the vector for chaining.
+If you just want the value of the norm without changing the vector, use C<norm()>. The default value for C<$p>
+is 2, which gives the familiar Euclidean distance norm.
+
+    my $unit_vector = $vector->normalize(2);
+
+is the same as
+
+    my $unit_vector = $vector->normalize;
+
+=cut
+
+sub normalize($;$)
+{
+    my ($self,$p) = @_;
+    $p ||= 2;
+    gsl_vector_scale( $self->raw, $self->norm($p) );
+    return $self;
+}
+
+=head2  as_list()
 
 Gets the content of a Math::GSL::Vector object as a Perl list.
 
     my $vector = Math::GSL::Vector->new(3);
     ...
     my @values = $vector->as_list;
+
 =cut
 
 sub as_list {
@@ -207,7 +248,7 @@ sub as_list {
     $self->get( [ 0 .. $self->length - 1  ] );
 }
 
-=head2  get() 
+=head2  get()
 
 Gets the value of an of a Math::GSL::Vector object.
 

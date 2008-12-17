@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 128;
+use Test::More tests => 132;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -441,5 +441,19 @@ sub GSL_VECTOR_REVERSE_OBJECTS : Tests(4) {
     ok_similar( [ $v->as_list ], [ @elements ] );
     ok_similar( [ $v->reverse->reverse->as_list ], [ $v->as_list ] );
 }
+
+sub GSL_VECTOR_NORMS : Tests(4) {
+    my $v        = Math::GSL::Vector->new([ (0) x 5 ]);
+    ok_similar( $v->norm, 0 , 'zero vector norm = 0' );
+
+    my $w = Math::GSL::Vector->new([1,2,3]);
+    my $z = Math::GSL::Vector->new([1,2,-3]);
+    ok_similar( [ $w->norm    ],    [ sqrt(14) ],  '2-norm' );
+    ok_similar( [ $w->norm(1) ],    [ 6        ],  '1-norm' );
+
+    local $TODO = qw{ this should work };
+    ok_similar( [ $z->norm(1) ],    [ 6        ],  '1-norm with neg. elems.' );
+}
+
 
 Test::Class->runtests;

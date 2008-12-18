@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 212;
+use Test::More tests => 215;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -671,7 +671,7 @@ sub GSL_MATRIX_OO_MULTIPLICATION_MATRICES : Tests {
     ok_similar([$m2->col(2)->as_list], [81,64,49]);
 }
 
-sub GSL_MATRIX_EIGENVALUES: Tests(3) {
+sub GSL_MATRIX_EIGENVALUES: Tests(6) {
     my $matrix = Math::GSL::Matrix->new(2,2)
                               ->set_row(0, [0,-1] )
                               ->set_row(1, [1, 0] );
@@ -681,6 +681,20 @@ sub GSL_MATRIX_EIGENVALUES: Tests(3) {
 
     my $rect = Math::GSL::Matrix->new(2,4);
     dies_ok( sub { $rect->eigenvalues }, 'eigenvalues for square matrices only' );
+
+    my $matrix2 = Math::GSL::Matrix->new(2,2)
+                              ->set_row(0, [1, 0] )
+                              ->set_row(1, [0, 1] );
+    my @eigs2 = $matrix2->eigenvalues;
+    ok_similar( [ @eigs2 ], [ 1, 1 ] );
+
+    my $matrix3 = Math::GSL::Matrix->new(2,2);
+    ok_similar( [ $matrix3->eigenvalues ], [ 0, 0 ], 'zero matrix eigenvalues = 0');
+
+    my $matrix4 = Math::GSL::Matrix->new(2,2)
+                              ->set_row(0, [1, 3] )
+                              ->set_row(1, [4, 2] );
+    ok_similar( [ $matrix4->eigenvalues ], [ -2, 5 ] );
 }
 
 Test::Class->runtests;

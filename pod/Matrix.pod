@@ -1,9 +1,15 @@
 %perlcode %{
 
-use Scalar::Util 'blessed';
 use Carp qw/croak/;
+use Scalar::Util 'blessed';
+
 use Math::GSL qw/:all/;
-use Math::GSL::Errno qw/:all/;
+use Math::GSL::Errno    qw/:all/;
+use Math::GSL::Eigen    qw/:all/;
+use Math::GSL::Vector   qw/:all/;
+use Math::GSL::Complex  qw/:all/;
+use Math::GSL::MatrixComplex qw/:all/;
+
 use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -442,8 +448,36 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
     my @matrix = $matrix->as_list;
 =cut
 
+sub eigenvalues($)
+{
+    my $self=shift;
+    my @eigs;
+    my ($r,$c) = ($self->rows,$self->cols);
+    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
+    my $evec   = gsl_matrix_complex_alloc($r,$c);
+    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
+    my $vector = gsl_vector_complex_alloc($r);
 
-sub as_list
+    gsl_eigen_nonsymmv($self->raw, $vector, $evec, $eigen);
+
+    my $x = gsl_vector_complex_real($vector); # vector of real components
+    my $y = gsl_vector_complex_imag($vector); # vector of imaginary components
+
+    map { push @eigs, _as_complex( gsl_vector_get($x->{vector}, $_) ,  gsl_vector_get($y->{vector}, $_) ) } (0 .. $r-1);
+
+    return @eigs;
+}
+
+sub _as_complex {
+    my ($w,$v) = @_;
+    my ($x,$y) = ($w,$v);
+    if( ref $w eq 'Math::GSL::Complex') {
+        ($x,$y) = (gsl_real($w),gsl_imag($w));
+    }
+    my $z      = Math::Complex->make( $x, $y);
+}
+
+sub as_list($)
 {
     my $self = shift;
     my $line;
@@ -507,12 +541,11 @@ sub col
 
    my @got;
    for my $n (0 .. $self->rows-1) {
-    push (@got, gsl_matrix_get($self->raw, $n, $col));
+        push (@got, gsl_matrix_get($self->raw, $n, $col));
    }
-    for my $n (0 .. $self->rows-1) {
-	gsl_matrix_set($colmat->raw, $n, 0, $got[$n]); }	
+   map { gsl_matrix_set($colmat->raw, $_, 0, $got[$_]) } (0 .. $self->rows-1);
 
-    return $colmat;
+   return $colmat;
 }
 
 =head2 set_row()
@@ -531,13 +564,15 @@ You can also set multiple rows at once with chained calls:
 =cut
 
 sub set_row {
- my ($self, $row, $values) = @_;
- my $length = $#$values;
- die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
- die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' if ($row < 0 || $row >= $self->rows);
- die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix' if($length != $self->cols-1);
- map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
- return $self;
+    my ($self, $row, $values) = @_;
+    my $length = $#$values;
+    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' 
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix'
+        if($length != $self->cols-1);
+    map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
+    return $self;
 }
 
 =head2 set_col()
@@ -556,13 +591,17 @@ You can also set multiple columns at once with chained calls:
 =cut
 
 sub set_col {
- my ($self, $col, $values) = @_;
- my $length = $#$values;
- die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
- die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' if ($col < 0 || $col >= $self->cols);
- die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix' if($length != $self->rows-1);
- map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
- return $self;
+    my ($self, $col, $values) = @_;
+    my $length = $#$values;
+
+    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' 
+        if ($col < 0 || $col >= $self->cols);
+    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix'
+        if($length != $self->rows-1);
+
+    map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
+    return $self;
 }
 
 sub _addition {

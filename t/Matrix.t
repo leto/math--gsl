@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 209;
+use Test::More tests => 211;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -8,6 +8,7 @@ use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Data::Dumper;
+use Math::Complex;
 use strict;
 
 BEGIN{ gsl_set_error_handler_off(); }
@@ -668,4 +669,14 @@ sub GSL_MATRIX_OO_MULTIPLICATION_MATRICES : Tests {
     ok_similar([$m2->col(1)->as_list], [4,10,18]);
     ok_similar([$m2->col(2)->as_list], [81,64,49]);
 }
+
+sub GSL_MATRIX_EIGENVALUES: Tests(2) {
+    my $matrix = Math::GSL::Matrix->new(2,2)
+                              ->set_row(0, [0,-1] )
+                              ->set_row(1, [1, 0] );
+    my @eigs = $matrix->eigenvalues;
+    ok_similar( [ Re($eigs[0]), Im($eigs[0]) ], [ 0,  1 ] ); #  i
+    ok_similar( [ Re($eigs[1]), Im($eigs[1]) ], [ 0, -1 ] ); # -i
+}
+
 Test::Class->runtests;

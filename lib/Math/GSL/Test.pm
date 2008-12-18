@@ -71,6 +71,7 @@ The default value of $eps is 1e-8. Don't try sending anything to the Moon with t
 
 sub is_similar {
     my ($x,$y, $eps, $similarity_function) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     $eps ||= 1e-8;
     if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
         if ( $#$x != $#$y ){

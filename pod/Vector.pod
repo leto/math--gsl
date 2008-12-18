@@ -207,8 +207,8 @@ sub norm($;$)
     my $norm = 0;
     $p ||= 2;
 
-    map { $norm += $_ ** $p } $self->as_list;
-    return $norm ** (1 / $p );
+    map { $norm += $p == 1 ? abs $_ : $_ ** $p } ($self->as_list);
+    return $norm **  (1 / $p);
 }
 
 =head2 normalize($p)
@@ -229,7 +229,11 @@ sub normalize($;$)
 {
     my ($self,$p) = @_;
     $p ||= 2;
-    gsl_vector_scale( $self->raw, $self->norm($p) );
+    my $norm = $self->norm($p);
+    return $self if ($norm == 0);
+
+    my $status = gsl_vector_scale( $self->raw, 1/$norm );
+    croak "Math::GSL::Vector - could not scale vectr" unless $status == $GSL_SUCCESS;
     return $self;
 }
 

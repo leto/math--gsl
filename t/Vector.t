@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 132;
+use Test::More tests => 137;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -362,7 +362,6 @@ sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
   my $result = gsl_complex_rect(5,5);
   $result = gsl_vector_complex_get($vec, 0);
   isa_ok($result, 'Math::GSL::Complex');
-  print Dumper [ $result ];
   local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
 }
 
@@ -442,18 +441,28 @@ sub GSL_VECTOR_REVERSE_OBJECTS : Tests(4) {
     ok_similar( [ $v->reverse->reverse->as_list ], [ $v->as_list ] );
 }
 
-sub GSL_VECTOR_NORMS : Tests(4) {
+sub GSL_VECTOR_NORM : Tests(5) {
     my $v        = Math::GSL::Vector->new([ (0) x 5 ]);
     ok_similar( $v->norm, 0 , 'zero vector norm = 0' );
 
+    isa_ok( $v->normalize, 'Math::GSL::Vector');
     my $w = Math::GSL::Vector->new([1,2,3]);
     my $z = Math::GSL::Vector->new([1,2,-3]);
     ok_similar( [ $w->norm    ],    [ sqrt(14) ],  '2-norm' );
     ok_similar( [ $w->norm(1) ],    [ 6        ],  '1-norm' );
 
-    local $TODO = qw{ this should work };
     ok_similar( [ $z->norm(1) ],    [ 6        ],  '1-norm with neg. elems.' );
+
 }
 
+sub GSL_VECTOR_NORMALIZE : Tests(4) {
+    my $w = Math::GSL::Vector->new([1,2,3]);
+    isa_ok( $w->normalize, 'Math::GSL::Vector');
+    ok_similar( $w->norm , 1, 'normalize default p=2');
+
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    isa_ok( $v->normalize(3), 'Math::GSL::Vector' );
+    ok_similar ( $v->norm(3), 1, 'normalize p=3');
+}
 
 Test::Class->runtests;

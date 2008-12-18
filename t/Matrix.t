@@ -1,12 +1,13 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 211;
+use Test::More tests => 212;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
 use Math::GSL::Errno    qw/:all/;
+use Test::Exception;
 use Data::Dumper;
 use Math::Complex;
 use strict;
@@ -670,13 +671,16 @@ sub GSL_MATRIX_OO_MULTIPLICATION_MATRICES : Tests {
     ok_similar([$m2->col(2)->as_list], [81,64,49]);
 }
 
-sub GSL_MATRIX_EIGENVALUES: Tests(2) {
+sub GSL_MATRIX_EIGENVALUES: Tests(3) {
     my $matrix = Math::GSL::Matrix->new(2,2)
                               ->set_row(0, [0,-1] )
                               ->set_row(1, [1, 0] );
     my @eigs = $matrix->eigenvalues;
     ok_similar( [ Re($eigs[0]), Im($eigs[0]) ], [ 0,  1 ] ); #  i
     ok_similar( [ Re($eigs[1]), Im($eigs[1]) ], [ 0, -1 ] ); # -i
+
+    my $rect = Math::GSL::Matrix->new(2,4);
+    dies_ok( sub { $rect->eigenvalues }, 'eigenvalues for square matrices only' );
 }
 
 Test::Class->runtests;

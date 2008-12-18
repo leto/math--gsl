@@ -451,7 +451,6 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
 sub eigenvalues($)
 {
     my $self=shift;
-    my @eigs;
     my ($r,$c) = ($self->rows,$self->cols);
     croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
     my $evec   = gsl_matrix_complex_alloc($r,$c);
@@ -463,9 +462,11 @@ sub eigenvalues($)
     my $x = gsl_vector_complex_real($vector); # vector of real components
     my $y = gsl_vector_complex_imag($vector); # vector of imaginary components
 
-    map { push @eigs, _as_complex( gsl_vector_get($x->{vector}, $_) ,  gsl_vector_get($y->{vector}, $_) ) } (0 .. $r-1);
+    return map {
+                _as_complex( gsl_vector_get($x->{vector}, $_) ,
+                             gsl_vector_get($y->{vector}, $_) )
+                } (0 .. $r-1);
 
-    return @eigs;
 }
 
 sub _as_complex {

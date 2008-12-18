@@ -481,16 +481,11 @@ sub _as_complex {
 sub as_list($)
 {
     my $self = shift;
-    my $line;
-    my @part;
-    my @total;
-    for($line=0; $line<$self->rows; $line++){
-       @part = map {
-         gsl_matrix_get($self->raw, $line, $_)
-       } (0 .. $self->cols-1 );
-       push(@total, @part);
+    my @matrix;
+    for my $row ( 0 .. $self->rows-1) {
+       push @matrix, map { gsl_matrix_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
     }
-    return @total;
+    return @matrix;
 }
 
 =head2 row()
@@ -511,12 +506,11 @@ sub row
 
    my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
 
-   my @got;
    for my $n (0 .. $self->cols-1) {
-    push (@got, gsl_matrix_get($self->raw, $row, $n));
+        gsl_matrix_set( $rowmat->raw, 0, $n,
+            gsl_matrix_get($self->raw, $row, $n)
+        );
    }
-    for my $n (0 .. $self->cols-1) {
-	gsl_matrix_set($rowmat->raw, 0, $n, $got[$n]); }	
 
     return $rowmat;
 }

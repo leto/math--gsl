@@ -4,11 +4,12 @@ use Data::Dumper;
 use Carp qw/croak/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
-use overload 
+use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
     '-'      => \&_subtract,
-    fallback => 1, 
+    'abs'    => \&_abs,
+    fallback => 1,
 ;
 
 @EXPORT_all  = qw/fopen fclose
@@ -338,8 +339,13 @@ sub _subtract {
     }
 }
 
+sub _abs {
+    my $self = shift;
+    $self->norm;
+}
+
 sub _addition {
-    my ($left, $right, $flip) = @_; 
+    my ($left, $right, $flip) = @_;
 
     my $lcopy = $left->copy;
 

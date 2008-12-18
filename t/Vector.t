@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 137;
+use Test::More tests => 139;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -463,6 +463,14 @@ sub GSL_VECTOR_NORMALIZE : Tests(4) {
     my $v = Math::GSL::Vector->new([1,2,3]);
     isa_ok( $v->normalize(3), 'Math::GSL::Vector' );
     ok_similar ( $v->norm(3), 1, 'normalize p=3');
+}
+
+sub GSL_VECTOR_NORM_OVERLOAD: Tests(2) {
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $w = Math::GSL::Vector->new([10,0,1]);
+
+    ok_similar( [ $v->norm ], [ abs $v ], 'abs overload');
+    ok_similar( [ abs $w   ], [ sqrt(101) ], 'abs = norm' )
 }
 
 Test::Class->runtests;

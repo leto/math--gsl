@@ -561,14 +561,12 @@ sub col
     croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column")
         unless ($col < $self->cols and $col >= 0);
 
-    my $colvec = Math::GSL::Vector->new($self->cols);
     my $colmat = Math::GSL::Matrix->new($self->rows, 1);
 
-   my @got;
-   for my $n (0 .. $self->rows-1) {
-        push (@got, gsl_matrix_get($self->raw, $n, $col));
-   }
-   map { gsl_matrix_set($colmat->raw, $_, 0, $got[$_]) } (0 .. $self->rows-1);
+   map { gsl_matrix_set($colmat->raw, $_, 0,
+           gsl_matrix_get($self->raw, $_, $col),
+           )
+       } (0 .. $self->rows-1);
 
    return $colmat;
 }

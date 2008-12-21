@@ -1,4 +1,4 @@
-#!/usr/bin/perl5.10 -w
+#!/usr/bin/perl -w
 use Math::GSL::Matrix;
 use strict;
 my $matrix = Math::GSL::Matrix->new(2,2)

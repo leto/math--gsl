@@ -1,5 +1,21 @@
 %perlcode %{
 
+#use Data::Dumper;
+use Carp qw/croak/;
+use Scalar::Util 'blessed';
+
+#use Math::GSL qw/:all/;
+#use Math::GSL::Errno    qw/:all/;
+#use Math::GSL::Eigen    qw/:all/;
+use Math::GSL::Vector   qw/:all/;
+#use Math::GSL::Complex  qw/:all/;
+use Math::GSL::Matrix   qw/:all/;
+use overload
+    '.'      => \&_dotProduct,
+    fallback => 1;
+
+
+
 @EXPORT_OK_level1 = qw/
                         gsl_blas_sdsdot gsl_blas_dsdot gsl_blas_sdot gsl_blas_ddot 
                         gsl_blas_cdotu gsl_blas_cdotc gsl_blas_zdotu gsl_blas_zdotc 
@@ -42,6 +58,20 @@
                 level2 => [ @EXPORT_OK_level2 ],  
                 level3 => [ @EXPORT_OK_level3 ],  
                );
+
+sub _dotProduct {
+    my ($left,$right) = @_;
+
+    if (blessed $left && $left->isa('Math::GSL::Matrix') && blessed $right && $right->isa('Math::GSL::Matrix') ) {
+        if ( $left->rows == $right->cols ) {
+		#my $C = Math::GSL::Matrix->new($left->rows, $right->cols);
+		#gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $left->raw, $right->raw, 1, $C->raw);
+        } else {
+	croak "Math::GSL - dot product of matrices must be called with two objects matrices and left matrix must have the same number of rows than the number of columns of the right matrix";
+        } } 
+    #return $C;
+}
+
 __END__
 
 =head1 NAME
@@ -50,7 +80,7 @@ Math::GSL::BLAS - Basic Linear Algebra Subprograms
 
 =head1 SYNOPSIS
 
-use Math::GSL::QRNG qw/:all/;
+use Math::GSL::BLAS qw/:all/;
 
 =head1 DESCRIPTION
 
@@ -287,7 +317,7 @@ The functions of this module are divised into 3 levels:
 =back
 
 You have to add the functions you want to use inside the qw /put_funtion_here /. 
-You can also write use Math::GSL::PowInt qw/:all/ to use all avaible functions of the module. 
+You can also write use Math::GSL::BLAS qw/:all/ to use all avaible functions of the module. 
 Other tags are also avaible, here is a complete list of all tags for this module :
 
 =over 3

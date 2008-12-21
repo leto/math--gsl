@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 215;
+use Test::More tests => 226;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -695,6 +695,39 @@ sub GSL_MATRIX_EIGENVALUES: Tests(6) {
                               ->set_row(0, [1, 3] )
                               ->set_row(1, [4, 2] );
     ok_similar( [ $matrix4->eigenvalues ], [ -2, 5 ] );
+}
+
+sub GSL_MATRIX_EIGENPAIR : Tests(11) {
+    my $matrix = Math::GSL::Matrix->new(2,2)
+                              ->set_row(0, [0,-1] )
+                              ->set_row(1, [1, 0] );
+
+    my ($eigenvalues, $eigenvectors) = $matrix->eigenpair;
+    cmp_ok( $#$eigenvalues, '==', $#$eigenvectors, 'same # of values as vectors');
+
+    my ($eig1,$eig2) = @$eigenvalues;
+    isa_ok( $eig1, 'Math::Complex');
+    isa_ok( $eig2, 'Math::Complex');
+
+    ok_similar( [ Re $eig1 ], [ 0 ] );
+    ok_similar( [ Im $eig1 ], [ 1 ] );
+
+    ok_similar( [ Re $eig2 ], [ 0   ] );
+    ok_similar( [ Im $eig2 ], [ -1  ] );
+
+    my ($u,$v)       = @$eigenvectors;
+
+    local $TODO = qq{working on it};
+    isa_ok( $u, 'Math::GSL::VectorComplex' );
+    isa_ok( $v, 'Math::GSL::VectorComplex' );
+
+    my ($u1,$u2)     = $u->as_list;
+    my ($v1,$v2)     = $v->as_list;
+    my $sqrt2by2     = sqrt(2)/2;
+
+    ok_similar( [ $u1, $u2], [ $sqrt2by2, - $sqrt2by2 ] );
+    ok_similar( [ $v1, $v2], [ $sqrt2by2,   $sqrt2by2 ] );
+
 }
 
 Test::Class->runtests;

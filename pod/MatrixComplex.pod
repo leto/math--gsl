@@ -117,7 +117,7 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 
     my $matrix     = Math::GSL::MatrixComplex->new(3,3);
     my $gsl_matrix = $matrix->raw;
-    my $stuff      = gsl_matrix_get($gsl_matrix, 1, 2);
+    my $stuff      = gsl_matrix_complex_get($gsl_matrix, 1, 2);
 
 =cut
 sub raw  { (shift)->{_matrix} }
@@ -157,7 +157,7 @@ sub as_list
     my @total;
     for($line=0; $line<$self->rows; $line++){
        @part = map { 
-         gsl_matrix_get($self->raw, $line, $_) 
+         gsl_matrix_complex_get($self->raw, $line, $_) 
        } (0 .. $self->cols-1 );
        push(@total, @part);
     }
@@ -184,10 +184,10 @@ sub row
 
    my @got; 
    for my $n (0 .. $self->cols-1) {
-    push (@got, gsl_matrix_get($self->raw, $row, $n)); 
+    push (@got, gsl_matrix_complex_get($self->raw, $row, $n)); 
    }
     for my $n (0 .. $self->cols-1) {
-	gsl_matrix_set($rowmat->raw, 0, $n, $got[$n]); }	
+	gsl_matrix_complex_set($rowmat->raw, 0, $n, $got[$n]); }	
 
     return $rowmat;
 }
@@ -213,10 +213,10 @@ sub col
 
    my @got; 
    for my $n (0 .. $self->rows-1) {
-    push (@got, gsl_matrix_get($self->raw, $n, $col)); 
+    push (@got, gsl_matrix_complex_get($self->raw, $n, $col)); 
    }
     for my $n (0 .. $self->rows-1) {
-	gsl_matrix_set($colmat->raw, $n, 0, $got[$n]); }	
+	gsl_matrix_complex_set($colmat->raw, $n, 0, $got[$n]); }	
 
     return $colmat;
 }
@@ -242,7 +242,7 @@ sub set_row {
  die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
  die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' if ($row < 0 || $row >= $self->rows);
  die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix' if($length != $self->cols-1);
- map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
+ map { gsl_matrix_complex_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
  return $self;
 }
 
@@ -267,7 +267,7 @@ sub set_col {
  die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
  die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' if ($col < 0 || $col >= $self->cols);
  die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix' if($length != $self->rows-1);
- map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
+ map { gsl_matrix_complex_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
  return $self;
 }
 

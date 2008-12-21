@@ -8,7 +8,11 @@ use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Eigen    qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
+
+# should only include needed methods
 use Math::GSL::MatrixComplex qw/:all/;
+use Math::GSL::VectorComplex qw/:all/;
+use Data::Dumper;
 
 use overload
     '*'      => \&_multiplication,
@@ -467,6 +471,32 @@ sub eigenvalues($)
                              gsl_vector_get($y->{vector}, $_) )
                 } (0 .. $r-1);
 
+}
+
+sub eigenpair($)
+{
+    my $self=shift;
+    my ($r,$c) = ($self->rows,$self->cols);
+    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
+    my $evec   = Math::GSL::MatrixComplex->new($r,$c);
+    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
+    my $vector = Math::GSL::VectorComplex->new($r);
+
+    gsl_eigen_nonsymmv($self->raw, $vector->raw, $evec->raw, $eigen);
+
+    warn Dumper [ $evec->as_list ];
+
+    my $eigenvectors = [ $evec->col(0), $evec->col(1) ];
+
+    my $x = gsl_vector_complex_real($vector->raw); # vector of real components
+    my $y = gsl_vector_complex_imag($vector->raw); # vector of imaginary components
+    my $eigenvalues = [
+                            map {
+                                _as_complex( gsl_vector_get($x->{vector}, $_) ,
+                                            gsl_vector_get($y->{vector}, $_) )
+                             } (0 .. $r-1)
+                      ];
+    return ($eigenvalues, $eigenvectors);
 }
 
 sub _as_complex {

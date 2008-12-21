@@ -74,7 +74,7 @@ sub new {
     my $this = {};
     my $vector;
 
-    # we expected $values to have Math::Complex objects
+    # we expect $values to have Math::Complex objects
     @$values = map { gsl_complex_rect(Re($_), Im($_)) } @$values;
 
     if ( ref $values eq 'ARRAY' ){

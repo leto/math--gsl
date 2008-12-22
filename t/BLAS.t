@@ -9,6 +9,7 @@ use Math::GSL::CBLAS   qw/:all/;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
+use Math::GSL::MatrixComplex  qw/:all/;
 use Data::Dumper;
 use strict;
 

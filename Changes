@@ -6,6 +6,7 @@
     - Added p-norms to Vector objects via norm() and normalize()
     - Added operator overloading so that
             abs $vector == $vector->norm
+    - Added as_vector() to Matrix and MatrixComplex objects
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

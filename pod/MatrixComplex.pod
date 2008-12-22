@@ -141,6 +141,25 @@ Returns the number of columns in the matrix.
 
 sub cols { (shift)->{_cols}   }
 
+=head2 as_vector()
+
+Returns a 1xN or Nx1 matrix as a Math::GSL::VectorComplex object. Dies if called on a matrix that is not a single row or column. Useful for turning the output of C<col()> or C<row()> into a vector, like so:
+
+    my $vector1 = $matrix->col(0)->as_vector;
+    my $vector2 = $matrix->row(1)->as_vector;
+
+=cut
+
+sub as_vector($)
+{
+    my ($self) = @_;
+    croak(__PACKAGE__.'::as_vector() - must be a single row or column matrix') unless ($self->cols == 1 or $self->rows == 1);
+
+    # TODO: there is a faster way to do this
+    return Math::GSL::VectorComplex->new([ $self->as_list ] );
+
+}
+
 =head2  as_list() 
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
@@ -157,7 +176,11 @@ sub as_list($)
     for my $row ( 0 .. $self->rows-1) {
        push @matrix, map { gsl_matrix_complex_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
     }
-    return @matrix;
+    return map {
+            Math::Complex->make(
+                gsl_real($_),
+                gsl_imag($_))
+            } @matrix;
 }
 
 =head2 row()

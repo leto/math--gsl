@@ -159,6 +159,7 @@ Gets the content of a Math::GSL::Vector object as a Perl list.
 
 sub as_list {
     my $self=shift;
+    # this is wrong
     return map { cplxe( gsl_complex_abs($_), gsl_complex_arg($_) ) } $self->get( [ 0 .. $self->length - 1  ] );
 }
 

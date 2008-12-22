@@ -698,16 +698,17 @@ sub GSL_MATRIX_EIGENPAIR : Tests(11) {
 
     my ($u,$v)       = @$eigenvectors;
 
-    local $TODO = qq{working on it};
     isa_ok( $u, 'Math::GSL::VectorComplex' );
     isa_ok( $v, 'Math::GSL::VectorComplex' );
 
-    my ($u1,$u2)     = $u->as_list;
-    my ($v1,$v2)     = $v->as_list;
+    local $TODO = qq{ VectorComplex->as_list is funky };
+    # we happen to know that these are real eigenvectors
+    my ($u1,$u2)     = map { Re $_ } $u->as_list;
+    my ($v1,$v2)     = map { Re $_ } $v->as_list;
     my $sqrt2by2     = sqrt(2)/2;
 
-    ok_similar( [ $u1, $u2], [ $sqrt2by2, - $sqrt2by2 ] );
-    ok_similar( [ $v1, $v2], [ $sqrt2by2,   $sqrt2by2 ] );
+    ok_similar( [ $u1, $u2 ], [ $sqrt2by2, - $sqrt2by2 ] );
+    ok_similar( [ $v1, $v2 ], [ $sqrt2by2,   $sqrt2by2 ] );
 
 }
 

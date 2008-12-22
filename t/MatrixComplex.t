@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 13;
+use Test::More tests => 14;
 use base q{Test::Class};
 use strict;
 
@@ -28,10 +28,11 @@ sub GSL_MATRIX_COMPLEX_NEW: Tests(3) {
     ok( $u->cols ==  20, 'cols');
 }
 
-sub GSL_MATRIX_COMPLEX_SET : Tests(1) {
+sub GSL_MATRIX_COMPLEX_SET : Tests(2) {
     my $u = Math::GSL::MatrixComplex->new(2,2);
     gsl_matrix_complex_set($u->raw, 0, 0, Math::GSL::Complex::gsl_complex_rect(3,5) );
-    warn Dumper [ $u->as_list ];
+   ok_similar( [ map { Re $_ } $u->row(0)->as_list ], [ 3, 0 ] );
+   ok_similar( [ map { Im $_ } $u->row(0)->as_list ], [ 5, 0 ] );
 }
 
 sub GSL_MATRIX_COMPLEX_COL : Tests(3) {
@@ -48,7 +49,6 @@ sub GSL_MATRIX_COMPLEX_ROW : Tests(3) {
     cmp_ok( $u->row(0)->rows, '==', 1 );
 }
 sub GSL_MATRIX_COMPLEX_SET_OO : Tests(2) {
-    local $TODO = qq{set_row with complex numbers goes boom};
     my $u = Math::GSL::MatrixComplex->new(2,2);
     $u->set_row(0, [ 1+7*i, 2*i ] )
       ->set_row(1, [ 3*i, -4  ] );

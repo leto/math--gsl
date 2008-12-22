@@ -1,6 +1,6 @@
 package Math::GSL::VectorComplex::Test;
 use base q{Test::Class};
-use Test::More tests => 23;
+use Test::More tests => 26;
 use Math::GSL::Test          qw/:all/;
 use Math::GSL                qw/:all/;
 use Math::GSL::VectorComplex qw/:all/;
@@ -22,6 +22,16 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     unlink 'vector' if -f 'vectorcomplex';
+}
+
+sub GSL_VECTOR_COMPLEX_ALLOC : Tests(1) {
+    my $vec = gsl_vector_complex_alloc(5);
+    isa_ok($vec, 'Math::GSL::VectorComplex');
+}
+
+sub GSL_VECTOR_COMPLEX_CALLOC : Tests(1) {
+    my $vec = gsl_vector_complex_calloc(5);
+    isa_ok($vec, 'Math::GSL::VectorComplex');
 }
 
 sub GSL_VECTOR_COMPLEX_NEW : Tests(12) {
@@ -83,6 +93,16 @@ sub GSL_VECTOR_COMPLEX_SWAP : Tests(6) {
     ok_similar ( [ map { Im $_ } $v->as_list     ],
                  [ map { Im $_ } $z , $z ** 2, 3 ] );
 
+}
+
+sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
+    my $vec = gsl_vector_complex_calloc(5);
+    my $complex = gsl_complex_rect(2,1);
+    gsl_vector_complex_set($vec, 0, $complex);
+    my $result = gsl_complex_rect(5,5);
+    $result = gsl_vector_complex_get($vec, 0);
+    isa_ok($result, 'Math::GSL::VectorComplex::gsl_complex');
+    local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
 }
 
 Test::Class->runtests;

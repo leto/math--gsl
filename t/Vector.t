@@ -1,11 +1,10 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 139;
+use Test::More tests => 136;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Vector  qw/:all/;
-use Math::GSL::Complex qw/:all/;
 use Test::Exception;
 use Data::Dumper;
 use strict;
@@ -20,6 +19,11 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     unlink 'vector' if -f 'vector';
+}
+
+sub GSL_VECTOR_RAW : Tests {
+    my $vec = Math::GSL::Vector->new(10);
+    isa_ok($vec->raw, 'Math::GSL::Vector::gsl_vector');
 }
 
 sub GSL_VECTOR_ALLOC : Tests {
@@ -338,31 +342,6 @@ sub GSL_VECTOR_FPRINTF_FSCANF : Tests {
 
    ok_similar( [ $vec2->as_list ], [ map { $_ ** 2 } (0..4) ]);
    ok_status(gsl_fclose($fh) ); 
-}
-
-sub GSL_VECTOR_COMPLEX_ALLOC : Tests {
-  my $vec = gsl_vector_complex_alloc(5);
-  isa_ok($vec, 'Math::GSL::Vector');
-}
-
-sub GSL_VECTOR_COMPLEX_CALLOC : Tests {
-  my $vec = gsl_vector_complex_calloc(5);
-  isa_ok($vec, 'Math::GSL::Vector');
-}
-
-sub GSL_VECTOR_RAW : Tests {
-    my $vec = Math::GSL::Vector->new(10);
-    isa_ok($vec->raw, 'Math::GSL::Vector::gsl_vector');
-}
-
-sub GSL_VECTOR_COMPLEX_SET_GET : Tests {
-  my $vec = gsl_vector_complex_calloc(5);
-  my $complex = gsl_complex_rect(2,1);
-  gsl_vector_complex_set($vec, 0, $complex);
-  my $result = gsl_complex_rect(5,5);
-  $result = gsl_vector_complex_get($vec, 0);
-  isa_ok($result, 'Math::GSL::Complex');
-  local $TODO = "don't know why the complex returned gsl_vector_complex_get is not usable";
 }
 
 sub GSL_ADDITION : Tests {

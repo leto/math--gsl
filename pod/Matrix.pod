@@ -8,6 +8,7 @@ use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Eigen    qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
+use Math::GSL::BLAS qw/gsl_blas_dgemm/;
 
 # should only include needed methods
 use Math::GSL::MatrixComplex qw/:all/;
@@ -15,7 +16,8 @@ use Math::GSL::VectorComplex qw/:all/;
 use Data::Dumper;
 
 use overload
-    '*'      => \&_multiplication,
+    '*'      => \&_dotProduct,
+    '.'      => \&_multiplication,
     '+'      => \&_addition,
     '-'      => \&_subtract,
     fallback => 1;
@@ -360,12 +362,13 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     my $matrix2 = $matrix1 + 4;                 # You can add or substract values or matrices to OO matrices
     my $matrix3 = $matrix1 - 4;
     my $matrix4 = $matrix2 + $matrix1;
-    my $matrix5 = $matrix2 * $matrix1;          # This is NOT a scalar product, it simply multiply each element
+    my $matrix5 = $matrix2 . $matrix1;          # This is a scalar product, it simply multiply each element
 						# with the element of $matrix1 that have the same position
     						# See Math::GSL::BLAS if you want scalar product
 
-    my $matrix6 = $matrix2 * 8;                 # Multiply every elements of $matrix2 by 8
-    my $matrix7 = gsl_matrix_alloc(5,5);        # standard interface
+    my $matrix6 = $matrix2 . 8;                 # Multiply every elements of $matrix2 by 8
+    my $matrix7 = $matrix2 * $matrix1;          # scalar product of two matrices
+    my $matrix8 = gsl_matrix_alloc(5,5);        # standard interface
 
 
 =head1 Objected Oriented Interface to GSL Math::GSL::Matrix
@@ -675,6 +678,19 @@ sub _multiplication {
         gsl_matrix_scale($lcopy->raw, $right);
     }
     return $lcopy;
+}
+
+sub _dotProduct {
+    my ($left,$right) = @_;
+
+    if (blessed $left && $left->isa('Math::GSL::Matrix') && blessed $right && $right->isa('Math::GSL::Matrix') and $left->rows == $right->cols ) {
+		my $C = Math::GSL::Matrix->new($left->rows, $right->cols);
+		gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $left->raw, $right->raw, 1, $C->raw);
+	}
+        else {
+	croak "Math::GSL - dot product of matrices must be called with two objects matrices and left matrix must have the same number of rows than the number of columns of the right matrix";
+        }  
+    return $C;
 }
 
 =head1 DESCRIPTION

@@ -1,6 +1,6 @@
 package Math::GSL::BLAS::Test;
 use base q{Test::Class};
-use Test::More tests => 100;
+use Test::More tests => 99;
 use Math::GSL          qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -630,22 +630,5 @@ sub GSL_BLAS_ZSYR2K : Tests {
     ok_similar([gsl_parts(gsl_matrix_complex_get($C, 1, 1))], [24, 4]);
 }
 
-sub DOT_PRODUCT_OVERLOAD : Tests {
-    my $A = Math::GSL::Matrix->new(2,2);
-    gsl_matrix_set($A->raw, 0,0,1);
-    gsl_matrix_set($A->raw, 1,0,3);
-    gsl_matrix_set($A->raw, 0,1,4);
-    gsl_matrix_set($A->raw, 1,1,2);
-    my $B = Math::GSL::Matrix->new(2,2);
-    gsl_matrix_set($B->raw, 0,0,2);
-    gsl_matrix_set($B->raw, 1,0,5);
-    gsl_matrix_set($B->raw, 0,1,1);
-    gsl_matrix_set($B->raw, 1,1,3);
-    my $C = $A . $B;    
-    print Dumper [ $C];    
-    my @got = $C->row(0)->as_list;
-    ok_similar([@got], [22, 13]);
-    @got = $C->row(1)->as_list;
-    ok_similar([@got], [16, 9]);
-}
+
 Test::Class->runtests;

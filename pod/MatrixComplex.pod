@@ -150,20 +150,14 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
     my @matrix = $matrix->as_list;
 =cut
 
-
-sub as_list 
+sub as_list($)
 {
     my $self = shift;
-    my $line;
-    my @part;
-    my @total;
-    for($line=0; $line<$self->rows; $line++){
-       @part = map { 
-         gsl_matrix_complex_get($self->raw, $line, $_) 
-       } (0 .. $self->cols-1 );
-       push(@total, @part);
+    my @matrix;
+    for my $row ( 0 .. $self->rows-1) {
+       push @matrix, map { gsl_matrix_complex_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
     }
-    return @total;
+    return @matrix;
 }
 
 =head2 row()
@@ -207,7 +201,7 @@ sub col
 {
     my ($self, $col) = @_;
     croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column")
-        unless ($col < $self->cols and $col >= 0);
+        unless (defined $col && $col < $self->cols and $col >= 0);
 
     my $colmat = Math::GSL::MatrixComplex->new($self->rows, 1);
 

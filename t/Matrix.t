@@ -1,6 +1,8 @@
 package Math::GSL::Matrix::Test;
+use Test::More tests => 225;
 use base q{Test::Class};
-use Test::More tests => 226;
+use strict;
+
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -8,9 +10,8 @@ use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Test::Exception;
-use Data::Dumper;
 use Math::Complex;
-use strict;
+use Data::Dumper;
 
 BEGIN{ gsl_set_error_handler_off(); }
 
@@ -509,26 +510,6 @@ sub NEW_SETS_VALUES_TO_ZERO : Tests {
 
     map { $sum += $_ } $matrix->as_list;
     ok( $sum == 0, 'new sets values to zero');
-}
-
-sub HERMITIAN : Tests {
-    my $matrix    = gsl_matrix_complex_alloc(2,2);
-    my $transpose = gsl_matrix_complex_alloc(2,2);
-    gsl_matrix_complex_set($matrix, 0, 0, gsl_complex_rect(3,0));
-    gsl_matrix_complex_set($matrix, 0, 1, gsl_complex_rect(2,1));
-    gsl_matrix_complex_set($matrix, 1, 0, gsl_complex_rect(2,-1));
-    gsl_matrix_complex_set($matrix, 1, 1, gsl_complex_rect(1,0));
-    gsl_matrix_complex_memcpy($transpose, $matrix);
-    gsl_matrix_complex_transpose($transpose);
-
-    for my $row (0..1) {
-        map { gsl_matrix_complex_set($transpose, $row, $_, gsl_complex_conjugate(gsl_matrix_complex_get($transpose, $row, $_))) } (0..1);
-    }
-
-    my $upper_right = gsl_matrix_complex_get($matrix, 0, 1 );
-    my $lower_left  = gsl_matrix_complex_get($matrix, 1, 0 );
-
-    ok( gsl_complex_eq( gsl_complex_conjugate($upper_right), $lower_left ), 'hermitian' );
 }
 
 sub SET_ROW : Tests {

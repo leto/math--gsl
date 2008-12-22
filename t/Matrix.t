@@ -1,6 +1,12 @@
 package Math::GSL::Matrix::Test;
+use Test::More tests => 225;
 use base q{Test::Class};
+<<<<<<< HEAD:t/Matrix.t
 use Test::More tests => 228;
+=======
+use strict;
+
+>>>>>>> 4e0e3a8fa228328f7a909236708b409b8f8aa406:t/Matrix.t
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -8,9 +14,8 @@ use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Test::Exception;
-use Data::Dumper;
 use Math::Complex;
-use strict;
+use Data::Dumper;
 
 BEGIN{ gsl_set_error_handler_off(); }
 
@@ -511,26 +516,6 @@ sub NEW_SETS_VALUES_TO_ZERO : Tests {
     ok( $sum == 0, 'new sets values to zero');
 }
 
-sub HERMITIAN : Tests {
-    my $matrix    = gsl_matrix_complex_alloc(2,2);
-    my $transpose = gsl_matrix_complex_alloc(2,2);
-    gsl_matrix_complex_set($matrix, 0, 0, gsl_complex_rect(3,0));
-    gsl_matrix_complex_set($matrix, 0, 1, gsl_complex_rect(2,1));
-    gsl_matrix_complex_set($matrix, 1, 0, gsl_complex_rect(2,-1));
-    gsl_matrix_complex_set($matrix, 1, 1, gsl_complex_rect(1,0));
-    gsl_matrix_complex_memcpy($transpose, $matrix);
-    gsl_matrix_complex_transpose($transpose);
-
-    for my $row (0..1) {
-        map { gsl_matrix_complex_set($transpose, $row, $_, gsl_complex_conjugate(gsl_matrix_complex_get($transpose, $row, $_))) } (0..1);
-    }
-
-    my $upper_right = gsl_matrix_complex_get($matrix, 0, 1 );
-    my $lower_left  = gsl_matrix_complex_get($matrix, 1, 0 );
-
-    ok( gsl_complex_eq( gsl_complex_conjugate($upper_right), $lower_left ), 'hermitian' );
-}
-
 sub SET_ROW : Tests {
     my $m = Math::GSL::Matrix->new(3,3);
     $m->set_row(0, [1,2,3]);
@@ -717,16 +702,17 @@ sub GSL_MATRIX_EIGENPAIR : Tests(11) {
 
     my ($u,$v)       = @$eigenvectors;
 
-    local $TODO = qq{working on it};
     isa_ok( $u, 'Math::GSL::VectorComplex' );
     isa_ok( $v, 'Math::GSL::VectorComplex' );
 
-    my ($u1,$u2)     = $u->as_list;
-    my ($v1,$v2)     = $v->as_list;
+    local $TODO = qq{ VectorComplex->as_list is funky };
+    # we happen to know that these are real eigenvectors
+    my ($u1,$u2)     = map { Re $_ } $u->as_list;
+    my ($v1,$v2)     = map { Re $_ } $v->as_list;
     my $sqrt2by2     = sqrt(2)/2;
 
-    ok_similar( [ $u1, $u2], [ $sqrt2by2, - $sqrt2by2 ] );
-    ok_similar( [ $v1, $v2], [ $sqrt2by2,   $sqrt2by2 ] );
+    ok_similar( [ $u1, $u2 ], [ $sqrt2by2, - $sqrt2by2 ] );
+    ok_similar( [ $v1, $v2 ], [ $sqrt2by2,   $sqrt2by2 ] );
 
 }
 

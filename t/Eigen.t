@@ -8,6 +8,8 @@ use Math::GSL::Matrix  qw/:all/;
 use Math::GSL::Vector  qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::MatrixComplex  qw/:all/;
+use Math::GSL::VectorComplex  qw/:all/;
 use Data::Dumper;
 use strict;
 

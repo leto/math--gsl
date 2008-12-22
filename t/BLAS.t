@@ -9,6 +9,8 @@ use Math::GSL::Matrix  qw/:all/;
 use Math::GSL::CBLAS   qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
+use Math::GSL::MatrixComplex  qw/:all/;
+use Math::GSL::VectorComplex  qw/:all/;
 use Data::Dumper;
 use strict;
 
@@ -105,7 +107,6 @@ sub GSL_BLAS_ZSWAP : Tests {
 
     ok_status(gsl_blas_zswap($vec1, $vec2));
     $c = gsl_vector_complex_get($vec1,0);
-    local $TODO = "Problem with the output of gsl_vector_complex_get";
     ok( defined $c,"gsl_vector_complex_get");  
 
     # goes boom

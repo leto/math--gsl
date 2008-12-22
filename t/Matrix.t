@@ -1,12 +1,9 @@
 package Math::GSL::Matrix::Test;
-use Test::More tests => 225;
 use base q{Test::Class};
-<<<<<<< HEAD:t/Matrix.t
-use Test::More tests => 228;
-=======
+use Test::More tests => 220;
 use strict;
+use warnings;
 
->>>>>>> 4e0e3a8fa228328f7a909236708b409b8f8aa406:t/Matrix.t
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
@@ -622,7 +619,7 @@ sub GSL_MATRIX_OO_MULTIPLICATION_CONSTANT : Tests {
     my $m = Math::GSL::Matrix->new(3,3);
     $m->set_col(1, [4,5,6])
       ->set_col(2, [9,8,7]);
-    my $m2 = $m . 4;
+    my $m2 = $m * 4;
     ok_similar([$m->col(2)->as_list], [9,8,7]);
     ok_similar([$m->col(1)->as_list], [4,5,6]);
     ok_similar([$m->col(0)->as_list], [0,0,0]);
@@ -630,30 +627,11 @@ sub GSL_MATRIX_OO_MULTIPLICATION_CONSTANT : Tests {
     ok_similar([$m2->col(1)->as_list], [16,20,24]);
     ok_similar([$m2->col(2)->as_list], [36,32,28]);
     ok_similar([$m2->col(0)->as_list], [0,0,0]);
-    
-    my $m3 = 4 . $m; 
+
+    my $m3 = 4 * $m;
     ok_similar([$m3->col(1)->as_list], [16,20,24]);
     ok_similar([$m3->col(2)->as_list], [36,32,28]);
     ok_similar([$m3->col(0)->as_list], [0,0,0]);
-}
-
-sub GSL_MATRIX_OO_MULTIPLICATION_MATRICES : Tests {
-    my $m = Math::GSL::Matrix->new(3,3);
-    my $m3 = Math::GSL::Matrix->new(3,3);
-    $m->set_col(1, [4,5,6])
-      ->set_col(2, [9,8,7])
-      ->set_col(0, [1,2,3]);
-    $m3->set_col(1, [1,2,3])
-       ->set_col(2, [9,8,7])
-       ->set_col(0, [1,2,3]);
-    my $m2 = $m . $m3;
-    ok_similar([$m->col(0)->as_list], [1,2,3]);
-    ok_similar([$m->col(2)->as_list], [9,8,7]);
-    ok_similar([$m->col(1)->as_list], [4,5,6]);
-
-    ok_similar([$m2->col(0)->as_list], [1,4,9]);
-    ok_similar([$m2->col(1)->as_list], [4,10,18]);
-    ok_similar([$m2->col(2)->as_list], [81,64,49]);
 }
 
 sub GSL_MATRIX_EIGENVALUES: Tests(6) {
@@ -716,18 +694,14 @@ sub GSL_MATRIX_EIGENPAIR : Tests(11) {
 
 }
 
-sub DOT_PRODUCT_OVERLOAD : Tests {
+sub MATRIX_MULTIPLICATION_OVERLOAD : Tests {
     my $A = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [1,3] )
                              ->set_row(1, [4, 2] );
     my $B = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [2,5] )
                              ->set_row(1, [1, 3] );
-    my $C = $A * $B;    
-	print Dumper [$C];
-#    my @got = $C->row(0)->as_list;
-#    ok_similar([@got], [22, 13]);
-#    @got = $C->row(1)->as_list;
-#    ok_similar([@got], [16, 9]);
+    my $C = $A * $B;
+    ok_similar([ $C->as_list ], [5, 14, 10, 26 ]);
 }
 Test::Class->runtests;

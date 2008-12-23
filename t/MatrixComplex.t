@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 14;
+use Test::More tests => 16;
 use base q{Test::Class};
 use strict;
 
@@ -75,5 +75,17 @@ sub HERMITIAN : Tests(1) {
 
     ok( gsl_complex_eq( gsl_complex_conjugate($upper_right), $lower_left ), 'hermitian' );
 }
+sub MULTIPLICATION_OVERLOAD : Tests(2) {
+    my $u = Math::GSL::MatrixComplex->new(2,2);
+    $u->set_row(0, [ 1+2*i, 2*i ] )
+      ->set_row(1, [ 3*i, -4  ] );
+    my $t = Math::GSL::MatrixComplex->new(2,2);
+    $t->set_row(0, [ 1+4*i, 1 ] )
+      ->set_row(1, [ 3*i, -4  ] );
+    my $result = $u * $t;
+    ok_similar( [ map { Re $_ } $result->as_list ], [ -13, 1, -12, 16 ] );
+    ok_similar( [ map { Im $_ } $result->as_list ], [ 6, -6, -9, 3 ] );
+}
+
 
 Test::Class->runtests;

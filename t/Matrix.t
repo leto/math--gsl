@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 234;
+use Test::More tests => 235;
 use strict;
 use warnings;
 
@@ -740,13 +740,17 @@ sub MATRIX_IDENTITY : Tests(6) {
     ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
 }
 
-sub MATRIX_INVERSE : Tests(2) {
+sub MATRIX_INVERSE : Tests(3) {
     my $A = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [1, 3] )
                              ->set_row(1, [4, 2] );
     my $Ainv = $A->inverse;
     isa_ok( $Ainv, 'Math::GSL::Matrix' );
-    ok_similar([ $Ainv->as_list ] , [ map { -0.1*$_ } ( 2, -3, -4, 1 ) ] );
+    ok_similar([ $Ainv->as_list ] , [ map { -$_/10 } ( 2, -3, -4, 1 ) ] );
+    my $B = Math::GSL::Matrix->new(2,3)
+                             ->set_row(0, [1, 3, 5] )
+                             ->set_row(1, [2, 4, 6] );
+    dies_ok( sub { $B->inverse } , 'inverse of non square matrix dies' );
 }
 
 Test::Class->runtests;

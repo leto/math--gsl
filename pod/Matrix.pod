@@ -473,7 +473,7 @@ Returns the inverse of a matrix or dies when called on a non-square matrix.
 sub inverse($)
 {
     my $self = shift;
-    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
+    croak(__PACKAGE__."- inverse only exists for square matrices") unless $self->is_square;
 
     my $p  = Math::GSL::Permutation->new( $self->rows );
     my $LU = $self->copy;

@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 220;
+use Test::More tests => 226;
 use strict;
 use warnings;
 
@@ -703,5 +703,29 @@ sub MATRIX_MULTIPLICATION_OVERLOAD : Tests {
                              ->set_row(1, [1, 3] );
     my $C = $A * $B;
     ok_similar([ $C->as_list ], [5, 14, 10, 26 ]);
+}
+
+sub MATRIX_IS_SQUARE : Tests(2) {
+    my $A = Math::GSL::Matrix->new(2,2);
+    ok( $A->is_square, 'is_square true for 2x2' );
+    my $B = Math::GSL::Matrix->new(2,3);
+    ok( ! $B->is_square, 'is_square false for 2x3' );
+}
+
+sub MATRIX_DETERMINANT : Tests(2) {
+    my $A = Math::GSL::Matrix->new(2,2)
+                             ->set_row(0, [1,3] )
+                             ->set_row(1, [4, 2] );
+
+    ok_similar( [ $A->det   ], [ -10 ], '->det() 2x2');
+    ok_similar( [ $A->lndet ], [ log 10 ], '->lndet() 2x2');
+
+}
+sub MATRIX_ZERO : Tests(2) {
+    my $A = Math::GSL::Matrix->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    isa_ok($A->zero, 'Math::GSL::Matrix');
+    ok_similar( [ $A->zero->as_list ], [ 0, 0, 0, 0 ] );
 }
 Test::Class->runtests;

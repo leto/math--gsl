@@ -12,6 +12,8 @@ use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_dgemm/;
 use Math::GSL::CBLAS qw/$CblasNoTrans/;
+use Math::GSL::Permutation;
+use Math::GSL::Linalg qw/gsl_linalg_LU_decomp gsl_linalg_LU_det gsl_linalg_LU_lndet/;
 
 # should only include needed methods
 use Math::GSL::MatrixComplex qw/:all/;
@@ -326,6 +328,21 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 =cut
 sub raw  { (shift)->{_matrix} }
 
+=head2 zero()
+
+Set a matrix to the zero matrix.
+
+    $matrix->zero;
+
+=cut
+
+sub zero # brrr!
+{
+    my $self=shift;
+    gsl_matrix_set_zero($self->raw);
+    return $self;
+}
+
 =head2 copy()
 
 Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
@@ -371,6 +388,64 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
     ...
     my @matrix = $matrix->as_list;
 =cut
+
+
+=head2 is_square()
+
+Returns true is a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
+
+=cut
+
+sub is_square($)
+{
+    my $self = shift;
+    return ($self->rows == $self->cols) ? 1 : 0 ;
+}
+
+=head2 det()
+
+Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $det = $matrix->det();
+
+=cut
+
+sub det($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    my $s = gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_LU_det($LU->raw, $s );
+}
+
+=head2 lndet()
+
+Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $lndet = $matrix->lndet();
+
+=cut
+
+sub lndet($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_LU_lndet($LU->raw);
+}
+
+=head2 eigenvalues()
+
+=cut
+
 
 sub eigenvalues($)
 {

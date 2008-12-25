@@ -7,7 +7,7 @@
     - Added operator overloading so that
             abs $vector == $vector->norm
     - Added as_vector() to Matrix and MatrixComplex objects
-    - Added is_square(), det(),  lndet(), zero() and identity()
+    - Added inverse(), is_square(), det(),  lndet(), zero() and identity()
         to Matrix objects
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)

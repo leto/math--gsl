@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 231;
+use Test::More tests => 234;
 use strict;
 use warnings;
 
@@ -730,13 +730,23 @@ sub MATRIX_ZERO : Tests(2) {
     ok_similar( [ $A->zero->as_list ], [ 0, 0, 0, 0 ] );
 }
 
-sub MATRIX_IDENTITY : Tests(5) {
+sub MATRIX_IDENTITY : Tests(6) {
     my $A = Math::GSL::Matrix->new(2,2)->identity;
     isa_ok($A, 'Math::GSL::Matrix');
     ok_similar([ $A->as_list ], [ 1, 0, 0, 1 ] );
+    ok_similar([ $A->inverse->as_list ], [ 1, 0, 0, 1 ] );
     ok_similar([ $A->det     ] ,[ 1 ] );
     ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
     ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
+}
+
+sub MATRIX_INVERSE : Tests(2) {
+    my $A = Math::GSL::Matrix->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    my $Ainv = $A->inverse;
+    isa_ok( $Ainv, 'Math::GSL::Matrix' );
+    ok_similar([ $Ainv->as_list ] , [ map { -0.1*$_ } ( 2, -3, -4, 1 ) ] );
 }
 
 Test::Class->runtests;

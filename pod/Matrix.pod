@@ -13,7 +13,12 @@ use Math::GSL::Complex  qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_dgemm/;
 use Math::GSL::CBLAS qw/$CblasNoTrans/;
 use Math::GSL::Permutation;
-use Math::GSL::Linalg qw/gsl_linalg_LU_decomp gsl_linalg_LU_det gsl_linalg_LU_lndet/;
+use Math::GSL::Linalg qw/
+    gsl_linalg_LU_decomp
+    gsl_linalg_LU_det
+    gsl_linalg_LU_lndet
+    gsl_linalg_LU_invert
+/;
 
 # should only include needed methods
 use Math::GSL::MatrixComplex qw/:all/;
@@ -455,6 +460,31 @@ sub lndet($)
 
     gsl_linalg_LU_decomp($LU->raw, $p->raw);
     return gsl_linalg_LU_lndet($LU->raw);
+}
+
+=head2 inverse()
+
+Returns the inverse of a matrix or dies when called on a non-square matrix.
+
+    my $inverse = $matrix->inverse;
+
+=cut
+
+sub inverse($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+    my $inverse = $self->copy;
+
+    # should check return status
+    gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    gsl_linalg_LU_invert($LU->raw, $p->raw,$inverse->raw);
+
+    return $inverse;
+
 }
 
 =head2 eigenvalues()

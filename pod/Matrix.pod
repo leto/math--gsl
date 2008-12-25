@@ -328,6 +328,21 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 =cut
 sub raw  { (shift)->{_matrix} }
 
+=head2 identity()
+
+Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
+
+    my $I = $matrix->identity;
+
+=cut
+
+sub identity
+{
+    my $self=shift;
+    gsl_matrix_set_identity($self->raw);
+    return $self;
+}
+
 =head2 zero()
 
 Set a matrix to the zero matrix.

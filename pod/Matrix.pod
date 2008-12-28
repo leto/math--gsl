@@ -412,7 +412,7 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
 
 =head2 is_square()
 
-Returns true is a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
+Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
 
 =cut
 

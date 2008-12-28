@@ -5,14 +5,21 @@ use Scalar::Util 'blessed';
 use Math::GSL qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Errno qw/:all/;
+use Math::GSL::Permutation;
 use Math::Complex;
 use Data::Dumper;
 use Math::GSL::BLAS qw/gsl_blas_zgemm/;
 use Math::GSL::CBLAS qw/$CblasNoTrans/;
+use Math::GSL::Linalg qw/
+    gsl_linalg_complex_LU_decomp
+    gsl_linalg_complex_LU_det
+    gsl_linalg_complex_LU_lndet
+    gsl_linalg_complex_LU_invert
+/;
 use overload
     '*'      => \&_multiplication,
-#    '+'      => \&_addition,
-#    '-'      => \&_subtract,
+    '+'      => \&_addition,
+    '-'      => \&_subtract,
 #    'abs'    => \&_abs,
     fallback => 1;
 
@@ -110,6 +117,40 @@ sub _dot_product {
     return $C;
 }
 
+sub _addition {
+    my ($left, $right) = @_;
+
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::MatrixComplex') && blessed $left && $left->isa('Math::GSL::MatrixComplex') ) {
+        if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
+            gsl_matrix_complex_add($lcopy->raw, $right->raw);
+        } else {
+            croak "Math::GSL - addition of matrices must be called with two objects matrices and must have the same number of columns and rows";
+        }
+    } else {
+        gsl_matrix_complex_add_constant($lcopy->raw, $right);
+    }
+    return $lcopy;
+}
+
+sub _subtract {
+    my ($left, $right) = @_;
+
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::MatrixComplex') && blessed $left && $left->isa('Math::GSL::MatrixComplex') ) {
+        if ( $left->cols == $right->cols && $left->rows == $right->rows ) {
+            gsl_matrix_complex_sub($lcopy->raw, $right->raw);
+        } else {
+            croak "Math::GSL - subtraction of matrices must be called with two objects matrices and must have the same number of columns and rows";
+        }
+    } else {
+        gsl_matrix_complex_add_constant($lcopy->raw, $right*-1);
+    }
+    return $lcopy;
+}
+
 sub copy {
     my $self = shift;
     my $copy = Math::GSL::MatrixComplex->new( $self->rows, $self->cols );
@@ -118,7 +159,7 @@ sub copy {
     }
     return $copy;
 }
-%EXPORT_TAGS = ( all => \@EXPORT_OK ,  );
+%EXPORT_TAGS = ( all => \@EXPORT_OK  );
 
 =head1 NAME
 
@@ -336,6 +377,138 @@ sub set_col {
     return $self;
 }
 
+=head2 is_square()
+
+Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
+
+=cut
+
+sub is_square($)
+{
+    my $self = shift;
+    return ($self->rows == $self->cols) ? 1 : 0 ;
+}
+
+=head2 det()
+
+Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $det = $matrix->det();
+
+=cut
+
+sub det($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    my $s = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_complex_LU_det($LU->raw, $s );
+}
+
+=head2 zero()
+
+Set a matrix to the zero matrix.
+
+    $matrix->zero;
+
+=cut
+
+sub zero # brrr!
+{
+    my $self=shift;
+    gsl_matrix_complex_set_zero($self->raw);
+    return $self;
+}
+
+=head2 identity()
+
+Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
+
+    my $I = $matrix->identity;
+
+=cut
+
+sub identity
+{
+    my $self=shift;
+    gsl_matrix_complex_set_identity($self->raw);
+    return $self;
+}
+
+=head2 inverse()
+
+Returns the inverse of a matrix or dies when called on a non-square matrix.
+
+    my $inverse = $matrix->inverse;
+
+=cut
+
+sub inverse($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- inverse only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+    my $inverse = $self->copy;
+
+    # should check return status
+    gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
+    gsl_linalg_complex_LU_invert($LU->raw, $p->raw,$inverse->raw);
+
+    return $inverse;
+
+}
+
+=head2 eigenvalues()
+
+=cut
+
+
+sub eigenvalues($)
+{
+    my $self=shift;
+    my ($r,$c) = ($self->rows,$self->cols);
+    croak "Math::GSL::MatrixComplex : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
+    my $evec   = gsl_matrix_complex_alloc($r,$c);
+    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
+    my $vector = gsl_vector_complex_alloc($r);
+
+    gsl_eigen_nonsymmv($self->raw, $vector, $evec, $eigen);
+
+    my $x = gsl_vector_complex_real($vector); # vector of real components
+    my $y = gsl_vector_complex_imag($vector); # vector of imaginary components
+
+    return map {
+                _as_complex( gsl_vector_get($x->{vector}, $_) ,
+                             gsl_vector_get($y->{vector}, $_) )
+                } (0 .. $r-1);
+
+}
+
+=head2 lndet()
+
+Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $lndet = $matrix->lndet();
+
+=cut
+
+sub lndet($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_complex_LU_lndet($LU->raw);
+}
 =head1 DESCRIPTION
 
 =over 1

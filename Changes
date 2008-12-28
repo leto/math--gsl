@@ -9,6 +9,11 @@
     - Added as_vector() to Matrix and MatrixComplex objects
     - Added inverse(), is_square(), det(),  lndet(), zero() and identity()
         to Matrix objects
+    - Added inverse(), is_square(), det(),  lndet(), zero() and identity()
+        to MatrixComplex objects
+    - Added dot product to Matrix objects
+    - Fix various typos in documentation
+    - Fix warnings about overloaded operators in Matrix and BLAS
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

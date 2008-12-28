@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 16;
+use Test::More tests => 29;
 use base q{Test::Class};
 use strict;
 
@@ -9,6 +9,7 @@ use Math::GSL::Errno         qw/:all/;
 use Math::GSL::MatrixComplex qw/:all/;
 use Math::GSL::Complex       qw/:all/;
 use Math::Complex;
+use Test::Exception;
 use Data::Dumper;
 
 BEGIN{ gsl_set_error_handler_off(); }
@@ -85,6 +86,54 @@ sub MULTIPLICATION_OVERLOAD : Tests(2) {
     my $result = $u * $t;
     ok_similar( [ map { Re $_ } $result->as_list ], [ -13, 1, -12, 16 ] );
     ok_similar( [ map { Im $_ } $result->as_list ], [ 6, -6, -9, 3 ] );
+}
+
+sub MATRIX_IS_SQUARE : Tests(2) {
+    my $A = Math::GSL::MatrixComplex->new(2,2);
+    ok( $A->is_square, 'is_square true for 2x2' );
+    my $B = Math::GSL::MatrixComplex->new(2,3);
+    ok( ! $B->is_square, 'is_square false for 2x3' );
+}
+
+sub MATRIX_DETERMINANT : Tests(2) {
+    my $A = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [1,3] )
+                             ->set_row(1, [4, 2] );
+
+    ok_similar( [ $A->det   ], [ -10 ], '->det() 2x2');
+    ok_similar( [ $A->lndet ], [ log 10 ], '->lndet() 2x2');
+
+}
+
+sub MATRIX_ZERO : Tests(2) {
+    my $A = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    isa_ok($A->zero, 'Math::GSL::MatrixComplex');
+    ok_similar( [ $A->zero->as_list ], [ 0, 0, 0, 0 ] );
+}
+
+sub MATRIX_IDENTITY : Tests(6) {
+    my $A = Math::GSL::MatrixComplex->new(2,2)->identity;
+    isa_ok($A, 'Math::GSL::MatrixComplex');
+    ok_similar([ $A->as_list ], [ 1, 0, 0, 1 ] );
+    ok_similar([ $A->inverse->as_list ], [ 1, 0, 0, 1 ] );
+    #ok_similar([ $A->det     ] ,[ 1 ] );
+    #ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
+    #ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
+}
+
+sub MATRIX_INVERSE : Tests(3) {
+    my $A = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    my $Ainv = $A->inverse;
+    isa_ok( $Ainv, 'Math::GSL::MatrixComplex' );
+    ok_similar([ $Ainv->as_list ] , [ map { -$_/10 } ( 2, -3, -4, 1 ) ] );
+    my $B = Math::GSL::MatrixComplex->new(2,3)
+                             ->set_row(0, [1, 3, 5] )
+                             ->set_row(1, [2, 4, 6] );
+    dies_ok( sub { $B->inverse } , 'inverse of non square matrix dies' );
 }
 
 

@@ -8,6 +8,7 @@ use Math::GSL::CBLAS       qw/:all/;
 use Math::GSL::Errno       qw/:all/;
 use Math::GSL::Linalg      qw/:all/;
 use Math::GSL::Matrix      qw/:all/;
+use Math::GSL::MatrixComplex qw/:all/;
 use Math::GSL::Vector      qw/:all/;
 use Math::GSL::Machine     qw/:all/;
 use Math::GSL::Complex     qw/:all/;
@@ -179,6 +180,23 @@ sub GSL_LINALG_LU_INVERT : Tests {
     is_similar(gsl_matrix_get($inverse, 3, 1), -9/40);
     is_similar(gsl_matrix_get($inverse, 3, 2), 1/40);
     is_similar(gsl_matrix_get($inverse, 3, 3), 1/40);
+}
+
+sub GSL_LINALG_COMPLEX_LU_DET : Tests {
+    my $m = Math::GSL::MatrixComplex->new(4,4)
+                                 ->set_row(0, [1,2,3,4])
+                                 ->set_row(1, [2,3,4,1])
+                                 ->set_row(2, [3,4,1,2])
+                                 ->set_row(3, [4,1,2,3]);
+    my $permutation = gsl_permutation_alloc(4);
+    gsl_permutation_init($permutation);
+    my $copy = $m->copy;
+    my ($result, $signum) = gsl_linalg_complex_LU_decomp($copy->raw, $permutation);
+    local $TODO = "gsl_linalg_complex_LU_det return a Math::GSL::Matrix::gsl_complex and not a Math::GSL::Complex like it should";
+    my $c = gsl_linalg_complex_LU_det($m->raw, $signum);
+    #print Dumper [$c];
+    
+    ok_similar( [gsl_parts($c)], [160, 0] );    
 }
 
 sub GSL_LINALG_LU_DET : Tests {

@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 29;
+use Test::More tests => 31;
 use base q{Test::Class};
 use strict;
 
@@ -100,8 +100,8 @@ sub MATRIX_DETERMINANT : Tests(2) {
                              ->set_row(0, [1,3] )
                              ->set_row(1, [4, 2] );
 
-    ok_similar( [ $A->det   ], [ -10 ], '->det() 2x2');
-    ok_similar( [ $A->lndet ], [ log 10 ], '->lndet() 2x2');
+    ok_similar( [ gsl_parts($A->det)   ], [ -10, 0 ], '->det() 2x2');
+    ok_similar( [ gsl_parts($A->lndet) ], [ log 10, 0 ], '->lndet() 2x2');
 
 }
 
@@ -118,7 +118,7 @@ sub MATRIX_IDENTITY : Tests(6) {
     isa_ok($A, 'Math::GSL::MatrixComplex');
     ok_similar([ $A->as_list ], [ 1, 0, 0, 1 ] );
     ok_similar([ $A->inverse->as_list ], [ 1, 0, 0, 1 ] );
-    #ok_similar([ $A->det     ] ,[ 1 ] );
+    ok_similar([ $A->det     ] ,[ 1 ] );
     #ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
     #ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
 }

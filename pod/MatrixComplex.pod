@@ -405,7 +405,7 @@ sub det($)
     my $p  = Math::GSL::Permutation->new( $self->rows );
     my $LU = $self->copy;
 
-    my $s = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
+    my ($result, $s) = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
     return gsl_linalg_complex_LU_det($LU->raw, $s );
 }
 

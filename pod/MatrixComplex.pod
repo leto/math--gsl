@@ -406,7 +406,10 @@ sub det($)
     my $LU = $self->copy;
 
     my $s = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
-    return gsl_linalg_complex_LU_det($LU->raw, $s );
+
+    # $z is a gsl_complex
+    my $z = gsl_linalg_complex_LU_det($LU->raw, $s );
+    return Math::Complex->make( gsl_real($z), gsl_imag($z) );
 }
 
 =head2 zero()

@@ -405,8 +405,11 @@ sub det($)
     my $p  = Math::GSL::Permutation->new( $self->rows );
     my $LU = $self->copy;
 
-    my ($result, $s) = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
-    return gsl_linalg_complex_LU_det($LU->raw, $s );
+    my $s = gsl_linalg_complex_LU_decomp($LU->raw, $p->raw);
+
+    # $z is a gsl_complex
+    my $z = gsl_linalg_complex_LU_det($LU->raw, $s );
+    return Math::Complex->make( gsl_real($z), gsl_imag($z) );
 }
 
 =head2 zero()

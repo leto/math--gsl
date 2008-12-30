@@ -95,13 +95,14 @@ sub MATRIX_IS_SQUARE : Tests(2) {
     ok( ! $B->is_square, 'is_square false for 2x3' );
 }
 
-sub MATRIX_DETERMINANT : Tests(2) {
+sub MATRIX_DETERMINANT : Tests(3) {
     my $A = Math::GSL::MatrixComplex->new(2,2)
                              ->set_row(0, [1,3] )
                              ->set_row(1, [4, 2] );
-
-    ok_similar( [ gsl_parts($A->det)   ], [ -10, 0 ], '->det() 2x2');
-    ok_similar( [ gsl_parts($A->lndet) ], [ log 10, 0 ], '->lndet() 2x2');
+    isa_ok( $A->det, 'Math::Complex');
+    warn Dumper [ $A->det   ], [ -10 ];
+    ok_similar( [ $A->det   ], [ -10 ], '->det() 2x2');
+    ok_similar( [ $A->lndet ], [ log 10 ], '->lndet() 2x2');
 
 }
 
@@ -113,14 +114,16 @@ sub MATRIX_ZERO : Tests(2) {
     ok_similar( [ $A->zero->as_list ], [ 0, 0, 0, 0 ] );
 }
 
-sub MATRIX_IDENTITY : Tests(6) {
+sub MATRIX_IDENTITY : Tests(7) {
     my $A = Math::GSL::MatrixComplex->new(2,2)->identity;
     isa_ok($A, 'Math::GSL::MatrixComplex');
     ok_similar([ $A->as_list ], [ 1, 0, 0, 1 ] );
     ok_similar([ $A->inverse->as_list ], [ 1, 0, 0, 1 ] );
-    ok_similar([ $A->det     ] ,[ 1 ] );
-    #ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
-    #ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
+
+    ok_similar([ Re $A->det     ] ,[ 1 ] );
+    ok_similar([ Im $A->det     ] ,[ 0 ] );
+    ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
+    ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
 }
 
 sub MATRIX_INVERSE : Tests(3) {

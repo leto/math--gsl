@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 31;
+use Test::More tests => 32;
 use base q{Test::Class};
 use strict;
 
@@ -100,7 +100,6 @@ sub MATRIX_DETERMINANT : Tests(3) {
                              ->set_row(0, [1,3] )
                              ->set_row(1, [4, 2] );
     isa_ok( $A->det, 'Math::Complex');
-    warn Dumper [ $A->det   ], [ -10 ];
     ok_similar( [ $A->det   ], [ -10 ], '->det() 2x2');
     ok_similar( [ $A->lndet ], [ log 10 ], '->lndet() 2x2');
 
@@ -124,6 +123,12 @@ sub MATRIX_IDENTITY : Tests(7) {
     ok_similar([ Im $A->det     ] ,[ 0 ] );
     ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
     ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
+}
+sub MATRIX_IS_HERMITIAN : Tests {
+    my $A = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    ok( $A->is_hermitian == 0, 'non hermitian matrix ');
 }
 
 sub MATRIX_INVERSE : Tests(3) {

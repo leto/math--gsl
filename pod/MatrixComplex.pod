@@ -6,6 +6,8 @@ use Math::GSL qw/:all/;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::Permutation;
+use Math::GSL::Eigen qw/:all/;
+use Math::GSL::VectorComplex qw/:all/;
 use Math::Complex;
 use Data::Dumper;
 use Math::GSL::BLAS qw/gsl_blas_zgemm/;
@@ -467,6 +469,16 @@ sub inverse($)
 
 }
 
+=head2 is_hermitian()
+
+=cut
+
+sub is_hermitian()
+{
+    my ($self) = @_;
+    return 1;
+
+}
 =head2 eigenvalues()
 
 =cut
@@ -481,6 +493,10 @@ sub eigenvalues($)
     my $eigen  = gsl_eigen_nonsymmv_alloc($r);
     my $vector = gsl_vector_complex_alloc($r);
 
+
+    # GSL has no generalized complex matrix routines
+    # can only continue if the matrix is hermitian
+    croak (__PACKAGE__."::eigenvalues : non-hermitian matrices are not currently supported")  unless $self->is_hermitian;
     gsl_eigen_nonsymmv($self->raw, $vector, $evec, $eigen);
 
     my $x = gsl_vector_complex_real($vector); # vector of real components

@@ -476,8 +476,10 @@ sub inverse($)
 sub is_hermitian()
 {
     my ($self) = @_;
-    return 1;
-
+    my $test = 1;
+    $test = $self->is_square;
+    #TODO still need to check properly if the matrix is hermitian
+    return $test;
 }
 =head2 eigenvalues()
 

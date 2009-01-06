@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 30;
+use Test::More tests => 37;
 use base q{Test::Class};
 use strict;
 
@@ -130,6 +130,14 @@ sub MATRIX_IS_HERMITIAN : Tests {
                              ->set_row(0, [1, 3] )
                              ->set_row(1, [4, 2] );
     ok( $A->is_hermitian == 0, 'non hermitian matrix ');
+    my $B = Math::GSL::MatrixComplex->new(2,3)
+                             ->set_row(0, [1, 3, 4] )
+                             ->set_row(1, [4, 2, 8] );
+    ok( $B->is_hermitian == 0, 'non square matrix ');
+    my $C = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [3, 2+1*i] )
+                             ->set_row(1, [2-1*i, 1] );
+  #  ok( $C->is_hermitian == 1, 'hermitian matrix ');
 }
 
 sub MATRIX_INVERSE : Tests(3) {
@@ -145,5 +153,14 @@ sub MATRIX_INVERSE : Tests(3) {
     dies_ok( sub { $B->inverse } , 'inverse of non square matrix dies' );
 }
 
+sub OVERLOAD_EQUAL : Tests(2) {
+    my $A = Math::GSL::MatrixComplex->new(2,2)
+                             ->set_row(0, [1+2*i, 3] )
+                             ->set_row(1, [4, 2] );
+    my $B = $A->copy;
+    ok ( $A == $B, 'should be equal');
+    $B->set_row(0, [1,2]);
+    ok ( $A != $B, 'should not be equal');
+}
 
 Test::Class->runtests;

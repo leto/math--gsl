@@ -1,5 +1,5 @@
 package Math::GSL::MatrixComplex::Test;
-use Test::More tests => 37;
+use Test::More tests => 38;
 use base q{Test::Class};
 use strict;
 
@@ -136,7 +136,7 @@ sub MATRIX_IS_HERMITIAN : Tests {
     my $C = Math::GSL::MatrixComplex->new(2,2)
                              ->set_row(0, [3, 2+1*i] )
                              ->set_row(1, [2-1*i, 1] );
-  #  ok( $C->is_hermitian == 1, 'hermitian matrix ');
+    ok( $C->is_hermitian == 1, 'hermitian matrix ');
 }
 
 sub MATRIX_INVERSE : Tests(3) {

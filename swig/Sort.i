@@ -92,6 +92,8 @@
     #include "gsl/gsl_sort_vector_int.h"
     #include "gsl/gsl_permutation.h"
 %}
+%import "gsl/gsl_inline.h"
+
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_sort.h"
 %include "gsl/gsl_sort_double.h"

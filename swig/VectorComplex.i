@@ -13,6 +13,7 @@ int fclose(FILE *);
     #include "gsl/gsl_vector_complex.h"
     #include "gsl/gsl_vector_complex_double.h"
 %}
+%import "gsl/gsl_inline.h"
 
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_complex.h"

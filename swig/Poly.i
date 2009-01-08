@@ -99,6 +99,7 @@
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_complex_math.h"
 %}
+%import "gsl/gsl_inline.h"
 
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_poly.h"

@@ -11,6 +11,8 @@
     #include "gsl/gsl_permute_vector_int.h"
     #include "gsl/gsl_permutation.h"
 %}
+%import "gsl/gsl_inline.h"
+
 %include "gsl/gsl_permute.h"
 %include "gsl/gsl_permute_double.h"
 %include "gsl/gsl_permute_int.h"

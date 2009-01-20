@@ -164,8 +164,7 @@ sub _equal {
 
 sub _not_equal {
     my ($left, $right) = @_;
-    my $comp = Array::Compare->new;
-    return !($comp->compare([$left->as_list], [$right->as_list]));
+    return !(&_equal($left, $right));
 }
 
 sub copy {
@@ -188,8 +187,8 @@ Math::GSL::MatrixComplex - Complex Matrices
     my $matrix1 = Math::GSL::MatrixComplex->new(5,5);  # OO interface
     my $matrix3 = $matrix1 + $matrix1;
     my $matrix4 = $matrix1 - $matrix1;
-    if($matrix1 == $matrix1) ...
-    if($matrix1 != $matrix1) ...
+    if($matrix1 == $matrix4) ...
+    if($matrix1 != $matrix3) ...
 
     my $matrix2 = gsl_matrix_complex_alloc(5,5);        # standard interface
 

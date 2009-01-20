@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 235;
+use Test::More tests => 237;
 use strict;
 use warnings;
 
@@ -751,6 +751,16 @@ sub MATRIX_INVERSE : Tests(3) {
                              ->set_row(0, [1, 3, 5] )
                              ->set_row(1, [2, 4, 6] );
     dies_ok( sub { $B->inverse } , 'inverse of non square matrix dies' );
+}
+
+sub OVERLOAD_EQUAL : Tests(2) {
+    my $A = Math::GSL::Matrix->new(2,2)
+                             ->set_row(0, [1, 3] )
+                             ->set_row(1, [4, 2] );
+    my $B = $A->copy;
+    ok ( $A == $B, 'should be equal');
+    $B->set_row(0, [1,2]);
+    ok ( $A != $B, 'should not be equal');
 }
 
 Test::Class->runtests;

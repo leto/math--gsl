@@ -14,7 +14,7 @@
     - Added dot product to Matrix objects
     - Fix various typos in documentation
     - Fix warnings about overloaded operators in Matrix and BLAS
-    - Overload '==' and '!=' for MatrixComplex objects
+    - Overload '==' and '!=' for MatrixComplex and Matrix objects
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

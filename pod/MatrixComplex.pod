@@ -26,7 +26,6 @@ use overload
     '!='     => \&_not_equal,
 #    'abs'    => \&_abs,
     fallback => 1;
-use Array::Compare;
 #use strict;
 @EXPORT_OK = qw/
                 gsl_matrix_complex_alloc
@@ -158,13 +157,12 @@ sub _subtract {
 
 sub _equal {
     my ($left, $right) = @_;
-    my $comp = Array::Compare->new;
-    return ($comp->compare([$left->as_list], [$right->as_list]));
+    return 0;
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
-    return !(&_equal($left, $right));
+    return 0;
 }
 
 sub copy {

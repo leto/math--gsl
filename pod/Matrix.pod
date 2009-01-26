@@ -750,13 +750,12 @@ sub _multiplication {
 
 sub _equal {
     my ($left, $right) = @_;
-    my $comp = Array::Compare->new;
-    return ($comp->compare([$left->as_list], [$right->as_list]));
+    return 0;
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
-    return !(&_equal($left, $right));
+    return 0;
 }
 
 sub _dot_product {

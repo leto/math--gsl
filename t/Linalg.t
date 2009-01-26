@@ -192,19 +192,11 @@ sub GSL_LINALG_COMPLEX_LU_DET : Tests(2) {
     gsl_permutation_init($permutation);
     my $copy = $m->copy;
     my ($result, $signum) = gsl_linalg_complex_LU_decomp($copy->raw, $permutation);
-<<<<<<< HEAD:t/Linalg.t
-    local $TODO = "gsl_linalg_complex_LU_det return a Math::GSL::Matrix::gsl_complex and not a Math::GSL::Complex like it should";
-    my $c = gsl_linalg_complex_LU_det($m->raw, $signum);
-    #print Dumper [$c];
-    
-    ok_similar( [gsl_parts($c)], [160, 0] );    
-=======
     my $gsl_det = gsl_linalg_complex_LU_det($m->raw, $signum);
     my $det = Math::Complex->make( gsl_real($gsl_det), gsl_imag($gsl_det) );
     #warn Dumper [ $det ];
     ok_similar( [ Re $det ], [ -6 ], 'real');
     ok_similar( [ Im $det ], [ 4  ], 'imag');
->>>>>>> 5a0c3ab... Mess with TODO test for MatrixComplex determinants:t/Linalg.t
 }
 
 sub GSL_LINALG_LU_DET : Tests {

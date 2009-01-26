@@ -1,3 +1,11 @@
+// Only include if we have GSL >= 1.12
+// This needs to be conditional
+%{
+    #include "gsl_inline.h"
+}
+%include "gsl_inline.h"
+
+
 %typemap(in) double const [] {
     AV *tempav;
     I32 len;

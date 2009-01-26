@@ -118,12 +118,11 @@ sub MATRIX_IDENTITY : Tests(7) {
     isa_ok($A, 'Math::GSL::MatrixComplex');
     ok_similar([ $A->as_list ], [ 1, 0, 0, 1 ] );
     ok_similar([ $A->inverse->as_list ], [ 1, 0, 0, 1 ] );
-
     ok_similar([ Re $A->det     ] ,[ 1 ] );
     ok_similar([ Im $A->det     ] ,[ 0 ] );
     #MatrixComplex doesn't yet have any function to find eigenvalues of complex matrices
-    #ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
-    #ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
+    ok_similar([ map { Re $_ } $A->eigenvalues ], [ 1, 1 ], 'identity eigs=1' );
+    ok_similar([ map { Im $_ } $A->eigenvalues ], [ 0, 0 ], 'identity eigs=1' );
 }
 sub MATRIX_IS_HERMITIAN : Tests {
     my $A = Math::GSL::MatrixComplex->new(2,2)

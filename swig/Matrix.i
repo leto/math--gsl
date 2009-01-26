@@ -15,6 +15,7 @@
     #include "gsl/gsl_matrix_complex_double.h"
     #include "gsl/gsl_matrix_char.h" 
 %}
+%import "gsl/gsl_inline.h"
 
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_complex.h"

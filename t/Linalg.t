@@ -356,7 +356,7 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
 
     ok_status( gsl_linalg_hessenberg_set_zero($self->{matrix}) );
     for(my $line = 2; $line<4; $line++) {
-        map { ok_similar(gsl_matrix_get($self->{matrix}, $line, $_), 0, 1e-8, "Set zero") } (0..$line-2);
+        map { ok_similar(gsl_matrix_get($self->{matrix}, $line, $_), 0, "Set zero", 1e-8) } (0..$line-2);
     }
 }
 

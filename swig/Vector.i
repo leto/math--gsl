@@ -15,6 +15,7 @@ int fclose(FILE *);
     #include "gsl/gsl_vector_float.h"
     #include "gsl/gsl_vector_int.h"
 %}
+%import "gsl/gsl_inline.h"
 
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_vector.h"

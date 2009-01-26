@@ -1,4 +1,5 @@
 %module "Math::GSL::FFT"
+%import "gsl/gsl_inline.h"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 %include "gsl/gsl_math.h"

@@ -5,11 +5,12 @@
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_complex_math.h"
 %}
+%import "gsl/gsl_inline.h"
 
 %include "gsl/gsl_complex.h"
 %include "gsl/gsl_complex_math.h"
 
-// Need to think this interface
+// Need to fix this interface
 %include "carrays.i"
 %array_functions(double, doubleArray);
 

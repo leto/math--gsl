@@ -26,6 +26,10 @@ use overload
     '!='     => \&_not_equal,
 #    'abs'    => \&_abs,
     fallback => 1;
+<<<<<<< HEAD:pod/MatrixComplex.pod
+=======
+use Array::Compare;
+>>>>>>> b2d551f34dd60416d7f1a3d7ee572e078ea7986c:pod/MatrixComplex.pod
 #use strict;
 @EXPORT_OK = qw/
                 gsl_matrix_complex_alloc
@@ -157,12 +161,21 @@ sub _subtract {
 
 sub _equal {
     my ($left, $right) = @_;
+<<<<<<< HEAD:pod/MatrixComplex.pod
     return 0;
+=======
+    my $comp = Array::Compare->new;
+    return ($comp->compare([$left->as_list], [$right->as_list]));
+>>>>>>> b2d551f34dd60416d7f1a3d7ee572e078ea7986c:pod/MatrixComplex.pod
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
+<<<<<<< HEAD:pod/MatrixComplex.pod
     return 0;
+=======
+    return !(&_equal($left, $right));
+>>>>>>> b2d551f34dd60416d7f1a3d7ee572e078ea7986c:pod/MatrixComplex.pod
 }
 
 sub copy {

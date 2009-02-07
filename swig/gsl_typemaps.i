@@ -1,9 +1,10 @@
 // Only include if we have GSL >= 1.12
 // This needs to be conditional
-%{
-    #include "gsl_inline.h"
-}
-%include "gsl_inline.h"
+#ifdef GSL_VERSION &&  GSL_VERSION == "1.12"
+    %include "gsl_inline.h"
+#endif
+
+
 
 
 %typemap(in) double const [] {

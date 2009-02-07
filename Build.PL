@@ -111,9 +111,14 @@ my $MIN_GSL_VERSION = "1.8";
 my $gv = $gsl_pkgcfg{'modversion'};
 my $current_minor_version;
 
+open my $fh, '>', 'swig/system.i' or die $!;
+
 if (defined $gv) {
   if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
     my @current= split /\./, $1;
+    print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
+    print $fh "#define GSL_MINOR_VERSION $current[1]\n";
+
     my @min= split /\./, $MIN_GSL_VERSION;
     $current_minor_version = $current[1];
     unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
@@ -142,6 +147,7 @@ if (defined $gv) {
     exit 1;
 }
 
+close $fh;
 
 my $ccflags = $gsl_pkgcfg{cflags};
 
@@ -174,7 +180,7 @@ if ($current_minor_version < 9 ) {
    @Subsystems = grep { ! /BSpline/ } @Subsystems;
 }
 my $cleanup = qq{
-                 xs/*_wrap.c core *.core 
+                 xs/*_wrap.c core *.core swig/system.i
                  swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build 
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig 
                  } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;

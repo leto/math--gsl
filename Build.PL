@@ -111,7 +111,8 @@ my $MIN_GSL_VERSION = "1.8";
 my $gv = $gsl_pkgcfg{'modversion'};
 my $current_minor_version;
 
-open my $fh, '>', 'swig/system.i' or die $!;
+my $path_system = File::Spec->catfile('swig', 'system.i');
+open my $fh, ">", "$path_system" or die $!;
 
 if (defined $gv) {
   if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {

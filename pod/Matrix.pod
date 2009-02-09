@@ -750,21 +750,15 @@ sub _multiplication {
 
 sub _equal {
     my ($left, $right) = @_;
-<<<<<<< HEAD:pod/Matrix.pod
     return 0;
-=======
     my $comp = Array::Compare->new;
     return ($comp->compare([$left->as_list], [$right->as_list]));
->>>>>>> b2d551f34dd60416d7f1a3d7ee572e078ea7986c:pod/Matrix.pod
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
-<<<<<<< HEAD:pod/Matrix.pod
     return 0;
-=======
     return !(&_equal($left, $right));
->>>>>>> b2d551f34dd60416d7f1a3d7ee572e078ea7986c:pod/Matrix.pod
 }
 
 sub _dot_product {

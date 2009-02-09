@@ -2,11 +2,14 @@
 // this brakes stuff
 // %include "typemaps.i"
 %include "gsl_typemaps.i" 
+%include "system.i"
 
 %{
     #include "gsl/gsl_sys.h"
 %}
-%include "gsl/gsl_sys.h"
+#if GSL_MINOR_VERSION == 12
+    %import "gsl/gsl_inline.h"
+#endif
 
 %typemap(in) double * (double dvalue) {
   SV* tempsv;

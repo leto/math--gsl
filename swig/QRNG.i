@@ -1,6 +1,7 @@
 %module "Math::GSL::QRNG"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "system.i"
 
 %apply double *OUTPUT { double x[] };
 
@@ -25,7 +26,9 @@
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_qrng.h"
 %}
-%import "gsl/gsl_inline.h"
+#if GSL_MINOR_VERSION == 12
+    %import "gsl/gsl_inline.h"
+#endif
 
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_qrng.h"

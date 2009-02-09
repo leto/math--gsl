@@ -1,8 +1,11 @@
 %module "Math::GSL::RNG"
+%include "system.i"
 %{
     #include "gsl/gsl_rng.h"
 %}
-%import "gsl/gsl_inline.h"
+#if GSL_MINOR_VERSION == 12
+    %import "gsl/gsl_inline.h"
+#endif
 %import "gsl/gsl_types.h"
 
 %include "gsl/gsl_rng.h"

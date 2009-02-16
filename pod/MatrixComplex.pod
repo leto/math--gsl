@@ -1,23 +1,27 @@
 %perlcode %{
 
+use strict;
 use Carp qw/croak/;
 use Scalar::Util 'blessed';
-use Math::GSL qw/:all/;
-use Math::GSL::Complex qw/:all/;
-use Math::GSL::Errno qw/:all/;
-use Math::GSL::Permutation;
-use Math::GSL::Eigen qw/:all/;
-use Math::GSL::VectorComplex qw/:all/;
 use Math::Complex;
 use Data::Dumper;
-use Math::GSL::BLAS qw/gsl_blas_zgemm/;
-use Math::GSL::CBLAS qw/$CblasNoTrans/;
+
+use Math::GSL           qw/:all/;
+use Math::GSL::Errno    qw/:all/;
+use Math::GSL::Eigen    qw/:all/;
+use Math::GSL::BLAS     qw/gsl_blas_zgemm/;
+use Math::GSL::CBLAS    qw/$CblasNoTrans/;
+use Math::GSL::Complex  qw/:all/;
+use Math::GSL::Permutation;
+use Math::GSL::VectorComplex qw/:all/;
+
 use Math::GSL::Linalg qw/
     gsl_linalg_complex_LU_decomp
     gsl_linalg_complex_LU_det
     gsl_linalg_complex_LU_lndet
     gsl_linalg_complex_LU_invert
 /;
+
 use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -26,9 +30,8 @@ use overload
     '!='     => \&_not_equal,
 #    'abs'    => \&_abs,
     fallback => 1;
-use Array::Compare;
-#use strict;
-@EXPORT_OK = qw/
+
+our @EXPORT_OK = qw/
                 gsl_matrix_complex_alloc
                 gsl_matrix_complex_calloc
                 gsl_matrix_complex_alloc_from_block
@@ -177,7 +180,7 @@ sub copy {
     }
     return $copy;
 }
-%EXPORT_TAGS = ( all => \@EXPORT_OK  );
+our %EXPORT_TAGS = ( all => \@EXPORT_OK  );
 
 =head1 NAME
 

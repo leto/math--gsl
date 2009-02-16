@@ -751,8 +751,6 @@ sub _multiplication {
 sub _equal {
     my ($left, $right) = @_;
     return 0;
-    my $comp = Array::Compare->new;
-    return ($comp->compare([$left->as_list], [$right->as_list]));
 }
 
 sub _not_equal {

@@ -1,4 +1,5 @@
 %module "Math::GSL::RNG"
+%include "gsl_typemaps.i"
 %include "system.i"
 %{
     #include "gsl/gsl_rng.h"

@@ -1,4 +1,5 @@
 %module "Math::GSL::PowInt"
+%include "gsl_typemaps.i"
 %include "system.i"
 %{
     #include "gsl/gsl_pow_int.h"

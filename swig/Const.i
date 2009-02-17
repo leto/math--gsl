@@ -1,4 +1,6 @@
 %module "Math::GSL::Const"
+%include "gsl_typemaps.i"
+
 %{
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_const.h"

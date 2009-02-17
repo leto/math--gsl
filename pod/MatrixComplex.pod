@@ -9,6 +9,7 @@ use Data::Dumper;
 use Math::GSL           qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Eigen    qw/:all/;
+use Math::GSL::Test     qw/is_similar/;
 use Math::GSL::BLAS     qw/gsl_blas_zgemm/;
 use Math::GSL::CBLAS    qw/$CblasNoTrans/;
 use Math::GSL::Complex  qw/:all/;
@@ -161,15 +162,15 @@ sub _subtract {
 
 sub _equal {
     my ($left, $right) = @_;
-    return 0;
-    my $comp = Array::Compare->new;
-    return ($comp->compare([$left->as_list], [$right->as_list]));
+    return is_similar( [ map { Re $_ } $left->as_list ],
+                       [ map { Re $_ } $right->as_list ]) &&
+           is_similar( [ map { Im $_ } $left->as_list ],
+                       [ map { Im $_ } $right->as_list ]);
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
-    return 0;
-    return !(&_equal($left, $right));
+    return !_equal($left,$right);
 }
 
 sub copy {

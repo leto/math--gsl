@@ -10,7 +10,8 @@ use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Eigen    qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Complex  qw/:all/;
-use Math::GSL::BLAS qw/gsl_blas_dgemm/;
+use Math::GSL::Test  qw/is_similar/;
+use Math::GSL::BLAS  qw/gsl_blas_dgemm/;
 use Math::GSL::CBLAS qw/$CblasNoTrans/;
 use Math::GSL::Permutation;
 use Math::GSL::Linalg qw/
@@ -750,13 +751,13 @@ sub _multiplication {
 
 sub _equal {
     my ($left, $right) = @_;
-    return 0;
+
+    return is_similar( [ $left->as_list ], [ $right->as_list ] );
 }
 
 sub _not_equal {
     my ($left, $right) = @_;
-    return 0;
-    return !(&_equal($left, $right));
+    return !is_similar( [ $left->as_list ], [ $right->as_list ] );
 }
 
 sub _dot_product {

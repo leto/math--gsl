@@ -1,6 +1,7 @@
 %module "Math::GSL::Sys"
 
 %include "typemaps.i"
+%include "gsl_typemaps.i"
 %apply int *OUTPUT { int * e };
 
 %{

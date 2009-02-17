@@ -24,10 +24,14 @@ our @EXPORT_OK = qw/
                gsl_isnan
                gsl_inf
                $GSL_NAN
+               $GSL_POSINF
+               $GSL_NEGINF
              /;
 
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
-our $GSL_NAN = gsl_nan();
+our $GSL_NAN    = gsl_nan();
+our $GSL_POSINF = gsl_posinf();
+our $GSL_NEGINF = gsl_neginf();
 
 __END__
 

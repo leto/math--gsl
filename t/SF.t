@@ -8,6 +8,7 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::SF      qw/:all/;
 use Math::GSL::Poly    qw/:all/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::Sys     qw/$GSL_NAN/;
 use Data::Dumper;
 use strict;
 use warnings;

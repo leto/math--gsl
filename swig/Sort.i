@@ -3,7 +3,6 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
-%include "system.i"
 
 %typemap(argout) (double * data, const size_t stride, const size_t n) {
     int i=0;
@@ -93,9 +92,6 @@
     #include "gsl/gsl_sort_vector_int.h"
     #include "gsl/gsl_permutation.h"
 %}
-#if GSL_MINOR_VERSION == 12
-    %import "gsl/gsl_inline.h"
-#endif
 
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_sort.h"

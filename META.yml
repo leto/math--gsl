@@ -6,7 +6,9 @@ author:
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
 resources:
-  license: http://www.opensource.org/licenses/gpl-license.php
+  license: http://opensource.org/licenses/gpl-license.php
+configure_requires:
+  ExtUtils::PkgConfig: 1.03
 requires:
   ExtUtils::PkgConfig: 1.03
   Scalar::Util: 0
@@ -517,7 +519,7 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Waveletc:
     file: lib/Math/GSL/Wavelet.pm
-generated_by: Module::Build version 0.2808
+generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

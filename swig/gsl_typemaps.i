@@ -1,11 +1,7 @@
-// Only include if we have GSL >= 1.12
-// This needs to be conditional
-#ifdef GSL_VERSION &&  GSL_VERSION == "1.12"
+%include "system.i"
+#ifdef GSL_MINOR_VERSION &&  GSL_MINOR_VERSION >= 12
     %include "gsl_inline.h"
 #endif
-
-
-
 
 %typemap(in) double const [] {
     AV *tempav;

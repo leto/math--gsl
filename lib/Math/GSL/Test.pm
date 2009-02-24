@@ -131,11 +131,11 @@ sub verify_results
                 printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
             }
             if (gsl_isnan($x)) {
-                    ok( gsl_isnan($expected), "'$expected'?='$x'" );
+                    ok( gsl_isnan($expected), sprintf("'$expected'?='$x' (%16b ?= %16b)", $expected, $x) );
             } elsif(gsl_isinf($x)) { 
-                    ok( gsl_isinf($expected), "'$expected'?='$x'" );
+                    ok( gsl_isinf($expected), sprintf("'$expected'?='$x' (%16b ?= %16b)", $expected, $x) );
             } else {
-                ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
+                    cmp_ok( $res,'<=', $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );
             }
         }
     }

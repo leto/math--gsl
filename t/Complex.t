@@ -1,6 +1,6 @@
 package Math::GSL::Complex::Test;
 use base q{Test::Class};
-use Test::More tests => 59;
+use Test::More tests => 60;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Const   qw/:all/;
@@ -16,10 +16,11 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub GSL_COMPLEX_NEW : Test {
+sub GSL_COMPLEX_NEW : Tests {
     my $self = shift;
     my $x = $self->{gsl_complex};
-    isa_ok( $x, 'Math::GSL::Complex' );
+    isa_ok( $x, 'Math::GSL::Complex::gsl_complex' );
+    isa_ok( Math::GSL::Complex->new(0,0), 'Math::GSL::Complex' );
 }
 
 sub GSL_COMPLEX_RECT : Tests {

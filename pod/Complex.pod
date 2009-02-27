@@ -28,7 +28,6 @@ our ($GSL_COMPLEX_ONE, $GSL_COMPLEX_ZERO, $GSL_COMPLEX_NEGONE) = map { gsl_compl
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-### wrapper interface ###
 sub new {
     my ($class, @values) = @_;
     my $this = {};
@@ -52,7 +51,6 @@ sub parts {
 
 sub raw  { (shift)->{_complex} }
 
-### end wrapper interface ###
 
 ### some important macros that are in gsl_complex.h
 sub gsl_complex_eq {
@@ -91,8 +89,6 @@ sub gsl_set_complex {
     gsl_set_imag($z, $i);
 }
 
-__END__
-
 =head1 NAME
 
 Math::GSL::Complex - Complex Numbers
@@ -101,13 +97,12 @@ Math::GSL::Complex - Complex Numbers
 
     use Math::GSL::Complex qw/:all/;
     my $complex = Math::GSL::Complex->new([3,2]); # creates a complex number 3+2*i
-    my $real = $complex->real; # returns the real value of the complex number
-    my $imag = $complex->imag; # returns the imaginary value of the complex number
-    $complex->gsl_set_real(5); # changes the real value of the complex number to 5
-    $complex->gsl_set_imag(4); # changes the imaginary value of the complex number to 4
-    $complex->gsl_set_complex(7,6); # changes the real value of the complex number to 7 and the imaginary value to 6
-    ($real, $imag) = $complex->parts; # returns the real and imaginary values of the complex number
-    my $abs = gsl_complex_abs2($complex->raw); # the raw method gives access to the underlying gsl_complex structure, it is needed for the functions below.
+    my $real = $complex->real;                    # returns the real part
+    my $imag = $complex->imag;                    # returns the imaginary part
+    $complex->gsl_set_real(5);                    # changes the real part to 5
+    $complex->gsl_set_imag(4);                    # changes the imaginary part to 4
+    $complex->gsl_set_complex(7,6);               # changes it to 7 + 6*I
+    ($real, $imag) = $complex->parts;
 
 =head1 DESCRIPTION
 
@@ -247,25 +242,16 @@ Here is a list of all the functions included in this module :
 
 =back
 
-You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. 
-You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
-
-For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
-Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
-
 =head1 EXAMPLES
 
 This code defines $z as 6 + 4*I, takes the complex conjugate of that number, then prints it out.
 
 =over 1
 
-=item C<my $z = gsl_complex_rect(6,4);>
-
-=item C<my $y = gsl_complex_conjugate($z);>
-
-=item C<my ($real, $imag) = gsl_parts($y);>
-
-=item C<print "z = $real + $imag*I\n";>
+    my $z = gsl_complex_rect(6,4);
+    my $y = gsl_complex_conjugate($z);
+    my ($real, $imag) = gsl_parts($y);
+    print "z = $real + $imag*I\n";
 
 =back
 
@@ -273,15 +259,11 @@ This code defines $z as 5 + 3*I, multiplies it by 2 and then prints it out.
 
 =over 1
 
-=item C<my $x = gsl_complex_rect(5,3);>
-
-=item C<my $z = gsl_complex_mul_real($x, 2);>
-
-=item C<my $real = gsl_real($z);>
-
-=item C<my $imag = gsl_imag($z);>
-
-=item C<print "Re(\$z) = $real\n";>
+    my $x = gsl_complex_rect(5,3);
+    my $z = gsl_complex_mul_real($x, 2);
+    my $real = gsl_real($z);
+    my $imag = gsl_imag($z);
+    print "Re(\$z) = $real\n";
 
 =back
 

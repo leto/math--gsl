@@ -201,10 +201,9 @@ sub ok_status {
     my ($got, $expected, $msg ) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     $expected ||= $GSL_SUCCESS;
-    my $strerr = gsl_strerror(int($got));
-    $msg       = $msg ? "$msg: " . $strerr : $strerr;
+    my $strerr = $got ? gsl_strerror(int($got)) : '';
 
-    ok( defined $got && $got == $expected, $msg );
+    ok( defined $got && $got == $expected, $msg ? "$msg: " .$strerr : $strerr );
 }
 
 =head2 is_status_ok($status)

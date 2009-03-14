@@ -5,8 +5,6 @@ use strict;
 use Config;
 use warnings;
 use Test::More;
-
-use Carp               qw/croak/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -24,7 +22,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.17_01';
+our $VERSION = '0.17_02';
 
 =head1 NAME
 
@@ -32,7 +30,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.17_01
+Version 0.17_02
 
 =head1 SYNOPSIS
 

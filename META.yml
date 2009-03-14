@@ -1,6 +1,6 @@
 ---
 name: Math-GSL
-version: 0.17_01
+version: 0.17_02
 author:
   - 'Jonathan Leto <jonathan@leto.net>'
 abstract: Interface to the GNU Scientific Library using SWIG
@@ -20,7 +20,7 @@ requires:
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
-    version: 0.17_01
+    version: 0.17_02
   Math::GSL::BLAS:
     file: lib/Math/GSL/BLAS.pm
   Math::GSL::BLASc:
@@ -519,7 +519,7 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Waveletc:
     file: lib/Math/GSL/Wavelet.pm
-generated_by: Module::Build version 0.280801
+generated_by: Module::Build version 0.31012
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

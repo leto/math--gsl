@@ -1,7 +1,7 @@
 package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More tests => 1108;
+use Test::More tests => 1109;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1141,16 +1141,16 @@ sub TEST_THE_KITCHEN_SINK : Tests {
     verify_results($results, 'Math::GSL::SF');
 
 }
-sub TEST_NAN_STRING : Tests
+sub TEST_NAN_STRING : Tests(1)
 {
     my $self = shift;
-    return if is_windows();
     my $results = {
-        'gsl_sf_gamma_e(-1,$r)'                                 => 'nan',
+        'gsl_sf_gamma_e(-1,$r)'                                 => $GSL_NAN,
     };
     verify_results($results, 'Math::GSL::SF');
-}    
-sub TEST_NAN : Tests 
+}
+
+sub TEST_NAN : Tests(18)
 {
     my $self = shift;
     my $results = {
@@ -1175,19 +1175,18 @@ sub TEST_NAN : Tests
     };
     verify_results($results, 'Math::GSL::SF');
 }
-sub TEST_FISHY_RESULTS
+sub TEST_FISHY_RESULTS : Tests(1)
 {
     local $TODO = 'fishy results';
     verify_results( {
                         'gsl_sf_expint_En_e(3,300.0,$r)'	=> .699131143349179084e-133,
                     }, 'Math::GSL::SF');
 }
-sub TEST_J0_RESULT_STRUCT: Tests {
+sub TEST_J0_RESULT_STRUCT: Tests(2) {
     my $result = Math::GSL::SF::gsl_sf_result_struct->new;
     my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
     ok( defined $result->{err}, '$result->{err}' );
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
 };
-
 
 Test::Class->runtests;

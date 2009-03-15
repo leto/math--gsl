@@ -1152,7 +1152,6 @@ sub TEST_NAN_STRING : Tests(1)
 
 sub TEST_NAN : Tests(18)
 {
-    my $self = shift;
     my $results = {
         'gsl_sf_coupling_3j_e(-1, 1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
         'gsl_sf_coupling_3j_e(1, -1, 2, 1, -1, 0,$r)'	        => $GSL_NAN,
@@ -1175,18 +1174,17 @@ sub TEST_NAN : Tests(18)
     };
     verify_results($results, 'Math::GSL::SF');
 }
-sub TEST_FISHY_RESULTS : Tests(1)
+sub TEST_ZZZ_OLD_BUGS : Test(1)
 {
-    local $TODO = 'fishy results';
-    verify_results( {
-                        'gsl_sf_expint_En_e(3,300.0,$r)'	=> .699131143349179084e-133,
-                    }, 'Math::GSL::SF');
+    my $r= Math::GSL::SF::gsl_sf_result_struct->new;
+    ok_similar( [ gsl_sf_expint_En_e(3,300.0,$r) ] , [ 1.6608815083360041367294736e-133 ] );
 }
+
 sub TEST_J0_RESULT_STRUCT: Tests(2) {
     my $result = Math::GSL::SF::gsl_sf_result_struct->new;
     my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
     ok( defined $result->{err}, '$result->{err}' );
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
-};
+}
 
 Test::Class->runtests;

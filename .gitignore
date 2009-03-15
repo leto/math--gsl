@@ -16,3 +16,5 @@ foo*
 tags
 .DS_Store
 xs/*_wrap.c
+swig/system.i
+.prove

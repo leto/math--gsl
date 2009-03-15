@@ -2,7 +2,6 @@ package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More tests => 1109;
-use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::SF      qw/:all/;
@@ -13,21 +12,19 @@ use Data::Dumper;
 use strict;
 use warnings;
 
-BEGIN{ gsl_set_error_handler_off(); }
-my $factor = 100;
-my $TOL1 = $factor*16.0*$GSL_DBL_EPSILON;
+BEGIN { gsl_set_error_handler_off() }
+
+my $factor    = 100;
+my $TOL1      = $factor*16.0*$GSL_DBL_EPSILON;
 my $SQRT_TOL0 = 2.0*$GSL_SQRT_DBL_EPSILON;
-my $DELTA = 1.2246467991473531772e-16;
-my $w = 0.8*$GSL_LOG_DBL_MAX;
-my $y = 0.2*$GSL_DBL_MAX;
+my $DELTA     = 1.2246467991473531772e-16;
+my $w         = 0.8*$GSL_LOG_DBL_MAX;
+my $y         = 0.2*$GSL_DBL_MAX;
 
 sub make_fixture : Test(setup) {
-    my $w = 0.8*$GSL_LOG_DBL_MAX;
-    my $y = 0.2*$GSL_DBL_MAX;
 }
 sub teardown : Test(teardown) {
 }
-
 
 sub TEST_THE_KITCHEN_SINK : Tests {
     my $results = { 

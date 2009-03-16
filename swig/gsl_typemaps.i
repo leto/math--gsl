@@ -65,7 +65,6 @@
     }
 %}
 %typemap(in) gsl_monte_function * {
-    croak("FOOBAR!");
     gsl_monte_function MF;
     int count;
     SV ** callback;
@@ -78,8 +77,9 @@
     fprintf(stderr,"STORE gsl_monte_function CALLBACK: %d\n", (int)$input);
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
 
-    MF.params   = &$input;
-    MF.function = &callthis;
+    MF.params  = &$input;
+    MF.dim     = 1; // XXX
+    MF.f       = &callthis;
     $1         = &MF;
 };
 %typemap(in) gsl_function * {

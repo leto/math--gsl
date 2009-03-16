@@ -1,6 +1,6 @@
 package Math::GSL::Monte::Test;
 use base q{Test::Class};
-use Test::More tests => 10;
+use Test::More tests => 12;
 use Math::GSL::Monte qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::RNG   qw/:all/;
@@ -26,29 +26,31 @@ sub teardown : Test(teardown) {
     gsl_monte_vegas_free($self->{vegas});
 }
 
-sub TEST_INIT  : Tests {
+sub TEST_INIT  : Tests(3) {
     my $self = shift;
-    ok_status( gsl_monte_plain_init($self->{plain}) );
-    ok_status( gsl_monte_vegas_init($self->{vegas}) );
-    ok_status( gsl_monte_miser_init($self->{miser}) );
+    ok_status( gsl_monte_plain_init($self->{plain}), $GSL_SUCCESS, 'plain' );
+    ok_status( gsl_monte_vegas_init($self->{vegas}), $GSL_SUCCESS, 'vegas' );
+    ok_status( gsl_monte_miser_init($self->{miser}), $GSL_SUCCESS, 'miser' );
 }
 
-sub TEST_MONTE_VEGAS_INTEGRATE : Tests {
+sub TEST_MONTE_VEGAS_INTEGRATE : Tests(3) {
     my $self = shift;
     my $state = gsl_monte_vegas_alloc(1);
     my $rng   = Math::GSL::RNG->new;
     my $result = [];
     my $err = [];
-    local $TODO = 'gsl_monte_function is broke';
     my $status;
     eval {
           $status =  gsl_monte_vegas_integrate( sub { $_[0] ** 2 },
-        [ 0 ], [ 1 ], 1, 500_000, $rng->raw, $state, $result, $err)
+        [ 0 ], [ 1 ], 1, 500000, $rng->raw, $state, $result, $err)
     };
-    ok_status($status);
+    ok( $state->{dim} == 1, 'dim = 1');
+    local $TODO = 'gsl_monte_function is broke';
+    ok_similar( [ 1/3 ] ,  [ $state->{result} ] );
+    ok_status($status, $TODO);
 
 }
-sub TEST_ALLOC : Tests {
+sub TEST_ALLOC : Tests(6) {
     my $self = shift;
     isa_ok($self->{miser},'Math::GSL::Monte');
     cmp_ok($self->{miser}->{dim},'==',$self->{dim});

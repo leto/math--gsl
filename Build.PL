@@ -159,6 +159,7 @@ $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 
+
 my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
 my $swig_flags = "$gsl_pkgcfg{cflags}"; # -Wall is a bit much
 
@@ -169,8 +170,9 @@ if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
 } elsif ( $^O eq 'darwin' ) {
     $ldflags .= ' -bundle -flat_namespace ';
 }
-if ($Config{archname} =~ /x86_64/ ) { 
-    $ldflags .= ' -fPIC  -fno-omit-frame-pointer '; 
+
+if ($Config{archname} =~ /x86_64|amd64/ ) {
+    $ldflags .= ' -fPIC  -fno-omit-frame-pointer ';
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 
@@ -195,7 +197,7 @@ my $builder = GSLBuilder->new(
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	    => q{},
     extra_linker_flags  => '-shared ' . $ldflags,
-    extra_compiler_flags=> $ccflags,
+    extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
     swig_flags          => $swig_flags, 
     license             => 'gpl',
     requires => {

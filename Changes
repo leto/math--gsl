@@ -1,8 +1,8 @@
 =head1 Math::GSL Changes
 
-=head1 v0.18 - ???
+=head1 v0.18 - March 16 2008
 
-    - Make Math::GSL play nice with upcoming GSL 1.12
+    - Make Math::GSL play nice with GSL 1.12
     - Added swap() to Vector objects with tests and docs
     - Added p-norms to Vector objects via norm() and normalize()
     - Added operator overloading so that
@@ -16,6 +16,8 @@
     - Fix various typos in documentation
     - Fix warnings about overloaded operators in Matrix and BLAS
     - Overload '==' and '!=' for MatrixComplex and Matrix objects
+    - Fix amd64 -fPIC compile failure
+    - Add tests to Monte and refactor Sort tests
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

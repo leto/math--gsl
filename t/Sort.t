@@ -20,13 +20,13 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub GSL_SORT_VECTOR : Tests {
+sub GSL_SORT_VECTOR : Tests(1) {
    my $vec = Math::GSL::Vector->new([6,4,2,3,1,5]);
    gsl_sort_vector($vec->raw);
    ok_similar( [ $vec->as_list ], [ 1 .. 6 ] );
 } 
 
-sub GSL_SORT_VECTOR_LARGEST : Tests {
+sub GSL_SORT_VECTOR_LARGEST : Tests(2) {
    my $vec = Math::GSL::Vector->new([reverse 0..50]);
    my $largest10 = [1..10];
    # $largest10 should not have to be passed in
@@ -35,7 +35,7 @@ sub GSL_SORT_VECTOR_LARGEST : Tests {
    ok_similar( $stuff, [ reverse (41 .. 50) ] );
 } 
 
-sub GSL_SORT_VECTOR_SMALLEST : Tests {
+sub GSL_SORT_VECTOR_SMALLEST : Tests(2) {
    my $vec = Math::GSL::Vector->new([reverse 0..50]);
    my $smallest10 = [1..10];
    # $smallest10 should not have to be passed in
@@ -44,7 +44,7 @@ sub GSL_SORT_VECTOR_SMALLEST : Tests {
    ok_similar( $stuff, [ 0 .. 9 ] );
 } 
 
-sub GSL_SORT_VECTOR_INDEX : Tests {
+sub GSL_SORT_VECTOR_INDEX : Tests(2) {
   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
   my $p = Math::GSL::Permutation->new(5);
   ok_status(gsl_sort_vector_index($p->raw, $vec->raw));
@@ -52,7 +52,7 @@ sub GSL_SORT_VECTOR_INDEX : Tests {
   ok_similar( [ $p->as_list ], [ 3, 1, 2, 0 , 4] );
 }
 
-sub GSL_SORT_VECTOR_SMALLEST_INDEX : Tests {
+sub GSL_SORT_VECTOR_SMALLEST_INDEX : Tests(2) {
     my $self   = shift;
     my $p      = [ 1 .. $#{$self->{data}} ];
     my $vector = Math::GSL::Vector->new([4,2,3,1,5]);
@@ -61,7 +61,7 @@ sub GSL_SORT_VECTOR_SMALLEST_INDEX : Tests {
     ok_similar( $stuff , [ 3, 1, 2] );
 }
 
-sub GSL_SORT_VECTOR_LARGEST_INDEX : Tests {
+sub GSL_SORT_VECTOR_LARGEST_INDEX : Tests(2) {
     my $self   = shift;
     my $p      = [ 1 .. $#{$self->{data}} ];
     my $vector = Math::GSL::Vector->new([4,2,3,1,5]);
@@ -76,7 +76,7 @@ sub GSL_SORT : Tests {
    ok_similar ( $sorted , [ -17, 0e0, 3e-10, 1, 42.7, 4242, 6900, 2**15 ], 'gsl_sort' );    
 }
 
-sub GSL_SORT_SMALLEST : Tests {
+sub GSL_SORT_SMALLEST : Tests(2) {
    my $self = shift;
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_smallest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
@@ -84,7 +84,7 @@ sub GSL_SORT_SMALLEST : Tests {
    ok_similar ( $sorted , [ -17, 0e0, 3e-10 ], 'gsl_sort_smallest' );     
 }
 
-sub GSL_SORT_LARGEST : Tests {
+sub GSL_SORT_LARGEST : Tests(2) {
    my $self = shift;
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_largest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
@@ -92,28 +92,28 @@ sub GSL_SORT_LARGEST : Tests {
    ok_similar ( $sorted , [ 2**15,  6900, 4242 ], 'gsl_sort_largest' );     
 }
 
-sub GSL_SORT_INDEX : Tests {
+sub GSL_SORT_INDEX : Tests(1) {
     my $self = shift;
     my $p = [ 1 .. $#{$self->{data}} ];
     my $sorted = gsl_sort_index($p, $self->{data}, 1, $#{$self->{data}}+1 );
     ok_similar( $sorted, [ 3, 7, 5, 1, 2, 6, 4, 0 ] );
 }
 
-sub GSL_SORT_SMALLEST_INDEX : Tests {
+sub GSL_SORT_SMALLEST_INDEX : Tests(1) {
     my $self = shift;
     my $p = [ 1 .. $#{$self->{data}} ];
     my $sorted = gsl_sort_smallest_index($p, 3, $self->{data}, 1, $#{$self->{data}}+1 );
     ok_similar( $sorted, [ 3, 7, 5 ] );
 }
 
-sub GSL_SORT_LARGEST_INDEX : Tests {
+sub GSL_SORT_LARGEST_INDEX : Tests(1) {
     my $self = shift;
     my $p = [ 1 .. $#{$self->{data}} ];
     my $sorted = gsl_sort_largest_index($p, 3, $self->{data}, 1, $#{$self->{data}}+1 );
     ok_similar( $sorted, [ 0,4,6 ] );
 }
 
-sub GSL_SORT_AGREES_WITH_PERL_SORT : Tests {
+sub GSL_SORT_AGREES_WITH_PERL_SORT : Tests(1) {
     my $self = shift;
     my $rng = Math::GSL::RNG->new;
     my @data = map { (-1) ** $_ * $rng->get } (1..100);

@@ -63,6 +63,9 @@
         y = POPn;
         return y;
     }
+    double callmonte(double x, int func, int dim, void *params ){
+        fprintf(stderr, "callmonte!!!");
+    }
 %}
 %typemap(in) gsl_monte_function * {
     gsl_monte_function MF;
@@ -74,14 +77,15 @@
     }
     if (Callbacks == (HV*)NULL)
         Callbacks = newHV();
-    fprintf(stderr,"STORE gsl_monte_function CALLBACK: %d\n", (int)$input);
+    fprintf(stderr,"STORE $$1_name gsl_monte_function CALLBACK: %d\n", (int)$input);
     hv_store( Callbacks, (char*)&$input, sizeof($input), newSVsv($input), 0 );
 
     MF.params  = &$input;
     MF.dim     = 1; // XXX
-    MF.f       = &callthis;
+    MF.f       = &callmonte;
     $1         = &MF;
 };
+
 %typemap(in) gsl_function * {
     gsl_function F;
     int count;

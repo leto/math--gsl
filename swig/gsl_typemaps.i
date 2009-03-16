@@ -63,7 +63,7 @@
         y = POPn;
         return y;
     }
-    double callmonte(double x, int func, int dim, void *params ){
+    double callmonte(double x[], size_t dim, void *params ){
         fprintf(stderr, "callmonte!!!");
     }
 %}

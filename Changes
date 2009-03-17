@@ -18,6 +18,7 @@
     - Overload '==' and '!=' for MatrixComplex and Matrix objects
     - Fix amd64 -fPIC compile failure
     - Add tests to Monte and refactor Sort tests
+    - Refactor and add error checking to callbacks
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

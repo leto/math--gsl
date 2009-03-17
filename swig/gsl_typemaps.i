@@ -46,6 +46,7 @@
     */
     double callthis(double x , int func, void *params){
         SV ** sv;
+        unsigned int count;
         double y;
         dSP;
 
@@ -58,8 +59,16 @@
 
         PUSHMARK(SP);
         XPUSHs(sv_2mortal(newSVnv((double)x)));
-        PUTBACK;
-        call_sv(*sv, G_SCALAR);
+        PUTBACK;                                /* make local stack pointer global */
+
+        count = call_sv(*sv, G_SCALAR);
+        SPAGAIN;
+
+        if (count != 1)
+                croak("Expected to call subroutine in scalar context!");
+
+        PUTBACK;                                /* make local stack pointer global */
+         
         y = POPn;
         return y;
     }

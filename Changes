@@ -13,13 +13,13 @@
     - Added inverse(), is_square(), det(),  lndet(), zero(), identity() 
         and hermitian() to MatrixComplex objects
     - Added dot product to Matrix objects
-    - Fix various typos in documentation
-    - Fix warnings about overloaded operators in Matrix and BLAS
-    - Overload '==' and '!=' for MatrixComplex and Matrix objects
-    - Fix amd64 -fPIC compile failure
-    - Add tests to Monte and refactor Sort tests
-    - Refactor and improve error checking in callback interface
-    - Fix 'NaN' test failures
+    - Fixed various typos in documentation
+    - Fixed warnings about overloaded operators in Matrix and BLAS
+    - Overloaded '==' and '!=' for MatrixComplex and Matrix objects
+    - Fixed amd64 -fPIC compile failure
+    - Added tests to Monte and refactor Sort tests
+    - Refactored and improve error checking in callback interface
+    - Fixed 'NaN' test failures (thanks CPANtesters!)
 
 =head1 v0.16 - December 14 2008 (Happy Snowpocalypse PDX!)
 

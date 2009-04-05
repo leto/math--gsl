@@ -1,7 +1,12 @@
 %include "system.i"
+%include "gsl/gsl_nan.h"
 #ifdef GSL_MINOR_VERSION &&  GSL_MINOR_VERSION >= 12
     %include "gsl_inline.h"
 #endif
+
+%{
+    #include "gsl/gsl_nan.h"
+%}
 
 %typemap(in) double const [] {
     AV *tempav;
@@ -12,7 +17,7 @@
         croak("Math::GSL : $$1_name is not a reference!");
     if (SvTYPE(SvRV($input)) != SVt_PVAV)
         croak("Math::GSL : $$1_name is not an array ref!");
-        
+
     tempav = (AV*)SvRV($input);
     len = av_len(tempav);
     $1 = (double *) malloc((len+1)*sizeof(double));
@@ -54,7 +59,7 @@
         sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
         if (sv == (SV**)NULL) {
             fprintf(stderr, "Math::GSL(callthis): %d not in Callbacks!\n", func);
-            return NAN;
+            return GSL_NAN;
         }
 
         PUSHMARK(SP);

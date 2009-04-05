@@ -54,7 +54,7 @@
         sv = hv_fetch(Callbacks, (char*)func, sizeof(func), FALSE );
         if (sv == (SV**)NULL) {
             fprintf(stderr, "Math::GSL(callthis): %d not in Callbacks!\n", func);
-            return;
+            return NAN;
         }
 
         PUSHMARK(SP);

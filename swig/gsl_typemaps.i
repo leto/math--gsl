@@ -27,6 +27,10 @@
     }
 }
 
+%typemap(freearg) double const [] {
+        if ($1) free($1);
+}
+
 %apply double const [] { 
     size_t *p ,double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[] , 

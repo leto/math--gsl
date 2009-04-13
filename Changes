@@ -1,5 +1,8 @@
 =head1 Math::GSL Changes
 
+=head1 v0.20 - April 2008
+    - Improvements to callbacks
+
 =head1 v0.18 - March 23 2008
 
     - Make Math::GSL play nice with GSL 1.12

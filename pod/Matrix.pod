@@ -529,7 +529,7 @@ sub eigenpair($)
 
     gsl_eigen_nonsymmv($self->raw, $vector->raw, $evec->raw, $eigen);
 
-    my $eigenvectors = [ map { $evec->col($_)->as_vector } (0,1) ];
+    my $eigenvectors = [ map { $evec->col($_)->as_vector } (0 .. $r-1) ];
 
     my $x = gsl_vector_complex_real($vector->raw); # vector of real components
     my $y = gsl_vector_complex_imag($vector->raw); # vector of imaginary components

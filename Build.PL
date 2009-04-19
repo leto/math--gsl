@@ -152,6 +152,14 @@ close $fh;
 
 my $ccflags = $gsl_pkgcfg{cflags};
 
+# In case GSL in installed in the system-wide directory, $ccflags is
+# empty (because pkg-config remove -I/usr/include). However, swig
+# need it. So adding it back...
+my $swig_flags_add='';
+if ($ccflags =~ /^\s*$/ ) {
+    $swig_flags_add=' -I/usr/include'
+}
+
 ## Swig produces a number of GCC warnings. Turn them off if we can.
 $ccflags .= try_cflags("-Wno-strict-aliasing");
 $ccflags .= try_cflags("-Wno-unused-function");
@@ -161,7 +169,7 @@ $ccflags .= try_cflags("-Wno-unused-variable");
 
 
 my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags = "$gsl_pkgcfg{cflags}"; # -Wall is a bit much
+my $swig_flags = "$gsl_pkgcfg{cflags}$swig_flags_add"; # -Wall is a bit much
 
 if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";

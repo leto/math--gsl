@@ -2,9 +2,6 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-FILE * fopen(char *, char *);
-int fclose(FILE *);
-
 %{
     #include "gsl/gsl_nan.h"
     #include "gsl/gsl_complex.h"

@@ -31,16 +31,74 @@ typedef int size_t;
     }
 }
 
+%typemap(freearg) double const [] {
+        if ($1) free($1);
+}
+
+%typemap(in) float const [] {
+    AV *tempav;
+    I32 len;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $$1_name is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $$1_name is not an array ref!");
+
+    tempav = (AV*)SvRV($input);
+    len = av_len(tempav);
+    $1 = (float *) malloc((len+1)*sizeof(float));
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(tempav, i, 0);
+        $1[i] = (float)(double) SvNV(*tv);
+    }
+}
+
+%typemap(freearg) float const [] {
+        if ($1) free($1);
+}
+
+%typemap(in) size_t const [] {
+    AV *tempav;
+    I32 len;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $$1_name is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $$1_name is not an array ref!");
+
+    tempav = (AV*)SvRV($input);
+    len = av_len(tempav);
+    $1 = (size_t *) malloc((len+1)*sizeof(size_t));
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(tempav, i, 0);
+        $1[i] = SvIV(*tv);
+    }
+}
+
+%typemap(freearg) size_t const [] {
+        if ($1) free($1);
+}
+
 %apply double const [] { 
-    size_t *p ,double *data, double *dest, double *f_in, double *f_out,
+    double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[],
     const double * x, const double * y, const double * w , const double x_array[],
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,
     const double * array , const double data2[], const double w[] ,
-    float const *A, float const *B, float const *C, float *C, double *v,
+    double *v,
     gsl_complex_packed_array data
 };
+
+%apply float const [] { 
+    float const *A, float const *B, float const *C, float *C
+};
+
+%apply size_t const [] { 
+    size_t *p
+}
 
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *neval };
 %apply double * OUTPUT {
@@ -256,4 +314,3 @@ typedef int size_t;
     fprintf(stderr, 'FDF_FUNC');
     return GSL_NAN;
 }
-

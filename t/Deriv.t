@@ -1,6 +1,6 @@
 package Math::GSL::Deriv::Test;
 use base 'Test::Class';
-use Test::More tests => 9;
+use Test::More tests => 13;
 use Math::GSL        qw/:all/;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::Deriv qw/:all/;
@@ -25,11 +25,23 @@ sub TEST_FUNCTION_STRUCT : Tests(1) {
     isa_ok( $self->{gsl_func},'Math::GSL::Deriv::gsl_function_struct');
 }
 
-sub TEST_DERIV_CENTRAL_DIES : Tests(1) { 
+sub TEST_DERIV_CENTRAL_DIES : Tests(5) { 
     my ($x,$h)=(10,0.01);
     throws_ok( sub {
                gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
-           },qr/not a reference value/, 'gsl_deriv_central borks when first arg is not a coderef');
+           },qr/Undefined subroutine/, 'gsl_deriv_central borks when first arg is not a existing routine');
+    throws_ok( sub {
+               gsl_deriv_central( undef, $x, $h); 
+           },qr/not a reference to code/, 'gsl_deriv_central borks when first arg is undef');
+    throws_ok( sub {
+               gsl_deriv_central( {}, $x, $h); 
+           },qr/not a reference to code/, 'gsl_deriv_central borks when first arg is hash ref');
+    throws_ok( sub {
+               gsl_deriv_central( [], $x, $h); 
+           },qr/is an empty array/, 'gsl_deriv_central borks when first arg is an empty array ref');
+    throws_ok( sub {
+               gsl_deriv_central( 'IAMNOTACODEREF', $x, $h); 
+           },qr/Undefined subroutine/, 'gsl_deriv_central borks when first arg is not a existing routine');
 }
 
 sub TEST_DERIV_CENTRAL : Tests(2) { 

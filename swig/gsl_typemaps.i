@@ -76,7 +76,72 @@
 }
 
 %apply float const [] { 
-    float const *A, float const *B, float const *C, float *C
+    float const *A, float const *B, float const *C
+};
+
+/*****************************
+ * handle 'float []' as an in/out array of floats
+ * We allocate the C array at the begining and free it at the end
+ * We modify the perl array IN PLACE (not sure other langage can do that
+ *   but perl can)
+ * Note the trick to store some private info before the C array
+ * as swig require that $1 points to the C array (as it uses it
+ * when calling the gsl function)
+ */
+%{
+    struct perl_array {
+        I32 len;
+        AV *array;
+    };
+%}
+
+%typemap(in) float [] {
+    struct perl_array * p_array = 0;   
+    I32 len;
+    AV *array;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $$1_name is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $$1_name is not an array ref!");
+
+    array = (AV*)SvRV($input);
+    len = av_len(array);
+    p_array = (struct perl_array *) malloc((len+1)*sizeof(float)+sizeof(struct perl_array));
+    p_array->len=len;
+    p_array->array=array;
+    $1 = (float *)&p_array[1];
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(array, i, 0);
+        $1[i] = (float)(double) SvNV(*tv);
+    }
+}
+
+%typemap(argout) float [] {
+    struct perl_array * p_array = 0;
+    int i;
+    SV **tv;
+    p_array=(struct perl_array *)(((char*)$1)-sizeof(struct perl_array));
+    for (i = 0; i <= p_array->len; i++) {
+        double val=(double)(float)($1[i]);
+        tv = av_fetch(p_array->array, i, 0);
+        sv_setnv(*tv, val);
+        if (argvi >= items) {            
+            EXTEND(sp,1);              /* Extend the stack by 1 object */
+        }
+        $result = sv_newmortal();
+        sv_setnv($result, val);
+        argvi++;
+    }
+}
+
+%typemap(freearg) float [] {
+    if ($1) free(((char*)$1)-sizeof(struct perl_array));
+}
+
+%apply float const [] { 
+    float *C
 };
 
 /*****************************

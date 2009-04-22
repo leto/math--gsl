@@ -2,9 +2,9 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 
-%apply double *INPUT { float const *X };
-%apply float *INPUT  { double const *X };
-%apply double *OUTPUT { float *C };
+%apply float [] { float *C };
+%apply double const [] { const double * };
+%apply float const [] { const float * };
 
 %{
     #include "gsl/gsl_cblas.h"

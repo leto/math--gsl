@@ -30,11 +30,12 @@ typedef int size_t;
         $1[i] = (double) SvNV(*tv);
     }
 }
-
+/*  This caused gsl_vector_view  functions to fail, can we 
+ *  turn this off for those functions?
 %typemap(freearg) double const [] {
         if ($1) free($1);
 }
-
+*/
 %typemap(in) float const [] {
     AV *tempav;
     I32 len;

@@ -10,6 +10,10 @@
     #include "gsl/gsl_monte.h"
 %}
 
+/*****************************
+ * handle 'double const []' as an input array of doubles
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) double const [] {
     AV *tempav;
     I32 len;
@@ -34,6 +38,22 @@
         if ($1) free($1);
 }
 */
+
+%apply double const [] { 
+    double *data, double *dest, double *f_in, double *f_out,
+    double data[], const double * src, double x[], double a[], double b[],
+    const double * x, const double * y, const double * w , const double x_array[],
+    const double xrange[], const double yrange[], double * base,
+    const double * base, const double xrange[], const double yrange[] ,
+    const double * array , const double data2[], const double w[] ,
+    double *v,
+    gsl_complex_packed_array data
+};
+
+/*****************************
+ * handle 'float const []' as an input array of floats
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) float const [] {
     AV *tempav;
     I32 len;
@@ -57,6 +77,14 @@
         if ($1) free($1);
 }
 
+%apply float const [] { 
+    float const *A, float const *B, float const *C, float *C
+};
+
+/*****************************
+ * handle 'size_t const []' as an input array of size_t
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) size_t const [] {
     AV *tempav;
     I32 len;
@@ -80,32 +108,26 @@
         if ($1) free($1);
 }
 
-%apply double const [] { 
-    double *data, double *dest, double *f_in, double *f_out,
-    double data[], const double * src, double x[], double a[], double b[],
-    const double * x, const double * y, const double * w , const double x_array[],
-    const double xrange[], const double yrange[], double * base,
-    const double * base, const double xrange[], const double yrange[] ,
-    const double * array , const double data2[], const double w[] ,
-    double *v,
-    gsl_complex_packed_array data
-};
-
-%apply float const [] { 
-    float const *A, float const *B, float const *C, float *C
-};
-
 %apply size_t const [] { 
     size_t *p
 }
 
+/*****************************
+ * handle some parameters as input or output
+ */
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *neval };
 %apply double * OUTPUT {
     double * min_out, double * max_out,
     double *abserr, double *result
 };
-%{
 
+/*****************************
+ * Callback managment
+ */
+%{
+    /* structure to hold required information while the gsl function call
+       for each callback
+     */
     struct gsl_function_perl {
         gsl_function C_gsl_function;
         SV * function;
@@ -119,9 +141,8 @@
     };
 
 
-    /* this function returns the value 
-        of evaluating the function pointer
-        stored in func with argument x
+    /* These functions (C callbacks) calls the perl callbacks.
+       Info for perl callback can be found using the 'void*params' parameter
     */
     double call_gsl_function(double x , void *params){
         struct gsl_function_perl *F=(struct gsl_function_perl*)params;
@@ -309,6 +330,7 @@
     SvREFCNT_dec(p->params);
 };
 
+/* TODO: same thing should be done for these kinds of callbacks */
 %typemap(in) gsl_function_fdf * {
     fprintf(stderr, 'FDF_FUNC');
     return GSL_NAN;

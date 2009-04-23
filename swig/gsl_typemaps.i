@@ -4,8 +4,6 @@
     %include "gsl/gsl_inline.h"
 #endif
 
-typedef int size_t;
-
 %{
     #include "gsl/gsl_nan.h"
     #include "gsl/gsl_math.h"

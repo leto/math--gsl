@@ -48,15 +48,6 @@ typedef int size_t;
     double *abserr, double *result
 };
 %{
-<<<<<<< HEAD:swig/gsl_typemaps.i
-    static HV * Callbacks = (HV*)NULL;  // Hash of callbacks, stored by memory address
-    SV * Last_Call        = (SV*)NULL;  // last used callback, used as fudge for systems with MULTIPLICITY
-
-    /* this function returns the value of evaluating the function pointer stored in func with argument x */
-
-    double callthis(double x , int func, void *params){
-        SV ** sv;
-=======
 
     struct gsl_function_perl {
         gsl_function C_gsl_function;

@@ -6,7 +6,7 @@ author:
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
 resources:
-  license: http://opensource.org/licenses/gpl-license.php
+  license: ~
 configure_requires:
   ExtUtils::PkgConfig: 1.03
 requires:

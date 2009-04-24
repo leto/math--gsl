@@ -535,6 +535,7 @@ sub SET_COL_CHAINED : Tests {
 }
 
 sub GSL_MATRIX_VIEW_ARRAY : Tests {
+    local $TODO = "memory management for view_array* functions is being worked on";
     my $array = [8,4,3,7];
     my $matrix_view = gsl_matrix_view_array ($array, 2,2);
     ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 0, $_) } 0..1], [8, 4]);
@@ -542,6 +543,7 @@ sub GSL_MATRIX_VIEW_ARRAY : Tests {
 }
 
 sub GSL_MATRIX_VIEW_ARRAY_WITH_TDA : Tests {
+    local $TODO = "memory management for view_array* functions is being worked on";
     my $array = [8,4,3,7,5];
     my $matrix_view = gsl_matrix_view_array_with_tda ($array, 2,2, 3);
     ok_similar([map { gsl_matrix_get($matrix_view->{matrix}, 0, $_) } 0..1], [8, 4]);

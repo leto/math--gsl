@@ -10,5 +10,7 @@
     #include "gsl/gsl_cblas.h"
 %}
 
+%ignore cblas_xerbla;
+
 %include "gsl/gsl_cblas.h"
 %include "../pod/CBLAS.pod"

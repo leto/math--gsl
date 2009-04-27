@@ -2,7 +2,6 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
-%apply int *OUTPUT { int * e };
 
 %{
     #include "gsl/gsl_sys.h"

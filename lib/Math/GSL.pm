@@ -11,8 +11,8 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Vector  qw/:file/;
 use Math::GSL::Machine qw/:all/;
 our @EXPORT = qw();
-our @EXPORT_OK = qw( 
-                     gsl_fopen gsl_fclose 
+our @EXPORT_OK = qw(
+                     gsl_fopen gsl_fclose
                      $GSL_MODE_DEFAULT $GSL_PREC_DOUBLE
                      $GSL_PREC_SINGLE $GSL_PREC_APPROX
                    );
@@ -22,7 +22,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.19_02';
+our $VERSION = '0.19_03';
 
 =head1 NAME
 
@@ -30,7 +30,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.19_02
+Version 0.19_03
 
 =head1 SYNOPSIS
 

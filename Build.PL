@@ -80,7 +80,7 @@ sub try_compile {
 		
 *** The test compile of '$tmp.c' failed: status $?
 *** (the status means: errno = $errno or '$!')
-*** DO NOT PANIC: this just means that *some* you may get some innocuous
+*** DO NOT PANIC: this just means that you may get some innocuous
 *** compiler warnings.
 ";
 	}
@@ -151,17 +151,26 @@ if (defined $gv) {
 close $fh;
 
 my $ccflags = $gsl_pkgcfg{cflags};
+# In case GSL in installed in the system-wide directory, $ccflags is
+# empty (because pkg-config remove -I/usr/include), but swig needs it
+
+my $swig_flags;
+if ($ccflags =~ /^\s*$/ ) {
+    $swig_flags =' -I/usr/include';
+}
 
 ## Swig produces a number of GCC warnings. Turn them off if we can.
-$ccflags .= try_cflags("-Wno-strict-aliasing");
+$ccflags .= try_cflags("-Wall");
+#$ccflags .= try_cflags("-Wno-strict-aliasing");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
+$ccflags .= try_cflags("-g");
 
 
 my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
-my $swig_flags = "$gsl_pkgcfg{cflags}"; # -Wall is a bit much
+$swig_flags = "$gsl_pkgcfg{cflags} $swig_flags";
 
 if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";

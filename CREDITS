@@ -1,0 +1,24 @@
+=pod
+
+    Following in the steps of other open source projects that
+    eventually take over the world, here is the partial list
+    of people who have contributed to Math::GSL and its supporting
+    works.  It is sorted by name and formatted to allow easy
+    grepping and beautification by scripts.
+    The fields are: name (N), email (E), web-address (W),
+    description (D), github (U) and snail-mail address (S).
+
+        Thanks,
+
+        The Math::GSL Team
+        PS: Yes, this looks remarkably like the many other CREDITS formats
+        PPS: This file is encoded in UTF-8
+
+----------
+N: Jonathan "Duke" Leto
+U: leto
+E: jonathan@leto.net
+W: http://leto.net
+S: Portland, OR
+
+=cut

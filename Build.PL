@@ -154,7 +154,7 @@ my $ccflags = $gsl_pkgcfg{cflags};
 # In case GSL in installed in the system-wide directory, $ccflags is
 # empty (because pkg-config remove -I/usr/include), but swig needs it
 
-my $swig_flags;
+my $swig_flags = '';
 if ($ccflags =~ /^\s*$/ ) {
     $swig_flags =' -I/usr/include';
 }

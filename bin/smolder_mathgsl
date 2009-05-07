@@ -1,9 +1,11 @@
-#!/opt/local/bin/perl5.10 -w
+#!/usr/local/bin/perl5.10 -w
 use strict;
 use warnings;
 use Config;
 use TAP::Harness::Archive;
 use Data::Dumper;
+use lib 'lib';
+use Math::GSL;
 $|++;
 
 my $archive = shift || 'my_test_run.tar.gz';
@@ -23,17 +25,17 @@ if ($^O eq 'MSWin32') {
     eval { require Sys::Hostname; $domain = Sys::Hostname::hostname(); };
 }
 
-my ($git_id,$git_branch);
+my ($git_id,$git_branch) = ('','');
+
 if ( -e '.git' ) {
-    $git_id = `git log -p -n 1|grep commit`;
+    chomp($git_id = `git log -p -n 1|grep commit`);
     $git_id =~ s/commit //;
-    $git_branch = `git branch | grep "^\*"`;
+    chomp($git_branch = `git branch | grep "^\*"`);
     $git_branch =~ s/\* //;
-    chomp $git_id;
-    chomp $git_branch;
 }
 my $properties = {
-    'Git Commit ID' => $git_id,
+    'Math::GSL'     => $Math::GSL::VERSION,
+    'Git Commit'    => $git_id,
     'Git Branch'    => $git_branch,
     'Submitter'     => "$me\@$domain",
     'Perl Version'  => $Config{version},
@@ -45,10 +47,13 @@ my $properties = {
     '64bit ints'    => $Config{use64bitint},
     '64bit all'     => $Config{use64bitall},
     'Patch level'   => $Config{version_patchlevel_string},
+    'Perl @INC'     => join(":",@INC),
+    'PERL5LIB'      => $ENV{PERL5LIB},
 };
 my @files = glob('t/*.t');
 my %options = (
            verbosity        => 0,
+           jobs             => 2,
            merge            => 1,
            lib              => [ 'lib', 'blib/lib', 'blib/arch' ],
            archive          => $archive,
@@ -59,13 +64,15 @@ my %options = (
 
 my $harness = TAP::Harness::Archive->new(\%options);
 $harness->runtests(@files);
+my $cmd;
 
-
-my $cmd =<<CMD;
+$cmd =<<CMD;
 smolder_smoke_signal --server $server \\
     --username $user --password $pass --file $archive \\
-    --project Math::GSL --platform $Config{osname} --architecture $archname
+    --project Math::GSL --platform $Config{osname} --architecture $archname \\
+    --tags "\$USER , Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
 CMD
+print "about to do:\n$cmd\n";
 
 system $cmd;
 

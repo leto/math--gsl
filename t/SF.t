@@ -2,6 +2,7 @@ package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More tests => 1109;
+use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::SF      qw/:all/;

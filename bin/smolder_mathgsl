@@ -13,7 +13,7 @@ my $server = 'smolder.plusthree.com';
 my ($user,$pass) = qw/leto bessel_J0/;
 my $archname = $Config{archname};
 if ($archname =~ /darwin/i){
-    $archname = `uname -p`;
+    chomp($archname = `uname -p`);
 }
 my $me = $^O eq 'MSWin32' ? $ENV{'USERNAME'}
         : $ENV{'LOGNAME'} || eval { getpwuid($<) };
@@ -64,13 +64,10 @@ my %options = (
 
 my $harness = TAP::Harness::Archive->new(\%options);
 $harness->runtests(@files);
-my $cmd;
-
-$cmd =<<CMD;
+my $cmd =<<CMD;
 smolder_smoke_signal --server $server \\
     --username $user --password $pass --file $archive \\
-    --project Math::GSL --platform $Config{osname} --architecture $archname \\
-    --tags "\$USER , Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
+    --project Math::GSL --platform $Config{osname} --architecture $archname --tags "\$USER , Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
 CMD
 print "about to do:\n$cmd\n";
 

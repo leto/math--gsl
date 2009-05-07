@@ -1,7 +1,7 @@
 %include "system.i"
 %include "gsl/gsl_nan.h"
-#if definded GSL_MINOR_VERSION &&  GSL_MINOR_VERSION >= 12
-    %include "gsl_inline.h"
+#if defined GSL_MINOR_VERSION && (GSL_MINOR_VERSION >= 12)
+    %include "gsl/gsl_inline.h"
 #endif
 
 typedef int size_t;

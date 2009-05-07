@@ -11,8 +11,8 @@ chdir $base_dir or die "$base_dir: $!";
 
 my $smolder  = qq{ export PERL5LIB=`pwd`/lib && /home/smoke/bin/smolder_mathgsl };
 
-system "cd $base_dir && git pull origin $branch && ./Build clean";
-system "perl Build.PL && ./Build && $smolder";
+system "cd $base_dir && git pull origin $branch ";
+system "perl Build.PL && ./Build && $smolder && ./Build clean";
 
 print "You just smoked some Math::GSL on branch $branch\n";
 

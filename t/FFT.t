@@ -16,7 +16,8 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
     unlink 'fft' if -f 'fft';
 }
-sub FFT_REAL_RADIX2_TRANSFORM : Tests 
+
+sub FFT_REAL_RADIX2_TRANSFORM : Tests(2)
 {
     my $input    = [ (0) x 5, (1) x 22, (0) x 5 ];
     my $expected = [ 22, -8.44205264582682, -4.64465605976076, -0.643126602526688, 1.70710678118655, 1.8349201998544,
@@ -33,7 +34,7 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests
     ok_similar( $output, $expected );
 }
 
-sub FFT_COMPLEX_RADIX2_FORWARD : Tests 
+sub FFT_COMPLEX_RADIX2_FORWARD : Tests(2)
 {
     my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
     my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, 1, 128);
@@ -42,12 +43,13 @@ sub FFT_COMPLEX_RADIX2_FORWARD : Tests
     # we should propably use the gsl_fft_real_unpack function here to create a suitable complex_packed_array
     ok( defined $fft );
 }
-sub FFT_VARS : Tests {
+
+sub FFT_VARS : Tests(2) {
     cmp_ok( $gsl_fft_forward, '==', -1, 'gsl_fft_forward' );
     cmp_ok( $gsl_fft_backward, '==', +1, 'gsl_fft_backward' );
 }
 
-sub WAVETABLE_ALLOC_FREE: Tests {
+sub WAVETABLE_ALLOC_FREE: Tests(6) {
     my $wavetable = gsl_fft_complex_wavetable_alloc(42);
     isa_ok($wavetable, 'Math::GSL::FFT' );
     gsl_fft_complex_wavetable_free($wavetable);
@@ -65,7 +67,7 @@ sub WAVETABLE_ALLOC_FREE: Tests {
 
 }
 
-sub WORKSPACE_ALLOC_FREE: Tests {
+sub WORKSPACE_ALLOC_FREE: Tests(4) {
     my $workspace = gsl_fft_complex_workspace_alloc(42);
     isa_ok($workspace, 'Math::GSL::FFT' );
     gsl_fft_complex_workspace_free($workspace);

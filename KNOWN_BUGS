@@ -1,9 +1,11 @@
 
 =head1 List of Known Bugs in Math::GSL
 
+* Mathieu Functions currently do not work.
+
 * The implementation of callbacks in Math::GSL is duct tape and paper clips. It is very sensitive
 
- to new and exotic platforms and compilers. 
+ to new and exotic platforms and compilers. UPDATE: This has been much improved by Vincent Danjean.
 
 * Math::GSL subclasses Module::Build and generates compile flags based on system characteristics,
 

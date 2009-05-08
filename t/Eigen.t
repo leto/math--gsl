@@ -1,6 +1,6 @@
 package Math::GSL::Eigen::Test;
 use base q{Test::Class};
-use Test::More tests => 39;
+use Test::More tests => 59;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Eigen   qw/:all/;
@@ -100,28 +100,28 @@ sub GSL_EIGEN_SYMMV : Tests {
     my $eval = gsl_vector_alloc(2);
     my $evec = gsl_matrix_alloc(2,2);
     ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
-    is_similar(gsl_vector_get($eval, 0), 3);
-    is_similar(gsl_vector_get($eval, 1), 1);
+    ok_similar(gsl_vector_get($eval, 0), 3);
+    ok_similar(gsl_vector_get($eval, 1), 1);
     my $x = gsl_matrix_get($evec, 0, 0);
 
     #this is the eigenvector for the eigenvalue 1, which is the second
     #eigenvalue in the $eval vector, but the GSL documentation says the first
     #eigenvector should correspond to the first eigenvalue... where'e the error?
 
-    is_similar(gsl_matrix_get($evec, 0, 1), -$x); 
+    ok_similar(gsl_matrix_get($evec, 0, 1), -$x); 
 
-    is_similar (sqrt($x**2+$x**2), 1);
+    ok_similar (sqrt($x**2+$x**2), 1);
     
     $x = gsl_matrix_get($evec, 1, 0);
-    is_similar(gsl_matrix_get($evec, 1, 1), $x);
-    is_similar(sqrt($x**2+$x**2), 1);
+    ok_similar(gsl_matrix_get($evec, 1, 1), $x);
+    ok_similar(sqrt($x**2+$x**2), 1);
 
     my $v1 = gsl_vector_alloc(2);
     my $v2 = gsl_vector_alloc(2);
     gsl_matrix_get_col($v1, $evec, 0);
     gsl_matrix_get_col($v2, $evec, 1);
     gsl_vector_mul($v1, $v2);
-    is_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
+    ok_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_SYMMV_SORT : Tests {
@@ -135,8 +135,8 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     my $evec = gsl_matrix_alloc(2,2);
     ok_status(gsl_eigen_symmv($m, $eval, $evec, $w));
     ok_status(gsl_eigen_symmv_sort ($eval, $evec, $GSL_EIGEN_SORT_VAL_ASC));
-    is_similar(gsl_vector_get($eval, 0), 1);
-    is_similar(gsl_vector_get($eval, 1), 3);
+    ok_similar(gsl_vector_get($eval, 0), 1);
+    ok_similar(gsl_vector_get($eval, 1), 3);
     my $x = gsl_matrix_get($evec, 0, 0);
     ok_similar(gsl_matrix_get($evec, 0, 1), -$x);
     ok_similar(sqrt($x**2+$x**2), 1);
@@ -150,7 +150,7 @@ sub GSL_EIGEN_SYMMV_SORT : Tests {
     gsl_matrix_get_col($v1, $evec, 0);
     gsl_matrix_get_col($v2, $evec, 1);
     gsl_vector_mul($v1, $v2);
-    is_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
+    ok_similar(gsl_vector_get($v1, 0) + gsl_vector_get($v1, 1) , 0);
 }
 
 sub GSL_EIGEN_HERM : Tests {
@@ -170,8 +170,8 @@ sub GSL_EIGEN_HERM : Tests {
     my $eigen  = gsl_eigen_herm_alloc(2);
     my $vector = gsl_vector_alloc(2);
     ok_status(gsl_eigen_herm($matrix, $vector, $eigen));
-    is_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
-    is_similar(gsl_vector_get($vector, 1), 2-sqrt(6));    
+    ok_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
+    ok_similar(gsl_vector_get($vector, 1), 2-sqrt(6));    
 }
 sub GSL_EIGEN_HERMV : Tests {
     my $matrix  = gsl_matrix_complex_alloc (2, 2);
@@ -191,8 +191,8 @@ sub GSL_EIGEN_HERMV : Tests {
     my $vector = gsl_vector_alloc(2);
     my $evec = gsl_matrix_complex_alloc(2,2);
     ok_status(gsl_eigen_hermv($matrix, $vector, $evec, $eigen));
-    is_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
-    is_similar(gsl_vector_get($vector, 1), 2-sqrt(6));
+    ok_similar(gsl_vector_get($vector, 0), 2+sqrt(6));
+    ok_similar(gsl_vector_get($vector, 1), 2-sqrt(6));
 
 #    my $x = gsl_matrix_complex_get($evec, 1, 1);
 #    ok_similar( [ gsl_parts($x) ], [-0.750532688285823, 0 ], "last row");
@@ -215,8 +215,8 @@ sub GSL_EIGEN_NONSYMM : Tests {
     my $y = gsl_vector_complex_imag($vector);
 
     # this interface seems hokey
-    is_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
-    is_similar( gsl_vector_get($y->{vector}, 1), 0 );
+    ok_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
+    ok_similar( gsl_vector_get($y->{vector}, 1), 0 );
 }
 
 sub GSL_EIGEN_NONSYMM_Z : Tests {
@@ -240,8 +240,8 @@ sub GSL_EIGEN_NONSYMM_Z : Tests {
     my $y = gsl_vector_complex_imag($vector);
 
     # this interface seems hokey
-    is_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
-    is_similar( gsl_vector_get($y->{vector}, 1), 0 );
+    ok_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
+    ok_similar( gsl_vector_get($y->{vector}, 1), 0 );
 }
 
 sub GSL_EIGEN_NONSYMMV : Tests {
@@ -261,8 +261,8 @@ sub GSL_EIGEN_NONSYMMV : Tests {
     my $y = gsl_vector_complex_imag($vector);
 
     # this interface seems hokey
-    is_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
-    is_similar( gsl_vector_get($y->{vector}, 1), 0 );
+    ok_similar( gsl_vector_get($x->{vector}, 1), (47/2)+(0.5*sqrt(6861)) );
+    ok_similar( gsl_vector_get($y->{vector}, 1), 0 );
 
     $x = gsl_matrix_complex_get($evec, 1, 0);
     ok_similar(gsl_imag($x), 0, "evec matrix");

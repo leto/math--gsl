@@ -1,6 +1,6 @@
 package Math::GSL::BLAS::Test;
 use base q{Test::Class};
-use Test::More tests => 99;
+use Test::More tests => 109;
 use Math::GSL          qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -22,15 +22,15 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub GSL_BLAS_DDOT : Tests {
+sub GSL_BLAS_DDOT : Tests(2) {
     my $vec1 = Math::GSL::Vector->new([1,2,3,4,5]);
     my $vec2 = Math::GSL::Vector->new([5,4,3,2,1]);
     my ($x, $result) = gsl_blas_ddot($vec1->raw, $vec2->raw);
     ok_status($x);
-    is_similar($result,35);
+    ok_similar($result,35);
 }
 
-sub GSL_BLAS_ZDOTU : Tests {
+sub GSL_BLAS_ZDOTU : Tests(2) {
     my $vec1 = gsl_vector_complex_alloc(2);
     my $vec2 = gsl_vector_complex_alloc(2);
     my $c = gsl_complex_rect(2,1);
@@ -40,7 +40,7 @@ sub GSL_BLAS_ZDOTU : Tests {
     gsl_vector_complex_set($vec1,1,$c); 
     gsl_vector_complex_set($vec2,1,$c);
     ok_status(gsl_blas_zdotu($vec1, $vec2, $c));
-    is_similar([ gsl_parts($c) ], [3,6]); 
+    ok_similar([ gsl_parts($c) ], [3,6]); 
 }
 
 sub GSL_BLAS_ZDOTC : Tests {
@@ -53,12 +53,12 @@ sub GSL_BLAS_ZDOTC : Tests {
     gsl_vector_complex_set($vec1,1,$c); 
     gsl_vector_complex_set($vec2,1,$c);
     ok_status(gsl_blas_zdotc($vec1, $vec2, $c));
-    is_similar([gsl_parts($c)], [7,0]); 
+    ok_similar([gsl_parts($c)], [7,0]); 
 }
 
 sub GSL_BLAS_DNRM2 : Tests {
     my $vec = Math::GSL::Vector->new([3,4]);
-    is_similar(gsl_blas_dnrm2($vec->raw), 5);
+    ok_similar(gsl_blas_dnrm2($vec->raw), 5);
 }
   
 
@@ -68,12 +68,12 @@ sub GSL_BLAS_DZNRM2 : Tests {
     gsl_vector_complex_set($vec,0,$c); 
     $c = gsl_complex_rect(1,1);
     gsl_vector_complex_set($vec,1,$c); 
-    is_similar([gsl_blas_dznrm2($vec)], [sqrt(7)]);
+    ok_similar([gsl_blas_dznrm2($vec)], [sqrt(7)]);
 }
 
 sub GSL_BLAS_DASUM : Tests {
     my $vec = Math::GSL::Vector->new([2,-3,4]);
-    is_similar(gsl_blas_dasum($vec->raw), 9);
+    ok_similar(gsl_blas_dasum($vec->raw), 9);
 }
 
 sub GSL_BLAS_DZASUM : Tests {
@@ -82,7 +82,7 @@ sub GSL_BLAS_DZASUM : Tests {
     gsl_vector_complex_set($vec,0,$c); 
     $c = gsl_complex_rect(1,1);
     gsl_vector_complex_set($vec,1,$c); 
-    is_similar(gsl_blas_dzasum($vec), 5);
+    ok_similar(gsl_blas_dzasum($vec), 5);
 }
 
 sub GSL_BLAS_DSWAP : Tests {
@@ -110,7 +110,7 @@ sub GSL_BLAS_ZSWAP : Tests {
     ok( defined $c,"gsl_vector_complex_get");  
 
     # goes boom
-    #is_similar( [gsl_parts($c) ], [ 3,3 ] );
+    #ok_similar( [gsl_parts($c) ], [ 3,3 ] );
 }
 
 sub GSL_BLAS_DCOPY : Tests {
@@ -124,13 +124,13 @@ sub GSL_BLAS_DAXPY : Tests {
     my $vec1 = Math::GSL::Vector->new([0,1,2]);
     my $vec2 = Math::GSL::Vector->new([2,3,4]);
     ok_status(gsl_blas_daxpy(2,$vec1->raw, $vec2->raw));
-    is_similar( [ $vec2->as_list ], [ 2, 5, 8 ] );
+    ok_similar( [ $vec2->as_list ], [ 2, 5, 8 ] );
 }
 
 sub GSL_BLAS_DSCAL : Tests {
     my $vec = Math::GSL::Vector->new([0,1,2]);
     gsl_blas_dscal(4, $vec->raw);
-    is_similar( [ $vec->as_list ], [0,4,8] );
+    ok_similar( [ $vec->as_list ], [0,4,8] );
 }
 
 sub GSL_BLAS_DROT : Tests {
@@ -200,7 +200,7 @@ sub GSL_BLAS_DTRMV : Tests {
     gsl_matrix_set($A->raw, 0,2,3);
     gsl_matrix_set($A->raw, 1,2,4);
     ok_status(gsl_blas_dtrmv($CblasLower, $CblasNoTrans, $CblasNonUnit, $A->raw, $x->raw));
-    is_similar( [ $x->as_list ], [ 3, 6, 9 ] );
+    ok_similar( [ $x->as_list ], [ 3, 6, 9 ] );
 }
 
 sub GSL_BLAS_DTRSV : Tests {

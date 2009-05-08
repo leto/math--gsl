@@ -33,7 +33,7 @@
     #include "gsl/gsl_sf_lambert.h"
     #include "gsl/gsl_sf_legendre.h"
     #include "gsl/gsl_sf_log.h"
-#ifdef GSL_VERSION &&  GSL_VERSION == "1.11"
+#if defined(GSL_VERSION_minor) &&  GSL_VERSION_MINOR == 11
     #include "gsl/gsl_sf_mathieu.h"
 #endif
     #include "gsl/gsl_sf_pow_int.h"

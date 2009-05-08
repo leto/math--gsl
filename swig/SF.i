@@ -1,8 +1,6 @@
 %module "Math::GSL::SF"
 %include "typemaps.i"
-//Commenting out as test for weird bugs on certain machines
-//Not actually needed other than GSL version checking
-//%include "gsl_typemaps.i"
+%include "gsl_typemaps.i"
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
@@ -33,7 +31,7 @@
     #include "gsl/gsl_sf_lambert.h"
     #include "gsl/gsl_sf_legendre.h"
     #include "gsl/gsl_sf_log.h"
-#ifdef GSL_VERSION &&  GSL_VERSION == "1.11"
+#if defined(GSL_MINOR_VERSION) &&  GSL_MINOR_VERSION >= 11
     #include "gsl/gsl_sf_mathieu.h"
 #endif
     #include "gsl/gsl_sf_pow_int.h"
@@ -70,7 +68,7 @@
 %include "gsl/gsl_sf_lambert.h"
 %include "gsl/gsl_sf_legendre.h"
 %include "gsl/gsl_sf_log.h"
-#ifdef GSL_VERSION && GSL_VERSION == '1.11'
+#ifdef __GSL_SF_MATHIEU_H__
     %include "gsl/gsl_sf_mathieu.h"
 #endif
 %include "gsl/gsl_sf_pow_int.h"

@@ -1,7 +1,7 @@
 package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More tests => 1109;
+use Test::More tests => 1110;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1178,11 +1178,21 @@ sub TEST_ZZZ_OLD_BUGS : Test(1)
     ok_similar( [ gsl_sf_expint_En_e(3,300.0,$r) ] , [ 1.6608815083360041367294736e-133 ] );
 }
 
-sub TEST_J0_RESULT_STRUCT: Tests(2) {
+sub TEST_J0_RESULT_STRUCT: Tests(2) 
+{
     my $result = Math::GSL::SF::gsl_sf_result_struct->new;
     my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
     ok( defined $result->{err}, '$result->{err}' );
-    ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
+    ok_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}, '$result->{val}' );
+}
+
+sub TEST_ZZZ_MATHIEU: Tests
+{
+    my $result = Math::GSL::SF::gsl_sf_result_struct->new;
+    ok_status(gsl_sf_mathieu_a(2, 1.0, $result));
+    local $TODO = 'mathieu functions';
+    isa_ok('Math::GSL::SF', gsl_sf_mathieu_alloc(10));
+
 }
 
 Test::Class->runtests;

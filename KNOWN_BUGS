@@ -1,9 +1,11 @@
 
 =head1 List of Known Bugs in Math::GSL
 
+* OO interface to NTuples is only a stub
+
 * Only NTuples of integers are currently supported
 
-* Reading/Writings NTuples from a file is broken
+* Reading NTuples from a file is broken, since ->swig_ntuple_data_get returns a SWIG-encoded void pointer to the data
 
 * Mathieu Functions currently do not work.
 

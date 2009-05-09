@@ -2,27 +2,32 @@
 
 =head2 List of Things that you can do to help Math::GSL
 
+* Use Math::GSL in your calculations and tell people about it!
+
+* Submit examples showing the use of Math::GSL to do everyday calculations
+
+* Make HTML version of Math::GSL POD look nicer
+
 * Fix something in KNOWN_BUGS
 
+* Add tests for the functions in Math::GSL::Randist
+
+* Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris
+
 * Add overloading to normal arithmetic operators (like Math::MatrixReal) in
+
   Vector, VectorComplex, Matrix, MatrixComplex, possibly others
 
 * Make passing parameters to function references work properly
 
 * Investigate serialization of Math::GSL::Vector/Matrix objects
 
+* Investigate static linking issues
+
+=head2 Maybe
+
 * PDL interoperability :
                       my $matrix = Math::GSL::Matrix->new(50,50);
                       my $pdl = $matrix->as_pdl();
 
-* Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris
 
-* Submit examples showing the use of Math::GSL to do everyday calculations
-
-* Make HTML version of Math::GSL POD look nicer
-
-* Add tests in xt/ to test for correct Build.PL behavior when modules are missing, etc...
-
-* Investigate static linking issues
-
-* Use Math::GSL in your calculations and tell people about it!

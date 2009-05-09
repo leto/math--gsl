@@ -1,6 +1,6 @@
 package Math::GSL::NTuple::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::More tests => 9;
 use Test::Exception;
 use Math::GSL::NTuple qw/:all/; 
 use Math::GSL::Const qw/:all/; 
@@ -16,7 +16,7 @@ END { warn "This is the end" }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    my $size = int rand(100);
+    my $size = 2 + int rand(100);
     $self->{size}   = $size;
     my $stuff       = [1..$size];
 
@@ -30,13 +30,13 @@ sub teardown : Test(teardown) {
     unlink 'ntuple2' if -f 'ntuple2';
 }
 
-sub GSL_NTUPLE_CREATE : Tests {
+sub GSL_NTUPLE_CREATE : Tests(2) {
     my $self = shift;
     isa_ok ($self->{ntuple}, 'Math::GSL::NTuple::gsl_ntuple');
     ok( -e 'ntuple', 'ntuple file created');
 }
 
-sub GSL_NTUPLE_OPEN_CLOSE : Tests {
+sub GSL_NTUPLE_OPEN_CLOSE : Tests(2) {
     my $self = shift;
     my $stuff = [];
     my $ntuple = gsl_ntuple_open('ntuple',$stuff, $self->{size} );
@@ -44,7 +44,7 @@ sub GSL_NTUPLE_OPEN_CLOSE : Tests {
     ok_status(gsl_ntuple_close($ntuple));
 }
 
-sub GSL_NTUPLE_WRITE: Tests {
+sub GSL_NTUPLE_WRITE: Tests(2) {
     my $self = shift; 
     my $data = [1..100];
     my $base = gsl_ntuple_create('ntuple', $data, 100);
@@ -52,7 +52,7 @@ sub GSL_NTUPLE_WRITE: Tests {
     ok_status(gsl_ntuple_close($base));
 }
 
-sub GSL_NTUPLE_READ: Tests {
+sub GSL_NTUPLE_READ: Tests(2) {
     my $self = shift; 
     my $data = [1..100];
     my $ntuple = gsl_ntuple_open('ntuple', $data, 100 );
@@ -61,5 +61,10 @@ sub GSL_NTUPLE_READ: Tests {
     ok_status(gsl_ntuple_read($ntuple),$GSL_EOF);
     ok_status(gsl_ntuple_close($ntuple));
 }
+sub GSL_NTUPLE_OBJECT: Tests(1) {
+    my $ntuple = Math::GSL::NTuple::gsl_ntuple->new;
+    isa_ok($ntuple,'Math::GSL::NTuple::gsl_ntuple');
+}
+
 1;
 Test::Class->runtests;

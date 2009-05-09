@@ -81,7 +81,7 @@ typedef int size_t;
         if ($1) free($1);
 }
 
-%apply double const [] { 
+%apply double const [] {
     double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[],
     const double * x, const double * y, const double * w , const double x_array[],

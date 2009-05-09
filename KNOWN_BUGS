@@ -1,6 +1,10 @@
 
 =head1 List of Known Bugs in Math::GSL
 
+* Only NTuples of integers are currently supported
+
+* Reading/Writings NTuples from a file is broken
+
 * Mathieu Functions currently do not work.
 
 * The implementation of callbacks in Math::GSL is duct tape and paper clips. It is very sensitive

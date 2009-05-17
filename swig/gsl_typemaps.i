@@ -84,6 +84,7 @@ typedef int size_t;
 %apply double const [] {
     double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[],
+    double xu[], double xl[],
     const double * x, const double * y, const double * w , const double x_array[],
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,

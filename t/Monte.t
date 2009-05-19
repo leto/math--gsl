@@ -1,6 +1,6 @@
 package Math::GSL::Monte::Test;
 use base q{Test::Class};
-use Test::More tests => 14;
+use Test::More tests => 15;
 use Math::GSL::Monte qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::RNG   qw/:all/;
@@ -44,6 +44,16 @@ sub TEST_MONTE_VEGAS_STATE_DIM : Tests {
     cmp_ok( $state->swig_dim_get , '==', 1, 'swig_dim_set' );
 }
 
+sub TEST_MONTE_PLAIN_INTEGRATE : Tests {
+
+    my $state = gsl_monte_plain_alloc(1);
+    my $rng   = Math::GSL::RNG->new;
+    my ($status, @stuff) =  gsl_monte_plain_integrate( sub { exp(-$_[0] ** 2) },
+        [ -1 ], [ 2 ], 1, 1000, $rng->raw, $state);
+    ok_status($status);
+    #warn Dumper [ @stuff ];
+
+}
 sub TEST_MONTE_VEGAS_INTEGRATE : Tests(3) {
     my $self = shift;
     my $state = gsl_monte_vegas_alloc(1);
@@ -53,7 +63,8 @@ sub TEST_MONTE_VEGAS_INTEGRATE : Tests(3) {
         [ 0 ], [ 1 ], 1, 100, $rng->raw, $state);
 
     ok( $state->{dim} == 1, 'dim = 1');
-    warn Dumper [ $status, $state, $state->{result} ];
+    #warn Dumper [ @stuff ];
+    #warn Dumper [ $status, $state, $state->{result} ];
     ok_status($status);
     local $TODO = 'result of Monte carlo needs fixin';
     ok_similar( [ 1/3 ] ,  [ $state->{result} ] );

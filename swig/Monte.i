@@ -6,7 +6,15 @@
                    size_t dim, size_t calls, gsl_rng * r,
                    gsl_monte_vegas_state *state,
                     double *result, double *abserr) {
-    // fprintf(stderr, "argout of monte_vegas_int!");
+    int i=0;
+    AV* tempav = newAV();
+
+    while( i < $4 ) {
+        av_push(tempav, newSVnv((double) $8[i]));
+        i++;
+    }
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
 }
 
 

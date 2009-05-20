@@ -22,7 +22,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.19_03';
+our $VERSION = '0.20';
 
 =head1 NAME
 
@@ -30,7 +30,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.19_03
+Version 0.20
 
 =head1 SYNOPSIS
 
@@ -44,7 +44,7 @@ Version 0.19_03
 
     use Math::GSL::RNG;
     my $rng = Math::GSL::RNG->new;
-    my @random_numbers = map { $rng->get } (1 .. 1000);
+    my @random_numbers = $rng->get(1000);
 
     use Math::GSL::Deriv qw/:all/;
     my $function = sub { my $x=shift; sin($x**2) };
@@ -147,7 +147,7 @@ L<http://search.cpan.org/dist/Math::GSL>
 If you would like the help develop Math::GSL, email the authors
 and do
 
-    git clone http://leto.net/code/Math-GSL.git 
+    git clone git://github.com/leto/math--gsl.git
     cd Math-GSL
     git checkout -b bleed   # create new local branch
     git pull origin bleed   # pull in remote bleed
@@ -155,8 +155,8 @@ and do
 to get the latest source, which is a two-headed beast with branches master and
 bleed. The master branch is our stable branch, which is periodically sync-ed
 with bleed. To view the latest source code online, go to
-L<http://leto.net/gitweb/>.  The latest version of Git can be found at
-L<http://git.or.cz>.
+L<http://github.com/leto/math--gsl/tree/master>.  The latest version of Git can be found at
+L<http://git-scm.com> .
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -169,7 +169,7 @@ This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Jonathan Leto, Thierry Moisan all rights reserved.
+Copyright 2008-2009 Jonathan Leto, Thierry Moisan all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

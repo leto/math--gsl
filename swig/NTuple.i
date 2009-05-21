@@ -44,7 +44,6 @@
 %}
 
 %include "gsl/gsl_ntuple.h"
-%include "gsl/gsl_errno.h"
 %include "gsl/gsl_histogram.h"
 
 %include "../pod/NTuple.pod"

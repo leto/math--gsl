@@ -3,8 +3,6 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
-%apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
-%apply double *OUTPUT { double * min_out, double * max_out };
 
 %{
     #include "gsl/gsl_matrix.h"

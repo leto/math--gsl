@@ -66,8 +66,8 @@ my $harness = TAP::Harness::Archive->new(\%options);
 $harness->runtests(@files);
 my $cmd =<<CMD;
 smolder_smoke_signal --server $server \\
-    --username $user --password $pass --file $archive \\
-    --project Math::GSL --platform $Config{osname} --architecture $archname --tags "\$USER , Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
+    --username $user --password $pass --file $archive --project Math::GSL \\
+    --platform $Config{osname} --architecture $archname --tags "\$USER , $Config{osname}, Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
 CMD
 print "about to do:\n$cmd\n";
 

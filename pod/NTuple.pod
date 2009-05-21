@@ -1,25 +1,22 @@
 %perlcode %{
-
-# Intermittent failure happens *after* this
-# END { warn "This is the end" }
-
+use Data::Dumper;
+use Carp qw/croak/;
+use Math::GSL::Errno qw/:all/;
 
 @EXPORT_OK = qw/
-               gsl_ntuple_open 
-               gsl_ntuple_create 
-               gsl_ntuple_write 
-               gsl_ntuple_read 
-               gsl_ntuple_bookdata 
-               gsl_ntuple_project 
-               gsl_ntuple_close 
+               gsl_ntuple_open
+               gsl_ntuple_create
+               gsl_ntuple_write
+               gsl_ntuple_read
+               gsl_ntuple_bookdata
+               gsl_ntuple_project
+               gsl_ntuple_close
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-__END__
-
 =head1 NAME
 
-Math::GSL::NTuple - Functions for creating and manipulating ntuples, sets of values associated with events
+Math::GSL::NTuple - Functions for creating and manipulating ntuples, sets of values
 
 =head1 SYNOPSIS
 
@@ -33,9 +30,25 @@ Here is a list of all the functions in this module :
 
 =over
 
+=cut 
+
+sub new
+{
+    my ($class,$values) = @_;
+    my $this = {};
+    my $ntuple = Math::GSL::NTuple::gsl_ntuple->new;
+    $this->{_ntuple} = $ntuple;
+
+    bless $this, $class;
+}
+
+sub raw
+{
+    return (shift)->{_ntuple};
+}
 =item * <gsl_ntuple_open($filename, $ntuple_data, $size)> - This function opens an existing ntuple file $filename for reading and returns a pointer to a corresponding ntuple struct. The ntuples in the file must have size $size. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied—this is used to copy ntuples in and out of the file.
 
-=item * <gsl_ntuple_create > - This function creates a new write-only ntuple file $filename for ntuples of size $size and returns a pointer to the newly created ntuple struct. Any existing file with the same name is truncated to zero length and overwritten. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied—this is used to copy ntuples in and out of the file. 
+=item * <gsl_ntuple_create > - This function creates a new write-only ntuple file $filename for ntuples of size $size and returns a pointer to the newly created ntuple struct. Any existing file with the same name is truncated to zero length and overwritten. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied—this is used to copy ntuples in and out of the file.
 
 
 =item * <gsl_ntuple_write($ntuple)> - This function writes the current $ntuple $ntuple->{ntuple_data} of size $ntuple->{size} to the corresponding file.
@@ -46,7 +59,7 @@ Here is a list of all the functions in this module :
 
 =item * <gsl_ntuple_project >
 
-=item * <gsl_ntuple_close($ntuple)> - This function closes the ntuple file ntuple and frees its associated allocated memory. 
+=item * <gsl_ntuple_close($ntuple)> - This function closes the ntuple file ntuple and frees its associated allocated memory.
 
 =back
 
@@ -62,7 +75,7 @@ Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+Copyright (C) 2008-2009-2009 Jonathan Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

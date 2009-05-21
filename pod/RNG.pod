@@ -26,9 +26,9 @@ Math::GSL::RNG - Random Number Generators
 
 =head1 SYNOPSIS
 
-    use Math::GSL::RNG qw/:all/;
-    my $rng = Math::GSL::RNG->new;
-    my @random = map { $rng->get } (1..100);
+    use Math::GSL::RNG;
+    my $rng     = Math::GSL::RNG->new;
+    my @random  = $rng->get(100);
 
 =head2 Math::GSL::RNG->new($type, $seed)
 
@@ -98,23 +98,25 @@ sub name {
 
 =head2 get()
 
-    my $nextval = $rng->get();
+    my $nextval  = $rng->get;
+    my (@values) = $rng->get(100);
 
-Get the next random value from the RNG object.
+Get the next random value from the RNG object. If given an integer N, returns the next N values.
 
 =cut
 
 sub get {
-    my ($self) = @_;
+    my ($self, $num_values) = @_;
+    $num_values ||= 1;
 
-    gsl_rng_get($self->{_rng});
+    return map { gsl_rng_get($self->{_rng}) } (1 .. $num_values);
 }
 
 =head2 raw()
 
     my $raw = $rng->raw();
 
-Return the raw GSL RNG object, useful for functions which take a RNG, such as the Monte Carlo integration functions.
+Return the raw GSL RNG object, useful for functions which take a RNG, such as the Monte Carlo integration functions or the random number distribution functions in Math::GSL::Randist.
 
 =cut
 
@@ -365,7 +367,7 @@ Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+Copyright (C) 2008-2009 Jonathan Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

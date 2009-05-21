@@ -1,9 +1,17 @@
 
 =head1 List of Known Bugs in Math::GSL
 
+* OO interface to NTuples is only a stub
+
+* Only NTuples of integers are currently supported
+
+* Reading NTuples from a file is broken, since ->swig_ntuple_data_get returns a SWIG-encoded void pointer to the data
+
+* Mathieu Functions currently do not work.
+
 * The implementation of callbacks in Math::GSL is duct tape and paper clips. It is very sensitive
 
- to new and exotic platforms and compilers. 
+ to new and exotic platforms and compilers. UPDATE: This has been much improved by Vincent Danjean.
 
 * Math::GSL subclasses Module::Build and generates compile flags based on system characteristics,
 

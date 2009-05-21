@@ -1,6 +1,6 @@
 package Math::GSL::RNG::Test;
 use base q{Test::Class};
-use Test::More tests => 31;
+use Test::More tests => 32;
 use Math::GSL        qw/:all/;
 use Math::GSL::RNG   qw/:all/; 
 use Math::GSL::Test  qw/:all/;
@@ -69,10 +69,12 @@ sub GSL_RNG_STATE : Tests {
     is_deeply( [@vals1], [@vals2], "state test, $#vals1 values checked");
 }
 
-sub GSL_RNG_GET : Tests {
+sub GSL_RNG_GET : Tests(2) {
     my $rng = Math::GSL::RNG->new;
     my $x   = $rng->get;
     ok( defined $x, '$rng->get' );
+    my @values = $rng->get(10);
+    ok( @values == 10, 'got 10 values from get->(10)');
 }
 
 sub GSL_RNG_NAME : Tests {

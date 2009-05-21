@@ -558,7 +558,7 @@ push @EXPORT_misc, qw/
                @EXPORT_coulumb, @EXPORT_coupling, @EXPORT_dawson, @EXPORT_debye,
                @EXPORT_dilog, @EXPORT_misc, @EXPORT_elliptic, @EXPORT_error, @EXPORT_legendre,
                @EXPORT_gamma, @EXPORT_transport, @EXPORT_trig, @EXPORT_zeta, @EXPORT_eta,
-               @EXPORT_vars
+               @EXPORT_vars, @EXPORT_mathieu
              );
 
 %EXPORT_TAGS = ( 
@@ -3139,7 +3139,7 @@ Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008 Jonathan Leto and Thierry Moisan
+Copyright (C) 2008-2009 Jonathan Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

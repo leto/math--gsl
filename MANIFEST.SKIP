@@ -11,3 +11,6 @@ blib/*
 foo*
 .*\.gz
 ^tags
+Math-GSL
+\.prove
+swig/system\.i

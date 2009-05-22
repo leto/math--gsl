@@ -4,14 +4,16 @@
     %include "gsl/gsl_inline.h"
 #endif
 
-typedef int size_t;
-
 %{
     #include "gsl/gsl_nan.h"
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_monte.h"
 %}
 
+/*****************************
+ * handle 'double const []' as an input array of doubles
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) double const [] {
     AV *tempav;
     I32 len;
@@ -35,6 +37,21 @@ typedef int size_t;
         if ($1) free($1);
 }
 
+%apply double const [] { 
+    double *data, double *dest, double *f_in, double *f_out,
+    double data[], const double * src, double x[], double a[], double b[],
+    const double * x, const double * y, const double * w , const double x_array[],
+    const double xrange[], const double yrange[], double * base,
+    const double * base, const double xrange[], const double yrange[] ,
+    const double * array , const double data2[], const double w[] ,
+    double *v,
+    gsl_complex_packed_array data
+};
+
+/*****************************
+ * handle 'float const []' as an input array of floats
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) float const [] {
     AV *tempav;
     I32 len;
@@ -58,6 +75,79 @@ typedef int size_t;
         if ($1) free($1);
 }
 
+%apply float const [] { 
+    float const *A, float const *B, float const *C
+};
+
+/*****************************
+ * handle 'float []' as an in/out array of floats
+ * We allocate the C array at the begining and free it at the end
+ * We modify the perl array IN PLACE (not sure other langage can do that
+ *   but perl can)
+ * Note the trick to store some private info before the C array
+ * as swig require that $1 points to the C array (as it uses it
+ * when calling the gsl function)
+ */
+%{
+    struct perl_array {
+        I32 len;
+        AV *array;
+    };
+%}
+
+%typemap(in) float [] {
+    struct perl_array * p_array = 0;   
+    I32 len;
+    AV *array;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $$1_name is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $$1_name is not an array ref!");
+
+    array = (AV*)SvRV($input);
+    len = av_len(array);
+    p_array = (struct perl_array *) malloc((len+1)*sizeof(float)+sizeof(struct perl_array));
+    p_array->len=len;
+    p_array->array=array;
+    $1 = (float *)&p_array[1];
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(array, i, 0);
+        $1[i] = (float)(double) SvNV(*tv);
+    }
+}
+
+%typemap(argout) float [] {
+    struct perl_array * p_array = 0;
+    int i;
+    SV **tv;
+    p_array=(struct perl_array *)(((char*)$1)-sizeof(struct perl_array));
+    for (i = 0; i <= p_array->len; i++) {
+        double val=(double)(float)($1[i]);
+        tv = av_fetch(p_array->array, i, 0);
+        sv_setnv(*tv, val);
+        if (argvi >= items) {            
+            EXTEND(sp,1);              /* Extend the stack by 1 object */
+        }
+        $result = sv_newmortal();
+        sv_setnv($result, val);
+        argvi++;
+    }
+}
+
+%typemap(freearg) float [] {
+    if ($1) free(((char*)$1)-sizeof(struct perl_array));
+}
+
+%apply float const [] { 
+    float *C
+};
+
+/*****************************
+ * handle 'size_t const []' as an input array of size_t
+ * We allocate the C array at the begining and free it at the end
+ */
 %typemap(in) size_t const [] {
     AV *tempav;
     I32 len;
@@ -84,6 +174,7 @@ typedef int size_t;
 %apply double const [] {
     double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[],
+    double xu[], double xl[],
     const double * x, const double * y, const double * w , const double x_array[],
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,
@@ -100,13 +191,22 @@ typedef int size_t;
     size_t *p
 }
 
+/*****************************
+ * handle some parameters as input or output
+ */
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *neval };
 %apply double * OUTPUT {
     double * min_out, double * max_out,
     double *abserr, double *result
 };
-%{
 
+/*****************************
+ * Callback managment
+ */
+%{
+    /* structure to hold required information while the gsl function call
+       for each callback
+     */
     struct gsl_function_perl {
         gsl_function C_gsl_function;
         SV * function;
@@ -120,9 +220,8 @@ typedef int size_t;
     };
 
 
-    /* this function returns the value 
-        of evaluating the function pointer
-        stored in func with argument x
+    /* These functions (C callbacks) calls the perl callbacks.
+       Info for perl callback can be found using the 'void*params' parameter
     */
     double call_gsl_function(double x , void *params){
         struct gsl_function_perl *F=(struct gsl_function_perl*)params;
@@ -310,6 +409,7 @@ typedef int size_t;
     SvREFCNT_dec(p->params);
 };
 
+/* TODO: same thing should be done for these kinds of callbacks */
 %typemap(in) gsl_function_fdf * {
     fprintf(stderr, 'FDF_FUNC');
     return GSL_NAN;

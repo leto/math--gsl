@@ -1,12 +1,12 @@
 =head1 Math::GSL Changes
 
-=head1 v0.19_04 - May 2009
+=head1 v0.20 - May 19 2009
     - $rng->get($n) will now return the next $n values of the random number generator
-    - Improvements to callbacks, thanks to patches from piotrj
     - Fixed + added test for RT#45044 math-gsl eigenpair bug, reported with patch by Ian Malone
     - Added more tests for Randist
     - Fixed some incorrectly written tests for BLAS and Linalg
     - Improved NTuple support and tests
+    - Improvements to callbacks, thanks to patches from piotrj
     - The following improvements were merged from Vincent Danjean's git repo:
     - Fixed some memory leaks caused by in-typemaps without argout-typemaps
     - Improved portable callback implementation

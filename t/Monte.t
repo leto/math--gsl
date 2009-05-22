@@ -1,6 +1,6 @@
 package Math::GSL::Monte::Test;
 use base q{Test::Class};
-use Test::More tests => 12;
+use Test::More tests => 15;
 use Math::GSL::Monte qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::RNG   qw/:all/;
@@ -33,19 +33,41 @@ sub TEST_INIT  : Tests(3) {
     ok_status( gsl_monte_miser_init($self->{miser}), $GSL_SUCCESS, 'miser' );
 }
 
+sub TEST_MONTE_VEGAS_STATE : Tests {
+    my $state = Math::GSL::Monte::gsl_monte_vegas_state->new;
+    isa_ok($state, 'Math::GSL::Monte::gsl_monte_vegas_state');
+}
+
+sub TEST_MONTE_VEGAS_STATE_DIM : Tests {
+    my $state = Math::GSL::Monte::gsl_monte_vegas_state->new;
+    $state->swig_dim_set(1);
+    cmp_ok( $state->swig_dim_get , '==', 1, 'swig_dim_set' );
+}
+
+sub TEST_MONTE_PLAIN_INTEGRATE : Tests {
+
+    my $state = gsl_monte_plain_alloc(1);
+    my $rng   = Math::GSL::RNG->new;
+    my ($status, @stuff) =  gsl_monte_plain_integrate( sub { exp(-$_[0] ** 2) },
+        [ -1 ], [ 2 ], 1, 1000, $rng->raw, $state);
+    ok_status($status);
+    #warn Dumper [ @stuff ];
+
+}
 sub TEST_MONTE_VEGAS_INTEGRATE : Tests(3) {
     my $self = shift;
     my $state = gsl_monte_vegas_alloc(1);
     my $rng   = Math::GSL::RNG->new;
-    my $status;
-    eval {
-          $status =  gsl_monte_vegas_integrate( sub { $_[0] ** 2 },
-        [ 0 ], [ 1 ], 1, 500000, $rng->raw, $state,);
-    };
+    my ($status, @stuff);
+    ($status, @stuff) =  gsl_monte_vegas_integrate( sub { $_[0] ** 2 },
+        [ 0 ], [ 1 ], 1, 100, $rng->raw, $state);
+
     ok( $state->{dim} == 1, 'dim = 1');
-    local $TODO = 'gsl_monte_function is broke';
+    #warn Dumper [ @stuff ];
+    #warn Dumper [ $status, $state, $state->{result} ];
+    ok_status($status);
+    local $TODO = 'result of Monte carlo needs fixin';
     ok_similar( [ 1/3 ] ,  [ $state->{result} ] );
-    ok_status($status, $TODO);
 
 }
 sub TEST_ALLOC : Tests(6) {

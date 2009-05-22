@@ -9,7 +9,8 @@ use Math::GSL;
 $|++;
 
 my $archive = shift || 'my_test_run.tar.gz';
-my $server = 'smolder.plusthree.com';
+my $server = 'smolder.leto.net';
+my $port = '8080';
 my ($user,$pass) = qw/leto bessel_J0/;
 my $archname = $Config{archname};
 if ($archname =~ /darwin/i){
@@ -65,8 +66,8 @@ my %options = (
 my $harness = TAP::Harness::Archive->new(\%options);
 $harness->runtests(@files);
 my $cmd =<<CMD;
-smolder_smoke_signal --server $server \\
-    --username $user --password $pass --file $archive --project Math::GSL \\
+smolder_smoke_signal --server $server --port $port \\
+    --username '$user' --password '$pass' --file $archive --project Math::GSL \\
     --platform $Config{osname} --architecture $archname --tags "\$USER , $Config{osname}, Math::GSL $Math::GSL::VERSION, $git_branch, Perl $Config{version}"
 CMD
 print "about to do:\n$cmd\n";

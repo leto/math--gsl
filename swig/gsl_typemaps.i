@@ -12,7 +12,7 @@
 
 /*****************************
  * handle 'double const []' as an input array of doubles
- * We allocate the C array at the begining and free it at the end
+ * We allocate the C array at the beginning and free it at the end
  */
 %typemap(in) double const [] {
     AV *tempav;
@@ -50,7 +50,7 @@
 
 /*****************************
  * handle 'float const []' as an input array of floats
- * We allocate the C array at the begining and free it at the end
+ * We allocate the C array at the beginning and free it at the end
  */
 %typemap(in) float const [] {
     AV *tempav;

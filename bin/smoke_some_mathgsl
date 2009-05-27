@@ -5,7 +5,7 @@ use lib 'lib';
 
 my $make      = 'make'; 
 my $branch    = shift || 'master';
-my $base_dir  = "/home/smoke/git/Math-GSL-$branch";
+my $base_dir  = shift || "$ENV{HOME}/git/Math-GSL-$branch";
 
 chdir $base_dir or die "$base_dir: $!";
 

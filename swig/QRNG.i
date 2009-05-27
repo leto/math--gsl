@@ -5,13 +5,9 @@
 %apply double *OUTPUT { double x[] };
 
 %typemap(argout) double x[] {
-    AV *tempav;
-    I32 len;
-    int i;
-    SV **tv;
 
-    if (argvi >= items) {            
-        EXTEND(sp,1);              
+    if (argvi >= items) {
+        EXTEND(sp,1);
     }
     $result = sv_newmortal();
     sv_setnv($result,(NV) *($1));

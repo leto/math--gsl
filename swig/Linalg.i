@@ -1,6 +1,8 @@
 %module "Math::GSL::Linalg"
 %include "gsl_typemaps.i"
 
+%apply int *OUTPUT { int *signum };
+
 %{
     #include "gsl/gsl_linalg.h"
     #include "gsl/gsl_permutation.h"

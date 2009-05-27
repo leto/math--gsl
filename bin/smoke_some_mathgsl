@@ -9,7 +9,7 @@ my $base_dir  = shift || "$ENV{HOME}/git/Math-GSL-$branch";
 
 chdir $base_dir or die "$base_dir: $!";
 
-my $smolder  = qq{ export PERL5LIB=`pwd`/lib:\$PERL5LIB && /home/smoke/bin/smolder_mathgsl };
+my $smolder  = qq{ export PERL5LIB=`pwd`/lib:\$PERL5LIB && $base_dir/bin/smolder_mathgsl };
 
 system "cd $base_dir && git pull origin $branch ";
 system "perl Build.PL && ./Build && $smolder && ./Build clean";

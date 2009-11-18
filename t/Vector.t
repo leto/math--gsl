@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 136;
+use Test::More tests => 142;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -453,4 +453,23 @@ sub GSL_VECTOR_NORM_OVERLOAD: Tests(2) {
     ok_similar( [ abs $w   ], [ sqrt(101) ], 'abs = norm' )
 }
 
+sub GSL_VECTOR_EQUAL : Tests(3){
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $w = Math::GSL::Vector->new([10,0,1]);
+    my $x = Math::GSL::Vector->new([1,2,3,0]);
+
+    ok_similar($v == $v, 1);
+    ok_similar($v == $w, 0);
+    ok_similar($v == $x, 0);
+}
+
+sub GSL_VECTOR_NOT_EQUAL : Tests(3){
+    my $v = Math::GSL::Vector->new([1,2,3]);
+    my $w = Math::GSL::Vector->new([10,0,1]);
+    my $x = Math::GSL::Vector->new([1,2,3,0]);
+
+    ok_similar($v != $v, 0);
+    ok_similar($v != $w, 1);
+    ok_similar($v != $x, 1);
+}
 Test::Class->runtests;

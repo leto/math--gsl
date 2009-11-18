@@ -4,11 +4,14 @@ use Data::Dumper;
 use Carp qw/croak/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
+use Math::GSL::Test     qw/is_similar/;
 use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
     '-'      => \&_subtract,
     'abs'    => \&_abs,
+    '=='     => \&_equal,
+    '!='     => \&_not_equal,
     fallback => 1,
 ;
 
@@ -374,6 +377,21 @@ sub dot_product {
     my ($status, $product) = gsl_blas_ddot($left->raw,$right->raw);
     croak sprintf "Math::GSL::dot_product - %s", gsl_strerror($status) if ($status != $GSL_SUCCESS);  
     return $product;
+}
+
+sub _equal {
+    my ($left,$right) = @_;
+    if ($left->length != $right->length)
+    {   
+        return 0;
+    }
+    return is_similar(  [$left->as_list ],
+                        [$right->as_list ]);
+}
+
+sub _not_equal {
+    my ($left, $right) = @_;
+    return !_equal($left,$right);
 }
 
 =head1 DESCRIPTION

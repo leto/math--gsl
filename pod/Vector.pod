@@ -2,9 +2,10 @@
 use Scalar::Util 'blessed';
 use Data::Dumper;
 use Carp qw/croak/;
-use Math::GSL::Errno qw/:all/;
+use Math::GSL::Errno qw/$GSL_SUCCESS/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
-use Math::GSL::Test     qw/is_similar/;
+use Math::GSL::Test qw/is_similar/;
+
 use overload
     '*'      => \&_multiplication,
     '+'      => \&_addition,
@@ -373,20 +374,18 @@ sub dot_product_pp {
 
 sub dot_product {
     my ($left,$right) = @_;
-    
+
     my ($status, $product) = gsl_blas_ddot($left->raw,$right->raw);
-    croak sprintf "Math::GSL::dot_product - %s", gsl_strerror($status) if ($status != $GSL_SUCCESS);  
+    croak sprintf "Math::GSL::dot_product - %s", gsl_strerror($status) if ($status != $GSL_SUCCESS);
     return $product;
 }
 
 sub _equal {
     my ($left,$right) = @_;
-    if ($left->length != $right->length)
-    {   
-        return 0;
-    }
-    return is_similar(  [$left->as_list ],
-                        [$right->as_list ]);
+
+    return 0 if ($left->length != $right->length);
+
+    return is_similar(  [$left->as_list ], [$right->as_list ]);
 }
 
 sub _not_equal {

@@ -1,5 +1,14 @@
 =head1 Math::GSL Changes
 
+=head1 v0.21 - ???
+    - Fixed the export of hypergeometric functions
+    - In instantiation of GSLBuilder in Build.PL, the value for the parameter
+      include_dirs were corrected to an anonymous empty array, instead of an
+      empty string.  (Jakob Ilves)
+    - Operator overloading of vector equality (Thierry Moisan)
+    - Various doc fixes (Pjotr Prins)
+    - Typemap fixes (Vincent Danjean)
+
 =head1 v0.20 - May 19 2009
     - $rng->get($n) will now return the next $n values of the random number generator
     - Fixed + added test for RT#45044 math-gsl eigenpair bug, reported with patch by Ian Malone

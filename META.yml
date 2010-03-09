@@ -6,17 +6,18 @@ author:
 abstract: Interface to the GNU Scientific Library using SWIG
 license: gpl
 resources:
-  license: ~
-configure_requires:
-  ExtUtils::PkgConfig: 1.03
+  license: http://opensource.org/licenses/gpl-license.php
 requires:
   ExtUtils::PkgConfig: 1.03
   Scalar::Util: 0
   Test::Class: 0.12
   Test::Exception: 0.21
   Test::More: 0
-  perl: 5.8.0
+  perl: v5.8.0
   version: 0
+configure_requires:
+  ExtUtils::PkgConfig: 1.03
+  Module::Build: 0.35
 provides:
   Math::GSL:
     file: lib/Math/GSL.pm
@@ -218,8 +219,6 @@ provides:
   Math::GSL::Interp::gsl_interp:
     file: lib/Math/GSL/Interp.pm
   Math::GSL::Interp::gsl_interp_accel:
-    file: lib/Math/GSL/Interp.pm
-  Math::GSL::Interp::gsl_interp_type:
     file: lib/Math/GSL/Interp.pm
   Math::GSL::Interpc:
     file: lib/Math/GSL/Interp.pm
@@ -519,7 +518,7 @@ provides:
     file: lib/Math/GSL/Wavelet.pm
   Math::GSL::Waveletc:
     file: lib/Math/GSL/Wavelet.pm
-generated_by: Module::Build version 0.32
+generated_by: Module::Build version 0.35
 meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4

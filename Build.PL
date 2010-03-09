@@ -112,7 +112,7 @@ my $gv = $gsl_pkgcfg{'modversion'};
 my $current_minor_version;
 
 my $path_system = File::Spec->catfile('swig', 'system.i');
-open my $fh, ">", "$path_system" or die $!;
+open my $fh, ">", "$path_system" or die "Could not create system.i : $!";
 
 if (defined $gv) {
   if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {

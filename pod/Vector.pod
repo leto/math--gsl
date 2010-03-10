@@ -2,7 +2,7 @@
 use Scalar::Util 'blessed';
 use Data::Dumper;
 use Carp qw/croak/;
-use Math::GSL::Errno qw/$GSL_SUCCESS/;
+use Math::GSL::Errno qw/$GSL_SUCCESS gsl_strerror/;
 use Math::GSL::BLAS qw/gsl_blas_ddot/;
 use Math::GSL::Test qw/is_similar/;
 

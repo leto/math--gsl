@@ -22,7 +22,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.21_01';
+our $VERSION = '0.21_02';
 
 =head1 NAME
 
@@ -30,7 +30,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.21_01
+Version 0.21_02
 
 =head1 SYNOPSIS
 
@@ -38,7 +38,7 @@ Version 0.21_01
     my $matrix = Math::GSL::Matrix->new(5,5);   # 5x5 zero matrix
     # note that columns and rows are zero-based
     $matrix->set_col(0, [1..5])                 # set *first* column to 1,2,3,4,5
-           ->set_row(2, [5..9]);                # set *third* column to 5,6,7,8,9   
+           ->set_row(2, [5..9]);                # set *third* column to 5,6,7,8,9
     my @matrix = $matrix->as_list;              # matrix as Perl list
     my $gsl_matrix = $matrix->raw;              # underlying GSL object
 

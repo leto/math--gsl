@@ -137,10 +137,10 @@
 }
 
 %typemap(freearg) float [] {
-    if ($1) free(((char*)$1)-sizeof(struct perl_array));
+    // if ($1) free(((char*)$1)-sizeof(struct perl_array));
 }
 
-%apply float const [] { 
+%apply float const [] {
     float *C
 };
 
@@ -168,7 +168,7 @@
 }
 
 %typemap(freearg) size_t const [] {
-        if ($1) free($1);
+      //  if ($1) free($1);
 }
 
 %apply double const [] {

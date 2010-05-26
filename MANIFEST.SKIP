@@ -14,3 +14,4 @@ foo*
 Math-GSL
 \.prove
 swig/system\.i
+^MYMETA.yml$

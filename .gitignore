@@ -19,3 +19,5 @@ xs/*_wrap.c
 swig/system.i
 .prove
 Math-GSL-*/
+MYMETA.yml
+META.yml

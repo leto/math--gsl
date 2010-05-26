@@ -21,3 +21,5 @@ swig/system.i
 Math-GSL-*/
 MYMETA.yml
 META.yml
+Makefile.PL
+Math-GSL-*.gz

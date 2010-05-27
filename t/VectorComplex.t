@@ -50,12 +50,16 @@ sub GSL_VECTOR_COMPLEX_NEW : Tests(12) {
     ok_similar( [ map { Im($_) } @elements ], [ 2, 0  ] );
 
     my $e0 = gsl_vector_complex_get($v->raw,0);
-    ok_similar( gsl_complex_abs($e0), 2, 'first element: new gets abs correct');
-    ok_similar( gsl_complex_arg($e0), $M_PI/2, 'first element: new gets arg correct');
+    my $abs0 = gsl_complex_abs($e0);
+    my $arg0 = gsl_complex_arg($e0);
+    ok_similar( $abs0, 2, "abs of first element: 2 ?= $abs0");
+    ok_similar( $arg0, $M_PI/2, "arg first element: $arg0 ?=" . $M_PI/2);
 
     my $e1 = gsl_vector_complex_get($v->raw,1);
-    ok_similar( gsl_complex_abs($e1), 4, '2nd element: new get abs correct');
-    ok_similar( gsl_complex_arg($e1), $M_PI, '2nd element: new get arg correct');
+    my $abs1 = gsl_complex_abs($e1);
+    my $arg1 = gsl_complex_arg($e1);
+    ok_similar( $abs1, 4, "abs of 2nd element: 4 ?= $abs1");
+    ok_similar( $arg1, $M_PI, "arg of 2nd element: $arg1 ?= $M_PI");
 }
 
 sub GSL_VECTOR_COMPLEX_REVERSE : Tests(5) {

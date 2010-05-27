@@ -76,7 +76,7 @@
 }
 
 %apply float const [] { 
-    float const *A, float const *B, float const *C
+    float const *A, float const *B, float const *C, float const *y
 };
 
 /*****************************
@@ -142,6 +142,14 @@
 
 %apply float const [] {
     float *C
+};
+
+%apply float [] {
+    float *C, float *x, float *y,
+    float *a, float *b, float *c,
+    float *s,
+    float *b1, float *b2,
+    float *d1, float *d2
 };
 
 /*****************************

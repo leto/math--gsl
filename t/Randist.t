@@ -7,6 +7,7 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Randist qw/:all/;
 use Math::GSL::Const   qw/ $M_PI /;
 use Data::Dumper;
+BEGIN { gsl_set_error_handler_off() }
 
 use strict;
 

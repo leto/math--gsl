@@ -5,7 +5,9 @@ use Math::GSL        qw/:all/;
 use Math::GSL::SF    qw/:all/;
 use Math::GSL::Const qw/:all/;
 use Math::GSL::Test  qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use strict;
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

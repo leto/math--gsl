@@ -9,6 +9,7 @@ use Math::GSL::Machine qw/:all/;
 use Data::Dumper;
 use strict;
 
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
 }

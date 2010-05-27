@@ -3,8 +3,11 @@ use base q{Test::Class};
 use Test::More tests => 28;
 use Math::GSL::Test qw/:all/;
 use Math::GSL::Sort qw/:all/;
+use Math::GSL::Errno qw/:all/;
 use Math::GSL::Statistics qw/:all/;
 use strict;
+
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

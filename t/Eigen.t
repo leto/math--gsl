@@ -4,6 +4,7 @@ use Test::More tests => 59;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Eigen   qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Matrix  qw/:all/;
 use Math::GSL::Vector  qw/:all/;
 use Math::GSL::Complex qw/:all/;
@@ -12,6 +13,7 @@ use Math::GSL::MatrixComplex  qw/:all/;
 use Math::GSL::VectorComplex  qw/:all/;
 use Data::Dumper;
 use strict;
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

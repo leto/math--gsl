@@ -5,7 +5,7 @@ Build
 blib
 *.bak
 *_wrap\.*
-\.*sw[op]
+\.*sw?
 _build
 tmp*
 pod2htm*

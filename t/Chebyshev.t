@@ -4,9 +4,12 @@ use warnings;
 use base q{Test::Class};
 use Math::GSL::Chebyshev qw/:all/;
 use Math::GSL::Test      qw/:all/;
+use Math::GSL::Errno     qw/:all/;
 use Math::GSL            qw/:all/;
 use Test::More tests => 10;
 use Data::Dumper;
+
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

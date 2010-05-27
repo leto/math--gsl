@@ -120,7 +120,9 @@ sub verify_results
         
         if ( defined $r && $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};
-            $eps = $factor*$r->{err};
+
+            # if $eps=0, give some default
+            $eps = $factor*$r->{err} || 1e-8;
             $res = abs($x-$expected);
 
             if ($ENV{DEBUG} ){

@@ -3,10 +3,12 @@ use base q{Test::Class};
 use Test::More tests => 60;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Test    qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL          qw/:all/;
 use Data::Dumper;
 use strict;
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

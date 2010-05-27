@@ -17,8 +17,6 @@ sub teardown : Test(teardown) {
 }
 
 sub TEST_CBLAS : Tests {
-       local $TODO = "need to figure out how to reture more that just first element";
-
        my $A = [ 0.11, 0.12, 0.13,
                   0.21, 0.22, 0.23 ];
        my $lda = 3;
@@ -30,9 +28,9 @@ sub TEST_CBLAS : Tests {
                   0.00, 0.00 ];
        my $ldc = 2.0;
 
-       # Compute C = A * B 
+       # Compute C = A * B
        # C  = [ 367.76 368.12 ]
-        #     [ 674.06 674.72 ]
+       #      [ 674.06 674.72 ]
        my @stuff = cblas_sgemm ($CblasRowMajor,
                     $CblasNoTrans, $CblasNoTrans, 2, 2, 3,
                     1.0, $A, $lda, $B, $ldb, 0.0, $C, $ldc);
@@ -47,7 +45,7 @@ sub CBLAS_IDAMAX : Tests {
    my $expected = 0;
    my $k;
    $k = cblas_idamax($N, $X, $incX);
-   is($k, $expected);
+   is_similar($k, $expected);
 }
 
 sub CBLAS_ISAMAX : Tests {
@@ -56,7 +54,7 @@ sub CBLAS_ISAMAX : Tests {
    my $incX = 1;
    my $expected = 0;
    my $k = cblas_isamax($N, $X, $incX);
-   is($k, $expected);
+   is_similar($k, $expected);
 }
 
 sub CBLAS_SASUM : Tests  {
@@ -75,12 +73,12 @@ sub CBLAS_DASUM : Tests(2) {
  my $incX = -1;
  my $expected = 0; 
  my $f = cblas_dasum($N, $X, $incX);
- is($f, $expected);
+ is_similar($f, $expected);
 
  $incX = 1;
- $expected = 12.413; 
+ $expected = 12.413;
  $f = cblas_dasum($N, $X, $incX);
- is($f, $expected);
+ is_similar($f, $expected);
 }
 
 Test::Class->runtests;

@@ -16,6 +16,9 @@ use Math::GSL::Permutation qw/:all/;
 use Math::Complex;
 use Data::Dumper;
 use strict;
+use warnings;
+
+BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
     my $self = shift;

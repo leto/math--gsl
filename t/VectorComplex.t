@@ -59,7 +59,7 @@ sub GSL_VECTOR_COMPLEX_NEW : Tests(12) {
     my $abs1 = gsl_complex_abs($e1);
     my $arg1 = gsl_complex_arg($e1);
     ok_similar( $abs1, 4, "abs of 2nd element: 4 ?= $abs1");
-    ok_similar( $arg1, $M_PI, "arg of 2nd element: $arg1 ?= $M_PI");
+    ok_similar( abs($arg1), $M_PI, "arg of 2nd element: " . abs($arg1) ." ?= $M_PI");
 }
 
 sub GSL_VECTOR_COMPLEX_REVERSE : Tests(5) {

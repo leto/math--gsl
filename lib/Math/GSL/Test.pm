@@ -105,8 +105,8 @@ sub is_similar {
 sub verify_results
 {
     my ($results,$class) = @_;
-    # GSL uses a factor of 100 
-    my $factor   = 20; 
+    # GSL uses a factor of 100
+    my $factor   = 100;
     my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
     my ($x,$res);
     local $Test::Builder::Level = $Test::Builder::Level + 1;

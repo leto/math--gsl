@@ -1,6 +1,8 @@
 =head1 Math::GSL Changes
 
-=head1 v0.21 - ???
+=head1 v0.22 - June 2010
+    - Improved tests
+    - == and != operators for Vectors
     - Fixed the export of hypergeometric functions (Thierry Moisan)
     - In instantiation of GSLBuilder in Build.PL, the value for the parameter
       include_dirs were corrected to an anonymous empty array, instead of an

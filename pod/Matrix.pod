@@ -650,6 +650,7 @@ Sets a the values of a row with the elements of an array.
     $matrix->set_row(0, [8, 6, 2]);
 
 You can also set multiple rows at once with chained calls:
+
     my $matrix = Math::GSL::Matrix->new(3,3);
     $matrix->set_row(0, [8, 6, 2])
            ->set_row(1, [2, 4, 1]);

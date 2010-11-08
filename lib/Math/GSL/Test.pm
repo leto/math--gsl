@@ -75,15 +75,15 @@ sub is_similar {
     $eps ||= 1e-8;
     if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
         if ( $#$x != $#$y ){
-            warn "is_similar(): items differ in length, $#$x != $#$y !!!";
+            diag "is_similar(): items differ in length, $#$x != $#$y !!!";
             return 0;
         } else {
             map { 
                     my $delta = (gsl_isnan($x->[$_]) or gsl_isnan($y->[$_])) ? gsl_nan() : abs($x->[$_] - $y->[$_]);
                     if($delta > $eps){
-                        warn "\n\tElements start differing at index $_, delta = $delta\n";
-                        warn qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
-                        warn qq{\t\t\$y->[$_] = } . $y->[$_] . "\n";
+                        diag "\n\tElements start differing at index $_, delta = $delta\n";
+                        diag qq{\t\t\$x->[$_] = } . $x->[$_] . "\n";
+                        diag qq{\t\t\$y->[$_] = } . $y->[$_] . "\n";
                         return 0;
                     }
                 } (0..$#$x);
@@ -94,7 +94,7 @@ sub is_similar {
                $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
         } elsif( defined $x && defined $y) { 
             my $delta = (gsl_isnan($x) or gsl_isnan($y)) ? gsl_nan() : abs($x-$y);
-            $delta > $eps ? warn qq{\t\t\$x=$x\n\t\t\$y=$y\n\t\tdelta=$delta\n} && return 0 : return 1;
+            $delta > $eps ? diag qq{\t\t\$x=$x\n\t\t\$y=$y\n\t\tdelta=$delta\n} && return 0 : return 1;
         } else {
             return 0;
         }

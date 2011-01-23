@@ -68,7 +68,7 @@ intuitive (but slightly slower) object-oriented interface.
     Math::GSL::Combination      - Combinatoric Functions
     Math::GSL::Complex          - Complex Numbers
     Math::GSL::Const            - Various Constants
-    Math::GSL::DHT              - Discrete Hilbert Transform
+    Math::GSL::DHT              - Discrete Hankel Transforms
     Math::GSL::Deriv            - Numerical Derivative
     Math::GSL::Eigen            - Eigenvalues and Eigenvectors
     Math::GSL::Errno            - Error Handling

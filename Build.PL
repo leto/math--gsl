@@ -209,12 +209,14 @@ my $builder = GSLBuilder->new(
     extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
     swig_flags          => $swig_flags, 
     license             => 'gpl',
+    build_requires => {
+        'Test::Most'            =>       0,
+        'Test::Exception'       =>    0.21,
+        'Test::Class'           =>    0.12,
+    },
     requires => {
         'ExtUtils::PkgConfig'   => '1.03',
         'Scalar::Util'          =>       0,
-        'Test::More'            =>       0,
-        'Test::Exception'       =>    0.21,
-        'Test::Class'           =>    0.12,
         version                 =>       0,
         perl                    =>  '5.8.0',
     },
@@ -222,7 +224,7 @@ my $builder = GSLBuilder->new(
     configure_requires => {
         'ExtUtils::PkgConfig' => '1.03',
     },
-    swig_source           => [  
+    swig_source           => [
                                 map { [ "swig/$_.i", "pod/$_.pod" ] } @Subsystems ,
                              ],
 );

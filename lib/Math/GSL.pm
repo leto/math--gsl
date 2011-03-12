@@ -194,13 +194,6 @@ under the same terms as Perl itself.
 
 =cut
 
-sub new 
-{
-    my ($self,$args) = @_;
-    my $class = ref $self || $self || 'Math::GSL';
-    my $this = { };
-    bless $this, $class;
-}
 sub gsl_fopen
 {
     my ($file, $mode) = @_;

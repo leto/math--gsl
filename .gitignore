@@ -23,3 +23,4 @@ MYMETA.yml
 META.yml
 Makefile.PL
 Math-GSL-*.gz
+cover_db/*

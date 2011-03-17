@@ -1,5 +1,9 @@
 =head1 Math::GSL Changes
 
+=head1 v0.23 - March 2011
+    - Fixed the tolerance of some tests that were causing CPANtesters failures
+    - Fixed some doc typos
+
 =head1 v0.22 - June 2010
     - Improved tests
     - == and != operators for Vectors

@@ -27,6 +27,14 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
+sub TEST_RT66882 : Tests(1) {
+    # This test was losing a small amount of precision with
+    # perls that have DUSELONGDOUBLE, so give it some leeway
+    my $r        = Math::GSL::SF::gsl_sf_result_struct->new;
+    Math::GSL::SF::gsl_sf_fermi_dirac_m1_e( 10.0,$r);
+    ok_similar($r->{val}, 0.9999546021312975656, 'gsl_sf_fermi_direc_m1_e', $factor*$r->{err});
+}
+
 sub TEST_THE_KITCHEN_SINK : Tests {
     my $results = { 
         'gsl_sf_airy_Ai_e(-5, $Math::GSL::GSL_MODE_DEFAULT, $r)'           => 0.3507610090241142,
@@ -625,7 +633,6 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_fermi_dirac_m1_e(-10.0,$r)'	=> 0.00004539786870243439450,
         'gsl_sf_fermi_dirac_m1_e( -1.0,$r)'	=> 0.26894142136999512075,
         'gsl_sf_fermi_dirac_m1_e(  1.0,$r)'	=> 0.7310585786300048793,
-        'gsl_sf_fermi_dirac_m1_e( 10.0,$r)'	=> 0.9999546021312975656,
         'gsl_sf_fermi_dirac_0_e(-10.0,$r)'	=> 0.00004539889921686464677,
         'gsl_sf_fermi_dirac_0_e( -1.0,$r)'	=> 0.31326168751822283405,
         'gsl_sf_fermi_dirac_0_e(  1.0,$r)'	=> 1.3132616875182228340,

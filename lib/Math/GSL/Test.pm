@@ -38,8 +38,8 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK,);
 sub _dump_result($)
 {
     my $r=shift;
-    printf "result->err: %.18g\n", $r->{err};
-    printf "result->val: %.18g\n", $r->{val};
+    diag sprintf( "result->err: %.18g\n", $r->{err});
+    diag sprintf( "result->val: %.18g\n", $r->{val});
 }
 
 =head2 is_windows()
@@ -127,10 +127,10 @@ sub verify_results
 
             if ($ENV{DEBUG} ){
                 _dump_result($r);
-                print "got $code = $x\n";
-                printf "expected   : %.18g\n", $expected ;
-                printf "difference : %.18g\n", $res;
-                printf "unexpected error of %.18g\n", $res-$eps if ($res-$eps>0);
+                #print "got $code = $x\n";
+                diag sprintf("expected   : %.18g\n", $expected);
+                diag sprintf("difference : %.18g\n", $res);
+                diag sprintf("unexpected error of %.18g\n", $res-$eps) if ($res-$eps>0);
             }
             if (gsl_isnan($x)) {
                     ok( gsl_isnan($expected), sprintf("'$expected'?='$x' (%16b ?= %16b)", $expected, $x) );

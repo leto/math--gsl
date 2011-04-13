@@ -1,5 +1,8 @@
 =head1 Math::GSL Changes
 
+=head1 v0.25 - April 2011
+    - TODO RT#66882 properly so that a stable release with a passing test suite can be used.
+
 =head1 v0.24 - April 2011
     - Fix https://rt.cpan.org/Ticket/Display.html?id=66882 (Tests fail on Perl's with DUSELONGDOUBLE)
 

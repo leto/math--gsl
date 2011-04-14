@@ -39,7 +39,7 @@ sub TEST_RT66882 : Tests(1) {
     my $results = {
         'gsl_sf_fermi_dirac_m1_e(10.0, $r)' => 0.9999546021312975656,
     };
-    verify_results($results, 'Math::GSL::SF');
+    verify_results($results, 'Math::GSL::SF', 1e-16);
 }
 
 sub TEST_THE_KITCHEN_SINK : Tests {

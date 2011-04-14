@@ -104,12 +104,15 @@ sub is_similar {
 # this is a huge hack
 sub verify_results
 {
-    my ($results,$class) = @_;
+    my ($results,$class, $eps) = @_;
     # GSL uses a factor of 100
     my $factor   = 100;
-    my $eps      = 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
     my ($x,$res);
+
     local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    # If no epsilon is passed in, default to TOL3 from the GSL test suite
+    $eps    ||= 2048*$Math::GSL::Machine::GSL_DBL_EPSILON; # TOL3
 
     croak "Usage: verify_results(%results, \$class)" unless $class;
     while (my($code,$expected)=each %$results){

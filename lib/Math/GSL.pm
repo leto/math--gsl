@@ -60,52 +60,97 @@ intuitive (but slightly slower) object-oriented interface.
 
 =head1 SUBSYSTEMS
 
-    Math::GSL::BLAS             - Linear Algebra Functions
-    Math::GSL::BSpline          - BSplines
-    Math::GSL::CBLAS            - Linear Algebra Functions
-    Math::GSL::CDF              - Cumulative Distribution Functions
-    Math::GSL::Chebyshev        - Chebyshev Polynomials
-    Math::GSL::Combination      - Combinatoric Functions
-    Math::GSL::Complex          - Complex Numbers
-    Math::GSL::Const            - Various Constants
-    Math::GSL::DHT              - Discrete Hankel Transforms
-    Math::GSL::Deriv            - Numerical Derivative
-    Math::GSL::Eigen            - Eigenvalues and Eigenvectors
-    Math::GSL::Errno            - Error Handling
-    Math::GSL::FFT              - Fast Fourier Transform
-    Math::GSL::Fit              - Curve Fitting
-    Math::GSL::Heapsort         - Sorting Heaps
-    Math::GSL::Histogram        - Histograms
-    Math::GSL::Histogram2D      - 2D Histograms
-    Math::GSL::Integration      - Numerical Integration
-    Math::GSL::Interp           - Interpolation
-    Math::GSL::Linalg           - Linear Algebra
-    Math::GSL::Machine          - Machine Specific Information
-    Math::GSL::Matrix           - NxM Matrices
-    Math::GSL::Min              - Minimization
-    Math::GSL::Monte            - Monte Carlo Integrations
-    Math::GSL::Multifit         - Multivariable Fitting
-    Math::GSL::Multimin         - Multivariable Minimization
-    Math::GSL::Multiroots       - Muiltvariable Root Finding
-    Math::GSL::NTuple           - N Tuples
-    Math::GSL::ODEIV            - Ordinary Differential Equation Solvers (Initial Value Problems)
-    Math::GSL::Permutation      - Permutations
-    Math::GSL::Poly             - Polynmials
-    Math::GSL::PowInt           - Integer Power Functions
-    Math::GSL::QRNG             - Quasi-Random Number Generators
-    Math::GSL::RNG              - Random Number Generators
-    Math::GSL::Randist          - Random Number Distributions
-    Math::GSL::Roots            - Root Finding Algorithms
-    Math::GSL::SF               - Special Functions
-    Math::GSL::Siman            - Simulated Annealing
-    Math::GSL::Sort             - Sorting
-    Math::GSL::Spline           - Splines
-    Math::GSL::Statistics       - Statistics Functions
-    Math::GSL::Sum              - Summation
-    Math::GSL::Sys              - Sytem utility functions
-    Math::GSL::Vector           - N-dimensional Vectors
-    Math::GSL::Wavelet          - Basic Wavelets
-    Math::GSL::Wavelet2D        - 2D Wavelets
+L<Math::GSL::BLAS>            - Linear Algebra Functions
+
+L<Math::GSL::BSpline>         - BSplines
+
+L<Math::GSL::CBLAS>           - Linear Algebra Functions
+
+L<Math::GSL::CDF>             - Cumulative Distribution Functions
+
+L<Math::GSL::Chebyshev>       - Chebyshev Polynomials
+
+L<Math::GSL::Combination>     - Combinatoric Functions
+
+L<Math::GSL::Complex>         - Complex Numbers
+
+L<Math::GSL::Const>           - Various Constants
+
+L<Math::GSL::DHT>             - Discrete Hankel Transforms
+
+L<Math::GSL::Deriv>            - Numerical Derivative
+
+L<Math::GSL::Eigen>           - Eigenvalues and Eigenvectors
+
+L<Math::GSL::Errno>           - Error Handling
+
+L<Math::GSL::FFT>             - Fast Fourier Transform
+
+L<Math::GSL::Fit>             - Curve Fitting
+
+L<Math::GSL::Heapsort>        - Sorting Heaps
+
+L<Math::GSL::Histogram>       - Histograms
+
+L<Math::GSL::Histogram2D>     - 2D Histograms
+
+L<Math::GSL::Integration>     - Numerical Integration
+
+L<Math::GSL::Interp>          - Interpolation
+
+L<Math::GSL::Linalg>          - Linear Algebra
+
+L<Math::GSL::Machine>         - Machine Specific Information
+
+L<Math::GSL::Matrix>          - NxM Matrices
+
+L<Math::GSL::Min>             - Minimization
+
+L<Math::GSL::Monte>           - Monte Carlo Integrations
+
+L<Math::GSL::Multifit>        - Multivariable Fitting
+
+L<Math::GSL::Multimin>        - Multivariable Minimization
+
+L<Math::GSL::Multiroots>      - Muiltvariable Root Finding
+
+L<Math::GSL::NTuple>          - N Tuples
+
+L<Math::GSL::ODEIV>           - Ordinary Differential Equation Solvers (Initial Value Problems)
+
+L<Math::GSL::Permutation>     - Permutations
+
+L<Math::GSL::Poly>            - Polynmials
+
+L<Math::GSL::PowInt>          - Integer Power Functions
+
+L<Math::GSL::QRNG>            - Quasi-Random Number Generators
+
+L<Math::GSL::RNG>             - Random Number Generators
+
+L<Math::GSL::Randist>         - Random Number Distributions
+
+L<Math::GSL::Roots>           - Root Finding Algorithms
+
+L<Math::GSL::SF>              - Special Functions
+
+L<Math::GSL::Siman>           - Simulated Annealing
+
+L<Math::GSL::Sort>            - Sorting
+
+L<Math::GSL::Spline>          - Splines
+
+L<Math::GSL::Statistics>      - Statistics Functions
+
+L<Math::GSL::Sum>             - Summation
+
+L<Math::GSL::Sys>             - Sytem utility functions
+
+L<Math::GSL::Vector>          - N-dimensional Vectors
+
+L<Math::GSL::Wavelet>         - Basic Wavelets
+
+L<Math::GSL::Wavelet2D>        - 2D Wavelets
 
 
 =head1 AUTHORS

@@ -197,6 +197,10 @@ my $cleanup = qq{
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig 
                  } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;
 
+if ($^O ne 'darwin') {
+    $ldflags = '-shared ' . $ldflags;
+}
+
 my $builder = GSLBuilder->new( 
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ $cleanup ],
@@ -205,7 +209,7 @@ my $builder = GSLBuilder->new(
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => 'lib/Math/GSL.pm',
     include_dirs	    => [],
-    extra_linker_flags  => '-shared ' . $ldflags,
+    extra_linker_flags  => $ldflags,
     extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
     swig_flags          => $swig_flags, 
     license             => 'gpl',

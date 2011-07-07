@@ -1,5 +1,6 @@
 %module "Math::GSL::Linalg"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %apply int *OUTPUT { int *signum };
 

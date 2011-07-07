@@ -1,6 +1,7 @@
 %module "Math::GSL::Randist"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 void gsl_ran_dir_2d (const gsl_rng * r, double *OUTPUT, double *OUTPUT);
 void gsl_ran_dir_2d_trig_method (const gsl_rng * r, double *OUTPUT, double *OUTPUT);

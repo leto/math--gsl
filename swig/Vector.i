@@ -1,6 +1,7 @@
 %module "Math::GSL::Vector"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 FILE * fopen(char *, char *);
 int fclose(FILE *);

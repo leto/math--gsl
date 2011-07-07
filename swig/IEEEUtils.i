@@ -1,5 +1,7 @@
 %module "Math::GSL::IEEEUtils"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %{
     #include "gsl/gsl_ieee_utils.h"
 %}

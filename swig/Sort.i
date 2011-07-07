@@ -3,6 +3,7 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %typemap(argout) (double * data, const size_t stride, const size_t n) {
     int i=0;

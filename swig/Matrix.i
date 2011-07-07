@@ -3,6 +3,8 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %apply int *OUTPUT { size_t *imin, size_t *imax, size_t *jmin, size_t *jmax };
 %apply double *OUTPUT { double * min_out, double * max_out };
 

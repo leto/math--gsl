@@ -1,3 +1,5 @@
+*~
+pm
 .gitignore
 *.core
 core
@@ -16,6 +18,7 @@ foo*
 tags
 .DS_Store
 xs/*_wrap.c
+swig/renames.i
 swig/system.i
 .prove
 Math-GSL-*/

@@ -77,7 +77,7 @@ sub try_compile {
 	    my $errno = $? >> 8;
 	    local $! = $errno;
 	    print "
-		
+
 *** The test compile of '$tmp.c' failed: status $?
 *** (the status means: errno = $errno or '$!')
 *** DO NOT PANIC: this just means that you may get some innocuous
@@ -101,26 +101,28 @@ sub try_cflags ($) {
     }
     print "no\n";
     return '';
-	
+
 }
 
 print "Checking for GSL..";
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
-my $MIN_GSL_VERSION = "1.8";
+my $MIN_GSL_VERSION = "1.11";
 my $gv = $gsl_pkgcfg{'modversion'};
 my $current_minor_version;
 
 my $path_system = File::Spec->catfile('swig', 'system.i');
 open my $fh, ">", "$path_system" or die "Could not create system.i : $!";
 
+my $current_version;
 if (defined $gv) {
   if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
-    my @current= split /\./, $1;
+    $current_version = $1;
+    my @current = split /\./, $current_version;
     print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
     print $fh "#define GSL_MINOR_VERSION $current[1]\n";
 
-    my @min= split /\./, $MIN_GSL_VERSION;
+    my @min = split /\./, $MIN_GSL_VERSION;
     $current_minor_version = $current[1];
     unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
 	    printf "
@@ -130,7 +132,6 @@ if (defined $gv) {
 	    exit 1;
 	} else {
 	    print "Found GSL version $gv\n";
-	    
 	}
     } else {
 	print "
@@ -187,21 +188,19 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems;
 
-# BSplines appeared in 1.9
-if ($current_minor_version < 9 ) {
-   @Subsystems = grep { ! /BSpline/ } @Subsystems;
-}
 my $cleanup = qq{
-                 xs/*_wrap.c core *.core swig/system.i
-                 swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build 
-                 lib/Math/GSL/[A-z]+/* blib *.so *.orig 
+                 xs/*_wrap*.c core *.core swig/system.i swig/renames.i
+                 swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build pm
+                 lib/Math/GSL/[A-z]+/* blib *.so *.orig
                  } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;
 
 if ($^O ne 'darwin') {
     $ldflags = '-shared ' . $ldflags;
 }
 
-my $builder = GSLBuilder->new( 
+my $ver2func = do("inc/ver2func");
+
+my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ $cleanup ],
     create_makefile_pl  => 'passthrough',
@@ -211,7 +210,7 @@ my $builder = GSLBuilder->new(
     include_dirs	    => [],
     extra_linker_flags  => $ldflags,
     extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
-    swig_flags          => $swig_flags, 
+    swig_flags          => $swig_flags,
     license             => 'gpl',
     build_requires => {
         'Test::Most'            =>       0,
@@ -229,9 +228,12 @@ my $builder = GSLBuilder->new(
         'ExtUtils::PkgConfig' => '1.03',
     },
     swig_source           => [
-                                map { [ "swig/$_.i", "pod/$_.pod" ] } @Subsystems ,
+                                map { [ "swig/$_.i", ["pod/$_.pod"] ] } @Subsystems ,
                              ],
+    ver2func => $ver2func,
+    current_version => $current_version,
 );
 $builder->add_build_element('swig');
+
 $builder->create_build_script();
 print "Have a great day!\n";

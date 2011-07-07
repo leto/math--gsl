@@ -1,4 +1,5 @@
 %module "Math::GSL::Machine"
+%include "renames.i"
 
 %{
     #include "gsl/gsl_machine.h"

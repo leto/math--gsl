@@ -1,6 +1,7 @@
 %module "Math::GSL::Permutation"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %{
     #include "gsl/gsl_permute.h"

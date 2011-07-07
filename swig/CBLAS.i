@@ -1,6 +1,7 @@
 %module "Math::GSL::CBLAS"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %apply double const [] { const double * };
 %apply float const [] { const float * };

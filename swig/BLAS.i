@@ -6,6 +6,7 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 %include "gsl/gsl_blas.h"
 %include "gsl/gsl_blas_types.h"
 %include "../pod/BLAS.pod"

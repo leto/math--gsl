@@ -1,6 +1,7 @@
 %module "Math::GSL::SF"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 

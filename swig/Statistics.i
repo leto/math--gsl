@@ -2,6 +2,7 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %apply double *OUTPUT { double * min, double * max };
 

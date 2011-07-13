@@ -1,6 +1,8 @@
 %module "Math::GSL::FFT"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %include "gsl/gsl_math.h"
 %include "gsl/gsl_sys.h"
 %include "gsl/gsl_pow_int.h"

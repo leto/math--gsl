@@ -1,6 +1,8 @@
 %module "Math::GSL::Complex"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %{
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_complex_math.h"

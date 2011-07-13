@@ -1,6 +1,7 @@
 %module "Math::GSL::NTuple"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 // XXX: This needs to properly take the type of array into account,
 // this assumes ints

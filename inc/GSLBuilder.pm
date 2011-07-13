@@ -40,9 +40,40 @@ sub process_swig_files {
     unless (is_release()) {
         $self->process_versioned_swig_files;
     }
+
+    my $binding_ver = $self->get_binding_version;
+    print "Process XS files version $binding_ver\n";
     foreach my $file (@$files_ref) {
-        $self->process_xs_file($file->[0]);
+        $self->process_xs_file($file->[0], $binding_ver);
     }
+}
+
+sub get_binding_version {
+    my $self = shift;
+    my $current_version = $self->{properties}->{current_version};
+    my @bindings = <xs/*>;
+    my $all_binding_versions = {};
+    foreach my $b (@bindings) {
+        if ($b =~ /\w(?:\d+)?\.([\d\.]+)\.c$/) {
+            $all_binding_versions->{$1} = 1;
+        }
+    }
+    my $result_binding_version;
+    foreach my $b_ver (keys %{$all_binding_versions}) {
+        if (cmp_versions($current_version, $b_ver) >= 0 &&
+            (!defined($result_binding_version) ||
+             cmp_versions($result_binding_version, $b_ver) == -1))
+        {
+            $result_binding_version = $b_ver;
+        }
+    }
+    unless (defined($result_binding_version)) {
+        die "Can't find appropriate bindings version, ".
+            "check 'xs' directory, it should contains bindings " .
+            "with version <= current GSL version ($current_version)";
+    }
+
+    return $result_binding_version;
 }
 
 sub process_versioned_swig_files {
@@ -53,6 +84,7 @@ sub process_versioned_swig_files {
 
     my $cur_ver = $p->{current_version};
     my $ver2func = $p->{ver2func};
+
     foreach my $ver (sort {cmp_versions($a, $b)} keys %{$ver2func}) {
         next if (cmp_versions($cur_ver, $ver) == -1);
         my @renames;
@@ -61,23 +93,22 @@ sub process_versioned_swig_files {
             push @renames, @{$ver2func->{$high_ver}};
         }
         print "Building wrappers for GSL $ver\n";
-        open(my $fh, '>', 'swig/renames.i');
+        my $renames_fname = catfile(qw/swig renames.i/);
+        open(my $fh, '>', $renames_fname)
+            or die "Could not create $renames_fname: $!";
         foreach my $rename (@renames) {
             print $fh q{%rename("%(regex:/} . $rename . q{/$ignore/)s") "";} . "\n";
         }
-        close($fh);
+        close($fh) or die "Could not close $renames_fname: $!";
 
         foreach my $file (@$files_ref) {
             $self->process_swig($file->[0], $file->[1], $ver);
         }
     }
-    $self->add_to_cleanup('swig/renames.i');
 }
 
 sub process_xs_file {
-    my ($self, $main_swig_file) = @_;
-
-    my $ver = $self->{properties}->{current_version};
+    my ($self, $main_swig_file, $ver) = @_;
 
     (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
     $file_base =~ s!swig/!!g;
@@ -166,6 +197,7 @@ sub compile_swig {
 }
 sub is_windows { $^O =~ /MSWin32/i }
 sub is_darwin  { $^O =~ /darwin/i  }
+sub is_cygwin  { $^O =~ /cygwin/i }
 
 # Windows fixes courtesy of <sisyphus@cpan.org>
 sub link_c {

@@ -58,15 +58,15 @@ sub try_compile {
 	my $cccmd = $args{cccmd};
 	my $errornull;
 	my $ccflags =  $Config{'ccflags'};
-    $ccflags .= " $args{ccflags}" if $args{ccflags};
+        $ccflags .= " $args{ccflags}" if $args{ccflags};
 
-    if ($args{silent} ) {
+        if ($args{silent} ) {
 	    $errornull = "2>/dev/null" unless defined $errornull;
 	} else {
 	    $errornull = '';
 	}
 
-    $cccmd = "$Config{'cc'} -o $tmp $ccflags $tmp.c $errornull"
+        $cccmd = "$Config{'cc'} -o $tmp $ccflags $tmp.c $errornull"
 	    unless defined $cccmd;
 
 	printf "cccmd = $cccmd\n" if $args{verbose};
@@ -96,12 +96,11 @@ sub try_cflags ($) {
     print "Checking if $Config{cc} supports \"$ccflags\"...";
     my $result = try_compile($c_prog, ccflags=>$ccflags);
     if ($result) {
-	print "yes\n";
-	return " $ccflags";
+        print "yes\n";
+        return " $ccflags";
     }
     print "no\n";
     return '';
-
 }
 
 print "Checking for GSL..";
@@ -109,32 +108,29 @@ my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 
 my $MIN_GSL_VERSION = "1.11";
 my $gv = $gsl_pkgcfg{'modversion'};
-my $current_minor_version;
 
-my $path_system = File::Spec->catfile('swig', 'system.i');
-open my $fh, ">", "$path_system" or die "Could not create system.i : $!";
+my $path_system = catfile(qw/swig system.i/);
+open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
 
 my $current_version;
 if (defined $gv) {
-  if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
-    $current_version = $1;
-    my @current = split /\./, $current_version;
-    print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
-    print $fh "#define GSL_MINOR_VERSION $current[1]\n";
+    if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
+        $current_version = $1;
+        my @current = split /\./, $current_version;
+        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
+        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
 
-    my @min = split /\./, $MIN_GSL_VERSION;
-    $current_minor_version = $current[1];
-    unless ($current[0] >= $min[0] && $current[1] >= $min[1]) {
-	    printf "
+        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
+            printf "
 *** 
 *** You need to have GSL %s or greater installed. (You have $gv).
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
-	    exit 1;
-	} else {
-	    print "Found GSL version $gv\n";
-	}
+            exit 1;
+        } else {
+            print "Found GSL version $gv\n";
+        }
     } else {
-	print "
+        print "
 *** 
 *** Can't parse GSL version $gv.
 *** Will continue and keep my fingers crossed for luck.
@@ -149,7 +145,7 @@ if (defined $gv) {
     exit 1;
 }
 
-close $fh;
+close $fh or die "Could not close $path_system : $!";
 
 my $ccflags = $gsl_pkgcfg{cflags};
 # In case GSL in installed in the system-wide directory, $ccflags is
@@ -173,11 +169,11 @@ $ccflags .= try_cflags("-g");
 my $ldflags    = "$gsl_pkgcfg{libs} -gsl";
 $swig_flags = "$gsl_pkgcfg{cflags} $swig_flags";
 
-if ( $^O eq 'cygwin'  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
+if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
     # Should we check the 32-ness?
     $swig_flags = '-DNEED_LONG';
-} elsif ( $^O eq 'darwin' ) {
+} elsif (GSLBuilder::is_darwin()) {
     $ldflags .= ' -bundle -flat_namespace ';
 }
 
@@ -186,19 +182,30 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 
-my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems;
+my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i
                  swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build pm
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig
-                 } . join " ", map { catfile( (qw( lib Math GSL ), "$_.pm") ) } @Subsystems;
+                 } . join " ", map { catfile( (qw/lib Math GSL/, "$_.pm") ) } @Subsystems;
 
-if ($^O ne 'darwin') {
+unless (GSLBuilder::is_darwin()) {
     $ldflags = '-shared ' . $ldflags;
 }
 
-my $ver2func = do("inc/ver2func");
+my $ver2func = do(catfile(qw/inc ver2func/));
+
+unless (GSLBuilder::is_release()) {
+    my $swig_ver = swig_version();
+    if ((split(/\./, $swig_ver))[0] < 2) {
+        print "
+***
+*** You need to have SWIG 2.X or greater installed. (You have $swig_ver).
+*** Get SWIG at http://www.swig.org/\n";
+        exit 1;
+    }
+}
 
 my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
@@ -206,7 +213,7 @@ my $builder = GSLBuilder->new(
     create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
-    dist_version_from   => 'lib/Math/GSL.pm',
+    dist_version_from   => catfile(qw/lib Math GSL.pm/),
     include_dirs	    => [],
     extra_linker_flags  => $ldflags,
     extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
@@ -228,7 +235,7 @@ my $builder = GSLBuilder->new(
         'ExtUtils::PkgConfig' => '1.03',
     },
     swig_source           => [
-                                map { [ "swig/$_.i", ["pod/$_.pod"] ] } @Subsystems ,
+                                map { [ catfile("swig", "$_.i"), [catfile("pod", "$_.pod")] ] } @Subsystems ,
                              ],
     ver2func => $ver2func,
     current_version => $current_version,
@@ -237,3 +244,17 @@ $builder->add_build_element('swig');
 
 $builder->create_build_script();
 print "Have a great day!\n";
+
+
+sub swig_version {
+    my $cmd = "swig -version";
+    my $out = `$cmd`;
+    if ($?) {
+        die "Can't run [$cmd] : $out";
+    }
+    if ($out =~ /swig\s+version\s+([\d\.]+)\n/i) {
+        return $1;
+    } else {
+        die "Can't parse SWIG version from this output:\n$out";
+    }
+}

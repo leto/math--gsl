@@ -1,5 +1,7 @@
 %module "Math::GSL::ODEIV"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %{
     #include "gsl/gsl_odeiv.h"
     #include "gsl/gsl_types.h"

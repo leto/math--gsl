@@ -1,6 +1,7 @@
 %module "Math::GSL::QRNG"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %apply double *OUTPUT { double x[] };
 

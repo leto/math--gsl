@@ -1,6 +1,7 @@
 %module "Math::GSL::Wavelet2D"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %{
     #include "gsl/gsl_types.h"

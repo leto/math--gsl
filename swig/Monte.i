@@ -1,6 +1,7 @@
 %module "Math::GSL::Monte"
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %typemap(argout) ( gsl_monte_function * f, double xl[], double xu[],
                    size_t dim, size_t calls, gsl_rng * r,

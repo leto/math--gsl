@@ -2,6 +2,8 @@
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
+%include "renames.i"
+
 %apply int *OUTPUT { int * e };
 
 %{

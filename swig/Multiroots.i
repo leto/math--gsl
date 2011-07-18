@@ -1,5 +1,6 @@
 %module "Math::GSL::Multiroots"
 %include "gsl_typemaps.i"
+%include "renames.i"
 
 %typemap(in) gsl_multiroot_function * {
     gsl_multiroot_function *f;

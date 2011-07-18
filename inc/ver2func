@@ -1,0 +1,41 @@
+{
+#    "1.8"  => [],
+#    "1.9"  => [],
+#    "1.10" => [],
+    "1.11" => [],
+    "1.12" => [qw/
+        ^gsl_linalg_cholesky_invert$
+        ^gsl_matrix_complex_isnonneg$
+        ^gsl_multimin_fminimizer_nmsimplex2.*
+        ^gsl_sf_exprel_n_CF_e$
+        ^gsl_vector_complex_add$ ^gsl_vector_complex_add_constant$
+        ^gsl_vector_complex_div$ ^gsl_vector_complex_isnonneg$
+        ^gsl_vector_complex_mul$ ^gsl_vector_complex_scale$
+        ^gsl_vector_complex_sub$
+              /],
+    "1.13" => [qw/
+        ^gsl_bspline_greville_abscissa$
+        ^gsl_min_fminimizer_quad_golden$
+        ^gsl_monte_miser_params.* ^gsl_monte_vegas_params ^gsl_monte_vegas_chisq$
+        ^gsl_monte_vegas_runval$
+        ^gsl_poly_eval_derivs$
+              /],
+    "1.14" => [qw/
+        ^gsl_integration_glfixed.*
+        ^gsl_multifit_linear_usvd$ ^gsl_multifit_wlinear_usvd$
+              /],
+    "1.15" => [qw/
+        ^gsl_bspline_deriv.* ^gsl_bspline_eval_nonzero$
+        ^gsl_cheb_order$ ^gsl_cheb_size$ ^gsl_cheb_coeffs$
+        ^gsl_eigen_nonsymmv_params$
+        ^gsl_integration_cquad.*
+        ^gsl_interp_type_min_size$
+        ^gsl_linalg_complex_cholesky_invert$
+        ^gsl_matrix_equal$ ^gsl_matrix_char_equal$ ^gsl_matrix_complex_equal$
+        ^gsl_matrix_int_equal$
+        ^gsl_pow_uint$
+        ^gsl_sf_bessel_Knu_scaled_e10_e$
+        ^gsl_vector_equal$ ^gsl_vector_char_equal$ ^gsl_vector_complex_equal$
+        ^gsl_vector_int_equal$
+              /],
+};

@@ -37,14 +37,14 @@
        // if ($1) free($1);
 }
 
-%apply double const [] { 
+%apply double const [] {
     double *data, double *dest, double *f_in, double *f_out,
     double data[], const double * src, double x[], double a[], double b[],
     const double * x, const double * y, const double * w , const double x_array[],
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,
     const double * array , const double data2[], const double w[] ,
-    double *v,
+    double *v, const double alpha[],
     gsl_complex_packed_array data
 };
 

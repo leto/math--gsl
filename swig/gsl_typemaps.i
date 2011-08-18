@@ -210,6 +210,109 @@
 };
 
 /*****************************
+ * array_wrapper
+ */
+
+%{
+
+enum awType { awDouble, awFloat, awInt, awUnsigned };
+
+typedef struct {
+    I32 size;
+    enum awType type;
+    void * data;
+} array_wrapper;
+
+array_wrapper * array_wrapper_alloc(int numelem, enum awType type){
+    array_wrapper * rv =  malloc(sizeof(array_wrapper));
+
+    if (rv == NULL)
+        croak("array_wrapper_alloc: can't malloc wrapper\n");
+
+    switch (type){
+        case awDouble:
+            rv->data = malloc(sizeof(double) * numelem);
+            break;
+        case awFloat:
+            rv->data = malloc(sizeof(float) * numelem);
+            break;
+        case awInt:
+            rv->data = malloc(sizeof(int) * numelem);
+            break;
+        case awUnsigned:
+            rv->data = malloc(sizeof(unsigned int) * numelem);
+            break;
+        default:
+            croak("array_wrapper_alloc: type should be awDouble, awFloat, awInt, or awUnsigned");
+    }
+
+    if (rv->data == NULL)
+        croak("array_wrapper_alloc: can't malloc data");
+
+    rv->size = numelem;
+    rv->type = type;
+    return rv;
+}
+
+void array_wrapper_free(array_wrapper * daw){
+    free(daw->data);
+    free(daw);
+}
+%}
+
+%typemap(out) array_wrapper * {
+    SV** tmparr;
+    array_wrapper * wrapper;
+    int i;
+
+    double * dptr;
+    float * fptr;
+    int * iptr;
+    unsigned int * uptr;
+    
+    wrapper = $1;
+
+    tmparr = malloc(sizeof(SV*) * wrapper->size);
+    if (tmparr == NULL)
+        croak("out typemap for array_wrapper: couldn't malloc tmparr");
+
+    switch (wrapper->type){
+        case awDouble:
+            dptr = (double *)wrapper->data;
+            for (i=0; i< wrapper->size; i++){
+                tmparr[i] = newSVnv(dptr[i]);
+            }
+            break;
+        case awFloat:
+            fptr = (float *)wrapper->data;
+            for (i=0; i< wrapper->size; i++){
+                tmparr[i] = newSVnv((double)fptr[i]);
+            }
+            break;
+        case awInt:
+            iptr = (int *)wrapper->data;
+            for (i=0; i< wrapper->size; i++){
+                tmparr[i] = newSViv(iptr[i]);
+            }
+            break;
+        case awUnsigned:
+            uptr = (unsigned int*)wrapper->data;
+            for (i=0; i< wrapper->size; i++){
+                tmparr[i] = newSVuv(uptr[i]);
+            }
+            break;
+        default:
+            croak("out typemap for array_wrapper : type should be awDouble, awFloat, awInt, or awUnsigned");
+    }
+
+    $result = newRV_inc((SV*) av_make(wrapper->size, tmparr));
+    free(tmparr);
+    array_wrapper_free(wrapper);
+    argvi++;
+}
+
+
+/*****************************
  * Callback managment
  */
 %{

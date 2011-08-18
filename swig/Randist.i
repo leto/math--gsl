@@ -33,8 +33,24 @@ void gsl_ran_bivariate_gaussian (const gsl_rng * r, double sigma_x, double sigma
     free($1);
 }
 
+%ignore gsl_ran_dirichlet;
+%rename (gsl_ran_dirichlet) gsl_ran_dirichlet_wrapper;
+array_wrapper * gsl_ran_dirichlet_wrapper(const gsl_rng * r, size_t K, const double alpha[]);
+
 %{
     #include "gsl/gsl_randist.h"
+    
+    // void gsl_ran_dirichlet (const gsl_rng * r, size_t K, const double alpha[], double theta[])
+    array_wrapper * gsl_ran_dirichlet_wrapper(const gsl_rng * r, size_t K, const double alpha[]){
+        array_wrapper * wrapper = array_wrapper_alloc(K, awDouble);
+        gsl_ran_dirichlet(r, wrapper->size, alpha, (double*)(wrapper->data));
+        return wrapper;
+    }
+    
 %}
+
+
 %include "gsl/gsl_randist.h"
 %include "../pod/Randist.pod"
+
+

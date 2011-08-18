@@ -41,7 +41,7 @@ sub GSL_RAN_DIRICHLET : Tests {
     my $alpha = [ 1.0, 2.0 ];
     my $theta = [ 2.0, 3.0 ];
 
-    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, 3, $alpha , $theta ) }, 'gsl_ran_dirichlet');
+    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, 3, $alpha ) }, 'gsl_ran_dirichlet');
 }
 
 Test::Class->runtests;

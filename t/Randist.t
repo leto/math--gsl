@@ -1,6 +1,6 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 15;
+use Test::Most tests => 18;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -59,12 +59,17 @@ sub GSL_RAN_MULTINOMIAL : Tests(4) {
 
     ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $N, $prob )}), 100, 'gsl_ran_multinomial(N,p)=N');
 }
+
+sub magnitude{ return sum map {$_ * $_} @_; }
+
 sub GSL_RAN_DIR : Tests(2) {
     my $self = shift;
+    my $raw = $self->{rng}->raw;
     lives_ok( sub{ gsl_ran_dir_nd($self->{rng}->raw, 20) }, 'gsl_ran_dir_nd');
-    print sum(map {$_ * $_} gsl_ran_dir_nd($self->{rng}->raw, 20));
-    print "\n";
-    ok_similar(sum(map {$_ * $_} @{gsl_ran_dir_nd($self->{rng}->raw, 20)}), 1.0, '|gsl_ran_dir_nd(N)|=1.0');
+    ok_similar(magnitude(@{gsl_ran_dir_nd($raw, 20)}), 1.0, 'norm(gsl_ran_dir_nd(N)|^2=1.0');
+    ok_similar(magnitude(gsl_ran_dir_2d($raw)), 1.0, '|gsl_ran_dir_2d()|^2=1.0');
+    ok_similar(magnitude(gsl_ran_dir_2d_trig_method($raw)), 1.0, '|gsl_ran_dir_2d()|^2=1.0');
+    ok_similar(magnitude(gsl_ran_dir_3d($raw)), 1.0, '|gsl_ran_dir_3d()|^2=1.0');
 }
 
 Test::Class->runtests;

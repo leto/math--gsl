@@ -59,6 +59,10 @@ double gsl_ran_multinomial_pdf_wrapper (size_t SIZE, const double ARRAY[], size_
 %rename (gsl_ran_multinomial_lnpdf) gsl_ran_multinomial_lnpdf_wrapper;
 double gsl_ran_multinomial_lnpdf_wrapper (size_t SIZE, const double ARRAY[], size_t SIZE, const unsigned int ARRAY[]);
 
+%ignore gsl_ran_dir_nd;
+%rename (gsl_ran_dir_nd) gsl_ran_dir_nd_wrapper;
+array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
+
 %{
     #include "gsl/gsl_randist.h"
 
@@ -100,6 +104,13 @@ double gsl_ran_multinomial_lnpdf_wrapper (size_t SIZE, const double ARRAY[], siz
         if (K1 != K2)   
             croak("gsl_ran_multinomial_lnpdf - arrays need to be same size");
         return gsl_ran_multinomial_lnpdf (K1, p, n);
+    }
+
+    /* void gsl_ran_dir_nd (const gsl_rng * r, size_t n, double * x) */
+    array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n) {
+        array_wrapper * wrapper = array_wrapper_alloc(n, awDouble);
+        gsl_ran_dir_nd(r, n, (double*)(wrapper->data));
+        return wrapper;
     }
     
 %}

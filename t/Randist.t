@@ -1,6 +1,6 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 13;
+use Test::Most tests => 15;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -36,7 +36,7 @@ sub GSL_RAN_BASIC : Tests {
         'gsl_ran_lognormal works');
 }
 
-sub GSL_RAN_DIRICHLET : Tests(3) {
+sub GSL_RAN_DIRICHLET : Tests(4) {
     my $self = shift;
     my $alpha = [ 1.0, 2.0 ];
     my $theta = [ 2.0, 3.0 ];
@@ -45,9 +45,9 @@ sub GSL_RAN_DIRICHLET : Tests(3) {
     lives_ok( sub{ gsl_ran_dirichlet_pdf($alpha, $theta ) }, 'gsl_ran_dirichlet_pdf');
     lives_ok( sub{ gsl_ran_dirichlet_lnpdf($alpha, $theta ) }, 'gsl_ran_dirichlet_lnpdf');
 
-    is(sum(@{gsl_ran_dirichlet($self->{rng}->raw, $alpha)}), 1.0, 'sum(gsl_ran_dirichlet(alpha))=1');
+    ok_similar(sum(@{gsl_ran_dirichlet($self->{rng}->raw, $alpha)}), 1.0, 'sum(gsl_ran_dirichlet(alpha))=1');
 }
-sub GSL_RAN_MULTINOMIAL : Tests(3) {
+sub GSL_RAN_MULTINOMIAL : Tests(4) {
     my $self = shift;
     my $prob = [ .25, .25, .5 ];
     my $N = 100;
@@ -57,7 +57,14 @@ sub GSL_RAN_MULTINOMIAL : Tests(3) {
     lives_ok( sub{ gsl_ran_multinomial_pdf($prob,$counts ) }, 'gsl_ran_multinomial_pdf');
     lives_ok( sub{ gsl_ran_multinomial_lnpdf($prob,$counts ) }, 'gsl_ran_multinomial_lnpdf');
 
-    is(sum(@{gsl_ran_multinomial($self->{rng}->raw, $N, $prob )}), 100, 'gsl_ran_multinomial(N,p)=N');
+    ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $N, $prob )}), 100, 'gsl_ran_multinomial(N,p)=N');
+}
+sub GSL_RAN_DIR : Tests(2) {
+    my $self = shift;
+    lives_ok( sub{ gsl_ran_dir_nd($self->{rng}->raw, 20) }, 'gsl_ran_dir_nd');
+    print sum(map {$_ * $_} gsl_ran_dir_nd($self->{rng}->raw, 20));
+    print "\n";
+    ok_similar(sum(map {$_ * $_} @{gsl_ran_dir_nd($self->{rng}->raw, 20)}), 1.0, '|gsl_ran_dir_nd(N)|=1.0');
 }
 
 Test::Class->runtests;

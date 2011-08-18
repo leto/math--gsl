@@ -314,6 +314,9 @@ void array_wrapper_free(array_wrapper * daw){
 /*****************************
  * input arrays with lengths
  */
+%typemap(arginit) (size_t SIZE, const double ARRAY[]) {
+    $2 = 0; /* apparently arrays are not null'd for multi-args? */
+}
 
 %typemap(in) (size_t SIZE, const double ARRAY[]) {
     AV* av;
@@ -338,6 +341,10 @@ void array_wrapper_free(array_wrapper * daw){
 %typemap(freearg) (size_t SIZE, const double ARRAY[]) {
     if ($2) 
         free($2);
+}
+
+%typemap(arginit) (size_t SIZE, const unsigned int ARRAY[]) {
+    $2 = NULL;
 }
 
 %typemap(in) (size_t SIZE, const unsigned int ARRAY[]) {

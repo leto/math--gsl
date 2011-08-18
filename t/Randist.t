@@ -1,6 +1,6 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 6;
+use Test::Most tests => 11;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -35,13 +35,24 @@ sub GSL_RAN_BASIC : Tests {
         'gsl_ran_lognormal works');
 }
 
-sub GSL_RAN_DIRICHLET : Tests {
+sub GSL_RAN_DIRICHLET : Tests(3) {
     my $self = shift;
-    local $TODO = 'const double alpha [] and double theta [] not correctly supported yet';
     my $alpha = [ 1.0, 2.0 ];
     my $theta = [ 2.0, 3.0 ];
 
-    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, 3, $alpha ) }, 'gsl_ran_dirichlet');
+    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, $alpha ) }, 'gsl_ran_dirichlet');
+    lives_ok( sub{ gsl_ran_dirichlet_pdf($alpha, $theta ) }, 'gsl_ran_dirichlet_pdf');
+    lives_ok( sub{ gsl_ran_dirichlet_lnpdf($alpha, $theta ) }, 'gsl_ran_dirichlet_lnpdf');
+}
+sub GSL_RAN_MULTINOMIAL : Tests(3) {
+    my $self = shift;
+    my $prob = [ .25, .25, .5 ];
+    my $N = 100;
+    my $counts = [100, 112, 220];
+
+    lives_ok( sub{ gsl_ran_multinomial($self->{rng}->raw, $N, $prob ) }, 'gsl_ran_multinomial');
+    lives_ok( sub{ gsl_ran_multinomial_pdf($prob,$counts ) }, 'gsl_ran_multinomial_pdf');
+    lives_ok( sub{ gsl_ran_multinomial_lnpdf($prob,$counts ) }, 'gsl_ran_multinomial_lnpdf');
 }
 
 Test::Class->runtests;

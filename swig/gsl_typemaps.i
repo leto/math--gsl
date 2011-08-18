@@ -311,6 +311,59 @@ void array_wrapper_free(array_wrapper * daw){
     argvi++;
 }
 
+/*****************************
+ * input arrays with lengths
+ */
+
+%typemap(in) (size_t SIZE, const double ARRAY[]) {
+    AV* av;
+    int i;
+
+    if (!SvROK($input))
+        croak("Argument $argnum is not a reference.");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Argument $argnum is not an array.");
+    av = (AV*)SvRV($input);
+    $1 = av_len(av) + 1;
+    
+    $2 = malloc($1 * sizeof(double));
+    if ($2 == NULL)
+        croak("%typemap(in) (int , const double []) - can't malloc");
+
+    for (i = 0; i < $1; i++) {
+        $2[i] = (double) SvNV(* av_fetch(av, i, 0));
+    }
+}
+
+%typemap(freearg) (size_t SIZE, const double ARRAY[]) {
+    if ($2) 
+        free($2);
+}
+
+%typemap(in) (size_t SIZE, const unsigned int ARRAY[]) {
+    AV* av;
+    int i;
+
+    if (!SvROK($input))
+        croak("Argument $argnum is not a reference.");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Argument $argnum is not an array.");
+    av = (AV*)SvRV($input);
+    $1 = av_len(av) + 1;
+    
+    $2 = malloc($1 * sizeof(unsigned int));
+    if ($2 == NULL)
+        croak("%typemap(in) (int , unsigned int []) - can't malloc");
+
+    for (i = 0; i < $1; i++) {
+        $2[i] = (unsigned int) SvUV(* av_fetch(av, i, 0));
+    }
+}
+
+%typemap(freearg) (size_t SIZE, const unsigned int ARRAY[]) {
+    if ($2) 
+        free($2);
+}
 
 /*****************************
  * Callback managment

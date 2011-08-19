@@ -49,7 +49,7 @@ double gsl_ran_dirichlet_lnpdf_wrapper(size_t SIZE, const double ARRAY[], size_t
 
 %ignore gsl_ran_multinomial;
 %rename (gsl_ran_multinomial) gsl_ran_multinomial_wrapper;
-array_wrapper * gsl_ran_multinomial_wrapper (const gsl_rng * r, unsigned int N, size_t SIZE, const double ARRAY[]);
+array_wrapper * gsl_ran_multinomial_wrapper (const gsl_rng * r, size_t SIZE, const double ARRAY[], unsigned int N);
 
 %ignore gsl_ran_multinomial_pdf;
 %rename (gsl_ran_multinomial_pdf) gsl_ran_multinomial_pdf_wrapper;
@@ -88,7 +88,7 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
     }
 
     /* void gsl_ran_multinomial (const gsl_rng * r, size_t K, unsigned int N, const double p[], unsigned int n[]) */
-    array_wrapper * gsl_ran_multinomial_wrapper (const gsl_rng * r, unsigned int N, size_t K, const double p[]){
+    array_wrapper * gsl_ran_multinomial_wrapper (const gsl_rng * r, size_t K, const double p[], unsigned int N){
         array_wrapper * wrapper = array_wrapper_alloc(K, awUnsigned);
         gsl_ran_multinomial(r, wrapper->size, N, p, (unsigned int*)(wrapper->data));
         return wrapper;

@@ -489,7 +489,7 @@ This function computes the probability p($k) of obtaining $k from a logarithmic 
 
 =over
 
-=item gsl_ran_multinomial($r, $N, $P) 
+=item gsl_ran_multinomial($r, $P, $N) 
 
 This function computes and returns a random sample n[] from the multinomial
 distribution formed by N trials from an underlying distribution p[K]. The

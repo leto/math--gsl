@@ -53,11 +53,11 @@ sub GSL_RAN_MULTINOMIAL : Tests(4) {
     my $N = 100;
     my $counts = [100, 112, 220];
 
-    lives_ok( sub{ gsl_ran_multinomial($self->{rng}->raw, $N, $prob ) }, 'gsl_ran_multinomial');
+    lives_ok( sub{ gsl_ran_multinomial($self->{rng}->raw, $prob, $N) }, 'gsl_ran_multinomial');
     lives_ok( sub{ gsl_ran_multinomial_pdf($counts,$prob ) }, 'gsl_ran_multinomial_pdf');
     lives_ok( sub{ gsl_ran_multinomial_lnpdf($counts,$prob ) }, 'gsl_ran_multinomial_lnpdf');
 
-    ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $N, $prob )}), 100, 'gsl_ran_multinomial(N,p)=N');
+    ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $prob, $N )}), 100, 'gsl_ran_multinomial(N,p)=N');
 }
 
 sub magnitude{ return sum map {$_ * $_} @_; }

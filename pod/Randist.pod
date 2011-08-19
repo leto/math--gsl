@@ -507,12 +507,12 @@ Random variates are generated using the conditional binomial method (see C.S.
 Davis, The computer generation of multinomial random variates, Comp. Stat. Data
 Anal. 16 (1993) 205¿217 for details).
 
-=item gsl_ran_multinomial_pdf($P, $counts)
+=item gsl_ran_multinomial_pdf($counts, $P)
 
 This function returns the probability for the multinomial
 distribution P(counts[1], counts[2], ..., counts[K]) with parameters p[K]. 
 
-=item gsl_ran_multinomial_lnpdf($P, $counts) 
+=item gsl_ran_multinomial_lnpdf($counts, $P) 
 
 This function returns the logarithm of the probability for the multinomial
 distribution P(counts[1], counts[2], ..., counts[K]) with parameters p[K]. 

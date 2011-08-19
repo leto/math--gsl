@@ -53,11 +53,11 @@ array_wrapper * gsl_ran_multinomial_wrapper (const gsl_rng * r, unsigned int N, 
 
 %ignore gsl_ran_multinomial_pdf;
 %rename (gsl_ran_multinomial_pdf) gsl_ran_multinomial_pdf_wrapper;
-double gsl_ran_multinomial_pdf_wrapper (size_t SIZE, const double ARRAY[], size_t SIZE, const unsigned int ARRAY[]);
+double gsl_ran_multinomial_pdf_wrapper (size_t SIZE, const unsigned int ARRAY[], size_t SIZE, const double ARRAY[]);
 
 %ignore gsl_ran_multinomial_lnpdf;
 %rename (gsl_ran_multinomial_lnpdf) gsl_ran_multinomial_lnpdf_wrapper;
-double gsl_ran_multinomial_lnpdf_wrapper (size_t SIZE, const double ARRAY[], size_t SIZE, const unsigned int ARRAY[]);
+double gsl_ran_multinomial_lnpdf_wrapper (size_t SIZE, const unsigned int ARRAY[], size_t SIZE, const double ARRAY[]);
 
 %ignore gsl_ran_dir_nd;
 %rename (gsl_ran_dir_nd) gsl_ran_dir_nd_wrapper;
@@ -94,13 +94,13 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
         return wrapper;
     }
     /* double gsl_ran_multinomial_pdf (size_t K, const double p[], const unsigned int n[]) */
-    double gsl_ran_multinomial_pdf_wrapper (size_t K1, const double p[], size_t K2, const unsigned int n[]){
+    double gsl_ran_multinomial_pdf_wrapper (size_t K1, const unsigned int n[], size_t K2, const double p[]){
         if (K1 != K2)   
             croak("gsl_ran_multinomial_pdf - arrays need to be same size");
         return gsl_ran_multinomial_pdf (K1, p, n);
     }
     /* double gsl_ran_multinomial_lnpdf (size_t K, const double p[], const unsigned int n[]) */
-    double gsl_ran_multinomial_lnpdf_wrapper (size_t K1, const double p[], size_t K2, const unsigned int n[]){
+    double gsl_ran_multinomial_lnpdf_wrapper (size_t K1, const unsigned int n[], size_t K2, const double p[]){
         if (K1 != K2)   
             croak("gsl_ran_multinomial_lnpdf - arrays need to be same size");
         return gsl_ran_multinomial_lnpdf (K1, p, n);

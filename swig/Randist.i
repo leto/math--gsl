@@ -75,13 +75,13 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
         return wrapper;
     }
     /* double gsl_ran_dirichlet_pdf (size_t K, const double alpha[], const double theta[]) */
-    double gsl_ran_dirichlet_pdf_wrapper(size_t K1, const double alpha[], size_t K2, const double theta[]){
+    double gsl_ran_dirichlet_pdf_wrapper(size_t K1, const double theta[], size_t K2, const double alpha[]){
         if (K1 != K2)   
             croak("gsl_ran_dirichlet_pdf - arrays need to be same size");
         return gsl_ran_dirichlet_pdf (K1, alpha, theta);
     }
     /* double gsl_ran_dirichlet_lnpdf (size_t K, const double alpha[], const double theta[]) */
-    double gsl_ran_dirichlet_lnpdf_wrapper(size_t K1, const double alpha[], size_t K2, const double theta[]){
+    double gsl_ran_dirichlet_lnpdf_wrapper(size_t K1, const double theta[], size_t K2, const double alpha[]){
         if (K1 != K2)   
             croak("gsl_ran_dirichlet_lnpdf - arrays need to be same size");
         return gsl_ran_dirichlet_lnpdf (K1, alpha, theta);

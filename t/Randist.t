@@ -42,8 +42,8 @@ sub GSL_RAN_DIRICHLET : Tests(4) {
     my $theta = [ 2.0, 3.0 ];
 
     lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, $alpha ) }, 'gsl_ran_dirichlet');
-    lives_ok( sub{ gsl_ran_dirichlet_pdf($alpha, $theta ) }, 'gsl_ran_dirichlet_pdf');
-    lives_ok( sub{ gsl_ran_dirichlet_lnpdf($alpha, $theta ) }, 'gsl_ran_dirichlet_lnpdf');
+    lives_ok( sub{ gsl_ran_dirichlet_pdf($theta, $alpha ) }, 'gsl_ran_dirichlet_pdf');
+    lives_ok( sub{ gsl_ran_dirichlet_lnpdf($theta, $alpha ) }, 'gsl_ran_dirichlet_lnpdf');
 
     ok_similar(sum(@{gsl_ran_dirichlet($self->{rng}->raw, $alpha)}), 1.0, 'sum(gsl_ran_dirichlet(alpha))=1');
 }

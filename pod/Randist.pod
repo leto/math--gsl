@@ -185,13 +185,20 @@ This function computes the probability density p($x) at $x for an exponential po
 
 =over
 
-=item gsl_ran_cauchy($r, $a)
+=item gsl_ran_cauchy($r, $scale)
 
-This function returns a random variate from the Cauchy distribution with scale parameter $a. The probability distribution for Cauchy random variates is, p(x) dx = {1 / a pi (1 + (x/$a)**2) } dx for x in the range -infinity to +infinity. The Cauchy distribution is also known as the Lorentz distribution. $r is a gsl_rng structure.
+This function returns a random variate from the Cauchy distribution with
+$scale. The probability distribution for Cauchy random variates is, 
 
-=item gsl_ran_cauchy_pdf($x, $a)
+ p(x) dx = {1 / $scale pi (1 + (x/$$scale)**2) } dx 
 
-This function computes the probability density p($x) at $x for a Cauchy distribution with scale parameter $a, using the formula given above.
+for x in the range -infinity to +infinity.  The Cauchy distribution is also
+known as the Lorentz distribution. $r is a gsl_rng structure.
+
+=item gsl_ran_cauchy_pdf($x, $scale)
+
+This function computes the probability density p($x) at $x for a Cauchy
+distribution with $scale, using the formula given above.
 
 =back
 
@@ -505,7 +512,7 @@ and normalized appropriately.
 
 Random variates are generated using the conditional binomial method (see C.S.
 Davis, The computer generation of multinomial random variates, Comp. Stat. Data
-Anal. 16 (1993) 205¿217 for details).
+Anal. 16 (1993) 205-217 for details).
 
 =item gsl_ran_multinomial_pdf($counts, $P)
 
@@ -565,13 +572,20 @@ This function computes the probability density p(x) at x for a Pareto distributi
 
 =over
 
-=item gsl_ran_poisson($r, $mu)
+=item gsl_ran_poisson($r, $lambda)
 
-This function returns a random integer from the Poisson distribution with mean $mu. $r is a gsl_rng structure. The probability distribution for Poisson variates is, p(k) = {$mu**$k \ $k!} exp(-$mu) for $k >= 0. $r is a gsl_rng structure
+This function returns a random integer from the Poisson distribution with mean
+$lambda. $r is a gsl_rng structure. The probability distribution for Poisson
+variates is, 
 
-=item gsl_ran_poisson_pdf($k, $mu)
+ p(k) = {$lambda**$k \ $k!} exp(-$lambda) 
 
-This function computes the probability p($k) of obtaining $k from a Poisson distribution with mean $mu, using the formula given above.
+for $k >= 0. $r is a gsl_rng structure.
+
+=item gsl_ran_poisson_pdf($k, $lambda)
+
+This function computes the probability p($k) of obtaining $k from a Poisson
+distribution with mean $lambda, using the formula given above.
 
 =for Comment 
 gsl_ran_poisson_array removed b/c it's an undoc'd function which merely returns array of poisson draws
@@ -646,13 +660,20 @@ This function returns a random variate from the Levy skew stable distribution wi
 
 =over
 
-=item gsl_ran_weibull($r, $a, $b)
+=item gsl_ran_weibull($r, $scale, $exponent)
 
-This function returns a random variate from the Weibull distribution. The distribution function is, p(x) dx = {b \over a^b} x^{b-1}  \exp(-(x/a)^b) dx for x >= 0. $r is a gsl_rng structure
+This function returns a random variate from the Weibull distribution with
+$scale and $exponent (aka scale). The distribution function is 
 
-=item gsl_ran_weibull_pdf($x, $a, $b)
+ p(x) dx = {$exponent \over $scale^$exponent} x^{$exponent-1}  
+           \exp(-(x/$scale)^$exponent) dx 
 
-This function computes the probability density p($x) at $x for a Weibull distribution with scale $a and exponent $b, using the formula given above.
+for x >= 0. $r is a gsl_rng structure
+
+=item gsl_ran_weibull_pdf($x, $scale, $exponent)
+
+This function computes the probability density p($x) at $x for a Weibull
+distribution with $scale and $exponent, using the formula given above.
 
 =back
 

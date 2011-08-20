@@ -210,7 +210,6 @@ unless (GSLBuilder::is_release()) {
 my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ $cleanup ],
-    create_makefile_pl  => 'passthrough',
     dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => catfile(qw/lib Math GSL.pm/),

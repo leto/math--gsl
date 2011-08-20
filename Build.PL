@@ -233,6 +233,7 @@ my $builder = GSLBuilder->new(
     sign                  => 0,
     configure_requires => {
         'ExtUtils::PkgConfig' => '1.03',
+        'Module::Build'       => '0.38',
     },
     swig_source           => [
                                 map { [ catfile("swig", "$_.i"), [catfile("pod", "$_.pod")] ] } @Subsystems ,

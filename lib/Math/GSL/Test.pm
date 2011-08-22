@@ -169,10 +169,11 @@ Note: Needing to pass in the class name is honky. This may change.
 
 sub verify
 {
-    my ($results,$class) = @_;
+    my ($results,$class, $todo) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     croak "Usage: verify(%results, \$class)" unless $class;
     while (my($code,$result)=each %$results){
+        local $TODO = $todo;
         my $x = eval qq{${class}::$code};
         ok(0, $@) if $@;
 

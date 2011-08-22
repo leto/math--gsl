@@ -1,6 +1,6 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 447;
+use Test::Most tests => 449;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -197,6 +197,14 @@ sub GSL_RAN_CHISQ : Tests(26){
         'gsl_ran_chisq_pdf(4,4)' => [0.135335283236613, $TOL0],
     };
     verify($results, 'Math::GSL::Randist');
+}
+
+sub GSL_RAN_CHISQ_BUG : Tests(2) {
+    my $results = {
+        'gsl_ran_chisq_pdf(0.0,2)' => [0.5, $TOL0],
+        'gsl_ran_chisq_pdf(0,2)'   => [0.5, $TOL0],
+    };
+    verify($results, 'Math::GSL::Randist', "possible chisq_pdf bug");
 }
 
 sub GSL_RAN_DIRICHLET : Tests(31) {

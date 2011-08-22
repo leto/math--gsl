@@ -262,6 +262,7 @@ void array_wrapper_free(array_wrapper * daw){
 
 %typemap(out) array_wrapper * {
     SV** tmparr;
+    AV* av;
     array_wrapper * wrapper;
     int i;
 
@@ -305,7 +306,8 @@ void array_wrapper_free(array_wrapper * daw){
             croak("out typemap for array_wrapper : type should be awDouble, awFloat, awInt, or awUnsigned");
     }
 
-    $result = newRV_inc((SV*) av_make(wrapper->size, tmparr));
+    av = av_make(wrapper->size, tmparr);
+    $result = sv_2mortal(newRV_noinc((SV*) av));
     free(tmparr);
     array_wrapper_free(wrapper);
     argvi++;

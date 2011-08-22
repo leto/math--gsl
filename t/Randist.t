@@ -1,6 +1,6 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 414;
+use Test::Most tests => 447;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -12,6 +12,9 @@ BEGIN { gsl_set_error_handler_off() }
 
 use strict;
 use warnings;
+
+my $TOL0 = 0.00000001;
+sub magnitude{ return sum map {$_ * $_} @_; }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
@@ -36,32 +39,6 @@ sub GSL_RAN_BASIC : Tests {
         'gsl_ran_lognormal works');
 }
 
-sub GSL_RAN_DIRICHLET : Tests(4) {
-    my $self = shift;
-    my $alpha = [ 1.0, 2.0 ];
-    my $theta = [ 2.0, 3.0 ];
-
-    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, $alpha ) }, 'gsl_ran_dirichlet');
-    lives_ok( sub{ gsl_ran_dirichlet_pdf($theta, $alpha ) }, 'gsl_ran_dirichlet_pdf');
-    lives_ok( sub{ gsl_ran_dirichlet_lnpdf($theta, $alpha ) }, 'gsl_ran_dirichlet_lnpdf');
-
-    ok_similar(sum(@{gsl_ran_dirichlet($self->{rng}->raw, $alpha)}), 1.0, 'sum(gsl_ran_dirichlet(alpha))=1');
-}
-sub GSL_RAN_MULTINOMIAL : Tests(4) {
-    my $self = shift;
-    my $prob = [ .25, .25, .5 ];
-    my $N = 100;
-    my $counts = [100, 112, 220];
-
-    lives_ok( sub{ gsl_ran_multinomial($self->{rng}->raw, $prob, $N) }, 'gsl_ran_multinomial');
-    lives_ok( sub{ gsl_ran_multinomial_pdf($counts,$prob ) }, 'gsl_ran_multinomial_pdf');
-    lives_ok( sub{ gsl_ran_multinomial_lnpdf($counts,$prob ) }, 'gsl_ran_multinomial_lnpdf');
-
-    ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $prob, $N )}), 100, 'gsl_ran_multinomial(N,p)=N');
-}
-
-sub magnitude{ return sum map {$_ * $_} @_; }
-
 sub GSL_RAN_DIR : Tests(5) {
     my $self = shift;
     my $raw = $self->{rng}->raw;
@@ -71,9 +48,8 @@ sub GSL_RAN_DIR : Tests(5) {
     ok_similar(magnitude(gsl_ran_dir_2d_trig_method($raw)), 1.0, '|gsl_ran_dir_2d()|^2=1.0');
     ok_similar(magnitude(gsl_ran_dir_3d($raw)), 1.0, '|gsl_ran_dir_3d()|^2=1.0');
 }
-my $TOL0 = 0.00000001;
 
-sub GSL_RAN_BETA_PDF : Tests(38){
+sub GSL_RAN_BETA : Tests(38){
     my $results = {
         'gsl_ran_beta_pdf(0,1,1)' => [1, $TOL0],
         'gsl_ran_beta_pdf(0.2,1,1)' => [1, $TOL0],
@@ -117,7 +93,7 @@ sub GSL_RAN_BETA_PDF : Tests(38){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_BINOMIAL_PDF : Tests(27){
+sub GSL_RAN_BINOMIAL : Tests(27){
     my $results = {
         'gsl_ran_binomial_pdf(0,0.5,100)' => [7.8886090522101e-31, $TOL0],
         'gsl_ran_binomial_pdf(1,0.5,100)' => [7.88860905221007e-29, $TOL0],
@@ -150,7 +126,7 @@ sub GSL_RAN_BINOMIAL_PDF : Tests(27){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_CAUCHY_PDF : Tests(25){
+sub GSL_RAN_CAUCHY : Tests(25){
     my $results = {
         'gsl_ran_cauchy_pdf(-10,1)' => [0.00315158303152268, $TOL0],
         'gsl_ran_cauchy_pdf(-6,1)' => [0.00860296989685921, $TOL0],
@@ -181,7 +157,7 @@ sub GSL_RAN_CAUCHY_PDF : Tests(25){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_CHISQ_PDF : Tests(26){
+sub GSL_RAN_CHISQ : Tests(26){
     my $results = {
         'gsl_ran_chisq_pdf(0.01,1)' => [3.96952547477012, $TOL0],
         'gsl_ran_chisq_pdf(0.1,1)' => [1.20003894843014, $TOL0],
@@ -213,7 +189,40 @@ sub GSL_RAN_CHISQ_PDF : Tests(26){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_EXPONENTIAL_PDF : Tests(24){
+sub GSL_RAN_DIRICHLET : Tests(31) {
+    my $self = shift;
+    my $alpha = [ 1.0, 2.0 ];
+    my $theta = [ 2.0, 3.0 ];
+
+    lives_ok( sub{ gsl_ran_dirichlet($self->{rng}->raw, $alpha ) }, 'gsl_ran_dirichlet');
+    lives_ok( sub{ gsl_ran_dirichlet_pdf($theta, $alpha ) }, 'gsl_ran_dirichlet_pdf');
+    lives_ok( sub{ gsl_ran_dirichlet_lnpdf($theta, $alpha ) }, 'gsl_ran_dirichlet_lnpdf');
+
+    ok_similar(sum(@{gsl_ran_dirichlet($self->{rng}->raw, $alpha)}), 1.0, 'sum(gsl_ran_dirichlet(alpha))=1');
+
+    # when dim = 2, dirichlet is beta.
+    for my $x (0.001,0.2,0.5,0.75,0.999) { # 5
+        my $y = 1 - $x;
+        for my $ab ([0.5,0.5],[1,1],[2,5],[10,2]) { # 4
+            my ($a, $b) = @$ab;
+            ok_similar(gsl_ran_dirichlet_pdf([$x,$y], [$a,$b]), gsl_ran_beta_pdf($x,$a,$b), 
+                "dirichlet == beta ([$a, $b], [$x, $y])");
+        }
+    }
+    my $results = {
+        'gsl_ran_dirichlet_pdf([0.31,0.25,0.44],[10,10,10])' => [11.5355719548212,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.1,0.1,0.8],[10,10,10])' => [2.48347392489645e-05,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.9,0.01,0.09],[10,2,2])' => [5.98332203211598,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.31,0.25,0.44],[1,1,1])' => [2,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.31,0.25,0.44],[.4,.5,.6])' => [0.848903581683801,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.1,0.2,0.145,0.145,0.25,0.16],[1.1,1.2,1.3,1.4,1.5,1.6])' => [277.893874809885,$TOL0],
+        'gsl_ran_dirichlet_pdf([0.1,0.2,0.145,0.145,0.25,0.16],[10.1,1.2,1.3,1.4,1.5,1.6])' => [0.00261027364595901,$TOL0],
+    };
+    verify($results, 'Math::GSL::Randist');
+}
+
+
+sub GSL_RAN_EXPONENTIAL : Tests(24){
     my $results = {
         'gsl_ran_exponential_pdf(0.05,2)' => [0.487654956014166, $TOL0],
         'gsl_ran_exponential_pdf(0.1,2)' => [0.475614712250357, $TOL0],
@@ -243,7 +252,7 @@ sub GSL_RAN_EXPONENTIAL_PDF : Tests(24){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_FDIST_PDF : Tests(49){
+sub GSL_RAN_FDIST : Tests(49){
     my $results = {
         'gsl_ran_fdist_pdf(0.01,1,1)' => [3.15158303152268, $TOL0],
         'gsl_ran_fdist_pdf(0.1,1,1)' => [0.915076583717946, $TOL0],
@@ -298,7 +307,7 @@ sub GSL_RAN_FDIST_PDF : Tests(49){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_GAMMA_PDF : Tests(50){
+sub GSL_RAN_GAMMA : Tests(50){
     my $results = {
         'gsl_ran_gamma_pdf(0,1,2)' => [0.5, $TOL0],
         'gsl_ran_gamma_pdf(0.01,1,2)' => [0.497506239596341, $TOL0],
@@ -354,7 +363,7 @@ sub GSL_RAN_GAMMA_PDF : Tests(50){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_GEOMETRIC_PDF : Tests(19){
+sub GSL_RAN_GEOMETRIC : Tests(19){
     my $results = {
         'gsl_ran_geometric_pdf(1,0.1)' => [0.1, $TOL0],
         'gsl_ran_geometric_pdf(2,0.1)' => [0.09, $TOL0],
@@ -379,7 +388,7 @@ sub GSL_RAN_GEOMETRIC_PDF : Tests(19){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_HYPERGEOMETRIC_PDF : Tests(19){
+sub GSL_RAN_HYPERGEOMETRIC : Tests(19){
     my $results = {
         'gsl_ran_hypergeometric_pdf(0,10,10,5)' => [0.0162538699690403, $TOL0],
         'gsl_ran_hypergeometric_pdf(1,10,10,5)' => [0.135448916408669, $TOL0],
@@ -404,7 +413,7 @@ sub GSL_RAN_HYPERGEOMETRIC_PDF : Tests(19){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_LOGNORMAL_PDF : Tests(27){
+sub GSL_RAN_LOGNORMAL : Tests(27){
     my $results = {
         'gsl_ran_lognormal_pdf(0,0,1)' => [0, $TOL0],
         'gsl_ran_lognormal_pdf(0.01,0,1)' => [0.000990238664959182, $TOL0],
@@ -437,14 +446,29 @@ sub GSL_RAN_LOGNORMAL_PDF : Tests(27){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_MULTINOMIAL_PDF : Tests(0){
-    my $results = {
+sub GSL_RAN_MULTINOMIAL : Tests(10){
+    my $self = shift;
+    my $prob = [ .25, .25, .5 ];
+    my $N = 100;
+    my $counts = [100, 112, 220];
 
+    lives_ok( sub{ gsl_ran_multinomial($self->{rng}->raw, $prob, $N) }, 'gsl_ran_multinomial');
+    lives_ok( sub{ gsl_ran_multinomial_pdf($counts,$prob ) }, 'gsl_ran_multinomial_pdf');
+    lives_ok( sub{ gsl_ran_multinomial_lnpdf($counts,$prob ) }, 'gsl_ran_multinomial_lnpdf');
+
+    ok_similar(sum(@{gsl_ran_multinomial($self->{rng}->raw, $prob, $N )}), 100, 'gsl_ran_multinomial(N,p)=N');
+    my $results = {
+        'gsl_ran_multinomial_pdf([1,1,2,4],[0.25,0.25,0.25,0.25])' => [0.01281738, $TOL0],
+        'gsl_ran_multinomial_pdf([199,123,12,123],[0.25,0.25,0.25,0.25])' => [1.78547e-48, $TOL0],
+        'gsl_ran_multinomial_pdf([0,0,0,1,0],[0.1,0.1,0.1,0.5,0.1])' => [0.55555556, 0.0001],
+        'gsl_ran_multinomial_pdf([5,6,7,6,5,5,5],[0.1,0.15,0.2,0.15,0.1,0.1,0.1])' => [3.807253e-05, $TOL0],
+        'gsl_ran_multinomial_pdf([1,1,2,4],[0.5,0.2,0.2,0.1])' => [0.000336, $TOL0],
+        'gsl_ran_multinomial_pdf([2,1,2,4],[0.5,0.2,0.2,0.1])' => [0.000756, $TOL0],
     };
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_NEGATIVE_BINOMIAL_PDF : Tests(16){
+sub GSL_RAN_NEGATIVE_BINOMIAL : Tests(16){
     my $results = {
         'gsl_ran_negative_binomial_pdf(0,0.5,100)' => [7.8886090522101e-31, $TOL0],
         'gsl_ran_negative_binomial_pdf(1,0.5,100)' => [3.94430452610504e-29, $TOL0],
@@ -466,7 +490,7 @@ sub GSL_RAN_NEGATIVE_BINOMIAL_PDF : Tests(16){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_GAUSSIAN_PDF : Tests(9){
+sub GSL_RAN_GAUSSIAN : Tests(9){
     my $results = {
         'gsl_ran_gaussian_pdf(1,1)' => [0.241970724519143, $TOL0],
         'gsl_ran_gaussian_pdf(2,1)' => [0.0539909665131881, $TOL0],
@@ -481,7 +505,7 @@ sub GSL_RAN_GAUSSIAN_PDF : Tests(9){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_POISSON_PDF : Tests(20){
+sub GSL_RAN_POISSON : Tests(20){
     my $results = {
         'gsl_ran_poisson_pdf(1,1)' => [0.367879441171442, $TOL0],
         'gsl_ran_poisson_pdf(2,1)' => [0.183939720585721, $TOL0],
@@ -507,7 +531,7 @@ sub GSL_RAN_POISSON_PDF : Tests(20){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_TDIST_PDF : Tests(15){
+sub GSL_RAN_TDIST : Tests(15){
     my $results = {
         'gsl_ran_tdist_pdf(1,1)' => [0.159154943091895, $TOL0],
         'gsl_ran_tdist_pdf(2,1)' => [0.0636619772367581, $TOL0],
@@ -528,7 +552,7 @@ sub GSL_RAN_TDIST_PDF : Tests(15){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_FLAT_PDF : Tests(8){
+sub GSL_RAN_FLAT : Tests(8){
     my $results = {
         'gsl_ran_flat_pdf(0.001,0,1)' => [1, $TOL0],
         'gsl_ran_flat_pdf(0.25,0,1)' => [1, $TOL0],
@@ -542,7 +566,7 @@ sub GSL_RAN_FLAT_PDF : Tests(8){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_WEIBULL_PDF : Tests(24){
+sub GSL_RAN_WEIBULL : Tests(24){
     my $results = {
         'gsl_ran_weibull_pdf(0,1,2)' => [0, $TOL0],
         'gsl_ran_weibull_pdf(0.01,1,2)' => [0.0199980000999967, $TOL0],

@@ -10,6 +10,16 @@ use List::Util qw/sum/;
 use Data::Dumper;
 BEGIN { gsl_set_error_handler_off() }
 
+# note: The point-values for beta, binom, cauchy, chisq, exp, f, gamma, geom,
+# hyper, lnorm, multinom, nbinom, t, unif, weibull, and norm were calculated
+# using R, so if there were an error in gsl itself it would show.  Other dists
+# are not available in R (at least not in the standard lib), though may be
+# calc'd some other way.
+
+# Not tested yet: bernoulli, bivariate, choose, discrete, erlang, exppow,
+# gumbel1, gumbel2, landau, laplace, levy, logarithmic, logistic, pareto,
+# pascal, poisson, rayleigh, sample, shuffle, ugaussian
+
 use strict;
 use warnings;
 
@@ -209,6 +219,9 @@ sub GSL_RAN_DIRICHLET : Tests(31) {
                 "dirichlet == beta ([$a, $b], [$x, $y])");
         }
     }
+
+    # these values calculated by Math::GSL itself... should be confirmed by
+    # some other software package.
     my $results = {
         'gsl_ran_dirichlet_pdf([0.31,0.25,0.44],[10,10,10])' => [11.5355719548212,$TOL0],
         'gsl_ran_dirichlet_pdf([0.1,0.1,0.8],[10,10,10])' => [2.48347392489645e-05,$TOL0],

@@ -177,7 +177,7 @@ sub GSL_RAN_CHISQ : Tests(26){
         'gsl_ran_chisq_pdf(1.5,1)' => [0.153866322805455, $TOL0],
         'gsl_ran_chisq_pdf(2,1)' => [0.103776874355149, $TOL0],
         'gsl_ran_chisq_pdf(4,1)' => [0.026995483256594, $TOL0],
-        'gsl_ran_chisq_pdf(0,2)' => [0.5, $TOL0],
+        'gsl_ran_chisq_pdf(0.0001,2)' => [0.499975, $TOL0],
         'gsl_ran_chisq_pdf(0.01,2)' => [0.497506239596341, $TOL0],
         'gsl_ran_chisq_pdf(0.1,2)' => [0.475614712250357, $TOL0],
         'gsl_ran_chisq_pdf(0.3,2)' => [0.430353988212529, $TOL0],

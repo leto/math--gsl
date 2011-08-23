@@ -1,11 +1,12 @@
 package Math::GSL::Randist::Test;
 use base q{Test::Class};
-use Test::Most tests => 447;
+use Test::Most tests => 449;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Randist qw/:all/;
 use Math::GSL::Const   qw/ $M_PI /;
+use Math::GSL qw/gsl_version/;
 use List::Util qw/sum/;
 use Data::Dumper;
 BEGIN { gsl_set_error_handler_off() }
@@ -196,6 +197,17 @@ sub GSL_RAN_CHISQ : Tests(26){
         'gsl_ran_chisq_pdf(2,4)' => [0.183939720585721, $TOL0],
         'gsl_ran_chisq_pdf(4,4)' => [0.135335283236613, $TOL0],
     };
+
+
+    if (gsl_version() >= version->parse('1.15')){
+        $results->{'gsl_ran_chisq_pdf(0.0,2)'} = [0.5, $TOL0];
+        $results->{'gsl_ran_chisq_pdf(0,2)'} = [0.5, $TOL0];
+    }
+    else{
+        $results->{'gsl_ran_chisq_pdf(0.0,2)'} = [0, $TOL0];
+        $results->{'gsl_ran_chisq_pdf(0,2)'} = [0, $TOL0];
+    }
+
     verify($results, 'Math::GSL::Randist');
 }
 

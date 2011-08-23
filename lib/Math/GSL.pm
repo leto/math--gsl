@@ -10,6 +10,8 @@ use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Vector  qw/:file/;
 use Math::GSL::Machine qw/:all/;
+use Math::GSL::Version;
+use version;
 our @EXPORT = qw();
 our @EXPORT_OK = qw(
                      gsl_fopen gsl_fclose
@@ -250,6 +252,10 @@ sub gsl_fclose
 {
     my $file = shift;
     return Math::GSL::Vector::fclose($file);
+}
+
+sub gsl_version{
+    return version->parse($Math::GSL::Version::GSL_VERSION);
 }
 
 42;

@@ -6,6 +6,7 @@ use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Randist qw/:all/;
 use Math::GSL::Const   qw/ $M_PI /;
+use Math::GSL;
 use List::Util qw/sum/;
 use Data::Dumper;
 BEGIN { gsl_set_error_handler_off() }
@@ -200,10 +201,16 @@ sub GSL_RAN_CHISQ : Tests(26){
 }
 
 sub GSL_RAN_CHISQ_BUG : Tests(2) {
-    my $results = {
+    my $results = Math::GSL::gsl_version() >= version->parse('1.15') ? 
+    {
         'gsl_ran_chisq_pdf(0.0,2)' => [0.5, $TOL0],
         'gsl_ran_chisq_pdf(0,2)'   => [0.5, $TOL0],
-    };
+    } :
+    {
+        'gsl_ran_chisq_pdf(0.0,2)' => [0.0, $TOL0],
+        'gsl_ran_chisq_pdf(0,2)'   => [0.0, $TOL0],
+    }
+    ;
     verify($results, 'Math::GSL::Randist', "possible chisq_pdf bug");
 }
 

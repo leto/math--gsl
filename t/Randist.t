@@ -168,7 +168,7 @@ sub GSL_RAN_CAUCHY : Tests(25){
     verify($results, 'Math::GSL::Randist');
 }
 
-sub GSL_RAN_CHISQ : Tests(26){
+sub GSL_RAN_CHISQ : Tests(28){
     my $results = {
         'gsl_ran_chisq_pdf(0.01,1)' => [3.96952547477012, $TOL0],
         'gsl_ran_chisq_pdf(0.1,1)' => [1.20003894843014, $TOL0],

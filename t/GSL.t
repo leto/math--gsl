@@ -1,6 +1,6 @@
 package Math::GSL::GSL::Test;
 use base q{Test::Class};
-use Test::More tests => 18;
+use Test::More tests => 19;
 use Math::GSL::SF      qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -10,6 +10,7 @@ use Math::GSL::CBLAS   qw/:all/;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
+use Math::GSL qw/gsl_version/;
 use Data::Dumper;
 use strict;
 
@@ -56,6 +57,10 @@ sub TEST_STUFF : Tests {
         unlink 'mrfuji' if -e 'mrfuji';
     }
 
+}
+
+sub TEST_VERSION : Tests { 
+    isa_ok(gsl_version(), "version");
 }
 
 Test::Class->runtests;

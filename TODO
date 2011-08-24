@@ -6,9 +6,7 @@
 
 * Submit examples showing the use of Math::GSL to do everyday calculations
 
-* Make HTML version of Math::GSL POD look nicer
-
-* Fix something in KNOWN_BUGS
+* Fix or provide more info on a Github Issue: https://github.com/leto/math--gsl/issues
 
 * Add tests for the functions in Math::GSL::Randist
 
@@ -29,5 +27,4 @@
 * PDL interoperability :
                       my $matrix = Math::GSL::Matrix->new(50,50);
                       my $pdl = $matrix->as_pdl();
-
 

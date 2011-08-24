@@ -52,6 +52,11 @@ Version 0.25_02
     my $function = sub { my $x=shift; sin($x**2) };
     my ($status,$val,$err) = gsl_deriv_central($function, 5, 0.01 );
 
+    use Math::GSL qw/gsl_version/;
+    # get a version object for the version of the underlying GSL library,
+    # which will stringify to a version number
+    my $gsl_version = gsl_version();
+
 Each GSL subsystem has it's own module. For example, the random number generator
 subsystem is Math::GSL::RNG. Many subsystems have a more Perlish and
 object-oriented frontend which can be used, as the above example shows. The raw
@@ -154,6 +159,24 @@ L<Math::GSL::Wavelet>         - Basic Wavelets
 
 L<Math::GSL::Wavelet2D>        - 2D Wavelets
 
+=cut
+
+sub gsl_fopen
+{
+    my ($file, $mode) = @_;
+    $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
+    return Math::GSL::Vector::fopen($file, $mode);
+}
+
+sub gsl_fclose
+{
+    my $file = shift;
+    return Math::GSL::Vector::fclose($file);
+}
+
+sub gsl_version{
+    return version->parse($Math::GSL::Version::GSL_VERSION);
+}
 
 =head1 AUTHORS
 
@@ -240,22 +263,5 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
-
-sub gsl_fopen
-{
-    my ($file, $mode) = @_;
-    $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
-    return Math::GSL::Vector::fopen($file, $mode);
-}
-
-sub gsl_fclose
-{
-    my $file = shift;
-    return Math::GSL::Vector::fclose($file);
-}
-
-sub gsl_version{
-    return version->parse($Math::GSL::Version::GSL_VERSION);
-}
 
 42;

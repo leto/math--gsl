@@ -1,4 +1,4 @@
-use Test::More tests => 52;
+use Test::More tests => 53;
 use Config;
 use File::Spec::Functions;
 use lib catfile 'blib', 'lib';
@@ -9,7 +9,7 @@ use warnings;
 
 
 BEGIN {
-	use_ok( 'Math::GSL' );
+    use_ok( 'Math::GSL' );
     map { use_ok("Math::GSL::$_") } GSLBuilder::subsystems();
 }
 

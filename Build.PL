@@ -235,7 +235,7 @@ my $builder = GSLBuilder->new(
         'Module::Build'       => '0.38',
     },
     swig_source           => [
-                                map { [ catfile("swig", "$_.i"), [catfile("pod", "$_.pod")] ] } @Subsystems ,
+                                map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,
                              ],
     ver2func => $ver2func,
     current_version => $current_version,

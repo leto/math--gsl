@@ -24,7 +24,6 @@ examples/tkplotdataset
 examples/vector/dot_product
 examples/vector/serialize
 examples/vector/speed
-HACKING
 inc/GSLBuilder.pm
 inc/ver2func
 KNOWN_BUGS

@@ -1,7 +1,7 @@
 package Math::GSL::Roots::Test;
 use strict;
 use base q{Test::Class};
-use Test::More tests => 14;
+use Test::More tests => 13;
 use Math::GSL        qw/:all/;
 use Math::GSL::Roots qw/:all/;
 use Math::GSL::Test  qw/:all/;
@@ -29,13 +29,6 @@ sub GSL_FDFSOLVER_BASIC : Tests {
     #));
 
 }
-sub GSL_ROOTS_ALLOC_FREE : Tests {
-    my $self = shift;
-    my $x = $self->{solver};
-    isa_ok($x, 'Math::GSL::Roots', 'gsl_root_fsolver_alloc' );
-    gsl_root_fsolver_free($x);
-    ok(!$@, 'gsl_root_fsolver_free');
-}
 
 sub GSL_ROOTS_SET : Tests {
     my $self = shift;
@@ -54,30 +47,36 @@ sub GSL_ROOT_ITERATE : Tests {
         sub { my $x=shift; ($x-3.2)**3 },
         0, 5
     ));
-    # This currently blows up
-    #local $TODO = q{???};
-    #ok_status( gsl_root_fsolver_iterate($solver));
-    my $root = gsl_root_fsolver_root($solver);
-    ok_similar([$root], [2.5], 'gsl_root_fsolver_root');
+
+    my ($status, $root);
+    for (1..20) {
+        $status = gsl_root_fsolver_iterate($solver);
+        $root = gsl_root_fsolver_root($solver);
+        my $x_lo = gsl_root_fsolver_x_lower($solver);
+        my $x_hi = gsl_root_fsolver_x_upper($solver);
+        $status = gsl_root_test_interval($x_lo, $x_hi, 3.1, 3.3);
+    }
+    ok_status($status);
+    ok_similar([$root], [3.2], 'gsl_root_fsolver_root', 0.1);
 }
 
 sub SOlVER_TYPES : Tests {
     cmp_ok( $gsl_root_fsolver_bisection->{name}   ,'eq','bisection'  );
     cmp_ok( $gsl_root_fsolver_brent->{name}       ,'eq','brent'      );
-    cmp_ok( $gsl_root_fsolver_falsepos->{name}    ,'eq','falsepos'   );     
-    cmp_ok( $gsl_root_fdfsolver_newton->{name}    ,'eq','newton'     );    
-    cmp_ok( $gsl_root_fdfsolver_secant->{name}    ,'eq','secant'     );   
-    cmp_ok( $gsl_root_fdfsolver_steffenson->{name},'eq','steffenson' ); 
+    cmp_ok( $gsl_root_fsolver_falsepos->{name}    ,'eq','falsepos'   );
+    cmp_ok( $gsl_root_fdfsolver_newton->{name}    ,'eq','newton'     );
+    cmp_ok( $gsl_root_fdfsolver_secant->{name}    ,'eq','secant'     );
+    cmp_ok( $gsl_root_fdfsolver_steffenson->{name},'eq','steffenson' );
 }
 
 sub GSL_ROOTFSOLVER_NAME : Tests {
     my $self = shift;
-    cmp_ok( gsl_root_fsolver_name($self->{solver})   ,'eq','bisection'  ); 
+    cmp_ok( gsl_root_fsolver_name($self->{solver})   ,'eq','bisection'  );
 }
 
 sub GSL_FDFSOLVER_NAME : Tests {
     my $self = shift;
-    cmp_ok( gsl_root_fdfsolver_name($self->{fdfsolver})   ,'eq','newton'  ); 
+    cmp_ok( gsl_root_fdfsolver_name($self->{fdfsolver})   ,'eq','newton'  );
 }
 
 Test::Class->runtests;

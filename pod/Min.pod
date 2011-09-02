@@ -1,8 +1,8 @@
 %perlcode %{
 
 @EXPORT_OK = qw/
-   gsl_min_fminimizer_alloc 
-   gsl_min_fminimizer_free 
+   gsl_min_fminimizer_alloc
+   gsl_min_fminimizer_free
    gsl_min_fminimizer_set 
    gsl_min_fminimizer_set_with_values
    gsl_min_fminimizer_iterate 
@@ -44,9 +44,15 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_min_fminimizer_free >
 
+Don't call this function explicitly. It will be called automatically in DESTROY for fminimizer.
+
 =item * C<gsl_min_fminimizer_set >
 
+Don't apply this function twice to the same fminimizer. It will cause a memory leak. Instead of this you should create new fminimizer.
+
 =item * C<gsl_min_fminimizer_set_with_values>
+
+Don't apply this function twice to the same fminimizer. It will cause a memory leak. Instead of this you should create new fminimizer.
 
 =item * C<gsl_min_fminimizer_iterate >
 

@@ -1,7 +1,7 @@
 package Math::GSL::Min::Test;
 use base q{Test::Class};
 use strict;
-use Test::More tests => 23;
+use Test::More tests => 22;
 use Math::GSL        qw/:all/;
 use Math::GSL::Min   qw/:all/;
 use Math::GSL::Test  qw/:all/;
@@ -10,25 +10,21 @@ use Math::GSL::Const qw/$M_PI/;
 #use Devel::Trace     qw/trace/;
 use Data::Dumper;
 
-#trace 'off';
-
 BEGIN { gsl_set_error_handler_off(); }
 
 sub trace { }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{min} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
+    $self->{min}   = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
     $self->{brent} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_brent);
 }
 
 sub teardown : Test(teardown) {
     my $self = shift;
-    #gsl_min_fminimizer_free($self->{min});
-    #gsl_min_fminimizer_free($self->{brent});
 }
 
-sub GSL_MIN_TYPES : Tests { 
+sub GSL_MIN_TYPES : Tests {
 
     my $m = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
     isa_ok($m, 'Math::GSL::Min');
@@ -47,10 +43,11 @@ sub GSL_MIN_SET : Tests {
     my $self = shift;
     my $mini = $self->{min};
     ok_status(
-            gsl_min_fminimizer_set($mini, 
-                sub { cos($_[0]) }, 3, 0, 2*$M_PI     
-            )
+        gsl_min_fminimizer_set($mini,
+            sub { cos($_[0]) }, 3, 0, 2*$M_PI
+        ),
     );
+
     # These are the first guesses first the initial iteration
     cmp_ok( $mini->{x_minimum}, '==', 3 );
     cmp_ok( $mini->{x_lower}, '==', 0 );
@@ -76,40 +73,24 @@ sub GSL_MIN_TEST_INTERVAL : Tests {
     my ($x_lower, $x_upper, $epsabs, $epsrel) = (0,1e-7, 1e-3,1e-5);
     ok_status(gsl_min_test_interval ($x_lower, $x_upper, $epsabs, $epsrel),
         $GSL_SUCCESS, 'gsl_min_test_interval'
-    ); 
+    );
 
     ($x_lower, $x_upper, $epsabs, $epsrel) = (0,1e-2, 1e-3,1e-5);
     ok_status(gsl_min_test_interval ($x_lower, $x_upper, $epsabs, $epsrel),
         $GSL_CONTINUE, 'gsl_min_test_interval'
-    ); 
+    );
 }
 
 sub GSL_MIN_ITERATE : Tests {
     my $self = shift;
     my $mini = $self->{min};
-    #warn Dumper [ $mini, $mini->{state} ];
-    ok_status(gsl_min_fminimizer_set_with_values($mini, 
-        sub { cos($_[0]) }, 
+    ok_status(gsl_min_fminimizer_set_with_values($mini,
+        sub { cos($_[0]) },
         3, cos(3),
         0, cos(0),
-        2*$M_PI, cos(2*$M_PI)     
+        2*$M_PI, cos(2*$M_PI)
     ));
-    #warn Dumper [ $mini, $mini->{state} ];
-    #trace 'on';
-    #warn Dumper [map { $mini->{$_} } qw(x_minimum x_lower x_upper f_minimum f_lower f_upper) ];
-    local $TODO = 'iterate does not work';
-    # This blows up
-    #ok_status( gsl_min_fminimizer_iterate($mini));
-    #trace 'off';
-}
-
-sub GSL_MIN_NEW_FREE : Tests {
-    my $self = shift;
-    my $min = $self->{min};
-    isa_ok($min, 'Math::GSL::Min');
-
-    gsl_min_fminimizer_free($min);
-    ok(!$@, 'gsl_min_fminimizer_free');
+    ok_status(gsl_min_fminimizer_iterate($mini));
 }
 
 Test::Class->runtests;

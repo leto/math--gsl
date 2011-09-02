@@ -393,6 +393,13 @@ void array_wrapper_free(array_wrapper * daw){
         SV * params;
     };
 
+    void gsl_function_perl_free(struct gsl_function_perl * perl_f){
+        if (perl_f != NULL) {
+            SvREFCNT_dec(perl_f->function);
+            SvREFCNT_dec(perl_f->params);
+            Safefree(perl_f);
+        }
+    }
 
     /* These functions (C callbacks) calls the perl callbacks.
        Info for perl callback can be found using the 'void*params' parameter
@@ -528,9 +535,11 @@ void array_wrapper_free(array_wrapper * daw){
     $1         = &w_gsl_monte_function.C_gsl_monte_function;
 };
 
-%typemap(in) gsl_function * (struct gsl_function_perl w_gsl_function) {
+%typemap(in) gsl_function * {
     SV * function = 0;
     SV * params = 0;
+    struct gsl_function_perl *w_gsl_function;
+    Newx(w_gsl_function, 1, struct gsl_function_perl);
 
     if (SvROK($input) && (SvTYPE(SvRV($input)) == SVt_PVAV)) {
         AV* array=(AV*)SvRV($input);
@@ -562,12 +571,13 @@ void array_wrapper_free(array_wrapper * daw){
         params=&PL_sv_undef;
     }
     params = newSVsv(params);
-            
-    w_gsl_function.params = params;
-    w_gsl_function.function = function;
-    w_gsl_function.C_gsl_function.params   = &w_gsl_function;
-    w_gsl_function.C_gsl_function.function = &call_gsl_function;
-    $1         = &w_gsl_function.C_gsl_function;
+
+    w_gsl_function->params = params;
+    w_gsl_function->function = function;
+    w_gsl_function->C_gsl_function.params = w_gsl_function;
+    w_gsl_function->C_gsl_function.function = &call_gsl_function;
+
+    $1 = &(w_gsl_function->C_gsl_function);
 };
 
 %typemap(freearg) gsl_monte_function * {
@@ -577,11 +587,12 @@ void array_wrapper_free(array_wrapper * daw){
     SvREFCNT_dec(p->params);
 };
 
+
 %typemap(freearg) gsl_function * {
     struct gsl_function_perl *p=(struct gsl_function_perl *) $1->params;
-    SvREFCNT_dec(p->function);
-    SvREFCNT_dec(p->params);
+    gsl_function_perl_free(p);
 };
+
 
 /* TODO: same thing should be done for these kinds of callbacks */
 %typemap(in) gsl_function_fdf * {

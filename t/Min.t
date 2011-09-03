@@ -10,17 +10,13 @@ use Math::GSL::Const qw/$M_PI/;
 #use Devel::Trace     qw/trace/;
 use Data::Dumper;
 
-#trace 'off';
-
-$| = 1;
-
 BEGIN { gsl_set_error_handler_off(); }
 
 sub trace { }
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{min} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
+    $self->{min}   = gsl_min_fminimizer_alloc($gsl_min_fminimizer_goldensection);
     $self->{brent} = gsl_min_fminimizer_alloc($gsl_min_fminimizer_brent);
 }
 
@@ -47,9 +43,9 @@ sub GSL_MIN_SET : Tests {
     my $self = shift;
     my $mini = $self->{min};
     ok_status(
-            gsl_min_fminimizer_set($mini,
-                sub { cos($_[0]) }, 3, 0, 2*$M_PI
-            )
+        gsl_min_fminimizer_set($mini,
+            sub { cos($_[0]) }, 3, 0, 2*$M_PI
+        ),
     );
 
     # These are the first guesses first the initial iteration

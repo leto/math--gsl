@@ -3,10 +3,14 @@
 =head1 v0.26 - August 2011
     - Dirichlet random distribution support and greatly increased docs by Tom Nishimura <tnish@fastmail.jp>
     - gsl_version() function which returns the version of GSL being used by Tom Nishimura <tnish@fastmail.jp>
+    - Fix '-bundle not allowed with -dynamiclib' build error on Mac OS X - Yury Zavarin
+    - Build swig wrappers for different versions of GSL (1.11 - 1.15) - Yury Zavarin
+    - Minimum SWIG version is now 2.x (only required for developers using the git repo)
+    - Removed deprecated stuff from Build.PL and added Module::Build to configure_requires
+    - Many small documentation improvements
 
 =head1 v0.25 - April 2011
     - TODO RT#66882 properly so that a stable release with a passing test suite can be used.
-    - Build swig wrappers for different versions of GSL (1.11 - 1.15) - Yury Zavarin
 
 =head1 v0.24 - April 2011
     - Fix https://rt.cpan.org/Ticket/Display.html?id=66882 (Tests fail on Perl's with DUSELONGDOUBLE)

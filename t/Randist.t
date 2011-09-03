@@ -198,14 +198,14 @@ sub GSL_RAN_CHISQ : Tests(28){
         'gsl_ran_chisq_pdf(4,4)' => [0.135335283236613, $TOL0],
     };
 
-
-    if (gsl_version() >= version->parse('1.15')){
+    # sucks, but version.pm is a ball of hate
+    my ($major, $minor) = split '.', gsl_version();
+    if ($major >= 1 && $minor >= 15) {
         $results->{'gsl_ran_chisq_pdf(0.0,2)'} = [0.5, $TOL0];
-        $results->{'gsl_ran_chisq_pdf(0,2)'} = [0.5, $TOL0];
-    }
-    else{
+        $results->{'gsl_ran_chisq_pdf(0,2)'}   = [0.5, $TOL0];
+    } else {
         $results->{'gsl_ran_chisq_pdf(0.0,2)'} = [0, $TOL0];
-        $results->{'gsl_ran_chisq_pdf(0,2)'} = [0, $TOL0];
+        $results->{'gsl_ran_chisq_pdf(0,2)'}   = [0, $TOL0];
     }
 
     verify($results, 'Math::GSL::Randist');

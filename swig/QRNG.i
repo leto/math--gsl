@@ -4,6 +4,7 @@
 %include "renames.i"
 
 %apply double *OUTPUT { double x[] };
+%typemap(freearg) double x[];
 
 %typemap(argout) double x[] {
 
@@ -18,6 +19,14 @@
     sv_setnv($result,(NV) *($1+1));
     argvi++;
 }
+
+%newobject gsl_qrng_alloc;
+%newobject gsl_qrng_clone;
+%extend gsl_qrng {
+    ~gsl_qrng() {
+        gsl_qrng_free($self);
+    }
+ }
 
 %{
     #include "gsl/gsl_types.h"

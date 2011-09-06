@@ -199,7 +199,7 @@ sub GSL_RAN_CHISQ : Tests(28){
     };
 
     # sucks, but version.pm is a ball of hate
-    my ($major, $minor) = split '.', gsl_version();
+    my ($major, $minor) = split /\./, gsl_version();
     if ($major >= 1 && $minor >= 15) {
         $results->{'gsl_ran_chisq_pdf(0.0,2)'} = [0.5, $TOL0];
         $results->{'gsl_ran_chisq_pdf(0,2)'}   = [0.5, $TOL0];

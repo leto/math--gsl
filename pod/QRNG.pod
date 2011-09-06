@@ -30,7 +30,8 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_qrng_memcpy($dest, $src)> - This function copies the quasi-random sequence generator $src into the pre-existing generator $dest, making $dest into an exact copy of $src. The two generators must be of the same type.
 
-=item C<gsl_qrng_free($q)> - This function frees all the memory associated with the generator $q. 
+=item C<gsl_qrng_free($q)> - This function frees all the memory associated with the generator $q.
+Don't call this function explicitly. It will be called automatically in DESTROY.
 
 =item C<gsl_qrng_init($q)> - This function reinitializes the generator $q to its starting point. Note that quasi-random sequences do not use a seed and always produce the same set of values. 
 

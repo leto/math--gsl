@@ -34,7 +34,7 @@
 }
 
 %typemap(freearg) double const [] {
-       // if ($1) free($1);
+       if ($1) free($1);
 }
 
 %apply double const [] {

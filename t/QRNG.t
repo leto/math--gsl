@@ -15,7 +15,6 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     my $self = shift;
-    gsl_qrng_free($self->{sobol});
 }
 
 sub GSL_QRNG_ALLOC : Tests {
@@ -43,7 +42,7 @@ sub GSL_QRNG_NAME : Tests {
     ok ($name eq 'sobol', 'gsl_qrng_name' );
 }
 
-sub GSL_QRNG_GET : Tests { 
+sub GSL_QRNG_GET : Tests {
     my $self = shift;
     my ($status, @values)= gsl_qrng_get($self->{sobol});
 
@@ -52,4 +51,5 @@ sub GSL_QRNG_GET : Tests {
     ($status, @values)= gsl_qrng_get($self->{sobol});
     ok_similar( [ 0.75, 0.25 ], \@values, 'gsl_qrng_get returns correct values for sobol' );
 }
+
 Test::Class->runtests;

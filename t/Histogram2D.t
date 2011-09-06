@@ -13,6 +13,7 @@ BEGIN{ gsl_set_error_handler_off(); }
 sub make_fixture : Test(setup) {
     my $self = shift;
     $self->{H} = gsl_histogram2d_alloc( 100, 100 );
+    gsl_histogram2d_set_ranges_uniform($self->{H}, 1, 100, 1, 100);
 }
 
 sub teardown : Test(teardown) {
@@ -47,11 +48,10 @@ sub MEMCPY : Tests {
     ok_status(gsl_histogram2d_memcpy($bob, $self->{H}), $GSL_EINVAL);
 }
 
-sub CLONE : Tests { 
+sub CLONE : Tests {
     my $self = shift;
-    local $TODO = "gsl_histogram2d_clone does not return a gsl_histogram_t";
     my $copy = gsl_histogram2d_clone($self->{H});
-    isa_ok( $copy, 'Math::GSL::Histogram');
+    isa_ok( $copy, 'Math::GSL::Histogram2D::gsl_histogram2d');
 }
 
 sub INCREMENT : Tests { 

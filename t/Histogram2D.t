@@ -1,6 +1,6 @@
 package Math::GSL::Histogram2D::Test;
 use base q{Test::Class};
-use Test::More tests => 88;
+use Test::More tests => 89;
 use Math::GSL              qw/:all/;
 use Math::GSL::Test        qw/:all/;
 use Math::GSL::Errno       qw/:all/;
@@ -195,8 +195,17 @@ sub MIN_BIN_MAX_BIN : Tests {
     cmp_ok(gsl_histogram2d_max_bin($self->{H}), '==', 50);
 }
 
-sub GSL_HISTOGRAM2D_XSIGMA_YSIGMA : Tests {
- local $TODO = "Don't know how to test this function";
+sub GSL_HISTOGRAM2D_XSIGMA : Tests(1) {
+    my $self = shift;
+
+    local $TODO = "gsl_histogram2d_xsigma";
+
+    gsl_histogram2d_increment($self->{H}, 0, 42);
+    gsl_histogram2d_increment($self->{H}, 42, 1);
+
+    my $xsigma = gsl_histogram2d_xsigma($self->{H});
+    # what is the correct answer?
+    is_similar(42, $xsigma, 1e-8, 'gsl_histogram2d_xsigma');
 }
 
 sub EQUAL_BINS_P : Tests { 

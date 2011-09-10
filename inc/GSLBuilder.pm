@@ -112,7 +112,9 @@ sub process_xs_file {
     my ($self, $main_swig_file, $ver) = @_;
 
     (my $file_base = $main_swig_file) =~ s/\.[^.]+$//;
-    $file_base =~ s!swig/!!g;
+    $file_base =~ s!\\!/!g;
+    (undef, undef, $file_base) = splitpath($file_base);
+
     my $c_file = catfile('xs',"${file_base}_wrap.$ver.c");
 
     # .c -> .o
@@ -215,14 +217,21 @@ sub link_c {
   unless ($self->up_to_date([$obj_file, @$objects], $lib_file)) {
     my @linker_flags = $self->split_like_shell($p->{extra_linker_flags});
 
-    push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl} if (is_windows() or is_darwin());
+    if(is_windows() or is_darwin()) {
+      if(is_windows() && $] eq '5.010000' && $Config{archname} =~ /x64/) {
+         push @linker_flags, $Config{bin} . '/' . $Config{libperl};
+      }
+      else {
+        push @linker_flags, $Config{archlib} . '/CORE/' . $Config{libperl};
+      }
+    }
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags});
     my @shrp = $self->split_like_shell($cf->{shrpenv});
-    my @ld = $self->split_like_shell($cf->{ld}) || "gcc";
+    my @ld = $self->split_like_shell($cf->{ld}) || "$Config{cc}";
 
     # Strip binaries if we are compiling on windows
-    push @ld, "-s" if (is_windows() && $Config{cc} eq 'gcc');
+    push @ld, "-s" if (is_windows() && $Config{cc} =~ /\bgcc\b/i);
 
     $self->do_system(@shrp, @ld, @lddlflags, '-o', $lib_file,
 		     $obj_file, @$objects, @linker_flags)
@@ -272,7 +281,7 @@ sub compile_c {
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags, @extra_compiler_flags, );
 
   my @cc = $self->split_like_shell($cf->{cc});
-  @cc = "gcc" unless @cc;
+  @cc = "$Config{cc}" unless @cc;
 
   $self->do_system(@cc, @flags, '-o', $obj_file, $file)
     or die "error building $Config{_o} file from '$file'";

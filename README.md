@@ -27,20 +27,15 @@ perldoc command.
 
 You can also look for information at:
 
-    MetaCPAN:
-        https://metacpan.org/release/Math-GSL
+MetaCPAN: https://metacpan.org/release/Math-GSL
 
-    Known bugs/issues:
-        https://github.com/leto/math--gsl/issues/
+Known bugs/issues: https://github.com/leto/math--gsl/issues/
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Math::GSL
+AnnoCPAN, Annotated CPAN documentation http://annocpan.org/dist/Math::GSL
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/Math::GSL
+CPAN Ratings http://cpanratings.perl.org/d/Math::GSL
 
-    Search CPAN
-        http://search.cpan.org/dist/Math::GSL
+Search CPAN http://search.cpan.org/dist/Math::GSL
 
 
 # Copyright and Licence

@@ -5,9 +5,18 @@ Scientific Library (GSL) is a numerical library for C and C++ programmers. It
 is free software under the GNU General Public License.  Math::GSL uses SWIG to
 generate Perl bindings to *most* GSL functionality.
 
-Currently Math::GSL requires at least Perl 5.8.x and GSL 1.11 to compile. SWIG 2.x
-is only needed if you want help work on Math::GSL and checkout code from the
-Math::GSL git repository.
+# Dependencies
+
+## CPAN distribution dependencies
+
+Currently Math::GSL requires at least Perl 5.8.x and GSL 1.11 to compile. It
+also requires [ExtUtils::PkgConfig](http://metacpan.org/release/ExtUtils-PkgConfig/) to find GSL and Module::Build.
+
+
+## Git repo dependencies
+
+SWIG 2.x is needed to build Math::GSL from the git repo, in addition to all
+the dependencies above.
 
 # Installation
 

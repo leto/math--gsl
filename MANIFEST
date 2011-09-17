@@ -80,7 +80,6 @@ lib/Math/GSL/VectorComplex.pm
 lib/Math/GSL/Version.pm
 lib/Math/GSL/Wavelet.pm
 lib/Math/GSL/Wavelet2D.pm
-Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
@@ -390,7 +389,7 @@ pod/VectorComplex.pod
 pod/Version.pod
 pod/Wavelet.pod
 pod/Wavelet2D.pod
-README
+README.md
 swig/BLAS.i
 swig/BSpline.i
 swig/CBLAS.i

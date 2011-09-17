@@ -32,9 +32,7 @@
     #include "gsl/gsl_sf_lambert.h"
     #include "gsl/gsl_sf_legendre.h"
     #include "gsl/gsl_sf_log.h"
-#if defined(GSL_MINOR_VERSION) &&  GSL_MINOR_VERSION >= 11
     #include "gsl/gsl_sf_mathieu.h"
-#endif
     #include "gsl/gsl_sf_pow_int.h"
     #include "gsl/gsl_sf_psi.h"
     #include "gsl/gsl_sf_result.h"
@@ -69,9 +67,7 @@
 %include "gsl/gsl_sf_lambert.h"
 %include "gsl/gsl_sf_legendre.h"
 %include "gsl/gsl_sf_log.h"
-#ifdef __GSL_SF_MATHIEU_H__
-    %include "gsl/gsl_sf_mathieu.h"
-#endif
+%include "gsl/gsl_sf_mathieu.h"
 %include "gsl/gsl_sf_pow_int.h"
 %include "gsl/gsl_sf_psi.h"
 %include "gsl/gsl_sf_result.h"

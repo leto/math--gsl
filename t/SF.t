@@ -1,7 +1,7 @@
 package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::More tests => 1109;
+use Test::Most tests => 1111;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1198,6 +1198,14 @@ sub TEST_J0_RESULT_STRUCT: Tests(2) {
     my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
     ok( defined $result->{err}, '$result->{err}' );
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
+}
+
+sub TEST_MATHIEU: Tests(2) {
+    my $self = shift;
+    my $r = Math::GSL::SF::gsl_sf_result_struct->new;
+
+    lives_ok { gsl_sf_mathieu_a(1,2.0,$r) }, 'gsl_sf_mathieu_a lives';
+    lives_ok { gsl_sf_mathieu_b(1,2.0,$r) }, 'gsl_sf_mathieu_b lives';
 }
 
 Test::Class->runtests;

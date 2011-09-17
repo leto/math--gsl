@@ -1,5 +1,8 @@
 =head1 Math::GSL Changes
 
+=head1 v0.27
+    - Mathieu functions are now accessible
+
 =head1 v0.26 - September 2011
     - The Math::GSL::Min and Math::GSL::Roots are now functional - Yury Zavarin
     - Dirichlet random distribution support and greatly increased docs by Tom Nishimura <tnish@fastmail.jp>

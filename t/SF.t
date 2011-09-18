@@ -1,7 +1,9 @@
 package Math::GSL::SF::Test;
+use strict;
+use warnings;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1115;
+use Test::Most tests => 1120;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -10,8 +12,6 @@ use Math::GSL::Poly    qw/:all/;
 use Math::GSL::Machine qw/:all/;
 use Math::GSL::Sys     qw/$GSL_NAN/;
 use Data::Dumper;
-use strict;
-use warnings;
 
 BEGIN { gsl_set_error_handler_off() }
 
@@ -1200,20 +1200,34 @@ sub TEST_J0_RESULT_STRUCT: Tests(2) {
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
 }
 
-sub TEST_MATHIEU: Tests(6) {
+sub TEST_MATHIEU_MISC : Tests(3) {
     my $self = shift;
-    my $r = Math::GSL::SF::gsl_sf_result_struct->new;
+    my $r      = Math::GSL::SF::gsl_sf_result_struct->new;
+    my $status = gsl_sf_mathieu_ce(0,0,0,$r);
 
-    lives_ok { gsl_sf_mathieu_a(1,2.0,$r) }, 'gsl_sf_mathieu_a lives';
-    lives_ok { gsl_sf_mathieu_b(1,2.0,$r) }, 'gsl_sf_mathieu_b lives';
+    # TODO: This test is being skipped for some crazy reason
+    is_similar( $r->{val}, cos(1), 1e-6, 'gsl_sf_mathieu_ce(0,0,0) = cos(1)');
 
+    lives_ok(sub { gsl_sf_mathieu_a(1,2.0,$r) }, 'gsl_sf_mathieu_a lives');
+    lives_ok(sub { gsl_sf_mathieu_b(1,2.0,$r) }, 'gsl_sf_mathieu_b lives');
+
+}
+
+sub TEST_MATHIEU : Tests(8) {
+    # TODO: These tests are being skipped for some crazy reason
+    my $results = {
     # mathieu_ce(a,0,z) = cos(sqrt(a)*z)
     # http://functions.wolfram.com/MathieuandSpheroidalFunctions/MathieuC/03/01/01/
-    my $results = {
-        'gsl_sf_mathieu_ce(0,0,0,$r)' => 0,
-        'gsl_sf_mathieu_ce(1,0,0,$r)' => 0,
-        'gsl_sf_mathieu_ce(0,0,1,$r)' => 0,
+        'gsl_sf_mathieu_ce(0,0,0,$r)' => cos(1),
+        'gsl_sf_mathieu_ce(1,0,0,$r)' => cos(1),
+        'gsl_sf_mathieu_ce(0,0,1,$r)' => 1,
         'gsl_sf_mathieu_ce(1,0,1,$r)' => cos(1),
+    # mathieu_se(a,0,z) = sin(sqrt(a)*z)
+    # http://functions.wolfram.com/MathieuandSpheroidalFunctions/MathieuS/03/01/01/
+        'gsl_sf_mathieu_se(0,0,0,$r)' => 0,
+        'gsl_sf_mathieu_se(1,0,0,$r)' => 0,
+        'gsl_sf_mathieu_se(0,0,1,$r)' => 0,
+        'gsl_sf_mathieu_se(1,0,1,$r)' => sin(1),
     };
     verify_results($results, 'Math::GSL::SF');
 }

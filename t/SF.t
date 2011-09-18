@@ -1,7 +1,7 @@
 package Math::GSL::SF::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1111;
+use Test::Most tests => 1115;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1200,12 +1200,22 @@ sub TEST_J0_RESULT_STRUCT: Tests(2) {
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
 }
 
-sub TEST_MATHIEU: Tests(2) {
+sub TEST_MATHIEU: Tests(6) {
     my $self = shift;
     my $r = Math::GSL::SF::gsl_sf_result_struct->new;
 
     lives_ok { gsl_sf_mathieu_a(1,2.0,$r) }, 'gsl_sf_mathieu_a lives';
     lives_ok { gsl_sf_mathieu_b(1,2.0,$r) }, 'gsl_sf_mathieu_b lives';
+
+    # mathieu_ce(a,0,z) = cos(sqrt(a)*z)
+    # http://functions.wolfram.com/MathieuandSpheroidalFunctions/MathieuC/03/01/01/
+    my $results = {
+        'gsl_sf_mathieu_ce(0,0,0,$r)' => 0,
+        'gsl_sf_mathieu_ce(1,0,0,$r)' => 0,
+        'gsl_sf_mathieu_ce(0,0,1,$r)' => 0,
+        'gsl_sf_mathieu_ce(1,0,1,$r)' => cos(1),
+    };
+    verify_results($results, 'Math::GSL::SF');
 }
 
 Test::Class->runtests;

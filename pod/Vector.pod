@@ -271,6 +271,9 @@ You can also enter an array of indices to receive their corresponding values:
 
 sub get {
     my ($self, $indices) = @_;
+
+    return gsl_vector_get($self->raw, $indices) unless ref $indices;
+
     return  map {  gsl_vector_get($self->raw, $_ ) } @$indices ;
 }
 

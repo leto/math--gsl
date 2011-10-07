@@ -1,6 +1,6 @@
 package Math::GSL::Vector::Test;
 use base q{Test::Class};
-use Test::More tests => 142;
+use Test::More tests => 143;
 use Math::GSL          qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -101,6 +101,11 @@ sub GSL_VECTOR_SET: Tests {
     $vec->set( [ 0..4] , [ reverse 1..5 ] );
     my ($x) = $vec->get([0]);
     ok( $x == 5, "gsl_vector_set: $x ?= 5" );
+}
+sub GSL_VECTOR_GET: Tests {
+    my $vec1  = Math::GSL::Vector->new([1, 7, 94, 15 ]);
+    my $first = $vec1->get(0);
+    is($first, 1, 'get 0-th element');
 }
 sub GSL_VECTOR_MIN: Tests {
     my $vec = Math::GSL::Vector->new( [ map { $_ ** 2 } (0..4) ] );

@@ -68,6 +68,9 @@ Math::GSL::Vector - Functions concerning vectors
     my $length      = $vec2->length;
     my $first       = $vec1->get(0);
 
+    # access raw GSL object to call low-level functions
+    my $raw         = $vec1->raw;
+    my $element     = gsl_vector_get($raw, 2);
 
 =cut
 
@@ -271,7 +274,7 @@ sub get {
     return  map {  gsl_vector_get($self->raw, $_ ) } @$indices ;
 }
 
-=head2  set() 
+=head2  set()
 
 Sets values of an of a Math::GSL::Vector object.
 
@@ -417,15 +420,28 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_vector_const_view_array_with_stride($base, $stride, $n)> - This function is equivalent to gsl_vector_view_array_with_stride but can be used for arrays which are declared const.
 
-=item C<gsl_vector_subvector($v, $offset, $n)> - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
+=item C<gsl_vector_subvector($v, $offset, $n)> 
 
-=item C<gsl_vector_subvector_with_stride($v, $offset, $stride, $size)> - return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position and with a $stride step between each element of $v
+Return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
 
-=item C<gsl_vector_const_subvector> 
+=item C<gsl_vector_subvector_with_stride($v, $offset, $stride, $size)>
 
-=item C<gsl_vector_get($v, $i)> - return the $i-th element of a vector $v
+Return a vector_view type which contains a subvector of $v, with a size of
+$size, starting from the $offset position and with a $stride step between each
+element of $v
 
-=item C<gsl_vector_set($v, $i, $x)> - return the vector $v with his $i-th element set to $x
+=item C<gsl_vector_const_subvector>
+
+
+=item C<gsl_vector_get($v, $i)>
+
+Return the $i-th element of a raw vector $v, where $v is a Math::GSL::Vector object. For example:
+
+    my $third_element = gsl_vector_get($v->raw, 3);
+
+=item C<gsl_vector_set($v, $i, $x)>
+
+Return the vector $v with his $i-th element set to $x
 
 =item C<gsl_vector_ptr> 
 

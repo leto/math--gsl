@@ -180,7 +180,7 @@ sub gsl_version{
 
 =head1 AUTHORS
 
-Jonathan Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan@gmail.com> >>
+Jonathan "Duke" Leto, C<< <jonathan@leto.net> >> and Thierry Moisan C<< <thierry.moisan@gmail.com> >>
 
 =head1 BUGS
 
@@ -257,7 +257,7 @@ This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2010 Jonathan Leto, Thierry Moisan all rights reserved.
+Copyright 2008-2010 Jonathan "Duke" Leto, Thierry Moisan all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

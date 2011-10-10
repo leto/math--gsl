@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# This has been heavily modified from the Device::Cdio Build.PL 
-# Jonathan Leto <jonathan@leto.net>
+# This has been heavily modified from the Device::Cdio Build.PL
+# Jonathan "Duke" Leto <jonathan@leto.net>
 
 #    Copyright (C) 2006 Rocky Bernstein <rocky@cpan.org>
 #

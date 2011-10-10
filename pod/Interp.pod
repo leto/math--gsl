@@ -35,49 +35,119 @@ Math::GSL::Interp - Interpolation
 
 =head1 SYNOPSIS
 
- use Math::GSL::Interp qw/:all/;
+    use Math::GSL::Interp qw/:all/;
+    my $x_array = [ 0.0, 1.0, 2.0, 3.0, 4.0 ];
+
+    # check that we get the last interval if x == last value 
+    $index_result = gsl_interp_bsearch($x_array, 4.0, 0, 4);
+    print "The last interval is $index_result \n";
 
 =head1 DESCRIPTION
 
-Here is a list of all the functions included in this module :
-
 =over 1
 
-=item C<gsl_interp_accel_alloc()> - This function returns a pointer to an accelerator object, which is a kind of iterator for interpolation lookups. It tracks the state of lookups, thus allowing for application of various acceleration strategies.
+=item C<gsl_interp_accel_alloc()> 
 
-=item C<gsl_interp_accel_find($a, $x_array, $size, $x)> - This function performs a lookup action on the data array $x_array of size $size, using the given accelerator $a. This is how lookups are performed during evaluation of an interpolation. The function returns an index i such that $x_array[i] <= $x < $x_array[i+1].
+This function returns a pointer to an accelerator object, which is a kind of
+iterator for interpolation lookups. It tracks the state of lookups, thus
+allowing for application of various acceleration strategies.
+
+=item C<gsl_interp_accel_find($a, $x_array, $size, $x)> 
+
+This function performs a lookup action on the data array $x_array of size
+$size, using the given accelerator $a. This is how lookups are performed during
+evaluation of an interpolation. The function returns an index i such that
+$x_array[i] <= $x < $x_array[i+1].
 
 =item C<gsl_interp_accel_reset> 
 
-=item C<gsl_interp_accel_free($a)> - This function frees the accelerator object $a. 
+=item C<gsl_interp_accel_free($a)> 
 
-=item C<gsl_interp_alloc($T, $alloc)> - This function returns a newly allocated interpolation object of type $T for $size data-points. $T must be one of the constants below.  
+This function frees the accelerator object $a. 
 
-=item C<gsl_interp_init($interp, $xa, $ya, $size)> - This function initializes the interpolation object interp for the data (xa,ya) where xa and ya are arrays of size size. The interpolation object (gsl_interp) does not save the data arrays xa and ya and only stores the static state computed from the data. The xa data array is always assumed to be strictly ordered, with increasing x values; the behavior for other arrangements is not defined. 
+=item C<gsl_interp_alloc($T, $alloc)> 
 
-=item C<gsl_interp_name($interp)> - This function returns the name of the interpolation type used by $interp. 
+This function returns a newly allocated interpolation object of type $T for
+$size data-points. $T must be one of the constants below.  
 
-=item C<gsl_interp_min_size($interp)> - This function returns the minimum number of points required by the interpolation type of $interp. For example, Akima spline interpolation requires a minimum of 5 points.
+=item C<gsl_interp_init($interp, $xa, $ya, $size)> 
 
-=item C<gsl_interp_eval_e($interp, $xa, $ya, $x, $acc)> - This functions returns the interpolated value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the y value.
+This function initializes the interpolation object interp for the data (xa,ya)
+where xa and ya are arrays of size size. The interpolation object (gsl_interp)
+does not save the data arrays xa and ya and only stores the static state
+computed from the data. The xa data array is always assumed to be strictly
+ordered, with increasing x values; the behavior for other arrangements is not
+defined. 
 
-=item C<gsl_interp_eval($interp, $xa, $ya, $x, $acc)> - This functions returns the interpolated value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. 
+=item C<gsl_interp_name($interp)> 
 
-=item C<gsl_interp_eval_deriv_e($interp, $xa, $ya, $x, $acc)> - This function computes the derivative value of y for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the d value.
+This function returns the name of the interpolation type used by $interp. 
 
-=item C<gsl_interp_eval_deriv($interp, $xa, $ya, $x, $acc)> - This function returns the derivative d of an interpolated function for a given point $x, using the interpolation object interp, data arrays $xa and $ya and the accelerator $acc.
+=item C<gsl_interp_min_size($interp)> 
 
-=item C<gsl_interp_eval_deriv2_e($interp, $xa, $ya, $x, $acc)> - This function computes the second derivative d2 of an interpolated function for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the d2 value.
+This function returns the minimum number of points required by the
+interpolation type of $interp. For example, Akima spline interpolation requires
+a minimum of 5 points.
 
-=item C<gsl_interp_eval_deriv2($interp, $xa, $ya, $x, $acc)> - This function returns the second derivative d2 of an interpolated function for a given point $x, using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc.
+=item C<gsl_interp_eval_e($interp, $xa, $ya, $x, $acc)> 
 
-=item C<gsl_interp_eval_integ_e($interp, $xa, $ya, $a, $b, $acc)> - This function computes the numerical integral result of an interpolated function over the range [$a, $b], using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. The function returns 0 if the operation succeeded, 1 otherwise and the result value.
+This functions returns the interpolated value of y for a given point $x, using
+the interpolation object $interp, data arrays $xa and $ya and the accelerator
+$acc. The function returns 0 if the operation succeeded, 1 otherwise and the y
+value.
 
-=item C<gsl_interp_eval_integ($interp, $xa, $ya, $a, $b, $acc)> - This function returns the numerical integral result of an interpolated function over the range [$a, $b], using the interpolation object $interp, data arrays $xa and $ya and the accelerator $acc. 
+=item C<gsl_interp_eval($interp, $xa, $ya, $x, $acc)> 
+
+This functions returns the interpolated value of y for a given point $x, using
+the interpolation object $interp, data arrays $xa and $ya and the accelerator
+$acc. 
+
+=item C<gsl_interp_eval_deriv_e($interp, $xa, $ya, $x, $acc)> 
+
+This function computes the derivative value of y for a given point $x, using
+the interpolation object $interp, data arrays $xa and $ya and the accelerator
+$acc. The function returns 0 if the operation succeeded, 1 otherwise and the d
+value.
+
+=item C<gsl_interp_eval_deriv($interp, $xa, $ya, $x, $acc)> 
+
+This function returns the derivative d of an interpolated function for a given
+point $x, using the interpolation object interp, data arrays $xa and $ya and
+the accelerator $acc.
+
+=item C<gsl_interp_eval_deriv2_e($interp, $xa, $ya, $x, $acc)> 
+
+This function computes the second derivative d2 of an interpolated function for
+a given point $x, using the interpolation object $interp, data arrays $xa and
+$ya and the accelerator $acc. The function returns 0 if the operation
+succeeded, 1 otherwise and the d2 value.
+
+=item C<gsl_interp_eval_deriv2($interp, $xa, $ya, $x, $acc)> 
+
+This function returns the second derivative d2 of an interpolated function
+for a given point $x, using the interpolation object $interp, data arrays $xa
+and $ya and the accelerator $acc.
+
+=item C<gsl_interp_eval_integ_e($interp, $xa, $ya, $a, $b, $acc)> 
+
+This function computes the numerical integral result of an interpolated
+function over the range [$a, $b], using the interpolation object $interp, data
+arrays $xa and $ya and the accelerator $acc. The function returns 0 if the
+operation succeeded, 1 otherwise and the result value.
+
+=item C<gsl_interp_eval_integ($interp, $xa, $ya, $a, $b, $acc)> 
+
+This function returns the numerical integral result of an interpolated function
+over the range [$a, $b], using the interpolation object $interp, data arrays
+$xa and $ya and the accelerator $acc. 
 
 =item C<gsl_interp_free($interp)> - This function frees the interpolation object $interp. 
 
-=item C<gsl_interp_bsearch($x_array, $x, $index_lo, $index_hi)> - This function returns the index i of the array $x_array such that $x_array[i] <= x < $x_array[i+1]. The index is searched for in the range [$index_lo,$index_hi].
+=item C<gsl_interp_bsearch($x_array, $x, $index_lo, $index_hi)> 
+
+This function returns the index i of the array $x_array such that $x_array[i]
+<= x < $x_array[i+1]. The index is searched for in the range
+[$index_lo,$index_hi].
 
 =back
 
@@ -85,41 +155,56 @@ This module also includes the following constants :
 
 =over 1
 
-=item C<$gsl_interp_linear> - Linear interpolation
+=item C<$gsl_interp_linear> 
 
-=item C<$gsl_interp_polynomial> - Polynomial interpolation. This method should only be used for interpolating small numbers of points because polynomial interpolation introduces large oscillations, even for well-behaved datasets. The number of terms in the interpolating polynomial is equal to the number of points. 
+Linear interpolation
 
-=item C<$gsl_interp_cspline> - Cubic spline with natural boundary conditions. The resulting curve is piecewise cubic on each interval, with matching first and second derivatives at the supplied data-points. The second derivative is chosen to be zero at the first point and last point.
+=item C<$gsl_interp_polynomial> 
 
-=item C<$gsl_interp_cspline_periodic> - Cubic spline with periodic boundary conditions. The resulting curve is piecewise cubic on each interval, with matching first and second derivatives at the supplied data-points. The derivatives at the first and last points are also matched. Note that the last point in the data must have the same y-value as the first point, otherwise the resulting periodic interpolation will have a discontinuity at the boundary. 
+Polynomial interpolation. This method should only be used for interpolating
+small numbers of points because polynomial interpolation introduces large
+oscillations, even for well-behaved datasets. The number of terms in the
+interpolating polynomial is equal to the number of points. 
 
-=item C<$gsl_interp_akima> - Non-rounded Akima spline with natural boundary conditions. This method uses the non-rounded corner algorithm of Wodicka. 
+=item C<$gsl_interp_cspline> 
 
-=item C<$gsl_interp_akima_periodic> - Non-rounded Akima spline with periodic boundary conditions. This method uses the non-rounded corner algorithm of Wodicka.
+Cubic spline with natural boundary conditions. The resulting curve is piecewise
+cubic on each interval, with matching first and second derivatives at the
+supplied data-points. The second derivative is chosen to be zero at the first
+point and last point.
+
+=item C<$gsl_interp_cspline_periodic> 
+
+Cubic spline with periodic boundary conditions. The resulting curve is
+piecewise cubic on each interval, with matching first and second derivatives at
+the supplied data-points. The derivatives at the first and last points are also
+matched. Note that the last point in the data must have the same y-value as the
+first point, otherwise the resulting periodic interpolation will have a
+discontinuity at the boundary. 
+
+=item C<$gsl_interp_akima> 
+
+Non-rounded Akima spline with natural boundary conditions. This method uses the
+non-rounded corner algorithm of Wodicka. 
+
+=item C<$gsl_interp_akima_periodic> 
+
+Non-rounded Akima spline with periodic boundary conditions. This method uses
+the non-rounded corner algorithm of Wodicka.
 
 =back
 
-=head1 EXAMPLES
-
- use Math::GSL::Interp qw/:all/;
- my $x_array = [ 0.0, 1.0, 2.0, 3.0, 4.0 ];
- # check that we get the last interval if x == last value 
- $index_result = gsl_interp_bsearch($x_array, 4.0, 0, 4);
- print "The last interval is $index_result \n";
-
 =head1 AUTHORS
 
-Jonathan Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2009 Jonathan Leto and Thierry Moisan
+Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
 
-
 %}
-

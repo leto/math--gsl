@@ -218,6 +218,11 @@ my $builder = GSLBuilder->new(
     extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
     swig_flags          => $swig_flags,
     license             => 'gpl',
+    meta_merge     => {
+        resources => {
+            repository  => 'http://github.com/leto/math--gsl/tree/master'
+        },
+    },
     build_requires => {
         'Test::Most'            =>       0,
         'Test::Exception'       =>    0.21,

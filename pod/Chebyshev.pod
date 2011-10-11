@@ -22,7 +22,7 @@ Math::GSL::Chebyshev - Univariate Chebyshev Series Approximation
 
 =head1 SYNOPSIS
 
-    use Math::GSL::Chebyshev qw /:all/;
+    use Math::GSL::Chebyshev qw/:all/;
 
     my $cheb             = gsl_cheb_alloc(40);
     my $function         = sub { sin(cos($_[0])) };
@@ -34,8 +34,6 @@ Math::GSL::Chebyshev - Univariate Chebyshev Series Approximation
     gsl_cheb_free($cheb);
 
 =head1 DESCRIPTION
-
-Here is a list of all the functions in this module :
 
 =over
 
@@ -95,9 +93,6 @@ in $deriv, which must be pre-allocated. Returns a GSL status code.
 
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
-
- Tip : search on google: site:http://www.gnu.org/software/gsl/manual/html_node/ name_of_the_function_you_want
-
 
 =head1 AUTHORS
 

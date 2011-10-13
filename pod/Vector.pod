@@ -214,9 +214,10 @@ sub norm($;$)
 
 =head2 normalize($p)
 
-Divide each element of a vector by it's norm, hence creating a unit vector. Returns the vector for chaining.
-If you just want the value of the norm without changing the vector, use C<norm()>. The default value for C<$p>
-is 2, which gives the familiar Euclidean distance norm.
+Divide each element of a vector by it's norm, hence creating a unit vector.
+Returns the vector for chaining.  If you just want the value of the norm
+without changing the vector, use C<norm()>. The default value for C<$p> is 2,
+which gives the familiar Euclidean distance norm.
 
     my $unit_vector = $vector->normalize(2);
 
@@ -407,11 +408,11 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_vector_alloc($x)> 
 
- create a vector of size $x
+Create a vector of size $x
 
 =item C<gsl_vector_calloc($x)> 
 
- create a vector of size $x and initializes all the elements of the vector to zero
+Create a vector of size $x and initializes all the elements of the vector to zero
 
 =item C<gsl_vector_alloc_from_block> 
 
@@ -419,7 +420,7 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_vector_free($v)> 
 
- free a previously allocated vector $v
+Free a previously allocated vector $v
 
 =item C<gsl_vector_view_array($base, $n)> 
 
@@ -434,7 +435,7 @@ while the view is still in use.
 
 =item C<gsl_vector_const_view_array($base, $n)> 
 
- This function is equivalent to gsl_vector_view_array but can be used for arrays which are declared const. 
+This function is equivalent to gsl_vector_view_array but can be used for arrays which are declared const. 
 
 =item C<gsl_vector_view_array_with_stride($base, $stride, $n)> 
 
@@ -450,7 +451,8 @@ allocated vector would be, using $view->{vector}.
 
 =item C<gsl_vector_const_view_array_with_stride($base, $stride, $n)> 
 
- This function is equivalent to gsl_vector_view_array_with_stride but can be used for arrays which are declared const.
+This function is equivalent to gsl_vector_view_array_with_stride but can be
+used for arrays which are declared const.
 
 =item C<gsl_vector_subvector($v, $offset, $n)> 
 
@@ -643,21 +645,21 @@ L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 Here is an example using both interfaces.
 
- use Math::GSL::Vector qw/:all/;
+    use Math::GSL::Vector qw/:all/;
 
- print "We'll create this vector : [0,1,4,9,16] \n";
- my $vector = Math::GSL::Vector->new([0,1,4,9,16]);
- my ($min, $max) = gsl_vector_minmax_index($vector->raw);
+    print "We'll create this vector : [0,1,4,9,16] \n";
+    my $vector = Math::GSL::Vector->new([0,1,4,9,16]);
+    my ($min, $max) = gsl_vector_minmax_index($vector->raw);
 
- print "We then check the index value of the maximum and minimum values of the vector. \n";
- print "The index of the maximum should be 4 and we received $max \n";
- print "The index of the minimum should be 0 and we received $min \n";
- print "We'll then swap the first and the third elements of the vector \n";
+    print "We then check the index value of the maximum and minimum values of the vector. \n";
+    print "The index of the maximum should be 4 and we received $max \n";
+    print "The index of the minimum should be 0 and we received $min \n";
+    print "We'll then swap the first and the third elements of the vector \n";
 
- gsl_vector_swap_elements($vector->raw, 0, 3);
- my @got = $vector->as_list;
- print "The vector should now be like this : [9,1,4,0,16] \n";
- print "and we received : [ @got ]\n";
+    gsl_vector_swap_elements($vector->raw, 0, 3);
+    my @got = $vector->as_list;
+    print "The vector should now be like this : [9,1,4,0,16] \n";
+    print "and we received : [ @got ]\n";
 
 =head1 AUTHORS
 

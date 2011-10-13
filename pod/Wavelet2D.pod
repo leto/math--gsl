@@ -18,5 +18,28 @@
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-%}
+=head1 NAME
 
+Math::GSL::Wavelet2D - 2-D Wavelets
+
+=head1 SYNOPSIS
+
+    use Math::GSL::Wavelet2D qw/:all/;
+
+=head1 DESCRIPTION
+
+=head1 AUTHORS
+
+Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan
+<thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+%}

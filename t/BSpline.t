@@ -1,4 +1,4 @@
-package Math::GSL::Poly::Test;
+package Math::GSL::BSpline::Test;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
 use Test::More tests => 1;
@@ -16,8 +16,8 @@ sub teardown : Test(teardown) {
 }
 
 sub ALLOC : Tests {
- my $B = gsl_bspline_alloc(2,5);
- isa_ok($B, 'Math::GSL::BSpline');
+    my $B = gsl_bspline_alloc(2,5);
+    isa_ok($B, 'Math::GSL::BSpline');
 }
 
 Test::Class->runtests;

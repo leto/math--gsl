@@ -150,6 +150,9 @@ if (defined $gv) {
 
 close $fh or die "Could not close $path_system : $!";
 
+modify_env();
+
+print "Asking ExtUtils::PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n";
 my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
 my $pkgcfg_ver = $gsl_pkgcfg{'modversion'};
 
@@ -271,4 +274,9 @@ sub swig_version {
     } else {
         die "Can't parse SWIG version from this output:\n$out";
     }
+}
+
+sub modify_env {
+    $ENV{PKG_CONFIG_PATH} ||= '';
+    $ENV{PKG_CONFIG_PATH} = '/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/pkgconfig:/usr/libdata/pkgconfig:/usr/local/libdata/pkgconfig:' . $ENV{PKG_CONFIG_PATH};
 }

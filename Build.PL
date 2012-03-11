@@ -102,14 +102,17 @@ sub try_cflags ($) {
     print "no\n";
     return '';
 }
+print "Checking for GSL..\n";
 
-print "Checking for GSL..";
-my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
+chomp(my $gv         = qx{gsl-config --version});
+chomp(my $gsl_prefix = qx{gsl-config --prefix});
+chomp(my $gsl_cflags = qx{gsl-config --cflags});
+chomp(my $gsl_libs   = qx{gsl-config --libs});
 
 my $MIN_GSL_VERSION = "1.11";
-my $gv = $gsl_pkgcfg{'modversion'};
 
 my $path_system = catfile(qw/swig system.i/);
+
 open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
 
 my $current_version;
@@ -127,7 +130,7 @@ if (defined $gv) {
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
             exit 1;
         } else {
-            print "Found GSL version $gv\n";
+            print "Found GSL $gv (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
         }
     } else {
         print "
@@ -147,7 +150,13 @@ if (defined $gv) {
 
 close $fh or die "Could not close $path_system : $!";
 
-my $ccflags = $gsl_pkgcfg{cflags};
+my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
+my $pkgcfg_ver = $gsl_pkgcfg{'modversion'};
+
+warn "pkgconfig version $pkgcfg_ver != gsl-config $gv possible misconfiguration" if $pkgcfg_ver ne $gv;
+
+my $ccflags    = $gsl_pkgcfg{cflags};
+
 # In case GSL in installed in the system-wide directory, $ccflags is
 # empty (because pkg-config remove -I/usr/include), but swig needs it
 

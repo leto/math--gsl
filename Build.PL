@@ -278,5 +278,11 @@ sub swig_version {
 
 sub modify_env {
     $ENV{PKG_CONFIG_PATH} ||= '';
-    $ENV{PKG_CONFIG_PATH} = '/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/pkgconfig:/usr/libdata/pkgconfig:/usr/local/libdata/pkgconfig:' . $ENV{PKG_CONFIG_PATH};
+
+    # TODO: What about windows and darwin?
+    my $guess =<<CARGOCULT;
+/usr/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/pkgconfig:/usr/libdata/pkgconfig:/usr/local/libdata/pkgconfig:/opt/pkgconfig:
+CARGOCULT
+
+    $ENV{PKG_CONFIG_PATH} = $guess . $ENV{PKG_CONFIG_PATH};
 }

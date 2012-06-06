@@ -3,4 +3,6 @@ perl:
     - "5.10"
     - "5.12"
     - "5.14"
+
+script:  'cpanm ExtUtils::PkgConfig'
 install: 'cpanm  -vv --quiet --installdeps --notest .'

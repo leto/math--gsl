@@ -422,7 +422,7 @@ This function computes the probability p($k) of obtaining $k from a geometric di
 
 =item gsl_ran_hypergeometric($r, $n1, $n2, $t)
 
-This function returns a random integer from the hypergeometric distribution. The probability distribution for hypergeometric random variates is, p(k) =  C(n_1, k) C(n_2, t - k) / C(n_1 + n_2, t) where C(a,b) = a!/(b!(a-b)!) and t <= n_1 + n_2. The domain of k is max(0,t-n_2), ..., min(t,n_1). If a population contains n_1 elements of “type 1” and n_2 elements of “type 2” then the hypergeometric distribution gives the probability of obtaining k elements of “type 1” in t samples from the population without replacement. $r is a gsl_rng structure. 
+This function returns a random integer from the hypergeometric distribution. The probability distribution for hypergeometric random variates is, p(k) =  C(n_1, k) C(n_2, t - k) / C(n_1 + n_2, t) where C(a,b) = a!/(b!(a-b)!) and t <= n_1 + n_2. The domain of k is max(0,t-n_2), ..., min(t,n_1). If a population contains n_1 elements of "type 1" and n_2 elements of "type 2" then the hypergeometric distribution gives the probability of obtaining k elements of "type 1" in t samples from the population without replacement. $r is a gsl_rng structure. 
 
 =item gsl_ran_hypergeometric_pdf($k, $n1, $n2, $t)
 

@@ -34,7 +34,7 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_dht_x_sample($t, $n)> - This function returns the value of the $n-th sample point in the unit interval, (j_{\nu,n+1}/j_{\nu,M}) X. These are the points where the function f(t) is assumed to be sampled.  
 
-=item C<gsl_dht_k_sample($t, $n)> - This function returns the value of the $n-th sample point in “k-space”, j_{\nu,n+1}/X.  
+=item C<gsl_dht_k_sample($t, $n)> - This function returns the value of the $n-th sample point in "k-space", j_{\nu,n+1}/X.  
 
 =item C<gsl_dht_free($t)> - This function frees the transform $t.  
 

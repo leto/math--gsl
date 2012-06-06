@@ -213,7 +213,7 @@ The false position algorithm is a method of finding roots based on linear
 interpolation. Its convergence is linear, but it is usually faster than
 bisection. On each iteration a line is drawn between the endpoints (a,f(a)) and
 (b,f(b)) and the point where this line crosses the x-axis taken as a
-“midpoint”. The value of the function at this point is calculated and its sign
+"midpoint". The value of the function at this point is calculated and its sign
 is used to determine which side of the interval does not contain a root. That
 side is discarded to give a new, smaller interval containing the root. This
 procedure can be continued indefinitely until the interval is sufficiently

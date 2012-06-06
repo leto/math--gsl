@@ -46,9 +46,9 @@ sub raw
 {
     return (shift)->{_ntuple};
 }
-=item * <gsl_ntuple_open($filename, $ntuple_data, $size)> - This function opens an existing ntuple file $filename for reading and returns a pointer to a corresponding ntuple struct. The ntuples in the file must have size $size. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied—this is used to copy ntuples in and out of the file.
+=item * <gsl_ntuple_open($filename, $ntuple_data, $size)> - This function opens an existing ntuple file $filename for reading and returns a pointer to a corresponding ntuple struct. The ntuples in the file must have size $size. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied -- this is used to copy ntuples in and out of the file.
 
-=item * <gsl_ntuple_create > - This function creates a new write-only ntuple file $filename for ntuples of size $size and returns a pointer to the newly created ntuple struct. Any existing file with the same name is truncated to zero length and overwritten. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied—this is used to copy ntuples in and out of the file.
+=item * <gsl_ntuple_create > - This function creates a new write-only ntuple file $filename for ntuples of size $size and returns a pointer to the newly created ntuple struct. Any existing file with the same name is truncated to zero length and overwritten. A pointer to memory for the current ntuple row $ntuple_data, which is an array reference, must be supplied -- this is used to copy ntuples in and out of the file.
 
 
 =item * <gsl_ntuple_write($ntuple)> - This function writes the current $ntuple $ntuple->{ntuple_data} of size $ntuple->{size} to the corresponding file.

@@ -1,7 +1,8 @@
 =head1 Math::GSL Changes
 
-=head1 v0.27
+=head1 v0.27 - July 2012
     - Mathieu functions are now accessible
+    - Improved detection of gsl
     - Fix bug in calling ->get() method on Math::GSL::Vectors
     - Greatly improved HTML formatting of documentation
 

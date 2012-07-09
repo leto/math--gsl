@@ -24,6 +24,8 @@ Math::GSL::BSpline - Functions for the computation of smoothing basis splines
 
 =head1 DESCRIPTION
 
+=over
+
 =item gsl_bspline_alloc($k, $nbreak) 
 
 This function allocates a workspace for computing B-splines of order $k. The
@@ -67,8 +69,11 @@ defining recurrence relation.
 For more informations on the functions, we refer you to the GSL offcial documentation: 
 http://www.gnu.org/software/gsl/manual/html_node/
 
+=back
+
 =head1 EXAMPLES
 
+Coming soon.
 
 =head1 AUTHORS
 

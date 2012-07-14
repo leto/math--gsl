@@ -4,10 +4,8 @@ perl:
     - "5.12"
     - "5.14"
 
-before_script:
-    - sudo apt-get install libgsl0-dev
-
 before_install:
+    - sudo apt-get install libgsl0-dev
     - cpanm ExtUtils::PkgConfig
 
 install: 'cpanm  -vv --quiet --installdeps --notest .'

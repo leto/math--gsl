@@ -5,6 +5,8 @@ Scientific Library (GSL) is a numerical library for C and C++ programmers. It
 is free software under the GNU General Public License.  Math::GSL uses SWIG to
 generate Perl bindings to *most* GSL functionality.
 
+[![Build Status](https://secure.travis-ci.org/leto/math--gsl.png)](http://travis-ci.org/leto/math--gsl)
+
 # Dependencies
 
 ## CPAN distribution dependencies

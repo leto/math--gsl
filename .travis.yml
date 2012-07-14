@@ -6,6 +6,8 @@ perl:
 
 before_script:
     - sudo apt-get install libgsl0-dev
+
+before_install:
     - cpanm ExtUtils::PkgConfig
 
 install: 'cpanm  -vv --quiet --installdeps --notest .'

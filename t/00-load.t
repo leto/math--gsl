@@ -9,9 +9,10 @@ use warnings;
 
 
 BEGIN {
-    use_ok( 'Math::GSL' );
+    use_ok( 'Math::GSL', qw/gsl_version/ );
     map { use_ok("Math::GSL::$_") } GSLBuilder::subsystems();
 }
 
-my $arch = $Config{archname};
-diag( "Testing Math::GSL " . $Math::GSL::VERSION . " on $arch, Perl ($^X) $]" );
+my $arch        = $Config{archname};
+my $gsl_version = gsl_version();
+diag( "Testing Math::GSL $Math::GSL::VERSION with GSL $gsl_version on $arch, Perl ($^X) $]" );

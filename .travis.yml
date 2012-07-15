@@ -5,7 +5,7 @@ perl:
     - "5.14"
 
 before_install:
-    - sudo apt-get install libgsl0-dev
+    - sudo apt-get install libgsl0-dev swig
     - cpanm ExtUtils::PkgConfig
 
-install: 'cpanm  -vv --quiet --installdeps --notest .'
+#install: 'cpanm  -vv --quiet --installdeps --notest .'

@@ -8,4 +8,5 @@ before_install:
     - sudo apt-get install libgsl0-dev swig
     - cpanm ExtUtils::PkgConfig
 
-#install: 'cpanm  -vv --quiet --installdeps --notest .'
+# Add verbosity for debugging
+install: 'cpanm  -vv --installdeps --notest .'

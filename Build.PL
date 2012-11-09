@@ -264,8 +264,16 @@ print "Have a great day!\n";
 
 
 sub swig_version {
+    # recent versions of Ubuntu call it swig2.0 . Le sigh.
+
     my $cmd = "swig -version";
     my $out = `$cmd`;
+    if ($?) {
+        warn "Didn't find 'swig' binary, trying another name";
+    }
+    $cmd = "swig2.0 -version";
+    $out = `$cmd`;
+
     if ($?) {
         die "Can't run [$cmd] : $out";
     }

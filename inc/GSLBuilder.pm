@@ -161,6 +161,23 @@ sub process_swig {
         unless($self->up_to_date([$main_swig_file, @deps], $c_file));
 }
 
+sub swig_binary_name {
+    # recent versions of Ubuntu call it swig2.0 . Le sigh.
+    my $cmd = "swig -version";
+    my $out = `$cmd`;
+    if ($?) {
+        $cmd = "swig2.0 -version";
+        $out = `$cmd`;
+
+        if ($?) {
+            die "Can't find the swig binary!";
+        } else {
+            return "swig2.0";
+        }
+    }
+    return "swig";
+}
+
 # Invoke swig with -perl -outdir and other options.
 sub compile_swig {
     my ($self, $file, $c_file, $ver) = @_;
@@ -174,7 +191,7 @@ sub compile_swig {
 
     my $pm_file = "${file_base}.pm";
 
-    my @swig       = qw/swig/, defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
+    my @swig       = swig_binary_name(), defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
     my @swig_flags = defined($p->{swig_flags}) ? $self->split_like_shell($p->{swig_flags}) : ();
 
     my $blib_lib = catdir(qw/blib lib/);

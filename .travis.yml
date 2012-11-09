@@ -3,6 +3,7 @@ perl:
     - "5.10"
     - "5.12"
     - "5.14"
+    - "5.16"
 
 before_install:
     - sudo apt-get install libgsl0-dev swig2.0

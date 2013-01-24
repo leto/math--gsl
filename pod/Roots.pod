@@ -106,7 +106,7 @@ This function initializes, or reinitializes, an existing solver $s to use the
 function and derivative $fdf and the initial guess $root. $f has to be of this
 form :
 
-    sub { my $x=shift; function_with_$x }
+    sub { my $x=shift; function($x) }
 
 For example:
 

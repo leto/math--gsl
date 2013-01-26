@@ -5,9 +5,14 @@ perl:
     - "5.14"
     - "5.16"
 
+compiler:
+    - clang
+    - gcc
+
 before_install:
     - sudo apt-get install libgsl0-dev swig2.0
     - cpanm ExtUtils::PkgConfig
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'
+

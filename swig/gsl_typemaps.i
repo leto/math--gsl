@@ -596,6 +596,5 @@ void array_wrapper_free(array_wrapper * daw){
 
 /* TODO: same thing should be done for these kinds of callbacks */
 %typemap(in) gsl_function_fdf * {
-    fprintf(stderr, 'FDF_FUNC');
     XSRETURN(GSL_NAN);
 }

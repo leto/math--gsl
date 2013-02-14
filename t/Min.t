@@ -90,7 +90,8 @@ sub GSL_MIN_ITERATE : Tests {
         0, cos(0),
         2*$M_PI, cos(2*$M_PI)
     ));
-    ok_status(gsl_min_fminimizer_iterate($mini));
+    my $status = gsl_min_fminimizer_iterate($mini);
+    ok_status($status);
 }
 
 Test::Class->runtests;

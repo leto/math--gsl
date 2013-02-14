@@ -41,7 +41,10 @@ Math::GSL::Min - 1-D Minimization
         0, cos(0),
         2*$M_PI, cos(2*$M_PI)
     );
-    gsl_min_fminimizer_iterate($m);
+    my $status = gsl_min_fminimizer_iterate($m);
+    my $min    = gsl_min_fminimizer_x_minimum($m);
+    my $lower  = gsl_min_fminimizer_x_lower($m);
+    my $upper  = gsl_min_fminimizer_x_upper($m);
 
 =head1 DESCRIPTION
 

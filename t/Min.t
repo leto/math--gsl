@@ -1,7 +1,7 @@
 package Math::GSL::Min::Test;
 use base q{Test::Class};
 use strict;
-use Test::More tests => 22;
+use Test::Most;
 use Math::GSL        qw/:all/;
 use Math::GSL::Min   qw/:all/;
 use Math::GSL::Test  qw/:all/;
@@ -83,15 +83,20 @@ sub GSL_MIN_TEST_INTERVAL : Tests {
 
 sub GSL_MIN_ITERATE : Tests {
     my $self = shift;
-    my $mini = $self->{min};
-    ok_status(gsl_min_fminimizer_set_with_values($mini,
+    my $m = $self->{min};
+    ok_status(gsl_min_fminimizer_set_with_values($m,
         sub { cos($_[0]) },
         3, cos(3),
         0, cos(0),
         2*$M_PI, cos(2*$M_PI)
     ));
-    my $status = gsl_min_fminimizer_iterate($mini);
+    my $status = gsl_min_fminimizer_iterate($m);
     ok_status($status);
+    lives_ok(sub{
+        my $min   = gsl_min_fminimizer_x_minimum($m);
+        my $lower = gsl_min_fminimizer_x_lower($m);
+        my $upper = gsl_min_fminimizer_x_upper($m);
+    }, 'getting the min, lower and upper lives');
 }
 
 Test::Class->runtests;

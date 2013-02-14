@@ -236,9 +236,9 @@ my $builder = GSLBuilder->new(
         },
     },
     build_requires => {
-        'Test::Most'            =>       0,
-        'Test::Exception'       =>    0.21,
-        'Test::Class'           =>    0.12,
+        'Test::Most'            =>    '0.31',
+        'Test::Exception'       =>    '0.21',
+        'Test::Class'           =>    '0.12',
     },
     requires => {
         'ExtUtils::PkgConfig'   => '1.03',

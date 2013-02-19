@@ -12,19 +12,8 @@
 
 * Test and submit bug reports to make Math::GSL work with Windows/Strawberry Perl/Darwin/Solaris
 
-* Add overloading to normal arithmetic operators (like Math::MatrixReal) in
-
-  Vector, VectorComplex, Matrix, MatrixComplex, possibly others
-
 * Make passing parameters to function references work properly
 
 * Investigate serialization of Math::GSL::Vector/Matrix objects
 
 * Investigate static linking issues
-
-=head2 Maybe
-
-* PDL interoperability :
-                      my $matrix = Math::GSL::Matrix->new(50,50);
-                      my $pdl = $matrix->as_pdl();
-

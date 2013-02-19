@@ -1,5 +1,30 @@
 %perlcode %{
 
+use strict;
+use warnings;
+use Carp qw/croak/;
+use Scalar::Util 'blessed';
+
+use overload
+#    '*'      => \&_multiplication,
+    '+'      => \&_addition,
+#    '-'      => \&_subtract,
+#    '=='     => \&_equal,
+#    '!='     => \&_not_equal,
+    fallback => 1;
+
+sub _addition {
+    my ($left, $right) = @_;
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
+        gsl_complex_add($lcopy->raw, $right->raw);
+    } else {
+        croak __PACKAGE__ . ": overload error!";
+    }
+    return $lcopy;
+}
+
 @EXPORT_OK = qw(
     gsl_complex_arg gsl_complex_abs gsl_complex_rect gsl_complex_polar doubleArray_getitem 
     gsl_complex_rect gsl_complex_polar gsl_complex_arg gsl_complex_abs gsl_complex_abs2 

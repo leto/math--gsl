@@ -25,7 +25,7 @@ sub _addition {
     return $lcopy;
 }
 
-@EXPORT_OK = qw(
+our @EXPORT_OK = qw(
     gsl_complex_arg gsl_complex_abs gsl_complex_rect gsl_complex_polar doubleArray_getitem 
     gsl_complex_rect gsl_complex_polar gsl_complex_arg gsl_complex_abs gsl_complex_abs2 
     gsl_complex_logabs gsl_complex_add gsl_complex_sub gsl_complex_mul gsl_complex_div 

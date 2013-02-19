@@ -471,4 +471,14 @@ sub GSL_COMPLEX_ARCCOTH : Tests {
     );
 }
 
+sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(1,1);
+    my $b = 42;
+    my $c = $a + $b;
+    ok_similar( [ gsl_parts($c)         ],
+                [ 43.0,  1.0            ],
+                'complex op overloading'
+    );
+}
+
 Test::Class->runtests;

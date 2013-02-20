@@ -1,6 +1,6 @@
 package Math::GSL::Complex::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::Most;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;

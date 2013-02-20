@@ -51,7 +51,7 @@ our @EXPORT_OK = qw(
 our ($GSL_COMPLEX_ONE, $GSL_COMPLEX_ZERO, $GSL_COMPLEX_NEGONE) = map { gsl_complex_rect($_, 0) } qw(1 0 -1); 
 
 
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 sub new {
     my ($class, @values) = @_;

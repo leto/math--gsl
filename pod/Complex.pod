@@ -1,4 +1,6 @@
 %perlcode %{
+use Scalar::Util 'blessed';
+use Math::GSL::Errno qw/$GSL_SUCCESS gsl_strerror/;
 
 use strict;
 use warnings;
@@ -12,18 +14,6 @@ use overload
 #    '=='     => \&_equal,
 #    '!='     => \&_not_equal,
     fallback => 1;
-
-sub _addition {
-    my ($left, $right) = @_;
-    my $lcopy = $left->copy;
-
-    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
-        gsl_complex_add($lcopy->raw, $right->raw);
-    } else {
-        croak __PACKAGE__ . ": overload error!";
-    }
-    return $lcopy;
-}
 
 our @EXPORT_OK = qw(
     gsl_complex_arg gsl_complex_abs gsl_complex_rect gsl_complex_polar doubleArray_getitem 
@@ -52,6 +42,19 @@ our ($GSL_COMPLEX_ONE, $GSL_COMPLEX_ZERO, $GSL_COMPLEX_NEGONE) = map { gsl_compl
 
 
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+sub _addition {
+    my ($left, $right, $flip) = @_;
+
+    my $lcopy = $left->copy;
+
+    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
+        gsl_complex_add($lcopy->raw, $right->raw);
+    } else {
+        gsl_complex_add_constant($lcopy->raw, $right);
+    }
+    return $lcopy;
+}
 
 sub new {
     my ($class, @values) = @_;

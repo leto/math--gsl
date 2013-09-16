@@ -1,6 +1,6 @@
 package Math::GSL::Complex::Test;
 use base q{Test::Class};
-use Test::More tests => 60;
+use Test::More;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -100,6 +100,14 @@ sub GSL_COMPLEX_EXP_EULERS_IDENTITY : Tests {       # e^(i pi) + 1 = 0
     ok_similar( [ gsl_parts($z) ], 
                 [ 0.0, 0.0      ]
     );
+}
+
+sub GSL_COMPLEX_ADD_OO : Tests {
+    my $x = gsl_complex_rect(5,3);
+    my $y = gsl_complex_rect(1,2);
+
+    my $z = $x + $y;
+    ok_similar( [ gsl_parts($z) ], [ 6, 5 ], 'gsl_complex_add with operator overloading' );
 }
 
 sub GSL_COMPLEX_ADD : Tests {
@@ -482,3 +490,4 @@ sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
 }
 
 Test::Class->runtests;
+done_testing;

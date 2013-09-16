@@ -105,6 +105,8 @@ Any comments that you want to associate with the smoke test run.
 
 Print verbose output of our actions to STDOUT.
 
+=back
+
 =cut
 
 # default options

@@ -85,6 +85,8 @@ our %EXPORT_TAGS = (
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::Randist - Probability Distributions
@@ -685,19 +687,37 @@ distribution with $scale and $exponent, using the formula given above.
 
 =item gsl_ran_dir_2d($r)
 
-This function returns two values. The first is $x and the second is $y of a random direction vector v = ($x,$y) in two dimensions. The vector is normalized such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
+This function returns two values. The first is $x and the second is $y of a
+random direction vector v = ($x,$y) in two dimensions. The vector is normalized
+such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
 
 =item gsl_ran_dir_2d_trig_method($r)
 
-This function returns two values. The first is $x and the second is $y of a random direction vector v = ($x,$y) in two dimensions. The vector is normalized such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
+This function returns two values. The first is $x and the second is $y of a
+random direction vector v = ($x,$y) in two dimensions. The vector is normalized
+such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
 
 =item gsl_ran_dir_3d($r)
 
-This function returns three values. The first is $x, the second $y and the third $z of a random direction vector v = ($x,$y,$z) in three dimensions. The vector is normalized such that |v|^2 = x^2 + y^2 + z^2 = 1. The method employed is due to Robert E. Knop (CACM 13, 326 (1970)), and explained in Knuth, v2, 3rd ed, p136. It uses the surprising fact that the distribution projected along any axis is actually uniform (this is only true for 3 dimensions). 
+This function returns three values. The first is $x, the second $y and the third
+$z of a random direction vector v = ($x,$y,$z) in three dimensions. The vector
+is normalized such that |v|^2 = x^2 + y^2 + z^2 = 1. The method employed is due
+to Robert E. Knop (CACM 13, 326 (1970)), and explained in Knuth, v2, 3rd ed,
+p136. It uses the surprising fact that the distribution projected along any axis
+is actually uniform (this is only true for 3 dimensions). 
 
-=item gsl_ran_dir_nd
+=item gsl_ran_dir_nd (Not yet implemented )
 
-* Not yet implemented * This function returns a random direction vector v = (x_1,x_2,...,x_n) in n dimensions. The vector is normalized such that |v|^2 = x_1^2 + x_2^2 + ... + x_n^2 = 1. The method uses the fact that a multivariate Gaussian distribution is spherically symmetric. Each component is generated to have a Gaussian distribution, and then the components are normalized. The method is described by Knuth, v2, 3rd ed, p135–136, and attributed to G. W. Brown, Modern Mathematics for the Engineer (1956). 
+This function returns a random direction vector v = (x_1,x_2,...,x_n) in n
+dimensions. The vector is normalized such that
+
+    |v|^2 = x_1^2 + x_2^2 + ... + x_n^2 = 1.
+
+The method uses the fact that a multivariate Gaussian distribution is
+spherically symmetric. Each component is generated to have a Gaussian
+distribution, and then the components are normalized. The method is described by
+Knuth, v2, 3rd ed, p135-136, and attributed to G. W. Brown, Modern Mathematics
+for the Engineer (1956). 
 
 =back
 
@@ -824,21 +844,24 @@ L<http://www.gnu.org/software/gsl/manual/html_node/>
  
 
  You might also want to write
- use Math::GSL::RNG qw/:all/;
- since a lot of the functions of Math::GSL::Randist take as argument a structure that is created by Math::GSL::RNG. 
- Refer to Math::GSL::RNG documentation to see how to create such a structure.
 
- Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is given in the EXAMPLES part on how to use the function related to this structure.
+    use Math::GSL::RNG qw/:all/;
+
+since a lot of the functions of Math::GSL::Randist take as argument a structure
+that is created by Math::GSL::RNG.  Refer to Math::GSL::RNG documentation to
+see how to create such a structure.
+
+Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is
+given in the EXAMPLES part on how to use the function related to this structure.
 
 
 =head1 EXAMPLES
 
-    use Math::GSL::Randist qw/:all/; 
-    print gsl_ran_exponential_pdf(5,2) . "\n"; 
+    use Math::GSL::Randist qw/:all/;
+    print gsl_ran_exponential_pdf(5,2) . "\n";
 
     use Math::GSL::Randist qw/:all/;
-    $x= Math::GSL::gsl_ran_discrete_t::new;
-
+    my $x = Math::GSL::gsl_ran_discrete_t::new;
 
 =head1 AUTHORS
 
@@ -846,7 +869,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2013 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

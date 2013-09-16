@@ -51,7 +51,7 @@ Search CPAN http://search.cpan.org/dist/Math::GSL
 
 # Copyright and Licence
 
-Copyright (C) 2008-2012 Jonathan "Duke" Leto and Thierry Moisan.
+Copyright (C) 2008-2013 Jonathan "Duke" Leto and Thierry Moisan.
 
 A full list of contributors is listed in the [CREDITS](https://github.com/leto/math--gsl/blob/master/CREDITS) file.
 

@@ -1,6 +1,6 @@
 package Math::GSL::QRNG::Test;
 use base q{Test::Class};
-use Test::More tests => 8;
+use Test::More tests => 10;
 use Math::GSL::QRNG  qw/:all/;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::Errno qw/:all/;

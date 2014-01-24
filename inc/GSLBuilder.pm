@@ -43,7 +43,8 @@ sub process_swig_files {
     }
 
     my $binding_ver = $self->get_binding_version;
-    print "Process XS files version $binding_ver\n";
+    my $current_version = $self->{properties}->{current_version};
+    print "Process XS files version $binding_ver (GSL version $current_version)\n";
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
     }

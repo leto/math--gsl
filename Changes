@@ -1,5 +1,11 @@
 =head1 Math::GSL Changes
 
+=head1 v0.28 - Jan 2014
+    - Fix build errors with clang
+    - Improve POD to play nice with Perl 5.18
+    - Teach Math::GSL about new functions added in GSL 1.16
+    - Added 1D minimization tests
+
 =head1 v0.27 - July 2012
     - Mathieu functions are now accessible
     - Improved detection of gsl

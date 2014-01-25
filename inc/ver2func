@@ -38,4 +38,11 @@
         ^gsl_vector_equal$ ^gsl_vector_char_equal$ ^gsl_vector_complex_equal$
         ^gsl_vector_int_equal$
               /],
+    "1.16" => [qw/
+        ^gsl_multifit_fdfsolver_driver$
+        ^gsl_stats_spearman$
+        ^gsl_sort_vector2$
+        ^gsl_poly_dd_hermite_init$
+        ^gsl_linalg_SV_leverage$
+        /],
 };

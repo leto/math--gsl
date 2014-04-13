@@ -4,6 +4,7 @@
     - Math::GSL ->max and ->min methods.
 	- Math::GSL ->dim method.
     - Math::GSL ->set_elem and ->get_elem methods.
+    - Math::GSL concat_vertically and concat_horizontally.
 
 =head1 v0.28 - Jan 2014
     - Fix build errors with clang

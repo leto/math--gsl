@@ -1,7 +1,7 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
 
-use Test::More tests => 263;
+use Test::More tests => 273;
 
 use strict;
 use warnings;
@@ -859,6 +859,40 @@ sub MATRIX_DIMENSIONS : Tests(2) {
     my ($r, $c) = $A->dim;
     ok ($r == 5, '->dim (rows)');
     ok ($c == 6, '->dim (cols)');
+}
+
+sub CONCAT_VERTICALLY : Tests(5) {
+    my $a = Math::GSL::Matrix->new(2,2)->set_row(0, [1, 2])->set_row(1, [3, 4]);
+    my $b = Math::GSL::Matrix->new(2,2)->set_row(0, [5, 6])->set_row(1, [7, 8]);
+    my $c = $a->vconcat($b);
+    ok($c->rows == 4, "vconcat - number of lines");
+    ok_similar([$c->as_list], [1..8], "vconcat - values");
+    ok_similar([$a->as_list], [1..4], "vconcat - obj is unmodified");
+
+    # Exceptions
+    dies_ok( sub { $a->vconcat("foo"); },
+	   		 "must be a Math::GSL::Matrix object");
+
+    my $tmp = Math::GSL::Matrix->new(1,1);
+    dies_ok( sub { $tmp->vconcat($a); },
+    		 "should have same number of columns");
+}
+
+sub CONCAT_HORIZONTALLY : Tests(5) {
+    my $a = Math::GSL::Matrix->new(2,2)->set_row(0, [1, 2])->set_row(1, [5, 6]);
+    my $b = Math::GSL::Matrix->new(2,2)->set_row(0, [3, 4])->set_row(1, [7, 8]);
+    my $c = $a->hconcat($b);
+    ok($c->cols == 4, "hconcat - number of columns");
+    ok_similar([$c->as_list], [1..8], "hconcat - values");
+    ok_similar([$a->as_list], [1,2,5,6], "hconcat - obj is unmodified");
+
+    # Exceptions
+    dies_ok( sub { $a->hconcat("foo"); },
+	   		 "must be a Math::GSL::Matrix object");
+
+    my $tmp = Math::GSL::Matrix->new(1,1);
+    dies_ok( sub { $tmp->hconcat($a); },
+    		 "should have same number of rows");
 }
 
 Test::Class->runtests;

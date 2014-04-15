@@ -699,6 +699,64 @@ sub set_col {
     return $self;
 }
 
+=head2 max()
+
+Computes the maximum value of a matrix. In array context returns the maximum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $max = $matrix->max();
+    ($max, $i, $j) = $matrix->max();
+
+=cut
+
+sub max {
+	my $matrix = shift;
+
+	my $max = gsl_matrix_max($matrix->raw);
+
+	if (wantarray) {
+		my ($i, $j) = gsl_matrix_max_index($matrix->raw);
+
+		return ($max, $j) if $matrix->rows == 1;
+		return ($max, $i) if $matrix->cols == 1;
+		return ($max, $i, $j);
+
+	} else {
+		return $max;			
+	}
+}
+
+=head2 min()
+
+Computes the minimum value of a matrix. In array context returns the minimum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $min = $matrix->min();
+    ($min, $i, $j) = $matrix->min();
+
+=cut
+
+sub min {
+	my $matrix = shift;
+
+	my $min = gsl_matrix_min($matrix->raw);
+
+	if (wantarray) {
+		my ($i, $j) = gsl_matrix_min_index($matrix->raw);
+
+		return ($min, $j) if $matrix->rows == 1;
+		return ($min, $i) if $matrix->cols == 1;
+		return ($min, $i, $j);
+
+	} else {
+		return $min;			
+	}
+}
+
 sub _addition {
     my ($left, $right) = @_;
 

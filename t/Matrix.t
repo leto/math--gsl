@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 238;
+use Test::More tests => 246;
 use strict;
 use warnings;
 
@@ -771,6 +771,42 @@ sub OVERLOAD_EQUAL : Tests(2) {
     ok ( $A == $B, 'should be equal');
     $B->set_row(0, [1,2]);
     ok ( $A != $B, 'should not be equal');
+}
+
+sub MATRIX_MAX : Tests(4) {
+    my $A = Math::GSL::Matrix->new(3,3)
+                             ->set_row(0, [1, 2, 3])
+                             ->set_row(1, [8, 7, 4])
+                             ->set_row(2, [9, 6, 5]);
+    ok ($A->max == 9, '->max in scalar context');
+    my @list = $A->max;
+    is_deeply ([@list], [9, 2, 0], '->max in list context');
+
+    my $B = Math::GSL::Matrix->new(1, 3)->set_row(0, [1, 9, 3]);
+    @list = $B->max;
+    is_deeply ([@list], [9, 1], '->max in list context for vector (1)');
+
+    my $C = Math::GSL::Matrix->new(3, 1)->set_row(0, [9])->set_row(1, [4])->set_row(2, [3]);
+    @list = $C->max;
+    is_deeply ([@list], [9, 0], '->max in list context for vector (2)');
+}
+
+sub MATRIX_MIN : Tests(4) {
+    my $A = Math::GSL::Matrix->new(3,3)
+                             ->set_row(0, [1, 2, 3])
+                             ->set_row(1, [8, 7, 4])
+                             ->set_row(2, [9, 6, 5]);
+    ok ($A->min == 1, '->min in scalar context');
+    my @list = $A->min;
+    is_deeply ([@list], [1, 0, 0], '->min in list context');
+
+    my $B = Math::GSL::Matrix->new(1, 3)->set_row(0, [1, 9, 3]);
+    @list = $B->min;
+    is_deeply ([@list], [1, 0], '->min in list context for vector (1)');
+
+    my $C = Math::GSL::Matrix->new(3, 1)->set_row(0, [9])->set_row(1, [4])->set_row(2, [3]);
+    @list = $C->min;
+    is_deeply ([@list], [3, 2], '->min in list context for vector (2)');
 }
 
 Test::Class->runtests;

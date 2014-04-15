@@ -757,6 +757,64 @@ sub min {
 	}
 }
 
+=head2 ieach()
+
+Applied a function to each element of a matrix. 
+
+    # compute exp to each element of matrix
+    $matrix->ieach( sub { exp(shift) });
+
+This method B<changes> the original matrix. See C<each> for a
+non destructive method.
+
+=cut
+
+sub ieach($&) {
+	my ($matrix, $func) = @_;
+
+    die __PACKAGE__.'::ieach($func) - $func must be a code reference'
+    	unless ref($func) eq "CODE";
+
+
+	for my $i (0 .. $matrix->rows-1) {
+		for my $j (0 .. $matrix->cols-1) {
+			# should be faster than use ->set_elem and ->get_elem
+			gsl_matrix_set($matrix->raw, $i, $j, 
+				           $func->(gsl_matrix_get($matrix->raw, $i, $j)));
+		}
+	}
+	return $matrix;
+}
+
+
+=head2 each()
+
+Applied a function to each element of a matrix. 
+
+    # compute exp to each element of matrix
+    $matrix->each( sub { exp(shift) });
+
+This method returns a B<new> matrix.
+
+=cut
+
+sub each($&) {
+	my ($matrix, $func) = @_;
+
+    die __PACKAGE__.'::each($func) - $func must be a code reference'
+    	unless ref($func) eq "CODE";
+
+    my $result = Math::GSL::Matrix->new($matrix->rows, $matrix->cols);
+	for my $i (0 .. $matrix->rows-1) {
+		for my $j (0 .. $matrix->cols-1) {
+			# should be faster than use ->set_elem and ->get_elem
+			gsl_matrix_set($result->raw, $i, $j, 
+				           $func->(gsl_matrix_get($matrix->raw, $i, $j)));
+		}
+	}
+	return $result;
+}
+
 sub _addition {
     my ($left, $right) = @_;
 

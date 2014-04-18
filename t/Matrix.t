@@ -1,6 +1,6 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 246;
+use Test::More tests => 251;
 use strict;
 use warnings;
 
@@ -808,5 +808,25 @@ sub MATRIX_MIN : Tests(4) {
     @list = $C->min;
     is_deeply ([@list], [3, 2], '->min in list context for vector (2)');
 }
+
+sub MATRIX_IEACH : Tests(2) {
+	my $A = Math::GSL::Matrix->new(2,2)
+							 ->set_row(0, [1, 2])
+							 ->set_row(1, [3, 4]);
+  dies_ok( sub { $A->ieach("foo") }, 'must be a code reference' );
+	$A = $A->ieach(sub { shift()**2 });
+	ok_similar( [$A->as_list], [1, 4, 9, 16], "->ieach");
+}
+
+sub MATRIX_EACH : Tests(3) {
+  my $A = Math::GSL::Matrix->new(2,2)
+               ->set_row(0, [1, 2])
+               ->set_row(1, [3, 4]);
+  dies_ok( sub { $A->each("foo") }, 'must be a code reference' );
+  my $B = $A->each(sub { shift()**2 });
+  ok_similar( [$A->as_list], [ 1, 2, 3, 4], "->each keeps object intact");
+  ok_similar( [$B->as_list], [ 1, 4, 9, 16], "->each does what it should");
+}
+
 
 Test::Class->runtests;

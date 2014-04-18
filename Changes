@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+	- Math::GSL ->each method.
     - Math::GSL ->max and ->min methods.
 
 =head1 v0.28 - Jan 2014

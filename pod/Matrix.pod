@@ -387,6 +387,18 @@ sub copy {
 }
 
 
+=head2 dim()
+
+Returns the number of rows and columns in a matrix as an array.
+
+   my ($rows, $cols) = $matrix->dim;
+
+Basically a shortcut to C<rows> and C<cols> methods.
+
+=cut
+
+sub dim { ($_[0]->rows, $_[0]->cols) }
+
 =head2 rows()
 
 Returns the number of rows in the matrix.

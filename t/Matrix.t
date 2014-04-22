@@ -1,6 +1,8 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 251;
+
+use Test::More tests => 253;
+
 use strict;
 use warnings;
 
@@ -828,5 +830,11 @@ sub MATRIX_EACH : Tests(3) {
   ok_similar( [$B->as_list], [ 1, 4, 9, 16], "->each does what it should");
 }
 
+sub MATRIX_DIMENSIONS : Tests(2) {
+    my $A = Math::GSL::Matrix->new(5,6);
+    my ($r, $c) = $A->dim;
+    ok ($r == 5, '->dim (rows)');
+    ok ($c == 6, '->dim (cols)');
+}
 
 Test::Class->runtests;

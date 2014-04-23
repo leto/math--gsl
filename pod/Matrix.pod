@@ -601,6 +601,28 @@ sub as_list($)
     return @matrix;
 }
 
+=head2 get_elem()
+
+Returns an element of a matrix.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $middle = $matrix->get_elem(1,1);
+
+B<NOTE:> just like any other method on this module, rows and arrays start
+with indice 0.
+
+=cut
+
+sub get_elem {
+	my ($self, $row, $col) = @_;
+	die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'
+		if ($row < 0 || $row >= $self->rows);
+	die __PACKAGE__.'::get_elem($x, $y, $v) - $y must be a valid column number'
+		if ($col < 0 || $col >= $self->cols);
+	return gsl_matrix_get($self->raw, $row, $col);
+}
+
 =head2 row()
 
 Returns a row matrix of the row you enter.
@@ -652,6 +674,32 @@ sub col
        } (0 .. $self->rows-1);
 
    return $colmat;
+}
+
+=head2 set_elem()
+
+Sets a specific value in the matrix.
+
+    my $matrix = Math::GSL::Matrix->new(2,2);
+    $matrix->set_elem(0, 0, $value);
+
+You can set multiple elements at once with chained calls:
+
+    $matrix->set_elem(0,0,1)->set_elem(1,1,1);
+
+B<NOTE:> just like any other method on this module, rows and arrays start
+with indice 0.
+
+=cut
+
+sub set_elem {
+	my ($self, $row, $col, $value) = @_;
+	die __PACKAGE__.'::set_elem($x, $y, $v) - $x must be a valid row number'
+		if ($row < 0 || $row >= $self->rows);
+	die __PACKAGE__.'::set_elem($x, $y, $v) - $y must be a valid column number'
+		if ($col < 0 || $col >= $self->cols);
+	gsl_matrix_set($self->raw, $row, $col, $value);
+	return $self;
 }
 
 =head2 set_row()

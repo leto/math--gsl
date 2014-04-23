@@ -1,7 +1,7 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
 
-use Test::More tests => 253;
+use Test::More tests => 263;
 
 use strict;
 use warnings;
@@ -467,6 +467,30 @@ sub GSL_MATRIX_NEW : Tests {
    isa_ok( $self->{obj}->raw, 'Math::GSL::Matrix::gsl_matrix' );
    ok( $self->{obj}->rows == 5, '->rows' );
    ok( $self->{obj}->cols == 5, '->cols' );
+}
+
+sub GSL_MATRIX_SET_ELEM : Tests(5) {
+   my $self = shift;
+   my $m = Math::GSL::Matrix->new(1,1);
+   $m->set_elem(0,0,99);
+   ok( gsl_matrix_get($m->raw, 0, 0) == 99, "OO set_elem");
+   dies_ok( sub { $m->set_elem(1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->set_elem(0,1,99); }, 'must be a valid column number' );
+   dies_ok( sub { $m->set_elem(-1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->set_elem(0,-1,99); }, 'must be a valid column number' );
+
+}
+
+sub GSL_MATRIX_GET_ELEM : Tests(5) {
+   my $self = shift;
+   my $m = Math::GSL::Matrix->new(1,1);
+   gsl_matrix_set($m->raw, 0, 0, 99);
+   ok( $m->get_elem(0,0) == 99, "OO get_elem");
+   dies_ok( sub { $m->get_elem(1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->get_elem(0,1,99); }, 'must be a valid column number' );
+   dies_ok( sub { $m->get_elem(-1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->get_elem(0,-1,99); }, 'must be a valid column number' );
+
 }
 
 sub AS_LIST_SQUARE : Tests {

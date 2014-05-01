@@ -855,3 +855,5 @@ xs/Wavelet_wrap.1.15.c
 xs/Wavelet_wrap.1.16.c
 xt/01-portability-files.t
 META.json
+c/Matrix.c
+c/Matrix.h

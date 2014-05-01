@@ -300,8 +300,6 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     my $matrix8 = gsl_matrix_alloc(5,5);        # standard interface
 
 
-=head1 Objected Oriented Interface to GSL Math::GSL::Matrix
-
 =head2 Math::GSL::Matrix->new()
 
 Creates a new Matrix of the given size.
@@ -875,6 +873,63 @@ sub each($&) {
 	return $result;
 }
 
+=head2 vconcat ()
+
+Concatenates vertically a new matrix with the object matrix, where the
+object matrix is above in the final matrix.
+Note that both matrices need to have the same number of columns.
+The method returns a B<new> matrix.
+
+    my $final = $m1->vconcat($m2);
+    # $final is $m1 on top of $m2
+
+=cut
+
+sub vconcat {
+    my ($self, $b) = @_;
+
+    die __PACKAGE__.'::vconcat($m) - $m must be a Math::GSL::Matrix object'
+        unless blessed($b) && $b->isa('Math::GSL::Matrix');
+    die __PACKAGE__.'::vconcat($m) - $self and $m should have same number of columns'
+        unless $self->cols == $b->cols;
+
+    bless {
+         _matrix => gsl_matrix_vconcat($self->raw, $b->raw),
+         _rows   => $self->rows + $b->rows,
+         _cols   => $self->cols
+    }, 'Math::GSL::Matrix'
+}
+
+=head2 hconcat ()
+
+Concatenates horizontally a new matrix with the object matrix, where the
+object matrix is at the left in the final matrix.
+Note that both matrices need to have the same number of rows.
+The method returns a B<new> matrix.
+
+    my $final = $m1->hconcat($m2);
+    # $final is $m1 at the left of $m2
+
+=cut
+
+sub hconcat {
+    my ($self, $b) = @_;
+
+    die __PACKAGE__.'::hconcat($m) - $m must be a Math::GSL::Matrix object'
+        unless blessed($b) && $b->isa('Math::GSL::Matrix');
+    die __PACKAGE__.'::hconcat($m) - $self and $m should have same number of rows'
+        unless $self->rows == $b->rows;
+
+    bless {
+         _matrix => gsl_matrix_hconcat($self->raw, $b->raw),
+         _rows   => $self->rows,
+         _cols   => $self->cols + $b->cols,
+    }, 'Math::GSL::Matrix'
+}
+
+
+
+
 sub _addition {
     my ($left, $right) = @_;
 
@@ -1080,7 +1135,7 @@ These are related to constant views of a matrix.
 
 =item C<gsl_matrix_const_row>
 
-=item C<gsl_matrix_const_colum>
+=item C<gsl_matrix_const_column>
 
 =item C<gsl_matrix_const_diagonal>
 

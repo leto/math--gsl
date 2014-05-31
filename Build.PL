@@ -168,6 +168,8 @@ if ($ccflags =~ /^\s*$/ ) {
     $swig_flags =' -I/usr/include';
 }
 
+$ccflags .= " $Config{ccflags}"; # we need this for some
+
 ## Swig produces a number of GCC warnings. Turn them off if we can.
 $ccflags .= try_cflags("-Wall");
 #$ccflags .= try_cflags("-Wno-strict-aliasing");

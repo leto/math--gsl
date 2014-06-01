@@ -1,5 +1,10 @@
 =head1 Math::GSL Changes
 
+=head1 v0.29 - June 2014
+
+	- Fix issue when prove/TAP::Harness uses lib/ modules instead of blib/ ones.
+    - Add functions introduced in gsl 1.16.
+    - Fix issue when compiling on some Linuxes.
 	- Math::GSL ->each method.
     - Math::GSL ->max and ->min methods.
 	- Math::GSL ->dim method.

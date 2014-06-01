@@ -39,10 +39,17 @@
         ^gsl_vector_int_equal$
               /],
     "1.16" => [qw/
-        ^gsl_multifit_fdfsolver_driver$
+        ^gsl_multifit_robust.*$
+        ^gsl_multifit_fsolver_driver$
+        ^gsl_multifit_fdfsolver_(?:dif_df|dif_fdf|driver)$
         ^gsl_stats_spearman$
         ^gsl_sort_vector2$
         ^gsl_poly_dd_hermite_init$
         ^gsl_linalg_SV_leverage$
+        ^gsl_bspline_knots_greville$
+        ^gsl_linalg_SV_leverage$
+        ^gsl_sort2.*$
+        ^gsl_sort_vector2_.*$
+        ^gsl_stats_[a-z]+_spearman$
         /],
 };

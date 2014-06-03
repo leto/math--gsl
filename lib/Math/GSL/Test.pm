@@ -1,5 +1,4 @@
 package Math::GSL::Test;
-use lib qw{lib blib/lib blib/arch};
 use base qw(Exporter);
 use base qw(DynaLoader);
 use strict;

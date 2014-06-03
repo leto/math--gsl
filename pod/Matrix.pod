@@ -301,13 +301,18 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 
 =head1 DESCRIPTION
 
+This module is part of the L<Math::GSL> distribution. It defines a Perl insterface
+to GNU Scientific Library matrices.
+
 There are two different (but not exclusive) ways to use this module: using the
 OO API, built  manually over the GSL functions, or using directly the
 functions defined by GSL library.
 
-=head2 Object Oriented API
+=head1 OBJECT ORIENTED API
 
-=head3 Math::GSL::Matrix->new()
+=head2 Constructor
+
+=head3 C<< Math::GSL::Matrix->new() >>
 
 Creates a new Matrix of the given size.
 
@@ -365,7 +370,9 @@ sub _new_from_dims
     bless $this, $class;
 }
 
-=head3 raw()
+=head2 Getters
+
+=head3 C<< raw() >>
 
 Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
 
@@ -374,58 +381,11 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
     my $stuff      = gsl_matrix_get($gsl_matrix, 1, 2);
 
 =cut
+
 sub raw  { (shift)->{_matrix} }
 
-=head3 identity()
 
-Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
-
-    my $I = $matrix->identity;
-
-=cut
-
-sub identity
-{
-    my $self=shift;
-    gsl_matrix_set_identity($self->raw);
-    return $self;
-}
-
-=head3 zero()
-
-Set a matrix to the zero matrix.
-
-    $matrix->zero;
-
-=cut
-
-sub zero # brrr!
-{
-    my $self=shift;
-    gsl_matrix_set_zero($self->raw);
-    return $self;
-}
-
-=head3 copy()
-
-Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
-
-    my $matrix = Math::GSL::Matrix->new(5,5);
-    my $copy   = $matrix->copy;
-
-=cut
-
-sub copy {
-    my $self = shift;
-    my $copy = Math::GSL::Matrix->new( $self->rows, $self->cols );
-    if ( gsl_matrix_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
-        croak "Math::GSL - error copying memory, aborting";
-    }
-    return $copy;
-}
-
-
-=head3 dim()
+=head3 C<< dim() >>
 
 Returns the number of rows and columns in a matrix as an array.
 
@@ -437,7 +397,7 @@ Basically a shortcut to C<rows> and C<cols> methods.
 
 sub dim { ($_[0]->rows, $_[0]->cols) }
 
-=head3 rows()
+=head3 C<< rows() >>
 
 Returns the number of rows in the matrix.
 
@@ -446,7 +406,7 @@ Returns the number of rows in the matrix.
 
 sub rows { (shift)->{_rows}   }
 
-=head3 cols()
+=head3 C<< cols() >>
 
 Returns the number of columns in the matrix.
 
@@ -455,7 +415,7 @@ Returns the number of columns in the matrix.
 
 sub cols { (shift)->{_cols}   }
 
-=head3  as_list()
+=head3 C<< as_list() >>
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
 
@@ -464,141 +424,14 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
     my @matrix = $matrix->as_list;
 =cut
 
-
-=head3 is_square()
-
-Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
-
-=cut
-
-sub is_square($)
+sub as_list($)
 {
     my $self = shift;
-    return ($self->rows == $self->cols) ? 1 : 0 ;
-}
-
-=head3 det()
-
-Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
-
-    my $det = $matrix->det();
-
-=cut
-
-sub det($)
-{
-    my $self = shift;
-    croak(__PACKAGE__."- determinant only exists for square matrices") unless $self->is_square;
-
-    my $p  = Math::GSL::Permutation->new( $self->rows );
-    my $LU = $self->copy;
-
-    my ($result, $s) = gsl_linalg_LU_decomp($LU->raw, $p->raw);
-    return gsl_linalg_LU_det($LU->raw, $s );
-}
-
-=head3 lndet()
-
-Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
-
-    my $lndet = $matrix->lndet();
-
-=cut
-
-sub lndet($)
-{
-    my $self = shift;
-    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
-
-    my $p  = Math::GSL::Permutation->new( $self->rows );
-    my $LU = $self->copy;
-
-    gsl_linalg_LU_decomp($LU->raw, $p->raw);
-    return gsl_linalg_LU_lndet($LU->raw);
-}
-
-=head3 inverse()
-
-Returns the inverse of a matrix or dies when called on a non-square matrix.
-
-    my $inverse = $matrix->inverse;
-
-=cut
-
-sub inverse($)
-{
-    my $self = shift;
-    croak(__PACKAGE__."- inverse only exists for square matrices") unless $self->is_square;
-
-    my $p  = Math::GSL::Permutation->new( $self->rows );
-    my $LU = $self->copy;
-    my $inverse = $self->copy;
-
-    # should check return status
-    gsl_linalg_LU_decomp($LU->raw, $p->raw);
-    gsl_linalg_LU_invert($LU->raw, $p->raw,$inverse->raw);
-
-    return $inverse;
-
-}
-
-=head3 eigenvalues()
-
-=cut
-
-
-sub eigenvalues($)
-{
-    my $self=shift;
-    my ($r,$c) = ($self->rows,$self->cols);
-    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
-    my $evec   = gsl_matrix_complex_alloc($r,$c);
-    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
-    my $vector = gsl_vector_complex_alloc($r);
-
-    gsl_eigen_nonsymmv($self->raw, $vector, $evec, $eigen);
-
-    my $x = gsl_vector_complex_real($vector); # vector of real components
-    my $y = gsl_vector_complex_imag($vector); # vector of imaginary components
-
-    return map {
-                _as_complex( gsl_vector_get($x->{vector}, $_) ,
-                             gsl_vector_get($y->{vector}, $_) )
-                } (0 .. $r-1);
-
-}
-
-sub eigenpair($)
-{
-    my $self=shift;
-    my ($r,$c) = ($self->rows,$self->cols);
-    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
-    my $evec   = Math::GSL::MatrixComplex->new($r,$c);
-    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
-    my $vector = Math::GSL::VectorComplex->new($r);
-
-    gsl_eigen_nonsymmv($self->raw, $vector->raw, $evec->raw, $eigen);
-
-    my $eigenvectors = [ map { $evec->col($_)->as_vector } (0 .. $r-1) ];
-
-    my $x = gsl_vector_complex_real($vector->raw); # vector of real components
-    my $y = gsl_vector_complex_imag($vector->raw); # vector of imaginary components
-    my $eigenvalues = [
-                            map {
-                                _as_complex( gsl_vector_get($x->{vector}, $_) ,
-                                            gsl_vector_get($y->{vector}, $_) )
-                             } (0 .. $r-1)
-                      ];
-    return ($eigenvalues, $eigenvectors);
-}
-
-sub _as_complex {
-    my ($w,$v) = @_;
-    my ($x,$y) = ($w,$v);
-    if( ref $w eq 'Math::GSL::Complex') {
-        ($x,$y) = (gsl_real($w),gsl_imag($w));
+    my @matrix;
+    for my $row ( 0 .. $self->rows-1) {
+       push @matrix, map { gsl_matrix_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
     }
-    my $z      = Math::Complex->make( $x, $y);
+    return @matrix;
 }
 
 =head3 as_vector()
@@ -620,24 +453,6 @@ sub as_vector($)
 
 }
 
-=head3 as_list()
-
-Returns a matrix as a flattened Perl list.
-
-    my @values = $matrix->as_list;
-
-=cut
-
-
-sub as_list($)
-{
-    my $self = shift;
-    my @matrix;
-    for my $row ( 0 .. $self->rows-1) {
-       push @matrix, map { gsl_matrix_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
-    }
-    return @matrix;
-}
 
 =head3 get_elem()
 
@@ -653,12 +468,12 @@ with indice 0.
 =cut
 
 sub get_elem {
-	my ($self, $row, $col) = @_;
-	die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'
-		if ($row < 0 || $row >= $self->rows);
-	die __PACKAGE__.'::get_elem($x, $y, $v) - $y must be a valid column number'
-		if ($col < 0 || $col >= $self->cols);
-	return gsl_matrix_get($self->raw, $row, $col);
+    my ($self, $row, $col) = @_;
+    die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::get_elem($x, $y, $v) - $y must be a valid column number'
+        if ($col < 0 || $col >= $self->cols);
+    return gsl_matrix_get($self->raw, $row, $col);
 }
 
 =head3 row()
@@ -714,7 +529,100 @@ sub col
    return $colmat;
 }
 
-=head3 set_elem()
+
+=head3 max()
+
+Computes the maximum value of a matrix. In array context returns the maximum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $max = $matrix->max();
+    ($max, $i, $j) = $matrix->max();
+
+=cut
+
+sub max {
+    my $matrix = shift;
+
+    my $max = gsl_matrix_max($matrix->raw);
+
+    if (wantarray) {
+        my ($i, $j) = gsl_matrix_max_index($matrix->raw);
+
+        return ($max, $j) if $matrix->rows == 1;
+        return ($max, $i) if $matrix->cols == 1;
+        return ($max, $i, $j);
+
+    } else {
+        return $max;            
+    }
+}
+
+=head3 min()
+
+Computes the minimum value of a matrix. In array context returns the minimum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $min = $matrix->min();
+    ($min, $i, $j) = $matrix->min();
+
+=cut
+
+sub min {
+    my $matrix = shift;
+
+    my $min = gsl_matrix_min($matrix->raw);
+
+    if (wantarray) {
+        my ($i, $j) = gsl_matrix_min_index($matrix->raw);
+
+        return ($min, $j) if $matrix->rows == 1;
+        return ($min, $i) if $matrix->cols == 1;
+        return ($min, $i, $j);
+
+    } else {
+        return $min;            
+    }
+}
+
+
+
+=head2 Setters
+
+=head3 C<< identity() >>
+
+Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
+
+    my $I = $matrix->identity;
+
+=cut
+
+sub identity
+{
+    my $self=shift;
+    gsl_matrix_set_identity($self->raw);
+    return $self;
+}
+
+=head3 C<< zero() >>
+
+Set a matrix to the zero matrix.
+
+    $matrix->zero;
+
+=cut
+
+sub zero # brrr!
+{
+    my $self=shift;
+    gsl_matrix_set_zero($self->raw);
+    return $self;
+}
+
+=head3 C<< set_elem() >>
 
 Sets a specific value in the matrix.
 
@@ -731,16 +639,16 @@ with indice 0.
 =cut
 
 sub set_elem {
-	my ($self, $row, $col, $value) = @_;
-	die __PACKAGE__.'::set_elem($x, $y, $v) - $x must be a valid row number'
-		if ($row < 0 || $row >= $self->rows);
-	die __PACKAGE__.'::set_elem($x, $y, $v) - $y must be a valid column number'
-		if ($col < 0 || $col >= $self->cols);
-	gsl_matrix_set($self->raw, $row, $col, $value);
-	return $self;
+    my ($self, $row, $col, $value) = @_;
+    die __PACKAGE__.'::set_elem($x, $y, $v) - $x must be a valid row number'
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::set_elem($x, $y, $v) - $y must be a valid column number'
+        if ($col < 0 || $col >= $self->cols);
+    gsl_matrix_set($self->raw, $row, $col, $value);
+    return $self;
 }
 
-=head3 set_row()
+=head3 C<< set_row() >>
 
 Sets a the values of a row with the elements of an array.
 
@@ -768,7 +676,7 @@ sub set_row {
     return $self;
 }
 
-=head3 set_col()
+=head3 C<< set_col() >>
 
 Sets a the values of a column with the elements of an array.
 
@@ -797,63 +705,172 @@ sub set_col {
     return $self;
 }
 
-=head3 max()
+=head2 Utility Functions
 
-Computes the maximum value of a matrix. In array context returns the maximum
-value and the position of that element in the matrix. If the matrix is a
-vector (being it vertical or horizontal) only one coordinate is returned: the
-position of the element in the vector.
+=head3 C<< copy() >>
 
-    $max = $matrix->max();
-    ($max, $i, $j) = $matrix->max();
+Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
 
-=cut
-
-sub max {
-	my $matrix = shift;
-
-	my $max = gsl_matrix_max($matrix->raw);
-
-	if (wantarray) {
-		my ($i, $j) = gsl_matrix_max_index($matrix->raw);
-
-		return ($max, $j) if $matrix->rows == 1;
-		return ($max, $i) if $matrix->cols == 1;
-		return ($max, $i, $j);
-
-	} else {
-		return $max;			
-	}
-}
-
-=head3 min()
-
-Computes the minimum value of a matrix. In array context returns the minimum
-value and the position of that element in the matrix. If the matrix is a
-vector (being it vertical or horizontal) only one coordinate is returned: the
-position of the element in the vector.
-
-    $min = $matrix->min();
-    ($min, $i, $j) = $matrix->min();
+    my $matrix = Math::GSL::Matrix->new(5,5);
+    my $copy   = $matrix->copy;
 
 =cut
 
-sub min {
-	my $matrix = shift;
-
-	my $min = gsl_matrix_min($matrix->raw);
-
-	if (wantarray) {
-		my ($i, $j) = gsl_matrix_min_index($matrix->raw);
-
-		return ($min, $j) if $matrix->rows == 1;
-		return ($min, $i) if $matrix->cols == 1;
-		return ($min, $i, $j);
-
-	} else {
-		return $min;			
-	}
+sub copy {
+    my $self = shift;
+    my $copy = Math::GSL::Matrix->new( $self->rows, $self->cols );
+    if ( gsl_matrix_memcpy($copy->raw, $self->raw) != $GSL_SUCCESS ) {
+        croak "Math::GSL - error copying memory, aborting";
+    }
+    return $copy;
 }
+
+
+
+
+=head3 C<< is_square() >>
+
+Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
+
+=cut
+
+sub is_square($)
+{
+    my $self = shift;
+    return ($self->rows == $self->cols) ? 1 : 0 ;
+}
+
+=head3 C<< det() >>
+
+Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $det = $matrix->det();
+
+=cut
+
+sub det($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    my ($result, $s) = gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_LU_det($LU->raw, $s );
+}
+
+=head3 C<< lndet() >>
+
+Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
+
+    my $lndet = $matrix->lndet();
+
+=cut
+
+sub lndet($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- log determinant only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+
+    gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    return gsl_linalg_LU_lndet($LU->raw);
+}
+
+=head3 C<< inverse() >>
+
+Returns the inverse of a matrix or dies when called on a non-square matrix.
+
+    my $inverse = $matrix->inverse;
+
+=cut
+
+sub inverse($)
+{
+    my $self = shift;
+    croak(__PACKAGE__."- inverse only exists for square matrices") unless $self->is_square;
+
+    my $p  = Math::GSL::Permutation->new( $self->rows );
+    my $LU = $self->copy;
+    my $inverse = $self->copy;
+
+    # should check return status
+    gsl_linalg_LU_decomp($LU->raw, $p->raw);
+    gsl_linalg_LU_invert($LU->raw, $p->raw,$inverse->raw);
+
+    return $inverse;
+
+}
+
+=head3 C<< eigenvalues() >>
+
+Computes the a matrix eigen values.
+
+=cut
+
+
+sub eigenvalues($)
+{
+    my $self=shift;
+    my ($r,$c) = ($self->rows,$self->cols);
+    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
+    my $evec   = gsl_matrix_complex_alloc($r,$c);
+    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
+    my $vector = gsl_vector_complex_alloc($r);
+
+    gsl_eigen_nonsymmv($self->raw, $vector, $evec, $eigen);
+
+    my $x = gsl_vector_complex_real($vector); # vector of real components
+    my $y = gsl_vector_complex_imag($vector); # vector of imaginary components
+
+    return map {
+                _as_complex( gsl_vector_get($x->{vector}, $_) ,
+                             gsl_vector_get($y->{vector}, $_) )
+                } (0 .. $r-1);
+
+}
+
+=head3 C<< eigenpair() >>
+
+=cut
+
+
+sub eigenpair($)
+{
+    my $self=shift;
+    my ($r,$c) = ($self->rows,$self->cols);
+    croak "Math::GSL::Matrix : \$matrix->eigenvalues - \$matrix must be square" unless ($r == $c);
+    my $evec   = Math::GSL::MatrixComplex->new($r,$c);
+    my $eigen  = gsl_eigen_nonsymmv_alloc($r);
+    my $vector = Math::GSL::VectorComplex->new($r);
+
+    gsl_eigen_nonsymmv($self->raw, $vector->raw, $evec->raw, $eigen);
+
+    my $eigenvectors = [ map { $evec->col($_)->as_vector } (0 .. $r-1) ];
+
+    my $x = gsl_vector_complex_real($vector->raw); # vector of real components
+    my $y = gsl_vector_complex_imag($vector->raw); # vector of imaginary components
+    my $eigenvalues = [
+                            map {
+                                _as_complex( gsl_vector_get($x->{vector}, $_) ,
+                                            gsl_vector_get($y->{vector}, $_) )
+                             } (0 .. $r-1)
+                      ];
+    return ($eigenvalues, $eigenvectors);
+}
+
+sub _as_complex {
+    my ($w,$v) = @_;
+    my ($x,$y) = ($w,$v);
+    if( ref $w eq 'Math::GSL::Complex') {
+        ($x,$y) = (gsl_real($w),gsl_imag($w));
+    }
+    my $z      = Math::Complex->make( $x, $y);
+}
+
 
 =head3 ieach()
 
@@ -1042,7 +1059,7 @@ sub _dot_product {
     return $C;
 }
 
-=head2 GSL exported functions
+=head1 GSL FUNCTION INTERFACE
 
 Here is a list of all the functions included in this module :
 

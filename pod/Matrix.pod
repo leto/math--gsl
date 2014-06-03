@@ -467,6 +467,8 @@ with indice 0.
 
 =cut
 
+sub element { get_elem(@_); } # compatibility with Math::MatrixReal
+
 sub get_elem {
     my ($self, $row, $col) = @_;
     die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'

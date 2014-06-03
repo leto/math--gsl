@@ -307,4 +307,14 @@ sub compile_c {
   return $obj_file;
 }
 
+# Propagate version numbers to all modules
+sub get_metadata {
+    my ($self, @args) = @_;
+    my $data = $self->SUPER::get_metadata(@args);
+    for my $mod (values %{$data->{provides}}) {
+        $mod->{version} ||= 0;
+    }
+    return $data;
+}
+
 3.14;

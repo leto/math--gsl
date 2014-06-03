@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+	- Add symbols introduced on gsl 1.15.
 	- Fixed in the correct way the prove/TAP::Harness problem.
 
 =head1 v0.29 - June 2014

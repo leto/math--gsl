@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - Math::GSL::Matrix constructor from a GSL matrix.
+    - Reorganization on the Math::GSL::Matrix documentation.
 	- Add symbols introduced on gsl 1.15.
 	- Fixed in the correct way the prove/TAP::Harness problem.
 

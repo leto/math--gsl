@@ -299,15 +299,54 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     if($matrix1 != $matrix3) ...
     my $matrix8 = gsl_matrix_alloc(5,5);        # standard interface
 
+=head1 DESCRIPTION
 
-=head2 Math::GSL::Matrix->new()
+There are two different (but not exclusive) ways to use this module: using the
+OO API, built  manually over the GSL functions, or using directly the
+functions defined by GSL library.
+
+=head2 Object Oriented API
+
+=head3 Math::GSL::Matrix->new()
 
 Creates a new Matrix of the given size.
 
     my $matrix = Math::GSL::Matrix->new(10,10);
+
+If by any chance you already have a gsl_matrix and want to "objectify" it, you
+can use the following constructor:
+
+    my $m = gsl_matrix_alloc(10, 20); 
+    # ... something
+    my $matrix = Math::GSL::Matrix->new($m);
+
+Note that C<$m> is B<NOT> copied. The new object will just refer to the old gsl_matrix.
+
 =cut
 
-sub new
+sub new {
+    return _new_from_matrix(@_) if @_ == 2;
+    return _new_from_dims(@_)   if @_ == 3;
+
+    croak( __PACKAGE__ .
+          sprintf("::new(...) - unknown Matrix constructor with %d args", scalar(@_)));
+}
+
+sub _new_from_matrix
+{
+    my ($class, $m) = @_;
+    if (!defined($m) || !blessed($m) || ref($m) ne "Math::GSL::Matrix::gsl_matrix") {
+        croak( __PACKAGE__.'::new($m) - $m should be a gsl_matrix');
+    }
+
+    return bless { 
+        _rows => $m->swig_size1_get(),
+        _cols => $m->swig_size2_get(),
+        _matrix => $m,
+    }, $class;
+}
+
+sub _new_from_dims
 {
     my ($class, $rows, $cols) = @_;
     my $this = {};
@@ -325,7 +364,8 @@ sub new
     ($this->{_rows}, $this->{_cols}) = ($rows,$cols);
     bless $this, $class;
 }
-=head2 raw()
+
+=head3 raw()
 
 Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
 
@@ -336,7 +376,7 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 =cut
 sub raw  { (shift)->{_matrix} }
 
-=head2 identity()
+=head3 identity()
 
 Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
 
@@ -351,7 +391,7 @@ sub identity
     return $self;
 }
 
-=head2 zero()
+=head3 zero()
 
 Set a matrix to the zero matrix.
 
@@ -366,7 +406,7 @@ sub zero # brrr!
     return $self;
 }
 
-=head2 copy()
+=head3 copy()
 
 Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
 
@@ -385,7 +425,7 @@ sub copy {
 }
 
 
-=head2 dim()
+=head3 dim()
 
 Returns the number of rows and columns in a matrix as an array.
 
@@ -397,7 +437,7 @@ Basically a shortcut to C<rows> and C<cols> methods.
 
 sub dim { ($_[0]->rows, $_[0]->cols) }
 
-=head2 rows()
+=head3 rows()
 
 Returns the number of rows in the matrix.
 
@@ -406,7 +446,7 @@ Returns the number of rows in the matrix.
 
 sub rows { (shift)->{_rows}   }
 
-=head2 cols()
+=head3 cols()
 
 Returns the number of columns in the matrix.
 
@@ -415,7 +455,7 @@ Returns the number of columns in the matrix.
 
 sub cols { (shift)->{_cols}   }
 
-=head2  as_list()
+=head3  as_list()
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
 
@@ -425,7 +465,7 @@ Get the contents of a Math::GSL::Matrix object as a Perl list.
 =cut
 
 
-=head2 is_square()
+=head3 is_square()
 
 Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
 
@@ -437,7 +477,7 @@ sub is_square($)
     return ($self->rows == $self->cols) ? 1 : 0 ;
 }
 
-=head2 det()
+=head3 det()
 
 Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -457,7 +497,7 @@ sub det($)
     return gsl_linalg_LU_det($LU->raw, $s );
 }
 
-=head2 lndet()
+=head3 lndet()
 
 Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -477,7 +517,7 @@ sub lndet($)
     return gsl_linalg_LU_lndet($LU->raw);
 }
 
-=head2 inverse()
+=head3 inverse()
 
 Returns the inverse of a matrix or dies when called on a non-square matrix.
 
@@ -502,7 +542,7 @@ sub inverse($)
 
 }
 
-=head2 eigenvalues()
+=head3 eigenvalues()
 
 =cut
 
@@ -561,7 +601,7 @@ sub _as_complex {
     my $z      = Math::Complex->make( $x, $y);
 }
 
-=head2 as_vector()
+=head3 as_vector()
 
 Returns a 1xN or Nx1 matrix as a Math::GSL::Vector object. Dies if called on a matrix that is not a single row or column. Useful for turning the output of C<col()> or C<row()> into a vector, like so:
 
@@ -580,7 +620,7 @@ sub as_vector($)
 
 }
 
-=head2 as_list()
+=head3 as_list()
 
 Returns a matrix as a flattened Perl list.
 
@@ -599,7 +639,7 @@ sub as_list($)
     return @matrix;
 }
 
-=head2 get_elem()
+=head3 get_elem()
 
 Returns an element of a matrix.
 
@@ -621,7 +661,7 @@ sub get_elem {
 	return gsl_matrix_get($self->raw, $row, $col);
 }
 
-=head2 row()
+=head3 row()
 
 Returns a row matrix of the row you enter.
 
@@ -648,7 +688,7 @@ sub row
     return $rowmat;
 }
 
-=head2 col()
+=head3 col()
 
 Returns a col matrix of the column you enter.
 
@@ -674,7 +714,7 @@ sub col
    return $colmat;
 }
 
-=head2 set_elem()
+=head3 set_elem()
 
 Sets a specific value in the matrix.
 
@@ -700,7 +740,7 @@ sub set_elem {
 	return $self;
 }
 
-=head2 set_row()
+=head3 set_row()
 
 Sets a the values of a row with the elements of an array.
 
@@ -728,7 +768,7 @@ sub set_row {
     return $self;
 }
 
-=head2 set_col()
+=head3 set_col()
 
 Sets a the values of a column with the elements of an array.
 
@@ -757,7 +797,7 @@ sub set_col {
     return $self;
 }
 
-=head2 max()
+=head3 max()
 
 Computes the maximum value of a matrix. In array context returns the maximum
 value and the position of that element in the matrix. If the matrix is a
@@ -786,7 +826,7 @@ sub max {
 	}
 }
 
-=head2 min()
+=head3 min()
 
 Computes the minimum value of a matrix. In array context returns the minimum
 value and the position of that element in the matrix. If the matrix is a
@@ -815,7 +855,7 @@ sub min {
 	}
 }
 
-=head2 ieach()
+=head3 ieach()
 
 Applied a function to each element of a matrix. 
 
@@ -845,7 +885,7 @@ sub ieach($&) {
 }
 
 
-=head2 each()
+=head3 each()
 
 Applied a function to each element of a matrix. 
 
@@ -873,7 +913,7 @@ sub each($&) {
 	return $result;
 }
 
-=head2 vconcat ()
+=head3 vconcat ()
 
 Concatenates vertically a new matrix with the object matrix, where the
 object matrix is above in the final matrix.
@@ -900,7 +940,7 @@ sub vconcat {
     }, 'Math::GSL::Matrix'
 }
 
-=head2 hconcat ()
+=head3 hconcat ()
 
 Concatenates horizontally a new matrix with the object matrix, where the
 object matrix is at the left in the final matrix.
@@ -1002,7 +1042,7 @@ sub _dot_product {
     return $C;
 }
 
-=head1 DESCRIPTION
+=head2 GSL exported functions
 
 Here is a list of all the functions included in this module :
 
@@ -1494,7 +1534,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

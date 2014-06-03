@@ -1,7 +1,7 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
 
-use Test::More tests => 273;
+use Test::More tests => 279;
 
 use strict;
 use warnings;
@@ -467,6 +467,16 @@ sub GSL_MATRIX_NEW : Tests {
    isa_ok( $self->{obj}->raw, 'Math::GSL::Matrix::gsl_matrix' );
    ok( $self->{obj}->rows == 5, '->rows' );
    ok( $self->{obj}->cols == 5, '->cols' );
+
+   my $m = gsl_matrix_alloc(10, 10);
+   my $new = Math::GSL::Matrix->new($m);
+   isa_ok( $new, 'Math::GSL::Matrix' );
+   isa_ok( $new->raw, 'Math::GSL::Matrix::gsl_matrix' );
+   ok( $new->rows == 10, '->rows' );
+   ok( $new->cols == 10, '->cols' );
+
+   dies_ok( sub { Math::GSL::Matrix->new(1,2,3); }, '::new(...) - unknown Matrix constructor with 3 args' );
+   dies_ok( sub { Math::GSL::Matrix->new(2); }, '::new($m) - $m should be a gsl_matrix');
 }
 
 sub GSL_MATRIX_SET_ELEM : Tests(5) {

@@ -624,6 +624,8 @@ sub zero # brrr!
 
 =head3 set_elem() 
 
+=head3 assign()
+
 Sets a specific value in the matrix.
 
     my $matrix = Math::GSL::Matrix->new(2,2);
@@ -637,6 +639,9 @@ B<NOTE:> just like any other method on this module, rows and arrays start
 with indice 0.
 
 =cut
+
+# added this to add compatibility with Math::RealMatrix. Useful.
+sub assign { set_elem(@_); }
 
 sub set_elem {
     my ($self, $row, $col, $value) = @_;

@@ -29,6 +29,7 @@
         ^gsl_cheb_order$ ^gsl_cheb_size$ ^gsl_cheb_coeffs$
         ^gsl_eigen_nonsymmv_params$
         ^gsl_integration_cquad.*
+        ^gsl_integration_glfixed_point$
         ^gsl_interp_type_min_size$
         ^gsl_linalg_complex_cholesky_invert$
         ^gsl_matrix_equal$ ^gsl_matrix_char_equal$ ^gsl_matrix_complex_equal$

@@ -299,15 +299,59 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     if($matrix1 != $matrix3) ...
     my $matrix8 = gsl_matrix_alloc(5,5);        # standard interface
 
+=head1 DESCRIPTION
 
-=head2 Math::GSL::Matrix->new()
+This module is part of the L<Math::GSL> distribution. It defines a Perl insterface
+to GNU Scientific Library matrices.
+
+There are two different (but not exclusive) ways to use this module: using the
+OO API, built  manually over the GSL functions, or using directly the
+functions defined by GSL library.
+
+=head1 OBJECT ORIENTED API
+
+=head2 Constructor
+
+=head3 Math::GSL::Matrix->new() 
 
 Creates a new Matrix of the given size.
 
     my $matrix = Math::GSL::Matrix->new(10,10);
+
+If by any chance you already have a gsl_matrix and want to "objectify" it, you
+can use the following constructor:
+
+    my $m = gsl_matrix_alloc(10, 20); 
+    # ... something
+    my $matrix = Math::GSL::Matrix->new($m);
+
+Note that C<$m> is B<NOT> copied. The new object will just refer to the old gsl_matrix.
+
 =cut
 
-sub new
+sub new {
+    return _new_from_matrix(@_) if @_ == 2;
+    return _new_from_dims(@_)   if @_ == 3;
+
+    croak( __PACKAGE__ .
+          sprintf("::new(...) - unknown Matrix constructor with %d args", scalar(@_)));
+}
+
+sub _new_from_matrix
+{
+    my ($class, $m) = @_;
+    if (!defined($m) || !blessed($m) || ref($m) ne "Math::GSL::Matrix::gsl_matrix") {
+        croak( __PACKAGE__.'::new($m) - $m should be a gsl_matrix');
+    }
+
+    return bless { 
+        _rows => $m->swig_size1_get(),
+        _cols => $m->swig_size2_get(),
+        _matrix => $m,
+    }, $class;
+}
+
+sub _new_from_dims
 {
     my ($class, $rows, $cols) = @_;
     my $this = {};
@@ -325,7 +369,10 @@ sub new
     ($this->{_rows}, $this->{_cols}) = ($rows,$cols);
     bless $this, $class;
 }
-=head2 raw()
+
+=head2 Getters
+
+=head3 raw() 
 
 Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
 
@@ -334,9 +381,220 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
     my $stuff      = gsl_matrix_get($gsl_matrix, 1, 2);
 
 =cut
+
 sub raw  { (shift)->{_matrix} }
 
-=head2 identity()
+
+=head3 dim() 
+
+Returns the number of rows and columns in a matrix as an array.
+
+   my ($rows, $cols) = $matrix->dim;
+
+Basically a shortcut to C<rows> and C<cols> methods.
+
+=cut
+
+sub dim { ($_[0]->rows, $_[0]->cols) }
+
+=head3 rows() 
+
+Returns the number of rows in the matrix.
+
+    my $rows = $matrix->rows;
+=cut
+
+sub rows { (shift)->{_rows}   }
+
+=head3 cols() 
+
+Returns the number of columns in the matrix.
+
+    my $cols = $matrix->cols;
+=cut
+
+sub cols { (shift)->{_cols}   }
+
+=head3 as_list() 
+
+Get the contents of a Math::GSL::Matrix object as a Perl list.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my @matrix = $matrix->as_list;
+=cut
+
+sub as_list($)
+{
+    my $self = shift;
+    my @matrix;
+    for my $row ( 0 .. $self->rows-1) {
+       push @matrix, map { gsl_matrix_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
+    }
+    return @matrix;
+}
+
+=head3 as_vector()
+
+Returns a 1xN or Nx1 matrix as a Math::GSL::Vector object. Dies if called on a matrix that is not a single row or column. Useful for turning the output of C<col()> or C<row()> into a vector, like so:
+
+    my $vector1 = $matrix->col(0)->as_vector;
+    my $vector2 = $matrix->row(1)->as_vector;
+
+=cut
+
+sub as_vector($)
+{
+    my ($self) = @_;
+    croak(__PACKAGE__.'::as_vector() - must be a single row or column matrix') unless ($self->cols == 1 or $self->rows == 1);
+
+    # TODO: there is a faster way to do this
+    return Math::GSL::Vector->new([ $self->as_list ] );
+
+}
+
+
+=head3 get_elem()
+
+Returns an element of a matrix.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $middle = $matrix->get_elem(1,1);
+
+B<NOTE:> just like any other method on this module, rows and arrays start
+with indice 0.
+
+=cut
+
+sub element { get_elem(@_); } # compatibility with Math::MatrixReal
+
+sub get_elem {
+    my ($self, $row, $col) = @_;
+    die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::get_elem($x, $y, $v) - $y must be a valid column number'
+        if ($col < 0 || $col >= $self->cols);
+    return gsl_matrix_get($self->raw, $row, $col);
+}
+
+=head3 row()
+
+Returns a row matrix of the row you enter.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $matrix_row = $matrix->row(0);
+
+=cut
+
+sub row
+{
+    my ($self, $row) = @_;
+    croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value')
+        unless (($row < $self->rows) and $row >= 0);
+
+   my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
+
+   for my $n (0 .. $self->cols-1) {
+        gsl_matrix_set( $rowmat->raw, 0, $n,
+            gsl_matrix_get($self->raw, $row, $n)
+        );
+   }
+
+    return $rowmat;
+}
+
+=head3 col()
+
+Returns a col matrix of the column you enter.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    ...
+    my $matrix_col = $matrix->col(0);
+
+=cut
+
+sub col
+{
+    my ($self, $col) = @_;
+    croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column")
+        unless ($col < $self->cols and $col >= 0);
+
+    my $colmat = Math::GSL::Matrix->new($self->rows, 1);
+
+   map { gsl_matrix_set($colmat->raw, $_, 0,
+           gsl_matrix_get($self->raw, $_, $col),
+           )
+       } (0 .. $self->rows-1);
+
+   return $colmat;
+}
+
+
+=head3 max()
+
+Computes the maximum value of a matrix. In array context returns the maximum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $max = $matrix->max();
+    ($max, $i, $j) = $matrix->max();
+
+=cut
+
+sub max {
+    my $matrix = shift;
+
+    my $max = gsl_matrix_max($matrix->raw);
+
+    if (wantarray) {
+        my ($i, $j) = gsl_matrix_max_index($matrix->raw);
+
+        return ($max, $j) if $matrix->rows == 1;
+        return ($max, $i) if $matrix->cols == 1;
+        return ($max, $i, $j);
+
+    } else {
+        return $max;            
+    }
+}
+
+=head3 min()
+
+Computes the minimum value of a matrix. In array context returns the minimum
+value and the position of that element in the matrix. If the matrix is a
+vector (being it vertical or horizontal) only one coordinate is returned: the
+position of the element in the vector.
+
+    $min = $matrix->min();
+    ($min, $i, $j) = $matrix->min();
+
+=cut
+
+sub min {
+    my $matrix = shift;
+
+    my $min = gsl_matrix_min($matrix->raw);
+
+    if (wantarray) {
+        my ($i, $j) = gsl_matrix_min_index($matrix->raw);
+
+        return ($min, $j) if $matrix->rows == 1;
+        return ($min, $i) if $matrix->cols == 1;
+        return ($min, $i, $j);
+
+    } else {
+        return $min;            
+    }
+}
+
+
+
+=head2 Setters
+
+=head3 identity() 
 
 Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
 
@@ -351,7 +609,7 @@ sub identity
     return $self;
 }
 
-=head2 zero()
+=head3 zero() 
 
 Set a matrix to the zero matrix.
 
@@ -366,7 +624,97 @@ sub zero # brrr!
     return $self;
 }
 
-=head2 copy()
+=head3 set_elem() 
+
+=head3 assign()
+
+Sets a specific value in the matrix.
+
+    my $matrix = Math::GSL::Matrix->new(2,2);
+    $matrix->set_elem(0, 0, $value);
+
+You can set multiple elements at once with chained calls:
+
+    $matrix->set_elem(0,0,1)->set_elem(1,1,1);
+
+B<NOTE:> just like any other method on this module, rows and arrays start
+with indice 0.
+
+=cut
+
+# added this to add compatibility with Math::RealMatrix. Useful.
+sub assign { set_elem(@_); }
+
+sub set_elem {
+    my ($self, $row, $col, $value) = @_;
+    die __PACKAGE__.'::set_elem($x, $y, $v) - $x must be a valid row number'
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::set_elem($x, $y, $v) - $y must be a valid column number'
+        if ($col < 0 || $col >= $self->cols);
+    gsl_matrix_set($self->raw, $row, $col, $value);
+    return $self;
+}
+
+=head3 set_row() 
+
+Sets a the values of a row with the elements of an array.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_row(0, [8, 6, 2]);
+
+You can also set multiple rows at once with chained calls:
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_row(0, [8, 6, 2])
+           ->set_row(1, [2, 4, 1]);
+    ...
+
+=cut
+
+sub set_row {
+    my ($self, $row, $values) = @_;
+    my $length = $#$values;
+    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' 
+        if ($row < 0 || $row >= $self->rows);
+    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix'
+        if($length != $self->cols-1);
+    map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
+    return $self;
+}
+
+=head3 set_col() 
+
+Sets a the values of a column with the elements of an array.
+
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_col(0, [8, 6, 2]);
+
+You can also set multiple columns at once with chained calls:
+    my $matrix = Math::GSL::Matrix->new(3,3);
+    $matrix->set_col(0, [8, 6, 2])
+           ->set_col(1, [2, 4, 1]);
+    ...
+
+=cut
+
+sub set_col {
+    my ($self, $col, $values) = @_;
+    my $length = $#$values;
+
+    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' 
+        if ($col < 0 || $col >= $self->cols);
+    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix'
+        if($length != $self->rows-1);
+
+    map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
+    return $self;
+}
+
+=head2 Utility Functions
+
+=head3 copy() 
 
 Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
 
@@ -385,47 +733,9 @@ sub copy {
 }
 
 
-=head2 dim()
-
-Returns the number of rows and columns in a matrix as an array.
-
-   my ($rows, $cols) = $matrix->dim;
-
-Basically a shortcut to C<rows> and C<cols> methods.
-
-=cut
-
-sub dim { ($_[0]->rows, $_[0]->cols) }
-
-=head2 rows()
-
-Returns the number of rows in the matrix.
-
-    my $rows = $matrix->rows;
-=cut
-
-sub rows { (shift)->{_rows}   }
-
-=head2 cols()
-
-Returns the number of columns in the matrix.
-
-    my $cols = $matrix->cols;
-=cut
-
-sub cols { (shift)->{_cols}   }
-
-=head2  as_list()
-
-Get the contents of a Math::GSL::Matrix object as a Perl list.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    ...
-    my @matrix = $matrix->as_list;
-=cut
 
 
-=head2 is_square()
+=head3 is_square() 
 
 Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
 
@@ -437,7 +747,7 @@ sub is_square($)
     return ($self->rows == $self->cols) ? 1 : 0 ;
 }
 
-=head2 det()
+=head3 det() 
 
 Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -457,7 +767,7 @@ sub det($)
     return gsl_linalg_LU_det($LU->raw, $s );
 }
 
-=head2 lndet()
+=head3 lndet() 
 
 Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -477,7 +787,7 @@ sub lndet($)
     return gsl_linalg_LU_lndet($LU->raw);
 }
 
-=head2 inverse()
+=head3 inverse() 
 
 Returns the inverse of a matrix or dies when called on a non-square matrix.
 
@@ -502,7 +812,9 @@ sub inverse($)
 
 }
 
-=head2 eigenvalues()
+=head3 eigenvalues() 
+
+Computes the a matrix eigen values.
 
 =cut
 
@@ -527,6 +839,11 @@ sub eigenvalues($)
                 } (0 .. $r-1);
 
 }
+
+=head3 eigenpair() 
+
+=cut
+
 
 sub eigenpair($)
 {
@@ -561,261 +878,8 @@ sub _as_complex {
     my $z      = Math::Complex->make( $x, $y);
 }
 
-=head2 as_vector()
 
-Returns a 1xN or Nx1 matrix as a Math::GSL::Vector object. Dies if called on a matrix that is not a single row or column. Useful for turning the output of C<col()> or C<row()> into a vector, like so:
-
-    my $vector1 = $matrix->col(0)->as_vector;
-    my $vector2 = $matrix->row(1)->as_vector;
-
-=cut
-
-sub as_vector($)
-{
-    my ($self) = @_;
-    croak(__PACKAGE__.'::as_vector() - must be a single row or column matrix') unless ($self->cols == 1 or $self->rows == 1);
-
-    # TODO: there is a faster way to do this
-    return Math::GSL::Vector->new([ $self->as_list ] );
-
-}
-
-=head2 as_list()
-
-Returns a matrix as a flattened Perl list.
-
-    my @values = $matrix->as_list;
-
-=cut
-
-
-sub as_list($)
-{
-    my $self = shift;
-    my @matrix;
-    for my $row ( 0 .. $self->rows-1) {
-       push @matrix, map { gsl_matrix_get($self->raw, $row, $_) } (0 .. $self->cols-1 );
-    }
-    return @matrix;
-}
-
-=head2 get_elem()
-
-Returns an element of a matrix.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    ...
-    my $middle = $matrix->get_elem(1,1);
-
-B<NOTE:> just like any other method on this module, rows and arrays start
-with indice 0.
-
-=cut
-
-sub get_elem {
-	my ($self, $row, $col) = @_;
-	die __PACKAGE__.'::get_elem($x, $y, $v) - $x must be a valid row number'
-		if ($row < 0 || $row >= $self->rows);
-	die __PACKAGE__.'::get_elem($x, $y, $v) - $y must be a valid column number'
-		if ($col < 0 || $col >= $self->cols);
-	return gsl_matrix_get($self->raw, $row, $col);
-}
-
-=head2 row()
-
-Returns a row matrix of the row you enter.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    ...
-    my $matrix_row = $matrix->row(0);
-
-=cut
-
-sub row
-{
-    my ($self, $row) = @_;
-    croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value')
-        unless (($row < $self->rows) and $row >= 0);
-
-   my $rowmat = Math::GSL::Matrix->new(1,$self->cols);
-
-   for my $n (0 .. $self->cols-1) {
-        gsl_matrix_set( $rowmat->raw, 0, $n,
-            gsl_matrix_get($self->raw, $row, $n)
-        );
-   }
-
-    return $rowmat;
-}
-
-=head2 col()
-
-Returns a col matrix of the column you enter.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    ...
-    my $matrix_col = $matrix->col(0);
-
-=cut
-
-sub col
-{
-    my ($self, $col) = @_;
-    croak (__PACKAGE__."::\$matrix->col(\$col) - $col not a valid column")
-        unless ($col < $self->cols and $col >= 0);
-
-    my $colmat = Math::GSL::Matrix->new($self->rows, 1);
-
-   map { gsl_matrix_set($colmat->raw, $_, 0,
-           gsl_matrix_get($self->raw, $_, $col),
-           )
-       } (0 .. $self->rows-1);
-
-   return $colmat;
-}
-
-=head2 set_elem()
-
-Sets a specific value in the matrix.
-
-    my $matrix = Math::GSL::Matrix->new(2,2);
-    $matrix->set_elem(0, 0, $value);
-
-You can set multiple elements at once with chained calls:
-
-    $matrix->set_elem(0,0,1)->set_elem(1,1,1);
-
-B<NOTE:> just like any other method on this module, rows and arrays start
-with indice 0.
-
-=cut
-
-sub set_elem {
-	my ($self, $row, $col, $value) = @_;
-	die __PACKAGE__.'::set_elem($x, $y, $v) - $x must be a valid row number'
-		if ($row < 0 || $row >= $self->rows);
-	die __PACKAGE__.'::set_elem($x, $y, $v) - $y must be a valid column number'
-		if ($col < 0 || $col >= $self->cols);
-	gsl_matrix_set($self->raw, $row, $col, $value);
-	return $self;
-}
-
-=head2 set_row()
-
-Sets a the values of a row with the elements of an array.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    $matrix->set_row(0, [8, 6, 2]);
-
-You can also set multiple rows at once with chained calls:
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    $matrix->set_row(0, [8, 6, 2])
-           ->set_row(1, [2, 4, 1]);
-    ...
-
-=cut
-
-sub set_row {
-    my ($self, $row, $values) = @_;
-    my $length = $#$values;
-    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
-    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' 
-        if ($row < 0 || $row >= $self->rows);
-    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix'
-        if($length != $self->cols-1);
-    map { gsl_matrix_set($self->raw, $row, $_, $values->[$_]) } (0..$length);
-    return $self;
-}
-
-=head2 set_col()
-
-Sets a the values of a column with the elements of an array.
-
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    $matrix->set_col(0, [8, 6, 2]);
-
-You can also set multiple columns at once with chained calls:
-    my $matrix = Math::GSL::Matrix->new(3,3);
-    $matrix->set_col(0, [8, 6, 2])
-           ->set_col(1, [2, 4, 1]);
-    ...
-
-=cut
-
-sub set_col {
-    my ($self, $col, $values) = @_;
-    my $length = $#$values;
-
-    die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
-    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' 
-        if ($col < 0 || $col >= $self->cols);
-    die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix'
-        if($length != $self->rows-1);
-
-    map { gsl_matrix_set($self->raw, $_, $col, $values->[$_]) } (0..$length);
-    return $self;
-}
-
-=head2 max()
-
-Computes the maximum value of a matrix. In array context returns the maximum
-value and the position of that element in the matrix. If the matrix is a
-vector (being it vertical or horizontal) only one coordinate is returned: the
-position of the element in the vector.
-
-    $max = $matrix->max();
-    ($max, $i, $j) = $matrix->max();
-
-=cut
-
-sub max {
-	my $matrix = shift;
-
-	my $max = gsl_matrix_max($matrix->raw);
-
-	if (wantarray) {
-		my ($i, $j) = gsl_matrix_max_index($matrix->raw);
-
-		return ($max, $j) if $matrix->rows == 1;
-		return ($max, $i) if $matrix->cols == 1;
-		return ($max, $i, $j);
-
-	} else {
-		return $max;			
-	}
-}
-
-=head2 min()
-
-Computes the minimum value of a matrix. In array context returns the minimum
-value and the position of that element in the matrix. If the matrix is a
-vector (being it vertical or horizontal) only one coordinate is returned: the
-position of the element in the vector.
-
-    $min = $matrix->min();
-    ($min, $i, $j) = $matrix->min();
-
-=cut
-
-sub min {
-	my $matrix = shift;
-
-	my $min = gsl_matrix_min($matrix->raw);
-
-	if (wantarray) {
-		my ($i, $j) = gsl_matrix_min_index($matrix->raw);
-
-		return ($min, $j) if $matrix->rows == 1;
-		return ($min, $i) if $matrix->cols == 1;
-		return ($min, $i, $j);
-
-	} else {
-		return $min;			
-	}
-}
-
-=head2 ieach()
+=head3 ieach()
 
 Applied a function to each element of a matrix. 
 
@@ -845,7 +909,7 @@ sub ieach($&) {
 }
 
 
-=head2 each()
+=head3 each()
 
 Applied a function to each element of a matrix. 
 
@@ -873,7 +937,7 @@ sub each($&) {
 	return $result;
 }
 
-=head2 vconcat ()
+=head3 vconcat ()
 
 Concatenates vertically a new matrix with the object matrix, where the
 object matrix is above in the final matrix.
@@ -900,7 +964,7 @@ sub vconcat {
     }, 'Math::GSL::Matrix'
 }
 
-=head2 hconcat ()
+=head3 hconcat ()
 
 Concatenates horizontally a new matrix with the object matrix, where the
 object matrix is at the left in the final matrix.
@@ -1002,7 +1066,7 @@ sub _dot_product {
     return $C;
 }
 
-=head1 DESCRIPTION
+=head1 GSL FUNCTION INTERFACE
 
 Here is a list of all the functions included in this module :
 
@@ -1494,7 +1558,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

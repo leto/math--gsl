@@ -129,16 +129,9 @@ sub process_xs_file {
     $self->link_c($archdir, $file_base, $obj_file);
 
     my $from = catfile(qw/pm Math GSL/, "${file_base}.pm.$ver");
-    my $to1 = catfile(qw/blib lib Math GSL/, "${file_base}.pm");
-
-    # it seems there is a bug with DynaLoader or similar, where
-    # the lib module is used instead of the blib one.
-    # while that problem is not solved, just copy the pm to
-    # both places.
-    my $to2 = catfile(qw/lib Math GSL/, "${file_base}.pm");
-    chmod 0644, $from, $to1, $to2;
-    copy($from, $to1);
-    copy($from, $to2);
+    my $to = catfile(qw/blib lib Math GSL/, "${file_base}.pm");
+    chmod 0644, $from, $to;
+    copy($from, $to);
 }
 
 sub cmp_versions {
@@ -312,6 +305,16 @@ sub compile_c {
     or die "error building $Config{_o} file from '$file'";
 
   return $obj_file;
+}
+
+# Propagate version numbers to all modules
+sub get_metadata {
+    my ($self, @args) = @_;
+    my $data = $self->SUPER::get_metadata(@args);
+    for my $mod (values %{$data->{provides}}) {
+        $mod->{version} ||= 0;
+    }
+    return $data;
 }
 
 3.14;

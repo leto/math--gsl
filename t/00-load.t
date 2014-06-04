@@ -1,7 +1,6 @@
 use Test::More tests => 53;
 use Config;
 use File::Spec::Functions;
-use lib catfile 'blib', 'lib';
 use lib 'inc';
 use GSLBuilder;
 use strict;

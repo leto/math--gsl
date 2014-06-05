@@ -12,7 +12,7 @@ generate Perl bindings to *most* GSL functionality.
 ## CPAN distribution dependencies
 
 Currently Math::GSL requires at least Perl 5.8.x and GSL 1.11 to compile. It
-also requires [ExtUtils::PkgConfig](http://metacpan.org/release/ExtUtils-PkgConfig/) to find GSL and Module::Build.
+also requires [PkgConfig](http://metacpan.org/release/PkgConfig/) to find GSL and Module::Build.
 
 
 ## Git repo dependencies

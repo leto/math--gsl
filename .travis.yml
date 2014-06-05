@@ -10,7 +10,7 @@ compiler:
 
 before_install:
     - sudo apt-get install libgsl0-dev swig2.0
-    - cpanm ExtUtils::PkgConfig
+    - cpanm PkgConfig
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

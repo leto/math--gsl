@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+    - Use PkgConfig instead of ExtUtils::PkgConfig.
     - Math::GSL::Matrix constructor from a GSL matrix.
     - Reorganization on the Math::GSL::Matrix documentation.
 	- Add symbols introduced on gsl 1.15.

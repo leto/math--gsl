@@ -27,13 +27,12 @@ use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
 BEGIN {
-    eval { require ExtUtils::PkgConfig };
+    eval { require PkgConfig };
     if ($@) {
-        print "\nI see that you are a CPANTester, you really should install ExtUtils::PkgConfig !\n"
+        print "\nI see that you are a CPANTester, you really should install PkgConfig !\n"
             if $ENV{AUTOMATED_TESTING};
         print <<EXIT;
-ExtUtils::PkgConfig is currently needed to find GSL for the compilation of this module.
-It may be bundled with Math::GSL in the future.
+PkgConfig is currently needed to find GSL for the compilation of this module.
 EXIT
         exit 0;
     }
@@ -152,13 +151,18 @@ close $fh or die "Could not close $path_system : $!";
 
 modify_env();
 
-print "Asking ExtUtils::PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n";
-my %gsl_pkgcfg = ExtUtils::PkgConfig->find ('gsl');
-my $pkgcfg_ver = $gsl_pkgcfg{'modversion'};
+print "Asking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n";
+my $gsl_pkgcfg = PkgConfig->find ('gsl');
+
+if ($gsl_pkgcfg->errmsg) {
+	die "PkgConfig failed with error message: " . $gsl_pkgcfg->errmsg;
+}
+
+my $pkgcfg_ver = $gsl_pkgcfg->pkg_version;
 
 warn "pkgconfig version $pkgcfg_ver != gsl-config $gv possible misconfiguration" if $pkgcfg_ver ne $gv;
 
-my $ccflags    = $gsl_pkgcfg{cflags};
+my $ccflags    = join " ", $gsl_pkgcfg->get_cflags;
 
 # In case GSL in installed in the system-wide directory, $ccflags is
 # empty (because pkg-config remove -I/usr/include), but swig needs it
@@ -180,8 +184,9 @@ $ccflags .= try_cflags("-Wno-unused-variable");
 $ccflags .= try_cflags("-g");
 
 
-my $ldflags = $gsl_pkgcfg{libs};
-$swig_flags = "$gsl_pkgcfg{cflags} $swig_flags";
+my $ldflags = join " ", $gsl_pkgcfg->get_ldflags;
+
+$swig_flags = join(" ", $gsl_pkgcfg->get_cflags) . " $swig_flags";
 
 if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
@@ -221,6 +226,13 @@ unless (GSLBuilder::is_release()) {
     }
 }
 
+$ccflags = "$ccflags " . ($ENV{CC_FLAGS}||''),
+
+print "\nConfigured with:\n";
+print "  linker flags: $ldflags\n";
+print "  compiler flags: $ccflags\n";
+print "  swig flags: $swig_flags\n";
+
 my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ $cleanup ],
@@ -229,7 +241,7 @@ my $builder = GSLBuilder->new(
     dist_version_from   => catfile(qw/lib Math GSL.pm/),
     include_dirs	    => [],
     extra_linker_flags  => $ldflags,
-    extra_compiler_flags=> "$ccflags " . ($ENV{CC_FLAGS}||''),
+    extra_compiler_flags=> $ccflags,
     swig_flags          => $swig_flags,
     license             => 'gpl',
     meta_merge     => {
@@ -238,20 +250,20 @@ my $builder = GSLBuilder->new(
         },
     },
     build_requires => {
-        'Test::Most'            =>    '0.31',
-        'Test::Exception'       =>    '0.21',
-        'Test::Class'           =>    '0.12',
+        'Test::Most'      =>    '0.31',
+        'Test::Exception' =>    '0.21',
+        'Test::Class'     =>    '0.12',
     },
     requires => {
-        'ExtUtils::PkgConfig'   => '1.03',
-        'Scalar::Util'          => 0,
-        version                 => '0.77',
-        perl                    => '5.8.0',
+        'PkgConfig'       => '0.07520',
+        'Scalar::Util'    => 0,
+        version           => '0.77',
+        perl              => '5.8.0',
     },
     sign                  => 0,
     configure_requires => {
-        'ExtUtils::PkgConfig' => '1.03',
-        'Module::Build'       => '0.38',
+        'PkgConfig'       => '0.07520',
+        'Module::Build'   => '0.38',
     },
     swig_source           => [
                                 map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,

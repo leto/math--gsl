@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+    - Change Build.PL to return 0 when GSL library not found.
     - Use PkgConfig instead of ExtUtils::PkgConfig.
     - Math::GSL::Matrix constructor from a GSL matrix.
     - Reorganization on the Math::GSL::Matrix documentation.

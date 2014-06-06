@@ -31,14 +31,179 @@ BEGIN {
     if ($@) {
         print "\nI see that you are a CPANTester, you really should install PkgConfig !\n"
             if $ENV{AUTOMATED_TESTING};
-        print <<EXIT;
-PkgConfig is currently needed to find GSL for the compilation of this module.
-EXIT
+        print "\nPkgConfig is currently needed to find GSL for the compilation of this module.\n";
         exit 0;
     }
 }
 
+print "\nChecking for GSL..\n";
 
+chomp(my $gsl_version = qx{gsl-config --version});
+chomp(my $gsl_prefix  = qx{gsl-config --prefix});
+chomp(my $gsl_cflags  = qx{gsl-config --cflags});
+chomp(my $gsl_libs    = qx{gsl-config --libs});
+
+my $current_version   = check_gsl_version($gsl_version);
+
+modify_env();
+
+print "\nAsking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n\n";
+my $gsl_pkgcfg = PkgConfig->find ('gsl');
+
+if ($gsl_pkgcfg->errmsg) {
+	print "PkgConfig failed with error message: " . $gsl_pkgcfg->errmsg;
+	exit 0;
+}
+
+my $pkgcfg_ver = $gsl_pkgcfg->pkg_version;
+
+warn "pkgconfig version $pkgcfg_ver != gsl-config $gsl_version possible misconfiguration" if $pkgcfg_ver ne $gsl_version;
+
+my $ccflags = join " ", $gsl_pkgcfg->get_cflags;
+my $ldflags = join " ", $gsl_pkgcfg->get_ldflags;
+
+# In case GSL in installed in the system-wide directory, $ccflags is
+# empty (because pkg-config remove -I/usr/include), but swig needs it
+
+my $swig_flags = '';
+if ($ccflags =~ /^\s*$/ ) {
+    $swig_flags =' -I/usr/include';
+}
+
+$ccflags .= " $Config{ccflags}"; # we need this for some Linuxes
+
+## Swig produces a number of GCC warnings. Turn them off if we can.
+$ccflags .= try_cflags("-Wall");
+#$ccflags .= try_cflags("-Wno-strict-aliasing");
+$ccflags .= try_cflags("-Wno-unused-function");
+$ccflags .= try_cflags("-Wno-unused-value");
+$ccflags .= try_cflags("-Wno-unused-function");
+$ccflags .= try_cflags("-Wno-unused-variable");
+$ccflags .= try_cflags("-g");
+
+$swig_flags = join(" ", $gsl_pkgcfg->get_cflags) . " $swig_flags";
+
+if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
+    $ldflags .= " -L$1 -lperl";
+    # Should we check the 32-ness?
+    $swig_flags = '-DNEED_LONG';
+} elsif (GSLBuilder::is_darwin()) {
+    $ldflags .= ' -bundle -flat_namespace ';
+}
+
+if ($Config{archname} =~ /x86_64|amd64/ ) {
+    $ldflags .= ' -fPIC  -fno-omit-frame-pointer ';
+    $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
+}
+
+my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
+
+my $cleanup = qq{
+                 xs/*_wrap*.c core *.core swig/system.i swig/renames.i
+                 swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build pm
+                 lib/Math/GSL/[A-z]+/* blib *.so *.orig
+                } . join " ", map { catfile( (qw/lib Math GSL/, "$_.pm") ) } @Subsystems;
+
+
+$ldflags = '-shared ' . $ldflags unless GSLBuilder::is_darwin();
+
+my $ver2func = do(catfile(qw/inc ver2func/));
+
+unless (GSLBuilder::is_release()) {
+    my $swig_ver = swig_version();
+    if ((split(/\./, $swig_ver))[0] < 2) {
+        print "
+***
+*** You need to have SWIG 2.X or greater installed. (You have $swig_ver).
+*** Get SWIG at http://www.swig.org/\n";
+        exit 0;
+    }
+}
+
+$ccflags = "$ccflags " . ($ENV{CC_FLAGS}||''),
+
+print "\nConfigured with flags...\n";
+print "  linker: $ldflags\n";
+print "  compiler: $ccflags\n";
+
+print "  swig: $swig_flags\n" unless GSLBuilder::is_release();
+
+print "\n";
+
+my $builder = GSLBuilder->new(
+    module_name         => 'Math::GSL',
+    add_to_cleanup      => [ $cleanup ],
+    dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
+    dist_author         => 'Jonathan Leto <jonathan@leto.net>',
+    dist_version_from   => catfile(qw/lib Math GSL.pm/),
+    include_dirs	    => [],
+    extra_linker_flags  => $ldflags,
+    extra_compiler_flags=> $ccflags,
+    swig_flags          => $swig_flags,
+    license             => 'gpl',
+    meta_merge     => {
+        resources => {
+            repository  => 'http://github.com/leto/math--gsl/tree/master'
+        },
+    },
+    build_requires => {
+        'Test::Most'      =>    '0.31',
+        'Test::Exception' =>    '0.21',
+        'Test::Class'     =>    '0.12',
+    },
+    requires => {
+        'PkgConfig'       => '0.07520',
+        'Scalar::Util'    => 0,
+        version           => '0.77',
+        perl              => '5.8.0',
+    },
+    sign                  => 0,
+    configure_requires => {
+        'PkgConfig'       => '0.07520',
+        'Module::Build'   => '0.38',
+    },
+    swig_source           => [
+                                map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,
+                             ],
+    ver2func => $ver2func,
+    current_version => $current_version,
+);
+
+$builder->add_build_element('swig');
+
+$builder->create_build_script();
+
+print "Have a great day!\n";
+
+
+### aux functions
+
+sub swig_version {
+    my $swig = GSLBuilder::swig_binary_name();
+
+    my $cmd = "$swig -version";
+    my $out = `$cmd`;
+
+    if ($?) {
+        die "Can't run [$cmd] : $out";
+    }
+    if ($out =~ /swig\s+version\s+([\d\.]+)\n/i) {
+        return $1;
+    } else {
+        die "Can't parse SWIG version from this output:\n$out";
+    }
+}
+
+sub modify_env {
+    $ENV{PKG_CONFIG_PATH} ||= '';
+
+    # TODO: What about windows and darwin?
+    my @guess = qw(/usr/pkgconfig /usr/lib/pkgconfig /usr/local/lib/pkgconfig
+    	           /usr/local/pkgconfig /usr/libdata/pkgconfig
+    	           /usr/local/libdata/pkgconfig /opt/pkgconfig);
+
+    $ENV{PKG_CONFIG_PATH} = join(":", @guess) . $ENV{PKG_CONFIG_PATH};
+}
 
 sub try_compile {
     my ($c, %args) = @_;
@@ -89,7 +254,7 @@ sub try_compile {
     return $ok;
 }
 
-sub try_cflags ($) {
+sub try_cflags {
     my ($ccflags) = @_;
     my $c_prog = "int main () { return 0; }\n";
     print "Checking if $Config{cc} supports \"$ccflags\"...";
@@ -101,205 +266,50 @@ sub try_cflags ($) {
     print "no\n";
     return '';
 }
-print "Checking for GSL..\n";
 
-chomp(my $gv         = qx{gsl-config --version});
-chomp(my $gsl_prefix = qx{gsl-config --prefix});
-chomp(my $gsl_cflags = qx{gsl-config --cflags});
-chomp(my $gsl_libs   = qx{gsl-config --libs});
+sub check_gsl_version {
+	my $gsl_version = shift;
 
-my $MIN_GSL_VERSION = "1.11";
+	my $MIN_GSL_VERSION = "1.11";
 
-my $path_system = catfile(qw/swig system.i/);
+	my $path_system = catfile(qw/swig system.i/);
 
-open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
+	open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
 
-my $current_version;
-if (defined $gv) {
-    if ($gv =~ m{\A(\d+(?:\.\d+)+)}) {
-        $current_version = $1;
-        my @current = split /\./, $current_version;
-        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
-        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
+	my $current_version;
 
-        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
-            printf "
-*** 
-*** You need to have GSL %s or greater installed. (You have $gv).
-*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
-            exit 1;
-        } else {
-            print "Found GSL $gv (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
-        }
-    } else {
-        print "
-*** 
-*** Can't parse GSL version $gv.
-*** Will continue and keep my fingers crossed for luck.
-";
-    }
-} else {
-    print "
-*** 
-*** Can't find GSL configuration info. Is GSL installed?
-*** Get GSL at http://www.gnu.org/software/gsl
-";
-    exit 1;
-}
+	if (defined $gsl_version) {
+	    if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
+	        $current_version = $1;
+	        my @current = split /\./, $current_version;
+	        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
+	        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
 
-close $fh or die "Could not close $path_system : $!";
-
-modify_env();
-
-print "Asking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n";
-my $gsl_pkgcfg = PkgConfig->find ('gsl');
-
-if ($gsl_pkgcfg->errmsg) {
-	die "PkgConfig failed with error message: " . $gsl_pkgcfg->errmsg;
-}
-
-my $pkgcfg_ver = $gsl_pkgcfg->pkg_version;
-
-warn "pkgconfig version $pkgcfg_ver != gsl-config $gv possible misconfiguration" if $pkgcfg_ver ne $gv;
-
-my $ccflags    = join " ", $gsl_pkgcfg->get_cflags;
-
-# In case GSL in installed in the system-wide directory, $ccflags is
-# empty (because pkg-config remove -I/usr/include), but swig needs it
-
-my $swig_flags = '';
-if ($ccflags =~ /^\s*$/ ) {
-    $swig_flags =' -I/usr/include';
-}
-
-$ccflags .= " $Config{ccflags}"; # we need this for some Linuxes
-
-## Swig produces a number of GCC warnings. Turn them off if we can.
-$ccflags .= try_cflags("-Wall");
-#$ccflags .= try_cflags("-Wno-strict-aliasing");
-$ccflags .= try_cflags("-Wno-unused-function");
-$ccflags .= try_cflags("-Wno-unused-value");
-$ccflags .= try_cflags("-Wno-unused-function");
-$ccflags .= try_cflags("-Wno-unused-variable");
-$ccflags .= try_cflags("-g");
-
-
-my $ldflags = join " ", $gsl_pkgcfg->get_ldflags;
-
-$swig_flags = join(" ", $gsl_pkgcfg->get_cflags) . " $swig_flags";
-
-if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
-    $ldflags .= " -L$1 -lperl";
-    # Should we check the 32-ness?
-    $swig_flags = '-DNEED_LONG';
-} elsif (GSLBuilder::is_darwin()) {
-    $ldflags .= ' -bundle -flat_namespace ';
-}
-
-if ($Config{archname} =~ /x86_64|amd64/ ) {
-    $ldflags .= ' -fPIC  -fno-omit-frame-pointer ';
-    $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
-}
-
-my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
-
-my $cleanup = qq{
-                 xs/*_wrap*.c core *.core swig/system.i swig/renames.i
-                 swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build pm
-                 lib/Math/GSL/[A-z]+/* blib *.so *.orig
-                 } . join " ", map { catfile( (qw/lib Math GSL/, "$_.pm") ) } @Subsystems;
-
-unless (GSLBuilder::is_darwin()) {
-    $ldflags = '-shared ' . $ldflags;
-}
-
-my $ver2func = do(catfile(qw/inc ver2func/));
-
-unless (GSLBuilder::is_release()) {
-    my $swig_ver = swig_version();
-    if ((split(/\./, $swig_ver))[0] < 2) {
-        print "
-***
-*** You need to have SWIG 2.X or greater installed. (You have $swig_ver).
-*** Get SWIG at http://www.swig.org/\n";
-        exit 1;
-    }
-}
-
-$ccflags = "$ccflags " . ($ENV{CC_FLAGS}||''),
-
-print "\nConfigured with:\n";
-print "  linker flags: $ldflags\n";
-print "  compiler flags: $ccflags\n";
-print "  swig flags: $swig_flags\n";
-
-my $builder = GSLBuilder->new(
-    module_name         => 'Math::GSL',
-    add_to_cleanup      => [ $cleanup ],
-    dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
-    dist_author         => 'Jonathan Leto <jonathan@leto.net>',
-    dist_version_from   => catfile(qw/lib Math GSL.pm/),
-    include_dirs	    => [],
-    extra_linker_flags  => $ldflags,
-    extra_compiler_flags=> $ccflags,
-    swig_flags          => $swig_flags,
-    license             => 'gpl',
-    meta_merge     => {
-        resources => {
-            repository  => 'http://github.com/leto/math--gsl/tree/master'
-        },
-    },
-    build_requires => {
-        'Test::Most'      =>    '0.31',
-        'Test::Exception' =>    '0.21',
-        'Test::Class'     =>    '0.12',
-    },
-    requires => {
-        'PkgConfig'       => '0.07520',
-        'Scalar::Util'    => 0,
-        version           => '0.77',
-        perl              => '5.8.0',
-    },
-    sign                  => 0,
-    configure_requires => {
-        'PkgConfig'       => '0.07520',
-        'Module::Build'   => '0.38',
-    },
-    swig_source           => [
-                                map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,
-                             ],
-    ver2func => $ver2func,
-    current_version => $current_version,
-);
-$builder->add_build_element('swig');
-
-$builder->create_build_script();
-print "Have a great day!\n";
-
-
-sub swig_version {
-    my $swig = GSLBuilder::swig_binary_name();
-
-    my $cmd = "$swig -version";
-    my $out = `$cmd`;
-
-    if ($?) {
-        die "Can't run [$cmd] : $out";
-    }
-    if ($out =~ /swig\s+version\s+([\d\.]+)\n/i) {
-        return $1;
-    } else {
-        die "Can't parse SWIG version from this output:\n$out";
-    }
-}
-
-sub modify_env {
-    $ENV{PKG_CONFIG_PATH} ||= '';
-
-    # TODO: What about windows and darwin?
-    my $guess =<<CARGOCULT;
-/usr/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/pkgconfig:/usr/libdata/pkgconfig:/usr/local/libdata/pkgconfig:/opt/pkgconfig:
-CARGOCULT
-
-    $ENV{PKG_CONFIG_PATH} = $guess . $ENV{PKG_CONFIG_PATH};
+	        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
+	            printf "
+	*** 
+	*** You need to have GSL %s or greater installed. (You have $gsl_version).
+	*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
+	            exit 0;
+	        } else {
+	            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
+	            return $current_version;
+	        }
+	    } else {
+	        print "
+	*** 
+	*** Can't parse GSL version $gsl_version.
+	*** Will continue and keep my fingers crossed for luck.
+	";
+		return undef;
+	    }
+	} else {
+	    print "
+	*** 
+	*** Can't find GSL configuration info. Is GSL installed?
+	*** Get GSL at http://www.gnu.org/software/gsl
+	";
+	    exit 0;
+	}
+	close $fh or die "Could not close $path_system : $!";
 }

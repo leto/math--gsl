@@ -26,49 +26,23 @@ use lib 'inc';
 use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
-BEGIN {
-    eval { require PkgConfig };
-    if ($@) {
-        print "\nI see that you are a CPANTester, you really should install PkgConfig !\n"
-            if $ENV{AUTOMATED_TESTING};
-        print "\nPkgConfig is currently needed to find GSL for the compilation of this module.\n";
-        exit 0;
-    }
-}
 
-print "\nChecking for GSL..\n";
 
-chomp(my $gsl_version = qx{gsl-config --version});
-chomp(my $gsl_prefix  = qx{gsl-config --prefix});
-chomp(my $gsl_cflags  = qx{gsl-config --cflags});
-chomp(my $gsl_libs    = qx{gsl-config --libs});
+our $MIN_GSL_VERSION = "1.11";
 
-my $current_version   = check_gsl_version($gsl_version);
+my $gsl_conf;
 
-modify_env();
+$gsl_conf = check_gsl_version();
+$gsl_conf = check_gsl_version_pkgconfig() if not $gsl_conf;
 
-print "\nAsking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n\n";
-my $gsl_pkgcfg = PkgConfig->find ('gsl');
-
-if ($gsl_pkgcfg->errmsg) {
-	print "PkgConfig failed with error message: " . $gsl_pkgcfg->errmsg;
-	exit 0;
-}
-
-my $pkgcfg_ver = $gsl_pkgcfg->pkg_version;
-
-warn "pkgconfig version $pkgcfg_ver != gsl-config $gsl_version possible misconfiguration" if $pkgcfg_ver ne $gsl_version;
-
-my $ccflags = join " ", $gsl_pkgcfg->get_cflags;
-my $ldflags = join " ", $gsl_pkgcfg->get_ldflags;
+my $ccflags = $gsl_conf->{gsl_cflags};
+my $ldflags = $gsl_conf->{gsl_libs};
 
 # In case GSL in installed in the system-wide directory, $ccflags is
 # empty (because pkg-config remove -I/usr/include), but swig needs it
 
 my $swig_flags = '';
-if ($ccflags =~ /^\s*$/ ) {
-    $swig_flags =' -I/usr/include';
-}
+$swig_flags = ' -I/usr/include' if $ccflags =~ /^\s*$/;
 
 $ccflags .= " $Config{ccflags}"; # we need this for some Linuxes
 
@@ -81,7 +55,7 @@ $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 $ccflags .= try_cflags("-g");
 
-$swig_flags = join(" ", $gsl_pkgcfg->get_cflags) . " $swig_flags";
+$swig_flags = "$gsl_conf->{gsl_cflags} $swig_flags";
 
 if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";
@@ -166,7 +140,7 @@ my $builder = GSLBuilder->new(
                                 map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,
                              ],
     ver2func => $ver2func,
-    current_version => $current_version,
+    current_version => $gsl_conf->{gsl_version},
 );
 
 $builder->add_build_element('swig');
@@ -267,10 +241,55 @@ sub try_cflags {
     return '';
 }
 
-sub check_gsl_version {
-	my $gsl_version = shift;
+sub check_gsl_version_pkgconfig {
 
-	my $MIN_GSL_VERSION = "1.11";
+    eval { require PkgConfig };
+    if ($@) {
+        print "\nI see that you are a CPANTester, you really should install PkgConfig !\n"
+            if $ENV{AUTOMATED_TESTING};
+        print "\nPkgConfig is currently needed to find GSL for the compilation of this module.\n";
+        exit 0;
+    }
+
+	modify_env();
+	print "\nAsking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n\n";
+	my $gsl_pkgcfg = PkgConfig->find ('gsl');
+
+	if ($gsl_pkgcfg->errmsg) {
+		my $errmsg = $gsl_pkgcfg->errmsg;
+		print "
+***
+*** PkgConfig failed with error message: $errmsg
+*** Probably you need to install GSL?
+*** Get GSL at http://www.gnu.org/software/gsl\n";
+		exit 0;
+	}
+
+	my $gsl_version = $gsl_pkgcfg->pkg_version;
+	if (GSLBuilder::cmp_versions($gsl_version, $MIN_GSL_VERSION) == -1) {
+	            printf "
+*** 
+*** You need to have GSL %s or greater installed. (You have $gsl_version).
+*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
+	            exit 0;
+	        }
+
+	return {
+		gsl_version => $gsl_version,
+		gsl_prefix  => undef,
+		gsl_libs    => join (" ", $gsl_pkgcfg->get_ldflags),
+		gsl_cflags  => join (" ", $gsl_pkgcfg->get_cflags),
+	};
+}
+
+sub check_gsl_version {
+
+	print "\nChecking for GSL using gsl-config\n";
+
+	chomp(my $gsl_version = qx{gsl-config --version});
+	chomp(my $gsl_prefix  = qx{gsl-config --prefix});
+	chomp(my $gsl_cflags  = qx{gsl-config --cflags});
+	chomp(my $gsl_libs    = qx{gsl-config --libs});
 
 	my $path_system = catfile(qw/swig system.i/);
 
@@ -287,29 +306,34 @@ sub check_gsl_version {
 
 	        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
 	            printf "
-	*** 
-	*** You need to have GSL %s or greater installed. (You have $gsl_version).
-	*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
+*** 
+*** You need to have GSL %s or greater installed. (You have $gsl_version).
+*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
 	            exit 0;
 	        } else {
 	            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
-	            return $current_version;
+	            return {
+	            	gsl_version => $current_version,
+	            	gsl_prefix  => $gsl_prefix,
+	            	gsl_libs    => $gsl_libs,
+	            	gsl_cflags  => $gsl_cflags,
+	            };
 	        }
 	    } else {
 	        print "
-	*** 
-	*** Can't parse GSL version $gsl_version.
-	*** Will continue and keep my fingers crossed for luck.
+*** 
+*** Can't parse GSL version $gsl_version.
+*** Trying with PkgConfig.
 	";
 		return undef;
 	    }
 	} else {
 	    print "
-	*** 
-	*** Can't find GSL configuration info. Is GSL installed?
-	*** Get GSL at http://www.gnu.org/software/gsl
+*** 
+*** Can't find GSL with gsl-config. 
+*** Trying with PkgConfig.
 	";
-	    exit 0;
+	    return undef;
 	}
 	close $fh or die "Could not close $path_system : $!";
 }

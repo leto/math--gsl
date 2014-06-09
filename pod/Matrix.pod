@@ -453,7 +453,6 @@ sub as_vector($)
 
 }
 
-
 =head3 get_elem()
 
 Returns an element of a matrix.
@@ -466,8 +465,6 @@ B<NOTE:> just like any other method on this module, rows and arrays start
 with indice 0.
 
 =cut
-
-sub element { get_elem(@_); } # compatibility with Math::MatrixReal
 
 sub get_elem {
     my ($self, $row, $col) = @_;
@@ -626,8 +623,6 @@ sub zero # brrr!
 
 =head3 set_elem() 
 
-=head3 assign()
-
 Sets a specific value in the matrix.
 
     my $matrix = Math::GSL::Matrix->new(2,2);
@@ -641,9 +636,6 @@ B<NOTE:> just like any other method on this module, rows and arrays start
 with indice 0.
 
 =cut
-
-# added this to add compatibility with Math::RealMatrix. Useful.
-sub assign { set_elem(@_); }
 
 sub set_elem {
     my ($self, $row, $col, $value) = @_;

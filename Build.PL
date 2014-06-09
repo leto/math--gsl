@@ -126,14 +126,14 @@ my $builder = GSLBuilder->new(
         'Test::Class'     =>    '0.12',
     },
     requires => {
-        'PkgConfig'       => '0.07520',
+        'PkgConfig'       => '0.07720',
         'Scalar::Util'    => 0,
         version           => '0.77',
         perl              => '5.8.0',
     },
     sign                  => 0,
     configure_requires => {
-        'PkgConfig'       => '0.07520',
+        'PkgConfig'       => '0.07720',
         'Module::Build'   => '0.38',
     },
     swig_source           => [
@@ -276,7 +276,7 @@ sub check_gsl_version_pkgconfig {
 
 	return {
 		gsl_version => $gsl_version,
-		gsl_prefix  => undef,
+		gsl_prefix  => $gsl_pkgcfg->get_var("prefix"),
 		gsl_libs    => join (" ", $gsl_pkgcfg->get_ldflags),
 		gsl_cflags  => join (" ", $gsl_pkgcfg->get_cflags),
 	};

@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+    - Fixed generated C files with wrong GSL version numbers.
     - Refactored Build.PL in order to use either gsl-config or PkgConfig.
     - Change Build.PL to return 0 when GSL library not found.
     - Use PkgConfig instead of ExtUtils::PkgConfig.

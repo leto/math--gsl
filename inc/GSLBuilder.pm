@@ -159,7 +159,7 @@ sub process_swig {
 
     # don't bother with swig if this is a CPAN release
     $self->compile_swig($main_swig_file, $c_file, $ver)
-        unless($self->up_to_date([$main_swig_file, @deps], $c_file));
+        unless $self->up_to_date([$main_swig_file, @deps], $c_file);
 }
 
 sub swig_binary_name {
@@ -208,6 +208,23 @@ sub compile_swig {
 		             '-perl5', @swig_flags, $file)
 	    or die "error : $! while building ( @swig_flags ) $c_file in $gsldir from '$file'";
     move($from, "$from.$ver");
+
+    {
+      ## updates the version number. 
+      ## all files are being processed right now.
+      ## later versions might use a fixed list of candidate files.
+      undef $/;
+      open my $in, "<", $c_file or die "Can't open file $c_file: $!";
+      my $contents = <$in>;
+      close $in;
+
+      $contents =~ s{("GSL_VERSION", TRUE \| 0x2 \| GV_ADDMULTI\);[\s\n]*sv_setsv\(sv, SWIG_FromCharPtr\(")\d\.\d+}
+                    {$1$ver};
+
+      open my $out, ">", $c_file or die "Can't overwrite file $c_file: $!";
+      print $out $contents;
+      close $out;
+    }
 
     if ($p->{current_version} eq $ver) {
         print "Copying from: $from.$ver, to: $to; it makes the CPAN indexer happy.\n";

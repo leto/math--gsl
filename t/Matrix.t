@@ -741,14 +741,15 @@ sub GSL_MATRIX_EIGENPAIR_RT45044 : Tests(1) {
 }
 
 sub MATRIX_MULTIPLICATION_OVERLOAD : Tests {
-    my $A = Math::GSL::Matrix->new(2,2)
+    my $A = Math::GSL::Matrix->new(3,2)
                              ->set_row(0, [1,3] )
-                             ->set_row(1, [4, 2] );
+                             ->set_row(1, [4,2] )
+                             ->set_row(2, [6,1] );
     my $B = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [2,5] )
                              ->set_row(1, [1, 3] );
     my $C = $A * $B;
-    ok_similar([ $C->as_list ], [5, 14, 10, 26 ]);
+    ok_similar([ $C->as_list ], [5, 14, 10, 26, 13, 33 ]);
 }
 
 sub MATRIX_IS_SQUARE : Tests(2) {

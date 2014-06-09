@@ -59,3 +59,4 @@ sub GSL_QRNG_GET : Tests {
 }
 
 Test::Class->runtests;
+

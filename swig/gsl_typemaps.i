@@ -602,7 +602,7 @@ void array_wrapper_free(array_wrapper * daw){
 
 
 %typemap(in) (const gsl_qrng * q, double x[]) (void *argp = 0, int res) {
-    res = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_gsl_qrng, 0 |  0 );
+    res = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_gsl_qrng, 0 );
     if (!SWIG_IsOK(res)) {
       SWIG_exception_fail(SWIG_ArgError(res), "in method '" "$symname" "', argument " "1"" of type '" "gsl_qrng *""'"); 
     }

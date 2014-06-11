@@ -599,3 +599,26 @@ void array_wrapper_free(array_wrapper * daw){
     XSRETURN(GSL_NAN);
 }
 */
+
+
+%typemap(in) (const gsl_qrng * q, double x[]) (void *argp = 0, int res) {
+    res = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_gsl_qrng, 0 |  0 );
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "$symname" "', argument " "1"" of type '" "gsl_qrng *""'"); 
+    }
+    $1 = (gsl_qrng*) argp;
+	$2 = (double*) calloc($1->dimension, sizeof(double));	
+}
+
+%typemap(argout) (const gsl_qrng * q, double x[])  {
+	int ii;
+	EXTEND(sp, $1->dimension);
+
+	for (ii = 0; ii < $1->dimension; ++ii) {
+		ST(argvi) = sv_newmortal();
+		sv_setnv(ST(argvi),(NV) *($2+ii));
+		argvi++;
+	}
+	free($2);
+}
+

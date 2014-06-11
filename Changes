@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - Fixed QRNG code that was failing on some machines.
+
 =head1 v0.31 - June 2014
     - Fixed Matrix multiplication that was forcing square matrices.
 

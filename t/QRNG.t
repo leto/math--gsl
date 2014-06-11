@@ -49,6 +49,7 @@ sub GSL_QRNG_NAME : Tests {
 
 sub GSL_QRNG_GET : Tests {
     my $self = shift;
+
     my ($status, @values)= gsl_qrng_get($self->{sobol});
 
     is ($status, $GSL_SUCCESS);

@@ -1,6 +1,6 @@
 package Math::GSL::QRNG::Test;
 use base q{Test::Class};
-use Test::More tests => 10;
+use Test::More tests => 11;
 use Math::GSL::QRNG  qw/:all/;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::Errno qw/:all/;
@@ -32,7 +32,6 @@ sub GSL_QRNG_STATE_SIZE : Tests {
 
     ok( defined $size, "size is defined");
     cmp_ok($size,'>',0 , 'size is positive and non-zero');
-
 }
 
 sub GSL_QRNG_CLONE : Tests {
@@ -50,13 +49,18 @@ sub GSL_QRNG_NAME : Tests {
 sub GSL_QRNG_GET : Tests {
     my $self = shift;
 
-    my ($status, @values)= gsl_qrng_get($self->{sobol});
+    my ($status, @values) = gsl_qrng_get($self->{sobol});
 
     is ($status, $GSL_SUCCESS);
     ok_similar( [ 0.5, 0.5 ], \@values, 'gsl_qrng_get returns multiple values' );
 
-    ($status, @values)= gsl_qrng_get($self->{sobol});
+    ($status, @values) = gsl_qrng_get($self->{sobol});
     ok_similar( [ 0.75, 0.25 ], \@values, 'gsl_qrng_get returns correct values for sobol' );
+
+    # Let's try with a bigger size generator
+    my $tmp = gsl_qrng_alloc($gsl_qrng_sobol, 4);
+    ($status, @values) = gsl_qrng_get($tmp);
+    is (scalar(@values), 4, 'gsl_qrng_get returns correct number of samples');
 }
 
 Test::Class->runtests;

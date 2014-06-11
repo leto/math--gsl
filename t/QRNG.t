@@ -1,8 +1,7 @@
 package Math::GSL::QRNG::Test;
 use base q{Test::Class};
-use Test::More tests => 18;
+use Test::More tests => 24;
 use Math::GSL::QRNG  qw/:all/;
-#use Math::GSL::QRNG::Sobol;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
@@ -83,6 +82,30 @@ sub GSL_QRNG_SOBOL : Tests {
 
     @state = $clone->get();
     ok_similar( [ 0.75, 0.25 ], \@state, 'clone clones the qrng status' );    
+}
+
+sub GSL_QRNG_HALTON : Tests {
+    my $halton = Math::GSL::QRNG::Halton->new(2);
+    isa_ok($halton, "Math::GSL::QRNG::Halton");
+
+    my @state = $halton->get();
+    ok_similar( [0.5, 0.333333333], \@state, "get returns correct number of samples");
+}
+
+sub GSL_QRNG_REVERSE_HALTON : Tests {
+    my $rhalton = Math::GSL::QRNG::ReverseHalton->new(2);
+    isa_ok($rhalton, "Math::GSL::QRNG::ReverseHalton");
+
+    my @state = $rhalton->get();
+    ok_similar( [0.5, 0.666666666], \@state, "get returns correct number of samples");
+}
+
+sub GSL_QRNG_NIEDERREITER2 : Tests {
+    my $niederreiter2 = Math::GSL::QRNG::Niederreiter2->new(2);
+    isa_ok($niederreiter2, "Math::GSL::QRNG::Niederreiter2");
+
+    my @state = $niederreiter2->get();
+    ok_similar( [0, 0], \@state, "get returns correct number of samples");
 }
 
 Test::Class->runtests;

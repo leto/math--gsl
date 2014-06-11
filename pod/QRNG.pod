@@ -43,6 +43,12 @@ different subclasses, namely:
 
 =item Math::GSL::QRNG::Sobol
 
+=item Math::GSL::QRNG::Niederreiter2
+
+=item Math::GSL::QRNG::Halton
+
+=item Math::GSL::QRNG::ReverseHalton
+
 =back
 
 =cut
@@ -195,6 +201,49 @@ sub new {
 
 	my $self = bless {}, $class;
 	$self->SUPER::_init($Math::GSL::QRNG::gsl_qrng_sobol, $dimension);
+	return $self;
+}
+
+# gsl_qrng_halton
+
+package Math::GSL::QRNG::Halton;
+use parent 'Math::GSL::QRNG';
+sub new {
+	my ($class, $dimension) = @_;
+
+	croak (__PACKAGE__.'::new($d) - supported dimensions are positive up to 1229.')
+		if $dimension < 1 or $dimension > 1229;
+
+	my $self = bless {}, $class;
+	$self->SUPER::_init($Math::GSL::QRNG::gsl_qrng_halton, $dimension);
+	return $self;
+}
+
+# gsl_qrng_reversehalton
+package Math::GSL::QRNG::ReverseHalton;
+use parent 'Math::GSL::QRNG';
+sub new {
+	my ($class, $dimension) = @_;
+
+	croak (__PACKAGE__.'::new($d) - supported dimensions are positive up to 1229.')
+		if $dimension < 1 or $dimension > 1229;
+
+	my $self = bless {}, $class;
+	$self->SUPER::_init($Math::GSL::QRNG::gsl_qrng_reversehalton, $dimension);
+	return $self;
+}
+
+# gsl_qrng_niederreiter_2
+package Math::GSL::QRNG::Niederreiter2;
+use parent 'Math::GSL::QRNG';
+sub new {
+	my ($class, $dimension) = @_;
+
+	croak (__PACKAGE__.'::new($d) - supported dimensions are positive up to 12.')
+		if $dimension < 1 or $dimension > 12;
+
+	my $self = bless {}, $class;
+	$self->SUPER::_init($Math::GSL::QRNG::gsl_qrng_niederreiter_2, $dimension);
 	return $self;
 }
 

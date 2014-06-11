@@ -1,24 +1,127 @@
 %perlcode %{
 
-@EXPORT_OK = qw($gsl_qrng_niederreiter_2 $gsl_qrng_sobol $gsl_qrng_halton $gsl_qrng_reversehalton
+use strict;
+use warnings;
+use Carp qw/croak/;
+use Math::GSL::Errno qw/$GSL_SUCCESS/;
+
+our @EXPORT_OK = qw($gsl_qrng_niederreiter_2 $gsl_qrng_sobol
+                    $gsl_qrng_halton $gsl_qrng_reversehalton
                 gsl_qrng_alloc gsl_qrng_memcpy gsl_qrng_clone
                 gsl_qrng_free  gsl_qrng_init gsl_qrng_name 
                 gsl_qrng_size gsl_qrng_state gsl_qrng_get
             );
-%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-
-__END__
+=encoding UTF-8
 
 =head1 NAME
 
-Math::GSL::QRNG - Quasi-random number generator
+Math::GSL::QRNG - Quasi-random number generators
 
 =head1 SYNOPSIS
 
-use Math::GSL::QRNG qw/:all/;
+	# use OO approach
+	use Math::GSL::QRNG;
+
+	my $QRNG = Math::GSL::QRNG::Sobol->new(2);
+	my @samples = $QRNG->get();
+
+	# use GSL interface
+    use Math::GSL::QRNG qw/:all/;
 
 =head1 DESCRIPTION
+
+This module interfaces with GNU Scientific Library quasi-random number generators (QRNG).
+
+=head1 OO Interface
+
+The OO Interface described in this documentation is available to all
+different subclasses, namely:
+
+=over
+
+=item Math::GSL::QRNG::Sobol
+
+=back
+
+=cut
+
+sub _init {
+	my ($self, $qrng, $dimension) = @_;
+	$self->{qrng} = gsl_qrng_alloc($qrng, $dimension);
+	return $self;
+}
+
+=head2 reinit
+
+Reinitializes the generator to its starting point. Note that quasi-random
+sequences do not use a seed and always produce the same set of values.
+
+	$qrng->reinit();
+
+=cut
+
+sub reinit {
+	my $self = shift;
+	gsl_qrng_init($self->{qrng});
+}
+
+=head2 get
+
+Retrieves the next point from the sequence generator. 
+Returns C<undef> on error.
+
+	my @points = $qrng->get();
+
+=cut
+
+sub get {
+	my $self = shift;
+	my ($status, @values) = gsl_qrng_get($self->{qrng});
+	return $status == $GSL_SUCCESS ? @values : undef;
+}
+
+=head2 name 
+
+Retrieves the QRNG name.
+
+    my $name = $qrng->name();
+
+=cut
+
+sub name {
+	my $self = shift;
+	return gsl_qrng_name($self->{qrng});
+}
+
+=head2 state_size
+
+Returns the size of the QRNG state.
+
+=cut
+
+sub state_size {
+	my $self = shift;
+	return gsl_qrng_size($self->{qrng});
+}
+
+=head2 clone
+
+Returns an exact copy of the current QRNG.
+
+=cut
+
+sub clone {
+	my $self = shift;
+	my $new = { qrng => gsl_qrng_clone($self->{qrng})};
+	return bless $new, ref($self);
+}
+
+### gsl_qrng_state => TODO
+### gsl_qrng_memcpy => ignore?
+
+=head1 GSL API
 
 Here is a list of all the functions included in this module :
 
@@ -68,15 +171,35 @@ For more informations on the functions, we refer you to the GSL offcial document
 
 =head1 AUTHORS
 
-Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+Jonathan "Duke" Leto <jonathan@leto.net>
+Thierry Moisan <thierry.moisan@gmail.com>
+Alberto Simões <ambs@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
+
+
+package Math::GSL::QRNG::Sobol;
+use parent 'Math::GSL::QRNG';
+sub new {
+	my ($class, $dimension) = @_;
+
+	croak (__PACKAGE__.'::new($d) - supported dimensions are positive up to 40.')
+		if $dimension < 1 or $dimension > 40;
+
+	my $self = bless {}, $class;
+	$self->SUPER::_init($Math::GSL::QRNG::gsl_qrng_sobol, $dimension);
+	return $self;
+}
+
+__END__
+
+
 %}
 

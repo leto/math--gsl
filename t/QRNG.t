@@ -1,7 +1,8 @@
 package Math::GSL::QRNG::Test;
 use base q{Test::Class};
-use Test::More tests => 11;
+use Test::More tests => 18;
 use Math::GSL::QRNG  qw/:all/;
+#use Math::GSL::QRNG::Sobol;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Data::Dumper;
@@ -61,6 +62,27 @@ sub GSL_QRNG_GET : Tests {
     my $tmp = gsl_qrng_alloc($gsl_qrng_sobol, 4);
     ($status, @values) = gsl_qrng_get($tmp);
     is (scalar(@values), 4, 'gsl_qrng_get returns correct number of samples');
+}
+
+sub GSL_QRNG_SOBOL : Tests {
+    my $sobol = Math::GSL::QRNG::Sobol->new(2);
+    isa_ok($sobol, "Math::GSL::QRNG::Sobol");
+    isa_ok($sobol->{qrng}, "Math::GSL::QRNG");
+
+    my @state = $sobol->get();
+    ok_similar( [0.5, 0.5], \@state, "get returns correct number of samples");
+
+    $sobol->reinit();
+    @state = $sobol->get();
+    ok_similar( [0.5, 0.5], \@state, "QRNG was reinitted");
+
+    is($sobol->name(), "sobol", "QRNG name acessible");
+
+    my $clone = $sobol->clone();
+    isa_ok($clone, "Math::GSL::QRNG::Sobol");
+
+    @state = $clone->get();
+    ok_similar( [ 0.75, 0.25 ], \@state, 'clone clones the qrng status' );    
 }
 
 Test::Class->runtests;

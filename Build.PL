@@ -130,6 +130,7 @@ my $builder = GSLBuilder->new(
         'Scalar::Util'    => 0,
         version           => '0.77',
         perl              => '5.8.0',
+        parent            => 0,
     },
     sign                  => 0,
     configure_requires => {

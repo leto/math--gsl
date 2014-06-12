@@ -53,6 +53,7 @@ $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
+$ccflags .= try_cflags("-Wno-gnu");
 $ccflags .= try_cflags("-g");
 
 $swig_flags = "$gsl_conf->{gsl_cflags} $swig_flags";

@@ -263,7 +263,7 @@ sub link_c {
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags});
     my @shrp = $self->split_like_shell($cf->{shrpenv});
-    my @ld = $self->split_like_shell($cf->{ld}) || "$Config{cc}";
+    my @ld = $self->split_like_shell($cf->{ld} || $Config{cc});
 
     # Strip binaries if we are compiling on windows
     push @ld, "-s" if (is_windows() && $Config{cc} =~ /\bgcc\b/i);

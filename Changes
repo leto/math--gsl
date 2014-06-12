@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+    - Correctly split the compiler name.
     - Added OO code to the QRNG module.
     - Fixed QRNG code that was failing on some machines.
 

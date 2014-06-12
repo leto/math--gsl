@@ -316,7 +316,7 @@ sub compile_c {
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags, @extra_compiler_flags, );
 
   my @cc = $self->split_like_shell($cf->{cc});
-  @cc = "$Config{cc}" unless @cc;
+  @cc = $self->split_like_shell($Config{cc}) unless @cc;
 
   $self->do_system(@cc, @flags, '-o', $obj_file, $file)
     or die "error building $Config{_o} file from '$file'";

@@ -759,6 +759,80 @@ sub det($)
     return gsl_linalg_LU_det($LU->raw, $s );
 }
 
+=head3 write
+
+Saves B<ONE> matrix into a file using the GSL binary format.
+
+     $matrix->save("matrix.dat");
+
+Note that this method always overwrite the file if it exists. In case more
+than one GSL object will be written to the file,  please use the C<gsl_fopen>,
+C<gsl_matrix_fwrite> and C<gsl_fclose> manually. Future versions might include
+helper for this task.
+
+B<NOTE>: in order to allow the read of one of these files without needing
+to know in advance the size of the matrix, an horizontal matrix with two 
+elements is saved in the beginning of the file with the number of rows
+and columns of the saved matrix.
+
+=cut
+
+sub write
+{
+	my ($self, $filename) = @_;
+
+	my $fh = gsl_fopen($filename, "w");
+	croak __PACKAGE__."::write - error opening file $filename for writing" unless $fh;
+
+    # create a temporary matrix with the main matrix dimensions
+    my $dim = gsl_matrix_alloc(1, 2);
+    my ($rows, $cols) = $self->dim;
+    gsl_matrix_set($dim, 0, 0, $rows);
+    gsl_matrix_set($dim, 0, 1, $cols);
+
+    my $err = gsl_matrix_fwrite($fh, $dim);
+    croak __PACKAGE__."::write - error writing matrix" if $err;
+
+    gsl_matrix_free($dim);
+
+	$err = gsl_matrix_fwrite($fh, $self->raw);
+	croak __PACKAGE__."::write - error writing matrix" if $err;
+
+	gsl_fclose($fh);
+}
+
+=head3 read
+
+Loads a matrix from a GSL binary file (saved using the C<save> method, 
+as it stores some extra information on the file).
+
+    my $matrix = Math::GSL::Matrix->read("matrix.dat");
+
+=cut
+
+sub read
+{
+    my ($class, $filename) = @_;
+    croak __PACKAGE__."::read - $filename does not exist" unless -f $filename;
+
+    my $fh = gsl_fopen($filename, "r");
+    croak __PACKAGE__."::read - error opening file $filename for reading" unless $fh;
+
+    my $dim = gsl_matrix_alloc(1, 2);
+    my $err = gsl_matrix_fread($fh, $dim);
+    croak __PACKAGE__."::read - error reading matrix" if $err;
+
+    my $m = gsl_matrix_alloc(gsl_matrix_get($dim, 0, 0),
+                             gsl_matrix_get($dim, 0, 1));
+    my $err = gsl_matrix_fread($fh, $m);
+    croak __PACKAGE__."::read - error reading matrix" if $err;
+
+    gsl_matrix_free($dim);
+
+    gsl_fclose($fh);
+    return Math::GSL::Matrix->new($m);
+}
+
 =head3 lndet() 
 
 Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.

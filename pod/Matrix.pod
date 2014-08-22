@@ -779,10 +779,10 @@ and columns of the saved matrix.
 
 sub write
 {
-	my ($self, $filename) = @_;
+    my ($self, $filename) = @_;
 
-	my $fh = gsl_fopen($filename, "w");
-	croak __PACKAGE__."::write - error opening file $filename for writing" unless $fh;
+    my $fh = gsl_fopen($filename, "w");
+    croak __PACKAGE__."::write - error opening file $filename for writing" unless $fh;
 
     # create a temporary matrix with the main matrix dimensions
     my $dim = gsl_matrix_alloc(1, 2);
@@ -795,10 +795,10 @@ sub write
 
     gsl_matrix_free($dim);
 
-	$err = gsl_matrix_fwrite($fh, $self->raw);
-	croak __PACKAGE__."::write - error writing matrix" if $err;
+    $err = gsl_matrix_fwrite($fh, $self->raw);
+    croak __PACKAGE__."::write - error writing matrix" if $err;
 
-	gsl_fclose($fh);
+    gsl_fclose($fh);
 }
 
 =head3 read

@@ -1,6 +1,6 @@
 package Math::GSL::RNG::Test;
 use base q{Test::Class};
-use Test::More tests => 36;
+use Test::More tests => 38;
 use Math::GSL          qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Randist qw/:all/;
@@ -77,6 +77,14 @@ sub GSL_RNG_GET : Tests(2) {
     ok( defined $x, '$rng->get' );
     my @values = $rng->get(10);
     ok( @values == 10, 'got 10 values from get->(10)');
+}
+
+sub GSL_RNG_CHOOSE : Tests(2) {
+    my $rng = Math::GSL::RNG->new;
+    my @in = (qw/aaa bbb ccc/);
+    my @out = $rng->choose(1, @in);
+    is scalar(@out), 1, "output array has correct size";
+    ok grep( { $_ eq $out[0] } @in), "element is ok";
 }
 
 sub GSL_RNG_SHUFFLE : Tests(4) {

@@ -1,4 +1,7 @@
 %perlcode %{
+
+use Carp;
+
 @EXPORT_OK = qw/
                  gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
@@ -146,6 +149,30 @@ sub shuffle {
     my $output = Math::GSL::Randist::our_gsl_ran_shuffle($self->raw,
                                                          [0..$nr_elements],
                                                          $nr_elements + 1);
+    return map { $array[$_] } @$output;
+}
+
+=head2 choose()
+
+   my @array = $rng->choose(4, @other_array);
+
+This function fills the destination array with k objects taken
+randomly from the n elements of the array argument.  The objects are
+sampled without replacement, thus each object can only appear once in
+destination array. It is required that k be less than or equal to n.
+
+=cut
+
+sub choose {
+    my ($self, $k, @array) = @_;
+
+    my $nr_elements = $#array;
+    croak __PACKAGE__, "- choose method called with k greater than number of elements in the array"
+      if $k > $nr_elements + 1;
+
+    my $output = Math::GSL::Randist::our_gsl_ran_choose($self->raw, $k,
+                                                        [0..$nr_elements],
+                                                        $nr_elements + 1);
     return map { $array[$_] } @$output;
 }
 

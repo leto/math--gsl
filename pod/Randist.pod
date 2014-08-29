@@ -727,7 +727,7 @@ for the Engineer (1956).
 
 =item gsl_ran_shuffle 
 
-* Not yet implemented *
+Please use the C<shuffle> method in the L<GSL::RNG> module.
 
 =item gsl_ran_choose
 

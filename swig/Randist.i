@@ -8,6 +8,7 @@ void gsl_ran_dir_2d_trig_method (const gsl_rng * r, double *OUTPUT, double *OUTP
 void gsl_ran_dir_3d (const gsl_rng * r, double *OUTPUT, double *OUTPUT, double *OUTPUT);
 void gsl_ran_bivariate_gaussian (const gsl_rng * r, double sigma_x, double sigma_y, double rho, double *OUTPUT, double *OUTPUT);
 
+
 %typemap(in) void * {
     AV *tempav;
     I32 len;
@@ -65,6 +66,7 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
 
 %{
     #include "gsl/gsl_randist.h"
+    #include "../c/Randist.c"
 
     /* create wrappers for multinormial and dirichlet */
     
@@ -117,6 +119,7 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
 
 
 %include "gsl/gsl_randist.h"
+%include "../c/Randist.h"
 %include "../pod/Randist.pod"
 
 

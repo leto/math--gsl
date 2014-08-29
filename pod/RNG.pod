@@ -177,6 +177,29 @@ sub choose {
 }
 
 
+=head2 sample()
+
+   my @array = $rng->sample(4, @other_array);
+
+This method is like C<choose> but samples k items from the original
+array of n items src with replacement, so the same object can appear
+more than once in the output sequence dest. There is no requirement
+that k be less than n in this case.
+
+=cut
+
+sub sample {
+    my ($self, $k, @array) = @_;
+
+    my $nr_elements = $#array;
+
+    my $output = Math::GSL::Randist::our_gsl_ran_sample($self->raw, $k,
+                                                        [0..$nr_elements],
+                                                        $nr_elements + 1);
+    return map { $array[$_] } @$output;
+}
+
+
 __END__
 
 

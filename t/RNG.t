@@ -1,6 +1,6 @@
 package Math::GSL::RNG::Test;
 use base q{Test::Class};
-use Test::More tests => 38;
+use Test::More tests => 43;
 use Math::GSL          qw/:all/;
 use Math::GSL::RNG     qw/:all/;
 use Math::GSL::Randist qw/:all/;
@@ -87,6 +87,16 @@ sub GSL_RNG_CHOOSE : Tests(2) {
     ok grep( { $_ eq $out[0] } @in), "element is ok";
 }
 
+sub GSL_RNG_SAMPLE : Tests(5) {
+    my $rng = Math::GSL::RNG->new;
+    my @in = (qw/aaa bbb ccc/);
+    my @out = $rng->sample(4, @in);
+    is scalar(@out), 4, "output array has correct size";
+    for my $i (0..3) {
+        ok grep( { $_ eq $out[$i] } @in), "element is ok";
+    }
+}
+
 sub GSL_RNG_SHUFFLE : Tests(4) {
     my $rng = Math::GSL::RNG->new;
     my @in = (qw/aaa bbb ccc/);
@@ -131,7 +141,7 @@ sub GSL_RNG_NO_MORE_SECRETS : Tests {
 
     # throw away the first $k values
     map {  $rng1->get && $rng2->get } (1..$k);
-    
+
     my ($n1,$n2) = ( $rng1->get , $rng2->get ); 
     ok( $n1 == $n2 , "parrallel state test: $n1 ?= $n2" );
 }

@@ -857,3 +857,5 @@ xt/01-portability-files.t
 META.json
 c/Matrix.c
 c/Matrix.h
+c/Randist.c
+c/Randist.h

@@ -31,6 +31,11 @@ sub subsystems {
     /;
 }
 
+sub c_modules {
+    my @c = qw/Matrix Randist/;
+    return +{ map {($_ => 1)} @c };
+}
+
 sub process_swig_files {
     my $self = shift;
     my $p = $self->{properties};
@@ -43,7 +48,8 @@ sub process_swig_files {
     }
 
     my $binding_ver = $self->get_binding_version;
-    print "Process XS files version $binding_ver\n";
+    my $current_version = $self->{properties}->{current_version};
+    print "Process XS files version $binding_ver (GSL version $current_version)\n";
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
     }
@@ -158,7 +164,7 @@ sub process_swig {
 
     # don't bother with swig if this is a CPAN release
     $self->compile_swig($main_swig_file, $c_file, $ver)
-        unless($self->up_to_date([$main_swig_file, @deps], $c_file));
+        unless $self->up_to_date([$main_swig_file, @deps], $c_file);
 }
 
 sub swig_binary_name {
@@ -208,6 +214,23 @@ sub compile_swig {
 	    or die "error : $! while building ( @swig_flags ) $c_file in $gsldir from '$file'";
     move($from, "$from.$ver");
 
+    {
+      ## updates the version number. 
+      ## all files are being processed right now.
+      ## later versions might use a fixed list of candidate files.
+      undef $/;
+      open my $in, "<", $c_file or die "Can't open file $c_file: $!";
+      my $contents = <$in>;
+      close $in;
+
+      $contents =~ s{("GSL_VERSION", TRUE \| 0x2 \| GV_ADDMULTI\);[\s\n]*sv_setsv\(sv, SWIG_FromCharPtr\(")\d\.\d+}
+                    {$1$ver};
+
+      open my $out, ">", $c_file or die "Can't overwrite file $c_file: $!";
+      print $out $contents;
+      close $out;
+    }
+
     if ($p->{current_version} eq $ver) {
         print "Copying from: $from.$ver, to: $to; it makes the CPAN indexer happy.\n";
         copy("$from.$ver", $to);
@@ -245,7 +268,7 @@ sub link_c {
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags});
     my @shrp = $self->split_like_shell($cf->{shrpenv});
-    my @ld = $self->split_like_shell($cf->{ld}) || "$Config{cc}";
+    my @ld = $self->split_like_shell($cf->{ld} || $Config{cc});
 
     # Strip binaries if we are compiling on windows
     push @ld, "-s" if (is_windows() && $Config{cc} =~ /\bgcc\b/i);
@@ -298,12 +321,22 @@ sub compile_c {
   my @flags = (@include_dirs, @cccdlflags, '-c', @ccflags, @extra_compiler_flags, );
 
   my @cc = $self->split_like_shell($cf->{cc});
-  @cc = "$Config{cc}" unless @cc;
+  @cc = $self->split_like_shell($Config{cc}) unless @cc;
 
   $self->do_system(@cc, @flags, '-o', $obj_file, $file)
     or die "error building $Config{_o} file from '$file'";
 
   return $obj_file;
+}
+
+# Propagate version numbers to all modules
+sub get_metadata {
+    my ($self, @args) = @_;
+    my $data = $self->SUPER::get_metadata(@args);
+    for my $mod (values %{$data->{provides}}) {
+        $mod->{version} ||= 0;
+    }
+    return $data;
 }
 
 3.14;

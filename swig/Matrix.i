@@ -16,7 +16,10 @@
     #include "gsl/gsl_matrix_int.h"
     #include "gsl/gsl_matrix_complex_double.h"
     #include "gsl/gsl_matrix_char.h" 
+
+    #include "../c/Matrix.c"
 %}
+
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_complex.h"
 %include "gsl/gsl_vector_double.h"
@@ -24,5 +27,8 @@
 %include "gsl/gsl_matrix_int.h"
 %include "gsl/gsl_matrix_complex_double.h"
 %include "gsl/gsl_matrix_char.h"
+
+%include "../c/Matrix.h"
+
 
 %include "../pod/Matrix.pod" 

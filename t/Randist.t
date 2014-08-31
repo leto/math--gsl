@@ -37,6 +37,9 @@ sub teardown : Test(teardown) {
     undef $self->{rng};
 }
 
+sub GSL_RAN_SHUFFLE : Tests {
+}
+
 sub GSL_RAN_PDF : Tests(4) {
     ok_similar(0, gsl_ran_bernoulli_pdf(2, 0.5), 'gsl_ran_bernoulli_pdf(2,0.5)=0' );
     ok_similar( gsl_ran_gaussian_pdf(0,1), 1/sqrt(2*$M_PI), 'gsl_ran_gaussian_pdf' );

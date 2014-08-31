@@ -181,8 +181,6 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item xrange[0] xrange[1] yrange[ny-1] yrange[ny] bin(0,ny-1)
 
-=item           
-
 =item xrange[1] xrange[2] yrange[0] yrange[1] bin(1,0)
 
 =item xrange[1] xrange[2] yrange[1] yrange[2] bin(1,1)
@@ -193,11 +191,7 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item xrange[1] xrange[2] yrange[ny-1] yrange[ny] bin(1,ny-1)
 
-=item          
-
 =item ....
-
-=item              
 
 =item xrange[nx-1] xrange[nx] yrange[0] yrange[1] bin(nx-1,0)
 
@@ -209,19 +203,47 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item xrange[nx-1] xrange[nx] yrange[ny-1] yrange[ny] bin(nx-1,ny-1)
 
-=back         
+=back
 
-Each line contains the lower and upper limits of the bin and the contents of the bin. Since the upper limits of the each bin are the lower limits of the neighboring bins there is duplication of these values but this allows the histogram to be manipulated with line-oriented tools. 
+Each line contains the lower and upper limits of the bin and the contents of the
+bin. Since the upper limits of the each bin are the lower limits of the
+neighboring bins there is duplication of these values but this allows the
+histogram to be manipulated with line-oriented tools. 
 
-=item C<gsl_histogram2d_fscanf($stream, $h)> - This function reads formatted data from the stream $stream (opened with the gsl_fopen function from the Math::GSL module) into the histogram $h. The data is assumed to be in the five-column format used by gsl_histogram2d_fprintf. The histogram $h must be preallocated with the correct lengths since the function uses the sizes of $h to determine how many numbers to read. The function returns 0 for success and $GSL_EFAILED if there was a problem reading from the file.
+=item C<gsl_histogram2d_fscanf($stream, $h)> 
 
-=item C<gsl_histogram2d_pdf_alloc($nx, $ny)> - This function allocates memory for a two-dimensional probability distribution of size $nx-by-$ny and returns a pointer to a newly initialized gsl_histogram2d_pdf struct. If insufficient memory is available a null pointer is returned and the error handler is invoked with an error code of $GSL_ENOMEM.
+This function reads formatted data from the stream $stream (opened with the
+gsl_fopen function from the Math::GSL module) into the histogram $h. The data is
+assumed to be in the five-column format used by gsl_histogram2d_fprintf. The
+histogram $h must be preallocated with the correct lengths since the function
+uses the sizes of $h to determine how many numbers to read. The function returns
+0 for success and $GSL_EFAILED if there was a problem reading from the file.
 
-=item C<gsl_histogram2d_pdf_init($p, $h)> - This function initializes the two-dimensional probability distribution calculated $p from the histogram $h. If any of the bins of $h are negative then the error handler is invoked with an error code of GSL_EDOM because a probability distribution cannot contain negative values.
+=item C<gsl_histogram2d_pdf_alloc($nx, $ny)> 
 
-=item C<gsl_histogram2d_pdf_free($p)> - This function frees the two-dimensional probability distribution function $p and all of the memory associated with it.
+This function allocates memory for a two-dimensional probability distribution of
+size $nx-by-$ny and returns a pointer to a newly initialized gsl_histogram2d_pdf
+struct. If insufficient memory is available a null pointer is returned and the
+error handler is invoked with an error code of $GSL_ENOMEM.
 
-=item C<gsl_histogram2d_pdf_sample($p, $r1, $r2)> - This function uses two uniform random numbers between zero and one, $r1 and $r2, to compute a single random sample from the two-dimensional probability distribution p. The function returns 0 if the operation succeeded, 1 otherwise followed by the x and y values of the sample.
+=item C<gsl_histogram2d_pdf_init($p, $h)>
+
+This function initializes the two-dimensional probability distribution
+calculated $p from the histogram $h. If any of the bins of $h are negative then
+the error handler is invoked with an error code of GSL_EDOM because a
+probability distribution cannot contain negative values.
+
+=item C<gsl_histogram2d_pdf_free($p)> 
+
+This function frees the two-dimensional probability distribution function $p and
+all of the memory associated with it.
+
+=item C<gsl_histogram2d_pdf_sample($p, $r1, $r2)> 
+
+This function uses two uniform random numbers between zero and one, $r1 and $r2,
+to compute a single random sample from the two-dimensional probability
+distribution p. The function returns 0 if the operation succeeded, 1 otherwise
+followed by the x and y values of the sample.
 
 =back
 
@@ -231,7 +253,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2013 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
@@ -239,4 +261,3 @@ under the same terms as Perl itself.
 =cut
 
 %}
-

@@ -1,6 +1,9 @@
+#!perl -T
 package Math::GSL::GSL::Test;
 use base q{Test::Class};
-use Test::More tests => 19;
+use Test::More tests => 21;
+use Test::Exception;
+use Test::Taint;
 use Math::GSL::SF      qw/:all/;
 use Math::GSL::BLAS    qw/:all/;
 use Math::GSL::Vector  qw/:all/;
@@ -56,6 +59,15 @@ sub TEST_STUFF : Tests {
         ok_status(gsl_fclose($fh));
         unlink 'mrfuji' if -e 'mrfuji';
     }
+    {
+        taint_checking_ok();
+        my $file = "foo";
+        taint($file);
+        dies_ok(
+                sub { my $fh = gsl_fopen($file, 'w'); },
+                "gsl_fopen doesn't work with tainted variables");
+    }
+
 
 }
 

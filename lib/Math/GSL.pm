@@ -4,6 +4,8 @@ use base 'DynaLoader';
 use strict;
 use Config;
 use warnings;
+use Carp qw/croak/;
+use Scalar::Util qw/tainted/;
 use Test::More;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Const   qw/:all/;
@@ -164,6 +166,10 @@ L<Math::GSL::Wavelet2D>        - 2D Wavelets
 sub gsl_fopen
 {
     my ($file, $mode) = @_;
+
+    croak __PACKAGE__, "- gsl_fopen doesn't work with tainted variables" if
+      tainted($file) || tainted($mode);
+
     $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
     return Math::GSL::Vector::fopen($file, $mode);
 }

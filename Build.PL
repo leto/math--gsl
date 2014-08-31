@@ -134,6 +134,7 @@ my $builder = GSLBuilder->new(
         'Test::Most'      =>    '0.31',
         'Test::Exception' =>    '0.21',
         'Test::Class'     =>    '0.12',
+        'Test::Taint'     => '1.06',
     },
     requires => {
         'PkgConfig'       => '0.07720',

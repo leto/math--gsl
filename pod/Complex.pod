@@ -1,6 +1,7 @@
 %perlcode %{
 use Scalar::Util 'blessed';
 use Math::GSL::Errno qw/$GSL_SUCCESS gsl_strerror/;
+use Data::Dumper;
 
 use strict;
 use warnings;
@@ -56,25 +57,36 @@ memory.
 
 sub copy {
     my $self = shift;
-    my $copy = Math::GSL::Complex->new( [$self->real, $self->imag] );
+    my $copy = Math::GSL::Complex->new(
+            gsl_real($self->raw), gsl_imag($self->raw)
+    );
+
     return $copy;
 }
 
 sub _addition {
-    my ($left, $right, $flip) = @_;
+    my ($left, $right) = @_;
 
     my $lcopy = $left->copy;
+    my $raw;
 
     if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
-        gsl_complex_add($lcopy->raw, $right->raw);
+        $raw = gsl_complex_add($lcopy->raw, $right->raw);
     } else {
-        gsl_complex_add_constant($lcopy->raw, $right);
+        $raw = gsl_complex_add_constant($lcopy->raw, $right);
     }
+    $lcopy->set_raw($raw);
     return $lcopy;
+}
+
+sub set_raw {
+    my ($self, $raw) = @_;
+    $self->{_complex} = $raw;
 }
 
 sub new {
     my ($class, @values) = @_;
+    #die Dumper [ @values ];
     my $this = {};
     $this->{_complex} = gsl_complex_rect($values[0], $values[1]);
     bless $this, $class;
@@ -91,7 +103,7 @@ sub imag {
 
 sub parts {
     my ($self) = @_;
-    gsl_parts($self->{_complex}->{dat});
+    gsl_parts($self->raw());
 }
 
 sub raw  { (shift)->{_complex} }

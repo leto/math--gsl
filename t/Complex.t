@@ -1,4 +1,6 @@
 package Math::GSL::Complex::Test;
+use strict;
+use warnings;
 use base q{Test::Class};
 use Test::Most;
 use Math::GSL::Complex qw/:all/;
@@ -7,7 +9,6 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL          qw/:all/;
 use Data::Dumper;
-use strict;
 BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
@@ -25,9 +26,15 @@ sub GSL_COMPLEX_NEW : Tests {
     isa_ok( Math::GSL::Complex->new(0,0), 'Math::GSL::Complex' );
 }
 
-sub GSL_COMPLEX_RECT : Tests {
+sub GSL_COMPLEX_RECT : Tests(2) {
     my $x = gsl_complex_rect(5,3);
     ok_similar( [ gsl_parts($x) ], [ 5, 3 ], 'gsl_complex_rect' );
+
+    my $a = gsl_complex_rect(1.2, 3.4);
+    ok_similar( [ gsl_parts($a) ],
+                [ 1.2, 3.4 ],
+                'gsl_complex_rect with floats'
+    );
 }
 
 sub GSL_COMPLEX_POLAR : Tests {
@@ -100,14 +107,6 @@ sub GSL_COMPLEX_EXP_EULERS_IDENTITY : Tests {       # e^(i pi) + 1 = 0
     ok_similar( [ gsl_parts($z) ], 
                 [ 0.0, 0.0      ]
     );
-}
-
-sub GSL_COMPLEX_ADD_OO : Tests {
-    my $x = gsl_complex_rect(5,3);
-    my $y = gsl_complex_rect(1,2);
-
-    my $z = $x + $y;
-    ok_similar( [ gsl_parts($z) ], [ 6, 5 ], 'gsl_complex_add with operator overloading' );
 }
 
 sub GSL_COMPLEX_ADD : Tests {
@@ -481,13 +480,17 @@ sub GSL_COMPLEX_ARCCOTH : Tests {
 
 sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
     my $a = Math::GSL::Complex->new(1,1);
-    my $b = 42;
+    my $b = Math::GSL::Complex->new(5,3);
     my $c = $a + $b;
-    ok_similar( [ gsl_parts($c)         ],
-                [ 43.0,  1.0            ],
-                'complex op overloading'
+    ok_similar( [ gsl_real($c->raw), gsl_imag($c->raw)  ],
+                [ 6.0,  4.0      ],
+                'complex addition OO using gsl_real/gsl_imag'
+    );
+
+    ok_similar( [ $c->parts()  ],
+                [ 6.0,  4.0      ],
+                'complex addition OO using parts()'
     );
 }
 
 Test::Class->runtests;
-done_testing;

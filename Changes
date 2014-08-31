@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - Added OO code for RNG->shuffle, RNG->choose and RNG->sample.
+
 =head1 v0.32 - June 2014
     - Correctly split the compiler name.
     - Added OO code to the QRNG module.

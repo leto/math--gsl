@@ -105,6 +105,15 @@ print "  swig: $swig_flags\n" unless GSLBuilder::is_release();
 
 print "\n";
 
+my $c_deps = GSLBuilder::c_modules();
+my $swig_source = [
+                   map {
+                       my $deps = [ catfile("pod", "$_.pod") ];
+                       push @$deps, catfile("c","$_.c"), catfile("c","$_.h") if $c_deps->{$_};
+                       [ catfile("swig", "$_.i"), $deps ]
+                   } @Subsystems ,
+                  ];
+
 my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
     add_to_cleanup      => [ $cleanup ],
@@ -138,12 +147,11 @@ my $builder = GSLBuilder->new(
         'PkgConfig'       => '0.07720',
         'Module::Build'   => '0.38',
     },
-    swig_source           => [
-                                map { [ catfile("swig", "$_.i"), [ catfile("pod", "$_.pod")] ] } @Subsystems ,
-                             ],
+    swig_source           => $swig_source,
     ver2func => $ver2func,
     current_version => $gsl_conf->{gsl_version},
 );
+
 
 $builder->add_build_element('swig');
 

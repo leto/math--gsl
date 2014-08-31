@@ -1,10 +1,11 @@
 package Math::GSL::RNG::Test;
 use base q{Test::Class};
-use Test::More tests => 32;
-use Math::GSL        qw/:all/;
-use Math::GSL::RNG   qw/:all/; 
-use Math::GSL::Test  qw/:all/;
-use Math::GSL::Errno qw/:all/; 
+use Test::More tests => 43;
+use Math::GSL          qw/:all/;
+use Math::GSL::RNG     qw/:all/;
+use Math::GSL::Randist qw/:all/;
+use Math::GSL::Test    qw/:all/;
+use Math::GSL::Errno   qw/:all/;
 use Data::Dumper;
 use strict;
 BEGIN { gsl_set_error_handler_off() }
@@ -66,7 +67,7 @@ sub GSL_RNG_STATE : Tests {
 
     my @vals1 = map { $rng1->get } (1..$k);
     my @vals2 = map { $rng2->get } (1..$k);
-    
+
     is_deeply( [@vals1], [@vals2], "state test, $#vals1 values checked");
 }
 
@@ -77,6 +78,35 @@ sub GSL_RNG_GET : Tests(2) {
     my @values = $rng->get(10);
     ok( @values == 10, 'got 10 values from get->(10)');
 }
+
+sub GSL_RNG_CHOOSE : Tests(2) {
+    my $rng = Math::GSL::RNG->new;
+    my @in = (qw/aaa bbb ccc/);
+    my @out = $rng->choose(1, @in);
+    is scalar(@out), 1, "output array has correct size";
+    ok grep( { $_ eq $out[0] } @in), "element is ok";
+}
+
+sub GSL_RNG_SAMPLE : Tests(5) {
+    my $rng = Math::GSL::RNG->new;
+    my @in = (qw/aaa bbb ccc/);
+    my @out = $rng->sample(4, @in);
+    is scalar(@out), 4, "output array has correct size";
+    for my $i (0..3) {
+        ok grep( { $_ eq $out[$i] } @in), "element is ok";
+    }
+}
+
+sub GSL_RNG_SHUFFLE : Tests(4) {
+    my $rng = Math::GSL::RNG->new;
+    my @in = (qw/aaa bbb ccc/);
+    my @out = $rng->shuffle(@in);
+    is scalar(@out), 3, "output array has same size";
+    ok grep( { $_ eq "aaa" } @out), "keeps elements";
+    ok grep( { $_ eq "bbb" } @out), "keeps elements";
+    ok grep( { $_ eq "ccc" } @out), "keeps elements";
+}
+
 
 sub GSL_RNG_NAME : Tests {
     my $self  = shift;
@@ -111,7 +141,7 @@ sub GSL_RNG_NO_MORE_SECRETS : Tests {
 
     # throw away the first $k values
     map {  $rng1->get && $rng2->get } (1..$k);
-    
+
     my ($n1,$n2) = ( $rng1->get , $rng2->get ); 
     ok( $n1 == $n2 , "parrallel state test: $n1 ?= $n2" );
 }

@@ -14,6 +14,37 @@
  * handle 'double const []' as an input array of doubles
  * We allocate the C array at the beginning and free it at the end
  */
+%typemap(in) int const [] {
+    AV *tempav;
+    I32 len;
+    int i;
+    SV **tv;
+    if (!SvROK($input))
+        croak("Math::GSL : $$1_name is not a reference!");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Math::GSL : $$1_name is not an array ref!");
+
+    tempav = (AV*)SvRV($input);
+    len = av_len(tempav);
+    $1 = (int *) malloc((len+2)*sizeof(int));
+    for (i = 0; i <= len; i++) {
+        tv = av_fetch(tempav, i, 0);
+        $1[i] = (int) SvNV(*tv);
+    }
+}
+
+%typemap(freearg) int const [] {
+       if ($1) free($1);
+}
+
+%apply int const [] {
+    int *v
+}
+
+/*****************************
+ * handle 'double const []' as an input array of doubles
+ * We allocate the C array at the beginning and free it at the end
+ */
 %typemap(in) double const [] {
     AV *tempav;
     I32 len;

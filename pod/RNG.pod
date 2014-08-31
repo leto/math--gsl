@@ -1,4 +1,7 @@
 %perlcode %{
+
+use Carp;
+
 @EXPORT_OK = qw/
                  gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
@@ -31,6 +34,8 @@ Math::GSL::RNG - Random Number Generators
     use Math::GSL::RNG;
     my $rng     = Math::GSL::RNG->new;
     my @random  = $rng->get(100);
+
+=head1 Object Oriented Interface
 
 =head2 Math::GSL::RNG->new($type, $seed)
 
@@ -118,7 +123,9 @@ sub get {
 
     my $raw = $rng->raw();
 
-Return the raw GSL RNG object, useful for functions which take a RNG, such as the Monte Carlo integration functions or the random number distribution functions in Math::GSL::Randist.
+Return the raw GSL RNG object, useful for functions which take a RNG,
+such as the Monte Carlo integration functions or the random number
+distribution functions in Math::GSL::Randist.
 
 =cut
 
@@ -127,10 +134,76 @@ sub raw {
     return $self->{_rng};
 }
 
+=head2 shuffle()
+
+   my @array = $rng->shuffle(@other_array);
+
+Given a RNG, shuffle an array.
+
+=cut
+
+sub shuffle {
+    my ($self, @array) = @_;
+
+    my $nr_elements = $#array;
+    my $output = Math::GSL::Randist::our_gsl_ran_shuffle($self->raw,
+                                                         [0..$nr_elements],
+                                                         $nr_elements + 1);
+    return map { $array[$_] } @$output;
+}
+
+=head2 choose()
+
+   my @array = $rng->choose(4, @other_array);
+
+This function fills the destination array with k objects taken
+randomly from the n elements of the array argument.  The objects are
+sampled without replacement, thus each object can only appear once in
+destination array. It is required that k be less than or equal to n.
+
+=cut
+
+sub choose {
+    my ($self, $k, @array) = @_;
+
+    my $nr_elements = $#array;
+    croak __PACKAGE__, "- choose method called with k greater than number of elements in the array"
+      if $k > $nr_elements + 1;
+
+    my $output = Math::GSL::Randist::our_gsl_ran_choose($self->raw, $k,
+                                                        [0..$nr_elements],
+                                                        $nr_elements + 1);
+    return map { $array[$_] } @$output;
+}
+
+
+=head2 sample()
+
+   my @array = $rng->sample(4, @other_array);
+
+This method is like C<choose> but samples k items from the original
+array of n items src with replacement, so the same object can appear
+more than once in the output sequence dest. There is no requirement
+that k be less than n in this case.
+
+=cut
+
+sub sample {
+    my ($self, $k, @array) = @_;
+
+    my $nr_elements = $#array;
+
+    my $output = Math::GSL::Randist::our_gsl_ran_sample($self->raw, $k,
+                                                        [0..$nr_elements],
+                                                        $nr_elements + 1);
+    return map { $array[$_] } @$output;
+}
+
+
 __END__
 
 
-=head1 DESCRIPTION
+=head1 GSL API Interface
 
 =over 1
 
@@ -317,7 +390,7 @@ __END__
 =item          t = u_{n-273} + u_{n-607}
 
 =item          u_n  = t - floor(t)
-     
+
 =back
 
  The original source code is available from NETLIB. For more information see,
@@ -369,7 +442,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

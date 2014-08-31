@@ -21,13 +21,13 @@ Math::GSL::QRNG - Quasi-random number generators
 
 =head1 SYNOPSIS
 
-	# use OO approach
-	use Math::GSL::QRNG;
+    # use OO approach
+    use Math::GSL::QRNG;
 
-	my $QRNG = Math::GSL::QRNG::Sobol->new(2);
-	my @samples = $QRNG->get();
+    my $QRNG = Math::GSL::QRNG::Sobol->new(2);
+    my @samples = $QRNG->get();
 
-	# use GSL interface
+    # use GSL interface
     use Math::GSL::QRNG qw/:all/;
 
 =head1 DESCRIPTION

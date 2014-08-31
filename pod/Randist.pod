@@ -29,8 +29,7 @@ our @EXPORT_OK = qw/gsl_ran_bernoulli gsl_ran_bernoulli_pdf gsl_ran_beta
                     gsl_ran_tdist_pdf gsl_ran_laplace gsl_ran_laplace_pdf 
                     gsl_ran_levy gsl_ran_levy_skew gsl_ran_weibull 
                     gsl_ran_weibull_pdf gsl_ran_dir_2d gsl_ran_dir_2d_trig_method 
-                    gsl_ran_dir_3d gsl_ran_dir_nd gsl_ran_shuffle 
-                    gsl_ran_choose gsl_ran_sample 
+                    gsl_ran_dir_3d gsl_ran_dir_nd 
                     gsl_ran_discrete_t gsl_ran_discrete_free gsl_ran_discrete_preproc
                     gsl_ran_discrete gsl_ran_discrete_pdf  
                 /;
@@ -38,11 +37,9 @@ our @EXPORT_OK = qw/gsl_ran_bernoulli gsl_ran_bernoulli_pdf gsl_ran_beta
 our %EXPORT_TAGS = (
         all                 => [  @EXPORT_OK ],
         logarithmic         => [ gsl_ran_logarithmic , gsl_ran_logarithmic_pdf ],
-        choose              => [ gsl_ran_choose ],
         exponential         => [ gsl_ran_exponential , gsl_ran_exponential_pdf ],
         gumbel1             => [ gsl_ran_gumbel1 , gsl_ran_gumbel1_pdf ],
         exppow              => [ gsl_ran_exppow , gsl_ran_exppow_pdf ],
-        sample              => [ gsl_ran_sample ],
         logistic            => [ gsl_ran_logistic , gsl_ran_logistic_pdf ],
         gaussian            => [  
                                  gsl_ran_gaussian , gsl_ran_gaussian_ratio_method , gsl_ran_gaussian_ziggurat,
@@ -68,7 +65,6 @@ our %EXPORT_TAGS = (
         dir                 => [ gsl_ran_dir_2d , gsl_ran_dir_2d_trig_method , gsl_ran_dir_3d , gsl_ran_dir_nd ], 
         pascal              => [ gsl_ran_pascal , gsl_ran_pascal_pdf ], 
         gumbel2             => [ gsl_ran_gumbel2 , gsl_ran_gumbel2_pdf ], 
-        shuffle             => [ gsl_ran_shuffle ], 
         landau              => [ gsl_ran_landau , gsl_ran_landau_pdf ], 
         bernoulli           => [ gsl_ran_bernoulli , gsl_ran_bernoulli_pdf ], 
         weibull             => [ gsl_ran_weibull , gsl_ran_weibull_pdf ], 
@@ -727,15 +723,15 @@ for the Engineer (1956).
 
 =item gsl_ran_shuffle 
 
-* Not yet implemented *
+Please use the C<shuffle> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_choose
 
-* Not yet implemented * Sample without replacement
+Please use the C<choose> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_sample 
 
-* Not yet implemented * Sample with replacement
+Please use the C<sample> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_discrete_preproc
 

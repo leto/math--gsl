@@ -31,6 +31,11 @@ sub subsystems {
     /;
 }
 
+sub c_modules {
+    my @c = qw/Matrix Randist/;
+    return +{ map {($_ => 1)} @c };
+}
+
 sub process_swig_files {
     my $self = shift;
     my $p = $self->{properties};

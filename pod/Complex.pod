@@ -11,7 +11,7 @@ use Scalar::Util 'blessed';
 use overload
 #    '*'      => \&_multiplication,
     '+'      => \&_addition,
-#    '-'      => \&_subtract,
+    '-'      => \&_subtract,
 #    '=='     => \&_equal,
 #    '!='     => \&_not_equal,
     fallback => 1;
@@ -64,6 +64,16 @@ sub copy {
     return $copy;
 }
 
+sub _subtract {
+    my ($left, $right) = @_;
+    my $rcopy = $right->copy;
+    my $raw   = gsl_complex_negative($right->raw);
+
+    $rcopy->set_raw($raw);
+
+    return _addition($left, $rcopy);
+}
+
 sub _addition {
     my ($left, $right) = @_;
 
@@ -86,24 +96,23 @@ sub set_raw {
 
 sub new {
     my ($class, @values) = @_;
-    #die Dumper [ @values ];
     my $this = {};
     $this->{_complex} = gsl_complex_rect($values[0], $values[1]);
     bless $this, $class;
 }
 sub real {
     my ($self) = @_;
-    gsl_real($self->{_complex}->{dat});
+    gsl_real($self->raw);
 }
 
 sub imag {
     my ($self) = @_;
-    gsl_imag($self->{_complex}->{dat});
+    gsl_imag($self->raw);
 }
 
 sub parts {
     my ($self) = @_;
-    gsl_parts($self->raw());
+    gsl_parts($self->raw);
 }
 
 sub raw  { (shift)->{_complex} }

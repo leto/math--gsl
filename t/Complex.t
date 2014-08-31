@@ -478,6 +478,21 @@ sub GSL_COMPLEX_ARCCOTH : Tests {
     );
 }
 
+sub GSL_COMPLEX_SUBTRACT_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(1,1);
+    my $b = Math::GSL::Complex->new(5,3);
+    my $c = $a - $b;
+    ok_similar( [ gsl_real($c->raw), gsl_imag($c->raw)  ],
+                [ -4.0,  -2.0      ],
+                'complex addition OO using gsl_real/gsl_imag'
+    );
+
+    ok_similar( [ $c->parts()  ],
+                [ -4.0,  -2.0      ],
+                'complex addition OO using parts()'
+    );
+}
+
 sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
     my $a = Math::GSL::Complex->new(1,1);
     my $b = Math::GSL::Complex->new(5,3);
@@ -490,6 +505,14 @@ sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
     ok_similar( [ $c->parts()  ],
                 [ 6.0,  4.0      ],
                 'complex addition OO using parts()'
+    );
+}
+
+sub GSL_COMPLEX_REAL_IMAG : Tests {
+    my $z = Math::GSL::Complex->new(5,3);
+    ok_similar( [ $z->real, $z->imag  ],
+                [ 5.0,  3.0      ],
+                '->real and ->imag work correctly'
     );
 }
 

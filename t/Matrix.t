@@ -1,7 +1,7 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
 
-use Test::More tests => 279;
+use Test::Most;
 
 use strict;
 use warnings;

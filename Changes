@@ -2,6 +2,7 @@
 
     - Added OO code for RNG->shuffle, RNG->choose and RNG->sample.
     - Complain when opening (fopen) a file from a tainted string.
+    - Complex now has operator overloading for +,-
 
 =head1 v0.32 - June 2014
     - Correctly split the compiler name.

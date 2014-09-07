@@ -1055,8 +1055,14 @@ sub _dot_product {
 
 sub DESTROY {
     my $self = shift;
-    gsl_matrix_free($self->raw) if defined($self->raw) && 
-                                   $self->raw->isa("Math::GSL::Matrix::gsl_matrix");
+
+    # during global phase of destruction there is no
+    # sure that objects are destroyed in order. So, when
+    # going out, just do not destroy anything. The Operating
+    # System should do us for us.
+    return if ${^GLOBAL_PHASE} eq 'DESTRUCT';
+
+    gsl_matrix_free($self->raw) if defined($self->raw);
 }
 
 =head1 GSL FUNCTION INTERFACE

@@ -290,8 +290,8 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
     my $matrix3 = $matrix1 - 4;
     my $matrix4 = $matrix2 + $matrix1;
     my $matrix5 = $matrix2 . $matrix1;          # This is a scalar product, it simply multiply each element
-						# with the element of $matrix1 that have the same position
-    						# See Math::GSL::BLAS if you want scalar product
+                                                # with the element of $matrix1 that have the same position
+                                                # See Math::GSL::BLAS if you want scalar product
 
     my $matrix6 = $matrix2 . 8;                 # Multiply every elements of $matrix2 by 8
     my $matrix7 = $matrix2 * $matrix1;          # scalar product of two matrices
@@ -1051,6 +1051,12 @@ sub _dot_product {
     my $C = Math::GSL::Matrix->new($left->rows, $right->cols);
     gsl_blas_dgemm($CblasNoTrans, $CblasNoTrans, 1, $left->raw, $right->raw, 0, $C->raw);
     return $C;
+}
+
+sub DESTROY {
+    my $self = shift;
+    gsl_matrix_free($self->raw) if defined($self->raw) && 
+                                   $self->raw->isa("Math::GSL::Matrix::gsl_matrix");
 }
 
 =head1 GSL FUNCTION INTERFACE

@@ -9,6 +9,8 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL          qw/:all/;
 use Data::Dumper;
+use Carp::Always;
+
 BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
@@ -491,6 +493,71 @@ sub GSL_COMPLEX_SUBTRACT_OVERLOAD : Tests {
                 [ -4.0,  -2.0      ],
                 'complex addition OO using parts()'
     );
+}
+
+sub GSL_COMPLEX_MULTIPLICATION_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(7,1);
+    my $b = Math::GSL::Complex->new(10,-3);
+    my $c = $a * $b;
+
+    ok_similar( [ $c->parts  ],
+                [ 73.0, -11  ],
+                'complex multiplication OO using gsl_real/gsl_imag'
+    );
+
+    my $r = 5;
+    my $d = $a * 5;
+
+    ok_similar( [ $d->parts  ],
+                [ 35.0, 5  ],
+                'complex multiplication OO with real number'
+    );
+
+    my $f = -1 * $c;
+
+    ok_similar( [ $f->parts  ],
+                [ -73.0, 11  ],
+                'complex multiplication OO'
+    );
+}
+sub GSL_COMPLEX_DIVISION_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(7,1);
+    my $b = Math::GSL::Complex->new(-1,0);
+    my $c = $a / $b;
+
+    ok_similar( [ gsl_parts($c->raw) ],
+                [ -7,  -1  ],
+                'complex division OO'
+    );
+
+    my $r = 5;
+    my $d = $a / 5;
+
+    ok_similar( [ $d->parts  ],
+                [ 7/5, 1/5  ],
+                'complex division OO with real number'
+    );
+
+    my $f = -1 / $b;
+
+    ok_similar( [ $f->parts  ],
+                [ 1, 0 ],
+                'complex division OO'
+    );
+}
+
+
+
+sub GSL_COMPLEX_EQUAL_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(100,2);
+    my $b = Math::GSL::Complex->new(5,3);
+    my $c = $a->copy;
+
+    cmp_ok( $a, '!=', $b, '$a != $b');
+
+    cmp_ok( $a, '!=', 5, '$a != $r');
+
+    cmp_ok( $a, '==', $c, '$a == $c');
 }
 
 sub GSL_COMPLEX_ADD_OVERLOAD : Tests {

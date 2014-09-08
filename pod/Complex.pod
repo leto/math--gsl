@@ -9,11 +9,12 @@ use Carp qw/croak/;
 use Scalar::Util 'blessed';
 
 use overload
-#    '*'      => \&_multiplication,
+    '*'      => \&_multiplication,
+    '/'      => \&_division,
     '+'      => \&_addition,
     '-'      => \&_subtract,
-#    '=='     => \&_equal,
-#    '!='     => \&_not_equal,
+    '=='     => \&_equal,
+    '!='     => \&_not_equal,
     fallback => 1;
 
 our @EXPORT_OK = qw(
@@ -64,6 +65,57 @@ sub copy {
     return $copy;
 }
 
+sub _not_equal {
+    my ($left, $right) = @_;
+    return ! _equal($left, $right);
+}
+
+sub _equal {
+    my ($left, $right) = @_;
+
+    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
+        return gsl_complex_eq($left->raw, $right->raw);
+    } else {
+        # If both are not Complex objects, they can't be the same
+        return 0;
+    }
+}
+
+sub _division {
+    my ($left, $right) = @_;
+    my $raw;
+
+    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
+        warn Dumper [ 'left', $left->parts, 'right', $right->parts ];
+        my $rcopy = $right->copy;
+        $raw = gsl_complex_div($left->raw, $right->raw);
+        $rcopy->set_raw( $raw );
+        return $rcopy;
+    } else {
+        my $lcopy = $left->copy;
+        $raw = gsl_complex_div_real($lcopy->raw, $right);
+        $lcopy->set_raw($raw);
+        return $lcopy;
+    }
+}
+
+sub _multiplication {
+    my ($left, $right) = @_;
+    my $raw;
+
+    if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
+        my $rcopy = $right->copy;
+        $raw = gsl_complex_mul($left->raw, $right->raw);
+        $rcopy->set_raw( $raw );
+        return $rcopy;
+    } else {
+        my $lcopy = $left->copy;
+        $raw = gsl_complex_mul_real($lcopy->raw, $right);
+        $lcopy->set_raw($raw);
+        return $lcopy;
+    }
+}
+
 sub _subtract {
     my ($left, $right) = @_;
     my $rcopy = $right->copy;
@@ -92,6 +144,7 @@ sub _addition {
 sub set_raw {
     my ($self, $raw) = @_;
     $self->{_complex} = $raw;
+    return $self;
 }
 
 sub new {
@@ -168,7 +221,7 @@ Math::GSL::Complex - Complex Numbers
     $complex->gsl_set_real(5);                    # changes the real part to 5
     $complex->gsl_set_imag(4);                    # changes the imaginary part to 4
     $complex->gsl_set_complex(7,6);               # changes it to 7 + 6*i
-    ($real, $imag) = $complex->parts;
+    ($real, $imag) = $complex->parts;             # get both at once
 
 =head1 DESCRIPTION
 
@@ -469,7 +522,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -824,7 +824,7 @@ sub read
 
     my $m = gsl_matrix_alloc(gsl_matrix_get($dim, 0, 0),
                              gsl_matrix_get($dim, 0, 1));
-    my $err = gsl_matrix_fread($fh, $m);
+    $err = gsl_matrix_fread($fh, $m);
     croak __PACKAGE__."::read - error reading matrix" if $err;
 
     gsl_matrix_free($dim);

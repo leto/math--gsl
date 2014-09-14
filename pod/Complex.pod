@@ -86,7 +86,6 @@ sub _division {
     my $raw;
 
     if ( blessed $right && $right->isa('Math::GSL::Complex') && blessed $left && $left->isa('Math::GSL::Complex') ) {
-        warn Dumper [ 'left', $left->parts, 'right', $right->parts ];
         my $rcopy = $right->copy;
         $raw = gsl_complex_div($left->raw, $right->raw);
         $rcopy->set_raw( $raw );

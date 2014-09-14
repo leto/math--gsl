@@ -9,7 +9,6 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL          qw/:all/;
 use Data::Dumper;
-use Carp::Always;
 
 BEGIN { gsl_set_error_handler_off() }
 

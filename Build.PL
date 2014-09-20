@@ -135,7 +135,6 @@ my $builder = GSLBuilder->new(
         'Test::Exception' => '0.21',
         'Test::Class'     => '0.12',
         'Test::Taint'     => '1.06',
-        'Carp::Always'    => 0,
     },
     requires => {
         'PkgConfig'       => '0.07720',

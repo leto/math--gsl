@@ -416,6 +416,29 @@ sub GSL_MATRIX_FREAD_FWRITE : Tests {
    gsl_fclose($fh);
 }
 
+sub GSL_MATRIX_WRITE_LOAD : Tests {
+    my $matrix = Math::GSL::Matrix->new(2,3);
+    for (0..2) {
+      $matrix->set_elem(0, $_, $_);
+      $matrix->set_elem(1, $_, $_**2);
+    }
+
+    $matrix->write('matrix');
+    ok(-f "matrix", "written file exists");
+
+    my $m2 = Math::GSL::Matrix->read('matrix');
+    isa_ok $m2, "Math::GSL::Matrix";
+
+    # Check dimensions
+    my ($r, $c) = $m2->dim;
+    is( $r, 2, "nr rows is correct $r");
+    is( $c, 3, "nr columns is correct $c");
+
+    # Check some values
+    is($matrix->get_elem(0, 1), 1, "element at (0,1) is OK");
+    is($matrix->get_elem(1, 2), 4, "element at (1,2) is OK");
+}
+
 sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
    my $self = shift;
 

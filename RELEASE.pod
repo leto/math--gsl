@@ -96,6 +96,15 @@ Be sure to add and commit changed files, and to tag the repository.
 
      git tag vX.XX
 
+=item 14.
+
+Add a release to GitHub with the tarball.
+
+=item 15.
+
+Organizational suggestion: close the milestone that refers to the
+current release and create the next one, if it does not still exist.
+
 =back
 
 =cut

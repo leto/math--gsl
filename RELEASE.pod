@@ -92,7 +92,9 @@ Everything seems good? Create the release and upload it to CPAN.
 
 =item 13.
 
-Be sure to tag the git repository
+Be sure to add and commit changed files, and to tag the repository.
+
+     git tag vX.XX
 
 =back
 

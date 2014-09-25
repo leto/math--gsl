@@ -92,13 +92,12 @@ Everything seems good? Create the release and upload it to CPAN.
 
 =item 13.
 
-Be sure to add and commit changed files, and to tag the repository.
-
-     git tag vX.XX
+Be sure to add and commit changed files.
 
 =item 14.
 
-Add a release to GitHub with the tarball.
+Add a release to GitHub with the tarball. This will also tag the
+current tree status.
 
 =item 15.
 

@@ -859,3 +859,4 @@ c/Matrix.c
 c/Matrix.h
 c/Randist.c
 c/Randist.h
+RELEASE.pod

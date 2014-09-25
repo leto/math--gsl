@@ -1,0 +1,99 @@
+=encoding utf8
+
+=head1 RELEASE INSTRUCTIONS
+
+This document intends to be a work in progress, where developers can
+take notes on the release process. When preparing a release, authors
+are encouraged to follow the check list bellow, adding or removing
+details from this document as relevant.
+
+=head2 RELEASE PROCESS
+
+=over
+
+=item 1.
+
+Ensure your C<master> branch is up to date with the GitHub website.
+
+=item 2.
+
+Check your installed C<libgsl> version. Namely, ensure the version
+installed in the system is the latest available, or at least, the last
+supported at the moment by C<Math::GSL>.
+
+Nevertheless, it would be better to upgrade C<Math::GSL> to support
+the latest C<libgsl> version before a new release, unless it is a
+serious bug fix.
+
+The latest C<libgsl> version can always be found at the GNU mirror:
+L<ftp://ftp.gnu.org/gnu/gsl/>.
+
+=item 3.
+
+Make a C<clean>. Probably it is a good idea to first run C<perl
+Build.PL>, updating any missing detail in the building process, and
+then run C<./Build clean>.
+
+=item 4.
+
+Make sure everything works before any further step. Compile Build.PL
+with C<perl Build.PL>, and check that the build system complains on missing C<c> files
+for the C<libgsl> wrapping. If not, check the previous step.
+
+=item 5.
+
+Build the module, with C<./Build>. Check that everything compiles.
+
+=item 6. 
+
+Run the standard test suite with C<./Build test>.
+
+=item 7.
+
+Bump the version in C<lib/Math/GSL.pm>. Make sure to update the
+C<$VERSION> variable, and the POD entry with the current version.
+
+=item 8.
+
+Update the C<Changes> file, adding the new version, and verify the
+change log. Hopefully ever feature commit will edit this
+file. Nevertheless try to think of anything that might be missing from
+the change log. Add the release date.
+
+=item 9.
+
+Restart the build process:
+
+    ./Build clean
+    perl Build.PL
+    ./Build
+    ./Build test
+
+=item 10.
+
+Check the distribution contents:
+
+     ./Build distcheck
+
+If there is any relevant file missing, add it. Go to 9.
+
+=item 11.
+
+Check if the tarball compiles and passes tests
+
+     ./Build disttest   # tries to compile from scratch from the dist tarball
+
+=item 12.
+
+Everything seems good? Create the release and upload it to CPAN.
+
+     ./Build dist
+     cpan-upload Math-GSL-x.xx.tar.gz
+
+=item 13.
+
+Be sure to tag the git repository
+
+=back
+
+=cut

@@ -1134,7 +1134,7 @@ sub DESTROY {
     # sure that objects are destroyed in order. So, when
     # going out, just do not destroy anything. The Operating
     # System should do us for us.
-    return if ${^GLOBAL_PHASE} eq 'DESTRUCT';
+    return if defined(${^GLOBAL_PHASE}) && ${^GLOBAL_PHASE} eq 'DESTRUCT';
 
     gsl_matrix_free($self->raw) if defined($self->raw);
 }

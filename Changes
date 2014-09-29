@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - Fixed bug on uncleared error variable (5.8.9)
+
 =head1 v0.33 - September 2014
     - Added OO code for RNG->shuffle, RNG->choose and RNG->sample.
     - Complain when opening (fopen) a file from a tainted string.

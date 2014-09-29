@@ -26,7 +26,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.33';
+our $VERSION = '0.34_1';
 
 =head1 NAME
 
@@ -34,7 +34,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.33
+Version 0.34_1
 
 =head1 SYNOPSIS
 

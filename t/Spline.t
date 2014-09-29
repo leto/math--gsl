@@ -21,7 +21,12 @@ sub teardown : Test(teardown) {
 }
 sub TEST_FREE : Test {
     my $self = shift;
+
+    ## Seems that early versions do not clear $!
+    $! = undef if $] <= 5.008009;
+
     gsl_spline_free($self->{spline});
+
     ok(!$@ && !$! && !$?,'gsl_spline_free');
 }
 sub TEST_MIN_SIZE : Test {

@@ -1,5 +1,4 @@
-%perlcode %{
-@EXPORT_OK = qw/
+%perlcode %{ @EXPORT_OK = qw/
                gsl_root_fsolver_alloc 
                gsl_root_fsolver_free 
                gsl_root_fsolver_set 
@@ -27,6 +26,8 @@
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 

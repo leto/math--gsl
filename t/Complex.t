@@ -1,13 +1,15 @@
 package Math::GSL::Complex::Test;
+use strict;
+use warnings;
 use base q{Test::Class};
-use Test::More tests => 60;
+use Test::Most;
 use Math::GSL::Complex qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL          qw/:all/;
 use Data::Dumper;
-use strict;
+
 BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {
@@ -25,9 +27,15 @@ sub GSL_COMPLEX_NEW : Tests {
     isa_ok( Math::GSL::Complex->new(0,0), 'Math::GSL::Complex' );
 }
 
-sub GSL_COMPLEX_RECT : Tests {
+sub GSL_COMPLEX_RECT : Tests(2) {
     my $x = gsl_complex_rect(5,3);
     ok_similar( [ gsl_parts($x) ], [ 5, 3 ], 'gsl_complex_rect' );
+
+    my $a = gsl_complex_rect(1.2, 3.4);
+    ok_similar( [ gsl_parts($a) ],
+                [ 1.2, 3.4 ],
+                'gsl_complex_rect with floats'
+    );
 }
 
 sub GSL_COMPLEX_POLAR : Tests {
@@ -468,6 +476,109 @@ sub GSL_COMPLEX_ARCCOTH : Tests {
     ok_similar( [ gsl_parts($z)       ], 
                 [ 0.0,  0.0            ],
                 'gsl_complex_arccoth'
+    );
+}
+
+sub GSL_COMPLEX_SUBTRACT_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(1,1);
+    my $b = Math::GSL::Complex->new(5,3);
+    my $c = $a - $b;
+    ok_similar( [ gsl_real($c->raw), gsl_imag($c->raw)  ],
+                [ -4.0,  -2.0      ],
+                'complex addition OO using gsl_real/gsl_imag'
+    );
+
+    ok_similar( [ $c->parts()  ],
+                [ -4.0,  -2.0      ],
+                'complex addition OO using parts()'
+    );
+}
+
+sub GSL_COMPLEX_MULTIPLICATION_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(7,1);
+    my $b = Math::GSL::Complex->new(10,-3);
+    my $c = $a * $b;
+
+    ok_similar( [ $c->parts  ],
+                [ 73.0, -11  ],
+                'complex multiplication OO using gsl_real/gsl_imag'
+    );
+
+    my $r = 5;
+    my $d = $a * 5;
+
+    ok_similar( [ $d->parts  ],
+                [ 35.0, 5  ],
+                'complex multiplication OO with real number'
+    );
+
+    my $f = -1 * $c;
+
+    ok_similar( [ $f->parts  ],
+                [ -73.0, 11  ],
+                'complex multiplication OO'
+    );
+}
+sub GSL_COMPLEX_DIVISION_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(7,1);
+    my $b = Math::GSL::Complex->new(-1,0);
+    my $c = $a / $b;
+
+    ok_similar( [ gsl_parts($c->raw) ],
+                [ -7,  -1  ],
+                'complex division OO'
+    );
+
+    my $r = 5;
+    my $d = $a / 5;
+
+    ok_similar( [ $d->parts  ],
+                [ 7/5, 1/5  ],
+                'complex division OO with real number'
+    );
+
+    my $f = -1 / $b;
+
+    ok_similar( [ $f->parts  ],
+                [ 1, 0 ],
+                'complex division OO'
+    );
+}
+
+
+
+sub GSL_COMPLEX_EQUAL_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(100,2);
+    my $b = Math::GSL::Complex->new(5,3);
+    my $c = $a->copy;
+
+    cmp_ok( $a, '!=', $b, '$a != $b');
+
+    cmp_ok( $a, '!=', 5, '$a != $r');
+
+    cmp_ok( $a, '==', $c, '$a == $c');
+}
+
+sub GSL_COMPLEX_ADD_OVERLOAD : Tests {
+    my $a = Math::GSL::Complex->new(1,1);
+    my $b = Math::GSL::Complex->new(5,3);
+    my $c = $a + $b;
+    ok_similar( [ gsl_real($c->raw), gsl_imag($c->raw)  ],
+                [ 6.0,  4.0      ],
+                'complex addition OO using gsl_real/gsl_imag'
+    );
+
+    ok_similar( [ $c->parts()  ],
+                [ 6.0,  4.0      ],
+                'complex addition OO using parts()'
+    );
+}
+
+sub GSL_COMPLEX_REAL_IMAG : Tests {
+    my $z = Math::GSL::Complex->new(5,3);
+    ok_similar( [ $z->real, $z->imag  ],
+                [ 5.0,  3.0      ],
+                '->real and ->imag work correctly'
     );
 }
 

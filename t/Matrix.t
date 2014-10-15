@@ -1,6 +1,8 @@
 package Math::GSL::Matrix::Test;
 use base q{Test::Class};
-use Test::More tests => 238;
+
+use Test::Most;
+
 use strict;
 use warnings;
 
@@ -414,6 +416,29 @@ sub GSL_MATRIX_FREAD_FWRITE : Tests {
    gsl_fclose($fh);
 }
 
+sub GSL_MATRIX_WRITE_LOAD : Tests {
+    my $matrix = Math::GSL::Matrix->new(2,3);
+    for (0..2) {
+      $matrix->set_elem(0, $_, $_);
+      $matrix->set_elem(1, $_, $_**2);
+    }
+
+    $matrix->write('matrix');
+    ok(-f "matrix", "written file exists");
+
+    my $m2 = Math::GSL::Matrix->read('matrix');
+    isa_ok $m2, "Math::GSL::Matrix";
+
+    # Check dimensions
+    my ($r, $c) = $m2->dim;
+    is( $r, 2, "nr rows is correct $r");
+    is( $c, 3, "nr columns is correct $c");
+
+    # Check some values
+    is($matrix->get_elem(0, 1), 1, "element at (0,1) is OK");
+    is($matrix->get_elem(1, 2), 4, "element at (1,2) is OK");
+}
+
 sub GSL_MATRIX_FPRINTF_FSCANF : Tests {
    my $self = shift;
 
@@ -465,6 +490,40 @@ sub GSL_MATRIX_NEW : Tests {
    isa_ok( $self->{obj}->raw, 'Math::GSL::Matrix::gsl_matrix' );
    ok( $self->{obj}->rows == 5, '->rows' );
    ok( $self->{obj}->cols == 5, '->cols' );
+
+   my $m = gsl_matrix_alloc(10, 10);
+   my $new = Math::GSL::Matrix->new($m);
+   isa_ok( $new, 'Math::GSL::Matrix' );
+   isa_ok( $new->raw, 'Math::GSL::Matrix::gsl_matrix' );
+   ok( $new->rows == 10, '->rows' );
+   ok( $new->cols == 10, '->cols' );
+
+   dies_ok( sub { Math::GSL::Matrix->new(1,2,3); }, '::new(...) - unknown Matrix constructor with 3 args' );
+   dies_ok( sub { Math::GSL::Matrix->new(2); }, '::new($m) - $m should be a gsl_matrix');
+}
+
+sub GSL_MATRIX_SET_ELEM : Tests(5) {
+   my $self = shift;
+   my $m = Math::GSL::Matrix->new(1,1);
+   $m->set_elem(0,0,99);
+   ok( gsl_matrix_get($m->raw, 0, 0) == 99, "OO set_elem");
+   dies_ok( sub { $m->set_elem(1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->set_elem(0,1,99); }, 'must be a valid column number' );
+   dies_ok( sub { $m->set_elem(-1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->set_elem(0,-1,99); }, 'must be a valid column number' );
+
+}
+
+sub GSL_MATRIX_GET_ELEM : Tests(5) {
+   my $self = shift;
+   my $m = Math::GSL::Matrix->new(1,1);
+   gsl_matrix_set($m->raw, 0, 0, 99);
+   ok( $m->get_elem(0,0) == 99, "OO get_elem");
+   dies_ok( sub { $m->get_elem(1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->get_elem(0,1,99); }, 'must be a valid column number' );
+   dies_ok( sub { $m->get_elem(-1,0,99); }, 'must be a valid row number' );
+   dies_ok( sub { $m->get_elem(0,-1,99); }, 'must be a valid column number' );
+
 }
 
 sub AS_LIST_SQUARE : Tests {
@@ -705,14 +764,15 @@ sub GSL_MATRIX_EIGENPAIR_RT45044 : Tests(1) {
 }
 
 sub MATRIX_MULTIPLICATION_OVERLOAD : Tests {
-    my $A = Math::GSL::Matrix->new(2,2)
+    my $A = Math::GSL::Matrix->new(3,2)
                              ->set_row(0, [1,3] )
-                             ->set_row(1, [4, 2] );
+                             ->set_row(1, [4,2] )
+                             ->set_row(2, [6,1] );
     my $B = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [2,5] )
                              ->set_row(1, [1, 3] );
     my $C = $A * $B;
-    ok_similar([ $C->as_list ], [5, 14, 10, 26 ]);
+    ok_similar([ $C->as_list ], [5, 14, 10, 26, 13, 33 ]);
 }
 
 sub MATRIX_IS_SQUARE : Tests(2) {
@@ -771,6 +831,102 @@ sub OVERLOAD_EQUAL : Tests(2) {
     ok ( $A == $B, 'should be equal');
     $B->set_row(0, [1,2]);
     ok ( $A != $B, 'should not be equal');
+}
+
+sub MATRIX_MAX : Tests(4) {
+    my $A = Math::GSL::Matrix->new(3,3)
+                             ->set_row(0, [1, 2, 3])
+                             ->set_row(1, [8, 7, 4])
+                             ->set_row(2, [9, 6, 5]);
+    ok ($A->max == 9, '->max in scalar context');
+    my @list = $A->max;
+    is_deeply ([@list], [9, 2, 0], '->max in list context');
+
+    my $B = Math::GSL::Matrix->new(1, 3)->set_row(0, [1, 9, 3]);
+    @list = $B->max;
+    is_deeply ([@list], [9, 1], '->max in list context for vector (1)');
+
+    my $C = Math::GSL::Matrix->new(3, 1)->set_row(0, [9])->set_row(1, [4])->set_row(2, [3]);
+    @list = $C->max;
+    is_deeply ([@list], [9, 0], '->max in list context for vector (2)');
+}
+
+sub MATRIX_MIN : Tests(4) {
+    my $A = Math::GSL::Matrix->new(3,3)
+                             ->set_row(0, [1, 2, 3])
+                             ->set_row(1, [8, 7, 4])
+                             ->set_row(2, [9, 6, 5]);
+    ok ($A->min == 1, '->min in scalar context');
+    my @list = $A->min;
+    is_deeply ([@list], [1, 0, 0], '->min in list context');
+
+    my $B = Math::GSL::Matrix->new(1, 3)->set_row(0, [1, 9, 3]);
+    @list = $B->min;
+    is_deeply ([@list], [1, 0], '->min in list context for vector (1)');
+
+    my $C = Math::GSL::Matrix->new(3, 1)->set_row(0, [9])->set_row(1, [4])->set_row(2, [3]);
+    @list = $C->min;
+    is_deeply ([@list], [3, 2], '->min in list context for vector (2)');
+}
+
+sub MATRIX_IEACH : Tests(2) {
+	my $A = Math::GSL::Matrix->new(2,2)
+							 ->set_row(0, [1, 2])
+							 ->set_row(1, [3, 4]);
+  dies_ok( sub { $A->ieach("foo") }, 'must be a code reference' );
+	$A = $A->ieach(sub { shift()**2 });
+	ok_similar( [$A->as_list], [1, 4, 9, 16], "->ieach");
+}
+
+sub MATRIX_EACH : Tests(3) {
+  my $A = Math::GSL::Matrix->new(2,2)
+               ->set_row(0, [1, 2])
+               ->set_row(1, [3, 4]);
+  dies_ok( sub { $A->each("foo") }, 'must be a code reference' );
+  my $B = $A->each(sub { shift()**2 });
+  ok_similar( [$A->as_list], [ 1, 2, 3, 4], "->each keeps object intact");
+  ok_similar( [$B->as_list], [ 1, 4, 9, 16], "->each does what it should");
+}
+
+sub MATRIX_DIMENSIONS : Tests(2) {
+    my $A = Math::GSL::Matrix->new(5,6);
+    my ($r, $c) = $A->dim;
+    ok ($r == 5, '->dim (rows)');
+    ok ($c == 6, '->dim (cols)');
+}
+
+sub CONCAT_VERTICALLY : Tests(5) {
+    my $a = Math::GSL::Matrix->new(2,2)->set_row(0, [1, 2])->set_row(1, [3, 4]);
+    my $b = Math::GSL::Matrix->new(2,2)->set_row(0, [5, 6])->set_row(1, [7, 8]);
+    my $c = $a->vconcat($b);
+    ok($c->rows == 4, "vconcat - number of lines");
+    ok_similar([$c->as_list], [1..8], "vconcat - values");
+    ok_similar([$a->as_list], [1..4], "vconcat - obj is unmodified");
+
+    # Exceptions
+    dies_ok( sub { $a->vconcat("foo"); },
+	   		 "must be a Math::GSL::Matrix object");
+
+    my $tmp = Math::GSL::Matrix->new(1,1);
+    dies_ok( sub { $tmp->vconcat($a); },
+    		 "should have same number of columns");
+}
+
+sub CONCAT_HORIZONTALLY : Tests(5) {
+    my $a = Math::GSL::Matrix->new(2,2)->set_row(0, [1, 2])->set_row(1, [5, 6]);
+    my $b = Math::GSL::Matrix->new(2,2)->set_row(0, [3, 4])->set_row(1, [7, 8]);
+    my $c = $a->hconcat($b);
+    ok($c->cols == 4, "hconcat - number of columns");
+    ok_similar([$c->as_list], [1..8], "hconcat - values");
+    ok_similar([$a->as_list], [1,2,5,6], "hconcat - obj is unmodified");
+
+    # Exceptions
+    dies_ok( sub { $a->hconcat("foo"); },
+	   		 "must be a Math::GSL::Matrix object");
+
+    my $tmp = Math::GSL::Matrix->new(1,1);
+    dies_ok( sub { $tmp->hconcat($a); },
+    		 "should have same number of rows");
 }
 
 Test::Class->runtests;

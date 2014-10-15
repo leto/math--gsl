@@ -4,6 +4,8 @@ use base 'DynaLoader';
 use strict;
 use Config;
 use warnings;
+use Carp qw/croak/;
+use Scalar::Util qw/tainted/;
 use Test::More;
 use Math::GSL::Test    qw/:all/;
 use Math::GSL::Const   qw/:all/;
@@ -24,7 +26,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.27';
+our $VERSION = '0.33';
 
 =head1 NAME
 
@@ -32,7 +34,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.27
+Version 0.33
 
 =head1 SYNOPSIS
 
@@ -164,6 +166,10 @@ L<Math::GSL::Wavelet2D>        - 2D Wavelets
 sub gsl_fopen
 {
     my ($file, $mode) = @_;
+
+    croak __PACKAGE__, "- gsl_fopen doesn't work with tainted variables" if
+      tainted($file) || tainted($mode);
+
     $mode .= '+b' if (is_windows() and $mode !~ /\+b/);
     return Math::GSL::Vector::fopen($file, $mode);
 }
@@ -257,7 +263,7 @@ This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2010 Jonathan "Duke" Leto, Thierry Moisan all rights reserved.
+Copyright 2008-2014 Jonathan "Duke" Leto, Thierry Moisan all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

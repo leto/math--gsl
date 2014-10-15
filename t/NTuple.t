@@ -1,6 +1,6 @@
 package Math::GSL::NTuple::Test;
 use base q{Test::Class};
-use Test::More tests => 11;
+use Test::Most;
 use Test::Exception;
 use Math::GSL::NTuple qw/:all/;
 use Math::GSL::Const  qw/:all/;
@@ -75,5 +75,4 @@ sub GSL_NTUPLE_OBJECT: Tests(2) {
     isa_ok($ntuple->raw,'Math::GSL::NTuple::gsl_ntuple');
 }
 
-1;
 Test::Class->runtests;

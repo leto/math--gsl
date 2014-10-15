@@ -29,8 +29,7 @@ our @EXPORT_OK = qw/gsl_ran_bernoulli gsl_ran_bernoulli_pdf gsl_ran_beta
                     gsl_ran_tdist_pdf gsl_ran_laplace gsl_ran_laplace_pdf 
                     gsl_ran_levy gsl_ran_levy_skew gsl_ran_weibull 
                     gsl_ran_weibull_pdf gsl_ran_dir_2d gsl_ran_dir_2d_trig_method 
-                    gsl_ran_dir_3d gsl_ran_dir_nd gsl_ran_shuffle 
-                    gsl_ran_choose gsl_ran_sample 
+                    gsl_ran_dir_3d gsl_ran_dir_nd 
                     gsl_ran_discrete_t gsl_ran_discrete_free gsl_ran_discrete_preproc
                     gsl_ran_discrete gsl_ran_discrete_pdf  
                 /;
@@ -38,11 +37,9 @@ our @EXPORT_OK = qw/gsl_ran_bernoulli gsl_ran_bernoulli_pdf gsl_ran_beta
 our %EXPORT_TAGS = (
         all                 => [  @EXPORT_OK ],
         logarithmic         => [ gsl_ran_logarithmic , gsl_ran_logarithmic_pdf ],
-        choose              => [ gsl_ran_choose ],
         exponential         => [ gsl_ran_exponential , gsl_ran_exponential_pdf ],
         gumbel1             => [ gsl_ran_gumbel1 , gsl_ran_gumbel1_pdf ],
         exppow              => [ gsl_ran_exppow , gsl_ran_exppow_pdf ],
-        sample              => [ gsl_ran_sample ],
         logistic            => [ gsl_ran_logistic , gsl_ran_logistic_pdf ],
         gaussian            => [  
                                  gsl_ran_gaussian , gsl_ran_gaussian_ratio_method , gsl_ran_gaussian_ziggurat,
@@ -68,7 +65,6 @@ our %EXPORT_TAGS = (
         dir                 => [ gsl_ran_dir_2d , gsl_ran_dir_2d_trig_method , gsl_ran_dir_3d , gsl_ran_dir_nd ], 
         pascal              => [ gsl_ran_pascal , gsl_ran_pascal_pdf ], 
         gumbel2             => [ gsl_ran_gumbel2 , gsl_ran_gumbel2_pdf ], 
-        shuffle             => [ gsl_ran_shuffle ], 
         landau              => [ gsl_ran_landau , gsl_ran_landau_pdf ], 
         bernoulli           => [ gsl_ran_bernoulli , gsl_ran_bernoulli_pdf ], 
         weibull             => [ gsl_ran_weibull , gsl_ran_weibull_pdf ], 
@@ -84,6 +80,8 @@ our %EXPORT_TAGS = (
 );
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 
@@ -685,19 +683,37 @@ distribution with $scale and $exponent, using the formula given above.
 
 =item gsl_ran_dir_2d($r)
 
-This function returns two values. The first is $x and the second is $y of a random direction vector v = ($x,$y) in two dimensions. The vector is normalized such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
+This function returns two values. The first is $x and the second is $y of a
+random direction vector v = ($x,$y) in two dimensions. The vector is normalized
+such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
 
 =item gsl_ran_dir_2d_trig_method($r)
 
-This function returns two values. The first is $x and the second is $y of a random direction vector v = ($x,$y) in two dimensions. The vector is normalized such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
+This function returns two values. The first is $x and the second is $y of a
+random direction vector v = ($x,$y) in two dimensions. The vector is normalized
+such that |v|^2 = $x^2 + $y^2 = 1. $r is a gsl_rng structure
 
 =item gsl_ran_dir_3d($r)
 
-This function returns three values. The first is $x, the second $y and the third $z of a random direction vector v = ($x,$y,$z) in three dimensions. The vector is normalized such that |v|^2 = x^2 + y^2 + z^2 = 1. The method employed is due to Robert E. Knop (CACM 13, 326 (1970)), and explained in Knuth, v2, 3rd ed, p136. It uses the surprising fact that the distribution projected along any axis is actually uniform (this is only true for 3 dimensions). 
+This function returns three values. The first is $x, the second $y and the third
+$z of a random direction vector v = ($x,$y,$z) in three dimensions. The vector
+is normalized such that |v|^2 = x^2 + y^2 + z^2 = 1. The method employed is due
+to Robert E. Knop (CACM 13, 326 (1970)), and explained in Knuth, v2, 3rd ed,
+p136. It uses the surprising fact that the distribution projected along any axis
+is actually uniform (this is only true for 3 dimensions). 
 
-=item gsl_ran_dir_nd
+=item gsl_ran_dir_nd (Not yet implemented )
 
-* Not yet implemented * This function returns a random direction vector v = (x_1,x_2,...,x_n) in n dimensions. The vector is normalized such that |v|^2 = x_1^2 + x_2^2 + ... + x_n^2 = 1. The method uses the fact that a multivariate Gaussian distribution is spherically symmetric. Each component is generated to have a Gaussian distribution, and then the components are normalized. The method is described by Knuth, v2, 3rd ed, p135–136, and attributed to G. W. Brown, Modern Mathematics for the Engineer (1956). 
+This function returns a random direction vector v = (x_1,x_2,...,x_n) in n
+dimensions. The vector is normalized such that
+
+    |v|^2 = x_1^2 + x_2^2 + ... + x_n^2 = 1.
+
+The method uses the fact that a multivariate Gaussian distribution is
+spherically symmetric. Each component is generated to have a Gaussian
+distribution, and then the components are normalized. The method is described by
+Knuth, v2, 3rd ed, p135-136, and attributed to G. W. Brown, Modern Mathematics
+for the Engineer (1956). 
 
 =back
 
@@ -707,15 +723,15 @@ This function returns three values. The first is $x, the second $y and the third
 
 =item gsl_ran_shuffle 
 
-* Not yet implemented *
+Please use the C<shuffle> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_choose
 
-* Not yet implemented * Sample without replacement
+Please use the C<choose> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_sample 
 
-* Not yet implemented * Sample with replacement
+Please use the C<sample> method in the L<GSL::RNG> module OO interface.
 
 =item gsl_ran_discrete_preproc
 
@@ -824,21 +840,24 @@ L<http://www.gnu.org/software/gsl/manual/html_node/>
  
 
  You might also want to write
- use Math::GSL::RNG qw/:all/;
- since a lot of the functions of Math::GSL::Randist take as argument a structure that is created by Math::GSL::RNG. 
- Refer to Math::GSL::RNG documentation to see how to create such a structure.
 
- Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is given in the EXAMPLES part on how to use the function related to this structure.
+    use Math::GSL::RNG qw/:all/;
+
+since a lot of the functions of Math::GSL::Randist take as argument a structure
+that is created by Math::GSL::RNG.  Refer to Math::GSL::RNG documentation to
+see how to create such a structure.
+
+Math::GSL::CDF also contains a structure named gsl_ran_discrete_t. An example is
+given in the EXAMPLES part on how to use the function related to this structure.
 
 
 =head1 EXAMPLES
 
-    use Math::GSL::Randist qw/:all/; 
-    print gsl_ran_exponential_pdf(5,2) . "\n"; 
+    use Math::GSL::Randist qw/:all/;
+    print gsl_ran_exponential_pdf(5,2) . "\n";
 
     use Math::GSL::Randist qw/:all/;
-    $x= Math::GSL::gsl_ran_discrete_t::new;
-
+    my $x = Math::GSL::gsl_ran_discrete_t::new;
 
 =head1 AUTHORS
 
@@ -846,7 +865,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2013 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

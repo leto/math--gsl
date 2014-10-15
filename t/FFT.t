@@ -1,6 +1,7 @@
 package Math::GSL::FFT::Test;
 use base q{Test::Class};
 use Test::More tests => 16;
+use Test::Differences;
 use Math::GSL::Test  qw/:all/;
 use Math::GSL::FFT   qw/:all/;
 use Math::GSL        qw/:all/;
@@ -17,31 +18,40 @@ sub teardown : Test(teardown) {
     unlink 'fft' if -f 'fft';
 }
 
-sub FFT_REAL_RADIX2_TRANSFORM : Tests(2)
+sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
-    my $input    = [ (0) x 5, (1) x 22, (0) x 5 ];
-    my $expected = [ 22, -8.44205264582682, -4.64465605976076, -0.643126602526688, 1.70710678118655, 1.8349201998544,
-            0.572726230154202, -0.676964287646119, -1, -0.455944707054924, 0.255700894591988, 0.524240654352147,
-            0.292893218813453, -0.059180002187481, -0.183771064985432, -0.0818926089645147, 0, -0.831469612302545,
-            -0.923879532511287, -0.195090322016128, 0.707106781186547, 0.98078528040323, 0.38268343236509,
-            -0.555570233019602, -1, -0.555570233019602, 0.38268343236509, 0.980785280403231, 0.707106781186547,
-            -0.195090322016128, -0.923879532511287, -0.831469612302545
-            ];
-    my ($status, $output ) = gsl_fft_real_radix2_transform ($input, 1, 32);
+    my $data    = [ (0) x 3, (1) x 2, (0) x 3 ];
+    my $expected = [
+    ];
+    my $status = gsl_fft_real_radix2_transform ($data, 1, 8);
     ok_status($status);
 
-    local $TODO = q{ not working again };
-    ok_similar( $output, $expected );
+    eq_or_diff( $data, $expected );
 }
 
-sub FFT_COMPLEX_RADIX2_FORWARD : Tests(2)
+sub FFT_HALFCOMPLEX_RADIX2_INVERSE : Tests
 {
-    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
-    my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, 1, 128);
+    my $data    = [ (0) x 3, (1) x 2, (0) x 3 ];
+    my $expected = [
+    ];
+    my $status = gsl_fft_halfcomplex_radix2_transform ($data, 1, 8);
     ok_status($status);
-    local $TODO = 'fft of complex_packed_array does not work';
+
+    eq_or_diff( $data, $expected );
+}
+
+sub FFT_COMPLEX_RADIX2_FORWARD : Tests
+{
+    local $TODO = 'no worky';
+    my $data = [ (1) x 3, (0) x 2, (1) x 3 ];
+    my $expected = [ ];
+
+    # this test caused a coredump currently because $data is not the correct format
+    return;
+    my $status = gsl_fft_complex_radix2_forward ($data, 1, 8);
+    ok_status($status);
+    eq_or_diff($data, $expected);
     # we should propably use the gsl_fft_real_unpack function here to create a suitable complex_packed_array
-    ok( defined $fft );
 }
 
 sub FFT_VARS : Tests(2) {

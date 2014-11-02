@@ -14,6 +14,8 @@ use Math::GSL::Errno qw/:all/;
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::NTuple - Functions for creating and manipulating ntuples, sets of values

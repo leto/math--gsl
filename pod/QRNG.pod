@@ -13,7 +13,7 @@ our @EXPORT_OK = qw($gsl_qrng_niederreiter_2 $gsl_qrng_sobol
             );
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-=encoding UTF-8
+=encoding utf8
 
 =head1 NAME
 

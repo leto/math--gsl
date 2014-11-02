@@ -590,6 +590,8 @@ push @EXPORT_misc, qw/
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::SF - Special Functions

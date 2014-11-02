@@ -183,6 +183,8 @@ sub copy {
 }
 our %EXPORT_TAGS = ( all => \@EXPORT_OK  );
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::MatrixComplex - Complex Matrices

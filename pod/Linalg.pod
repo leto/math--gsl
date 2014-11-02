@@ -111,6 +111,8 @@
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::Linalg - Functions for solving linear systems

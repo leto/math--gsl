@@ -823,6 +823,19 @@ sub MATRIX_INVERSE : Tests(3) {
     dies_ok( sub { $B->inverse } , 'inverse of non square matrix dies' );
 }
 
+sub MATRIX_TRANSPOSE : Tests(3) {
+    my $A = Math::GSL::Matrix->new(2,2)
+                             ->set_row(0, [1, 2] )
+                             ->set_row(1, [3, 4] );
+    my $Atr = $A->transpose;
+    isa_ok( $Atr, 'Math::GSL::Matrix' );
+    ok_similar([ $Atr->as_list ] , [ ( 1, 3, 2, 4 ) ] );
+    my $B = Math::GSL::Matrix->new(2,3)
+                             ->set_row(0, [1, 3, 5] )
+                             ->set_row(1, [2, 4, 6] );
+    dies_ok( sub { $B->transpose } , 'transposeof non square matrix dies' );
+}
+
 sub OVERLOAD_EQUAL : Tests(2) {
     my $A = Math::GSL::Matrix->new(2,2)
                              ->set_row(0, [1, 3] )

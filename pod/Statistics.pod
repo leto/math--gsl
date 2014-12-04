@@ -118,6 +118,8 @@ push @EXPORT_OK, @EXPORT_int, @EXPORT_char;
                );
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::Statistics - Statistical functions 

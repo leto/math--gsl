@@ -45,6 +45,8 @@ our ($GSL_COMPLEX_ONE, $GSL_COMPLEX_ZERO, $GSL_COMPLEX_NEGONE) = map { gsl_compl
 
 our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
+=encoding utf8
+
 =head2 copy()
 
 Returns a copy of the Complex number, which resides at a different location in

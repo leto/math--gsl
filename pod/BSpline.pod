@@ -14,6 +14,8 @@
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::BSpline - Functions for the computation of smoothing basis splines

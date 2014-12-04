@@ -3,19 +3,19 @@
 @EXPORT_OK = qw/
    gsl_min_fminimizer_alloc
    gsl_min_fminimizer_free
-   gsl_min_fminimizer_set 
+   gsl_min_fminimizer_set
    gsl_min_fminimizer_set_with_values
-   gsl_min_fminimizer_iterate 
-   gsl_min_fminimizer_name 
+   gsl_min_fminimizer_iterate
+   gsl_min_fminimizer_name
    gsl_min_fminimizer_x_minimum
-   gsl_min_fminimizer_x_lower 
-   gsl_min_fminimizer_x_upper 
+   gsl_min_fminimizer_x_lower
+   gsl_min_fminimizer_x_upper
    gsl_min_fminimizer_f_minimum
-   gsl_min_fminimizer_f_lower 
-   gsl_min_fminimizer_f_upper 
-   gsl_min_fminimizer_minimum 
-   gsl_min_test_interval 
-   gsl_min_find_bracket 
+   gsl_min_fminimizer_f_lower
+   gsl_min_fminimizer_f_upper
+   gsl_min_fminimizer_minimum
+   gsl_min_test_interval
+   gsl_min_find_bracket
    $gsl_min_fminimizer_brent
    $gsl_min_fminimizer_goldensection
 /;
@@ -23,6 +23,8 @@
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 
@@ -41,10 +43,15 @@ Math::GSL::Min - 1-D Minimization
         0, cos(0),
         2*$M_PI, cos(2*$M_PI)
     );
-    my $status = gsl_min_fminimizer_iterate($m);
-    my $min    = gsl_min_fminimizer_x_minimum($m);
-    my $lower  = gsl_min_fminimizer_x_lower($m);
-    my $upper  = gsl_min_fminimizer_x_upper($m);
+    my $status  = gsl_min_fminimizer_iterate($m);
+
+    my $x_min   = gsl_min_fminimizer_x_minimum($m);
+    my $x_lower = gsl_min_fminimizer_x_lower($m);
+    my $x_upper = gsl_min_fminimizer_x_upper($m);
+
+    my $f_min   = gsl_min_fminimizer_f_minimum($m);
+    my $f_lower = gsl_min_fminimizer_f_lower($m);
+    my $f_upper = gsl_min_fminimizer_f_upper($m);
 
 =head1 DESCRIPTION
 
@@ -52,9 +59,9 @@ Here is a list of all the functions in this module :
 
 =over
 
-=item * C<gsl_min_fminimizer_alloc >
+=item * C<gsl_min_fminimizer_alloc($type)>
 
-=item * C<gsl_min_fminimizer_free >
+=item * C<gsl_min_fminimizer_free>
 
 Don't call this function explicitly. It will be called automatically in DESTROY for fminimizer.
 
@@ -66,27 +73,27 @@ Don't apply this function twice to the same fminimizer. It will cause a memory l
 
 Don't apply this function twice to the same fminimizer. It will cause a memory leak. Instead of this you should create new fminimizer.
 
-=item * C<gsl_min_fminimizer_iterate >
+=item * C<gsl_min_fminimizer_iterate($m)>
 
 =item * C<gsl_min_fminimizer_name >
 
-=item * C<gsl_min_fminimizer_x_minimum>
+=item * C<gsl_min_fminimizer_x_minimum($m)>
 
-=item * C<gsl_min_fminimizer_x_lower >
+=item * C<gsl_min_fminimizer_x_lower($m) >
 
-=item * C<gsl_min_fminimizer_x_upper >
+=item * C<gsl_min_fminimizer_x_upper($m) >
 
-=item * C<gsl_min_fminimizer_f_minimum>
+=item * C<gsl_min_fminimizer_f_minimum($m)>
 
-=item * C<gsl_min_fminimizer_f_lower >
+=item * C<gsl_min_fminimizer_f_lower($m) >
 
-=item * C<gsl_min_fminimizer_f_upper >
+=item * C<gsl_min_fminimizer_f_upper($m) >
 
-=item * C<gsl_min_fminimizer_minimum >
+=item * C<gsl_min_fminimizer_minimum($m) >
 
-=item * C<gsl_min_test_interval >
+=item * C<gsl_min_test_interval($m) >
 
-=item * C<gsl_min_find_bracket >
+=item * C<gsl_min_find_bracket($m) >
 
 =back
 
@@ -96,7 +103,7 @@ This module also includes the following constants :
 
 =item * C<$gsl_min_fminimizer_brent>
 
-=item * C<$gsl_min_fminimizer_goldensection> 
+=item * C<$gsl_min_fminimizer_goldensection>
 
 =back
 
@@ -109,7 +116,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

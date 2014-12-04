@@ -28,6 +28,8 @@ use overload
 @EXPORT_OK = (@EXPORT_all);
 %EXPORT_TAGS = ( all => \@EXPORT_all );
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::VectorComplex - Complex Vectors

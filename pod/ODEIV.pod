@@ -39,6 +39,8 @@
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::ODEIV - functions for solving ordinary differential equation (ODE) initial value problems

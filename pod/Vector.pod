@@ -46,6 +46,8 @@ use overload
 @EXPORT_OK = (@EXPORT_all, @EXPORT_file);
 %EXPORT_TAGS = ( file => \@EXPORT_file, all => \@EXPORT_all );
 
+=encoding utf8
+
 =head1 NAME
 
 Math::GSL::Vector - Functions concerning vectors

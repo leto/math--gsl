@@ -297,7 +297,17 @@ sub check_gsl_version {
 
 	print "\nChecking for GSL using gsl-config\n";
 
-	chomp(my $gsl_version = qx{gsl-config --version});
+	my $gsl_version = qx{gsl-config --version};
+	if (not defined $gsl_version) {
+	    print "
+*** 
+*** Can't find GSL with gsl-config. 
+*** Trying with PkgConfig.
+	";
+	    return undef;
+	}
+
+    chomp($gsl_version);
 	chomp(my $gsl_prefix  = qx{gsl-config --prefix});
 	chomp(my $gsl_cflags  = qx{gsl-config --cflags});
 	chomp(my $gsl_libs    = qx{gsl-config --libs});
@@ -308,43 +318,34 @@ sub check_gsl_version {
 
 	my $current_version;
 
-	if (defined $gsl_version) {
-	    if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
-	        $current_version = $1;
-	        my @current = split /\./, $current_version;
-	        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
-	        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
+    if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
+        $current_version = $1;
+        my @current = split /\./, $current_version;
+        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
+        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
 
-	        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
-	            printf "
+        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
+            printf "
 *** 
 *** You need to have GSL %s or greater installed. (You have $gsl_version).
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
-	            exit 0;
-	        } else {
-	            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
-	            return {
-	            	gsl_version => $current_version,
-	            	gsl_prefix  => $gsl_prefix,
-	            	gsl_libs    => $gsl_libs,
-	            	gsl_cflags  => $gsl_cflags,
-	            };
-	        }
-	    } else {
-	        print "
+            exit 0;
+        } else {
+            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
+            return {
+                gsl_version => $current_version,
+                gsl_prefix  => $gsl_prefix,
+                gsl_libs    => $gsl_libs,
+                gsl_cflags  => $gsl_cflags,
+            };
+        }
+    } else {
+        print "
 *** 
 *** Can't parse GSL version $gsl_version.
 *** Trying with PkgConfig.
-	";
-		return undef;
-	    }
-	} else {
-	    print "
-*** 
-*** Can't find GSL with gsl-config. 
-*** Trying with PkgConfig.
-	";
-	    return undef;
-	}
+";
+        return undef;
+    }
 	close $fh or die "Could not close $path_system : $!";
 }

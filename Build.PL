@@ -137,7 +137,6 @@ my $builder = GSLBuilder->new(
         'Test::Taint'     => '1.06',
     },
     requires => {
-        'PkgConfig'       => '0.07720',
         'Scalar::Util'    => 0,
         'version'         => '0.77',
         'perl'            => '5.8.0',

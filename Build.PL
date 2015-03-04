@@ -272,7 +272,13 @@ sub check_gsl_version_pkgconfig {
 ***
 *** PkgConfig failed with error message: $errmsg
 *** Probably you need to install GSL?
-*** Get GSL at http://www.gnu.org/software/gsl\n";
+***  On Debian/Ubuntu you can use:
+***      sudo apt-get install libgsl0-dev
+***  On Mac you can use homebrew (http://brew.sh/):
+***      brew install gsl
+***  On Fedora/CentOS/RedHat/openSUSE you can use
+***      sudo yum install gsl-devel
+*** Or get GSL at http://www.gnu.org/software/gsl\n";
         exit 0;
     }
 

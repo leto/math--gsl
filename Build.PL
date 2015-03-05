@@ -120,7 +120,7 @@ my $builder = GSLBuilder->new(
     dist_abstract       => 'Interface to the GNU Scientific Library using SWIG',
     dist_author         => 'Jonathan Leto <jonathan@leto.net>',
     dist_version_from   => catfile(qw/lib Math GSL.pm/),
-    include_dirs	    => [],
+    include_dirs        => [],
     extra_linker_flags  => $ldflags,
     extra_compiler_flags=> $ccflags,
     swig_flags          => $swig_flags,
@@ -183,8 +183,8 @@ sub modify_env {
 
     # TODO: What about windows and darwin?
     my @guess = qw(/usr/pkgconfig /usr/lib/pkgconfig /usr/local/lib/pkgconfig
-    	           /usr/local/pkgconfig /usr/libdata/pkgconfig
-    	           /usr/local/libdata/pkgconfig /opt/pkgconfig);
+                   /usr/local/pkgconfig /usr/libdata/pkgconfig
+                   /usr/local/libdata/pkgconfig /opt/pkgconfig);
 
     $ENV{PKG_CONFIG_PATH} = join(":", @guess) . $ENV{PKG_CONFIG_PATH};
 }
@@ -200,39 +200,39 @@ sub try_compile {
     unlink("$tmp.c", "$tmp$obj_ext");
 
     if (open(TMPC, ">", "$tmp.c")) {
-	print TMPC $c;
-	close(TMPC);
+    print TMPC $c;
+    close(TMPC);
 
-	my $cccmd = $args{cccmd};
-	my $errornull;
-	my $ccflags =  $Config{'ccflags'};
+    my $cccmd = $args{cccmd};
+    my $errornull;
+    my $ccflags =  $Config{'ccflags'};
         $ccflags .= " $args{ccflags}" if $args{ccflags};
 
         if ($args{silent} ) {
-	    $errornull = "2>/dev/null" unless defined $errornull;
-	} else {
-	    $errornull = '';
-	}
+        $errornull = "2>/dev/null" unless defined $errornull;
+    } else {
+        $errornull = '';
+    }
 
         $cccmd = "$Config{'cc'} -o $tmp $ccflags $tmp.c $errornull"
-	    unless defined $cccmd;
+        unless defined $cccmd;
 
-	printf "cccmd = $cccmd\n" if $args{verbose};
-	my $res = system($cccmd);
-	$ok = defined($res) && $res == 0;
+    printf "cccmd = $cccmd\n" if $args{verbose};
+    my $res = system($cccmd);
+    $ok = defined($res) && $res == 0;
 
-	if ( !$ok ) {
-	    my $errno = $? >> 8;
-	    local $! = $errno;
-	    print "
+    if ( !$ok ) {
+        my $errno = $? >> 8;
+        local $! = $errno;
+        print "
 
 *** The test compile of '$tmp.c' failed: status $?
 *** (the status means: errno = $errno or '$!')
 *** DO NOT PANIC: this just means that you may get some innocuous
 *** compiler warnings.
 ";
-	}
-	unlink("$tmp.c");
+    }
+    unlink("$tmp.c");
 
     }
     return $ok;
@@ -261,89 +261,96 @@ sub check_gsl_version_pkgconfig {
         exit 0;
     }
 
-	modify_env();
-	print "\nAsking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n\n";
-	my $gsl_pkgcfg = PkgConfig->find ('gsl');
+    modify_env();
+    print "\nAsking PkgConfig with ENV{PKG_CONFIG_PATH}=" . ($ENV{PKG_CONFIG_PATH} || '') . "\n\n";
+    my $gsl_pkgcfg = PkgConfig->find ('gsl');
 
-	if ($gsl_pkgcfg->errmsg) {
-		my $errmsg = $gsl_pkgcfg->errmsg;
-		print "
+    if ($gsl_pkgcfg->errmsg) {
+        my $errmsg = $gsl_pkgcfg->errmsg;
+        print "
 ***
 *** PkgConfig failed with error message: $errmsg
 *** Probably you need to install GSL?
-*** Get GSL at http://www.gnu.org/software/gsl\n";
-		exit 0;
-	}
+***  On Debian/Ubuntu you can use:
+***      sudo apt-get install libgsl0-dev
+***  On Mac you can use homebrew (http://brew.sh/):
+***      brew install gsl
+***  On Fedora/CentOS/RedHat/openSUSE you can use
+***      sudo yum install gsl-devel
+*** Or get GSL at http://www.gnu.org/software/gsl\n";
+        exit 0;
+    }
 
-	my $gsl_version = $gsl_pkgcfg->pkg_version;
-	if (GSLBuilder::cmp_versions($gsl_version, $MIN_GSL_VERSION) == -1) {
-	            printf "
+    my $gsl_version = $gsl_pkgcfg->pkg_version;
+    if (GSLBuilder::cmp_versions($gsl_version, $MIN_GSL_VERSION) == -1) {
+                printf "
 *** 
 *** You need to have GSL %s or greater installed. (You have $gsl_version).
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
-	            exit 0;
-	        }
+                exit 0;
+            }
 
-	return {
-		gsl_version => $gsl_version,
-		gsl_prefix  => $gsl_pkgcfg->get_var("prefix"),
-		gsl_libs    => join (" ", $gsl_pkgcfg->get_ldflags),
-		gsl_cflags  => join (" ", $gsl_pkgcfg->get_cflags),
-	};
+    return {
+        gsl_version => $gsl_version,
+        gsl_prefix  => $gsl_pkgcfg->get_var("prefix"),
+        gsl_libs    => join (" ", $gsl_pkgcfg->get_ldflags),
+        gsl_cflags  => join (" ", $gsl_pkgcfg->get_cflags),
+    };
 }
 
 sub check_gsl_version {
 
-	print "\nChecking for GSL using gsl-config\n";
+    print "\nChecking for GSL using gsl-config\n";
 
-	chomp(my $gsl_version = qx{gsl-config --version});
-	chomp(my $gsl_prefix  = qx{gsl-config --prefix});
-	chomp(my $gsl_cflags  = qx{gsl-config --cflags});
-	chomp(my $gsl_libs    = qx{gsl-config --libs});
-
-	my $path_system = catfile(qw/swig system.i/);
-
-	open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
-
-	my $current_version;
-
-	if (defined $gsl_version) {
-	    if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
-	        $current_version = $1;
-	        my @current = split /\./, $current_version;
-	        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
-	        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
-
-	        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
-	            printf "
-*** 
-*** You need to have GSL %s or greater installed. (You have $gsl_version).
-*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
-	            exit 0;
-	        } else {
-	            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
-	            return {
-	            	gsl_version => $current_version,
-	            	gsl_prefix  => $gsl_prefix,
-	            	gsl_libs    => $gsl_libs,
-	            	gsl_cflags  => $gsl_cflags,
-	            };
-	        }
-	    } else {
-	        print "
-*** 
-*** Can't parse GSL version $gsl_version.
-*** Trying with PkgConfig.
-	";
-		return undef;
-	    }
-	} else {
-	    print "
+    my $gsl_version = qx{gsl-config --version};
+    if (not defined $gsl_version) {
+        print "
 *** 
 *** Can't find GSL with gsl-config. 
 *** Trying with PkgConfig.
-	";
-	    return undef;
-	}
-	close $fh or die "Could not close $path_system : $!";
+    ";
+        return undef;
+    }
+
+    chomp($gsl_version);
+    chomp(my $gsl_prefix  = qx{gsl-config --prefix});
+    chomp(my $gsl_cflags  = qx{gsl-config --cflags});
+    chomp(my $gsl_libs    = qx{gsl-config --libs});
+
+    my $path_system = catfile(qw/swig system.i/);
+
+    open my $fh, ">", "$path_system" or die "Could not create $path_system : $!";
+
+    my $current_version;
+
+    if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
+        $current_version = $1;
+        my @current = split /\./, $current_version;
+        print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
+        print $fh "#define GSL_MINOR_VERSION $current[1]\n";
+
+        if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
+            printf "
+*** 
+*** You need to have GSL %s or greater installed. (You have $gsl_version).
+*** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
+            exit 0;
+        } else {
+            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
+            return {
+                gsl_version => $current_version,
+                gsl_prefix  => $gsl_prefix,
+                gsl_libs    => $gsl_libs,
+                gsl_cflags  => $gsl_cflags,
+            };
+        }
+    } else {
+        print "
+*** 
+*** Can't parse GSL version $gsl_version.
+*** Trying with PkgConfig.
+";
+        return undef;
+    }
+    close $fh or die "Could not close $path_system : $!";
 }

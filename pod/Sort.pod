@@ -142,7 +142,7 @@ documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 =head1 PERFORMANCE
 
 In the source code of Math::GSL, the file "examples/benchmark/sort" compares
-the performance of gsl_sort() to Perl's builtin sort() function. It's first
+the performance of gsl_sort() to Perl's builtin sort() function. Its first
 argument is the number of iterations and the second is the size of the array
 of numbers to sort. For example, to see a benchmark of 1000 iterations for 
 arrays of size 50000 you would type

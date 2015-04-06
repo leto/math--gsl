@@ -216,7 +216,7 @@ sub norm($;$)
 
 =head2 normalize($p)
 
-Divide each element of a vector by it's norm, hence creating a unit vector.
+Divide each element of a vector by its norm, hence creating a unit vector.
 Returns the vector for chaining.  If you just want the value of the norm
 without changing the vector, use C<norm()>. The default value for C<$p> is 2,
 which gives the familiar Euclidean distance norm.

@@ -59,7 +59,7 @@ Version 0.34
     # which will stringify to a version number
     my $gsl_version = gsl_version();
 
-Each GSL subsystem has it's own module. For example, the random number generator
+Each GSL subsystem has its own module. For example, the random number generator
 subsystem is Math::GSL::RNG. Many subsystems have a more Perlish and
 object-oriented frontend which can be used, as the above example shows. The raw
 GSL object is useful for using the low-level GSL functions, which in the case of

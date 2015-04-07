@@ -79,7 +79,7 @@
 
     $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
     argvi++;
-} 
+}
 
 %apply double * { double *data, double *dest };
 

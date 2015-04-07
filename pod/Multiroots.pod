@@ -1,24 +1,24 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_multiroot_fdjacobian 
-               gsl_multiroot_fsolver_alloc 
-               gsl_multiroot_fsolver_free 
-               gsl_multiroot_fsolver_set 
-               gsl_multiroot_fsolver_iterate 
-               gsl_multiroot_fsolver_name 
-               gsl_multiroot_fsolver_root 
-               gsl_multiroot_fsolver_dx 
-               gsl_multiroot_fsolver_f 
-               gsl_multiroot_fdfsolver_alloc 
-               gsl_multiroot_fdfsolver_set 
-               gsl_multiroot_fdfsolver_iterate 
-               gsl_multiroot_fdfsolver_free 
-               gsl_multiroot_fdfsolver_name 
-               gsl_multiroot_fdfsolver_root 
-               gsl_multiroot_fdfsolver_dx 
-               gsl_multiroot_fdfsolver_f 
-               gsl_multiroot_test_delta 
-               gsl_multiroot_test_residual 
+               gsl_multiroot_fdjacobian
+               gsl_multiroot_fsolver_alloc
+               gsl_multiroot_fsolver_free
+               gsl_multiroot_fsolver_set
+               gsl_multiroot_fsolver_iterate
+               gsl_multiroot_fsolver_name
+               gsl_multiroot_fsolver_root
+               gsl_multiroot_fsolver_dx
+               gsl_multiroot_fsolver_f
+               gsl_multiroot_fdfsolver_alloc
+               gsl_multiroot_fdfsolver_set
+               gsl_multiroot_fdfsolver_iterate
+               gsl_multiroot_fdfsolver_free
+               gsl_multiroot_fdfsolver_name
+               gsl_multiroot_fdfsolver_root
+               gsl_multiroot_fdfsolver_dx
+               gsl_multiroot_fdfsolver_f
+               gsl_multiroot_test_delta
+               gsl_multiroot_test_residual
                $gsl_multiroot_fsolver_dnewton
                $gsl_multiroot_fsolver_broyden
                $gsl_multiroot_fsolver_hybrid
@@ -36,7 +36,7 @@ __END__
 
 =head1 NAME
 
-Math::GSL::Multiroots - Multidimensional root-finding 
+Math::GSL::Multiroots - Multidimensional root-finding
 
 
 =head1 SYNOPSIS
@@ -51,7 +51,7 @@ Solving nonlinear systems with n equations in n unknowns.
 
 Here is a list of all the functions in this module :
 
-=over 
+=over
 
 =item * C<gsl_multiroot_fdjacobian >
 

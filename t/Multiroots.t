@@ -31,7 +31,7 @@ sub TEST_FSOLVER_SET : Tests {
     local $TODO = 'need gsl_multiroot_function typemap';
     my $self = shift;
     my $vector = Math::GSL::Vector->new(2);
-    ok_status(gsl_multiroot_fsolver_set($self->{fsolver}, 
+    ok_status(gsl_multiroot_fsolver_set($self->{fsolver},
             sub { die 'This will surely fail' },
             $vector->raw,
     ));
@@ -44,7 +44,7 @@ sub TEST_FDFSOLVER_ALLOC : Tests {
 
 sub TEST_FSOLVER_TYPES : Tests {
     my $self = shift;
-    isa_ok( $_, 'Math::GSL::Multiroots') 
+    isa_ok( $_, 'Math::GSL::Multiroots')
         for ($gsl_multiroot_fsolver_dnewton,
             $gsl_multiroot_fsolver_broyden,
             $gsl_multiroot_fsolver_hybrid,

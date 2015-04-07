@@ -11,12 +11,12 @@ use Math::GSL::Sys qw/gsl_nan gsl_isnan gsl_isinf/;
 use Data::Dumper;
 use Carp qw/croak/;
 our @EXPORT = qw();
-our @EXPORT_OK = qw( 
-                     is_similar ok_similar 
+our @EXPORT_OK = qw(
+                     is_similar ok_similar
                      ok_similar_relative
-                     is_similar_relative 
-                     verify verify_results 
-                     is_windows 
+                     is_similar_relative
+                     verify verify_results
+                     is_windows
                      ok_status is_status_ok
 );
 use constant GSL_IS_WINDOWS =>  ($^O =~ /MSWin32/i)  ?  1 : 0 ;
@@ -51,17 +51,17 @@ Returns true if current system is Windows-like.
 sub is_windows() { GSL_IS_WINDOWS }
 
 =head2 is_similar($x,$y;$eps,$similarity_function)
-    
+
     is_similar($x,$y);
     is_similar($x, $y, 1e-7);
     is_similar($x,$y, 1e-3, sub { ... } );
 
-Return true if $x and $y are within $eps of each other, i.e. 
+Return true if $x and $y are within $eps of each other, i.e.
 
-    abs($x-$y) <= $eps 
+    abs($x-$y) <= $eps
 
-If passed a code reference $similarity_function, it will pass $x and $y as parameters to it and 
-will check to see if 
+If passed a code reference $similarity_function, it will pass $x and $y as parameters to it and
+will check to see if
 
     $similarity_function->($x,$y_) <= $eps
 
@@ -78,7 +78,7 @@ sub is_similar {
             diag "is_similar(): items differ in length, $#$x != $#$y !!!";
             return 0;
         } else {
-            map { 
+            map {
                     my $delta = (gsl_isnan($x->[$_]) or gsl_isnan($y->[$_])) ? gsl_nan() : abs($x->[$_] - $y->[$_]);
                     if($delta > $eps){
                         diag "\n\tElements start differing at index $_, delta = $delta\n";
@@ -92,7 +92,7 @@ sub is_similar {
     } else {
         if( ref $similarity_function eq 'CODE') {
                $similarity_function->($x,$y) <= $eps ? return 1 : return 0;
-        } elsif( defined $x && defined $y) { 
+        } elsif( defined $x && defined $y) {
             my $delta = (gsl_isnan($x) or gsl_isnan($y)) ? gsl_nan() : abs($x-$y);
             $delta > $eps ? diag qq{\t\t\$x=$x\n\t\t\$y=$y\n\t\tdelta=$delta\n} && return 0 : return 1;
         } else {
@@ -120,7 +120,7 @@ sub verify_results
         my $status   = eval qq{${class}::$code};
 
         ok(0, qq{'$code' died} ) if !defined $status;
-        
+
         if ( defined $r && $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};
 
@@ -137,7 +137,7 @@ sub verify_results
             }
             if (gsl_isnan($x)) {
                     ok( gsl_isnan($expected), sprintf("'$expected'?='$x' (%16b ?= %16b)", $expected, $x) );
-            } elsif(gsl_isinf($x)) { 
+            } elsif(gsl_isinf($x)) {
                     ok( gsl_isinf($expected), sprintf("'$expected'?='$x' (%16b ?= %16b)", $expected, $x) );
             } else {
                     cmp_ok( $res,'<=', $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );
@@ -146,12 +146,12 @@ sub verify_results
     }
 }
 
-=head2 verify( $results, $class) 
+=head2 verify( $results, $class)
 
 Takes a hash reference of key/value pairs where the keys are bits of code, which when evaluated should
 be within some tolerance of the value. For example:
 
-    my $results = { 
+    my $results = {
                     'gsl_cdf_ugaussian_P(2.0)'        => [ 0.977250, 1e-5 ],
                     'gsl_cdf_ugaussian_Q(2.0)'        => [ 0.022750, 1e-7 ],
                     'gsl_cdf_ugaussian_Pinv(0.977250)'=> [ 2.000000 ],
@@ -186,7 +186,7 @@ sub verify
                ok( gsl_isinf($expected), "'$expected'?='$x'" );
         } else {
             my $res = abs($x - $expected);
-            ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );    
+            ok( $res <= $eps, "$code ?= $x,\nres= +-$res, eps=$eps" );
         }
     }
 }

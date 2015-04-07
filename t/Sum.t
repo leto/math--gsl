@@ -44,28 +44,28 @@ sub ACCEL : Tests  {
       }
 
   my $w = gsl_sum_levin_utrunc_alloc (50);
-  
+
   my @got = gsl_sum_levin_utrunc_accel ($t, 50, $w);
   ok_status($got[0], $GSL_SUCCESS);
   ok(is_similar_relative($got[1], $zeta_2, 1e-8), "trunc result, zeta(2)");
 
-  # No need to check precision for truncated result since this is not a meaningful number 
+  # No need to check precision for truncated result since this is not a meaningful number
 
   gsl_sum_levin_utrunc_free ($w);
- 
- 
+
+
   $w = gsl_sum_levin_u_alloc (50);
 
   @got = gsl_sum_levin_u_accel ($t, 50, $w);
   ok_status($got[0], $GSL_SUCCESS);
   ok(is_similar_relative($got[1], $zeta_2, 1e-8), "full result, zeta(2)");
-  
+
   my $sd_est = -(log($got[2]/abs($got[1]))/log(10));
   my $sd_actual = -(log($GSL_DBL_EPSILON + abs(($got[1] - $zeta_2)/$zeta_2))/log(10));
 
-  # Allow one digit of slop 
-  
-  local $TODO = "The error test from GSL fails here"; 
+  # Allow one digit of slop
+
+  local $TODO = "The error test from GSL fails here";
   ok ($sd_est > $sd_actual + 1.0, "full significant digits, zeta(2) ($sd_est vs $sd_actual)");
 
   gsl_sum_levin_u_free ($w);
@@ -82,27 +82,27 @@ sub ACCEL2 : Tests  {
        $t->[$n] = $t->[$n - 1] * ($x / $n);
     }
   my $w = gsl_sum_levin_utrunc_alloc (50);
-  
+
   my @got = gsl_sum_levin_utrunc_accel ($t, 50, $w);
   ok_status($got[0], $GSL_SUCCESS);
   ok(is_similar_relative($got[1], $y, 1e-8), "trunc result, exp(10)");
 
-  # No need to check precision for truncated result since this is not a meaningful number 
+  # No need to check precision for truncated result since this is not a meaningful number
 
   gsl_sum_levin_utrunc_free ($w);
- 
- 
+
+
   $w = gsl_sum_levin_u_alloc (50);
 
   @got = gsl_sum_levin_u_accel ($t, 50, $w);
   ok_status($got[0], $GSL_SUCCESS);
   ok(is_similar_relative($got[1], $y, 1e-8), "full result, exp(10)");
-  
+
   my $sd_est = -(log($got[2]/abs($got[1]))/log(10));
   my $sd_actual = -(log($GSL_DBL_EPSILON + abs(($got[1] - $y)/$y))/log(10));
 
-  # Allow one digit of slop 
-  local $TODO = "The error test from GSL fails here"; 
+  # Allow one digit of slop
+  local $TODO = "The error test from GSL fails here";
   ok ($sd_est > $sd_actual + 1.0, "full significant digits, exp(10) ($sd_est vs $sd_actual)");
 
   gsl_sum_levin_u_free ($w);

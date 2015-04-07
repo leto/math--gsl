@@ -21,36 +21,36 @@ sub teardown : Test(teardown) {
     unlink 'combo.txt' if -e 'combo.txt';
 }
 
-sub GSL_COMBINATION_ALLOC : Tests { 
+sub GSL_COMBINATION_ALLOC : Tests {
     my $c = gsl_combination_alloc(2,2);
     isa_ok($c, 'Math::GSL::Combination');
 }
 
-sub GSL_COMBINATION_CALLOC : Tests { 
+sub GSL_COMBINATION_CALLOC : Tests {
     my $c = gsl_combination_calloc(2,2);
     isa_ok($c, 'Math::GSL::Combination');
 }
 
 sub GSL_COMBINATION_GET : Tests {
-    my $self = shift; 
-    map {ok(gsl_combination_get($self->{comb}, $_) eq $_) } (0..4);   
+    my $self = shift;
+    map {ok(gsl_combination_get($self->{comb}, $_) eq $_) } (0..4);
 }
 
 sub GSL_COMBINATION_NEXT : Tests {
-    my $c = gsl_combination_calloc(6,3);  
+    my $c = gsl_combination_calloc(6,3);
     is_deeply( [ map{ gsl_combination_get($c,$_) } (0..1) ] , [ 0 .. 1 ] );
     ok_status(gsl_combination_next($c));
     is_deeply( [ map{ gsl_combination_get($c,$_) } (0..2) ] , [ 0, 1, 3 ] );
-} 
+}
 
-sub NEW : Tests { 
+sub NEW : Tests {
     my $c = Math::GSL::Combination->new(5,5);
     isa_ok($c, 'Math::GSL::Combination');
     is_deeply( [ map { gsl_combination_get($c->raw, $_) } (0..4) ],
-        [ 0 .. 4 ] );   
+        [ 0 .. 4 ] );
 }
 
-sub AS_LIST: Tests { 
+sub AS_LIST: Tests {
     my $self = shift;
     is_deeply( [ $self->{obj}->as_list ] , [ 0 .. 4 ] );
 }
@@ -68,14 +68,14 @@ sub ELEMENTS : Tests {
 sub NEXT_STATUS : Tests {
     my $c = Math::GSL::Combination->new(6,3);
     $c->next();
-    ok( $c->status() == 0 );    
+    ok( $c->status() == 0 );
 }
 
 sub PREV_STATUS : Tests {
     my $c = Math::GSL::Combination->new(6,3);
     $c->next();
     $c->prev();
-    ok( $c->status() == 0 );    
+    ok( $c->status() == 0 );
 }
 
 sub FWRITE : Tests {
@@ -91,7 +91,7 @@ sub FWRITE : Tests {
 
 sub NEXT : Tests {
     my $c = Math::GSL::Combination->new(6,3);
-    
+
     is_deeply( [ $c->as_list ] , [ 0 .. 2 ] );
     $c->next;
     ok_status( $c->status );

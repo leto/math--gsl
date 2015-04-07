@@ -27,7 +27,7 @@ sub GSL_HISTOGRAM2D_ALLOC : Tests {
     ok(!$@, 'gsl_histogram_free');
 }
 
-sub GSL_HISTOGRAM2D_SET_RANGES : Tests { 
+sub GSL_HISTOGRAM2D_SET_RANGES : Tests {
     my $self = shift;
     my $ranges = [ 0 .. 100];
     ok_status(gsl_histogram2d_set_ranges($self->{H}, $ranges, 100 + 1, $ranges, 100+1));
@@ -54,7 +54,7 @@ sub CLONE : Tests {
     isa_ok( $copy, 'Math::GSL::Histogram2D::gsl_histogram2d');
 }
 
-sub INCREMENT : Tests { 
+sub INCREMENT : Tests {
     my $self = shift;
     gsl_histogram2d_set_ranges_uniform($self->{H}, 0, 100, 0, 100);
 
@@ -63,7 +63,7 @@ sub INCREMENT : Tests {
     ok_status(gsl_histogram2d_increment($self->{H}, 150.5, 150.5 ), $GSL_EDOM);
 }
 
-sub GET : Tests { 
+sub GET : Tests {
     my $self = shift;
     gsl_histogram2d_set_ranges_uniform($self->{H}, 0, 100, 0, 100);
 
@@ -102,7 +102,7 @@ sub MEAN : Tests {
 sub SUM : Tests {
     my $self = shift;
     gsl_histogram2d_set_ranges_uniform($self->{H}, 0, 100, 0, 100);
-    
+
     ok_status(gsl_histogram2d_increment($self->{H}, 50.5, 50.5 ));
     ok_status(gsl_histogram2d_increment($self->{H}, 11.5, 11.5 ));
     ok_similar(2, gsl_histogram2d_sum($self->{H}));
@@ -124,12 +124,12 @@ sub FWRITE_FREAD : Tests {
     gsl_histogram2d_set_ranges_uniform($H, 0, 5, 0, 5);
     ok_status(gsl_histogram2d_increment($H, 0.5, 1.5 ));
 
-    ok_status(gsl_histogram2d_fwrite($stream, $H));  
+    ok_status(gsl_histogram2d_fwrite($stream, $H));
     ok_status(gsl_fclose($stream));
-   
+
     $stream = gsl_fopen("histogram2d", 'r');
-    my $h = gsl_histogram2d_alloc(5, 5);  
-    ok_status(gsl_histogram2d_fread($stream, $h));  
+    my $h = gsl_histogram2d_alloc(5, 5);
+    ok_status(gsl_histogram2d_fread($stream, $h));
     is_deeply( [ map { gsl_histogram2d_get($h, 0, $_) } (0..4) ],
                [ 0, 1, (0) x 3 ]
     );
@@ -169,7 +169,7 @@ sub ACCUMULATE : Tests {
     ok_status(gsl_histogram2d_accumulate($self->{H}, -150.5, -150.5, 3 ), $GSL_EDOM);
 }
 
-sub NX_NY : Tests { 
+sub NX_NY : Tests {
     my $self = shift;
     gsl_histogram2d_set_ranges_uniform($self->{H}, 0, 100, 0, 100);
     cmp_ok(gsl_histogram2d_nx($self->{H}), '==', 100);
@@ -208,7 +208,7 @@ sub GSL_HISTOGRAM2D_XSIGMA : Tests(1) {
     is_similar(42, $xsigma, 1e-8, 'gsl_histogram2d_xsigma');
 }
 
-sub EQUAL_BINS_P : Tests { 
+sub EQUAL_BINS_P : Tests {
     my $self = shift;
     my $h2 = gsl_histogram2d_alloc(100,100);
     gsl_histogram2d_set_ranges_uniform($self->{H}, 0, 100, 0, 100);
@@ -277,12 +277,12 @@ sub FPRINTF_FSCANF : Tests {
     gsl_histogram2d_set_ranges_uniform($H, 0, 5, 0, 5);
     ok_status(gsl_histogram2d_increment($H, 0.5, 0.5 ));
 
-    ok_status(gsl_histogram2d_fprintf($stream, $H, "%e", "%e"));  
+    ok_status(gsl_histogram2d_fprintf($stream, $H, "%e", "%e"));
     ok_status(gsl_fclose($stream));
-   
+
     $stream = gsl_fopen("histogram2d", 'r');
-    my $h = gsl_histogram2d_alloc(5,5);  
-    ok_status(gsl_histogram2d_fscanf($stream, $h));  
+    my $h = gsl_histogram2d_alloc(5,5);
+    ok_status(gsl_histogram2d_fscanf($stream, $h));
     is_deeply( [ map { gsl_histogram2d_get($h, 0, $_) } (0..4) ],
                [ 1, (0) x 4 ]
     );

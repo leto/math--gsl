@@ -1,22 +1,22 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_combination_alloc 
-               gsl_combination_calloc 
-               gsl_combination_init_first 
-               gsl_combination_init_last 
-               gsl_combination_free 
-               gsl_combination_memcpy 
-               gsl_combination_fread 
-               gsl_combination_fwrite 
-               gsl_combination_fscanf 
-               gsl_combination_fprintf 
-               gsl_combination_n 
-               gsl_combination_k 
-               gsl_combination_data 
-               gsl_combination_get 
-               gsl_combination_valid 
-               gsl_combination_next 
-               gsl_combination_prev 
+               gsl_combination_alloc
+               gsl_combination_calloc
+               gsl_combination_init_first
+               gsl_combination_init_last
+               gsl_combination_free
+               gsl_combination_memcpy
+               gsl_combination_fread
+               gsl_combination_fwrite
+               gsl_combination_fscanf
+               gsl_combination_fprintf
+               gsl_combination_n
+               gsl_combination_k
+               gsl_combination_data
+               gsl_combination_get
+               gsl_combination_valid
+               gsl_combination_next
+               gsl_combination_prev
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -61,12 +61,12 @@ initializes it to the lexicographically first combination.
 =item * C<gsl_combination_init_first($c)>
 
 This function initializes the combination $c to the lexicographically first
-combination, i.e. (0,1,2,...,k-1). 
+combination, i.e. (0,1,2,...,k-1).
 
 =item * C<gsl_combination_init_last($c)>
 
 This function initializes the combination $c to the lexicographically last
-combination, i.e. (n-k,n-k+1,...,n-1). 
+combination, i.e. (n-k,n-k+1,...,n-1).
 
 =item * C<gsl_combination_free($c)>
 
@@ -174,7 +174,7 @@ sub get {
 sub raw { (shift)->{_combination} }
 sub length { (shift)->{_length} }
 
-sub elements { 
+sub elements {
     my $self = shift;
     return gsl_combination_k($self->{_combination});
 }
@@ -208,7 +208,7 @@ sub prev {
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
- 
+
 
 
 =head1 AUTHORS

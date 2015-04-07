@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 # interfc
-#   v0.2   Keith Lofstrom   2008 Sept 18 
+#   v0.2   Keith Lofstrom   2008 Sept 18
 #         with tweaks by Jonathan Leto
 #
-# Compare the results of numerical integration of 
+# Compare the results of numerical integration of
 # (2.0/sqrt(PI)*integral[x,inf](e^(-x^2) ) with the
-# erfc() function.   
+# erfc() function.
 #
 # The results are pretty good, within 1e-14 or better
 # for the examples tried

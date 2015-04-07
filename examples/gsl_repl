@@ -4,7 +4,7 @@ use Devel::REPL;
 
 package Devel::REPL::Plugin::GSL;
 use Devel::REPL::Plugin;
-sub BEFORE_PLUGIN 
+sub BEFORE_PLUGIN
 {
     package Devel::REPL::Plugin::Packages::DefaultScratchpad;
     use aliased 'Math::GSL::Matrix';
@@ -20,7 +20,7 @@ sub BEFORE_PLUGIN
 }
 
 # FancyPrompt
-my @plugins = qw(GSL History LexEnv Colors Packages Timing); 
+my @plugins = qw(GSL History LexEnv Colors Packages Timing);
 my $repl = Devel::REPL->new;
 $repl->load_plugin($_) for @plugins;
 $repl->run;

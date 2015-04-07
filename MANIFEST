@@ -546,6 +546,7 @@ t/Vector.t
 t/VectorComplex.t
 t/Wavelet.t
 t/Wavelet2D.t
+t/style-trailing-space.t
 TODO
 xs/BLAS_wrap.1.11.c
 xs/BLAS_wrap.1.12.c

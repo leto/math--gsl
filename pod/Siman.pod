@@ -1,7 +1,7 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_siman_solve 
-               gsl_siman_solve_many 
+               gsl_siman_solve
+               gsl_siman_solve_many
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -35,7 +35,7 @@ Here is a list of all the functions in this module :
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
- 
+
 
 
 =head1 AUTHORS

@@ -25,7 +25,7 @@ sub teardown : Test(teardown) {
 sub TEST_CONSTANTS : Tests {
     ok(defined $GSL_INTEG_COSINE  , '$GSL_INTEG_COSINE');
     ok(defined $GSL_INTEG_SINE    , '$GSL_INTEG_SINE');
-    ok(defined $GSL_INTEG_GAUSS15 , '$GSL_INTEG_GAUSS15'); 
+    ok(defined $GSL_INTEG_GAUSS15 , '$GSL_INTEG_GAUSS15');
     ok(defined $GSL_INTEG_GAUSS21 , '$GSL_INTEG_GAUSS21');
     ok(defined $GSL_INTEG_GAUSS31 , '$GSL_INTEG_GAUSS31');
     ok(defined $GSL_INTEG_GAUSS41 , '$GSL_INTEG_GAUSS41');
@@ -36,14 +36,14 @@ sub TEST_CONSTANTS : Tests {
 sub TEST_QAG : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qag (
-                                sub { $_[0]**2} , 
+                                sub { $_[0]**2} ,
                                 0, 1, 0, 1e-7, 1000,
-                                6, $self->{wspace}, 
+                                6, $self->{wspace},
                            );
     ok_status($status);
     my $res = abs($result - 1/3);
-    ok_similar( 
-        [$result], [1/3], 
+    ok_similar(
+        [$result], [1/3],
         sprintf('gsl_integration_qag: res=%.18f, abserr=%.18f',$res,$abserr),
         $abserr
     );
@@ -60,14 +60,14 @@ sub TEST_QAGI : Tests {
 sub TEST_QAGIU : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qagiu (
-                                sub { my $x=shift; log($x)/(1+100+$x**2) } , 
+                                sub { my $x=shift; log($x)/(1+100+$x**2) } ,
                                     0.0, 0.0, 1.0E-3, 1000,
-                                $self->{wspace} 
+                                $self->{wspace}
                             );
     ok_status($status);
     ok_similar([$abserr],[ 3.016716913328831851E-06], "gsl_integration_qagiu absolute error",1e-5);
 
-    my $integrator = 'gsl_integration_qagiu';    
+    my $integrator = 'gsl_integration_qagiu';
     my $func = sub { my $x=shift; log($x)/(1+100+$x**2) };
     verify_integral($integrator, $func, 3.616892186127022568E-01, 0, 2e-3, 0);
 
@@ -91,7 +91,7 @@ sub verify_integral {
     }
     { no strict 'refs'; ($status, $result, $abserr) = $integrator->( @params ) }
     ok_status($status);
-    ok_similar( [$result], [$actual], 
+    ok_similar( [$result], [$actual],
         sprintf( $format,$actual,
             abs($result-$actual)/abs($actual),$abserr
         ), $epsrel
@@ -102,14 +102,14 @@ sub verify_integral {
 sub TEST_QAG2 : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qag (
-                                sub { 1/$_[0] } , 
+                                sub { 1/$_[0] } ,
                                 1, 10, 0, 1e-7, 1000,
-                                5, $self->{wspace}, 
+                                5, $self->{wspace},
                            );
     ok_status($status);
     my $res = abs($result - log 10);
-    ok_similar( 
-        [$result],[log 10], 
+    ok_similar(
+        [$result],[log 10],
         sprintf('gsl_integration_qags: res=%.18f, abserr=%.18f',$res,$abserr),
         $abserr
     );
@@ -120,35 +120,35 @@ sub TEST_QAG2 : Tests {
 sub TEST_QAGS3 : Tests {
     my $self = shift;
     my ($status, $result, $abserr) = gsl_integration_qags (
-                                sub { my $x=shift; $x ** 2 * log (1/$x) } , 
+                                sub { my $x=shift; $x ** 2 * log (1/$x) } ,
                                 0, 1, 0, 1e-7, 1000,
-                                $self->{wspace}, 
+                                $self->{wspace},
                            );
     ok_status($status);
     my $res = abs($result - 1/9);
-    ok_similar( 
-        [$result],[1/9], 
+    ok_similar(
+        [$result],[1/9],
         sprintf('gsl_integration_qags: res=%.18f, abserr=%.18f',$res,$abserr),
         $abserr
     );
 }
 
 
-sub TEST_WORKSPACE_ALLOC : Tests { 
+sub TEST_WORKSPACE_ALLOC : Tests {
     my $self = shift;
     isa_ok($self->{wspace}, 'Math::GSL::Integration');
 }
 
 sub TEST_QNG : Tests {
     my ($status, $result, $abserr, $neval) = gsl_integration_qng (
-                                sub { $_[0]**2} , 
-                                0, 1, 0, 1e-7, 
+                                sub { $_[0]**2} ,
+                                0, 1, 0, 1e-7,
                            );
     ok_status($status);
     my $res = abs($result - 1/3);
     ok( $neval > 0, 'returned number of evaluations');
-    ok_similar( 
-        [$result], [1/3], 
+    ok_similar(
+        [$result], [1/3],
         sprintf('gsl_integration_qng: res=%.18f, abserr=%.18f',$res,$abserr),
        $abserr
     );
@@ -161,6 +161,6 @@ sub QAWS_ALLOC : Tests {
 
 sub QAWO_ALLOC : Tests {
    my $table = gsl_integration_qawo_table_alloc(10.0 * $M_PI, 1.0,$GSL_INTEG_SINE, 1000);
-   isa_ok($table, 'Math::GSL::Integration'); 
+   isa_ok($table, 'Math::GSL::Integration');
 }
 Test::Class->runtests;

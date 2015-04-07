@@ -28,7 +28,7 @@ sub GSL_WAVELET_ALLOC_FREE : Tests {
     isa_ok( $self->{workspace}, 'Math::GSL::Wavelet', 'gsl_wavelet_workspace_alloc' );
 }
 
-sub GSL_WAVELET_TYPES : Tests { 
+sub GSL_WAVELET_TYPES : Tests {
 
     ok( blessed $gsl_wavelet_bspline );
     ok( blessed $gsl_wavelet_bspline_centered );
@@ -38,18 +38,18 @@ sub GSL_WAVELET_TYPES : Tests {
     ok( blessed $gsl_wavelet_daubechies_centered);
 
 }
-sub GSL_WAVELET_TRANSFORM_FORWARD : Tests { 
+sub GSL_WAVELET_TRANSFORM_FORWARD : Tests {
     my $self = shift;
 
     my $status = gsl_wavelet_transform_forward ($self->{wavelet},[0..255],
-             1.0, 256, $self->{workspace} ); 
+             1.0, 256, $self->{workspace} );
     ok( $status == $GSL_SUCCESS , 'gsl_wavelet_transform_forward' );
 }
 
-sub GSL_WAVELET_TRANSFORM_INVERSE : Tests { 
+sub GSL_WAVELET_TRANSFORM_INVERSE : Tests {
     my $self = shift;
 
-    my $status = gsl_wavelet_transform_inverse ($self->{wavelet},[0..255],1.0, 256, $self->{workspace} ); 
+    my $status = gsl_wavelet_transform_inverse ($self->{wavelet},[0..255],1.0, 256, $self->{workspace} );
     ok( $status == $GSL_SUCCESS , 'gsl_wavelet_transform_inverse' );
 }
 

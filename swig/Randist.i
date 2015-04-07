@@ -24,7 +24,7 @@ void gsl_ran_bivariate_gaussian (const gsl_rng * r, double sigma_x, double sigma
     len = av_len(tempav);
     $1 = (int **) malloc((len+2)*sizeof(int *));
     for (i = 0; i <= len; i++) {
-        tv = av_fetch(tempav, i, 0);    
+        tv = av_fetch(tempav, i, 0);
         x  = SvIV(*tv);
         memset((int*)($1+i), x , 1);
         //printf("curr = %d\n", (int)($1+i) );
@@ -69,7 +69,7 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
     #include "../c/Randist.c"
 
     /* create wrappers for multinormial and dirichlet */
-    
+
     /* void gsl_ran_dirichlet (const gsl_rng * r, size_t K, const double alpha[], double theta[]) */
     array_wrapper * gsl_ran_dirichlet_wrapper(const gsl_rng * r, size_t K, const double alpha[]){
         array_wrapper * wrapper = array_wrapper_alloc(K, awDouble);
@@ -78,13 +78,13 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
     }
     /* double gsl_ran_dirichlet_pdf (size_t K, const double alpha[], const double theta[]) */
     double gsl_ran_dirichlet_pdf_wrapper(size_t K1, const double theta[], size_t K2, const double alpha[]){
-        if (K1 != K2)   
+        if (K1 != K2)
             croak("gsl_ran_dirichlet_pdf - arrays need to be same size");
         return gsl_ran_dirichlet_pdf (K1, alpha, theta);
     }
     /* double gsl_ran_dirichlet_lnpdf (size_t K, const double alpha[], const double theta[]) */
     double gsl_ran_dirichlet_lnpdf_wrapper(size_t K1, const double theta[], size_t K2, const double alpha[]){
-        if (K1 != K2)   
+        if (K1 != K2)
             croak("gsl_ran_dirichlet_lnpdf - arrays need to be same size");
         return gsl_ran_dirichlet_lnpdf (K1, alpha, theta);
     }
@@ -97,13 +97,13 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
     }
     /* double gsl_ran_multinomial_pdf (size_t K, const double p[], const unsigned int n[]) */
     double gsl_ran_multinomial_pdf_wrapper (size_t K1, const unsigned int n[], size_t K2, const double p[]){
-        if (K1 != K2)   
+        if (K1 != K2)
             croak("gsl_ran_multinomial_pdf - arrays need to be same size");
         return gsl_ran_multinomial_pdf (K1, p, n);
     }
     /* double gsl_ran_multinomial_lnpdf (size_t K, const double p[], const unsigned int n[]) */
     double gsl_ran_multinomial_lnpdf_wrapper (size_t K1, const unsigned int n[], size_t K2, const double p[]){
-        if (K1 != K2)   
+        if (K1 != K2)
             croak("gsl_ran_multinomial_lnpdf - arrays need to be same size");
         return gsl_ran_multinomial_lnpdf (K1, p, n);
     }
@@ -114,7 +114,7 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
         gsl_ran_dir_nd(r, n, (double*)(wrapper->data));
         return wrapper;
     }
-    
+
 %}
 
 

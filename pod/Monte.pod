@@ -1,20 +1,20 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_monte_miser_integrate 
-               gsl_monte_miser_alloc 
-               gsl_monte_miser_init 
-               gsl_monte_miser_free 
-               gsl_monte_plain_integrate 
-               gsl_monte_plain_alloc 
-               gsl_monte_plain_init 
-               gsl_monte_plain_free 
-               gsl_monte_vegas_integrate 
-               gsl_monte_vegas_alloc 
-               gsl_monte_vegas_init 
-               gsl_monte_vegas_free 
-               $GSL_VEGAS_MODE_IMPORTANCE 
-               $GSL_VEGAS_MODE_IMPORTANCE_ONLY 
-               $GSL_VEGAS_MODE_STRATIFIED 
+               gsl_monte_miser_integrate
+               gsl_monte_miser_alloc
+               gsl_monte_miser_init
+               gsl_monte_miser_free
+               gsl_monte_plain_integrate
+               gsl_monte_plain_alloc
+               gsl_monte_plain_init
+               gsl_monte_plain_free
+               gsl_monte_vegas_integrate
+               gsl_monte_vegas_alloc
+               gsl_monte_vegas_init
+               gsl_monte_vegas_free
+               $GSL_VEGAS_MODE_IMPORTANCE
+               $GSL_VEGAS_MODE_IMPORTANCE_ONLY
+               $GSL_VEGAS_MODE_STRATIFIED
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -36,7 +36,7 @@ This module is not yet implemented. Patches Welcome!
 
 Here is a list of all the functions in this module :
 
-=over 
+=over
 
 =item * C<gsl_monte_miser_integrate >
 
@@ -68,11 +68,11 @@ This module also includes the following constants :
 
 =over
 
-=item * $GSL_VEGAS_MODE_IMPORTANCE 
+=item * $GSL_VEGAS_MODE_IMPORTANCE
 
-=item * $GSL_VEGAS_MODE_IMPORTANCE_ONLY 
+=item * $GSL_VEGAS_MODE_IMPORTANCE_ONLY
 
-=item * $GSL_VEGAS_MODE_STRATIFIED 
+=item * $GSL_VEGAS_MODE_STRATIFIED
 
 =back
 

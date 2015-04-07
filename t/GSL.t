@@ -25,17 +25,17 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub TEST_STUFF : Tests { 
+sub TEST_STUFF : Tests {
     {
-        my $results = { 
+        my $results = {
                     q{is_similar(undef, [1,2,3]) }                        => [ 0 ],
                     q{is_similar(0.10005,0.1000501, 1e-5)}                => [ 1 ],
                     q{is_similar(0.10005,0.1000501, 1e-7)}                => [ 0 ],
-                    q{is_similar([1,2,3    ], [1,2,3.001])}               => [ 0 ], 
-                    q{is_similar([1,2,3.001], [1,2,3.001])}               => [ 1 ], 
-                    q{is_similar([1,2,3.001], [1,2,3.001],1e-2)}          => [ 1 ], 
-                    q{is_similar([1,2,3.0010001], [1,2,3.0010002], 1e-5)} => [ 1 ], 
-                    q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => [ 0 ], 
+                    q{is_similar([1,2,3    ], [1,2,3.001])}               => [ 0 ],
+                    q{is_similar([1,2,3.001], [1,2,3.001])}               => [ 1 ],
+                    q{is_similar([1,2,3.001], [1,2,3.001],1e-2)}          => [ 1 ],
+                    q{is_similar([1,2,3.0010001], [1,2,3.0010002], 1e-5)} => [ 1 ],
+                    q{is_similar([1,2,3.0010001], [1,2,3.0010002] )}      => [ 0 ],
                     q{is_similar_relative( 1e8, 1e8 + 1, 1e-7) }          => [ 1 ],
                     q{is_similar_relative( 1e8, 1e8 + 1e3, 1e-7) }        => [ 0 ],
                     q{is_status_ok($GSL_SUCCESS)}                         => [ 1 ],
@@ -71,7 +71,7 @@ sub TEST_STUFF : Tests {
 
 }
 
-sub TEST_VERSION : Tests { 
+sub TEST_VERSION : Tests {
     isa_ok(gsl_version(), "version");
 }
 

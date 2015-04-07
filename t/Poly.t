@@ -36,7 +36,7 @@ sub GSL_POLY_COMPLEX_EVAL : Tests(1) {
     ok_similar( [ gsl_parts($got) ] , [ 9, 4 ], 'gsl_poly_complex_eval' );
 }
 
-sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests(1) { 
+sub GSL_COMPLEX_POLY_COMPLEX_EVAL : Tests(1) {
     local $TODO = "typemap for array of gsl_complex objects is needed";
     my $z    = gsl_complex_rect(2,1);                      # 2+i
     my $c1   = gsl_complex_rect(3,2);                      # 3+2i
@@ -68,7 +68,7 @@ sub GSL_POLY_COMPLEX_SOLVE_QUADRATIC : Tests {
 
     my ($num_roots) = gsl_poly_complex_solve_quadratic ( 4.0, -20.0, 26.0 , $z0, $z1);
 
-    ok_similar ([ $num_roots, gsl_parts($z0), gsl_parts($z1) ], 
+    ok_similar ([ $num_roots, gsl_parts($z0), gsl_parts($z1) ],
                 [ 2,     2.5, -0.5, 2.5, 0.5                 ]
 
     );

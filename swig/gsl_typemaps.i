@@ -106,7 +106,7 @@
         //if ($1) free($1);
 }
 
-%apply float const [] { 
+%apply float const [] {
     float const *A, float const *B, float const *C, float const *y
 };
 
@@ -158,7 +158,7 @@
         double val=(double)(float)($1[i]);
         tv = av_fetch(p_array->array, i, 0);
         sv_setnv(*tv, val);
-        if (argvi >= items) {            
+        if (argvi >= items) {
             EXTEND(sp,1);              /* Extend the stack by 1 object */
         }
         $result = sv_newmortal();
@@ -223,11 +223,11 @@
     gsl_complex_packed_array data
 };
 
-%apply float const [] { 
+%apply float const [] {
     float const *A, float const *B, float const *C, float *C
 };
 
-%apply size_t const [] { 
+%apply size_t const [] {
     size_t *p
 }
 
@@ -301,7 +301,7 @@ void array_wrapper_free(array_wrapper * daw){
     float * fptr;
     int * iptr;
     unsigned int * uptr;
-    
+
     wrapper = $1;
 
     tmparr = malloc(sizeof(SV*) * wrapper->size);
@@ -361,7 +361,7 @@ void array_wrapper_free(array_wrapper * daw){
         croak("Argument $argnum is not an array.");
     av = (AV*)SvRV($input);
     $1 = av_len(av) + 1;
-    
+
     $2 = malloc($1 * sizeof(double));
     if ($2 == NULL)
         croak("%typemap(in) (int , const double []) - can't malloc");
@@ -372,7 +372,7 @@ void array_wrapper_free(array_wrapper * daw){
 }
 
 %typemap(freearg) (size_t SIZE, const double ARRAY[]) {
-    if ($2) 
+    if ($2)
         free($2);
 }
 
@@ -390,7 +390,7 @@ void array_wrapper_free(array_wrapper * daw){
         croak("Argument $argnum is not an array.");
     av = (AV*)SvRV($input);
     $1 = av_len(av) + 1;
-    
+
     $2 = malloc($1 * sizeof(unsigned int));
     if ($2 == NULL)
         croak("%typemap(in) (int , unsigned int []) - can't malloc");
@@ -401,7 +401,7 @@ void array_wrapper_free(array_wrapper * daw){
 }
 
 %typemap(freearg) (size_t SIZE, const unsigned int ARRAY[]) {
-    if ($2) 
+    if ($2)
         free($2);
 }
 
@@ -461,7 +461,7 @@ void array_wrapper_free(array_wrapper * daw){
         PUTBACK;                                /* make local stack pointer global */
         FREETMPS;
         LEAVE;
-         
+
         return y;
     }
     double call_gsl_monte_function(double *x_array , size_t dim, void *params){
@@ -499,7 +499,7 @@ void array_wrapper_free(array_wrapper * daw){
         PUTBACK;                                /* make local stack pointer global */
         FREETMPS;
         LEAVE;
-         
+
         return y;
     }
 %}
@@ -556,7 +556,7 @@ void array_wrapper_free(array_wrapper * daw){
         params=&PL_sv_undef;
     }
     params = newSVsv(params);
-            
+
     w_gsl_monte_function.f = f;
     w_gsl_monte_function.dim = dim;
     w_gsl_monte_function.params = params;
@@ -635,10 +635,10 @@ void array_wrapper_free(array_wrapper * daw){
 %typemap(in) (const gsl_qrng * q, double x[]) (void *argp = 0, int res) {
     res = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_gsl_qrng, 0 );
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "$symname" "', argument " "1"" of type '" "gsl_qrng *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "$symname" "', argument " "1"" of type '" "gsl_qrng *""'");
     }
     $1 = (gsl_qrng*) argp;
-	$2 = (double*) calloc($1->dimension, sizeof(double));	
+	$2 = (double*) calloc($1->dimension, sizeof(double));
 }
 
 %typemap(argout) (const gsl_qrng * q, double x[])  {

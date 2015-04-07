@@ -24,7 +24,7 @@ sub GSL_SORT_VECTOR : Tests(1) {
    my $vec = Math::GSL::Vector->new([6,4,2,3,1,5]);
    gsl_sort_vector($vec->raw);
    ok_similar( [ $vec->as_list ], [ 1 .. 6 ] );
-} 
+}
 
 sub GSL_SORT_VECTOR_LARGEST : Tests(2) {
    my $vec = Math::GSL::Vector->new([reverse 0..50]);
@@ -33,7 +33,7 @@ sub GSL_SORT_VECTOR_LARGEST : Tests(2) {
    my ($status, $stuff) = gsl_sort_vector_largest($largest10, 10, $vec->raw);
    ok_status( $status);
    ok_similar( $stuff, [ reverse (41 .. 50) ] );
-} 
+}
 
 sub GSL_SORT_VECTOR_SMALLEST : Tests(2) {
    my $vec = Math::GSL::Vector->new([reverse 0..50]);
@@ -42,7 +42,7 @@ sub GSL_SORT_VECTOR_SMALLEST : Tests(2) {
    my ($status, $stuff) = gsl_sort_vector_smallest($smallest10, 10, $vec->raw);
    ok_status( $status);
    ok_similar( $stuff, [ 0 .. 9 ] );
-} 
+}
 
 sub GSL_SORT_VECTOR_INDEX : Tests(2) {
   my $vec = Math::GSL::Vector->new([4,2,3,1,5]);
@@ -73,7 +73,7 @@ sub GSL_SORT_VECTOR_LARGEST_INDEX : Tests(2) {
 sub GSL_SORT : Tests {
    my $self = shift;
    my $sorted = gsl_sort($self->{data}, 1, $#{$self->{data}} + 1 );
-   ok_similar ( $sorted , [ -17, 0e0, 3e-10, 1, 42.7, 4242, 6900, 2**15 ], 'gsl_sort' );    
+   ok_similar ( $sorted , [ -17, 0e0, 3e-10, 1, 42.7, 4242, 6900, 2**15 ], 'gsl_sort' );
 }
 
 sub GSL_SORT_SMALLEST : Tests(2) {
@@ -81,7 +81,7 @@ sub GSL_SORT_SMALLEST : Tests(2) {
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_smallest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
    ok_status($status);
-   ok_similar ( $sorted , [ -17, 0e0, 3e-10 ], 'gsl_sort_smallest' );     
+   ok_similar ( $sorted , [ -17, 0e0, 3e-10 ], 'gsl_sort_smallest' );
 }
 
 sub GSL_SORT_LARGEST : Tests(2) {
@@ -89,7 +89,7 @@ sub GSL_SORT_LARGEST : Tests(2) {
    my $out = [1..10];
    my ($status, $sorted) = gsl_sort_largest($out, 3, $self->{data}, 1, $#{$self->{data}}+1 );
    ok_status($status);
-   ok_similar ( $sorted , [ 2**15,  6900, 4242 ], 'gsl_sort_largest' );     
+   ok_similar ( $sorted , [ 2**15,  6900, 4242 ], 'gsl_sort_largest' );
 }
 
 sub GSL_SORT_INDEX : Tests(1) {

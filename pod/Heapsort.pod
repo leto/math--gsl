@@ -1,7 +1,7 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_heapsort 
-               gsl_heapsort_index 
+               gsl_heapsort
+               gsl_heapsort_index
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -26,16 +26,16 @@ Here is a list of all the functions in this module :
 
 =over
 
-=item * gsl_heapsort 
+=item * gsl_heapsort
 
-=item * gsl_heapsort_index 
+=item * gsl_heapsort_index
 
 =back
 
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
- 
+
 
 
 =head1 AUTHORS

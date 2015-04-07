@@ -233,7 +233,7 @@ sub GSL_RAN_DIRICHLET : Tests(31) {
         my $y = 1 - $x;
         for my $ab ([0.5,0.5],[1,1],[2,5],[10,2]) { # 4
             my ($a, $b) = @$ab;
-            ok_similar(gsl_ran_dirichlet_pdf([$x,$y], [$a,$b]), gsl_ran_beta_pdf($x,$a,$b), 
+            ok_similar(gsl_ran_dirichlet_pdf([$x,$y], [$a,$b]), gsl_ran_beta_pdf($x,$a,$b),
                 "dirichlet == beta ([$a, $b], [$x, $y])");
         }
     }

@@ -21,7 +21,7 @@ my $TOL5 = 131072.0*$GSL_DBL_EPSILON;
 my $TOL6 = 1048576.0*$GSL_DBL_EPSILON;
 
 {
-    my $results = { 
+    my $results = {
                     'gsl_cdf_ugaussian_P(2.0)'                      => [  0.977250, 1e-5 ],
                     'gsl_cdf_ugaussian_Q(2.0)'                      => [  0.022750, 1e-5 ],
                     'gsl_cdf_ugaussian_Pinv(0.977250)'              => [  2.000000, 1e-5 ],

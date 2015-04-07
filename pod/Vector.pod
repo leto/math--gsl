@@ -23,13 +23,13 @@ use overload
                  gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
                  gsl_vector_set_basis gsl_vector_fread gsl_vector_fwrite gsl_vector_fscanf
-                 gsl_vector_fprintf gsl_vector_memcpy gsl_vector_reverse gsl_vector_swap 
-                 gsl_vector_swap_elements gsl_vector_max gsl_vector_min gsl_vector_minmax 
+                 gsl_vector_fprintf gsl_vector_memcpy gsl_vector_reverse gsl_vector_swap
+                 gsl_vector_swap_elements gsl_vector_max gsl_vector_min gsl_vector_minmax
                  gsl_vector_max_index gsl_vector_min_index gsl_vector_minmax_index
                  gsl_vector_add gsl_vector_sub gsl_vector_mul gsl_vector_div
                  gsl_vector_scale gsl_vector_add_constant gsl_vector_isnull
                  gsl_vector_ispos gsl_vector_isneg gsl_vector_isnonneg
-                 gsl_vector_float_alloc gsl_vector_float_calloc gsl_vector_float_alloc_from_block 
+                 gsl_vector_float_alloc gsl_vector_float_calloc gsl_vector_float_alloc_from_block
                  gsl_vector_float_alloc_from_vector gsl_vector_float_free gsl_vector_float_view_array
                  gsl_vector_float_view_array_with_stride gsl_vector_float_const_view_array gsl_vector_float_const_view_array_with_stride
                  gsl_vector_float_subvector gsl_vector_float_subvector_with_stride gsl_vector_float_const_subvector
@@ -56,8 +56,8 @@ Math::GSL::Vector - Functions concerning vectors
 
     use Math::GSL::Vector qw/:all/;
     my $vec1 = Math::GSL::Vector->new([1, 7, 94, 15 ]);
-    my $vec2 = $vec1 * 5; 
-    my $vec3 = Math::GSL::Vector>new(10);   # 10 element zero vector 
+    my $vec2 = $vec1 * 5;
+    my $vec3 = Math::GSL::Vector>new(10);   # 10 element zero vector
     my $vec4 = $vec1 + $vec2;
 
     # set the element at index 1 to 9
@@ -93,7 +93,7 @@ You can also create and set directly the values of the vector like this :
 sub new {
     my ($class, $values) = @_;
     my $length  = $#$values;
-    my $this = {}; 
+    my $this = {};
     my $vector;
     if ( ref $values eq 'ARRAY' ){
         die __PACKAGE__.'::new($x) - $x must be a nonempty array reference' if $length == -1;
@@ -107,7 +107,7 @@ sub new {
     } else {
         die __PACKAGE__.'::new($x) - $x must be an int or array reference';
     }
-    $this->{_vector} = $vector; 
+    $this->{_vector} = $vector;
     bless $this, $class;
 }
 =head2 raw()
@@ -164,7 +164,7 @@ Returns the minimum value contained in the vector.
    my $vector = Math::GSL::Vector->new([2,4,1]);
    my $minimum = $vector->min;
 
-=cut 
+=cut
 
 sub min {
     my $self=shift;
@@ -178,7 +178,7 @@ Returns the minimum value contained in the vector.
    my $vector = Math::GSL::Vector->new([2,4,1]);
    my $maximum = $vector->max;
 
-=cut 
+=cut
 
 sub max {
     my $self=shift;
@@ -192,7 +192,7 @@ Returns the number of elements contained in the vector.
    my $vector = Math::GSL::Vector->new([2,4,1]);
    my $length = $vector->length;
 
-=cut 
+=cut
 
 sub length { my $self=shift; $self->{_length} }
 
@@ -293,15 +293,15 @@ This sets the second and third value to 8 and 23.
 
 sub set {
     my ($self, $indices, $values) = @_;
-    die (__PACKAGE__.'::set($indices, $values) - $indices and $values must be array references of the same length') 
+    die (__PACKAGE__.'::set($indices, $values) - $indices and $values must be array references of the same length')
         unless ( ref $indices eq 'ARRAY' && ref $values eq 'ARRAY' &&  $#$indices == $#$values );
-    eval { 
+    eval {
         map {  gsl_vector_set($self->{_vector}, $indices->[$_], $values->[$_] ) } (0..$#$indices);
-    }; 
+    };
     return;
 }
 
-=head2 copy() 
+=head2 copy()
 
 Returns a copy of the vector, which has the same length and values but resides at a different location in memory.
 
@@ -340,7 +340,7 @@ sub _subtract {
         gsl_vector_scale($lcopy->raw, -1 );
         gsl_vector_add_constant($lcopy->raw, $right);
         return $lcopy;
-    } else { 
+    } else {
         return _addition($left, -1.0*$right);
     }
 }
@@ -370,7 +370,7 @@ sub _addition {
 sub dot_product_pp {
     my ($left,$right) = @_;
     my $sum=0;
-    if ( blessed $right && $right->isa('Math::GSL::Vector') && 
+    if ( blessed $right && $right->isa('Math::GSL::Vector') &&
          $left->length == $right->length ) {
          my @l = $left->as_list;
          my @r = $right->as_list;
@@ -408,23 +408,23 @@ Here is a list of all the functions included in this module :
 
 =over 1
 
-=item C<gsl_vector_alloc($x)> 
+=item C<gsl_vector_alloc($x)>
 
 Create a vector of size $x
 
-=item C<gsl_vector_calloc($x)> 
+=item C<gsl_vector_calloc($x)>
 
 Create a vector of size $x and initializes all the elements of the vector to zero
 
-=item C<gsl_vector_alloc_from_block> 
+=item C<gsl_vector_alloc_from_block>
 
-=item C<gsl_vector_alloc_from_vector> 
+=item C<gsl_vector_alloc_from_vector>
 
-=item C<gsl_vector_free($v)> 
+=item C<gsl_vector_free($v)>
 
 Free a previously allocated vector $v
 
-=item C<gsl_vector_view_array($base, $n)> 
+=item C<gsl_vector_view_array($base, $n)>
 
 This function returns a vector view of an array reference $base. The start of
 the new vector is given by $base and has $n elements. Mathematically, the i-th
@@ -433,13 +433,13 @@ runs from 0 to $n-1. The array containing the elements of v is not owned by the
 new vector view. When the view goes out of scope the original array will
 continue to exist. The original memory can only be deallocated by freeing the
 original pointer base. Of course, the original array should not be deallocated
-while the view is still in use.  
+while the view is still in use.
 
-=item C<gsl_vector_const_view_array($base, $n)> 
+=item C<gsl_vector_const_view_array($base, $n)>
 
-This function is equivalent to gsl_vector_view_array but can be used for arrays which are declared const. 
+This function is equivalent to gsl_vector_view_array but can be used for arrays which are declared const.
 
-=item C<gsl_vector_view_array_with_stride($base, $stride, $n)> 
+=item C<gsl_vector_view_array_with_stride($base, $stride, $n)>
 
 This function returns a vector view of an array reference $base with an
 additional $stride argument. The subvector is formed in the same way as for
@@ -449,14 +449,14 @@ the i-th element of the new vector v' is given by, v'(i) = $base->[i*$stride]
 where the index i runs from 0 to $n-1. Note that the view gives direct access
 to the underlying elements of the original array. A vector view $view can be
 passed to any subroutine which takes a vector argument just as a directly
-allocated vector would be, using $view->{vector}. 
+allocated vector would be, using $view->{vector}.
 
-=item C<gsl_vector_const_view_array_with_stride($base, $stride, $n)> 
+=item C<gsl_vector_const_view_array_with_stride($base, $stride, $n)>
 
 This function is equivalent to gsl_vector_view_array_with_stride but can be
 used for arrays which are declared const.
 
-=item C<gsl_vector_subvector($v, $offset, $n)> 
+=item C<gsl_vector_subvector($v, $offset, $n)>
 
 Return a vector_view type which contains a subvector of $v, with a size of $size, starting from the $offset position
 
@@ -479,24 +479,24 @@ Return the $i-th element of a raw vector $v, where $v is a Math::GSL::Vector obj
 
 Return the vector $v with his $i-th element set to $x
 
-=item C<gsl_vector_ptr> 
+=item C<gsl_vector_ptr>
 
-=item C<gsl_vector_const_ptr> 
+=item C<gsl_vector_const_ptr>
 
-=item C<gsl_vector_set_zero($v)> 
+=item C<gsl_vector_set_zero($v)>
 
  set all the elements of $v to 0
 
-=item C<gsl_vector_set_all($v, $x)> 
+=item C<gsl_vector_set_all($v, $x)>
 
 set all the elements of $v to $x
 
-=item C<gsl_vector_set_basis($v, $i)> 
+=item C<gsl_vector_set_basis($v, $i)>
 
 set all the elements of $v to 0 except for the $i-th element which is set to 1
 and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_fread($file, $v)> 
+=item C<gsl_vector_fread($file, $v)>
 
 This function reads into the vector $v from the open stream $file opened with
 gsl_fopen function from the Math::GSL module in binary format. The vector $v
@@ -504,123 +504,123 @@ must be preallocated with the correct length since the function uses the size
 of $v to determine how many bytes to read. The return value is 0 for success
 and 1 if there was a problem reading from the file.
 
-=item C<gsl_vector_fwrite($file, $v)> 
+=item C<gsl_vector_fwrite($file, $v)>
 
 This function writes the elements of the vector $v to the stream $file opened
 with gsl_fopen function from the Math::GSL module in binary format. The return
 value is 0 for success and 1 if there was a problem writing to the file. Since
 the data is written in the native binary format it may not be portable between
-different architectures. 
+different architectures.
 
-=item C<gsl_vector_fscanf($file, $v)> 
+=item C<gsl_vector_fscanf($file, $v)>
 
 This function reads formatted data from the stream $file opened with gsl_fopen
 function from the Math::GSL module into the vector $v. The vector $v must be
 preallocated with the correct length since the function uses the size of $v to
 determine how many numbers to read. The function returns 0 for success and 1 if
-there was a problem reading from the file. 
+there was a problem reading from the file.
 
-=item C<gsl_vector_fprintf($file, $v, $format)> 
+=item C<gsl_vector_fprintf($file, $v, $format)>
 
 This function writes the elements of the vector $v line-by-line to the stream
 $file opened with gsl_fopen function from the Math::GSL module using the format
 specifier $format, which should be one of the "%g", "%e" or "%f" formats for
 floating point numbers and "%d" for integers. The function returns 0 for
-success and 1 if there was a problem writing to the file.  
+success and 1 if there was a problem writing to the file.
 
-=item C<gsl_vector_memcpy($dest, $src)> 
+=item C<gsl_vector_memcpy($dest, $src)>
 
 This function copies the elements of the vector $src into the vector $dest and
 return 0 if the opertaion succeded, 1 otherwise. The two vectors must have the
-same length.  
+same length.
 
-=item C<gsl_vector_reverse($v)> 
+=item C<gsl_vector_reverse($v)>
 
 reverse the order of the elements of the vector $v and return 0 if the
 opertaion succeded, 1 otherwise
 
-=item C<gsl_vector_swap($v, $v2)> 
+=item C<gsl_vector_swap($v, $v2)>
 
 swap the values of the vectors $v and $v2 and return 0 if the opertaion
-succeded, 1 otherwise 
+succeded, 1 otherwise
 
-=item C<gsl_vector_swap_elements($v, $i, $j)> 
+=item C<gsl_vector_swap_elements($v, $i, $j)>
 
 permute the elements at position $i and $j in the vector $v and return 0 if the
 operation succeded, 1 otherwise.
 
-=item C<gsl_vector_max($v)> 
+=item C<gsl_vector_max($v)>
 
  return the maximum value in the vector $v
 
-=item C<gsl_vector_min($v)> 
+=item C<gsl_vector_min($v)>
 
 return the minimum value in the vector $v
 
-=item C<gsl_vector_minmax($v)> 
+=item C<gsl_vector_minmax($v)>
 
 return two values, the first is the minimum value in the vector $v and the
 second is the maximum value.
 
-=item C<gsl_vector_max_index($v)> 
+=item C<gsl_vector_max_index($v)>
 
 return the position of the maximum value in the vector $v
 
-=item C<gsl_vector_min_index($v)> 
+=item C<gsl_vector_min_index($v)>
 
 return the position of the minimum value in the vector $v
 
-=item C<gsl_vector_minmax_index> 
+=item C<gsl_vector_minmax_index>
 
 return two values, the first is the position of the minimum value in the vector
 $v and the second is the position of the maximum value.
 
-=item C<gsl_vector_add($v, $v2)> 
+=item C<gsl_vector_add($v, $v2)>
 
 add the elements of $v2 to the elements of $v, the two vectors must have the
 same length and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_sub($v, $v2)> 
+=item C<gsl_vector_sub($v, $v2)>
 
 substract the elements of $v2 from the elements of $v, the two vectors must
 have the same length and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_mul($v, $v2)> 
+=item C<gsl_vector_mul($v, $v2)>
 
 multiply the elements of $v by the elements of $v2, the two vectors must have
 the same length and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_div($v, $v2)> 
+=item C<gsl_vector_div($v, $v2)>
 
 divides the elements of $v by the elements of $v2, the two vectors must have
 the same length and return 0 if the operation succeded, 1 otherwise.
 
-=item C<gsl_vector_scale($v, $x)> 
+=item C<gsl_vector_scale($v, $x)>
 
 multiplty the elements of the vector $v by a constant $x and return 0 if the
 operation succeded, 1 otherwise.
 
-=item C<gsl_vector_add_constant($v, $x)> 
+=item C<gsl_vector_add_constant($v, $x)>
 
 add a constant $x to the elements of the vector $v and return 0 if the
 operation succeded, 1 otherwise.
 
-=item C<gsl_vector_isnull($v)> 
+=item C<gsl_vector_isnull($v)>
 
 verify if all the elements of the vector $v are null, return 0 if it's the
 case, 1 otherwise.
 
-=item C<gsl_vector_ispos($v)> 
+=item C<gsl_vector_ispos($v)>
 
 verify if all the elements of the vector $v are positive, return 0 if it's the
 case, 1 otherwise.
 
-=item C<gsl_vector_isneg($v)> 
+=item C<gsl_vector_isneg($v)>
 
 verify if all the elements of the vector $v are negative, return 0 if it's the
 case, 1 otherwise.
 
-=item C<gsl_vector_isnonneg($v)> 
+=item C<gsl_vector_isnonneg($v)>
 
 verify if all the elements the vector $v are not negative, return 0 if it's the
 case, 1 otherwise.
@@ -640,7 +640,7 @@ leaving the odd elements untouched :
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation: 
+For more informations on the functions, we refer you to the GSL offcial documentation:
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 =head1 EXAMPLES

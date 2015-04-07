@@ -1,16 +1,16 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_cheb_alloc 
-               gsl_cheb_free 
-               gsl_cheb_init 
-               gsl_cheb_eval 
-               gsl_cheb_eval_err 
-               gsl_cheb_eval_n 
-               gsl_cheb_eval_n_err 
-               gsl_cheb_eval_mode 
-               gsl_cheb_eval_mode_e 
-               gsl_cheb_calc_deriv 
-               gsl_cheb_calc_integ 
+               gsl_cheb_alloc
+               gsl_cheb_free
+               gsl_cheb_init
+               gsl_cheb_eval
+               gsl_cheb_eval_err
+               gsl_cheb_eval_n
+               gsl_cheb_eval_n_err
+               gsl_cheb_eval_mode
+               gsl_cheb_eval_mode_e
+               gsl_cheb_calc_deriv
+               gsl_cheb_calc_integ
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -79,14 +79,14 @@ the estimated error of the evaluation.
 
 =item * C<gsl_cheb_calc_deriv($deriv,$cheb) >
 
-   my $status = gsl_cheb_calc_deriv( $deriv, $cheb ); 
+   my $status = gsl_cheb_calc_deriv( $deriv, $cheb );
 
 This will calculate the derivative of $cheb and stores it
 in $deriv, which must be pre-allocated. Returns a GSL status code.
 
 =item * C<gsl_cheb_calc_integ($integ,$cheb) >
 
-   my $status = gsl_cheb_calc_integ( $deriv, $cheb ); 
+   my $status = gsl_cheb_calc_integ( $deriv, $cheb );
 
 This will calculate the derivative of $cheb and stores it
 in $deriv, which must be pre-allocated. Returns a GSL status code.

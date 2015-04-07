@@ -1,7 +1,7 @@
 package Math::GSL::PowInt::Test;
 use base q{Test::Class};
 use Test::More tests => 14;
-use Math::GSL::Sys    qw/gsl_posinf gsl_nan/; 
+use Math::GSL::Sys    qw/gsl_posinf gsl_nan/;
 use Math::GSL::Test   qw/:all/;
 use Math::GSL::PowInt qw/:all/;
 use Math::GSL::Errno  qw/:all/;
@@ -14,7 +14,7 @@ sub teardown : Test(teardown) { }
 
 sub TEST_BASIC: Tests {
     my %results = (
-                'gsl_pow_2(3.14)'  => [ (3.14)**2 ],   
+                'gsl_pow_2(3.14)'  => [ (3.14)**2 ],
                 'gsl_pow_2(3)'     => [ 3 ** 2 ],
                 'gsl_pow_2(0)'     => [ 0 ** 2 ],
                 'gsl_pow_2(-1)'    => [ (-1) ** 2 ],
@@ -31,7 +31,7 @@ sub TEST_BASIC: Tests {
 }
 
 sub TEST_NAN_INF : Tests {
-    my $self = shift; 
+    my $self = shift;
     $main::nan    = gsl_nan();
     $main::posinf = gsl_posinf();
     my %results = (

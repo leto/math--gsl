@@ -107,7 +107,7 @@
     - Added as_vector() to Matrix and MatrixComplex objects
     - Added inverse(), is_square(), det(),  lndet(), zero() and identity()
         to Matrix objects
-    - Added inverse(), is_square(), det(),  lndet(), zero(), identity() 
+    - Added inverse(), is_square(), det(),  lndet(), zero(), identity()
         and hermitian() to MatrixComplex objects
     - Added dot product to Matrix objects
     - Fixed various typos in documentation
@@ -151,7 +151,7 @@
     - Examples and new documentation in Statistics, as well as tests (Thierry)
     - Bugfixes relating to compiling on 64bit Red Hat Linux, reported by Michael Roberge
     - Improved FFT, Deriv, Integration, Chebyshev, Combination and Roots docs
-    - Documentation for Math::GSL::Test 
+    - Documentation for Math::GSL::Test
     - Improved introduction examples in Math::GSL
     - Improved Minimization subsystem tests, but it is not functional
     - Added examples/fft/forward_real
@@ -164,8 +164,8 @@
         Script which tests the erfc() special function against computing
         the integral definition with gsl_integration_qagiu()
 
-    - Added example/vector/speed 
-    
+    - Added example/vector/speed
+
         This shows a considerable performance boost using Math::GSL::Vectors
         instead of List::Util when searching for the min and max elements of
         large sets of random numbers.
@@ -177,7 +177,7 @@
 
 =head1 v0.12 - September 14 2008
 
-    - Darwin support! 
+    - Darwin support!
     - Minimum Perl version changed to 5.8.0
     - Make platform check compile time constants for performance
         aka The Wilhelm Speedup (thanks to Eric Wilhelm <scratchcomputing@gmail.com>)
@@ -199,7 +199,7 @@
     - Added 'examples/gsl_repl' which is a rapid prototyping tool/interactive interpreter
     - Compile support for GSL's as old as 1.8 (test suite still needs to be properly guarded)
 
-=head1 v0.10 
+=head1 v0.10
 
     - Continued porting to MSWin32, fixing many NaN and Inf handling issues
 
@@ -208,15 +208,15 @@
     - Large documentation improvements
     - MSWin32 support thanks to testing and feedback from <sisyphus@cpan.org>
 
-=head1 v0.07 
+=head1 v0.07
 
     - Initial CPAN release
-    
-=head1 v0.042 
+
+=head1 v0.042
 
     - Started change to Test::Class
 
-=head1 v0.01 
+=head1 v0.01
 
     - Added swig interface files and swig-ified build script
     - initial tests for special function library gsl_sf <--> Math::GSL::Sf

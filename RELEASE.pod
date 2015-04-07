@@ -44,7 +44,7 @@ for the C<libgsl> wrapping. If not, check the previous step.
 
 Build the module, with C<./Build>. Check that everything compiles.
 
-=item 6. 
+=item 6.
 
 Run the standard test suite with C<./Build test>.
 

@@ -314,7 +314,7 @@ functions defined by GSL library.
 
 =head2 Constructor
 
-=head3 Math::GSL::Matrix->new() 
+=head3 Math::GSL::Matrix->new()
 
 Creates a new Matrix of the given size.
 
@@ -323,7 +323,7 @@ Creates a new Matrix of the given size.
 If by any chance you already have a gsl_matrix and want to "objectify" it, you
 can use the following constructor:
 
-    my $m = gsl_matrix_alloc(10, 20); 
+    my $m = gsl_matrix_alloc(10, 20);
     # ... something
     my $matrix = Math::GSL::Matrix->new($m);
 
@@ -346,7 +346,7 @@ sub _new_from_matrix
         croak( __PACKAGE__.'::new($m) - $m should be a gsl_matrix');
     }
 
-    return bless { 
+    return bless {
         _rows => $m->swig_size1_get(),
         _cols => $m->swig_size2_get(),
         _matrix => $m,
@@ -374,7 +374,7 @@ sub _new_from_dims
 
 =head2 Getters
 
-=head3 raw() 
+=head3 raw()
 
 Get the underlying GSL matrix object created by SWIG, useful for using gsl_matrix_* functions which do not have an OO counterpart.
 
@@ -387,7 +387,7 @@ Get the underlying GSL matrix object created by SWIG, useful for using gsl_matri
 sub raw  { (shift)->{_matrix} }
 
 
-=head3 dim() 
+=head3 dim()
 
 Returns the number of rows and columns in a matrix as an array.
 
@@ -399,7 +399,7 @@ Basically a shortcut to C<rows> and C<cols> methods.
 
 sub dim { ($_[0]->rows, $_[0]->cols) }
 
-=head3 rows() 
+=head3 rows()
 
 Returns the number of rows in the matrix.
 
@@ -408,7 +408,7 @@ Returns the number of rows in the matrix.
 
 sub rows { (shift)->{_rows}   }
 
-=head3 cols() 
+=head3 cols()
 
 Returns the number of columns in the matrix.
 
@@ -417,7 +417,7 @@ Returns the number of columns in the matrix.
 
 sub cols { (shift)->{_cols}   }
 
-=head3 as_list() 
+=head3 as_list()
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
 
@@ -556,7 +556,7 @@ sub max {
         return ($max, $i, $j);
 
     } else {
-        return $max;            
+        return $max;
     }
 }
 
@@ -585,7 +585,7 @@ sub min {
         return ($min, $i, $j);
 
     } else {
-        return $min;            
+        return $min;
     }
 }
 
@@ -593,7 +593,7 @@ sub min {
 
 =head2 Setters
 
-=head3 identity() 
+=head3 identity()
 
 Set a matrix to the identity matrix, i.e. one on the diagonal and zero elsewhere.
 
@@ -608,7 +608,7 @@ sub identity
     return $self;
 }
 
-=head3 zero() 
+=head3 zero()
 
 Set a matrix to the zero matrix.
 
@@ -623,7 +623,7 @@ sub zero # brrr!
     return $self;
 }
 
-=head3 set_elem() 
+=head3 set_elem()
 
 Sets a specific value in the matrix.
 
@@ -649,7 +649,7 @@ sub set_elem {
     return $self;
 }
 
-=head3 set_row() 
+=head3 set_row()
 
 Sets a the values of a row with the elements of an array.
 
@@ -669,7 +669,7 @@ sub set_row {
     my ($self, $row, $values) = @_;
     my $length = $#$values;
     die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
-    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number' 
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid row number'
         if ($row < 0 || $row >= $self->rows);
     die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is columns in the matrix'
         if($length != $self->cols-1);
@@ -677,7 +677,7 @@ sub set_row {
     return $self;
 }
 
-=head3 set_col() 
+=head3 set_col()
 
 Sets a the values of a column with the elements of an array.
 
@@ -697,7 +697,7 @@ sub set_col {
     my $length = $#$values;
 
     die __PACKAGE__.'::new($x, $values) - $values must be a nonempty array reference' if $length == -1;
-    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number' 
+    die __PACKAGE__.'::set_row($x, $values) - $x must be a valid column number'
         if ($col < 0 || $col >= $self->cols);
     die __PACKAGE__.'::set_row($x, $values) - $values must contains the same number of elements as there is rowss in the matrix'
         if($length != $self->rows-1);
@@ -708,7 +708,7 @@ sub set_col {
 
 =head2 Utility Functions
 
-=head3 copy() 
+=head3 copy()
 
 Returns a copy of the matrix, which has the same size and values but resides at a different location in memory.
 
@@ -729,7 +729,7 @@ sub copy {
 
 
 
-=head3 is_square() 
+=head3 is_square()
 
 Returns true if a matrix is square, i.e. it has the same number of rows as columns, false otherwise.
 
@@ -741,7 +741,7 @@ sub is_square($)
     return ($self->rows == $self->cols) ? 1 : 0 ;
 }
 
-=head3 det() 
+=head3 det()
 
 Returns the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -773,7 +773,7 @@ C<gsl_matrix_fwrite> and C<gsl_fclose> manually. Future versions might include
 helper for this task.
 
 B<NOTE>: in order to allow the read of one of these files without needing
-to know in advance the size of the matrix, an horizontal matrix with two 
+to know in advance the size of the matrix, an horizontal matrix with two
 elements is saved in the beginning of the file with the number of rows
 and columns of the saved matrix.
 
@@ -805,7 +805,7 @@ sub write
 
 =head3 read
 
-Loads a matrix from a GSL binary file (saved using the C<save> method, 
+Loads a matrix from a GSL binary file (saved using the C<save> method,
 as it stores some extra information on the file).
 
     my $matrix = Math::GSL::Matrix->read("matrix.dat");
@@ -835,7 +835,7 @@ sub read
     return Math::GSL::Matrix->new($m);
 }
 
-=head3 lndet() 
+=head3 lndet()
 
 Returns the natural log of the absolute value of the determinant of a matrix (computed by LU decomposition) or dies if called on a non-square matrix.
 
@@ -855,7 +855,7 @@ sub lndet($)
     return gsl_linalg_LU_lndet($LU->raw);
 }
 
-=head3 inverse() 
+=head3 inverse()
 
 Returns the inverse of a matrix or dies when called on a non-square matrix.
 
@@ -901,7 +901,7 @@ sub transpose($)
     return $copy;
 }
 
-=head3 eigenvalues() 
+=head3 eigenvalues()
 
 Computes the a matrix eigen values.
 
@@ -929,7 +929,7 @@ sub eigenvalues($)
 
 }
 
-=head3 eigenpair() 
+=head3 eigenpair()
 
 =cut
 
@@ -970,7 +970,7 @@ sub _as_complex {
 
 =head3 ieach()
 
-Applied a function to each element of a matrix. 
+Applied a function to each element of a matrix.
 
     # compute exp to each element of matrix
     $matrix->ieach( sub { exp(shift) });
@@ -990,7 +990,7 @@ sub ieach($&) {
 	for my $i (0 .. $matrix->rows-1) {
 		for my $j (0 .. $matrix->cols-1) {
 			# should be faster than use ->set_elem and ->get_elem
-			gsl_matrix_set($matrix->raw, $i, $j, 
+			gsl_matrix_set($matrix->raw, $i, $j,
 				           $func->(gsl_matrix_get($matrix->raw, $i, $j)));
 		}
 	}
@@ -1000,7 +1000,7 @@ sub ieach($&) {
 
 =head3 each()
 
-Applied a function to each element of a matrix. 
+Applied a function to each element of a matrix.
 
     # compute exp to each element of matrix
     $matrix->each( sub { exp(shift) });
@@ -1019,7 +1019,7 @@ sub each($&) {
 	for my $i (0 .. $matrix->rows-1) {
 		for my $j (0 .. $matrix->cols-1) {
 			# should be faster than use ->set_elem and ->get_elem
-			gsl_matrix_set($result->raw, $i, $j, 
+			gsl_matrix_set($result->raw, $i, $j,
 				           $func->(gsl_matrix_get($matrix->raw, $i, $j)));
 		}
 	}

@@ -5,7 +5,7 @@ use Carp;
 @EXPORT_OK = qw/
                  gsl_rng_alloc gsl_rng_set gsl_rng_get gsl_rng_free gsl_rng_memcpy
                  gsl_rng_fwrite gsl_rng_fread gsl_rng_clone gsl_rng_max gsl_rng_min
-                 gsl_rng_name gsl_rng_size gsl_rng_state gsl_rng_print_state gsl_rng_uniform gsl_rng_uniform_pos gsl_rng_uniform_int 
+                 gsl_rng_name gsl_rng_size gsl_rng_state gsl_rng_print_state gsl_rng_uniform gsl_rng_uniform_pos gsl_rng_uniform_int
                 $gsl_rng_default $gsl_rng_knuthran $gsl_rng_ran0 $gsl_rng_borosh13
                 $gsl_rng_coveyou $gsl_rng_cmrg $gsl_rng_fishman18 $gsl_rng_fishman20 $gsl_rng_fishman2x
                 $gsl_rng_gfsr4 $gsl_rng_knuthran $gsl_rng_knuthran2 $gsl_rng_knuthran2002 $gsl_rng_lecuyer21
@@ -13,13 +13,13 @@ use Carp;
                 $gsl_rng_r250 $gsl_rng_ran0 $gsl_rng_ran1 $gsl_rng_ran2 $gsl_rng_ran3
                 $gsl_rng_rand $gsl_rng_rand48 $gsl_rng_random128_bsd $gsl_rng_random128_gli $gsl_rng_random128_lib
                 $gsl_rng_random256_bsd $gsl_rng_random256_gli $gsl_rng_random256_lib $gsl_rng_random32_bsd
-                $gsl_rng_random32_glib $gsl_rng_random32_libc $gsl_rng_random64_bsd $gsl_rng_random64_glib 
+                $gsl_rng_random32_glib $gsl_rng_random32_libc $gsl_rng_random64_bsd $gsl_rng_random64_glib
                 $gsl_rng_random64_libc $gsl_rng_random8_bsd $gsl_rng_random8_glibc $gsl_rng_random8_libc5
                 $gsl_rng_random_bsd $gsl_rng_random_glibc2 $gsl_rng_random_libc5 $gsl_rng_randu
                 $gsl_rng_ranf $gsl_rng_ranlux $gsl_rng_ranlux389 $gsl_rng_ranlxd1 $gsl_rng_ranlxd2 $gsl_rng_ranlxs0
                 $gsl_rng_ranlxs1 $gsl_rng_ranlxs2 $gsl_rng_ranmar $gsl_rng_slatec $gsl_rng_taus $gsl_rng_taus2
                 $gsl_rng_taus113 $gsl_rng_transputer $gsl_rng_tt800 $gsl_rng_uni $gsl_rng_uni32 $gsl_rng_vax
-                $gsl_rng_waterman14 $gsl_rng_zuf 
+                $gsl_rng_waterman14 $gsl_rng_zuf
               /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -47,7 +47,7 @@ parameters are optional. The type $gsl_rng_default is used when no $type
 is given.
 
 =cut
- 
+
 sub new {
     my ($class, $type, $seed) = @_;
     $type ||= $gsl_rng_default;
@@ -57,7 +57,7 @@ sub new {
     my $rng  = gsl_rng_alloc($type);
     gsl_rng_set($rng, $seed);
 
-    $self->{_rng} = $rng; 
+    $self->{_rng} = $rng;
     bless $self, $class;
 }
 
@@ -217,11 +217,11 @@ __END__
 
 =item gsl_rng_memcpy($dest, $src) - This function copies the random number generator $src into the pre-existing generator $dest, making $dest into an exact copy of $src. The two generators must be of the same type.
 
-=item gsl_rng_uniform($r) - This function returns a double precision floating point number uniformly distributed in the range [0,1). The range includes 0.0 but excludes 1.0. The value is typically obtained by dividing the result of gsl_rng_get($r) by gsl_rng_max($r) + 1.0 in double precision. Some generators compute this ratio internally so that they can provide floating point numbers with more than 32 bits of randomness (the maximum number of bits that can be portably represented in a single unsigned long int). 
+=item gsl_rng_uniform($r) - This function returns a double precision floating point number uniformly distributed in the range [0,1). The range includes 0.0 but excludes 1.0. The value is typically obtained by dividing the result of gsl_rng_get($r) by gsl_rng_max($r) + 1.0 in double precision. Some generators compute this ratio internally so that they can provide floating point numbers with more than 32 bits of randomness (the maximum number of bits that can be portably represented in a single unsigned long int).
 
 =item gsl_rng_uniform_pos($r) - This function returns a positive double precision floating point number uniformly distributed in the range (0,1), excluding both 0.0 and 1.0. The number is obtained by sampling the generator with the algorithm of gsl_rng_uniform until a non-zero value is obtained. You can use this function if you need to avoid a singularity at 0.0.
 
-=item gsl_rng_uniform_int($r, $n) - This function returns a random integer from 0 to $n-1 inclusive by scaling down and/or discarding samples from the generator $r. All integers in the range [0,$n-1] are produced with equal probability. For generators with a non-zero minimum value an offset is applied so that zero is returned with the correct probability. Note that this function is designed for sampling from ranges smaller than the range of the underlying generator. The parameter $n must be less than or equal to the range of the generator $r. If $n is larger than the range of the generator then the function calls the error handler with an error code of $GSL_EINVAL and returns zero. In particular, this function is not intended for generating the full range of unsigned integer values [0,2^32-1]. Instead choose a generator with the maximal integer range and zero mimimum value, such as $gsl_rng_ranlxd1, $gsl_rng_mt19937 or $gsl_rng_taus, and sample it directly using gsl_rng_get. The range of each generator can be found using the auxiliary functions described in the next section. 
+=item gsl_rng_uniform_int($r, $n) - This function returns a random integer from 0 to $n-1 inclusive by scaling down and/or discarding samples from the generator $r. All integers in the range [0,$n-1] are produced with equal probability. For generators with a non-zero minimum value an offset is applied so that zero is returned with the correct probability. Note that this function is designed for sampling from ranges smaller than the range of the underlying generator. The parameter $n must be less than or equal to the range of the generator $r. If $n is larger than the range of the generator then the function calls the error handler with an error code of $GSL_EINVAL and returns zero. In particular, this function is not intended for generating the full range of unsigned integer values [0,2^32-1]. Instead choose a generator with the maximal integer range and zero mimimum value, such as $gsl_rng_ranlxd1, $gsl_rng_mt19937 or $gsl_rng_taus, and sample it directly using gsl_rng_get. The range of each generator can be found using the auxiliary functions described in the next section.
 
 =item gsl_rng_fwrite($stream, $r) - This function writes the random number state of the random number generator $r to the stream $stream (opened with the gsl_fopen function from the Math::GSL module) in binary format. The return value is 0 for success and $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
 
@@ -239,7 +239,7 @@ __END__
 
 =item print "r is a " . gsl_rng_name($r) . "generator\n";
 
-=item would print something like r is a 'taus' generator. 
+=item would print something like r is a 'taus' generator.
 
 =back
 
@@ -247,7 +247,7 @@ __END__
 
 =item gsl_rng_state($r) - This function returns a pointer to the state of generator $r. You can use this information to access the state directly.
 
-=item gsl_rng_print_state($r) 
+=item gsl_rng_print_state($r)
 
 =back
 
@@ -271,7 +271,7 @@ __END__
 
 =item $gsl_rng_fishman20
 
-=item $gsl_rng_fishman2x - This is the L'Ecuyer-Fishman random number generator. It is taken from Knuth's Seminumerical Algorithms, 3rd Ed., page 108. Its sequence is, z_{n+1} = (x_n - y_n) mod m with m = 2^31 - 1. x_n and y_n are given by the fishman20 and lecuyer21 algorithms. The seed specifies the initial value, x_1. 
+=item $gsl_rng_fishman2x - This is the L'Ecuyer-Fishman random number generator. It is taken from Knuth's Seminumerical Algorithms, 3rd Ed., page 108. Its sequence is, z_{n+1} = (x_n - y_n) mod m with m = 2^31 - 1. x_n and y_n are given by the fishman20 and lecuyer21 algorithms. The seed specifies the initial value, x_1.
 
 =item $gsl_rng_gfsr4
 
@@ -303,7 +303,7 @@ __END__
 
 =item $gsl_rng_ran3
 
-=item $gsl_rng_rand - This is the BSD rand generator. Its sequence is x_{n+1} = (a x_n + c) mod m with a = 1103515245, c = 12345 and m = 2^31. The seed specifies the initial value, x_1. The period of this generator is 2^31, and it uses 1 word of storage per generator. 
+=item $gsl_rng_rand - This is the BSD rand generator. Its sequence is x_{n+1} = (a x_n + c) mod m with a = 1103515245, c = 12345 and m = 2^31. The seed specifies the initial value, x_1. The period of this generator is 2^31, and it uses 1 word of storage per generator.
 
 =item $gsl_rng_rand48
 
@@ -379,7 +379,7 @@ __END__
 
 =item $gsl_rng_uni32
 
-=item $gsl_rng_vax - This is the VAX generator MTH$RANDOM. Its sequence is, x_{n+1} = (a x_n + c) mod m with a = 69069, c = 1 and m = 2^32. The seed specifies the initial value, x_1. The period of this generator is 2^32 and it uses 1 word of storage per generator. 
+=item $gsl_rng_vax - This is the VAX generator MTH$RANDOM. Its sequence is, x_{n+1} = (a x_n + c) mod m with a = 69069, c = 1 and m = 2^32. The seed specifies the initial value, x_1. The period of this generator is 2^32 and it uses 1 word of storage per generator.
 
 =item $gsl_rng_waterman14
 
@@ -395,11 +395,11 @@ __END__
 
  The original source code is available from NETLIB. For more information see,
 
- * W. Petersen, “Lagged Fibonacci Random Number Generators for the NEC SX-3”, International Journal of High Speed Computing (1994). 
+ * W. Petersen, “Lagged Fibonacci Random Number Generators for the NEC SX-3”, International Journal of High Speed Computing (1994).
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation: 
+For more informations on the functions, we refer you to the GSL offcial documentation:
 
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
@@ -410,7 +410,7 @@ L<http://www.gnu.org/software/gsl/manual/html_node/>
 The following example will print out a list a random integers between certain
 minimum and maximum values. The command line arguments are first the number of
 random numbers wanted, the minimum and then maximum. The defaults are 10, 0 and
-100, respectively. 
+100, respectively.
 
     use Math::GSL::RNG qw/:all/;
     my $seed = int rand(100);
@@ -425,7 +425,7 @@ random numbers wanted, the minimum and then maximum. The defaults are 10, 0 and
 The C<$seed> argument is optional but encouraged. This program is available in
 the B<examples/> directory that comes with the source of this module.
 
-If you would like a series of random non-integer numbers, then you can generate one "scaling factor" 
+If you would like a series of random non-integer numbers, then you can generate one "scaling factor"
 and multiple by that, such as
 
     use Math::GSL::RNG qw/:all/;

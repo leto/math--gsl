@@ -15,7 +15,7 @@
     #include "gsl/gsl_matrix_double.h"
     #include "gsl/gsl_matrix_int.h"
     #include "gsl/gsl_matrix_complex_double.h"
-    #include "gsl/gsl_matrix_char.h" 
+    #include "gsl/gsl_matrix_char.h"
 
     #include "../c/Matrix.c"
 %}
@@ -31,4 +31,4 @@
 %include "../c/Matrix.h"
 
 
-%include "../pod/Matrix.pod" 
+%include "../pod/Matrix.pod"

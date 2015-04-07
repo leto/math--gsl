@@ -621,8 +621,8 @@ sub GSL_MATRIX_OO_ADDITION_CONSTANT : Tests {
     ok_similar([$m2->col(1)->as_list], [8,9,10]);
     ok_similar([$m2->col(2)->as_list], [13,12,11]);
     ok_similar([$m2->col(0)->as_list], [4,4,4]);
-    
-    my $m3 = 4 + $m; 
+
+    my $m3 = 4 + $m;
     ok_similar([$m3->col(1)->as_list], [8,9,10]);
     ok_similar([$m3->col(2)->as_list], [13,12,11]);
     ok_similar([$m3->col(0)->as_list], [4,4,4]);

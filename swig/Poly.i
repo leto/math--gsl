@@ -1,7 +1,7 @@
 %module "Math::GSL::Poly"
 // this brakes stuff
 // %include "typemaps.i"
-%include "gsl_typemaps.i" 
+%include "gsl_typemaps.i"
 %include "renames.i"
 
 %{
@@ -26,15 +26,15 @@
 %typemap(argout) gsl_complex {
     AV* tempav = newAV();
     double x,y;
-    if (argvi >= items) {            
-        EXTEND(sp,1);              
+    if (argvi >= items) {
+        EXTEND(sp,1);
     }
     //fprintf(stderr,"--> %g <--\n", GSL_REAL($1));
     //fprintf(stderr,"--> %g <--\n", GSL_IMAG($1));
 
     $result = sv_newmortal();
-   
-    x = GSL_REAL($1); 
+
+    x = GSL_REAL($1);
     y = GSL_IMAG($1);
 
     /* the next 2 lines blow up
@@ -65,7 +65,7 @@
         croak("Math::GSL : $input is not a reference!");
     if (SvTYPE(SvRV($input)) != SVt_PVAV)
         croak("Math::GSL : $input is not an array ref!");
-       
+
     z      = gsl_complex_rect(0,0);
     tempav = (AV*)SvRV($input);
     len    = av_len(tempav);

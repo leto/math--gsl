@@ -21,7 +21,7 @@
   $1 = &dvalue;
 }
 
-#gsl_complex gsl_complex_poly_complex_eval (const gsl_complex c [], const int len, const gsl_complex z);
+/* gsl_complex gsl_complex_poly_complex_eval (const gsl_complex c [], const int len, const gsl_complex z); */
 
 %typemap(argout) gsl_complex {
     AV* tempav = newAV();

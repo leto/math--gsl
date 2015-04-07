@@ -1,5 +1,14 @@
 =head1 Math::GSL Changes
 
+=head1 v0.35 - April 2015
+
+    - Remotion of trailing whitespaces (Shlomi Fish)
+    - Documentation fixes (Shlomi Fish)
+    - Remotion of PkgConfig from runtime requirements
+      (Bartosz Jakubski)
+    - Indentation fixes (Bartosz Jakubski)
+    - Installation feedback improvements (Bartosz Jakubski)
+
 =head1 v0.34 - December 2014
 
     - Fixed bug on uncleared error variable (5.8.9)

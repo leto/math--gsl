@@ -1,14 +1,14 @@
 %perlcode %{
 
 @EXPORT_OK = qw/
-    gsl_wavelet_alloc 
-    gsl_wavelet_free 
-    gsl_wavelet_name 
-    gsl_wavelet_workspace_alloc 
-    gsl_wavelet_workspace_free 
-    gsl_wavelet_transform 
-    gsl_wavelet_transform_forward 
-    gsl_wavelet_transform_inverse 
+    gsl_wavelet_alloc
+    gsl_wavelet_free
+    gsl_wavelet_name
+    gsl_wavelet_workspace_alloc
+    gsl_wavelet_workspace_free
+    gsl_wavelet_transform
+    gsl_wavelet_transform_forward
+    gsl_wavelet_transform_inverse
     $gsl_wavelet_daubechies
     $gsl_wavelet_daubechies_centered
     $gsl_wavelet_haar
@@ -36,19 +36,19 @@ Math::GSL::Wavelet - 1-D (Real) Wavelets
 
 =over 1
 
-=item C<gsl_wavelet_alloc($T, $k)> 
+=item C<gsl_wavelet_alloc($T, $k)>
 
 This function allocates and initializes a wavelet object of type $T, where $T
 must be one of the constants below. The parameter $k selects the specific member
 of the wavelet family.
 
-=item C<gsl_wavelet_free($w)> 
+=item C<gsl_wavelet_free($w)>
 
-This function frees the wavelet object $w. 
+This function frees the wavelet object $w.
 
 =item C<gsl_wavelet_name>
 
-=item C<gsl_wavelet_workspace_alloc($n)> 
+=item C<gsl_wavelet_workspace_alloc($n)>
 
 This function allocates a workspace for the discrete wavelet transform. To
 perform a one-dimensional transform on $n elements, a workspace of size $n must
@@ -56,13 +56,13 @@ be provided. For two-dimensional transforms of $n-by-$n matrices it is
 sufficient to allocate a workspace of size $n, since the transform operates on
 individual rows and columns.
 
-=item C<gsl_wavelet_workspace_free($work)> 
+=item C<gsl_wavelet_workspace_free($work)>
 
-This function frees the allocated workspace work. 
+This function frees the allocated workspace work.
 
 =item C<gsl_wavelet_transform>
 
-=item C<gsl_wavelet_transform_forward($w, $data, $stride, $n, $work)> 
+=item C<gsl_wavelet_transform_forward($w, $data, $stride, $n, $work)>
 
 This functions compute in-place forward discrete wavelet transforms of length $n
 with stride $stride on the array $data. The length of the transform $n is
@@ -78,7 +78,7 @@ form,
     (s_{-1,0}, d_{0,0}, d_{1,0}, d_{1,1}, d_{2,0}, ..., d_{j,k}, ..., d_{J-1,2^{J-1}-1})
 
 =back
-     
+
 where the first element is the smoothing coefficient s_{-1,0}, followed by the
 detail coefficients d_{j,k} for each level j. The backward transform inverts
 these coefficients to obtain the original data. These functions return a status
@@ -111,7 +111,7 @@ moments. The implemented wavelets are k=4, 6, ..., 20, with k even.
 
 =back
 
-This is the Haar wavelet. The only valid choice of k for the Haar wavelet is k=2. 
+This is the Haar wavelet. The only valid choice of k for the Haar wavelet is k=2.
 
 =over 1
 

@@ -15,9 +15,9 @@ my $vector = Math::GSL::Vector->new([@stuff]);
 my $runs = shift || 50_000;
 timethese($runs, {
     'min - List::Util         ' => sub { min(@stuff) },
-    'min of Math::GSL vector  ' => sub { $vector->min }, 
+    'min of Math::GSL vector  ' => sub { $vector->min },
 });
 timethese($runs, {
     'max - List::Util         ' => sub { max(@stuff) },
-    'max of Math::GSL vector  ' => sub { $vector->max }, 
+    'max of Math::GSL vector  ' => sub { $vector->max },
 });

@@ -35,7 +35,7 @@ sub GSL_VECTOR_LENGTH: Tests {
     my $vector = $self->{object};
     ok( $vector->length == 5, '$vector->length' );
 }
-sub GSL_VECTOR_SET_GET: Tests { 
+sub GSL_VECTOR_SET_GET: Tests {
     my $self = shift;
     gsl_vector_set($self->{vector}, 0, 42 );
     my $elem   = gsl_vector_get($self->{vector}, 0);
@@ -44,15 +44,15 @@ sub GSL_VECTOR_SET_GET: Tests {
 
 sub GSL_VECTOR_ISNONNEG: Tests {
     my $self = shift;
-    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4);
     ok( !gsl_vector_isnonneg($self->{vector}),'gsl_vector_isnonneg' );
-    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4);
     ok( gsl_vector_isnonneg($self->{vector}),'gsl_vector_isnonneg' );
 }
 
 sub GSL_VECTOR_ISNULL: Tests(2) {
     my $self = shift;
-    map { gsl_vector_set($self->{vector}, $_, 0 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, 0 ) } (0..4);
     ok( gsl_vector_isnull($self->{vector}),'null vector returns true' );
     gsl_vector_set($self->{vector}, 0, 5 );
     ok( !gsl_vector_isnull($self->{vector}), 'changed non-null vector returns false' );
@@ -60,16 +60,16 @@ sub GSL_VECTOR_ISNULL: Tests(2) {
 
 sub GSL_VECTOR_ISPOS: Tests {
     my $self = shift;
-    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, -1 ) } (0..4);
     ok( !gsl_vector_ispos($self->{vector}),'gsl_vector_pos' );
-    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, 1 ) } (0..4);
     ok( gsl_vector_ispos($self->{vector}),'gsl_vector_pos' );
 }
 
 sub GSL_VECTOR_ISNEG: Tests {
     my $self = shift;
 
-    map { gsl_vector_set($self->{vector}, $_, -$_ ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, -$_ ) } (0..4);
     ok( !gsl_vector_isneg($self->{vector}),'gsl_vector_neg' );
 
     gsl_vector_set($self->{vector}, 0, -1 );
@@ -118,7 +118,7 @@ sub GSL_VECTOR_MAX: Tests {
     ok_similar( $vec->max ,4200, '$vec->min' );
     ok_similar( gsl_vector_max($vec->raw) ,4200, 'gsl_vector_max' );
 }
-sub GSL_VECTOR_FREAD_FWRITE: Tests { 
+sub GSL_VECTOR_FREAD_FWRITE: Tests {
     my $self = shift;
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
 
@@ -128,7 +128,7 @@ sub GSL_VECTOR_FREAD_FWRITE: Tests {
     ok( -f "vector", 'gsl_vector_fwrite' );
     ok_status(fclose($fh));
 
-    map { gsl_vector_set($self->{vector}, $_, $_ ** 3 ) } (0..4); 
+    map { gsl_vector_set($self->{vector}, $_, $_ ** 3 ) } (0..4);
 
     $fh = gsl_fopen("vector", 'r');
 
@@ -144,8 +144,8 @@ sub GSL_VECTOR_SUBVECTOR : Tests {
     map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
     my $vec_sub = gsl_vector_subvector($self->{vector}, 2, 3);
 
-    ok_similar( [ map { gsl_vector_get($vec_sub->{vector}, $_) } (0..2) ], 
-                [ 4, 9, 16 ], 
+    ok_similar( [ map { gsl_vector_get($vec_sub->{vector}, $_) } (0..2) ],
+                [ 4, 9, 16 ],
               );
 }
 
@@ -186,28 +186,28 @@ sub GSL_VECTOR_MAX_INDEX : Tests {
    my $self = shift;
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
    my $index = gsl_vector_max_index($self->{vector});
-   is($index, 4, "Position of the maximum"); 
+   is($index, 4, "Position of the maximum");
 }
 
 sub GSL_VECTOR_MIN_INDEX : Tests {
    my $self = shift;
    map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); ;
    my $index = gsl_vector_min_index($self->{vector});
-   is($index, 0, "Position of the minimum"); 
+   is($index, 0, "Position of the minimum");
 }
 
 sub GSL_VECTOR_MINMAX_INDEX : Tests {
    my $self = shift;
    my ($min, $max);
-   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4); 
+   map { gsl_vector_set($self->{vector}, $_, $_ ** 2 ) } (0..4);
    ($min, $max) = gsl_vector_minmax_index($self->{vector});
    ok_similar( [ 0, 4 ], [ $min, $max], 'gsl_vector_minmax_index' );
 }
 
 sub GSL_VECTOR_MINMAX : Tests {
    my ($min, $max);
-   my $vector = gsl_vector_alloc(5); 
-   map { gsl_vector_set($vector, $_, $_ ** 2 ) } (0..4); 
+   my $vector = gsl_vector_alloc(5);
+   map { gsl_vector_set($vector, $_, $_ ** 2 ) } (0..4);
 
    ($min, $max) = gsl_vector_minmax($vector);
 
@@ -224,7 +224,7 @@ sub GSL_VECTOR_MEMCPY : Tests {
 
 sub GSL_VECTOR_VIEW_ARRAY : Tests {
    local $TODO = "memory management for view_array* functions is being worked on";
-   my @array = [1,2,3,4,5,6]; 
+   my @array = [1,2,3,4,5,6];
    my $vec_view = gsl_vector_view_array(@array, 2);
    map { is(gsl_vector_get($vec_view->{vector}, $_), $_+1 ) } (0..1); ;
 }
@@ -260,7 +260,7 @@ sub GSL_VECTOR_SUB : Tests {
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
    map { gsl_vector_set($second_vec, $_, 1) } (0..4); ;
    ok_status( gsl_vector_sub($self->{vector}, $second_vec));
-   map { is(gsl_vector_get($self->{vector}, $_), $_ - 1 ) } (0..4); ;   
+   map { is(gsl_vector_get($self->{vector}, $_), $_ - 1 ) } (0..4); ;
 }
 
 sub GSL_VECTOR_MUL : Tests {
@@ -269,7 +269,7 @@ sub GSL_VECTOR_MUL : Tests {
    map { gsl_vector_set($self->{vector}, $_, $_ ) } (0..4); ;
    map { gsl_vector_set($second_vec, $_, 2) } (0..4); ;
    ok_status( gsl_vector_mul($self->{vector}, $second_vec));
-   map { is(gsl_vector_get($self->{vector}, $_), $_ * 2 ) } (0..4); ;   
+   map { is(gsl_vector_get($self->{vector}, $_), $_ * 2 ) } (0..4); ;
 }
 
 sub GSL_VECTOR_DIV : Tests {
@@ -278,7 +278,7 @@ sub GSL_VECTOR_DIV : Tests {
    map { gsl_vector_set($self->{vector}, $_, $_*2 ) } (0..4); ;
    map { gsl_vector_set($second_vec, $_, 2) } (0..4); ;
    ok_status( gsl_vector_div($self->{vector}, $second_vec));
-   map { is(gsl_vector_get($self->{vector}, $_), $_ ) } (0..4); ;   
+   map { is(gsl_vector_get($self->{vector}, $_), $_ ) } (0..4); ;
 }
 
 sub GSL_VECTOR_SCALE : Tests {
@@ -323,15 +323,15 @@ sub GSL_VECTOR_SWAP : Tests {
 
    ok_status( gsl_vector_swap($vec1, $vec2));
 
-   ok_similar( [ map { gsl_vector_get($vec1, $_)  } @idx ], 
+   ok_similar( [ map { gsl_vector_get($vec1, $_)  } @idx ],
                [ @idx ],
              );
-   ok_similar( [ map { gsl_vector_get($vec2, $_)  } @idx ], 
+   ok_similar( [ map { gsl_vector_get($vec2, $_)  } @idx ],
                [ map { $_**2 } @idx ],
              );
 }
 
-sub GSL_VECTOR_FPRINTF_FSCANF : Tests {  
+sub GSL_VECTOR_FPRINTF_FSCANF : Tests {
    my $vec1 = Math::GSL::Vector->new([ map { $_ ** 2 } (0..4) ]);
 
    my $fh = gsl_fopen("vector", 'w');
@@ -341,13 +341,13 @@ sub GSL_VECTOR_FPRINTF_FSCANF : Tests {
 
    my $vec2 = Math::GSL::Vector->new([ map { $_ ** 3 } (0..4) ]);
 
-   $fh = gsl_fopen("vector", 'r');   
+   $fh = gsl_fopen("vector", 'r');
    ok( defined $fh, 'fopen  - readonly');
-   
+
    ok_status(gsl_vector_fscanf($fh, $vec2->raw));
 
    ok_similar( [ $vec2->as_list ], [ map { $_ ** 2 } (0..4) ]);
-   ok_status(gsl_fclose($fh) ); 
+   ok_status(gsl_fclose($fh) );
 }
 
 sub GSL_ADDITION : Tests {
@@ -362,7 +362,7 @@ sub GSL_ADDITION : Tests {
 
   my $vec5 = 5 + $vec2;
   ok_similar([$vec5->as_list], [7,8,9]);
-   
+
   my $z = Math::GSL::Vector->new([0..10]);
   dies_ok( sub { $z + $vec1; }, 'addition checks vector length' );
   ok_similar([$vec1->as_list], [1,2,3]);
@@ -379,7 +379,7 @@ sub GSL_SUBTRACTION : Tests(3) {
     my $v2 = Math::GSL::Vector->new( [ 5 .. 9 ]);
 
     ok_similar( [($v2-$v1)->as_list], [ (4) x 5 ] );
-    
+
     my $v3 = $v2 - 3;
     ok_similar( [ $v3->as_list  ], [ 2 .. 6 ] );
 

@@ -215,7 +215,7 @@ sub compile_swig {
     move($from, "$from.$ver");
 
     {
-      ## updates the version number. 
+      ## updates the version number.
       ## all files are being processed right now.
       ## later versions might use a fixed list of candidate files.
       undef $/;

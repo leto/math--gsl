@@ -19,7 +19,7 @@ sub teardown : Test(teardown) {
 
 sub GSL_ODEIV_STEP_ALLOC : Tests {
     my $step = gsl_odeiv_step_alloc($gsl_odeiv_step_rk2, 3);
-    isa_ok( $step, 'Math::GSL::ODEIV' ); 
+    isa_ok( $step, 'Math::GSL::ODEIV' );
 }
 
 sub GSL_ODEIV_EVOLVE_ALLOC : Tests {

@@ -1,6 +1,6 @@
 Requirements:
     * Gnuplot
-    
+
 To see a graph of Bessel functions, run the script named "bessel" in the current directory:
 
     ./bessel

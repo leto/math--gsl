@@ -284,7 +284,7 @@ sub check_gsl_version_pkgconfig {
     my $gsl_version = $gsl_pkgcfg->pkg_version;
     if (GSLBuilder::cmp_versions($gsl_version, $MIN_GSL_VERSION) == -1) {
                 printf "
-*** 
+***
 *** You need to have GSL %s or greater installed. (You have $gsl_version).
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
                 exit 0;
@@ -305,8 +305,8 @@ sub check_gsl_version {
     my $gsl_version = qx{gsl-config --version};
     if (not defined $gsl_version) {
         print "
-*** 
-*** Can't find GSL with gsl-config. 
+***
+*** Can't find GSL with gsl-config.
 *** Trying with PkgConfig.
     ";
         return undef;
@@ -331,7 +331,7 @@ sub check_gsl_version {
 
         if (GSLBuilder::cmp_versions($current_version, $MIN_GSL_VERSION) == -1) {
             printf "
-*** 
+***
 *** You need to have GSL %s or greater installed. (You have $gsl_version).
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
             exit 0;
@@ -346,7 +346,7 @@ sub check_gsl_version {
         }
     } else {
         print "
-*** 
+***
 *** Can't parse GSL version $gsl_version.
 *** Trying with PkgConfig.
 ";

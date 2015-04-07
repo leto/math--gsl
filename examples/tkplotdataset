@@ -1,4 +1,4 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
 use Tk;
 use Tk::PlotDataset;
 use Tk::LineGraphDataset;

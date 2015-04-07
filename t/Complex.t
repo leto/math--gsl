@@ -43,7 +43,7 @@ sub GSL_COMPLEX_POLAR : Tests {
     my ($r,$theta)  = ( gsl_complex_abs($x), gsl_complex_arg($x) );
 
     print "x=$r * e^(i $theta)*I\n" if $ENV{DEBUG};
-    ok( is_similar($r,1.0),     'gsl_complex_polar r, res=' .($r-1.) . "\n"); 
+    ok( is_similar($r,1.0),     'gsl_complex_polar r, res=' .($r-1.) . "\n");
     ok( is_similar($theta,0.1), 'gsl_complex_polar theta, res=' .($theta-0.1) . "\n");
 }
 
@@ -93,10 +93,10 @@ sub GSL_COMPLEX_LOG_B : Tests {
     );
 }
 
-sub GSL_COMPLEX_EXP : Tests {      
+sub GSL_COMPLEX_EXP : Tests {
     my $z = gsl_complex_rect(2, 5);
     $z    = gsl_complex_exp($z);
-    ok_similar( [ gsl_parts($z)                   ], 
+    ok_similar( [ gsl_parts($z)                   ],
                 [ $M_E**2*cos(5), $M_E**2*sin(5)  ]
     );
 }
@@ -105,7 +105,7 @@ sub GSL_COMPLEX_EXP_EULERS_IDENTITY : Tests {       # e^(i pi) + 1 = 0
     my $z = gsl_complex_rect(0, $M_PI);
     $z    = gsl_complex_exp($z);
     $z    = gsl_complex_add_real($z, 1);
-    ok_similar( [ gsl_parts($z) ], 
+    ok_similar( [ gsl_parts($z) ],
                 [ 0.0, 0.0      ]
     );
 }
@@ -200,7 +200,7 @@ sub GSL_COMPLEX_MUL_IMAG : Tests {
 sub GSL_COMPLEX_DIV_IMAG : Tests {
     my $x = gsl_complex_rect(6,4);
 
-    my $z = gsl_complex_div_imag($x, 2); 
+    my $z = gsl_complex_div_imag($x, 2);
     ok_similar( [ gsl_parts($z) ], [ 2, -3 ], 'gsl_complex_div_imag' );
 }
 
@@ -246,13 +246,13 @@ sub GSL_COMPLEX_POW : Tests {
     ok_similar( [gsl_parts($z) ], [ 3**2 - 4**2, 2*3*4 ], 'gsl_complex_pow' );
 }
 
-sub GSL_COMPLEX_SET_REAL : Tests { 
+sub GSL_COMPLEX_SET_REAL : Tests {
     my $x = gsl_complex_rect(3,4);
     gsl_set_real($x, 5);
     ok_similar(  [ gsl_parts($x) ], [ 5, 4 ], 'gsl_complex_set_real');
 }
 
-sub GSL_COMPLEX_SET_IMAG : Tests { 
+sub GSL_COMPLEX_SET_IMAG : Tests {
     my $x = gsl_complex_rect(3,4);
     gsl_set_imag($x, 5);
     ok_similar(  [ gsl_parts($x) ], [ 3, 5 ], 'gsl_complex_set_imag');
@@ -268,8 +268,8 @@ sub GSL_COMPLEX_SIN : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_sin($x);
 
-    ok_similar( [ gsl_parts($z)                       ], 
-                [ 0.53092108624852, -3.59056458998578 ], 
+    ok_similar( [ gsl_parts($z)                       ],
+                [ 0.53092108624852, -3.59056458998578 ],
                 'gsl_complex_sin'
     );
 }
@@ -278,7 +278,7 @@ sub GSL_COMPLEX_ARCSIN : Tests {
     my $x = gsl_complex_rect(1,0);
     my $z = gsl_complex_arcsin($x);
 
-    ok_similar( [ gsl_parts($z)    ], 
+    ok_similar( [ gsl_parts($z)    ],
                 [ $M_PI/2, 0.0     ],
                 'gsl_complex_arcsin'
     );
@@ -287,8 +287,8 @@ sub GSL_COMPLEX_SINH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_sinh($x);
 
-    ok_similar( [ gsl_parts($z) ], 
-                [ 0.0,      0.0 ], 
+    ok_similar( [ gsl_parts($z) ],
+                [ 0.0,      0.0 ],
                 'gsl_complex_sinh'
     );
 }
@@ -297,15 +297,15 @@ sub GSL_COMPLEX_ARCSINH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arcsinh($x);
 
-    ok_similar( [ gsl_parts($z) ], 
-                [ 0.0,      0.0 ], 
+    ok_similar( [ gsl_parts($z) ],
+                [ 0.0,      0.0 ],
                 'gsl_complex_arcsinh'
     );
 }
 sub GSL_COMPLEX_COS : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_cos($x);
-    ok_similar( [ gsl_parts($z)                       ], 
+    ok_similar( [ gsl_parts($z)                       ],
                 [ -3.72454550491532, -0.511822569987385],
                 'gsl_complex_cos'
     );
@@ -314,7 +314,7 @@ sub GSL_COMPLEX_COS : Tests {
 sub GSL_COMPLEX_ARCCOS : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arccos($x);
-    ok_similar( [ gsl_parts($z)], 
+    ok_similar( [ gsl_parts($z)],
                 [ $M_PI/2, 0.0 ],
                 'gsl_complex_arccos'
     );
@@ -322,7 +322,7 @@ sub GSL_COMPLEX_ARCCOS : Tests {
 sub GSL_COMPLEX_COSH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_cosh($x);
-    ok_similar( [ gsl_parts($z)  ], 
+    ok_similar( [ gsl_parts($z)  ],
                 [ 1, 0.0         ],
                 'gsl_complex_cosh'
     );
@@ -331,7 +331,7 @@ sub GSL_COMPLEX_COSH : Tests {
 sub GSL_COMPLEX_ARCCOSH : Tests {
     my $x = gsl_complex_rect(1,0);
     my $z = gsl_complex_arccosh($x);
-    ok_similar( [ gsl_parts($z)    ], 
+    ok_similar( [ gsl_parts($z)    ],
                 [ 0.0, 0.0         ],
                 'gsl_complex_arccosh'
     );
@@ -340,8 +340,8 @@ sub GSL_COMPLEX_ARCCOSH : Tests {
 sub GSL_COMPLEX_TAN : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_tan($x);
-    ok_similar( [ gsl_parts($z)                       ], 
-                [ -0.0098843750383225, 0.965385879022133 ], 
+    ok_similar( [ gsl_parts($z)                       ],
+                [ -0.0098843750383225, 0.965385879022133 ],
                 'gsl_complex_tan'
     );
 }
@@ -349,8 +349,8 @@ sub GSL_COMPLEX_TAN : Tests {
 sub GSL_COMPLEX_ARCTAN : Tests {
     my $x = gsl_complex_rect(1,0);
     my $z = gsl_complex_arctan($x);
-    ok_similar( [ gsl_parts($z)    ], 
-                [ $M_PI/4 , 0.0    ], 
+    ok_similar( [ gsl_parts($z)    ],
+                [ $M_PI/4 , 0.0    ],
                 'gsl_complex_arctan'
     );
 }
@@ -358,8 +358,8 @@ sub GSL_COMPLEX_ARCTAN : Tests {
 sub GSL_COMPLEX_TANH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_tan($x);
-    ok_similar( [ gsl_parts($z) ], 
-                [ 0.0,    0.0   ], 
+    ok_similar( [ gsl_parts($z) ],
+                [ 0.0,    0.0   ],
                 'gsl_complex_tanh'
     );
 }
@@ -367,15 +367,15 @@ sub GSL_COMPLEX_TANH : Tests {
 sub GSL_COMPLEX_ARCTANH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arctan($x);
-    ok_similar( [ gsl_parts($z) ], 
-                [ 0.0,    0.0   ], 
+    ok_similar( [ gsl_parts($z) ],
+                [ 0.0,    0.0   ],
                 'gsl_complex_arctanh'
     );
 }
 sub GSL_COMPLEX_SEC : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_sec($x);
-    ok_similar( [ gsl_parts($z)                          ], 
+    ok_similar( [ gsl_parts($z)                          ],
                 [ -0.263512975158389, 0.0362116365587685 ],
                 'gsl_complex_sec'
     );
@@ -384,7 +384,7 @@ sub GSL_COMPLEX_SEC : Tests {
 sub GSL_COMPLEX_ARCSEC : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arcsec($x);
-    ok_similar( [ gsl_parts($z)  ], 
+    ok_similar( [ gsl_parts($z)  ],
                 [ $M_PI/2,  0.0  ],
                 'gsl_complex_arcsec'
     );
@@ -392,7 +392,7 @@ sub GSL_COMPLEX_ARCSEC : Tests {
 sub GSL_COMPLEX_SECH : Tests {
     my $x = gsl_complex_rect(1,0);
     my $z = gsl_complex_sech($x);
-    ok_similar( [ gsl_parts($z)             ], 
+    ok_similar( [ gsl_parts($z)             ],
                 [ 2/(exp(1)+exp(-1)), 0.0 ],
                 'gsl_complex_sech'
     );
@@ -401,7 +401,7 @@ sub GSL_COMPLEX_SECH : Tests {
 sub GSL_COMPLEX_ARCSECH : Tests {
     my $x = gsl_complex_rect(2/(exp(1)+exp(-1)),0);
     my $z = gsl_complex_arcsech($x);
-    ok_similar( [ gsl_parts($z)  ], 
+    ok_similar( [ gsl_parts($z)  ],
                 [ 1.0 ,      0.0 ],
                 'gsl_complex_arcsech'
     );
@@ -410,7 +410,7 @@ sub GSL_COMPLEX_ARCSECH : Tests {
 sub GSL_COMPLEX_CSC : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_csc($x);
-    ok_similar( [ gsl_parts($z)                       ], 
+    ok_similar( [ gsl_parts($z)                       ],
                 [ 0.0403005788568915, 0.27254866146294],
                 'gsl_complex_csc'
     );
@@ -419,8 +419,8 @@ sub GSL_COMPLEX_CSC : Tests {
 sub GSL_COMPLEX_ARCCSC : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arccsc($x);
-    ok_similar( [ gsl_parts($z)], 
-                [ 0.0, 0.0     ], 
+    ok_similar( [ gsl_parts($z)],
+                [ 0.0, 0.0     ],
                 'gsl_complex_arccsc'
     );
 }
@@ -428,7 +428,7 @@ sub GSL_COMPLEX_ARCCSC : Tests {
 sub GSL_COMPLEX_CSCH : Tests {
     my $x = gsl_complex_rect(0,1);
     my $z = gsl_complex_csch($x);
-    ok_similar( [ gsl_parts($z)  ], 
+    ok_similar( [ gsl_parts($z)  ],
                 [ 0.0 , -1/sin(1)],
                 'gsl_complex_csch'
     );
@@ -437,8 +437,8 @@ sub GSL_COMPLEX_CSCH : Tests {
 sub GSL_COMPLEX_ARCCSCH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arccsch($x);
-    ok_similar( [ gsl_parts($z)  ], 
-                [ 0.0 , 0.0      ], 
+    ok_similar( [ gsl_parts($z)  ],
+                [ 0.0 , 0.0      ],
                 'gsl_complex_arccsch'
     );
 }
@@ -446,7 +446,7 @@ sub GSL_COMPLEX_ARCCSCH : Tests {
 sub GSL_COMPLEX_COT : Tests {
     my $x = gsl_complex_rect(3,2);
     my $z = gsl_complex_cot($x);
-    ok_similar( [ gsl_parts($z)                       ], 
+    ok_similar( [ gsl_parts($z)                       ],
                 [ -0.0106047834703371, -1.035746637765],
                 'gsl_complex_cot'
     );
@@ -455,7 +455,7 @@ sub GSL_COMPLEX_COT : Tests {
 sub GSL_COMPLEX_ARCCOT : Tests {
     my $x = gsl_complex_rect(1,0);
     my $z = gsl_complex_arccot($x);
-    ok_similar( [ gsl_parts($z) ], 
+    ok_similar( [ gsl_parts($z) ],
                 [ $M_PI/4 , 0.0 ],
                 'gsl_complex_arccot'
     );
@@ -464,7 +464,7 @@ sub GSL_COMPLEX_ARCCOT : Tests {
 sub GSL_COMPLEX_COTH : Tests {
     my $x = gsl_complex_rect(0,1);
     my $z = gsl_complex_coth($x);
-    ok_similar( [ gsl_parts($z)       ], 
+    ok_similar( [ gsl_parts($z)       ],
                 [ 0.0, -cos(1)/sin(1) ],
                 'gsl_complex_coth'
     );
@@ -473,7 +473,7 @@ sub GSL_COMPLEX_COTH : Tests {
 sub GSL_COMPLEX_ARCCOTH : Tests {
     my $x = gsl_complex_rect(0,0);
     my $z = gsl_complex_arccoth($x);
-    ok_similar( [ gsl_parts($z)       ], 
+    ok_similar( [ gsl_parts($z)       ],
                 [ 0.0,  0.0            ],
                 'gsl_complex_arccoth'
     );

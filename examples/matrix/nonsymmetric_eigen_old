@@ -9,7 +9,7 @@ use Math::Complex;
 use Data::Dumper;
 use strict;
 my $matrix = Math::GSL::Matrix->new(2,2)
-                              ->set_row(0, [0,-1] )  
+                              ->set_row(0, [0,-1] )
                               ->set_row(1, [1, 0] );
 print <<STUFF;
 Finding eigenvalue/eigenvectors for

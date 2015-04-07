@@ -44,7 +44,7 @@ sub GSL_STATS_SD : Tests {
 sub GSL_STATS_ABSDEV : Tests {
     my $self = shift;
     my $x = gsl_stats_absdev($self->{data},1, 20);
-    ok_similar($x, 2.9); 
+    ok_similar($x, 2.9);
 }
 
 sub GSL_STATS_SKEW : Tests {
@@ -61,62 +61,62 @@ sub GSL_STATS_KURTOSIS : Tests {
 
 sub GSL_STATS_COVARIANCE : Tests {
     my $self = shift;
-    my $x = gsl_stats_covariance($self->{data}, 1, $self->{datab}, 1, 20); 
+    my $x = gsl_stats_covariance($self->{data}, 1, $self->{datab}, 1, 20);
     ok_similar_relative($x, 14.5263157894737);
 }
 
 sub GSL_STATS_CORRELATION : Tests {
     my $self = shift;
     my $x = gsl_stats_correlation($self->{data}, 1, $self->{datab}, 1, 20);
-    ok_similar_relative($x, 0.793090350710101); 
+    ok_similar_relative($x, 0.793090350710101);
 }
 
 sub GSL_STATS_PVARIANCE : Tests {
     my $self = shift;
-    my $x = gsl_stats_pvariance($self->{data}, 1, 20, $self->{datab}, 1, 20); 
+    my $x = gsl_stats_pvariance($self->{data}, 1, 20, $self->{datab}, 1, 20);
     ok_similar_relative($x, 18.8421052631579);
 }
 
 sub GSL_STATS_TTEST : Tests {
     my $self = shift;
-    my $x = gsl_stats_ttest($self->{data}, 1, 20, $self->{datab}, 1, 20); 
+    my $x = gsl_stats_ttest($self->{data}, 1, 20, $self->{datab}, 1, 20);
     ok_similar_relative($x, -1.45701922702927);
 }
 
-sub GSL_STATS_MAX : Tests { 
+sub GSL_STATS_MAX : Tests {
     my $self = shift;
-    my $x = gsl_stats_max($self->{data}, 1, 20); 
+    my $x = gsl_stats_max($self->{data}, 1, 20);
     ok_similar_relative($x, 22);
 }
 
 sub GSL_STATS_MIN : Tests {
     my $self = shift;
-    my $x = gsl_stats_min($self->{data}, 1, 20); 
+    my $x = gsl_stats_min($self->{data}, 1, 20);
     ok_similar_relative($x, 8);
 }
 
 sub GSL_STATS_MINMAX : Tests {
     my $self = shift;
-    my ($min, $max) = gsl_stats_minmax($self->{data}, 1, 20); 
+    my ($min, $max) = gsl_stats_minmax($self->{data}, 1, 20);
     ok_similar_relative($max, 22);
     ok_similar_relative($min, 8);
 }
 
 sub GSL_STATS_MAX_INDEX : Tests {
     my $self = shift;
-    my $x = gsl_stats_max_index($self->{data}, 1, 20); 
+    my $x = gsl_stats_max_index($self->{data}, 1, 20);
     ok_similar_relative($x, 9);
 }
 
 sub GSL_STATS_MIN_INDEX : Tests {
     my $self = shift;
-    my $x = gsl_stats_min_index($self->{data}, 1, 20); 
+    my $x = gsl_stats_min_index($self->{data}, 1, 20);
     ok_similar_relative($x, 12);
 }
 
 sub GSL_STATS_MINMAX_INDEX : Tests {
     my $self = shift;
-    my ($min, $max) = gsl_stats_minmax_index($self->{data}, 1, 20); 
+    my ($min, $max) = gsl_stats_minmax_index($self->{data}, 1, 20);
     ok_similar_relative($min, 12);
     ok_similar_relative($max, 9);
 }
@@ -170,7 +170,7 @@ sub GSL_STATS_LAG1_AUTOCORRELATION : Tests {
     $numacc3->[0] = 1000000.2 ;
     for ($i = 1 ; $i < 1000  ; $i += 2) {
         $numacc3->[$i] = 1000000.1 ;
-        $numacc3->[$i+1] = 1000000.3 ; 
+        $numacc3->[$i+1] = 1000000.3 ;
     }
     my $mean = gsl_stats_mean ($numacc3, 1, $nacc3);
     my $sd = gsl_stats_sd ($numacc3, 1, $nacc3);
@@ -189,7 +189,7 @@ sub GSL_STATS_WMEAN : Tests {
     my $w = [4, 4, 2, 2];
     my $data = [2, 3, 4, 5];
     my $mean = gsl_stats_wmean($w, 1, $data, 1, 4);
-    ok_similar ($mean, 19/6);    
+    ok_similar ($mean, 19/6);
 }
 
 Test::Class->runtests;

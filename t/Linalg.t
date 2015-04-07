@@ -42,7 +42,7 @@ sub GSL_LINALG_LU_DECOMP : Tests {
 
     my ($result, $signum) = gsl_linalg_LU_decomp($base->raw, $permutation);
     is_deeply( [ $result, $signum ], [ 0, 1] );
- 
+
     my $U = Math::GSL::Matrix->new(4,4);
     my $R = Math::GSL::Matrix->new(4,4);
     my $L = Math::GSL::Matrix->new(4,4);
@@ -139,7 +139,7 @@ sub GSL_LINALG_LU_SVX : Tests {
     gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     gsl_linalg_LU_svx($self->{matrix}, $permutation, $x);
     my $value = gsl_vector_get($x, 0);
-    ok_similar( 
+    ok_similar(
         [ map { gsl_vector_get($x, $_) } (1..3) ],
         [ 3-10*$value, -2*$value+2, 13*$value-3 ]
     );
@@ -148,7 +148,7 @@ sub GSL_LINALG_LU_SVX : Tests {
 sub GSL_LINALG_LU_INVERT : Tests {
     my $self = shift;
     map { gsl_matrix_set($self->{matrix}, 0, $_, $_+1) } (0..3);
- 
+
     gsl_matrix_set($self->{matrix}, 1, 0, 2);
     gsl_matrix_set($self->{matrix}, 1, 1, 3);
     gsl_matrix_set($self->{matrix}, 1, 2, 4);
@@ -163,13 +163,13 @@ sub GSL_LINALG_LU_INVERT : Tests {
     gsl_matrix_set($self->{matrix}, 3, 1, 1);
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
     gsl_matrix_set($self->{matrix}, 3, 3, 3);
-    
+
     my $inverse = gsl_matrix_alloc(4,4);
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
     gsl_linalg_LU_decomp($self->{matrix}, $permutation);
     gsl_linalg_LU_invert($self->{matrix}, $permutation, $inverse);
-    
+
     ok_similar(gsl_matrix_get($inverse, 0, 0), -9/40);
     ok_similar(gsl_matrix_get($inverse, 0, 1), 1/40);
     ok_similar(gsl_matrix_get($inverse, 0, 2), 1/40);
@@ -210,7 +210,7 @@ sub GSL_LINALG_COMPLEX_LU_DET : Tests(2) {
 sub GSL_LINALG_LU_DET : Tests {
     my $self = shift;
     map { gsl_matrix_set($self->{matrix}, 0, $_, $_+1) } (0..3);
- 
+
     gsl_matrix_set($self->{matrix}, 1, 0, 2);
     gsl_matrix_set($self->{matrix}, 1, 1, 3);
     gsl_matrix_set($self->{matrix}, 1, 2, 4);
@@ -225,17 +225,17 @@ sub GSL_LINALG_LU_DET : Tests {
     gsl_matrix_set($self->{matrix}, 3, 1, 1);
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
     gsl_matrix_set($self->{matrix}, 3, 3, 3);
-    
+
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
     my ($result, $signum) = gsl_linalg_LU_decomp($self->{matrix}, $permutation);
-    ok_similar(gsl_linalg_LU_det($self->{matrix}, $signum), 160);    
+    ok_similar(gsl_linalg_LU_det($self->{matrix}, $signum), 160);
 }
 
 sub GSL_LINALG_LU_LNDET : Tests {
     my $self = shift;
     map { gsl_matrix_set($self->{matrix}, 0, $_, $_+1) } (0..3);
- 
+
     gsl_matrix_set($self->{matrix}, 1, 0, 2);
     gsl_matrix_set($self->{matrix}, 1, 1, 3);
     gsl_matrix_set($self->{matrix}, 1, 2, 4);
@@ -250,11 +250,11 @@ sub GSL_LINALG_LU_LNDET : Tests {
     gsl_matrix_set($self->{matrix}, 3, 1, 1);
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
     gsl_matrix_set($self->{matrix}, 3, 3, 3);
-    
+
     my $permutation = gsl_permutation_alloc(4);
     gsl_permutation_init($permutation);
     gsl_linalg_LU_decomp($self->{matrix}, $permutation);
-    ok_similar(gsl_linalg_LU_lndet($self->{matrix}), log(160));    
+    ok_similar(gsl_linalg_LU_lndet($self->{matrix}), log(160));
 }
 
 sub GSL_LINALG_QR_DECOMP : Tests {
@@ -267,15 +267,15 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     }
 
     my $tau = gsl_vector_alloc(3);
-    my $q = gsl_matrix_alloc(3,3);    
-    my $r = gsl_matrix_alloc(3,5);    
+    my $q = gsl_matrix_alloc(3,3);
+    my $r = gsl_matrix_alloc(3,5);
     my $a = gsl_matrix_alloc(3,5);
     my $save = gsl_matrix_alloc(3, 5);
     gsl_matrix_memcpy($save, $matrix);
 
     ok_status(gsl_linalg_QR_decomp($matrix, $tau));
     ok_similar(gsl_linalg_QR_unpack($matrix, $tau, $q, $r), 0);
-  # compute a = q r 
+  # compute a = q r
   gsl_blas_dgemm ($CblasNoTrans, $CblasNoTrans, 1.0, $q, $r, 0.0, $a);
 
   my ($aij, $mij);
@@ -283,7 +283,7 @@ sub GSL_LINALG_QR_DECOMP : Tests {
     for($j=0; $j<5; $j++) {
       $aij = gsl_matrix_get($a, $i, $j);
       $mij = gsl_matrix_get($save, $i, $j);
-      ok(is_similar_relative($aij, $mij, 2 * 8.0 * $GSL_DBL_EPSILON));      
+      ok(is_similar_relative($aij, $mij, 2 * 8.0 * $GSL_DBL_EPSILON));
     }
   }
 
@@ -307,7 +307,7 @@ sub GSL_LINALG_CHOLESKY_DECOMP : Tests {
     gsl_matrix_set($self->{matrix}, 3, 1, 11);
     gsl_matrix_set($self->{matrix}, 3, 2, 20);
     gsl_matrix_set($self->{matrix}, 3, 3, 30);
-   
+
     ok_status(gsl_linalg_cholesky_decomp($self->{matrix}));
     my $v = gsl_matrix_diagonal($self->{matrix});
     ok_similar(
@@ -341,7 +341,7 @@ sub GSL_LINALG_HESSENBERG_DECOMP_UNPACK_UNPACK_ACCUM_SET_ZERO : Tests {
     gsl_matrix_set($self->{matrix}, 3, 0, -6);
     gsl_matrix_set($self->{matrix}, 3, 1, 7);
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
-    gsl_matrix_set($self->{matrix}, 3, 3, -8);   
+    gsl_matrix_set($self->{matrix}, 3, 3, -8);
     my $tau = gsl_vector_alloc(4);
     ok_status(gsl_linalg_hessenberg_decomp($self->{matrix}, $tau));
     my $U = gsl_matrix_alloc(4,4);
@@ -391,7 +391,7 @@ sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
     gsl_matrix_set($self->{matrix}, 3, 0, -6);
     gsl_matrix_set($self->{matrix}, 3, 1, 7);
     gsl_matrix_set($self->{matrix}, 3, 2, 2);
-    gsl_matrix_set($self->{matrix}, 3, 3, -8);   
+    gsl_matrix_set($self->{matrix}, 3, 3, -8);
     my $tau_U = gsl_vector_alloc(4);
     my $tau_V = gsl_vector_alloc(3);
 
@@ -402,8 +402,8 @@ sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
     my $superdiag = gsl_vector_alloc(3);
     ok_status(gsl_linalg_bidiag_unpack($self->{matrix}, $tau_U, $U, $tau_V, $V, $diag, $superdiag));
     ok_similar(gsl_matrix_get($V, 0, 0), 1);
-    ok_similar( [ map { gsl_matrix_get($V, $_, 0) } (1..3) ], [ (0) x 3 ] ); 
-    ok_similar( [ map { gsl_matrix_get($V, 0, $_) } (1..3) ], [ (0) x 3 ] ); 
+    ok_similar( [ map { gsl_matrix_get($V, $_, 0) } (1..3) ], [ (0) x 3 ] );
+    ok_similar( [ map { gsl_matrix_get($V, 0, $_) } (1..3) ], [ (0) x 3 ] );
 
     local $TODO = 'look into this';
     ok_similar(gsl_matrix_get($U, 1, 1), -0.609437002705849772);

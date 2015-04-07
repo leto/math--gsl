@@ -1,27 +1,27 @@
 %perlcode %{ @EXPORT_OK = qw/
-               gsl_root_fsolver_alloc 
-               gsl_root_fsolver_free 
-               gsl_root_fsolver_set 
-               gsl_root_fsolver_iterate 
-               gsl_root_fsolver_name 
-               gsl_root_fsolver_root 
-               gsl_root_fsolver_x_lower 
-               gsl_root_fsolver_x_upper 
-               gsl_root_fdfsolver_alloc 
-               gsl_root_fdfsolver_set 
-               gsl_root_fdfsolver_iterate 
-               gsl_root_fdfsolver_free 
-               gsl_root_fdfsolver_name 
-               gsl_root_fdfsolver_root 
-               gsl_root_test_interval 
-               gsl_root_test_residual 
-               gsl_root_test_delta 
-               $gsl_root_fsolver_bisection    
-               $gsl_root_fsolver_brent   
-               $gsl_root_fsolver_falsepos     
-               $gsl_root_fdfsolver_newton     
-               $gsl_root_fdfsolver_secant     
-               $gsl_root_fdfsolver_steffenson 
+               gsl_root_fsolver_alloc
+               gsl_root_fsolver_free
+               gsl_root_fsolver_set
+               gsl_root_fsolver_iterate
+               gsl_root_fsolver_name
+               gsl_root_fsolver_root
+               gsl_root_fsolver_x_lower
+               gsl_root_fsolver_x_upper
+               gsl_root_fdfsolver_alloc
+               gsl_root_fdfsolver_set
+               gsl_root_fdfsolver_iterate
+               gsl_root_fdfsolver_free
+               gsl_root_fdfsolver_name
+               gsl_root_fdfsolver_root
+               gsl_root_test_interval
+               gsl_root_test_residual
+               gsl_root_test_delta
+               $gsl_root_fsolver_bisection
+               $gsl_root_fsolver_brent
+               $gsl_root_fsolver_falsepos
+               $gsl_root_fdfsolver_newton
+               $gsl_root_fdfsolver_secant
+               $gsl_root_fdfsolver_steffenson
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -39,7 +39,7 @@ Math::GSL::Roots - Find roots of arbitrary 1-D functions
 
 =head1 DESCRIPTION
 
-=over 
+=over
 
 =item * C<gsl_root_fsolver_alloc($T)> -
 
@@ -56,7 +56,7 @@ Don't call this function explicitly. It will be called automatically in DESTROY 
 
 This function initializes, or reinitializes, an existing solver $s to use the
 function $f and the initial search interval [$x_lower, $x_upper]. $f has to be
-of this form : 
+of this form :
 
     sub { my $x=shift; function_with_$x }
 For example:
@@ -88,7 +88,7 @@ This function returns the current estimate of the root for the solver $s.
 
 =item * C<gsl_root_fsolver_x_lower($s)> -
 
-This function returns the current lower value of the bracketing interval for the solver $s. 
+This function returns the current lower value of the bracketing interval for the solver $s.
 
 =item * C<gsl_root_fsolver_x_upper($s)> -
 
@@ -122,7 +122,7 @@ encounters an unexpected problem then an error code will be returned (the
 Math::GSL::Errno has to be included),
 
 $GSL_EBADFUNC - The iteration encountered a singular point where the function or its derivative evaluated to Inf or NaN.
-$GSL_EZERODIV - The derivative of the function vanished at the iteration point, preventing the algorithm from continuing without a division by zero. 
+$GSL_EZERODIV - The derivative of the function vanished at the iteration point, preventing the algorithm from continuing without a division by zero.
 
 =item * C<gsl_root_fdfsolver_free($s)> -
 
@@ -136,7 +136,7 @@ This function returns the name of the solver use within the $s solver.
 
 This function returns the current estimate of the root for the solver $s.
 
-=item * C<gsl_root_test_interval($x_lower, $x_upper, $epsabs, $epsrel)> - 
+=item * C<gsl_root_test_interval($x_lower, $x_upper, $epsabs, $epsrel)> -
 
 This function tests for the convergence of the interval [$x_lower, $x_upper]
 with absolute error epsabs and relative error $epsrel. The test returns
@@ -153,7 +153,7 @@ $GSL_SUCCESS if the following condition is achieved,
 
     |r - r^*| < epsabs + epsrel r^*
 
-  assuming that the true root r^* is contained within the interval. 
+  assuming that the true root r^* is contained within the interval.
 
 =item * C<gsl_root_test_residual($f, $epsabs)> -
 
@@ -164,7 +164,7 @@ $epsabs. The test returns $GSL_SUCCESS if the following condition is achieved,
 
 and returns $GSL_CONTINUE otherwise. This criterion is suitable for situations
 where the precise location of the root, x, is unimportant provided a value can
-be found where the residual, |f(x)|, is small enough. 
+be found where the residual, |f(x)|, is small enough.
 
 =item * C<gsl_root_test_delta($x1, $x0, $epsabs, $epsrel)> -
 
@@ -174,7 +174,7 @@ $GSL_SUCCESS if the following condition is achieved,
 
     |x_1 - x_0| < epsabs + epsrel |x_1|
 
-and returns $GSL_CONTINUE otherwise. 
+and returns $GSL_CONTINUE otherwise.
 
 =back
 
@@ -191,7 +191,7 @@ function at the midpoint is calculated. The sign of this value is used to
 determine which half of the interval does not contain a root. That half is
 discarded to give a new, smaller interval containing the root. This procedure
 can be continued indefinitely until the interval is sufficiently small. At any
-time the current estimate of the root is taken as the midpoint of the interval. 
+time the current estimate of the root is taken as the midpoint of the interval.
 
 =item * C<$gsl_root_fsolver_brent> -
 
@@ -206,7 +206,7 @@ a guess for the root. If it lies within the bounds of the current interval then
 the interpolating point is accepted, and used to generate a smaller interval.
 If the interpolating point is not accepted then the algorithm falls back to an
 ordinary bisection step. The best estimate of the root is taken from the most
-recent interpolation or bisection. 
+recent interpolation or bisection.
 
 =item * C<$gsl_root_fsolver_falsepos> -
 
@@ -219,7 +219,7 @@ is used to determine which side of the interval does not contain a root. That
 side is discarded to give a new, smaller interval containing the root. This
 procedure can be continued indefinitely until the interval is sufficiently
 small. The best estimate of the root is taken from the linear interpolation of
-the interval on the current iteration. 
+the interval on the current iteration.
 
 =item * C<$gsl_root_fdfsolver_newton> -
 
@@ -228,9 +228,9 @@ with an initial guess for the location of the root. On each iteration, a line
 tangent to the function f is drawn at that position. The point where this line
 crosses the x-axis becomes the new guess. The iteration is defined by the
 following sequence, x_{i+1} = x_i - f(x_i)/f'(x_i) Newton's method converges
-quadratically for single roots, and linearly for multiple roots. 
+quadratically for single roots, and linearly for multiple roots.
 
-=item * C<$gsl_root_fdfsolver_secant> - 
+=item * C<$gsl_root_fdfsolver_secant> -
 
 The secant method is a simplified version of Newton's method which does not
 require the computation of the derivative on every step.  On its first
@@ -241,7 +241,7 @@ compute a first step,
 
 Subsequent iterations avoid the evaluation of the derivative by replacing it
 with a numerical estimate, the slope of the line through the previous two
-points, 
+points,
 
     x_{i+1} = x_i f(x_i) / f'_{est}
 
@@ -259,7 +259,7 @@ cancellation errors if the separation of the points becomes too small.
 On single roots, the method has a convergence of order (1 + \sqrt 5)/2
 (approximately 1.62). It converges linearly for multiple roots.
 
-=item * C<$gsl_root_fdfsolver_steffenson> - 
+=item * C<$gsl_root_fdfsolver_steffenson> -
 
 The Steffenson Method provides the fastest convergence of all the routines. It
 combines the basic Newton algorithm with an Aitken “delta-squared”
@@ -276,7 +276,7 @@ iterate is also returned if the denominator of the acceleration term ever
 becomes zero.
 
 As with all acceleration procedures this method can become unstable if the
-function is not well-behaved. 
+function is not well-behaved.
 
 =back
 

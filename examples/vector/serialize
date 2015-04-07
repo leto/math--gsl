@@ -16,7 +16,7 @@ if ( -e 'data' ) {
     # The next line coredumps my box
     print Dumper [ $v->as_list ];
     print join (" ", $v->as_list ) . "\n";
-} else { 
+} else {
     my %data;
     my $rng    = Math::GSL::RNG->new;
     my @stuff  = map { $rng->get } (1..10) ;

@@ -29,7 +29,7 @@ my @x        = map { $_/ 100 } ( 0 .. 3000 ) ;
 my @negx     = map { -$_ } reverse @x ;
 my $series;
 
-{ 
+{
     no strict 'refs';
     $series = new Chart::Clicker::Data::Series({
         keys    => [@negx, @x],

@@ -81,7 +81,7 @@ sub GSL_QRNG_SOBOL : Tests {
     isa_ok($clone, "Math::GSL::QRNG::Sobol");
 
     @state = $clone->get();
-    ok_similar( [ 0.75, 0.25 ], \@state, 'clone clones the qrng status' );    
+    ok_similar( [ 0.75, 0.25 ], \@state, 'clone clones the qrng status' );
 }
 
 sub GSL_QRNG_HALTON : Tests {

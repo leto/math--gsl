@@ -44,7 +44,7 @@ sub TEST_RT66882 : Tests {
 }
 
 sub TEST_THE_KITCHEN_SINK : Tests {
-    my $results = { 
+    my $results = {
         'gsl_sf_airy_Ai_e(-5, $Math::GSL::GSL_MODE_DEFAULT, $r)'           => 0.3507610090241142,
         'gsl_sf_airy_Ai_e(-500,$Math::GSL::GSL_MODE_DEFAULT, $r)'         => 0.0725901201040411396,
         'gsl_sf_bessel_J0_e(0.1,$r)'         => 0.99750156206604003230,
@@ -53,13 +53,13 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_bessel_J0_e(100,$r)'         => 0.019985850304223122424,
         'gsl_sf_bessel_J0_e(1e10,$r)'        => 2.1755917502468917269e-06,
         'gsl_sf_erf_e(5,$r)'                 => 0.999999999998463,
-        'gsl_sf_dilog_e(-3.0,$r)'            => -1.9393754207667089531,     
-        'gsl_sf_dilog_e(-0.5,$r)'            => -0.4484142069236462024,     
+        'gsl_sf_dilog_e(-3.0,$r)'            => -1.9393754207667089531,
+        'gsl_sf_dilog_e(-0.5,$r)'            => -0.4484142069236462024,
         'gsl_sf_gamma_e(6.3,$r)'             =>  201.813275184748,
-        'gsl_sf_dilog_e(-0.001,$r)'          => -0.0009997501110486510834,  
-        'gsl_sf_dilog_e(0.1,$r)'             => 0.1026177910993911,        
-        'gsl_sf_dilog_e(0.7,$r)'             => 0.8893776242860387386,     
-        'gsl_sf_dilog_e(1.0,$r)'             => 1.6449340668482260,        
+        'gsl_sf_dilog_e(-0.001,$r)'          => -0.0009997501110486510834,
+        'gsl_sf_dilog_e(0.1,$r)'             => 0.1026177910993911,
+        'gsl_sf_dilog_e(0.7,$r)'             => 0.8893776242860387386,
+        'gsl_sf_dilog_e(1.0,$r)'             => 1.6449340668482260,
         'gsl_sf_clausen_e($M_PI/20.0,$r)'	=> 0.4478882448133546,
         'gsl_sf_clausen_e($M_PI/6.0,$r)'	=> 0.8643791310538927,
         'gsl_sf_clausen_e($M_PI/3.0,$r)'	=> 1.0149416064096535,
@@ -1148,7 +1148,7 @@ sub TEST_THE_KITCHEN_SINK : Tests {
         'gsl_sf_eta_e( 5, $r)'	=> 0.9721197704469093059,
         'gsl_sf_eta_e( 5.2, $r)'	=> 0.9755278712546684682,
         'gsl_sf_eta_e( 6, $r)'	=> 0.9855510912974351041,
-        'gsl_sf_eta_e( 20,$r)'	=> 0.9999990466115815221, 
+        'gsl_sf_eta_e( 20,$r)'	=> 0.9999990466115815221,
     };
 
     verify_results($results, 'Math::GSL::SF');
@@ -1195,7 +1195,7 @@ sub TEST_ZZZ_OLD_BUGS : Test(1)
 
 sub TEST_J0_RESULT_STRUCT: Tests(2) {
     my $result = Math::GSL::SF::gsl_sf_result_struct->new;
-    my ($status) = gsl_sf_bessel_J0_e(2.0,$result); 
+    my ($status) = gsl_sf_bessel_J0_e(2.0,$result);
     ok( defined $result->{err}, '$result->{err}' );
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
 }

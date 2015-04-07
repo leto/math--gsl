@@ -1,8 +1,8 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_deriv_central 
-               gsl_deriv_backward 
-               gsl_deriv_forward 
+               gsl_deriv_central
+               gsl_deriv_backward
+               gsl_deriv_forward
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -20,10 +20,10 @@ Math::GSL::Deriv - Numerical Derivatives
     use Math::GSL::Errno qw/:all/;
 
     my ($x, $h) = (1.5, 0.01);
-    my ($status, $val,$err) = gsl_deriv_central ( sub {  sin($_[0]) }, $x, $h); 
+    my ($status, $val,$err) = gsl_deriv_central ( sub {  sin($_[0]) }, $x, $h);
     my $res = abs($val - cos($x));
     if ($status == $GSL_SUCCESS) {
-        printf "deriv(sin((%g)) = %.18g, max error=%.18g\n", $x, $val, $err;  
+        printf "deriv(sin((%g)) = %.18g, max error=%.18g\n", $x, $val, $err;
         printf "       cos(%g)) = %.18g, residue=  %.18g\n"  , $x, cos($x), $res;
     } else {
         my $gsl_error = gsl_strerror($status);
@@ -40,43 +40,43 @@ grained approximation. As the step size $h goes to zero, the formal definition o
 derivative is reached, but in practive you must choose a reasonable step size to get
 a reasonable answer. Usually something in the range of 1/10 to 1/10000 is sufficient.
 
-So long as your function returns a single scalar value, you can differentiate as 
+So long as your function returns a single scalar value, you can differentiate as
 complicated a function as your heart desires.
 
-=over 
+=over
 
-=item * C<gsl_deriv_central($function, $x, $h)> 
+=item * C<gsl_deriv_central($function, $x, $h)>
 
     use Math::GSL::Deriv qw/gsl_deriv_central/;
     my ($x, $h) = (1.5, 0.01);
     sub func { my $x=shift; $x**4 - 15 * $x + sqrt($x) };
 
-    my ($status, $val,$err) = gsl_deriv_central ( \&func , $x, $h); 
+    my ($status, $val,$err) = gsl_deriv_central ( \&func , $x, $h);
 
 This method approximates the central difference of the subroutine reference
 $function, evaluated at $x, with "step size" $h. This means that the
 function is evaluated at $x-$h and $x+h.
 
 
-=item * C<gsl_deriv_backward($function, $x, $h)> 
+=item * C<gsl_deriv_backward($function, $x, $h)>
 
     use Math::GSL::Deriv qw/gsl_deriv_backward/;
     my ($x, $h) = (1.5, 0.01);
     sub func { my $x=shift; $x**4 - 15 * $x + sqrt($x) };
 
-    my ($status, $val,$err) = gsl_deriv_backward ( \&func , $x, $h); 
+    my ($status, $val,$err) = gsl_deriv_backward ( \&func , $x, $h);
 
 This method approximates the backward difference of the subroutine
 reference $function, evaluated at $x, with "step size" $h. This means that
 the function is evaluated at $x-$h and $x.
 
-=item * C<gsl_deriv_forward($function, $x, $h)> 
+=item * C<gsl_deriv_forward($function, $x, $h)>
 
     use Math::GSL::Deriv qw/gsl_deriv_forward/;
     my ($x, $h) = (1.5, 0.01);
     sub func { my $x=shift; $x**4 - 15 * $x + sqrt($x) };
 
-    my ($status, $val,$err) = gsl_deriv_forward ( \&func , $x, $h); 
+    my ($status, $val,$err) = gsl_deriv_forward ( \&func , $x, $h);
 
 This method approximates the forward difference of the subroutine reference
 $function, evaluated at $x, with "step size" $h. This means that the

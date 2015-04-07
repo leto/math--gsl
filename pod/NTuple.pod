@@ -82,7 +82,7 @@ values in $ntuple->{data}.
 
 =item * <gsl_ntuple_project()>
 
-=item * <gsl_ntuple_close($ntuple)> 
+=item * <gsl_ntuple_close($ntuple)>
 
 This function closes the ntuple file ntuple and frees its associated allocated
 memory.

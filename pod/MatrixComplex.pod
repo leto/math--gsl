@@ -59,7 +59,7 @@ our @EXPORT_OK = qw/
                 gsl_matrix_complex_const_subdiagonal
                 gsl_matrix_complex_const_superdiagonal
                 gsl_matrix_complex_const_subrow
-                gsl_matrix_complex_const_subcolumn 
+                gsl_matrix_complex_const_subcolumn
                 gsl_matrix_complex_const_view_array
                 gsl_matrix_complex_const_view_array_with_tda
                 gsl_matrix_complex_const_view_vector
@@ -108,7 +108,7 @@ sub _multiplication {
             #gsl_matrix_complex_mul_elements($lcopy->raw, $right->raw);
         } else {
             croak "Math::GSL::MatrixComplex - multiplication of elements of matrices must be called with two objects matrices and must have the same number of columns and rows";
-        } 
+        }
     } else {
         gsl_matrix_complex_scale($lcopy->raw, $right);
     }
@@ -209,13 +209,13 @@ Creates a new MatrixComplex object of the given size.
     my $matrix = Math::GSL::MatrixComplex->new(10,10);
 =cut
 
-sub new 
+sub new
 {
     my ($class, $rows, $cols) = @_;
-    my $this = {}; 
+    my $this = {};
     my $matrix;
-    if ( defined $rows       && defined $cols && 
-        $rows > 0            && $cols > 0     && 
+    if ( defined $rows       && defined $cols &&
+        $rows > 0            && $cols > 0     &&
         (int $rows == $rows) && (int $cols == $cols)){
 
         $matrix  = gsl_matrix_complex_alloc($rows,$cols);
@@ -223,7 +223,7 @@ sub new
         croak( __PACKAGE__.'::new($x,$y) - $x and $y must be positive integers');
     }
     gsl_matrix_complex_set_zero($matrix);
-    $this->{_matrix} = $matrix; 
+    $this->{_matrix} = $matrix;
     ($this->{_rows}, $this->{_cols}) = ($rows,$cols);
     bless $this, $class;
 }
@@ -274,7 +274,7 @@ sub as_vector($)
 
 }
 
-=head2  as_list() 
+=head2  as_list()
 
 Get the contents of a Math::GSL::Matrix object as a Perl list.
 
@@ -310,8 +310,8 @@ Returns a row matrix of the row you enter.
 sub row
 {
     my ($self, $row) = @_;
-    croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value') 
-        unless (($row < $self->rows) and $row >= 0);  
+    croak (__PACKAGE__.'::$matrix->row($row) - invalid $row value')
+        unless (($row < $self->rows) and $row >= 0);
 
    my $rowmat = Math::GSL::MatrixComplex->new(1,$self->cols);
 
@@ -509,7 +509,7 @@ sub is_hermitian()
     my $test = $self->is_square;
     my $transpose = $self->copy;
     gsl_matrix_complex_transpose($transpose->raw);
-    
+
     if($test == 1) {
         for my $row (0..$self->rows - 1) {
             map { gsl_matrix_complex_set($transpose->raw, $row, $_, gsl_complex_conjugate(gsl_matrix_complex_get($transpose->raw, $row, $_))) } (0..$self->cols - 1);
@@ -691,7 +691,7 @@ sub lndet($)
 
 =item C<gsl_matrix_complex_set_col>
 
-=back 
+=back
 
 For more informations on the functions, we refer you to the GSL offcial documentation
 L<http://www.gnu.org/software/gsl/manual/html_node/>

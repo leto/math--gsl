@@ -1,52 +1,52 @@
 %perlcode %{
 @EXPORT_OK = qw/
-               gsl_histogram2d_alloc 
-               gsl_histogram2d_calloc 
-               gsl_histogram2d_calloc_uniform 
-               gsl_histogram2d_free 
-               gsl_histogram2d_increment 
-               gsl_histogram2d_accumulate 
-               gsl_histogram2d_find 
-               gsl_histogram2d_get 
-               gsl_histogram2d_get_xrange 
-               gsl_histogram2d_get_yrange 
-               gsl_histogram2d_xmax 
-               gsl_histogram2d_xmin 
-               gsl_histogram2d_nx 
-               gsl_histogram2d_ymax 
-               gsl_histogram2d_ymin 
-               gsl_histogram2d_ny 
-               gsl_histogram2d_reset 
-               gsl_histogram2d_calloc_range 
-               gsl_histogram2d_set_ranges_uniform 
-               gsl_histogram2d_set_ranges 
-               gsl_histogram2d_memcpy 
-               gsl_histogram2d_clone 
-               gsl_histogram2d_max_val 
-               gsl_histogram2d_max_bin 
-               gsl_histogram2d_min_val 
-               gsl_histogram2d_min_bin 
-               gsl_histogram2d_xmean 
-               gsl_histogram2d_ymean 
-               gsl_histogram2d_xsigma 
-               gsl_histogram2d_ysigma 
-               gsl_histogram2d_cov 
-               gsl_histogram2d_sum 
-               gsl_histogram2d_equal_bins_p 
-               gsl_histogram2d_add 
-               gsl_histogram2d_sub 
-               gsl_histogram2d_mul 
-               gsl_histogram2d_div 
-               gsl_histogram2d_scale 
-               gsl_histogram2d_shift 
-               gsl_histogram2d_fwrite 
-               gsl_histogram2d_fread 
-               gsl_histogram2d_fprintf 
-               gsl_histogram2d_fscanf 
-               gsl_histogram2d_pdf_alloc 
-               gsl_histogram2d_pdf_init 
-               gsl_histogram2d_pdf_free 
-               gsl_histogram2d_pdf_sample 
+               gsl_histogram2d_alloc
+               gsl_histogram2d_calloc
+               gsl_histogram2d_calloc_uniform
+               gsl_histogram2d_free
+               gsl_histogram2d_increment
+               gsl_histogram2d_accumulate
+               gsl_histogram2d_find
+               gsl_histogram2d_get
+               gsl_histogram2d_get_xrange
+               gsl_histogram2d_get_yrange
+               gsl_histogram2d_xmax
+               gsl_histogram2d_xmin
+               gsl_histogram2d_nx
+               gsl_histogram2d_ymax
+               gsl_histogram2d_ymin
+               gsl_histogram2d_ny
+               gsl_histogram2d_reset
+               gsl_histogram2d_calloc_range
+               gsl_histogram2d_set_ranges_uniform
+               gsl_histogram2d_set_ranges
+               gsl_histogram2d_memcpy
+               gsl_histogram2d_clone
+               gsl_histogram2d_max_val
+               gsl_histogram2d_max_bin
+               gsl_histogram2d_min_val
+               gsl_histogram2d_min_bin
+               gsl_histogram2d_xmean
+               gsl_histogram2d_ymean
+               gsl_histogram2d_xsigma
+               gsl_histogram2d_ysigma
+               gsl_histogram2d_cov
+               gsl_histogram2d_sum
+               gsl_histogram2d_equal_bins_p
+               gsl_histogram2d_add
+               gsl_histogram2d_sub
+               gsl_histogram2d_mul
+               gsl_histogram2d_div
+               gsl_histogram2d_scale
+               gsl_histogram2d_shift
+               gsl_histogram2d_fwrite
+               gsl_histogram2d_fread
+               gsl_histogram2d_fprintf
+               gsl_histogram2d_fscanf
+               gsl_histogram2d_pdf_alloc
+               gsl_histogram2d_pdf_init
+               gsl_histogram2d_pdf_free
+               gsl_histogram2d_pdf_sample
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
@@ -97,15 +97,15 @@ This subsystem allows the creation and manipulation of 2D histograms. Currently,
 
 =item C<gsl_histogram2d_get($h, $i, $j)> - This function returns the contents of the ($i,$j)-th bin of the histogram $h. If ($i,$j) lies outside the valid range of indices for the histogram then the error handler is called with an error code of $GSL_EDOM and the function returns 0.
 
-=item C<gsl_histogram2d_get_xrange($h, $i)> - This functions finds the upper and lower range limits of the $i-th in the x direction of the histogram $h. The range limits are stored in returned after 0 or 1 in this order : xlower and xupper. The lower limits are inclusive (i.e. events with these coordinates are included in the bin) and the upper limits are exclusive (i.e. events with the value of the upper limit are not included and fall in the neighboring higher bin, if it exists). The functions returns 0 has first value to indicate success. If $i lies outside the valid range of indices for the histogram then the error handler is called with an error code of GSL_EDOM. 
+=item C<gsl_histogram2d_get_xrange($h, $i)> - This functions finds the upper and lower range limits of the $i-th in the x direction of the histogram $h. The range limits are stored in returned after 0 or 1 in this order : xlower and xupper. The lower limits are inclusive (i.e. events with these coordinates are included in the bin) and the upper limits are exclusive (i.e. events with the value of the upper limit are not included and fall in the neighboring higher bin, if it exists). The functions returns 0 has first value to indicate success. If $i lies outside the valid range of indices for the histogram then the error handler is called with an error code of GSL_EDOM.
 
-=item C<gsl_histogram2d_get_yrange($h, $j)> - This functions finds the upper and lower range limits of the $j-th in the y direction of the histogram $h. The range limits are stored in returned after 0 or 1 in this order : ylower and yupper. The lower limits are inclusive (i.e. events with these coordinates are included in the bin) and the upper limits are exclusive (i.e. events with the value of the upper limit are not included and fall in the neighboring higher bin, if it exists). The functions returns 0 has first value to indicate success. If $j lies outside the valid range of indices for the histogram then the error handler is called with an error code of GSL_EDOM. 
+=item C<gsl_histogram2d_get_yrange($h, $j)> - This functions finds the upper and lower range limits of the $j-th in the y direction of the histogram $h. The range limits are stored in returned after 0 or 1 in this order : ylower and yupper. The lower limits are inclusive (i.e. events with these coordinates are included in the bin) and the upper limits are exclusive (i.e. events with the value of the upper limit are not included and fall in the neighboring higher bin, if it exists). The functions returns 0 has first value to indicate success. If $j lies outside the valid range of indices for the histogram then the error handler is called with an error code of GSL_EDOM.
 
 =item C<gsl_histogram2d_xmax($h)> - This functions returns the maximum upper range limit for the x direction of the histogram $h.
 
 =item C<gsl_histogram2d_xmin($h)> - This functions returns the minimum lower range limit for the x direction of the histogram $h.
 
-=item C<gsl_histogram2d_nx($h)> - This functions the number of bins for the x direction. 
+=item C<gsl_histogram2d_nx($h)> - This functions the number of bins for the x direction.
 
 =item C<gsl_histogram2d_ymax($h)> - This functions returns the maximum upper range limit for the y direction of the histogram $h.
 
@@ -133,11 +133,11 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item C<gsl_histogram2d_max_val($h)> - This function returns the maximum value contained in the histogram bins.
 
-=item C<gsl_histogram2d_max_bin($h)> - This function finds the indices of the bin containing the maximum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same maximum value the first bin found is returned. 
+=item C<gsl_histogram2d_max_bin($h)> - This function finds the indices of the bin containing the maximum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same maximum value the first bin found is returned.
 
 =item C<gsl_histogram2d_min_val($h)> - This function returns the minimum value contained in the histogram bins.
 
-=item C<gsl_histogram2d_min_bin($h)> - This function finds the indices of the bin containing the minimum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same minimum value the first bin found is returned. 
+=item C<gsl_histogram2d_min_bin($h)> - This function finds the indices of the bin containing the minimum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same minimum value the first bin found is returned.
 
 =item C<gsl_histogram2d_xmean($h)> - This function returns the mean of the histogrammed x variable, where the histogram is regarded as a probability distribution. Negative bin values are ignored for the purposes of this calculation.
 
@@ -161,9 +161,9 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item C<gsl_histogram2d_div($h1, $h2)> - This function divides the contents of the bins of histogram $h1 by the contents of the corresponding bins in histogram $h2, i.e. h'_1(i,j) = h_1(i,j) / h_2(i,j). The two histograms must have identical bin ranges.
 
-=item C<gsl_histogram2d_scale($h, $scale)> - This function multiplies the contents of the bins of histogram $h by the constant scale, i.e. h'_1(i,j) = h_1(i,j) $scale. 
+=item C<gsl_histogram2d_scale($h, $scale)> - This function multiplies the contents of the bins of histogram $h by the constant scale, i.e. h'_1(i,j) = h_1(i,j) $scale.
 
-=item C<gsl_histogram2d_shift($h, $offset)> - This function shifts the contents of the bins of histogram $h by the constant offset, i.e. h'_1(i,j) = h_1(i,j) + $offset. 
+=item C<gsl_histogram2d_shift($h, $offset)> - This function shifts the contents of the bins of histogram $h by the constant offset, i.e. h'_1(i,j) = h_1(i,j) + $offset.
 
 =item C<gsl_histogram2d_fwrite($stream $h)> - This function writes the ranges and bins of the histogram $h to the stream $stream (opened with the gsl_fopen function from the Math::GSL module) in binary format. The return value is 0 for success and $GSL_EFAILED if there was a problem writing to the file. Since the data is written in the native binary format it may not be portable between different architectures.
 
@@ -210,9 +210,9 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 Each line contains the lower and upper limits of the bin and the contents of the
 bin. Since the upper limits of the each bin are the lower limits of the
 neighboring bins there is duplication of these values but this allows the
-histogram to be manipulated with line-oriented tools. 
+histogram to be manipulated with line-oriented tools.
 
-=item C<gsl_histogram2d_fscanf($stream, $h)> 
+=item C<gsl_histogram2d_fscanf($stream, $h)>
 
 This function reads formatted data from the stream $stream (opened with the
 gsl_fopen function from the Math::GSL module) into the histogram $h. The data is
@@ -221,7 +221,7 @@ histogram $h must be preallocated with the correct lengths since the function
 uses the sizes of $h to determine how many numbers to read. The function returns
 0 for success and $GSL_EFAILED if there was a problem reading from the file.
 
-=item C<gsl_histogram2d_pdf_alloc($nx, $ny)> 
+=item C<gsl_histogram2d_pdf_alloc($nx, $ny)>
 
 This function allocates memory for a two-dimensional probability distribution of
 size $nx-by-$ny and returns a pointer to a newly initialized gsl_histogram2d_pdf
@@ -235,12 +235,12 @@ calculated $p from the histogram $h. If any of the bins of $h are negative then
 the error handler is invoked with an error code of GSL_EDOM because a
 probability distribution cannot contain negative values.
 
-=item C<gsl_histogram2d_pdf_free($p)> 
+=item C<gsl_histogram2d_pdf_free($p)>
 
 This function frees the two-dimensional probability distribution function $p and
 all of the memory associated with it.
 
-=item C<gsl_histogram2d_pdf_sample($p, $r1, $r2)> 
+=item C<gsl_histogram2d_pdf_sample($p, $r1, $r2)>
 
 This function uses two uniform random numbers between zero and one, $r1 and $r2,
 to compute a single random sample from the two-dimensional probability

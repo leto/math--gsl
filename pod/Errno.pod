@@ -1,16 +1,16 @@
-%perlcode %{ 
+%perlcode %{
 @EXPORT_OK = qw/
-                gsl_error gsl_stream_printf gsl_strerror gsl_set_error_handler 
-                gsl_set_error_handler_off gsl_set_stream_handler gsl_set_stream 
-                $GSL_SUCCESS $GSL_FAILURE $GSL_CONTINUE $GSL_EDOM 
-                $GSL_ERANGE $GSL_EFAULT $GSL_EINVAL $GSL_EFAILED 
-                $GSL_EFACTOR $GSL_ESANITY $GSL_ENOMEM $GSL_EBADFUNC 
-                $GSL_ERUNAWAY $GSL_EMAXITER $GSL_EZERODIV $GSL_EBADTOL 
-                $GSL_ETOL $GSL_EUNDRFLW $GSL_EOVRFLW $GSL_ELOSS 
-                $GSL_EROUND $GSL_EBADLEN $GSL_ENOTSQR $GSL_ESING 
-                $GSL_EDIVERGE $GSL_EUNSUP $GSL_EUNIMPL $GSL_ECACHE 
-                $GSL_ETABLE $GSL_ENOPROG $GSL_ENOPROGJ $GSL_ETOLF 
-                $GSL_ETOLX $GSL_ETOLG $GSL_EOF 
+                gsl_error gsl_stream_printf gsl_strerror gsl_set_error_handler
+                gsl_set_error_handler_off gsl_set_stream_handler gsl_set_stream
+                $GSL_SUCCESS $GSL_FAILURE $GSL_CONTINUE $GSL_EDOM
+                $GSL_ERANGE $GSL_EFAULT $GSL_EINVAL $GSL_EFAILED
+                $GSL_EFACTOR $GSL_ESANITY $GSL_ENOMEM $GSL_EBADFUNC
+                $GSL_ERUNAWAY $GSL_EMAXITER $GSL_EZERODIV $GSL_EBADTOL
+                $GSL_ETOL $GSL_EUNDRFLW $GSL_EOVRFLW $GSL_ELOSS
+                $GSL_EROUND $GSL_EBADLEN $GSL_ENOTSQR $GSL_ESING
+                $GSL_EDIVERGE $GSL_EUNSUP $GSL_EUNIMPL $GSL_ECACHE
+                $GSL_ETABLE $GSL_ENOPROG $GSL_ENOPROGJ $GSL_ETOLF
+                $GSL_ETOLX $GSL_ETOLG $GSL_EOF
             /;
 %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -35,15 +35,15 @@ Math::GSL::Errno - Error Handling
 
 =over 4
 
-=item * $GSL_SUCCESS 
+=item * $GSL_SUCCESS
 
 Success
 
-=item * $GSL_FAILURE 
+=item * $GSL_FAILURE
 
 General Failure
 
-=item * $GSL_CONTINUE 
+=item * $GSL_CONTINUE
 
 Iteration has not converged
 
@@ -53,7 +53,7 @@ Domain error; used by mathematical functions when an argument value does not fal
 
 =item * $GSL_ERANGE
 
-Range error; used by mathematical functions when the result value is not representable because of overflow or underflow (like ERANGE in the C library) 
+Range error; used by mathematical functions when the result value is not representable because of overflow or underflow (like ERANGE in the C library)
 
 =item * $GSL_EFAULT
 
@@ -61,7 +61,7 @@ Invalid Pointer
 
 =item * $GSL_EINVAL
 
-Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library).Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library). 
+Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library).Invalid argument. This is used to indicate various kinds of problems with passing the wrong argument to a library function (like EINVAL in the C library).
 
 =item * $GSL_EFAILED
 
@@ -187,13 +187,13 @@ End of file
 
 =item * gsl_strerror($gsl_errno) - This function returns a pointer to a string describing the error code gsl_errno. For example, print ("error: gsl_strerror ($status)\n"); would print an error message like error: output range error for a status value of GSL_ERANGE.
 
-=item * gsl_set_error_handler 
+=item * gsl_set_error_handler
 
 =item * gsl_set_error_handler_off() - This function turns off the error handler by defining an error handler which does nothing. This will cause the program to continue after any error, so the return values from any library routines must be checked. This is the recommended behavior for production programs. The previous handler is returned (so that you can restore it later).
 
 =item * gsl_set_stream_handler
 
-=item * gsl_set_stream 
+=item * gsl_set_stream
 
 =back
 

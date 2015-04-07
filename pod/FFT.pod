@@ -1,56 +1,56 @@
 %perlcode %{
 @EXPORT_complex = qw/
-               gsl_fft_complex_radix2_forward 
-               gsl_fft_complex_radix2_backward 
-               gsl_fft_complex_radix2_inverse 
-               gsl_fft_complex_radix2_transform 
-               gsl_fft_complex_radix2_dif_forward 
-               gsl_fft_complex_radix2_dif_backward 
-               gsl_fft_complex_radix2_dif_inverse 
-               gsl_fft_complex_radix2_dif_transform 
-               gsl_fft_complex_wavetable_alloc 
-               gsl_fft_complex_wavetable_free 
-               gsl_fft_complex_workspace_alloc 
-               gsl_fft_complex_workspace_free 
-               gsl_fft_complex_memcpy 
-               gsl_fft_complex_forward 
-               gsl_fft_complex_backward 
-               gsl_fft_complex_inverse 
-               gsl_fft_complex_transform 
+               gsl_fft_complex_radix2_forward
+               gsl_fft_complex_radix2_backward
+               gsl_fft_complex_radix2_inverse
+               gsl_fft_complex_radix2_transform
+               gsl_fft_complex_radix2_dif_forward
+               gsl_fft_complex_radix2_dif_backward
+               gsl_fft_complex_radix2_dif_inverse
+               gsl_fft_complex_radix2_dif_transform
+               gsl_fft_complex_wavetable_alloc
+               gsl_fft_complex_wavetable_free
+               gsl_fft_complex_workspace_alloc
+               gsl_fft_complex_workspace_free
+               gsl_fft_complex_memcpy
+               gsl_fft_complex_forward
+               gsl_fft_complex_backward
+               gsl_fft_complex_inverse
+               gsl_fft_complex_transform
                /;
 @EXPORT_halfcomplex = qw/
-               gsl_fft_halfcomplex_radix2_backward 
-               gsl_fft_halfcomplex_radix2_inverse 
-               gsl_fft_halfcomplex_radix2_transform 
-               gsl_fft_halfcomplex_wavetable_alloc 
-               gsl_fft_halfcomplex_wavetable_free 
-               gsl_fft_halfcomplex_backward 
-               gsl_fft_halfcomplex_inverse 
-               gsl_fft_halfcomplex_transform 
-               gsl_fft_halfcomplex_unpack 
-               gsl_fft_halfcomplex_radix2_unpack 
+               gsl_fft_halfcomplex_radix2_backward
+               gsl_fft_halfcomplex_radix2_inverse
+               gsl_fft_halfcomplex_radix2_transform
+               gsl_fft_halfcomplex_wavetable_alloc
+               gsl_fft_halfcomplex_wavetable_free
+               gsl_fft_halfcomplex_backward
+               gsl_fft_halfcomplex_inverse
+               gsl_fft_halfcomplex_transform
+               gsl_fft_halfcomplex_unpack
+               gsl_fft_halfcomplex_radix2_unpack
                /;
-@EXPORT_real = qw/ 
-               gsl_fft_real_radix2_transform 
-               gsl_fft_real_wavetable_alloc 
-               gsl_fft_real_wavetable_free 
-               gsl_fft_real_workspace_alloc 
-               gsl_fft_real_workspace_free 
-               gsl_fft_real_transform 
-               gsl_fft_real_unpack 
+@EXPORT_real = qw/
+               gsl_fft_real_radix2_transform
+               gsl_fft_real_wavetable_alloc
+               gsl_fft_real_wavetable_free
+               gsl_fft_real_workspace_alloc
+               gsl_fft_real_workspace_free
+               gsl_fft_real_transform
+               gsl_fft_real_unpack
              /;
 @EXPORT_vars = qw/
                 $gsl_fft_forward
                 $gsl_fft_backward
                 /;
 @EXPORT_OK =   (
-                @EXPORT_real, 
+                @EXPORT_real,
                 @EXPORT_complex,
-                @EXPORT_halfcomplex, 
+                @EXPORT_halfcomplex,
                 @EXPORT_vars,
                 );
-%EXPORT_TAGS = ( 
-                all         => \@EXPORT_OK, 
+%EXPORT_TAGS = (
+                all         => \@EXPORT_OK,
                 real        => \@EXPORT_real,
                 complex     => \@EXPORT_complex,
                 halfcomplex => \@EXPORT_halfcomplex,
@@ -68,13 +68,13 @@ Math::GSL::FFT - Fast Fourier Transforms (FFT)
 
     use Math::GSL::FFT qw /:all/;
     # alternating elements are real/imaginary part, hence 256 element array
-    my $data = [ (1) x 10, (0) x 236, (1) x 10 ]; 
+    my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
 
     # use every element of the array
-    my $stride = 1;  
+    my $stride = 1;
 
     # But it contains 128 complex numbers
-    my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, $stride, 128); 
+    my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, $stride, 128);
 
 =head1 DESCRIPTION
 
@@ -83,7 +83,7 @@ An OO interface will evolve soon.
 
 =over
 
-=item * C<gsl_fft_complex_radix2_forward($data, $stride, $n) > 
+=item * C<gsl_fft_complex_radix2_forward($data, $stride, $n) >
 
 This function computes the forward FFTs of length $n with stride $stride, on
 the array reference $data using an in-place radix-2 decimation-in-time
@@ -91,7 +91,7 @@ algorithm. The length of the transform $n is restricted to powers of two. For
 the transform version of the function the sign argument can be either forward
 (-1) or backward (+1). The functions return a value of $GSL_SUCCESS if no
 errors were detected, or $GSL_EDOM if the length of the data $n is not a power
-of two. The complex functions of the FFT module are not yet fully implemented. 
+of two. The complex functions of the FFT module are not yet fully implemented.
 
 =item * C<gsl_fft_complex_radix2_backward >
 
@@ -107,7 +107,7 @@ of two. The complex functions of the FFT module are not yet fully implemented.
 
 =item * C<gsl_fft_complex_radix2_dif_transform >
 
-=item * C<gsl_fft_complex_wavetable_alloc($n)> 
+=item * C<gsl_fft_complex_wavetable_alloc($n)>
 
 This function prepares a trigonometric lookup table for a complex FFT of length
 $n. The function returns a pointer to the newly allocated
@@ -121,18 +121,18 @@ computation is a one-off overhead which does not affect the final throughput.
 The wavetable structure can be used repeatedly for any transform of the same
 length. The table is not modified by calls to any of the other FFT functions.
 The same wavetable can be used for both forward and backward (or inverse)
-transforms of a given length. 
+transforms of a given length.
 
-=item * C<gsl_fft_complex_wavetable_free($wavetable)> 
+=item * C<gsl_fft_complex_wavetable_free($wavetable)>
 
 This function frees the memory associated with the wavetable $wavetable. The
 wavetable can be freed if no further FFTs of the same length will be needed.
 
-=item * C<gsl_fft_complex_workspace_alloc($n)> 
+=item * C<gsl_fft_complex_workspace_alloc($n)>
 
-This function allocates a workspace for a complex transform of length $n. 
+This function allocates a workspace for a complex transform of length $n.
 
-=item * C<gsl_fft_complex_workspace_free($workspace) > 
+=item * C<gsl_fft_complex_workspace_free($workspace) >
 
 This function frees the memory associated with the workspace $workspace. The
 workspace can be freed if no further FFTs of the same length will be needed.
@@ -147,14 +147,14 @@ workspace can be freed if no further FFTs of the same length will be needed.
 
 =item * C<gsl_fft_complex_transform >
 
-=item * C<gsl_fft_halfcomplex_radix2_backward($data, $stride, $n)> 
+=item * C<gsl_fft_halfcomplex_radix2_backward($data, $stride, $n)>
 
 This function computes the backwards in-place radix-2 FFT of length $n and
 stride $stride on the half-complex sequence data stored according the output
 scheme used by gsl_fft_real_radix2. The result is a real array stored in
 natural order.
 
-=item * C<gsl_fft_halfcomplex_radix2_inverse($data, $stride, $n)> 
+=item * C<gsl_fft_halfcomplex_radix2_inverse($data, $stride, $n)>
 
 This function computes the inverse in-place radix-2 FFT of length $n and stride
 $stride on the half-complex sequence data stored according the output scheme
@@ -163,7 +163,7 @@ order.
 
 =item * C<gsl_fft_halfcomplex_radix2_transform>
 
-=item * C<gsl_fft_halfcomplex_wavetable_alloc($n)> 
+=item * C<gsl_fft_halfcomplex_wavetable_alloc($n)>
 
 This function prepares trigonometric lookup tables for an FFT of size $n real
 elements. The functions return a pointer to the newly allocated struct if no
@@ -177,9 +177,9 @@ is a one-off overhead which does not affect the final throughput.  The
 wavetable structure can be used repeatedly for any transform of the same
 length. The table is not modified by calls to any of the other FFT functions.
 The appropriate type of wavetable must be used for forward real or inverse
-half-complex transforms. 
+half-complex transforms.
 
-=item * C<gsl_fft_halfcomplex_wavetable_free($wavetable)> 
+=item * C<gsl_fft_halfcomplex_wavetable_free($wavetable)>
 
 This function frees the memory associated with the wavetable $wavetable. The
 wavetable can be freed if no further FFTs of the same length will be needed.
@@ -194,7 +194,7 @@ wavetable can be freed if no further FFTs of the same length will be needed.
 
 =item * C<gsl_fft_halfcomplex_radix2_unpack >
 
-=item * C<gsl_fft_real_radix2_transform($data, $stride, $n) > 
+=item * C<gsl_fft_real_radix2_transform($data, $stride, $n) >
 
 This function computes an in-place radix-2 FFT of length $n and stride $stride
 on the real array reference $data. The output is a half-complex sequence, which
@@ -225,12 +225,12 @@ considering the input data as a complex sequence with zero imaginary part,
           complex[N-1].real  =    data[1]
           complex[N-1].imag  =   -data[N-1]
 
-=for notyou #' 
+=for notyou #'
 
 Note that the output data can be converted into the full complex sequence using
 the function gsl_fft_halfcomplex_unpack.
 
-=item * C<gsl_fft_real_wavetable_alloc($n)> 
+=item * C<gsl_fft_real_wavetable_alloc($n)>
 
 This function prepares trigonometric lookup tables for an FFT of size $n real
 elements. The functions return a pointer to the newly allocated struct if no
@@ -244,19 +244,19 @@ is a one-off overhead which does not affect the final throughput.  The
 wavetable structure can be used repeatedly for any transform of the same
 length. The table is not modified by calls to any of the other FFT functions.
 The appropriate type of wavetable must be used for forward real or inverse
-half-complex transforms. 
+half-complex transforms.
 
-=item * C<gsl_fft_real_wavetable_free($wavetable)> 
+=item * C<gsl_fft_real_wavetable_free($wavetable)>
 
 This function frees the memory associated with the wavetable $wavetable. The
-wavetable can be freed if no further FFTs of the same length will be needed. 
+wavetable can be freed if no further FFTs of the same length will be needed.
 
-=item * C<gsl_fft_real_workspace_alloc($n)> 
+=item * C<gsl_fft_real_workspace_alloc($n)>
 
 This function allocates a workspace for a real transform of length $n. The same
 workspace can be used for both forward real and inverse halfcomplex transforms.
 
-=item * C<gsl_fft_real_workspace_free($workspace)> 
+=item * C<gsl_fft_real_workspace_free($workspace)>
 
 This function frees the memory associated with the workspace $workspace. The
 workspace can be freed if no further FFTs of the same length will be needed.
@@ -280,7 +280,7 @@ This module also includes the following constants :
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
- 
+
 
 
 =head1 AUTHORS

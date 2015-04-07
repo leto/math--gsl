@@ -26,7 +26,7 @@ sub GSL_CHEB_ALLOC : Tests {
     isa_ok($self->{cheb}, 'Math::GSL::Chebyshev');
 }
 
-sub GSL_CHEB_INIT : Tests { 
+sub GSL_CHEB_INIT : Tests {
     my $self = shift;
     my $func = sub { my $x = shift; return sin(cos($x)) };
 

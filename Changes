@@ -1,5 +1,10 @@
 =head1 Math::GSL Changes
 
+=head1 v0.36 - someday...
+
+    - Fixed error messages on Matrix set_col and set_row
+      methods (Jon Schutz)
+
 =head1 v0.35 - April 2015
 
     - Remotion of trailing whitespaces (Shlomi Fish)

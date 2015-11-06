@@ -56,4 +56,10 @@
         ^gsl_sort_vector2_.*$
         ^gsl_stats_[a-z]+_spearman$
         /],
+     "2.0" => [qw/
+        ^gsl_multifit_robust_residuals$
+        ^gsl_multifit_robust_weights$
+        ^gsl_linalg_givens$
+        ^gsl_linalg_givens_gv$
+       /],
 };

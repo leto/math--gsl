@@ -256,6 +256,7 @@ sub link_c {
 
   unless ($self->up_to_date([$obj_file, @$objects], $lib_file)) {
     my @linker_flags = $self->split_like_shell($p->{extra_linker_flags});
+    push @linker_flags, "-v" if $ENV{DEBUG_LD};
 
     if(is_windows() or is_darwin()) {
       if(is_windows() && $] eq '5.010000' && $Config{archname} =~ /x64/) {

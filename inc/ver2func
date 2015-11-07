@@ -47,9 +47,6 @@
         ^gsl_sort_vector2$
         ^gsl_poly_dd_hermite_init$
         ^gsl_linalg_SV_leverage$
-     /],
-     "1.17" => [qw/
-        ^gsl_multifit_robust_weights$
         ^gsl_bspline_knots_greville$
         ^gsl_linalg_SV_leverage$
         ^gsl_sort2.*$

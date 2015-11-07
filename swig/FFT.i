@@ -3,6 +3,7 @@
 %include "gsl_typemaps.i"
 %include "renames.i"
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_math.h"
 %include "gsl/gsl_sys.h"
 %include "gsl/gsl_pow_int.h"
@@ -44,6 +45,7 @@
 }
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_sys.h"
     #include "gsl/gsl_pow_int.h"

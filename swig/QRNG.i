@@ -29,10 +29,12 @@
  }
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_qrng.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_qrng.h"
 %include "../pod/QRNG.pod"

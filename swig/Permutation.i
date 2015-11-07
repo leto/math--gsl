@@ -4,6 +4,7 @@
 %include "renames.i"
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_permute.h"
     #include "gsl/gsl_permute_double.h"
     #include "gsl/gsl_permute_int.h"
@@ -13,6 +14,7 @@
     #include "gsl/gsl_permutation.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_permute.h"
 %include "gsl/gsl_permute_double.h"
 %include "gsl/gsl_permute_int.h"

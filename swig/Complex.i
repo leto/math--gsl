@@ -4,10 +4,12 @@
 %include "renames.i"
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_complex_math.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_complex.h"
 %include "gsl/gsl_complex_math.h"
 

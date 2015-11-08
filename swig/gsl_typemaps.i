@@ -4,8 +4,10 @@
     %include "gsl/gsl_inline.h"
 #endif
 
+%include "gsl/gsl_errno.h"
 %{
     #include "gsl/gsl_nan.h"
+    #include "gsl/gsl_errno.h"
     #include "gsl/gsl_math.h"
     #include "gsl/gsl_monte.h"
 %}

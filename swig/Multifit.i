@@ -14,6 +14,7 @@
     #include "gsl/gsl_matrix.h"
     #include "gsl/gsl_permutation.h"
     #include "gsl/gsl_multifit.h"
+    #include "gsl/gsl_multifit_nlin.h"
 %}
 
 %include "gsl/gsl_inline.h"
@@ -23,4 +24,5 @@
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_permutation.h"
 %include "gsl/gsl_multifit.h"
+%include "gsl/gsl_multifit_nlin.h"
 %include "../pod/Multifit.pod"

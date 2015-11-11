@@ -6,6 +6,8 @@
 
 %apply double *OUTPUT { double * y, double * y_err, double * chisq,  size_t * rank};
 
+%ignore gsl_multifit_fdfsolver_dif_fdf;
+
 %{
     #include "gsl/gsl_inline.h"
     #include "gsl/gsl_types.h"

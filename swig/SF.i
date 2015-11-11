@@ -5,6 +5,12 @@
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
+%ignore gsl_sf_legendre_Plm_array;
+%ignore gsl_sf_legendre_Plm_deriv_array;
+%ignore gsl_sf_legendre_array_size;
+%ignore gsl_sf_legendre_sphPlm_array;
+%ignore gsl_sf_legendre_sphPlm_deriv_array;
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_version.h"

@@ -5,6 +5,12 @@
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
+// rename wrappers to original
+//
+%ignore gsl_sf_bessel_Jn_array;
+%rename (gsl_sf_bessel_Jn_array) gsl_sf_bessel_Jn_array_wrapper;
+int gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x, double result_array[]);
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_version.h"
@@ -40,7 +46,16 @@
     #include "gsl/gsl_sf_transport.h"
     #include "gsl/gsl_sf_trig.h"
     #include "gsl/gsl_sf_zeta.h"
+
+    /*  int gsl_sf_bessel_Jn_array (int nmin, int nmax, double x, double result_array[]) */
+    int gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x, double result_array[]){
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        return gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
+    }
+
+
 %}
+
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_version.h"
 %include "gsl/gsl_mode.h"

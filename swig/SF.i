@@ -9,7 +9,7 @@
 //
 %ignore gsl_sf_bessel_Jn_array;
 %rename (gsl_sf_bessel_Jn_array) gsl_sf_bessel_Jn_array_wrapper;
-int gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x, double result_array[]);
+array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x);
 
 %{
     #include "gsl/gsl_types.h"
@@ -48,9 +48,10 @@ int gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x, double result_a
     #include "gsl/gsl_sf_zeta.h"
 
     /*  int gsl_sf_bessel_Jn_array (int nmin, int nmax, double x, double result_array[]) */
-    int gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x, double result_array[]){
+    array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x) {
         array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
-        return gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
+        gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
+        return wrapper;
     }
 
 

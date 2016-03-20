@@ -766,11 +766,11 @@ These routines compute the regular cylindrical Bessel function of order n, J_n($
 
 =over
 
-=item C<gsl_sf_bessel_Jn_array($nmin, $nmax, $x, $result_array)>
+=item C<gsl_sf_bessel_Jn_array($nmin, $nmax, $x)>
 
 This routine computes the values of the regular cylindrical Bessel functions
-J_n($x) for n from $nmin to $nmax inclusive, storing the results in the array
-$result_array. The values are computed using recurrence relations for
+J_n($x) for n from $nmin to $nmax inclusive, returning the results in an array
+reference. The values are computed using recurrence relations for
 efficiency, and therefore may differ slightly from the exact values.
 
 =back

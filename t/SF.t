@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1120;
+use Test::Most tests => 1121;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1230,6 +1230,11 @@ sub TEST_MATHIEU : Tests(8) {
         'gsl_sf_mathieu_se(1,0,1,$r)' => sin(1),
     };
     verify_results($results, 'Math::GSL::SF');
+}
+
+sub TEST_ZBESSEL_ARRAYS : Tests(1) {
+    my $J = gsl_sf_bessel_Jn_array (0, 15, 0);
+    ok_similar( $J, [ 1, (0) x 15 ], "gsl_sf_bessel_Jn_array(0,15,0)");
 }
 
 Test::Class->runtests;

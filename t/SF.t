@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1121;
+use Test::Most tests => 1122;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1232,9 +1232,13 @@ sub TEST_MATHIEU : Tests(8) {
     verify_results($results, 'Math::GSL::SF');
 }
 
-sub TEST_ZBESSEL_ARRAYS : Tests(1) {
+sub TEST_ZBESSEL_ARRAYS : Tests(2) {
     my $J = gsl_sf_bessel_Jn_array (0, 15, 0);
     ok_similar( $J, [ 1, (0) x 15 ], "gsl_sf_bessel_Jn_array(0,15,0)");
+
+    $J = gsl_sf_bessel_Jn_array(0,1,1);
+    # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselJ
+    ok_similar( $J, [ 0.765197686558, 0.440050585745 ], "gsl_sf_bessel_Jn_array(0,1,1)");
 }
 
 Test::Class->runtests;

@@ -921,9 +921,13 @@ These routines compute the irregular modified cylindrical Bessel function of ord
 
 =over
 
-=item C<gsl_sf_bessel_Kn_array>
+=item C<gsl_sf_bessel_Kn_array($nmin, $nmax, $x)>
 
-
+This routine computes the values of the Irregular Modified Cylindrical Bessel Functions
+K_n($x) for n from $nmin to $nmax inclusive, returning the results in an array
+reference. The values are computed using recurrence relations for
+efficiency, and therefore may differ slightly from the exact values.
+This function is only defined for positive $x and with throw an exception otherwise.
 
 =back
 

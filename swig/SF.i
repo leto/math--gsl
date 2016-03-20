@@ -11,6 +11,10 @@
 %rename (gsl_sf_bessel_Jn_array) gsl_sf_bessel_Jn_array_wrapper;
 array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x);
 
+%ignore gsl_sf_bessel_Kn_array;
+%rename (gsl_sf_bessel_Kn_array) gsl_sf_bessel_Kn_array_wrapper;
+array_wrapper* gsl_sf_bessel_Kn_array_wrapper(int nmin, int nmax, double x);
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_version.h"
@@ -49,8 +53,21 @@ array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x);
 
     /*  int gsl_sf_bessel_Jn_array (int nmin, int nmax, double x, double result_array[]) */
     array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
         array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
-        gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
+        ret = gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret)
+           croak("Math::GSL::SF::gsl_sf_bessel_Jn_array returned failure");
+        return wrapper;
+    }
+
+    /*  int gsl_sf_bessel_Kn_array (int nmin, int nmax, double x, double result_array[]) */
+    array_wrapper* gsl_sf_bessel_Kn_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        ret = gsl_sf_bessel_Kn_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret)
+           croak("Math::GSL::SF::gsl_sf_bessel_Kn_array returned failure");
         return wrapper;
     }
 

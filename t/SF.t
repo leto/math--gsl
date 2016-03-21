@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1124;
+use Test::Most tests => 1126;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1232,7 +1232,7 @@ sub TEST_MATHIEU : Tests(8) {
     verify_results($results, 'Math::GSL::SF');
 }
 
-sub TEST_ZBESSEL_ARRAYS : Tests(4) {
+sub TEST_ZBESSEL_ARRAYS : Tests {
     my $J = gsl_sf_bessel_Jn_array (0, 15, 0);
     ok_similar( $J, [ 1, (0) x 15 ], "gsl_sf_bessel_Jn_array(0,15,0)");
 
@@ -1240,13 +1240,21 @@ sub TEST_ZBESSEL_ARRAYS : Tests(4) {
     # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselJ
     ok_similar( $J, [ 0.765197686558, 0.440050585745 ], "gsl_sf_bessel_Jn_array(0,1,1)");
 
-    $J = gsl_sf_bessel_Kn_array(0,1,1);
+    my $K = gsl_sf_bessel_Kn_array(0,1,1);
     # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselK
-    ok_similar( $J, [ 0.421024438241, 0.601907230197], "gsl_sf_bessel_Kn_array(0,1,1)");
+    ok_similar( $K, [ 0.421024438241, 0.601907230197], "gsl_sf_bessel_Kn_array(0,1,1)");
 
     dies_ok( sub {
         my $K = gsl_sf_bessel_Kn_array(0,1,0);
     }, "gsl_sf_bessel_Kn_array(0,1,0) dies because it is not defined at 0");
+
+    my $I = gsl_sf_bessel_In_array(0,1,1);
+    # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselI
+    ok_similar( $I, [ 1.26606587775,0.565159103992 ], "gsl_sf_bessel_In_array(0,1,1)");
+
+    my $Y = gsl_sf_bessel_Yn_array(0,1,1);
+    # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselY
+    ok_similar( $Y, [ 0.0882569642157, -0.781212821300], "gsl_sf_bessel_Yn_array(0,1,1)");
 }
 
 Test::Class->runtests;

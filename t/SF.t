@@ -1245,7 +1245,7 @@ sub TEST_ZBESSEL_ARRAYS : Tests(4) {
     ok_similar( $J, [ 0.421024438241, 0.601907230197], "gsl_sf_bessel_Kn_array(0,1,1)");
 
     dies_ok( sub {
-        $J = gsl_sf_bessel_Kn_array(0,1,0);
+        my $K = gsl_sf_bessel_Kn_array(0,1,0);
     }, "gsl_sf_bessel_Kn_array(0,1,0) dies because it is not defined at 0");
 }
 

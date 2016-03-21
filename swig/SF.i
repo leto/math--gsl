@@ -6,14 +6,39 @@
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
 // rename wrappers to original
-//
+
 %ignore gsl_sf_bessel_Jn_array;
 %rename (gsl_sf_bessel_Jn_array) gsl_sf_bessel_Jn_array_wrapper;
 array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x);
-
+%ignore gsl_sf_bessel_Yn_array;
+%rename (gsl_sf_bessel_Yn_array) gsl_sf_bessel_Yn_array_wrapper;
+array_wrapper* gsl_sf_bessel_Yn_array_wrapper(int nmin, int nmax, double x);
+%ignore gsl_sf_bessel_In_array;
+%rename (gsl_sf_bessel_In_array) gsl_sf_bessel_In_array_wrapper;
+array_wrapper* gsl_sf_bessel_In_array_wrapper(int nmin, int nmax, double x);
+%ignore gsl_sf_bessel_In_scaled_array;
+%rename (gsl_sf_bessel_In_scaled_array) gsl_sf_bessel_In_scaled_array_wrapper;
+array_wrapper* gsl_sf_bessel_In_scaled_array_wrapper(int nmin, int nmax, double x);
 %ignore gsl_sf_bessel_Kn_array;
 %rename (gsl_sf_bessel_Kn_array) gsl_sf_bessel_Kn_array_wrapper;
 array_wrapper* gsl_sf_bessel_Kn_array_wrapper(int nmin, int nmax, double x);
+%ignore gsl_sf_bessel_Kn_scaled_array;
+%rename (gsl_sf_bessel_Kn_scaled_array) gsl_sf_bessel_Kn_scaled_array_wrapper;
+array_wrapper* gsl_sf_bessel_Kn_scaled_array_wrapper(int nmin, int nmax, double x);
+%ignore gsl_sf_bessel_jl_array;
+%rename (gsl_sf_bessel_jl_array) gsl_sf_bessel_jl_array_wrapper;
+array_wrapper* gsl_sf_bessel_jl_array_wrapper(int lmax, double x);
+%ignore gsl_sf_bessel_jl_steed_array;
+%rename (gsl_sf_bessel_jl_steed_array) gsl_sf_bessel_jl_steed_array_wrapper;
+array_wrapper* gsl_sf_bessel_jl_steed_array_wrapper(int lmax, double x);
+%ignore gsl_sf_bessel_yl_array;
+%rename (gsl_sf_bessel_yl_array) gsl_sf_bessel_yl_array_wrapper;
+array_wrapper* gsl_sf_bessel_yl_array_wrapper(int lmax, double x);
+%ignore gsl_sf_bessel_il_scaled_array;
+%rename (gsl_sf_bessel_il_scaled_array) gsl_sf_bessel_il_scaled_array_wrapper;
+array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
+%ignore gsl_sf_bessel_kl_scaled_array;
+%rename (gsl_sf_bessel_kl_scaled_array) gsl_sf_bessel_kl_scaled_array_wrapper;
 
 %{
     #include "gsl/gsl_types.h"
@@ -51,26 +76,94 @@ array_wrapper* gsl_sf_bessel_Kn_array_wrapper(int nmin, int nmax, double x);
     #include "gsl/gsl_sf_trig.h"
     #include "gsl/gsl_sf_zeta.h"
 
-    /*  int gsl_sf_bessel_Jn_array (int nmin, int nmax, double x, double result_array[]) */
     array_wrapper* gsl_sf_bessel_Jn_array_wrapper(int nmin, int nmax, double x) {
         int ret;
         array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
         ret = gsl_sf_bessel_Jn_array(nmin,nmax,x, (double*)(wrapper->data));
-        if (ret)
-           croak("Math::GSL::SF::gsl_sf_bessel_Jn_array returned failure");
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_Jn_array returned %s", gsl_strerror(ret));
         return wrapper;
     }
-
-    /*  int gsl_sf_bessel_Kn_array (int nmin, int nmax, double x, double result_array[]) */
+    array_wrapper* gsl_sf_bessel_Yn_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        ret = gsl_sf_bessel_Yn_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_Yn_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_In_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        ret = gsl_sf_bessel_In_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_In_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_In_scaled_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        ret = gsl_sf_bessel_In_scaled_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_In_scaled_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
     array_wrapper* gsl_sf_bessel_Kn_array_wrapper(int nmin, int nmax, double x) {
         int ret;
         array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
         ret = gsl_sf_bessel_Kn_array(nmin,nmax,x, (double*)(wrapper->data));
-        if (ret)
-           croak("Math::GSL::SF::gsl_sf_bessel_Kn_array returned failure");
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_Kn_array returned %s", gsl_strerror(ret));
         return wrapper;
     }
-
+    array_wrapper* gsl_sf_bessel_Kn_scaled_array_wrapper(int nmin, int nmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(nmax - nmin + 1, awDouble);
+        ret = gsl_sf_bessel_Kn_scaled_array(nmin,nmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_Kn_scaled_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_jl_array_wrapper(int lmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(lmax + 1, awDouble);
+        ret = gsl_sf_bessel_jl_array(lmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_jl_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_jl_steed_array_wrapper(int lmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(lmax + 1, awDouble);
+        ret = gsl_sf_bessel_jl_steed_array(lmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_jl_steed_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_yl_array_wrapper(int lmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(lmax + 1, awDouble);
+        ret = gsl_sf_bessel_yl_array(lmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_yl_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(lmax + 1, awDouble);
+        ret = gsl_sf_bessel_il_scaled_array(lmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_il_scaled_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
+    array_wrapper* gsl_sf_bessel_kl_scaled_array_wrapper(int lmax, double x) {
+        int ret;
+        array_wrapper * wrapper = array_wrapper_alloc(lmax + 1, awDouble);
+        ret = gsl_sf_bessel_kl_scaled_array(lmax,x, (double*)(wrapper->data));
+        if (ret != GSL_SUCCESS)
+           croak("Math::GSL::SF::gsl_sf_bessel_kl_scaled_array returned %s", gsl_strerror(ret));
+        return wrapper;
+    }
 
 %}
 

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Math::GSL::Test qw/:all/;
 use base q{Test::Class};
-use Test::Most tests => 1126;
+use Test::Most tests => 1132;
 use Math::GSL          qw/:all/;
 use Math::GSL::Const   qw/:all/;
 use Math::GSL::Errno   qw/:all/;
@@ -1244,6 +1244,18 @@ sub TEST_ZBESSEL_ARRAYS : Tests {
     # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselK
     ok_similar( $K, [ 0.421024438241, 0.601907230197], "gsl_sf_bessel_Kn_array(0,1,1)");
 
+    $K = gsl_sf_bessel_Kn_scaled_array(0,1,1);
+    ok_similar( $K, [ exp(1)*0.421024438241, exp(1)*0.601907230197], "gsl_sf_bessel_Kn_scaled_array(0,1,1)");
+
+    my $j = gsl_sf_bessel_jl_array(1,1);
+    ok_similar($j, [sin(1), sin(1) - cos(1)], "gsl_sf_bessel_jl_array(0,1,1)");
+
+    $j = gsl_sf_bessel_jl_steed_array(1,1);
+    ok_similar($j, [sin(1), sin(1) - cos(1)], "gsl_sf_bessel_jl_steed_array(0,1,1)");
+
+    my $y = gsl_sf_bessel_yl_array(1,1);
+    ok_similar($y, [-cos(1), -cos(1)-sin(1)], "gsl_sf_bessel_yl_array(0,1,1)");
+
     dies_ok( sub {
         my $K = gsl_sf_bessel_Kn_array(0,1,0);
     }, "gsl_sf_bessel_Kn_array(0,1,0) dies because it is not defined at 0");
@@ -1252,9 +1264,24 @@ sub TEST_ZBESSEL_ARRAYS : Tests {
     # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselI
     ok_similar( $I, [ 1.26606587775,0.565159103992 ], "gsl_sf_bessel_In_array(0,1,1)");
 
+    my $Is = gsl_sf_bessel_In_scaled_array(0,1,1);
+
+    ok_similar( $Is, [ exp(-1)*1.26606587775,exp(-1)*0.565159103992 ], "gsl_sf_bessel_In_scaled_array(0,1,1)");
+
     my $Y = gsl_sf_bessel_Yn_array(0,1,1);
     # values from http://functions.wolfram.com/webMathematica/FunctionEvaluation.jsp?name=BesselY
     ok_similar( $Y, [ 0.0882569642157, -0.781212821300], "gsl_sf_bessel_Yn_array(0,1,1)");
+
+    lives_ok(sub { my $il = gsl_sf_bessel_il_scaled_array(1,1) }, 'gsl_sf_bessel_il_scaled_array(1,1) lives ');
+
+    return;
+    # kl_scaled_array does not seem to be found by SWIG, although it is for gsl2.0
+    lives_ok(sub {
+            my $kl = gsl_sf_bessel_kl_scaled_array(1,1)
+        }, 'gsl_sf_bessel_kl_scaled_array(1,1) lives ');
+
+    my $kl = gsl_sf_bessel_kl_scaled_array(1,1);
+    die Dumper [ $kl ];
 }
 
 Test::Class->runtests;

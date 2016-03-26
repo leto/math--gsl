@@ -4,6 +4,17 @@
 
     - Fixed error messages on Matrix set_col and set_row
       methods (Jon Schutz)
+    - Implemented array-based Bessel functions:
+               gsl_sf_bessel_Jn_array
+               gsl_sf_bessel_Yn_array
+               gsl_sf_bessel_In_array
+               gsl_sf_bessel_In_scaled_array
+               gsl_sf_bessel_Kn_array
+               gsl_sf_bessel_Kn_scaled_array
+               gsl_sf_bessel_jl_array
+               gsl_sf_bessel_jl_steed_array
+               gsl_sf_bessel_yl_array
+               gsl_sf_bessel_il_scaled_array
 
 =head1 v0.35 - April 2015
 

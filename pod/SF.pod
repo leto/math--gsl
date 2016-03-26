@@ -766,11 +766,11 @@ These routines compute the regular cylindrical Bessel function of order n, J_n($
 
 =over
 
-=item C<gsl_sf_bessel_Jn_array($nmin, $nmax, $x, $result_array)>
+=item C<gsl_sf_bessel_Jn_array($nmin, $nmax, $x)>
 
 This routine computes the values of the regular cylindrical Bessel functions
-J_n($x) for n from $nmin to $nmax inclusive, storing the results in the array
-$result_array. The values are computed using recurrence relations for
+J_n($x) for n from $nmin to $nmax inclusive, returning the results in an array
+reference. The values are computed using recurrence relations for
 efficiency, and therefore may differ slightly from the exact values.
 
 =back
@@ -807,8 +807,13 @@ These routines compute the irregular cylindrical Bessel function of order $n, Y_
 
 =over
 
-=item C<gsl_sf_bessel_Yn_array>
+=item C<gsl_sf_bessel_Yn_array($nmin, $nmax, $x)>
 
+This routine computes the values of the irregular cylindrical Bessel functions
+Y_n(x) for n from $nmin to $nmax inclusive, returning the results in an array
+reference. The domain of the function is $x>0. The values are computed using
+recurrence relations for efficiency, and therefore may differ slightly from the
+exact values.
 
 
 =back
@@ -829,7 +834,7 @@ These routines compute the regular modified cylindrical Bessel function of zerot
 
 =item C<gsl_sf_bessel_I1($x)>
 
-These routines compute the regular modified cylindrical Bessel function of first order, I_1(x).
+
 
 =back
 
@@ -845,9 +850,13 @@ These routines compute the regular modified cylindrical Bessel function of order
 
 =over
 
-=item C<gsl_sf_bessel_In_array>
+=item C<gsl_sf_bessel_In_array($nmin, $nmax, $x)>
 
-
+This routine computes the values of the regular modified cylindrical Bessel
+functions I_n(x) for n from $nmin to $nmax inclusive, returning the results in an
+array reference. The start of the range nmin must be positive or zero. The
+values are computed using recurrence relations for efficiency, and therefore may
+differ slightly from the exact values.
 
 =back
 
@@ -883,9 +892,13 @@ These routines compute the scaled regular modified cylindrical Bessel function o
 
 =over
 
-=item C<gsl_sf_bessel_In_scaled_array>
+=item C<gsl_sf_bessel_In_scaled_array($nmin, $nmax, $x)>
 
-
+This routine computes the values of the scaled regular cylindrical Bessel
+functions exp(-|$x|) I_n($x) for n from $nmin to $nmax inclusive, returning the
+results in an array reference. The start of the range nmin must be positive
+or zero. The values are computed using recurrence relations for efficiency, and
+therefore may differ slightly from the exact values.
 
 =back
 
@@ -921,9 +934,13 @@ These routines compute the irregular modified cylindrical Bessel function of ord
 
 =over
 
-=item C<gsl_sf_bessel_Kn_array>
+=item C<gsl_sf_bessel_Kn_array($nmin, $nmax, $x)>
 
-
+This routine computes the values of the Irregular Modified Cylindrical Bessel Functions
+K_n($x) for n from $nmin to $nmax inclusive, returning the results in an array
+reference. The values are computed using recurrence relations for
+efficiency, and therefore may differ slightly from the exact values.
+This function is only defined for positive $x and with throw an exception otherwise.
 
 =back
 
@@ -959,8 +976,14 @@ These routines compute the scaled irregular modified cylindrical Bessel function
 
 =over
 
-=item C<gsl_sf_bessel_Kn_scaled_array >
+=item C<gsl_sf_bessel_Kn_scaled_array($nmin, $max, $x) >
 
+This routine computes the values of the scaled irregular cylindrical Bessel
+functions exp(x) K_n(x) for n from nmin to nmax inclusive, storing the results
+in the array result_array. The start of the range nmin must be positive or zero.
+The domain of the function is x>0. The values are computed using recurrence
+relations for efficiency, and therefore may differ slightly from the exact
+values.
 
 
 =back
@@ -1007,17 +1030,25 @@ These routines compute the scaled irregular modified cylindrical Bessel function
 
 =over
 
-=item C<gsl_sf_bessel_jl_array>
+=item C<gsl_sf_bessel_jl_array($lmax, $x)>
 
-
+This routine computes the values of the regular spherical Bessel functions
+j_l(x) for l from 0 to C<$lmax> inclusive for C<$lmax> >= 0 and $x >= 0, returning
+the results in an array reference. The values are computed using recurrence
+relations for efficiency, and therefore may differ slightly from the exact
+values.
 
 =back
 
 =over
 
-=item C<gsl_sf_bessel_jl_steed_array>
+=item C<gsl_sf_bessel_jl_steed_array($lmax, $x)>
 
-
+This routine uses Steed’s method to compute the values of the regular spherical
+Bessel functions j_l(x) for l from 0 to $lmax inclusive for $lmax >= 0 and $x >= 0,
+storing the results in the array result_array. The Steed/Barnett algorithm is
+described in Comp. Phys. Comm. 21, 297 (1981). Steed’s method is more stable
+than the recurrence used in the other functions but is also slower.
 
 =back
 
@@ -1063,9 +1094,12 @@ These routines compute the scaled irregular modified cylindrical Bessel function
 
 =over
 
-=item C<gsl_sf_bessel_yl_array>
+=item C<gsl_sf_bessel_yl_array($lmax, $x)>
 
-
+This routine computes the values of the irregular spherical Bessel functions
+y_l(x) for l from 0 to $lmax inclusive for lmax >= 0, returning the results in an
+array reference. The values are computed using recurrence relations for
+efficiency, and therefore may differ slightly from the exact values.
 
 =back
 
@@ -1111,9 +1145,13 @@ These routines compute the scaled irregular modified cylindrical Bessel function
 
 =over
 
-=item C<gsl_sf_bessel_il_scaled_array>
+=item C<gsl_sf_bessel_il_scaled_array($lmax, $x)>
 
-
+This routine computes the values of the scaled regular modified spherical Bessel
+functions exp(-|x|) i_l(x) for l from 0 to $lmax inclusive for $lmax >= 0,
+returning the results in an array reference. The values are computed using
+recurrence relations for efficiency, and therefore may differ slightly from the
+exact values.
 
 =back
 
@@ -1159,8 +1197,13 @@ These routines compute the scaled irregular modified cylindrical Bessel function
 
 =over
 
-=item C<gsl_sf_bessel_kl_scaled_array>
+=item C<gsl_sf_bessel_kl_scaled_array($lmax, $x)>
 
+This routine computes the values of the scaled irregular modified spherical Bessel
+functions exp($x) k_l($x) for l from 0 to lmax inclusive for $lmax >= 0 and $x>0,
+returning the results in an array reference. The values are computed using
+recurrence relations for efficiency, and therefore may differ slightly from the
+exact values.
 
 
 =back

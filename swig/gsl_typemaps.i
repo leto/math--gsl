@@ -11,7 +11,7 @@
 %}
 
 /*****************************
- * handle 'double const []' as an input array of doubles
+ * handle 'int const []' as an input array of doubles
  * We allocate the C array at the beginning and free it at the end
  */
 %typemap(in) int const [] {
@@ -167,6 +167,7 @@
     }
 }
 
+
 %typemap(freearg) float [] {
     // if ($1) free(((char*)$1)-sizeof(struct perl_array));
 }
@@ -182,6 +183,7 @@
     float *b1, float *b2,
     float *d1, float *d2
 };
+
 
 /*****************************
  * handle 'size_t const []' as an input array of size_t
@@ -220,6 +222,7 @@
     const double * base, const double xrange[], const double yrange[] ,
     const double * array , const double data2[], const double w[] ,
     double *v,
+    double result_array[],
     gsl_complex_packed_array data
 };
 
@@ -351,6 +354,26 @@ void array_wrapper_free(array_wrapper * daw){
     $2 = 0; /* apparently arrays are not null'd for multi-args? */
 }
 
+%typemap(in) (int min, int nmax, double x, double result_array[]) {
+    AV* av;
+    int i;
+
+    if (!SvROK($input))
+        croak("Argument $argnum is not a reference.");
+    if (SvTYPE(SvRV($input)) != SVt_PVAV)
+        croak("Argument $argnum is not an array.");
+    av = (AV*)SvRV($input);
+    $1 = av_len(av) + 1;
+
+    $2 = malloc($1 * sizeof(double));
+    if ($4 == NULL)
+        croak("%%typemap(in) - can't malloc");
+
+    for (i = 0; i < $1; i++) {
+        $4[i] = (double) SvNV(* av_fetch(av, i, 0));
+    }
+}
+
 %typemap(in) (size_t SIZE, const double ARRAY[]) {
     AV* av;
     int i;
@@ -364,7 +387,7 @@ void array_wrapper_free(array_wrapper * daw){
 
     $2 = malloc($1 * sizeof(double));
     if ($2 == NULL)
-        croak("%typemap(in) (int , const double []) - can't malloc");
+        croak("%%typemap(in) (int , const double []) - can't malloc");
 
     for (i = 0; i < $1; i++) {
         $2[i] = (double) SvNV(* av_fetch(av, i, 0));
@@ -393,7 +416,7 @@ void array_wrapper_free(array_wrapper * daw){
 
     $2 = malloc($1 * sizeof(unsigned int));
     if ($2 == NULL)
-        croak("%typemap(in) (int , unsigned int []) - can't malloc");
+        croak("%%typemap(in) (int , unsigned int []) - can't malloc");
 
     for (i = 0; i < $1; i++) {
         $2[i] = (unsigned int) SvUV(* av_fetch(av, i, 0));

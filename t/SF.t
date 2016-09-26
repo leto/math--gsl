@@ -1286,14 +1286,14 @@ sub TEST_MATHIEU : Tests {
     # these functions had _e added starting in 2.0
     my $suffix = $major >= 2 ? "_e" : "";
     my $results = {
-        'gsl_sf_mathieu_ce_e(0,0,0,$r)'           => sqrt(2)/2,
-        'gsl_sf_mathieu_ce_e(1,0,0,$r)'           => 1.00,
-        'gsl_sf_mathieu_ce_e(0,0,$M_PI/2,$r)'     => sqrt(2)/2,
-        'gsl_sf_mathieu_se_e(0,0,0,$r)'           => 0,
-        'gsl_sf_mathieu_se_e(1,0,0,$r)'           => 0,
-        'gsl_sf_mathieu_se_e(0,0,1,$r)'           => 0,
-        'gsl_sf_mathieu_se_e(1,0,1,$r)'           => sin(1),
-        'gsl_sf_mathieu_se_e(15,25,$M_PI/2,$r)'   => -0.9467086958780897,
+        "gsl_sf_mathieu_ce$suffix" . '(0,0,0,$r)'           => sqrt(2)/2,
+        "gsl_sf_mathieu_ce$suffix" . '(1,0,0,$r)'           => 1.00,
+        "gsl_sf_mathieu_ce$suffix" . '(0,0,$M_PI/2,$r)'     => sqrt(2)/2,
+        "gsl_sf_mathieu_se$suffix" . '(0,0,0,$r)'           => 0,
+        "gsl_sf_mathieu_se$suffix" . '(1,0,0,$r)'           => 0,
+        "gsl_sf_mathieu_se$suffix" . '(0,0,1,$r)'           => 0,
+        "gsl_sf_mathieu_se$suffix" . '(1,0,1,$r)'           => sin(1),
+        "gsl_sf_mathieu_se$suffix" . '(15,25,$M_PI/2,$r)'   => -0.9467086958780897,
     };
     verify_results($results, 'Math::GSL::SF');
 }

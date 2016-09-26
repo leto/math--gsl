@@ -473,13 +473,17 @@ push @EXPORT_misc, qw/
                gsl_sf_mathieu_a_array
                gsl_sf_mathieu_b_array
                gsl_sf_mathieu_a
+               gsl_sf_mathieu_a_e
                gsl_sf_mathieu_b
+               gsl_sf_mathieu_b_e
                gsl_sf_mathieu_a_coeff
                gsl_sf_mathieu_b_coeff
                gsl_sf_mathieu_alloc
                gsl_sf_mathieu_free
                gsl_sf_mathieu_ce
+               gsl_sf_mathieu_ce_e
                gsl_sf_mathieu_se
+               gsl_sf_mathieu_se_e
                gsl_sf_mathieu_ce_array
                gsl_sf_mathieu_se_array
                gsl_sf_mathieu_Mc

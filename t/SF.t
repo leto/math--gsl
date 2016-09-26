@@ -1264,18 +1264,6 @@ sub TEST_J0_RESULT_STRUCT: Tests(2) {
     ok( is_similar($result->{val}, gsl_sf_bessel_J0(2.0), $result->{err}) , '$result->{val}' );
 }
 
-sub TEST_MATHIEU_MISC : Tests {
-    my $self = shift;
-    my $r      = Math::GSL::SF::gsl_sf_result_struct->new;
-    my $status = gsl_sf_mathieu_ce_e(0,5.0,0,$r);
-
-    is_similar( $r->{val}, 0.04480018165188902, 1e-6, 'gsl_sf_mathieu_ce_e(0,5.0,0)');
-
-    lives_ok(sub { gsl_sf_mathieu_a_e(1,2.0,$r) }, 'gsl_sf_mathieu_a_e lives');
-    lives_ok(sub { gsl_sf_mathieu_b_e(1,2.0,$r) }, 'gsl_sf_mathieu_b_e lives');
-
-}
-
 sub TEST_MATHIEU : Tests {
     # https://github.com/ampl/gsl/blob/master/specfunc/test_mathieu.c
     my $version= gsl_version();
@@ -1286,6 +1274,7 @@ sub TEST_MATHIEU : Tests {
     # these functions had _e added starting in 2.0
     my $suffix = $major >= 2 ? "_e" : "";
     my $results = {
+        "gsl_sf_mathieu_ce$suffix" . '(0,5.0,0,$r)'         => 0.04480018165188902,
         "gsl_sf_mathieu_ce$suffix" . '(0,0,0,$r)'           => sqrt(2)/2,
         "gsl_sf_mathieu_ce$suffix" . '(1,0,0,$r)'           => 1.00,
         "gsl_sf_mathieu_ce$suffix" . '(0,0,$M_PI/2,$r)'     => sqrt(2)/2,

@@ -420,5 +420,3 @@ sub GSL_LINALG_BIDIAG_DECOMP_UNPACK_UNPACK2_UNPACK_B : Tests {
 }
 
 Test::Class->runtests;
-
-done_testing;

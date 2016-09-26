@@ -1228,5 +1228,3 @@ sub TEST_MATHIEU : Tests {
 }
 
 Test::Class->runtests;
-
-done_testing;

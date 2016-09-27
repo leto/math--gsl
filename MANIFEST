@@ -1289,3 +1289,4 @@ xs/Wavelet_wrap.2.1.c
 xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xt/01-portability-files.t
+META.json

@@ -150,8 +150,8 @@ sub GSL_MULTIFIT_WLINEAR : Tests {
     local $TODO;
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
-    if ($major >= 2) {
-        $TODO = "stopped working in 2.x";
+    if ($major == 2 && $minor == 0) {
+        $TODO = "this was broken in 2.0 and fixed in 2.1";
     }
 
     my $filip_n = 82;

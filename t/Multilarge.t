@@ -16,8 +16,7 @@ BEGIN {
     if ($major >= 2 && $minor >= 1) {
         use Math::GSL::Multilarge qw/:all/;
     } else {
-        ok(1,"Make test harness happy");
-        done_testing;
+        plan skip_all => "Multilarge added in GSL 2.1";
         exit(0);
     }
 }

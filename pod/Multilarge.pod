@@ -29,7 +29,7 @@ Math::GSL::Multilarge - Large Linear Systems
 
 =head1 SYNOPSIS
 
-use Math::GSL::Multilarge qw /:all/;
+    use Math::GSL::Multilarge qw /:all/;
 
 =head1 DESCRIPTION
 

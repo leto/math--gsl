@@ -1,6 +1,3 @@
-bin/smoke_some_mathgsl
-bin/smolder_mathgsl
-bin/smolder_smoke_signal
 Build.PL
 c/Matrix.c
 c/Matrix.h
@@ -1292,4 +1289,3 @@ xs/Wavelet_wrap.2.1.c
 xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xt/01-portability-files.t
-META.json

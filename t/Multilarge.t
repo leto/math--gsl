@@ -9,7 +9,18 @@ use Math::GSL::Matrix   qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Machine  qw/:all/;
 use Math::GSL::Multifit qw/:all/;
-use Math::GSL::Multilarge qw/:all/;
+
+BEGIN {
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    if ($major >= 2 && $minor >= 1) {
+        use Math::GSL::Multilarge qw/:all/;
+    } else {
+        done_testing;
+        exit(0);
+    }
+}
+
 use Data::Dumper;
 use strict;
 use warnings;
@@ -25,6 +36,7 @@ sub teardown : Test(teardown) {
 sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     my $type  = Math::GSL::Multilarge::gsl_multilarge_linear_type->new;
     isa_ok($type, 'Math::GSL::Multilarge::gsl_multilarge_linear_type');
+
 
     # This coredumps
     # my $multi = Math::GSL::Multilarge::gsl_multilarge_linear_alloc($type,16);

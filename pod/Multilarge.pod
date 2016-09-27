@@ -1,0 +1,58 @@
+%perlcode %{
+@EXPORT_OK = qw/
+            gsl_multilarge_linear_accumulate
+            gsl_multilarge_linear_alloc
+            gsl_multilarge_linear_free
+            gsl_multilarge_linear_genform1
+            gsl_multilarge_linear_genform2
+            gsl_multilarge_linear_L_decomp
+            gsl_multilarge_linear_name
+            gsl_multilarge_linear_normal
+            gsl_multilarge_linear_rcond
+            gsl_multilarge_linear_reset
+            gsl_multilarge_linear_solve
+            gsl_multilarge_linear_stdform1
+            gsl_multilarge_linear_stdform2
+            gsl_multilarge_linear_tsqr
+            gsl_multilarge_linear_wstdform1
+            gsl_multilarge_linear_wstdform2
+             /;
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+Math::GSL::Multilarge - Large Linear Systems
+
+=head1 SYNOPSIS
+
+use Math::GSL::Multilarge qw /:all/;
+
+=head1 DESCRIPTION
+
+This subsystem is for solving large dense least squares systems.
+
+For more informations on the functions, we refer you to the GSL offcial
+documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+=head1 EXAMPLES
+
+None yet
+
+=head1 AUTHORS
+
+Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008-2016 Jonathan "Duke" Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+%}

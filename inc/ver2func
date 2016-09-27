@@ -59,4 +59,7 @@
         ^gsl_linalg_givens$
         ^gsl_linalg_givens_gv$
        /],
+     "2.1" => [qw/
+       ^gsl_multifit_linear_rcond$
+      /],
 };

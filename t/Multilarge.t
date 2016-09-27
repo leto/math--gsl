@@ -17,7 +17,7 @@ BEGIN {
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
     if ($major >= 2 && $minor >= 1) {
-        use Math::GSL::Multilarge qw/:all/;
+        eval "use Math::GSL::Multilarge qw/:all/";
     } else {
         ok(1,"Multilarge added in GSL 2.1");
         exit(0);

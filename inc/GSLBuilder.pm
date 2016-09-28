@@ -49,7 +49,12 @@ sub process_swig_files {
 
     my $binding_ver = $self->get_binding_version;
     my $current_version = $self->{properties}->{current_version};
-    print "Process XS files version $binding_ver (GSL version $current_version)\n";
+    if ($binding_ver eq $current_version) {
+        print "Process XS files version $binding_ver (GSL version $current_version)\n";
+    } else {
+        print "VERSION MISMATCH: Let's hope for the best.\nProcess XS files version $binding_ver (GSL version $current_version)\n";
+    }
+
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
     }
@@ -66,7 +71,9 @@ sub get_binding_version {
         }
     }
     my $result_binding_version;
-    foreach my $b_ver (keys %{$all_binding_versions}) {
+
+    # make sure we find 2.2.1 before 2.2
+    foreach my $b_ver (reverse sort keys %{$all_binding_versions}) {
         if (cmp_versions($current_version, $b_ver) >= 0 &&
             (!defined($result_binding_version) ||
              cmp_versions($result_binding_version, $b_ver) == -1))
@@ -74,6 +81,7 @@ sub get_binding_version {
             $result_binding_version = $b_ver;
         }
     }
+
     unless (defined($result_binding_version)) {
         die "Can't find appropriate bindings version, ".
             "check 'xs' directory, it should contains bindings " .

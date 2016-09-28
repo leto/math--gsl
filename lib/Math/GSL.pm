@@ -26,7 +26,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK, );
 
 our ($GSL_PREC_DOUBLE, $GSL_PREC_SINGLE, $GSL_PREC_APPROX ) = 0 .. 2;
 our $GSL_MODE_DEFAULT = $GSL_PREC_DOUBLE;
-our $VERSION = '0.36';
+our $VERSION = '0.37';
 
 =head1 NAME
 
@@ -34,7 +34,7 @@ Math::GSL - Perl interface to the GNU Scientific Library (GSL)
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 SYNOPSIS
 
@@ -239,18 +239,14 @@ L<http://search.cpan.org/dist/Math::GSL>
 
 =head1 DEVELOPMENT
 
-If you would like the help develop Math::GSL, email the authors
-and do
+If you would like the help develop Math::GSL, visit us on Github
+L<https://github.com/leto/math--gsl> and fork, send Pull Requests
+and/or create issues.
 
-    git clone git://github.com/leto/math--gsl.git
-    cd math--gsl
-    # start hacking
+To view the latest source code online, go to
+L<http://github.com/leto/math--gsl/tree/master>.
 
-to get the latest source, which is a two-headed beast with branches master and
-bleed. The master branch is our stable branch, which is periodically sync-ed
-with bleed. To view the latest source code online, go to
-L<http://github.com/leto/math--gsl/tree/master>.  The latest version of Git can be found at
-L<http://git-scm.com> .
+The latest version of Git can be found at L<http://git-scm.com> .
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -263,7 +259,7 @@ This Perl module is dedicated in memory of Nick Ing-Simmons.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2014 Jonathan "Duke" Leto, Thierry Moisan all rights reserved.
+Copyright 2008-2016 Jonathan "Duke" Leto, Thierry Moisan all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -7,6 +7,7 @@ FILE * fopen(char *, char *);
 int fclose(FILE *);
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_nan.h"
     #include "gsl/gsl_vector.h"
     #include "gsl/gsl_vector_char.h"
@@ -17,6 +18,7 @@ int fclose(FILE *);
     #include "gsl/gsl_vector_int.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_vector.h"
 %include "gsl/gsl_vector_char.h"

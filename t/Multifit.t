@@ -1,6 +1,7 @@
 package Math::GSL::Multifit::Test;
 use base q{Test::Class};
 use Test::More tests => 164;
+use Math::GSL           qw/:all/;
 use Math::GSL::BLAS     qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Errno    qw/:all/;
@@ -146,6 +147,13 @@ my $filip_y = [0.8116, 0.9072, 0.9052, 0.9039, 0.8053, 0.8377,
 }
 
 sub GSL_MULTIFIT_WLINEAR : Tests {
+    local $TODO;
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    if ($major == 2 && $minor == 0) {
+        $TODO = "this was broken in 2.0 and fixed in 2.1";
+    }
+
     my $filip_n = 82;
     my $filip_p = 11;
 my @filip_x = ( -6.860120914, -4.324130045, -4.358625055,

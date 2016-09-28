@@ -1,7 +1,10 @@
 =head1 Math::GSL Changes
 
-=head1 v0.36 - Fri Mar 25 23:32:03 PDT 2016
+=head1 v0.37 - September 2016
+    - Support for GSL 2.0, 2.1 and 2.2
+    - Multilarge subsystem added for GSL >= 2.1
 
+=head1 v0.36 - Fri Mar 25 23:32:03 PDT 2016
     - Fixed error messages on Matrix set_col and set_row
       methods (Jon Schutz)
     - Implemented array-based Bessel functions:

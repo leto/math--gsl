@@ -3,8 +3,10 @@
 %include "renames.i"
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_pow_int.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_pow_int.h"
 %include "../pod/PowInt.pod"

@@ -119,7 +119,7 @@ sub verify_results
         my $r        = Math::GSL::SF::gsl_sf_result_struct->new;
         my $status   = eval qq{${class}::$code};
 
-        ok(0, qq{'$code' died} ) if !defined $status;
+        ok(0, qq{'$code' died: $@} ) if !defined $status;
 
         if ( defined $r && $code =~ /_e\(.*\$r/) {
             $x   = $r->{val};

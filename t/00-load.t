@@ -1,4 +1,4 @@
-use Test::More tests => 53;
+use Test::More;
 use Config;
 use File::Spec::Functions;
 use lib 'inc';
@@ -10,8 +10,15 @@ use warnings;
 BEGIN {
     use_ok( 'Math::GSL', qw/gsl_version/ );
     map { use_ok("Math::GSL::$_") } GSLBuilder::subsystems();
+    my $major = $Math::GSL::Version::GSL_MAJOR_VERSION;
+    my $minor = $Math::GSL::Version::GSL_MINOR_VERSION;
+    if ($major >= 2 && $minor >= 1) {
+        use_ok("Math::GSL::Multilarge");
+    }
 }
 
 my $arch        = $Config{archname};
 my $gsl_version = gsl_version();
 diag( "Testing Math::GSL $Math::GSL::VERSION with GSL $gsl_version on $arch, Perl ($^X) $]" );
+
+done_testing;

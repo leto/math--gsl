@@ -106,6 +106,7 @@
                 gsl_linalg_balance_matrix
                 gsl_linalg_balance_accum
                 gsl_linalg_balance_columns
+                gsl_linalg_givens gsl_linalg_givens_gv
        /;
 %EXPORT_TAGS = ( all =>[ @EXPORT_OK ] );
 
@@ -145,6 +146,14 @@ Here is a list of all the functions included in this module :
 =item gsl_linalg_householder_hv($tau, $v, $w) - This function applies the Householder transformation P defined by the scalar $tau and the vector $v to the vector $w. On output the result P w is stored in $w.
 
 =item gsl_linalg_householder_hm1
+
+=item gsl_linalg_givens($a,$b,$c,$s)
+
+Performs a Givens rotation on the vector ($a,$b) and stores the answer in $c and $s.
+
+=item gsl_linalg_givens_gv($v, $i,$j, $c, $s)
+
+Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $c and $s.
 
 =item gsl_linalg_complex_householder_hm($tau, $v, $A) - Does the same operation than gsl_linalg_householder_hm but with the complex matrix $A, the complex value $tau and the complex vector $v.
 
@@ -388,12 +397,10 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2015 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
 %}
-
-

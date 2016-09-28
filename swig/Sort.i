@@ -84,6 +84,7 @@
 %apply double * { double *data, double *dest };
 
 %{
+    #include "gsl/gsl_inline.h"
     #include "gsl/gsl_nan.h"
     #include "gsl/gsl_sort.h"
     #include "gsl/gsl_sort_double.h"
@@ -94,6 +95,7 @@
     #include "gsl/gsl_permutation.h"
 %}
 
+%include "gsl/gsl_inline.h"
 %include "gsl/gsl_nan.h"
 %include "gsl/gsl_sort.h"
 %include "gsl/gsl_sort_double.h"

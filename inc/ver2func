@@ -47,13 +47,41 @@
         ^gsl_sort_vector2$
         ^gsl_poly_dd_hermite_init$
         ^gsl_linalg_SV_leverage$
-     /],
-     "1.17" => [qw/
-        ^gsl_multifit_robust_weights$
         ^gsl_bspline_knots_greville$
         ^gsl_linalg_SV_leverage$
         ^gsl_sort2.*$
         ^gsl_sort_vector2_.*$
         ^gsl_stats_[a-z]+_spearman$
         /],
+     "2.0" => [qw/
+        ^gsl_multifit_robust_residuals$
+        ^gsl_multifit_robust_weights$
+        ^gsl_linalg_givens$
+        ^gsl_linalg_givens_gv$
+       /],
+     "2.1" => [qw/
+        ^gsl_multifit_linear_rcond$
+      /],
+      "2.2" =>[qw/
+        ^gsl_linalg_cholesky_rcond$
+        ^gsl_linalg_QRPT_rcond$
+        ^gsl_linalg_QRPT_lssolve$
+        ^gsl_linalg_QRPT_lssolve2$
+        ^gsl_linalg_pcholesky_invert$
+        ^gsl_linalg_mcholesky$
+        ^gsl_linalg_pcholesky$
+        ^gsl_linalg_tri_lower_invert$
+        ^gsl_linalg_tri_lower_rcond$
+        ^gsl_linalg_tri_lower_unit_invert$
+        ^gsl_linalg_tri_upper_invert$
+        ^gsl_linalg_tri_upper_rcond$
+        ^gsl_linalg_tri_upper_unit_invert$
+        ^gsl_multilarge_linear_lcurve$
+        ^gsl_permute_matrix$
+        ^gsl_ran_multivariate_gaussian$
+        ^gsl_rstat_rms$
+      /],
+      "2.2.1" => [qw/
+        ^gsl_linalg_cholesky_decomp1$
+      /],
 };

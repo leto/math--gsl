@@ -1,4 +1,4 @@
-%module "Math::GSL::Multifit"
+%module "Math::GSL::Multilarge"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
@@ -16,7 +16,7 @@
     #include "gsl/gsl_matrix.h"
     #include "gsl/gsl_permutation.h"
     #include "gsl/gsl_multifit.h"
-    #include "gsl/gsl_multifit_nlin.h"
+    #include "gsl/gsl_multilarge.h"
 %}
 
 %include "gsl/gsl_inline.h"
@@ -26,5 +26,5 @@
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_permutation.h"
 %include "gsl/gsl_multifit.h"
-%include "gsl/gsl_multifit_nlin.h"
+%include "gsl/gsl_multilarge.h"
 %include "../pod/Multifit.pod"

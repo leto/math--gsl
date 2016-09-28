@@ -35,6 +35,7 @@ my $gsl_conf;
 $gsl_conf = check_gsl_version();
 $gsl_conf = check_gsl_version_pkgconfig() if not $gsl_conf;
 
+my ($major,$minor) = split /\./, $gsl_conf->{gsl_version};
 my $ccflags = $gsl_conf->{gsl_cflags};
 my $ldflags = $gsl_conf->{gsl_libs};
 
@@ -72,6 +73,7 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
 }
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
+push @Subsystems, "Multilarge" if $major >= 2;
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i

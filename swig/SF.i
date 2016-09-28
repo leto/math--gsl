@@ -40,6 +40,12 @@ array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
 %ignore gsl_sf_bessel_kl_scaled_array;
 %rename (gsl_sf_bessel_kl_scaled_array) gsl_sf_bessel_kl_scaled_array_wrapper;
 
+%ignore gsl_sf_legendre_Plm_array;
+%ignore gsl_sf_legendre_Plm_deriv_array;
+%ignore gsl_sf_legendre_array_size;
+%ignore gsl_sf_legendre_sphPlm_array;
+%ignore gsl_sf_legendre_sphPlm_deriv_array;
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_version.h"

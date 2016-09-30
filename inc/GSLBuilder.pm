@@ -47,14 +47,21 @@ sub process_swig_files {
         $self->process_versioned_swig_files;
     }
 
-    my $binding_ver = $self->get_binding_version;
+    my $binding_ver     = $self->get_binding_version;
     my $current_version = $self->{properties}->{current_version};
-    if ($binding_ver eq $current_version) {
-        print "Process XS files version $binding_ver (GSL version $current_version)\n";
-    } else {
-        print "VERSION MISMATCH: Let's hope for the best.\nProcess XS files version $binding_ver (GSL version $current_version)\n";
-    }
+    my $gsl_prefix      = $self->{properties}->{gsl_prefix};
+    my $gsl_ldflags     = $self->{properties}->{extra_linker_flags};
+    my $gsl_ccflags     = $self->{properties}->{extra_compiler_flags};
+    my $swig_flags      = $self->{properties}->{swig_flags};
 
+    if ($binding_ver ne $current_version) {
+        print "VERSION MISMATCH: Let's hope for the best.\n";
+    }
+    print "Processing $binding_ver XS files, GSL $current_version (via gsl-config) at $gsl_prefix\n";
+    print "Compiler   = " . qx{ $Config{cc} --version } . "\n";
+    print "ccflags    = @$gsl_ccflags\n";
+    print "ldflags    = @$gsl_ldflags\n";
+    print "swig_flags = $swig_flags\n" unless is_release();
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
     }

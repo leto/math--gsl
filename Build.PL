@@ -26,8 +26,6 @@ use lib 'inc';
 use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
-
-
 our $MIN_GSL_VERSION = "1.11";
 
 my $gsl_conf;
@@ -99,15 +97,7 @@ unless (GSLBuilder::is_release()) {
 
 $ccflags = "$ccflags " . ($ENV{CC_FLAGS}||''),
 
-print "\nConfigured with flags...\n";
-print "  linker: $ldflags\n";
-print "  compiler: $ccflags\n";
-
-print "  swig: $swig_flags\n" unless GSLBuilder::is_release();
-
-print "\n";
-
-my $c_deps = GSLBuilder::c_modules();
+my $c_deps      = GSLBuilder::c_modules();
 my $swig_source = [
                    map {
                        my $deps = [ catfile("pod", "$_.pod") ];
@@ -151,7 +141,8 @@ my $builder = GSLBuilder->new(
     },
     swig_source           => $swig_source,
     ver2func => $ver2func,
-    current_version => $gsl_conf->{gsl_version},
+    current_version       => $gsl_conf->{gsl_version},
+    gsl_prefix            => $gsl_conf->{gsl_prefix},
 );
 
 
@@ -302,7 +293,7 @@ sub check_gsl_version_pkgconfig {
 
 sub check_gsl_version {
 
-    print "\nChecking for GSL using gsl-config\n";
+    print "Checking for GSL using gsl-config\n";
 
     my $gsl_version = qx{gsl-config --version};
     if (not defined $gsl_version) {
@@ -338,7 +329,7 @@ sub check_gsl_version {
 *** Get GSL at http://www.gnu.org/software/gsl\n", $MIN_GSL_VERSION;
             exit 0;
         } else {
-            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix, CFLAGS=$gsl_cflags, $gsl_libs\n";
+            print "Found GSL $gsl_version (via gsl-config) installed in $gsl_prefix\n";
             return {
                 gsl_version => $current_version,
                 gsl_prefix  => $gsl_prefix,

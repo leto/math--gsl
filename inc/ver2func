@@ -68,6 +68,14 @@
         ^gsl_multifit_linear_L_decomp$
       /],
       "2.2" =>[qw/
+        ^gsl_matrix_complex_transpose_tricpy$
+        ^gsl_matrix_char_transpose_tricpy$
+        ^gsl_matrix_transpose_tricpy$
+        ^gsl_ran_multivariate_gaussian_mean$
+        ^gsl_ran_multivariate_gaussian_vcov$
+        ^gsl_ran_multivariate_gaussian_pdf$
+        ^gsl_ran_multivariate_gaussian_log_pdf$
+        ^gsl_ran_multivariate_gaussian$
         ^gsl_linalg_COD.*$
         ^gsl_linalg_cholesky_rcond$
         ^gsl_linalg_cholesky_scale$
@@ -101,7 +109,6 @@
         ^gsl_linalg_tri_upper_unit_invert$
         ^gsl_multilarge_linear_lcurve$
         ^gsl_permute_matrix$
-        ^gsl_ran_multivariate_gaussian$
         ^gsl_rstat_rms$
       /],
       "2.2.1" => [qw/

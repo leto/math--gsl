@@ -62,6 +62,14 @@
         ^gsl_bspline_eval_nonzero$
         ^gsl_bspline_deriv.*
         ^gsl_bspline_workspace.*
+        ^gsl_multifit_linear_solve$
+        ^gsl_multifit_fdfsolver_residual$
+        ^gsl_multifit_fdfsolver_jac$
+        ^gsl_multifit_fdfsolver_niter$
+        ^gsl_multifit_fdfsolver_test$
+        ^gsl_multifit_fdfsolver_wset$
+        ^gsl_multifit_eval_wf$
+        ^gsl_multifit_eval_wdf$
         ^gsl_multifit_linear_stdform2$
         ^gsl_multifit_linear_wstdform2$
         ^gsl_multifit_linear_genform2$
@@ -85,6 +93,7 @@
         ^gsl_multifit_linear_workspace.*
         ^gsl_linalg_givens$
         ^gsl_linalg_givens_gv$
+        ^gsl_linalg_QR_matQ$
        /],
 
      "2.1" => [qw/
@@ -93,6 +102,11 @@
       /],
 
       "2.2" =>[qw/
+        ^gsl_matrix_tricpy$
+        ^gsl_matrix_complex_tricpy$
+        ^gsl_matrix_char_tricpy$
+        ^gsl_matrix_int_tricpy$
+        ^gsl_matrix_int_transpose_tricpy$
         ^gsl_matrix_complex_transpose_tricpy$
         ^gsl_matrix_char_transpose_tricpy$
         ^gsl_matrix_transpose_tricpy$

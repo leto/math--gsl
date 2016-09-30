@@ -54,6 +54,10 @@
         ^gsl_stats_[a-z]+_spearman$
         /],
      "2.0" => [qw/
+        ^gsl_multifit_linear_stdform2$
+        ^gsl_multifit_linear_wstdform2$
+        ^gsl_multifit_linear_genform2$
+        ^gsl_multifit_linear_wgenform2$
         ^gsl_multifit_robust_residuals$
         ^gsl_multifit_robust_weights$
         ^gsl_linalg_givens$
@@ -61,6 +65,7 @@
        /],
      "2.1" => [qw/
         ^gsl_multifit_linear_rcond$
+        ^gsl_multifit_linear_L_decomp$
       /],
       "2.2" =>[qw/
         ^gsl_linalg_COD.*$

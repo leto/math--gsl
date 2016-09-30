@@ -26,7 +26,7 @@ use lib 'inc';
 use GSLBuilder;
 use File::Spec::Functions qw/:ALL/;
 
-our $MIN_GSL_VERSION = "1.11";
+our $MIN_GSL_VERSION = "1.15";
 
 my $gsl_conf;
 

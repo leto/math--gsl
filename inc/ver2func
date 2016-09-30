@@ -63,13 +63,31 @@
         ^gsl_multifit_linear_rcond$
       /],
       "2.2" =>[qw/
+        ^gsl_linalg_COD.*$
         ^gsl_linalg_cholesky_rcond$
+        ^gsl_linalg_cholesky_scale$
+        ^gsl_linalg_cholesky_scale_apply$
+        ^gsl_linalg_cholesky_decomp2$
+        ^gsl_linalg_cholesky_svx2$
+        ^gsl_linalg_cholesky_solve2$
+        ^gsl_linalg_pcholesky_decomp$
+        ^gsl_linalg_pcholesky_solve$
+        ^gsl_linalg_pcholesky_svx$
+        ^gsl_linalg_pcholesky_decomp2$
+        ^gsl_linalg_pcholesky_solve2$
+        ^gsl_linalg_pcholesky_svx2$
+        ^gsl_linalg_pcholesky_rcond$
+        ^gsl_linalg_pcholesky_invert$
+        ^gsl_linalg_mcholesky_decomp$
+        ^gsl_linalg_mcholesky_solve$
+        ^gsl_linalg_mcholesky_svx$
+        ^gsl_linalg_mcholesky_rcond$
+        ^gsl_linalg_mcholesky_invert$
+        ^gsl_linalg_invnorm1$
+        ^gsl_linalg_QRPT_rank$
         ^gsl_linalg_QRPT_rcond$
         ^gsl_linalg_QRPT_lssolve$
         ^gsl_linalg_QRPT_lssolve2$
-        ^gsl_linalg_pcholesky_invert$
-        ^gsl_linalg_mcholesky$
-        ^gsl_linalg_pcholesky$
         ^gsl_linalg_tri_lower_invert$
         ^gsl_linalg_tri_lower_rcond$
         ^gsl_linalg_tri_lower_unit_invert$

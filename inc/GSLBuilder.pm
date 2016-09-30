@@ -124,7 +124,16 @@ sub process_versioned_swig_files {
         close($fh) or die "Could not close $renames_fname: $!";
 
         foreach my $file (@$files_ref) {
-            $self->process_swig($file->[0], $file->[1], $ver);
+            my ($major,$minor,$tiny) = split /\./, $ver;
+            # don't create lots of XS for subsystems that didn't exist
+            # in old GSL versions
+            if ($file->[0] =~ m/Multilarge/) {
+                if ($major >=2 && $minor >= 1) {
+                    $self->process_swig($file->[0], $file->[1], $ver);
+                }
+            } else {
+                $self->process_swig($file->[0], $file->[1], $ver);
+            }
         }
     }
 }
@@ -203,6 +212,8 @@ sub swig_binary_name {
 sub compile_swig {
     my ($self, $file, $c_file, $ver) = @_;
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
+
+    print "Creating $c_file\n";
 
     # File name, minus the suffix
     (my $file_base = $file) =~ s/\.[^.]+$//;

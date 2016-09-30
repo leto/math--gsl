@@ -3,6 +3,7 @@
 #    "1.9"  => [],
 #    "1.10" => [],
     "1.11" => [],
+
     "1.12" => [qw/
         ^gsl_linalg_cholesky_invert$
         ^gsl_matrix_complex_isnonneg$
@@ -13,6 +14,7 @@
         ^gsl_vector_complex_mul$ ^gsl_vector_complex_scale$
         ^gsl_vector_complex_sub$
               /],
+
     "1.13" => [qw/
         ^gsl_bspline_greville_abscissa$
         ^gsl_min_fminimizer_quad_golden$
@@ -20,12 +22,13 @@
         ^gsl_monte_vegas_runval$
         ^gsl_poly_eval_derivs$
               /],
+
     "1.14" => [qw/
         ^gsl_integration_glfixed.*
         ^gsl_multifit_linear_usvd$ ^gsl_multifit_wlinear_usvd$
               /],
+
     "1.15" => [qw/
-        ^gsl_bspline_deriv.* ^gsl_bspline_eval_nonzero$
         ^gsl_cheb_order$ ^gsl_cheb_size$ ^gsl_cheb_coeffs$
         ^gsl_eigen_nonsymmv_params$
         ^gsl_integration_cquad.*
@@ -39,6 +42,7 @@
         ^gsl_vector_equal$ ^gsl_vector_char_equal$ ^gsl_vector_complex_equal$
         ^gsl_vector_int_equal$
               /],
+
      "1.16" => [qw/
         ^gsl_multifit_robust.*$
         ^gsl_multifit_fsolver_driver$
@@ -53,7 +57,11 @@
         ^gsl_sort_vector2_.*$
         ^gsl_stats_[a-z]+_spearman$
         /],
+
      "2.0" => [qw/
+        ^gsl_bspline_eval_nonzero$
+        ^gsl_bspline_deriv.*
+        ^gsl_bspline_workspace.*
         ^gsl_multifit_linear_stdform2$
         ^gsl_multifit_linear_wstdform2$
         ^gsl_multifit_linear_genform2$
@@ -63,10 +71,12 @@
         ^gsl_linalg_givens$
         ^gsl_linalg_givens_gv$
        /],
+
      "2.1" => [qw/
         ^gsl_multifit_linear_rcond$
         ^gsl_multifit_linear_L_decomp$
       /],
+
       "2.2" =>[qw/
         ^gsl_matrix_complex_transpose_tricpy$
         ^gsl_matrix_char_transpose_tricpy$

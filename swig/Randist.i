@@ -65,6 +65,8 @@ double gsl_ran_multinomial_lnpdf_wrapper (size_t SIZE, const unsigned int ARRAY[
 array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
 
 %{
+    #include "gsl/gsl_matrix.h"
+    #include "gsl/gsl_vector.h"
     #include "gsl/gsl_randist.h"
     #include "../c/Randist.c"
 
@@ -117,7 +119,8 @@ array_wrapper * gsl_ran_dir_nd_wrapper (const gsl_rng * r, size_t n);
 
 %}
 
-
+%include "gsl/gsl_matrix.h"
+%include "gsl/gsl_vector.h"
 %include "gsl/gsl_randist.h"
 %include "../c/Randist.h"
 %include "../pod/Randist.pod"

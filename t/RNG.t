@@ -8,6 +8,8 @@ use Math::GSL::Test    qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Data::Dumper;
 use strict;
+use warnings;
+
 BEGIN { gsl_set_error_handler_off() }
 
 sub make_fixture : Test(setup) {

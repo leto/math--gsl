@@ -66,8 +66,23 @@
         ^gsl_multifit_linear_wstdform2$
         ^gsl_multifit_linear_genform2$
         ^gsl_multifit_linear_wgenform2$
+        ^gsl_multifit_linear_stdform1$
+        ^gsl_multifit_linear_wstdform1$
+        ^gsl_multifit_linear_genform1$
+        ^gsl_multifit_linear_wgenform1$
+        ^gsl_multifit_linear_bsvd$
+        ^gsl_multifit_linear_lreg$
+        ^gsl_multifit_linear_lcurve$
+        ^gsl_multifit_linear_lcorner$
+        ^gsl_multifit_linear_lcorner2$
+        ^gsl_multifit_linear_Lk$
+        ^gsl_multifit_linear_Lsobolev$
+        ^gsl_multifit_linear_applyW$
+        ^gsl_multifit_robust_maxiter$
         ^gsl_multifit_robust_residuals$
         ^gsl_multifit_robust_weights$
+        ^gsl_multifit_covar_QRPT$
+        ^gsl_multifit_linear_workspace.*
         ^gsl_linalg_givens$
         ^gsl_linalg_givens_gv$
        /],

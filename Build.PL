@@ -47,6 +47,7 @@ $ccflags .= " $Config{ccflags}"; # we need this for some Linuxes
 
 ## Swig produces a number of GCC warnings. Turn them off if we can.
 $ccflags .= try_cflags("-Wall");
+$ccflags .= try_cflags("-Wno-sometimes-uninitialized");
 #$ccflags .= try_cflags("-Wno-strict-aliasing");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-value");

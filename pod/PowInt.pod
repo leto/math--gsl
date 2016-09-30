@@ -33,18 +33,16 @@ You can also write
 
 C<use Math::GSL::PowInt qw/:all/;>
 
-to use all avaible functions of the module.
+to use all available functions of the module.
 
 =head1 PURPOSE
 
-This module is used to speed up arithmetic operations. The underlying code
-decomposes the multiplication in the most efficient way. Since it is
-implemented in XS (via SWIG), it should lend a large performance increase over
-the Perl builtin exponentiation operator, '**' .
+This module doesn't provide much performance improvement over the Perl builtin
+'**' operator, but is included for completeness.
 
 =head1 BENCHMARKS
 
-Would someone like to submit some benchmarks?
+DANAJ has included some benchmarks in a bug report L<https://rt.cpan.org/Ticket/Display.html?id=96440>
 
 =head1 AUTHORS
 
@@ -52,7 +50,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2016 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

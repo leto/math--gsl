@@ -17,7 +17,7 @@ sub teardown : Test(teardown) {
 
 sub ALLOC : Tests {
     my $B = gsl_bspline_alloc(2,5);
-    isa_ok($B, 'Math::GSL::BSpline');
+    ok(defined $B, 'Math::GSL::BSpline');
 }
 
 Test::Class->runtests;

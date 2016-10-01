@@ -1,5 +1,12 @@
 =head1 Math::GSL Changes
 
+=head1 v0.39 - September 2016
+    - Fix Debian Bug reported by Niko Tyni
+        https://bugs.debian.org/826009
+    - Extensive fixes to allow GSL 1.15 and GSL 1.16
+      to continue to work with GSL 2.x
+    - GSL 1.11 - 1.14 are no longer supported
+
 =head1 v0.38 - September 2016
     - Fixes for compiling against various GSL
       versions (thanks CPANtesters!)

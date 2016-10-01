@@ -13,8 +13,15 @@ env:
         - CC="clang"
         - CC="gcc"
 
+addons:
+  apt:
+    packages:
+      - libgsl0-dev
+      - swig2.0
+
 before_install:
-    - sudo apt-get install libgsl0-dev swig2.0
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install cpanm   ; fi
     - cpanm PkgConfig
 
 # Add verbosity for debugging

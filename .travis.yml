@@ -1,12 +1,17 @@
 language: perl
+os:
+  - osx
+  - linux
+
 perl:
     - "5.18"
     - "5.16"
     - "5.14"
 
-compiler:
-    - clang
-    - gcc
+env:
+    matrix:
+        - CC="clang"
+        - CC="gcc"
 
 before_install:
     - sudo apt-get install libgsl0-dev swig2.0

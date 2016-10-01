@@ -15,6 +15,9 @@ BEGIN {
     if ($major >= 2 && $minor >= 1) {
         use_ok("Math::GSL::Multilarge");
     }
+    if ($major >= 2) {
+        use_ok("Math::GSL::Multifit");
+    }
 }
 
 my $arch        = $Config{archname};

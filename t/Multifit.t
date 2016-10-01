@@ -13,6 +13,17 @@ use Data::Dumper;
 use strict;
 BEGIN { gsl_set_error_handler_off() }
 
+BEGIN {
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    if ($major >= 2) {
+        eval "use Math::GSL::Multilarge qw/:all/";
+    } else {
+        plan skip_all => "Multifit swig bindings don't like GSL < 2.0";
+        exit(0);
+    }
+}
+
 sub make_fixture : Test(setup) {
 }
 

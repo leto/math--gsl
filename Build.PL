@@ -73,6 +73,7 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
 push @Subsystems, "Multilarge" if $major >= 2;
+push @Subsystems, "Multifit" if $major >= 2;
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i

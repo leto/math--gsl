@@ -20,7 +20,7 @@ sub subsystems {
         CBLAS        FFT          Min           IEEEUtils
         CDF          Fit          QRNG
         Chebyshev    Monte        RNG           Vector
-        Heapsort     Multifit     Randist       Roots
+        Heapsort     Randist      Roots
         Combination  Histogram    Multimin      Wavelet
         Complex      Histogram2D  Multiroots    Wavelet2D
         Const        Siman        Sum           Sys
@@ -129,6 +129,13 @@ sub process_versioned_swig_files {
             # in old GSL versions
             if ($file->[0] =~ m/Multilarge/) {
                 if ($major >=2 && $minor >= 1) {
+                    $self->process_swig($file->[0], $file->[1], $ver);
+                }
+            } else {
+                $self->process_swig($file->[0], $file->[1], $ver);
+            }
+            if ($file->[0] =~ m/Multifit/) {
+                if ($major >=2) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
             } else {

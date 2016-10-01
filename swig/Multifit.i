@@ -23,6 +23,7 @@
 
 %inline %{
 #if defined GSL_MAJOR_VERSION && (GSL_MAJOR_VERSION < 2)
+    /* TOTAL HACKERY TO GET THINGS TO COMPILE on 1.15 and 1.16 */
     GSL_VAR const gsl_multifit_fdfsolver_type * gsl_multifit_fdfsolver_lmniel;
 #endif
 %}

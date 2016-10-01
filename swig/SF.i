@@ -6,6 +6,21 @@
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
+%ignore gsl_sf_ellint_D_e;
+%ignore gsl_sf_ellint_D;
+%ignore gsl_sf_mathieu_a_e;
+%ignore gsl_sf_mathieu_a;
+%ignore gsl_sf_mathieu_b_e;
+%ignore gsl_sf_mathieu_b;
+%ignore gsl_sf_mathieu_ce_e;
+%ignore gsl_sf_mathieu_ce;
+%ignore gsl_sf_mathieu_se_e;
+%ignore gsl_sf_mathieu_se;
+%ignore gsl_sf_mathieu_Mc_e;
+%ignore gsl_sf_mathieu_Mc;
+%ignore gsl_sf_mathieu_Ms_e;
+%ignore gsl_sf_mathieu_Ms;
+
 // rename wrappers to original
 
 %ignore gsl_sf_bessel_Jn_array;

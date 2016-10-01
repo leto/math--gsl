@@ -1,6 +1,6 @@
 package Math::GSL::Multilarge::Test;
 use base q{Test::Class};
-use Test::More tests => 1;
+use Test::More;
 use Math::GSL           qw/:all/;
 use Math::GSL::BLAS     qw/:all/;
 use Math::GSL::Test     qw/:all/;
@@ -8,7 +8,6 @@ use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Machine  qw/:all/;
-use Math::GSL::Multifit qw/:all/;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -19,7 +18,7 @@ BEGIN {
     if ($major >= 2 && $minor >= 1) {
         eval "use Math::GSL::Multilarge qw/:all/";
     } else {
-        ok(1,"Multilarge added in GSL 2.1");
+        plan skip_all => "Multilarge swig bindings don't like GSL < 2.0";
         exit(0);
     }
 }

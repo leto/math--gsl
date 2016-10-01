@@ -22,7 +22,7 @@ addons:
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install cpanm   ; fi
-    - cpanm PkgConfig
+    - cpanm -v PkgConfig
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

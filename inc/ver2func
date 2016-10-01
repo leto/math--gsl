@@ -14,6 +14,9 @@ return {
         /],
 
      "2.0" => [qw/
+        ^gsl_sf_legendre_nlm$
+        ^gsl_sf_legendre_deriv.*
+        ^gsl_sf_legendre_array.*
         ^gsl_multifit_robust.*$
         ^gsl_multifit_fsolver_driver$
         ^gsl_multifit_function_fdf$

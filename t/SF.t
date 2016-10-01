@@ -44,6 +44,7 @@ sub TEST_RT66882 : Tests {
 }
 
 sub TEST_ELLINT : Tests {
+    local $TODO = "these functions are not currently available";
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
     my $results;
@@ -1265,6 +1266,7 @@ sub TEST_J0_RESULT_STRUCT: Tests(2) {
 }
 
 sub TEST_MATHIEU : Tests {
+    local $TODO = "these functions are not currently available";
     # https://github.com/ampl/gsl/blob/master/specfunc/test_mathieu.c
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;

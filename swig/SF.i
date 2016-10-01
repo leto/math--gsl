@@ -2,8 +2,24 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 %include "renames.i"
+%include "system.i"
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
+
+%ignore gsl_sf_ellint_D_e;
+%ignore gsl_sf_ellint_D;
+%ignore gsl_sf_mathieu_a_e;
+%ignore gsl_sf_mathieu_a;
+%ignore gsl_sf_mathieu_b_e;
+%ignore gsl_sf_mathieu_b;
+%ignore gsl_sf_mathieu_ce_e;
+%ignore gsl_sf_mathieu_ce;
+%ignore gsl_sf_mathieu_se_e;
+%ignore gsl_sf_mathieu_se;
+%ignore gsl_sf_mathieu_Mc_e;
+%ignore gsl_sf_mathieu_Mc;
+%ignore gsl_sf_mathieu_Ms_e;
+%ignore gsl_sf_mathieu_Ms;
 
 // rename wrappers to original
 
@@ -171,6 +187,20 @@ array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
         return wrapper;
     }
 
+%}
+
+%inline %{
+#if defined GSL_MAJOR_VERSION && (GSL_MAJOR_VERSION < 2)
+    /* TOTAL HACKERY TO GET THINGS TO COMPILE on 1.15 and 1.16 */
+    typedef enum
+    {
+    GSL_SF_LEGENDRE_SCHMIDT,
+    GSL_SF_LEGENDRE_SPHARM,
+    GSL_SF_LEGENDRE_FULL,
+    GSL_SF_LEGENDRE_NONE
+    } gsl_sf_legendre_t;
+
+#endif
 %}
 
 %include "gsl/gsl_types.h"

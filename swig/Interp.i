@@ -14,12 +14,7 @@
     #include "gsl/gsl_interp.h"
 %}
 
-%inline %{
-#if defined GSL_MAJOR_VERSION && (GSL_MAJOR_VERSION < 2)
-    GSL_VAR const gsl_interp_type * gsl_interp_steffen;
-#endif
-%}
-
+%ignore gsl_interp_steffen;
 %ignore gsl_interp_type;
 
 %include "gsl/gsl_inline.h"

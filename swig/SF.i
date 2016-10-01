@@ -2,6 +2,7 @@
 %include "typemaps.i"
 %include "gsl_typemaps.i"
 %include "renames.i"
+%include "system.i"
 
 %apply double *OUTPUT { double * sn, double * cn, double * dn, double * sgn };
 
@@ -171,6 +172,20 @@ array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
         return wrapper;
     }
 
+%}
+
+%inline %{
+#if defined GSL_MAJOR_VERSION && (GSL_MAJOR_VERSION < 2)
+    /* TOTAL HACKERY TO GET THINGS TO COMPILE on 1.15 and 1.16 */
+    typedef enum
+    {
+    GSL_SF_LEGENDRE_SCHMIDT,
+    GSL_SF_LEGENDRE_SPHARM,
+    GSL_SF_LEGENDRE_FULL,
+    GSL_SF_LEGENDRE_NONE
+    } gsl_sf_legendre_t;
+
+#endif
 %}
 
 %include "gsl/gsl_types.h"

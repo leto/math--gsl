@@ -41,7 +41,10 @@ my $ldflags = $gsl_conf->{gsl_libs};
 # empty (because pkg-config remove -I/usr/include), but swig needs it
 
 my $swig_flags = '';
-$swig_flags = ' -I/usr/include' if $ccflags =~ /^\s*$/;
+
+$swig_flags = " -DGSL$major";
+
+$swig_flags .= ' -I/usr/include' if $ccflags =~ /^\s*$/;
 
 $ccflags .= " $Config{ccflags}"; # we need this for some Linuxes
 

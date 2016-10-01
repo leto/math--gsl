@@ -1,7 +1,7 @@
 language: perl
-os:
-  - osx
-  - linux
+#os:
+#  - osx
+#  - linux
 
 perl:
     - "5.18"
@@ -20,9 +20,7 @@ addons:
       - swig2.0
 
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install cpanm   ; fi
-    - sudo cpanm -n -v PkgConfig
+    - cpanm -n PkgConfig
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

@@ -70,6 +70,7 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
     $ldflags .= ' -fPIC  -fno-omit-frame-pointer ';
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
+$ccflags = $Config{cccdlflags} . ' ' . $ldflags;
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
 push @Subsystems, "Multilarge" if $major >= 2;

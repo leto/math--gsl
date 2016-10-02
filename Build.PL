@@ -185,7 +185,9 @@ sub modify_env {
                    /usr/local/pkgconfig /usr/libdata/pkgconfig
                    /usr/local/libdata/pkgconfig /opt/pkgconfig);
 
-    $ENV{PKG_CONFIG_PATH} = join(":", @guess) . $ENV{PKG_CONFIG_PATH};
+    unshift @guess, $ENV{PKG_CONFIG_PATH} if $ENV{PKG_CONFIG_PATH};
+
+    $ENV{PKG_CONFIG_PATH} = join(":", @guess);
 }
 
 sub try_compile {

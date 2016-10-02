@@ -189,8 +189,9 @@ array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
 
 %}
 
-#ifndef GSL2
 %inline %{
+#if defined GSL_MAJOR_VERSION && (GSL_MAJOR_VERSION < 2)
+    /* TOTAL HACKERY TO GET THINGS TO COMPILE on 1.15 and 1.16 */
     typedef enum
     {
     GSL_SF_LEGENDRE_SCHMIDT,
@@ -198,8 +199,9 @@ array_wrapper* gsl_sf_bessel_il_scaled_array_wrapper(int lmax, double x);
     GSL_SF_LEGENDRE_FULL,
     GSL_SF_LEGENDRE_NONE
     } gsl_sf_legendre_t;
-%}
+
 #endif
+%}
 
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_version.h"

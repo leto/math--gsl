@@ -31,6 +31,7 @@ before_install:
     - ./configure --disable-ccache
     - make -j2
     - sudo make install
+    - cd ..
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

@@ -70,11 +70,13 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
     $ldflags .= ' -fPIC  -fno-omit-frame-pointer ';
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
+# this causes warnings with clang + OSX
 $ccflags = $Config{cccdlflags} . ' ' . $ldflags;
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
 push @Subsystems, "Multilarge" if $major >= 2;
 push @Subsystems, "Multifit" if $major >= 2;
+push @Subsystems, "Rstat" if $major >= 2;
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i

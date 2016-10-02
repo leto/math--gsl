@@ -137,7 +137,7 @@ sub process_versioned_swig_files {
             } else {
                 $self->process_swig($file->[0], $file->[1], $ver);
             }
-            if ($file->[0] =~ m/Multifit/) {
+            if ($file->[0] =~ m/Multifit/ or $file->[0] =~ m/Rstat/) {
                 if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
@@ -332,7 +332,6 @@ sub compile_c {
   $self->add_to_cleanup($obj_file);
   return $obj_file if $self->up_to_date($file, $obj_file);
 
-
   $cf->{installarchlib} = $Config{archlib};
 
   my @include_dirs = @{$p->{include_dirs}}
@@ -340,12 +339,10 @@ sub compile_c {
 			: map {"-I$_"} ( catdir($cf->{installarchlib}, 'CORE') ) ;
 
   my @extra_compiler_flags = $self->split_like_shell($p->{extra_compiler_flags});
+  my @cccdlflags           = $self->split_like_shell($cf->{cccdlflags});
+  my @ccflags              = $self->split_like_shell($cf->{ccflags});
 
-  my @cccdlflags = $self->split_like_shell($cf->{cccdlflags});
-
-  my @ccflags  = $self->split_like_shell($cf->{ccflags});
   push @ccflags, $self->split_like_shell($Config{cppflags});
-
   my @optimize = $self->split_like_shell($cf->{optimize});
 
   # Whoah! There seems to be a bug in gcc 4.1.0 and optimization
@@ -359,7 +356,7 @@ sub compile_c {
 
   my @cc = $self->split_like_shell($cf->{cc});
   @cc = $self->split_like_shell($Config{cc}) unless @cc;
-
+  print join(" ", @cc, @flags, '-o', $obj_file, $file) . "\n";
   $self->do_system(@cc, @flags, '-o', $obj_file, $file)
     or die "error building $Config{_o} file from '$file'";
 

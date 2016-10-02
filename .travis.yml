@@ -14,18 +14,42 @@ perl:
 
 env:
     matrix:
-        - CC="clang"
-        - CC="gcc"
+        - PATH=/tmp/gsl-2.2.1
+        - PATH=/tmp/gsl-1.15
+
 
 addons:
   apt:
     packages:
-      - libgsl0-dev
+      # - libgsl0-dev # this is 1.16 on trusty
       - swig2.0
 
 before_install:
     - cpanm -n PkgConfig
+    - cd /tmp
+    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
+    - tar zxpf gsl-1.15.tar.gz
+    - cd gsl-1.15
+    - ./configure --prefix /tmp/gsl1.15
+    - make -j2
+    - make install
+    - cd ..
+    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
+    - tar zxpf gsl-2.2.1.tar.gz
+    - cd gsl-2.2.1
+    - ./configure --prefix /tmp/gsl2.2.1
+    - make -j2
+    - make install
+    - cd ..
+    - git clone --depth=5 https://github.com/leto/math--gsl.git
+    - cd math--gsl
+    - export PATH=/tmp/gsl2.2.1/bin:$PATH
+    - perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest GSL
+    # now we have /tmp/math--gsl/Math-GSL*.tar.gz to test with
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'
+
+script:
+    - cd /tmp && tar xvpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
 

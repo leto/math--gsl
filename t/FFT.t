@@ -29,8 +29,6 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests(2)
             ];
     my ($status, $output ) = gsl_fft_real_radix2_transform ($input, 1, 32);
     ok_status($status);
-
-    local $TODO = q{ not working again };
     ok_similar( $output, $expected );
 }
 

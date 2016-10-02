@@ -1,4 +1,5 @@
 language: perl
+dist: trusty
 #os:
 #  - osx
 #  - linux
@@ -20,18 +21,10 @@ addons:
   apt:
     packages:
       - libgsl0-dev
+      - swig2.0
 
 before_install:
     - cpanm -n PkgConfig
-    # swig 2.0.4 is not compatible with Perl 5.20 and up
-    - wget https://github.com/swig/swig/archive/rel-2.0.12.tar.gz
-    - tar zxpf rel-2.0.12.tar.gz
-    - cd swig-rel-2*
-    - ./autogen.sh
-    - ./configure --disable-ccache
-    - make -j2
-    - sudo make install
-    - cd ..
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

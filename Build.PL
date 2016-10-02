@@ -121,7 +121,7 @@ my $builder = GSLBuilder->new(
     dist_version_from   => catfile(qw/lib Math GSL.pm/),
     include_dirs        => [],
     extra_linker_flags  => $ldflags,
-    extra_compiler_flags=> $ccflags,
+    extra_compiler_flags=> $ccflags . " " . $swig_flags,
     swig_flags          => $swig_flags,
     license             => 'gpl',
     meta_merge     => {
@@ -208,9 +208,9 @@ sub try_compile {
     my $cccmd = $args{cccmd};
     my $errornull;
     my $ccflags =  $Config{'ccflags'};
-        $ccflags .= " $args{ccflags}" if $args{ccflags};
+    $ccflags .= " $args{ccflags}" if $args{ccflags};
 
-        if ($args{silent} ) {
+    if ($args{silent} ) {
         $errornull = "2>/dev/null" unless defined $errornull;
     } else {
         $errornull = '';

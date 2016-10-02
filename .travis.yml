@@ -14,8 +14,8 @@ perl:
 
 env:
     matrix:
-        - PATH=/tmp/gsl-2.2.1
-        - PATH=/tmp/gsl-1.15
+        - PATH=/tmp/gsl-2.2.1:$PATH
+        - PATH=/tmp/gsl-1.15:$PATH
 
 
 addons:

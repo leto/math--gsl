@@ -254,6 +254,9 @@ pm/Math/GSL/Multifit.pm.2.0
 pm/Math/GSL/Multifit.pm.2.1
 pm/Math/GSL/Multifit.pm.2.2
 pm/Math/GSL/Multifit.pm.2.2.1
+pm/Math/GSL/Multilarge.pm.1.15
+pm/Math/GSL/Multilarge.pm.1.16
+pm/Math/GSL/Multilarge.pm.2.0
 pm/Math/GSL/Multilarge.pm.2.1
 pm/Math/GSL/Multilarge.pm.2.2
 pm/Math/GSL/Multilarge.pm.2.2.1
@@ -725,6 +728,9 @@ xs/Multifit_wrap.2.0.c
 xs/Multifit_wrap.2.1.c
 xs/Multifit_wrap.2.2.1.c
 xs/Multifit_wrap.2.2.c
+xs/Multilarge_wrap.1.15.c
+xs/Multilarge_wrap.1.16.c
+xs/Multilarge_wrap.2.0.c
 xs/Multilarge_wrap.2.1.c
 xs/Multilarge_wrap.2.2.1.c
 xs/Multilarge_wrap.2.2.c
@@ -866,5 +872,5 @@ xs/Wavelet_wrap.2.0.c
 xs/Wavelet_wrap.2.1.c
 xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
+xt/01-pod.t
 xt/01-portability-files.t
-META.json

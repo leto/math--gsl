@@ -87,12 +87,14 @@ $ldflags = '-shared ' . $ldflags unless GSLBuilder::is_darwin();
 
 my $ver2func = do(catfile(qw/inc ver2func/));
 
+my $swig_version;
+
 unless (GSLBuilder::is_release()) {
-    my $swig_ver = swig_version();
-    if ((split(/\./, $swig_ver))[0] < 2) {
+    $swig_version = swig_version();
+    if ((split(/\./, $swig_version))[0] < 2) {
         print "
 ***
-*** You need to have SWIG 2.X or greater installed. (You have $swig_ver).
+*** You need to have SWIG 2.0 or greater installed. (You have $swig_version).
 *** Get SWIG at http://www.swig.org/\n";
         exit 0;
     }
@@ -143,7 +145,8 @@ my $builder = GSLBuilder->new(
         'Module::Build'   => '0.38',
     },
     swig_source           => $swig_source,
-    ver2func => $ver2func,
+    swig_version          => $swig_version,
+    ver2func              => $ver2func,
     current_version       => $gsl_conf->{gsl_version},
     gsl_prefix            => $gsl_conf->{gsl_prefix},
 );
@@ -160,9 +163,8 @@ print "Have a great day!\n";
 
 sub swig_version {
     my $swig = GSLBuilder::swig_binary_name();
-
-    my $cmd = "$swig -version";
-    my $out = `$cmd`;
+    my $cmd  = "$swig -version";
+    my $out  = `$cmd`;
 
     if ($?) {
         die "Can't run [$cmd] : $out";

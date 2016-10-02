@@ -53,15 +53,18 @@ sub process_swig_files {
     my $gsl_ldflags     = $self->{properties}->{extra_linker_flags};
     my $gsl_ccflags     = $self->{properties}->{extra_compiler_flags};
     my $swig_flags      = $self->{properties}->{swig_flags};
+    my $swig_version    = $self->{properties}->{swig_version};
 
     if ($binding_ver ne $current_version) {
         print "VERSION MISMATCH: Let's hope for the best.\n";
     }
     print "Processing $binding_ver XS files, GSL $current_version (via gsl-config) at $gsl_prefix\n";
-    print "Compiler   = " . qx{ $Config{cc} --version } . "\n";
-    print "ccflags    = @$gsl_ccflags\n";
-    print "ldflags    = @$gsl_ldflags\n";
-    print "swig_flags = $swig_flags\n" unless is_release();
+    print "Compiler    = " . qx{ $Config{cc} --version } . "\n";
+    print "ccflags     = @$gsl_ccflags\n";
+    print "ldflags     = @$gsl_ldflags\n";
+    print "swig_flags  = $swig_flags\n" unless is_release();
+    print "swig_version= $swig_version\n" unless is_release();
+
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
     }
@@ -135,7 +138,7 @@ sub process_versioned_swig_files {
                 $self->process_swig($file->[0], $file->[1], $ver);
             }
             if ($file->[0] =~ m/Multifit/) {
-                if ($major >=2) {
+                if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
             } else {
@@ -201,10 +204,10 @@ sub process_swig {
 sub swig_binary_name {
     # recent versions of Ubuntu call it swig2.0 . Le sigh.
     my $cmd = "swig -version";
-    my $out = `$cmd`;
+    my $out  = eval { no warnings; `$cmd` };
     if ($?) {
         $cmd = "swig2.0 -version";
-        $out = `$cmd`;
+        $out = eval { no warnings; `$cmd` };
 
         if ($?) {
             die "Can't find the swig binary!";

@@ -59,12 +59,15 @@ sub process_swig_files {
         print "VERSION MISMATCH: Let's hope for the best.\n";
     }
     print "Processing $binding_ver XS files, GSL $current_version (via gsl-config) at $gsl_prefix\n";
-    print "Compiler    = " . qx{ $Config{cc} --version } . "\n";
-    print "ccflags     = @$gsl_ccflags\n";
-    print "ldflags     = @$gsl_ldflags\n";
-    print "swig_flags  = $swig_flags\n" unless is_release();
-    print "swig_version= $swig_version\n" unless is_release();
-    print "PERL5LIB    = $ENV{PERL5LIB}\n";
+    print "Compiler        = " . qx{ $Config{cc} --version } . "\n";
+    print "ccflags         = @$gsl_ccflags\n";
+    print "ldflags         = @$gsl_ldflags\n";
+    print "swig_flags      = $swig_flags\n" unless is_release();
+    print "swig_version    = $swig_version\n" unless is_release();
+    my $PERL5LIB           = $ENV{PERL5LIB} || "";
+    my $LD_LIBRARY_PATH    = $ENV{LD_LIBRARY_PATH} || "";
+    print "PERL5LIB        = $PERL5LIB\n";
+    print "LD_LIBRARY_PATH =$LD_LIBRARY_PATH\n";
 
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);
@@ -302,12 +305,13 @@ sub link_c {
     }
 
     my @lddlflags = $self->split_like_shell($cf->{lddlflags});
-    my @shrp = $self->split_like_shell($cf->{shrpenv});
-    my @ld = $self->split_like_shell($cf->{ld} || $Config{cc});
+    my @shrp      = $self->split_like_shell($cf->{shrpenv});
+    my @ld        = $self->split_like_shell($cf->{ld} || $Config{cc});
 
     # Strip binaries if we are compiling on windows
     push @ld, "-s" if (is_windows() && $Config{cc} =~ /\bgcc\b/i);
 
+    print join(" ", @shrp, @ld, @lddlflags, '-o', $lib_file, $obj_file, @$objects, @linker_flags) . "\n";
     $self->do_system(@shrp, @ld, @lddlflags, '-o', $lib_file,
 		     $obj_file, @$objects, @linker_flags)
       or die "error building $lib_file file from '$obj_file'";

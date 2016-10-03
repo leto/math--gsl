@@ -224,8 +224,6 @@ sub compile_swig {
     my ($self, $file, $c_file, $ver) = @_;
     my ($cf, $p) = ($self->{config}, $self->{properties}); # For convenience
 
-    print "Creating $c_file\n";
-
     # File name, minus the suffix
     (my $file_base = $file) =~ s/\.[^.]+$//;
 
@@ -245,10 +243,9 @@ sub compile_swig {
     my $to      = catfile(qw/lib Math GSL/, $pm_file);
     chmod 0644, $from, $to;
 
-    $self->do_system(@swig, '-o', $c_file ,
-                     '-outdir', $gsldir,
-		             '-perl5', @swig_flags, $file)
-	    or die "error : $! while building ( @swig_flags ) $c_file in $gsldir from '$file'";
+    my @args = ( @swig, '-o', $c_file , '-outdir', $gsldir, '-perl5', @swig_flags, $file);
+    print join(" ", @args ) . "\n";
+    $self->do_system( @args ) or die "error : $! while building ( @swig_flags ) $c_file in $gsldir from '$file'";
     move($from, "$from.$ver");
 
     {
@@ -260,6 +257,7 @@ sub compile_swig {
       my $contents = <$in>;
       close $in;
 
+      # TODO: this doesn't support x.y.z
       $contents =~ s{("GSL_VERSION", TRUE \| 0x2 \| GV_ADDMULTI\);[\s\n]*sv_setsv\(sv, SWIG_FromCharPtr\(")\d\.\d+}
                     {$1$ver};
 
@@ -269,7 +267,7 @@ sub compile_swig {
     }
 
     if ($p->{current_version} eq $ver) {
-        print "Copying from: $from.$ver, to: $to; it makes the CPAN indexer happy.\n";
+        # print "Copying from: $from.$ver, to: $to; it makes the CPAN indexer happy.\n";
         copy("$from.$ver", $to);
     }
 

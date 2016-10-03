@@ -122,7 +122,8 @@ my $builder = GSLBuilder->new(
     include_dirs        => [],
     extra_linker_flags  => $ldflags,
     extra_compiler_flags=> $ccflags . " " . $swig_flags,
-    swig_flags          => $swig_flags,
+    # suppress swig warnings about GSL source code
+    swig_flags          => $swig_flags . " -w451,454",
     license             => 'gpl',
     meta_merge     => {
         resources => {

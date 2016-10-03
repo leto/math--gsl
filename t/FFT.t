@@ -36,7 +36,7 @@ sub FFT_COMPLEX_RADIX2_FORWARD : Tests(2)
 {
     my $data = [ (1) x 10, (0) x 236, (1) x 10 ];
     my ($status, $fft) = gsl_fft_complex_radix2_forward ($data, 1, 128);
-    ok_status($status);
+    ok($status == $GSL_SUCCESS, "gsl_fft_complex_radix2_forward returned status=" . gsl_strerror($status) );
     local $TODO = 'fft of complex_packed_array does not work';
     # we should propably use the gsl_fft_real_unpack function here to create a suitable complex_packed_array
     ok( defined $fft );

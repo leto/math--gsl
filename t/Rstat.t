@@ -38,7 +38,7 @@ sub GSL_RSTAT_QUANTILE : Tests {
     my @data = (17.2, 18.1, 16.5, 18.3, 12.6);
     map {
         my $status = gsl_rstat_quantile_add( $_, $rstat);
-        ok($status == $GSL_SUCCESS, "gsl_rstat_quantile_add");
+        ok_status($status);
     } @data;
     my $q = gsl_rstat_quantile_get($rstat);
     ok_similar($q, 16.5,"gsl_rstat_quantile_get=$q");

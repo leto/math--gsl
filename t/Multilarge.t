@@ -50,7 +50,7 @@ sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     my $LQR       = gsl_matrix_alloc($m, $p);
     my $Ltau      = gsl_vector_alloc($p);
     my $status    = Math::GSL::Multilarge::gsl_multilarge_linear_L_decomp($LQR, $Ltau);
-    ok($status == $GSL_SUCCESS, "gsl_multilarge_linear_L_decomp returned status=" . gsl_strerror($status) );
+    ok_status($status);
 
     my $rowidx = 0;
     my $lambda = 1e-1;
@@ -70,7 +70,7 @@ sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     {
         my ($status,$rnorm,$snorm) = Math::GSL::Multilarge::gsl_multilarge_linear_solve($lambda, $cs, $multi);
         local $TODO = "still working on this";
-        ok($status == $GSL_SUCCESS, "gsl_multilarge_linear_solve returned status=" . gsl_strerror($status) );
+        ok_status($status);
     }
 }
 

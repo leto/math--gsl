@@ -33,13 +33,18 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
-    my $type  = Math::GSL::Multilarge::gsl_multilarge_linear_type->new;
-    isa_ok($type, 'Math::GSL::Multilarge::gsl_multilarge_linear_type');
-
-
-    # This coredumps
-    # my $multi = Math::GSL::Multilarge::gsl_multilarge_linear_alloc($type,16);
-    # isa_ok($multi, 'Math::GSL::Multilarge');
+    # TODO: why aren't things exported properly?
+    my $normal = $Math::GSL::Multilarge::gsl_multilarge_linear_normal;
+    my $multi  = Math::GSL::Multilarge::gsl_multilarge_linear_alloc($normal,16);
+    isa_ok($multi, 'Math::GSL::Multilarge');
+    my ($m,$n,$p) = (40,40,40);
+    my $Xs         = gsl_matrix_alloc($n, $p);
+    my $ys         = gsl_vector_alloc($n);
+    my $cs         = gsl_vector_alloc($p);
+    my $LQR        = gsl_matrix_alloc($m, $p);
+    my $Ltau       = gsl_vector_alloc($p);
+    my $status     = Math::GSL::Multilarge::gsl_multilarge_linear_L_decomp($LQR, $Ltau);
+    ok($status == $GSL_SUCCESS, "gsl_multilarge_linear_L_decomp returned status=" . gsl_strerror($status) );
 }
 
 Test::Class->runtests;

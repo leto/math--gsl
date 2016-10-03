@@ -5,13 +5,16 @@ dist: trusty
 #  - linux
 
 perl:
-# Only test two versions for now until things settle down
-#    - "5.24"
-#    - "5.22"
+    - "5.24"
+    - "5.22"
     - "5.20"
+    - "5.20-extras" # -Duseshrplib -Duseithreads
     - "5.18"
-#    - "5.16"
-#    - "5.14"
+    - "5.16"
+    - "5.14"
+    - "5.12"
+    - "5.10"
+    - "5.8"
 
 env:
     matrix:
@@ -62,4 +65,3 @@ script:
     - perl Build.PL
     - ./Build
     - ./Build test
-

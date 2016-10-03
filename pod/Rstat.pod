@@ -36,9 +36,20 @@ Math::GSL::Rstat - Running Statistical functions
 =head1 SYNOPSIS
 
     use Math::GSL::Rstat qw /:all/;
-    # TODO: docs
-
-
+    my @data = (17.2, 18.1, 16.5, 18.3, 12.6);
+    map { gsl_rstat_add( $_, $rstat) } @data;
+    my $rstat    = gsl_rstat_alloc();
+    my $mean     = gsl_rstat_mean($rstat);
+    my $variance = gsl_rstat_variance($rstat);
+    my $largest  = gsl_rstat_max($rstat);
+    my $smallest = gsl_rstat_min($rstat);
+    my $sd       = gsl_rstat_sd($rstat);
+    my $rms      = gsl_rstat_rms($rstat);
+    my $sd_mean  = gsl_rstat_sd_mean($rstat);
+    my $median   = gsl_rstat_median($rstat);
+    my $skew     = gsl_rstat_skew($rstat);
+    my $kurtosis = gsl_rstat_kurtosis($rstat);
+    my $n        = gsl_rstat_n($rstat);
 
 =head1 DESCRIPTION
 
@@ -59,4 +70,3 @@ under the same terms as Perl itself.
 =cut
 
 %}
-

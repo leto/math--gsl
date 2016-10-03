@@ -1,8 +1,8 @@
 language: perl
 dist: trusty
-#os:
-#  - osx
-#  - linux
+os:
+  - osx
+  - linux
 
 perl:
     - "5.24"

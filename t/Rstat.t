@@ -42,7 +42,7 @@ sub GSL_RSTAT_QUANTILE : Tests {
         ok($status == $GSL_SUCCESS, "gsl_rstat_quantile_add");
     } @data;
     my $q = gsl_rstat_quantile_get($rstat);
-    ok(1,"gsl_rstat_quantile_get=$q");
+    ok_similar($q, 16.5,"gsl_rstat_quantile_get=$q");
 }
 
 sub GSL_RSTAT : Tests {
@@ -83,6 +83,8 @@ sub GSL_RSTAT : Tests {
 
     my $status = gsl_rstat_reset($rstat);
     ok($status == $GSL_SUCCESS, "gsl_rstat_reset");
+    $n = gsl_rstat_n($rstat);
+    ok($n == 0, "n=0");
 
     gsl_rstat_free($rstat);
     ok(1,"gsl_rstat_free seemed to work");

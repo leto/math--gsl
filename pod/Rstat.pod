@@ -53,6 +53,8 @@ Math::GSL::Rstat - Running Statistical functions
 
 =head1 DESCRIPTION
 
+NOTE: This module requires GSL 2.0 or higher.
+
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 

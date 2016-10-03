@@ -33,6 +33,8 @@ Math::GSL::Multilarge - Large Linear Systems
 
 =head1 DESCRIPTION
 
+NOTE: This module requires GSL 2.1 or higher.
+
 This subsystem is for solving large dense least squares systems.
 
 For more informations on the functions, we refer you to the GSL offcial

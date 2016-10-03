@@ -39,9 +39,11 @@ Math::GSL::Multifit - Least-squares functions for a general linear model with mu
 
 =head1 SYNOPSIS
 
-use Math::GSL::Multifit qw /:all/;
+    use Math::GSL::Multifit qw /:all/;
 
 =head1 DESCRIPTION
+
+NOTE: This module requires GSL 2.1 or higher.
 
 The functions in this module perform least-squares fits to a general linear model, y = X c where y is a vector of n observations, X is an n by p matrix of predictor variables, and the elements of the vector c are the p unknown best-fit parameters which are to be estimated.
 

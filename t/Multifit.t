@@ -16,10 +16,10 @@ BEGIN { gsl_set_error_handler_off() }
 BEGIN {
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
-    if ($major >= 2) {
+    if ($major >= 2 and $minor >= 1) {
         eval "use Math::GSL::Multifit qw/:all/";
     } else {
-        plan skip_all => "Multifit swig bindings don't like GSL < 2.0";
+        plan skip_all => "Multifit swig bindings don't like GSL < 2.1";
         exit(0);
     }
 }

@@ -74,9 +74,10 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
 $ccflags = $Config{cccdlflags} . ' ' . $ldflags unless GSLBuilder::is_darwin();
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
+# NOTE: keep in sync with inc/GSLBuilder.pm
 push @Subsystems, "Multilarge" if $major >= 2 and $minor >= 1;
-push @Subsystems, "Multifit" if $major >= 2;
-push @Subsystems, "Rstat" if $major >= 2;
+push @Subsystems, "Multifit"   if $major >= 2 and $minor >= 1;
+push @Subsystems, "Rstat"      if $major >= 2;
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i

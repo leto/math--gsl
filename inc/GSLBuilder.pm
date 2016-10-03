@@ -134,11 +134,11 @@ sub process_versioned_swig_files {
             my ($major,$minor,$tiny) = split /\./, $ver;
             # don't create lots of XS for subsystems that didn't exist
             # in old GSL versions
-            if ($file->[0] =~ m/Multilarge/) {
+            if ($file->[0] =~ m/Multilarge/ or $file->[0] =~ m/Multifit/) {
                 if ($major >=2 && $minor >= 1) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
-            } elsif ($file->[0] =~ m/Multifit/ or $file->[0] =~ m/Rstat/) {
+            } elsif ($file->[0] =~ m/Rstat/) {
                 if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }

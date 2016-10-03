@@ -18,7 +18,6 @@ env:
         - PATH=/tmp/gsl-2.2.1:$PATH
         - PATH=/tmp/gsl-1.15:$PATH
 
-
 addons:
   apt:
     packages:
@@ -27,6 +26,7 @@ addons:
 
 before_install:
     - cpanm -n PkgConfig
+    - export ORIG_DIR=`pwd`
     - cd /tmp
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
     - tar zxpf gsl-1.15.tar.gz
@@ -48,6 +48,7 @@ before_install:
     - perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest GSL
     - ls -la /tmp/math--gsl/Math-GSL*.tar.gz
     # now we have /tmp/math--gsl/Math-GSL*.tar.gz to test with
+    - cd $ORIG_DIR
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'

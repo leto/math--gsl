@@ -135,10 +135,7 @@ sub process_versioned_swig_files {
                 if ($major >=2 && $minor >= 1) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
-            } else {
-                $self->process_swig($file->[0], $file->[1], $ver);
-            }
-            if ($file->[0] =~ m/Multifit/ or $file->[0] =~ m/Rstat/) {
+            } elsif ($file->[0] =~ m/Multifit/ or $file->[0] =~ m/Rstat/) {
                 if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }

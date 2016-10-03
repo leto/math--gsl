@@ -1336,14 +1336,10 @@ sub TEST_ZBESSEL_ARRAYS : Tests {
 
     lives_ok(sub { my $il = gsl_sf_bessel_il_scaled_array(1,1) }, 'gsl_sf_bessel_il_scaled_array(1,1) lives ');
 
-    return;
-    # kl_scaled_array does not seem to be found by SWIG, although it is for gsl2.0
+    local $TODO = "gsl_sf_bessel_kl_scaled_array is missing";
     lives_ok(sub {
             my $kl = gsl_sf_bessel_kl_scaled_array(1,1)
         }, 'gsl_sf_bessel_kl_scaled_array(1,1) lives ');
-
-    my $kl = gsl_sf_bessel_kl_scaled_array(1,1);
-    die Dumper [ $kl ];
 }
 
 Test::Class->runtests;

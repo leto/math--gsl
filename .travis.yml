@@ -5,12 +5,13 @@ dist: trusty
 #  - linux
 
 perl:
-    - "5.24"
-    - "5.22"
+# Only test two versions for now until things settle down
+#    - "5.24"
+#    - "5.22"
     - "5.20"
     - "5.18"
-    - "5.16"
-    - "5.14"
+#    - "5.16"
+#    - "5.14"
 
 env:
     matrix:
@@ -45,11 +46,12 @@ before_install:
     - cd math--gsl
     - export PATH=/tmp/gsl2.2.1/bin:$PATH
     - perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest GSL
+    - ls -la /tmp/math--gsl/Math-GSL*.tar.gz
     # now we have /tmp/math--gsl/Math-GSL*.tar.gz to test with
 
 # Add verbosity for debugging
 install: 'cpanm  -vv --installdeps --notest .'
 
 script:
-    - cd /tmp && tar xvpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
+    - cd /tmp && tar zxpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
 

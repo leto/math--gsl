@@ -10,6 +10,7 @@ use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Machine  qw/:all/;
 use Data::Dumper;
 use strict;
+use warnings;
 BEGIN { gsl_set_error_handler_off() }
 
 BEGIN {

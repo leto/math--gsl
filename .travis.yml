@@ -53,5 +53,5 @@ before_install:
 install: 'cpanm  -vv --installdeps --notest .'
 
 script:
-    - cd /tmp && tar zxpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
+    - cd /tmp/math--gsl && tar zxpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
 

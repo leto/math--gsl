@@ -2,6 +2,9 @@
 
 =head1 v0.40 - ??? 2016
     - gsl_fft_real_radix2_transform works again
+    - gsl_linalg_givens now works
+    - gsl_vector_const_subvector is now exported properly
+    - Documentation for Math::GSL::Rstat
 
 =head1 v0.39 - September 2016
     - Fix Debian Bug reported by Niko Tyni

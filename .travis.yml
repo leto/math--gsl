@@ -52,7 +52,8 @@ before_install:
 
 # Add verbosity for debugging
 install:
-    - cpanm  -vv --installdeps --notest .
+    # this should always point to the newest version of GSL we support
+    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm  -vv --installdeps --notest .
 
 script:
     - cd /tmp/math--gsl

@@ -48,6 +48,7 @@ before_install:
     - ls -la /tmp/gsl-2.2.1/lib
     - cd ..
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.0.tar.gz
+    - tar zxpf gsl-2.0.tar.gz
     - cd gsl-2.0
     - ./configure --prefix /tmp/gsl-2.0 > /dev/null
     - make -j2 > /dev/null

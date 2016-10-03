@@ -64,6 +64,7 @@ sub process_swig_files {
     print "ldflags     = @$gsl_ldflags\n";
     print "swig_flags  = $swig_flags\n" unless is_release();
     print "swig_version= $swig_version\n" unless is_release();
+    print "PERL5LIB    = $ENV{PERL5LIB}\n";
 
     foreach my $file (@$files_ref) {
         $self->process_xs_file($file->[0], $binding_ver);

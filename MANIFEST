@@ -249,15 +249,10 @@ pm/Math/GSL/Monte.pm.2.0
 pm/Math/GSL/Monte.pm.2.1
 pm/Math/GSL/Monte.pm.2.2
 pm/Math/GSL/Monte.pm.2.2.1
-pm/Math/GSL/Multifit.pm.1.15
-pm/Math/GSL/Multifit.pm.1.16
 pm/Math/GSL/Multifit.pm.2.0
 pm/Math/GSL/Multifit.pm.2.1
 pm/Math/GSL/Multifit.pm.2.2
 pm/Math/GSL/Multifit.pm.2.2.1
-pm/Math/GSL/Multilarge.pm.1.15
-pm/Math/GSL/Multilarge.pm.1.16
-pm/Math/GSL/Multilarge.pm.2.0
 pm/Math/GSL/Multilarge.pm.2.1
 pm/Math/GSL/Multilarge.pm.2.2
 pm/Math/GSL/Multilarge.pm.2.2.1
@@ -327,8 +322,6 @@ pm/Math/GSL/Roots.pm.2.0
 pm/Math/GSL/Roots.pm.2.1
 pm/Math/GSL/Roots.pm.2.2
 pm/Math/GSL/Roots.pm.2.2.1
-pm/Math/GSL/Rstat.pm.1.15
-pm/Math/GSL/Rstat.pm.1.16
 pm/Math/GSL/Rstat.pm.2.0
 pm/Math/GSL/Rstat.pm.2.1
 pm/Math/GSL/Rstat.pm.2.2
@@ -555,6 +548,7 @@ t/QRNG.t
 t/Randist.t
 t/RNG.t
 t/Roots.t
+t/Rstat.t
 t/SF.t
 t/Siman.t
 t/Sort.t
@@ -729,15 +723,10 @@ xs/Monte_wrap.2.0.c
 xs/Monte_wrap.2.1.c
 xs/Monte_wrap.2.2.1.c
 xs/Monte_wrap.2.2.c
-xs/Multifit_wrap.1.15.c
-xs/Multifit_wrap.1.16.c
 xs/Multifit_wrap.2.0.c
 xs/Multifit_wrap.2.1.c
 xs/Multifit_wrap.2.2.1.c
 xs/Multifit_wrap.2.2.c
-xs/Multilarge_wrap.1.15.c
-xs/Multilarge_wrap.1.16.c
-xs/Multilarge_wrap.2.0.c
 xs/Multilarge_wrap.2.1.c
 xs/Multilarge_wrap.2.2.1.c
 xs/Multilarge_wrap.2.2.c
@@ -807,8 +796,6 @@ xs/Roots_wrap.2.0.c
 xs/Roots_wrap.2.1.c
 xs/Roots_wrap.2.2.1.c
 xs/Roots_wrap.2.2.c
-xs/Rstat_wrap.1.15.c
-xs/Rstat_wrap.1.16.c
 xs/Rstat_wrap.2.0.c
 xs/Rstat_wrap.2.1.c
 xs/Rstat_wrap.2.2.1.c

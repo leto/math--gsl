@@ -31,7 +31,7 @@ before_install:
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
     - tar zxpf gsl-1.15.tar.gz
     - cd gsl-1.15
-    - ./configure --prefix /tmp/gsl1.15 > /dev/null
+    - ./configure --prefix /tmp/gsl-1.15 > /dev/null
     - make -j2 > /dev/null
     - make install > /dev/null
     - cd ..

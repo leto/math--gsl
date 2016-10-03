@@ -20,7 +20,7 @@ use overload
                  gsl_vector_alloc gsl_vector_calloc gsl_vector_alloc_from_block gsl_vector_alloc_from_vector
                  gsl_vector_free gsl_vector_view_array gsl_vector_const_view_array gsl_vector_view_array_with_stride
                  gsl_vector_const_view_array_with_stride gsl_vector_subvector gsl_vector_subvector_wi gsl_vector_subvector_with_stride
-                 gsl_vector_const_subvec gsl_vector_const_subvec gsl_vector_get gsl_vector_set
+                 gsl_vector_const_subvector gsl_vector_const_subvec gsl_vector_get gsl_vector_set
                  gsl_vector_ptr gsl_vector_const_ptr gsl_vector_set_zero gsl_vector_set_all
                  gsl_vector_set_basis gsl_vector_fread gsl_vector_fwrite gsl_vector_fscanf
                  gsl_vector_fprintf gsl_vector_memcpy gsl_vector_reverse gsl_vector_swap

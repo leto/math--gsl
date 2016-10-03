@@ -2,12 +2,13 @@ package Math::GSL::Multilarge::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL           qw/:all/;
-use Math::GSL::BLAS     qw/:all/;
+use Math::GSL::Min      qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Math::GSL::Matrix   qw/:all/;
 use Math::GSL::Vector   qw/:all/;
 use Math::GSL::Machine  qw/:all/;
+use List::Util          qw/min/;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -38,13 +39,35 @@ sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     my $multi  = Math::GSL::Multilarge::gsl_multilarge_linear_alloc($normal,16);
     isa_ok($multi, 'Math::GSL::Multilarge');
     my ($m,$n,$p) = (40,40,40);
-    my $Xs         = gsl_matrix_alloc($n, $p);
-    my $ys         = gsl_vector_alloc($n);
-    my $cs         = gsl_vector_alloc($p);
-    my $LQR        = gsl_matrix_alloc($m, $p);
-    my $Ltau       = gsl_vector_alloc($p);
-    my $status     = Math::GSL::Multilarge::gsl_multilarge_linear_L_decomp($LQR, $Ltau);
+    my $nblock    = 5;
+    my $nrows     = $n / $nblock;
+    my $X         = gsl_matrix_alloc($n, $p);
+    my $Xs        = gsl_matrix_alloc($n, $p);
+    my $y         = gsl_vector_alloc($n);
+    my $ys        = gsl_vector_alloc($n);
+    my $cs        = gsl_vector_alloc($p);
+    my $LQR       = gsl_matrix_alloc($m, $p);
+    my $Ltau      = gsl_vector_alloc($p);
+    my $status    = Math::GSL::Multilarge::gsl_multilarge_linear_L_decomp($LQR, $Ltau);
     ok($status == $GSL_SUCCESS, "gsl_multilarge_linear_L_decomp returned status=" . gsl_strerror($status) );
+
+    my $rowidx = 0;
+    my $lambda = 1e-1;
+    while ( $rowidx < $n) {
+        my $nleft = $n - $rowidx;
+        my $nr    = min($nrows, $nleft);
+        my $Xv    = gsl_matrix_const_submatrix($X, $rowidx, 0, $nr, $p);
+        my $yv    = gsl_vector_const_subvector($y, $rowidx, $nr);
+        my $Xsv   = gsl_matrix_submatrix($Xs, 0, 0, $nr, $p);
+        my $ysv   = gsl_vector_subvector($ys, 0, $nr);
+        $rowidx += $nr;
+    }
+    my $rnorm = 0.0;
+    my $snorm = 0.0;
+    # TODO: GSL_MULTILARGE_LINEAR_ALLOC died (TypeError in method
+    # 'gsl_multilarge_linear_solve', argument 3 of type 'double *' at
+    # t/Multilarge.t line 67.)
+    # Math::GSL::Multilarge::gsl_multilarge_linear_solve($lambda, $cs, $rnorm, $snorm, $multi);
 }
 
 Test::Class->runtests;

@@ -7,18 +7,19 @@ dist: trusty
 perl:
     - "5.24"
     - "5.22"
-    - "5.20"
+#   - "5.20"
     - "5.20-extras" # -Duseshrplib -Duseithreads
-    - "5.18"
-    - "5.16"
-    - "5.14"
-    - "5.12"
+#    - "5.18"
+#    - "5.16"
+#    - "5.14"
+#    - "5.12"
     - "5.10"
     - "5.8"
 
 env:
     matrix:
         - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
         - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
 
 addons:
@@ -36,15 +37,22 @@ before_install:
     - cd gsl-1.15
     - ./configure --prefix /tmp/gsl-1.15 > /dev/null
     - make -j2 > /dev/null
-    - make install > /dev/null
+    - make -j2 install > /dev/null
     - cd ..
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
     - tar zxpf gsl-2.2.1.tar.gz
     - cd gsl-2.2.1
     - ./configure --prefix /tmp/gsl-2.2.1 > /dev/null
     - make -j2 > /dev/null
-    - make install > /dev/null
+    - make -j2 install > /dev/null
     - ls -la /tmp/gsl-2.2.1/lib
+    - cd ..
+    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.0.tar.gz
+    - cd gsl-2.0
+    - ./configure --prefix /tmp/gsl-2.0 > /dev/null
+    - make -j2 > /dev/null
+    - make -j2 install > /dev/null
+    - ls -la /tmp/gsl-2.0/lib
     - cd ..
     - git clone --depth=5 https://github.com/leto/math--gsl.git
     - cd math--gsl
@@ -64,4 +72,4 @@ script:
     - cd Math-GSL*
     - perl Build.PL
     - ./Build
-    - ./Build test
+    - ./Build test --tap_harness_args jobs=2

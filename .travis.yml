@@ -15,8 +15,8 @@ perl:
 
 env:
     matrix:
-        - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
 
 addons:
   apt:

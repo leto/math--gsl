@@ -70,6 +70,7 @@ lib/Math/GSL/QRNG.pm
 lib/Math/GSL/Randist.pm
 lib/Math/GSL/RNG.pm
 lib/Math/GSL/Roots.pm
+lib/Math/GSL/Rstat.pm
 lib/Math/GSL/SF.pm
 lib/Math/GSL/Siman.pm
 lib/Math/GSL/Sort.pm
@@ -326,6 +327,12 @@ pm/Math/GSL/Roots.pm.2.0
 pm/Math/GSL/Roots.pm.2.1
 pm/Math/GSL/Roots.pm.2.2
 pm/Math/GSL/Roots.pm.2.2.1
+pm/Math/GSL/Rstat.pm.1.15
+pm/Math/GSL/Rstat.pm.1.16
+pm/Math/GSL/Rstat.pm.2.0
+pm/Math/GSL/Rstat.pm.2.1
+pm/Math/GSL/Rstat.pm.2.2
+pm/Math/GSL/Rstat.pm.2.2.1
 pm/Math/GSL/SF.pm.1.15
 pm/Math/GSL/SF.pm.1.16
 pm/Math/GSL/SF.pm.2.0
@@ -438,6 +445,7 @@ pod/QRNG.pod
 pod/Randist.pod
 pod/RNG.pod
 pod/Roots.pod
+pod/Rstat.pod
 pod/SF.pod
 pod/Siman.pod
 pod/Sort.pod
@@ -493,6 +501,7 @@ swig/QRNG.i
 swig/Randist.i
 swig/RNG.i
 swig/Roots.i
+swig/Rstat.i
 swig/SF.i
 swig/Siman.i
 swig/Sort.i
@@ -506,7 +515,6 @@ swig/Version.i
 swig/Wavelet.i
 swig/Wavelet2D.i
 t/00-load.t
-t/01-pod.t
 t/BLAS.t
 t/BSpline.t
 t/CBLAS.t
@@ -552,7 +560,6 @@ t/Siman.t
 t/Sort.t
 t/Spline.t
 t/Statistics.t
-t/style-trailing-space.t
 t/Sum.t
 t/Sys.t
 t/Vector.t
@@ -800,6 +807,12 @@ xs/Roots_wrap.2.0.c
 xs/Roots_wrap.2.1.c
 xs/Roots_wrap.2.2.1.c
 xs/Roots_wrap.2.2.c
+xs/Rstat_wrap.1.15.c
+xs/Rstat_wrap.1.16.c
+xs/Rstat_wrap.2.0.c
+xs/Rstat_wrap.2.1.c
+xs/Rstat_wrap.2.2.1.c
+xs/Rstat_wrap.2.2.c
 xs/SF_wrap.1.15.c
 xs/SF_wrap.1.16.c
 xs/SF_wrap.2.0.c
@@ -873,4 +886,4 @@ xs/Wavelet_wrap.2.1.c
 xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xt/01-pod.t
-xt/01-portability-files.t
+xt/style-trailing-space.t

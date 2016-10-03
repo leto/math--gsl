@@ -2,7 +2,6 @@ package Math::GSL::Rstat::Test;
 use base q{Test::Class};
 use Test::More;
 use Math::GSL           qw/:all/;
-use Math::GSL::Rstat    qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Errno    qw/:all/;
 use Data::Dumper;

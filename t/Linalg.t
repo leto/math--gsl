@@ -30,12 +30,9 @@ sub teardown : Test(teardown) {
 }
 
 sub GSL_GIVENS : Tests {
-    my ($c,$s); # answer will be stored in these
     my ($a,$b) = (1.0,0.0);
-
-    # TODO: this causes a core dump
-    # gsl_linalg_givens($a, $b, $c, $s);
-    # ok_similar( [$c, $s], [0,1], "givens rotation with 1,0")
+    my ($c, $s) = gsl_linalg_givens($a, $b);
+    ok_similar( [$c, $s], [1,0], "givens rotation with 1,0")
 }
 
 sub GSL_LINALG_LU_DECOMP : Tests {

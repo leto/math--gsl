@@ -3,6 +3,7 @@
 %include "renames.i"
 
 %apply int *OUTPUT { int *signum };
+%apply double *OUTPUT { double *c, double *s };
 
 %{
     #include "gsl/gsl_inline.h"

@@ -15,8 +15,8 @@ perl:
 
 env:
     matrix:
-        - DEBUG_LD=1 PATH=/tmp/gsl-2.2.1:$PATH
-        - DEBUG_LD=1 PATH=/tmp/gsl-1.15:$PATH
+        - DEBUG_LD=1 LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1:$PATH
+        - DEBUG_LD=1 LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15:$PATH
 
 addons:
   apt:
@@ -51,8 +51,14 @@ before_install:
     - cd $ORIG_DIR
 
 # Add verbosity for debugging
-install: 'cpanm  -vv --installdeps --notest .'
+install:
+    - cpanm  -vv --installdeps --notest .
 
 script:
-    - cd /tmp/math--gsl && tar zxpf Math-GSL* && cd Math-GSL* && perl Build.PL && ./Build && ./Build test
+    - cd /tmp/math--gsl
+    - tar zxpf Math-GSL*
+    - cd Math-GSL*
+    - perl Build.PL
+    - ./Build
+    - ./Build test
 

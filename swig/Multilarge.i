@@ -4,7 +4,7 @@
 %include "gsl_typemaps.i"
 %include "renames.i"
 
-%apply double *OUTPUT { double * y, double * y_err, double * chisq,  size_t * rank};
+%apply double *OUTPUT { double *rnorm, double *snorm };
 
 %ignore gsl_multifit_fdfsolver_dif_fdf;
 

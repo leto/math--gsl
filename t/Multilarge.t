@@ -33,6 +33,7 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
+# this is a rough translation of multilarge/test.c in the gsl source code
 sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     # TODO: why aren't things exported properly?
     my $normal = $Math::GSL::Multilarge::gsl_multilarge_linear_normal;
@@ -54,20 +55,23 @@ sub GSL_MULTILARGE_LINEAR_ALLOC : Tests {
     my $rowidx = 0;
     my $lambda = 1e-1;
     while ( $rowidx < $n) {
-        my $nleft = $n - $rowidx;
-        my $nr    = min($nrows, $nleft);
-        my $Xv    = gsl_matrix_const_submatrix($X, $rowidx, 0, $nr, $p);
-        my $yv    = gsl_vector_const_subvector($y, $rowidx, $nr);
-        my $Xsv   = gsl_matrix_submatrix($Xs, 0, 0, $nr, $p);
-        my $ysv   = gsl_vector_subvector($ys, 0, $nr);
+        my $nleft  = $n - $rowidx;
+        my $nr     = min($nrows, $nleft);
+        my $Xv     = gsl_matrix_const_submatrix($X, $rowidx, 0, $nr, $p);
+        my $yv     = gsl_vector_const_subvector($y, $rowidx, $nr);
+        my $Xsv    = gsl_matrix_submatrix($Xs, 0, 0, $nr, $p);
+        my $ysv    = gsl_vector_subvector($ys, 0, $nr);
+        # TODO: GSL_MULTILARGE_LINEAR_ALLOC died (TypeError in method
+        # 'gsl_multilarge_linear_accumulate', argument 1 of type 'gsl_matrix
+        # *' at t/Multilarge.t line 64.)
+        # my $status = Math::GSL::Multilarge::gsl_multilarge_linear_accumulate($Xsv, $ysv, $multi);
         $rowidx += $nr;
     }
-    my $rnorm = 0.0;
-    my $snorm = 0.0;
-    # TODO: GSL_MULTILARGE_LINEAR_ALLOC died (TypeError in method
-    # 'gsl_multilarge_linear_solve', argument 3 of type 'double *' at
-    # t/Multilarge.t line 67.)
-    # Math::GSL::Multilarge::gsl_multilarge_linear_solve($lambda, $cs, $rnorm, $snorm, $multi);
+    {
+        my ($status,$rnorm,$snorm) = Math::GSL::Multilarge::gsl_multilarge_linear_solve($lambda, $cs, $multi);
+        local $TODO = "still working on this";
+        ok($status == $GSL_SUCCESS, "gsl_multilarge_linear_solve returned status=" . gsl_strerror($status) );
+    }
 }
 
 Test::Class->runtests;

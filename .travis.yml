@@ -38,14 +38,14 @@ before_install:
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
     - tar zxpf gsl-2.2.1.tar.gz
     - cd gsl-2.2.1
-    - ./configure --prefix /tmp/gsl2.2.1 > /dev/null
+    - ./configure --prefix /tmp/gsl-2.2.1 > /dev/null
     - make -j2 > /dev/null
     - make install > /dev/null
-    - ls -la /tmp/gsl.2.2.1/lib
+    - ls -la /tmp/gsl-2.2.1/lib
     - cd ..
     - git clone --depth=5 https://github.com/leto/math--gsl.git
     - cd math--gsl
-    - export PATH=/tmp/gsl2.2.1/bin:$PATH
+    - export PATH=/tmp/gsl-2.2.1/bin:$PATH
     - perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest GSL
     - ls -la /tmp/math--gsl/Math-GSL*.tar.gz
     # now we have /tmp/math--gsl/Math-GSL*.tar.gz to test with

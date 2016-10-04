@@ -28,11 +28,11 @@ perl:
 
 env:
     matrix:
-        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
-        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
-        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
-        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
-        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
 
 addons:
   apt:

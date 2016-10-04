@@ -54,9 +54,6 @@ $ccflags .= try_cflags("-Wno-unused-value");
 $ccflags .= try_cflags("-Wno-unused-function");
 $ccflags .= try_cflags("-Wno-unused-variable");
 $ccflags .= try_cflags("-Wno-gnu");
-# for use with ccache
-$ccflags .= try_cflags("-Qunused-arguments");
-$ccflags .= try_cflags("-Wno-error=unused-command-line-argument");
 $ccflags .= try_cflags("-g");
 
 $swig_flags = "$gsl_conf->{gsl_cflags} $swig_flags";

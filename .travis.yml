@@ -3,6 +3,8 @@ dist: trusty
 git:
     depth: 5
 
+cache: ccache
+
 #os:
 #  - osx
 #  - linux
@@ -34,6 +36,7 @@ addons:
       - swig2.0
 
 before_install:
+    - ls -la /
     - cpanm -n PkgConfig
     - export ORIG_DIR=`pwd`
     - cd /tmp

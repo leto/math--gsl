@@ -19,7 +19,7 @@ BEGIN {
     if ($major >= 2 && $minor >= 1) {
         eval "use Math::GSL::Multilarge qw/:all/";
     } else {
-        plan skip_all => "Multilarge swig bindings don't like GSL < 2.0";
+        plan skip_all => "Multilarge swig bindings don't like GSL < 2.1";
         exit(0);
     }
 }

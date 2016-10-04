@@ -11,8 +11,8 @@ use warnings;
 BEGIN {
     gsl_set_error_handler_off();
 
-    my $version= gsl_version();
-    my ($major, $minor) = split /\./, $version;
+    my $version = gsl_version();
+    my ($major, $minor, $tiny) = split /\./, $version;
     if ($major >= 2) {
         eval "use Math::GSL::Rstat qw/:all/";
     } else {
@@ -23,8 +23,8 @@ BEGIN {
 
 sub make_fixture : Test(setup) {
     my $self = shift;
-    $self->{rstat}    = gsl_rstat_alloc();
-    $self->{quantile} = gsl_rstat_quantile_alloc(0.5);
+    $self->{rstat}    = Math::GSL::Rstat::gsl_rstat_alloc();
+    $self->{quantile} = Math::GSL::Rstat::gsl_rstat_quantile_alloc(0.5);
 }
 
 sub teardown : Test(teardown) {
@@ -55,18 +55,22 @@ sub GSL_RSTAT : Tests {
         ok($status == $GSL_SUCCESS, "gsl_rstat_quantile_add");
     } @data;
 
+    my $version = gsl_version();
+    my ($major, $minor, $tiny) = split /\./, $version;
+
     my $mean     = gsl_rstat_mean($rstat);
     my $variance = gsl_rstat_variance($rstat);
     my $largest  = gsl_rstat_max($rstat);
     my $smallest = gsl_rstat_min($rstat);
     my $sd       = gsl_rstat_sd($rstat);
-    my $rms      = gsl_rstat_rms($rstat);
     my $sd_mean  = gsl_rstat_sd_mean($rstat);
     my $median   = gsl_rstat_median($rstat);
     my $skew     = gsl_rstat_skew($rstat);
     my $kurtosis = gsl_rstat_kurtosis($rstat);
     my $n        = gsl_rstat_n($rstat);
     my $eps      = 1e-3;
+    my $rms;
+    $rms = gsl_rstat_rms($rstat) if $major >= 2 and $minor >= 2;
 
     ok_similar( 16.54, $mean, "The sample mean is 16.54", $eps);
     ok_similar( 5.373, $variance, "The estimated variance is 5.373", $eps);

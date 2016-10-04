@@ -1,6 +1,6 @@
 package Math::GSL::Rstat::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::Most;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
 use Math::GSL::Errno    qw/:all/;
@@ -15,6 +15,7 @@ BEGIN {
     my ($major, $minor, $tiny) = split /\./, $version;
     if ($major >= 2) {
         eval "use Math::GSL::Rstat qw/:all/";
+        die $@ if @$;
     } else {
         plan skip_all => "Rstat doesn't exist in GSL < 2.0";
         exit(0);

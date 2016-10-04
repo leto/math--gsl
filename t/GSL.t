@@ -1,7 +1,11 @@
 #!perl -T
 package Math::GSL::GSL::Test;
+
+# TODO: modules must be findable without consulting PERL5LIB
+# when run with "prove", but not "./Build test"
+# use lib ...
 use base q{Test::Class};
-use Test::More tests => 21;
+use Test::Most;
 use Test::Exception;
 use Test::Taint;
 use Math::GSL::SF      qw/:all/;
@@ -16,6 +20,7 @@ use Math::GSL::Errno   qw/:all/;
 use Math::GSL qw/gsl_version/;
 use Data::Dumper;
 use strict;
+use warnings;
 
 BEGIN { gsl_set_error_handler_off(); }
 

@@ -1,9 +1,14 @@
+# currently we would need to compile our own SWIG to use containers
+# sudo: false
+#
 language: perl
 dist: trusty
 git:
     depth: 5
 
-cache: ccache
+cache:
+  - ccache
+  - apt
 
 #os:
 #  - osx
@@ -37,6 +42,8 @@ addons:
 
 before_install:
     - ls -la /
+    - ls -la /tmp
+    - ls -la /home/travis
     - cpanm -n PkgConfig
     - export ORIG_DIR=`pwd`
     - cd /tmp
@@ -87,6 +94,9 @@ before_install:
 
 # Add verbosity for debugging
 install:
+    - ls -la /
+    - ls -la /tmp
+    - ls -la /home/travis
     # this should always point to the newest version of GSL we support
     - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm -vv --installdeps --notest .
 
@@ -96,4 +106,5 @@ script:
     - cd Math-GSL*
     - perl Build.PL
     - ./Build
-    - ./Build test verbose=1
+    # - ./Build test verbose=1
+    - prove -rblvs -j 3 t/

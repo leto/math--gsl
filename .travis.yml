@@ -1,5 +1,8 @@
 language: perl
 dist: trusty
+git:
+    depth: 5
+
 #os:
 #  - osx
 #  - linux
@@ -22,6 +25,7 @@ env:
         - LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
         - LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
         - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
 
 addons:
   apt:
@@ -37,6 +41,13 @@ before_install:
     - tar zxpf gsl-1.15.tar.gz
     - cd gsl-1.15
     - ./configure --prefix /tmp/gsl-1.15 > /dev/null
+    - make -j2 > /dev/null
+    - make -j2 install > /dev/null
+    - cd ..
+    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.16.tar.gz
+    - tar zxpf gsl-1.16.tar.gz
+    - cd gsl-1.16
+    - ./configure --prefix /tmp/gsl-1.16 > /dev/null
     - make -j2 > /dev/null
     - make -j2 install > /dev/null
     - cd ..
@@ -74,7 +85,7 @@ before_install:
 # Add verbosity for debugging
 install:
     # this should always point to the newest version of GSL we support
-    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm  -vv --installdeps --notest .
+    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm -vv --installdeps --notest .
 
 script:
     - cd /tmp/math--gsl
@@ -82,4 +93,4 @@ script:
     - cd Math-GSL*
     - perl Build.PL
     - ./Build
-    - ./Build test --tap_harness_args jobs=2
+    - ./Build test --verbose 1 --tap_harness_args jobs=2

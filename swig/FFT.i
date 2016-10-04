@@ -3,6 +3,8 @@
 %include "gsl_typemaps.i"
 %include "renames.i"
 
+%apply double *OUTPUT { gsl_complex_packed_array complex_coefficient };
+
 // These must come before our %include's
 %typemap(argout) (double data[], const size_t stride, const size_t n) {
     int i=0;
@@ -17,12 +19,24 @@
     argvi++;
 }
 
+%typemap(argout) (const double halfcomplex_coefficient[], double * complex_coefficient, size_t stride, size_t n) {
+    int i=0;
+    AV* tempav = newAV();
+
+    while( i < $4 ) {
+        av_push(tempav, newSVnv((double) $2[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+}
+
 %typemap(argout) (gsl_complex_packed_array data[], const size_t stride, const size_t n) {
     int i=0;
     AV* tempav = newAV();
 
-    /* is this tested? */
-    while( i < 2*$3 ) {
+    while( i < $3 ) {
         av_push(tempav, newSVnv((double) $1[i]));
         i++;
     }

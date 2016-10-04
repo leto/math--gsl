@@ -67,6 +67,7 @@ return {
       /],
 
       "2.2" =>[qw/
+        ^gsl_rstat_quantile_reset$
         ^gsl_matrix_tricpy$
         ^gsl_matrix_complex_tricpy$
         ^gsl_matrix_char_tricpy$

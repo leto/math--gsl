@@ -93,4 +93,4 @@ script:
     - cd Math-GSL*
     - perl Build.PL
     - ./Build
-    - ./Build test --verbose 1 --tap_harness_args jobs=2
+    - ./Build test verbose=1

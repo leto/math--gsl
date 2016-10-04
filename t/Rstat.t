@@ -70,15 +70,17 @@ sub GSL_RSTAT : Tests {
     my $kurtosis = gsl_rstat_kurtosis($rstat);
     my $n        = gsl_rstat_n($rstat);
     my $eps      = 1e-3;
-    my $rms;
-    $rms = gsl_rstat_rms($rstat) if $major >= 2 and $minor >= 2;
+
+    if ($major >=2 and $minor >=2) {
+        my $rms = gsl_rstat_rms($rstat);
+        ok_similar( $rms, 16.669433,"The root mean squared is 16.66", $eps);
+    }
 
     ok_similar( 16.54, $mean, "The sample mean is 16.54", $eps);
     ok_similar( 5.373, $variance, "The estimated variance is 5.373", $eps);
     ok_similar( 18.30, $largest, "The largest value is 18.3", $eps);
     ok_similar( 12.60, $smallest, "The smallest value is 12.6", $eps);
     ok_similar( $sd, 2.317973, "The standard deviation is 2.31", $eps);
-    ok_similar( $rms, 16.669433,"The root mean squared is 16.66", $eps);
     ok_similar( $sd_mean, 1.036629,"The sd_mean is 1.03", $eps);
     ok_similar( $median, 16.500000, "The median is 16.5", $eps);
     ok_similar( $skew, -0.829058, "The skew is -0.83", $eps);

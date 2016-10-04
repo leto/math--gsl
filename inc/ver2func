@@ -67,6 +67,7 @@ return {
       /],
 
       "2.2" =>[qw/
+        ^gsl_rstat_rms$
         ^gsl_rstat_quantile_reset$
         ^gsl_matrix_tricpy$
         ^gsl_matrix_complex_tricpy$
@@ -114,7 +115,6 @@ return {
         ^gsl_linalg_tri_upper_unit_invert$
         ^gsl_multilarge_linear_lcurve$
         ^gsl_permute_matrix$
-        ^gsl_rstat_rms$
       /],
       "2.2.1" => [qw/
         ^gsl_linalg_cholesky_decomp1$

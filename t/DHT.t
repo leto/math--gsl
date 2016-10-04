@@ -1,12 +1,13 @@
 package Math::GSL::DHT::Test;
 use base q{Test::Class};
-use Test::More tests => 7;
+use Test::Most;
 use Math::GSL        qw/:all/;
 use Math::GSL::DHT   qw/:all/;
 use Math::GSL::Errno qw/:all/;
 use Math::GSL::Test  qw/:all/;
 use Data::Dumper;
 use strict;
+use warnings;
 
 BEGIN { gsl_set_error_handler_off(); }
 
@@ -19,6 +20,10 @@ sub teardown : Test(teardown) {
 sub GSL_DHT_ALLOC_FREE : Tests {
     my $dht = gsl_dht_alloc(5);
     isa_ok($dht, 'Math::GSL::DHT');
+
+    my $status = gsl_dht_init($dht, 1.0, 50);
+    ok_status($status);
+
     gsl_dht_free($dht);
     ok(!$@, 'gsl_dht_free');
 }
@@ -37,6 +42,8 @@ sub DHT_SAMPLE_APPLY : Tests {
             my $x = gsl_dht_x_sample($dht, $n);
             $f_in->[$n] = exp(-$x);
     }
+    my $k = gsl_dht_k_sample($dht, 127);
+    ok($k, "k=$k");
     ok( $#$f_in = 127, 'gsl_dht_x_sample' );
 
     ok_status( gsl_dht_apply($dht, $f_in, $f_out));

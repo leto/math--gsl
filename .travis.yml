@@ -28,22 +28,22 @@ perl:
 
 env:
     matrix:
-        - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
+        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
+        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
+        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
+        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
+        - CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
 
 addons:
   apt:
     packages:
       # - libgsl0-dev # this is 1.16 on trusty
+      - ccache
       - swig2.0
 
 before_install:
-    - ls -la /
-    - ls -la /tmp
-    - ls -la /home/travis
+    - ls -la /home/travis/build
+    - ls -la /home/travis/builds
     - cpanm -n PkgConfig
     - export ORIG_DIR=`pwd`
     - cd /tmp
@@ -94,9 +94,8 @@ before_install:
 
 # Add verbosity for debugging
 install:
-    - ls -la /
-    - ls -la /tmp
-    - ls -la /home/travis
+    - ls -la /home/travis/build
+    - ls -la /home/travis/builds
     # this should always point to the newest version of GSL we support
     - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm -vv --installdeps --notest .
 

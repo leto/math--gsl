@@ -18,6 +18,26 @@ sub teardown : Test(teardown) {
     unlink 'fft' if -f 'fft';
 }
 
+sub FFT_REAL_TRANSFORM : Tests
+{
+    my $input  = [ 0 .. 6 ];
+    my $N      = @$input;
+
+    my $workspace1          = gsl_fft_real_workspace_alloc($N);
+    my $wavetable1          = gsl_fft_real_wavetable_alloc($N);
+    my ($status, $output )  = gsl_fft_real_transform ($input, 1, $N, $wavetable1, $workspace1);
+    ok_status($status);
+
+    my $workspace2          = gsl_fft_real_workspace_alloc($N);
+    my $wavetable2          = gsl_fft_halfcomplex_wavetable_alloc($N);
+    my ($status2, $output2) = gsl_fft_halfcomplex_inverse($output, 1, $N, $wavetable2, $workspace2);
+    ok_status($status2);
+
+    # why no 1/N factor here?
+    # F = F^(-1) on real inputs
+    ok_similar( $input, $output2 );
+}
+
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
     my $N      = 8;

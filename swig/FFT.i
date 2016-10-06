@@ -3,8 +3,6 @@
 %include "gsl_typemaps.i"
 %include "renames.i"
 
-%apply double *OUTPUT { gsl_complex_packed_array complex_coefficient };
-
 // These must come before our %include's
 %typemap(argout) (double data[], const size_t stride, const size_t n) {
     int i=0;
@@ -32,7 +30,7 @@
     argvi++;
 }
 
-%typemap(argout) (gsl_complex_packed_array data[], const size_t stride, const size_t n) {
+%typemap(argout) (gsl_complex_packed_array data, const size_t stride, const size_t n) {
     int i=0;
     AV* tempav = newAV();
 

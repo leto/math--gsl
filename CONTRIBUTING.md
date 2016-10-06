@@ -19,7 +19,7 @@ It tests Math::GSL across multiple versions of GSL and Perl which will find vari
 * Keep whatever style formatting is in the file you are editing (spaces/tabs/indentation/etc)
 * Update ChangeLog that describes the change
 * Add yourself to CREDITS if you are not there
-* Run the tests again and make sure they pass `prove -lrv t/` 
+* Run the tests again and make sure they pass `prove -blrv t/`
 * Make sure everything you think is committed is actually committed.
 * Push your changes to your fork on Github
 * Submit a Pull Request (PR)

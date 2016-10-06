@@ -30,12 +30,19 @@ sub FFT_REAL_TRANSFORM : Tests
 
     my $workspace2          = gsl_fft_real_workspace_alloc($N);
     my $wavetable2          = gsl_fft_halfcomplex_wavetable_alloc($N);
-    my ($status2, $output2) = gsl_fft_halfcomplex_inverse($output, 1, $N, $wavetable2, $workspace2);
+    my ($status2, $output2) = gsl_fft_halfcomplex_backward($output, 1, $N, $wavetable2, $workspace2);
     ok_status($status2);
 
-    # why no 1/N factor here?
+    # F = F^(-1)/$N on real inputs
+    ok_similar( $input, [ map { $_ / $N } @$output2 ] );
+
+    my $wavetable3          = gsl_fft_halfcomplex_wavetable_alloc($N);
+    my $workspace3          = gsl_fft_real_workspace_alloc($N);
+    my ($status3, $output3) = gsl_fft_halfcomplex_inverse($output, 1, $N, $wavetable3, $workspace3);
+    ok_status($status3);
+
     # F = F^(-1) on real inputs
-    ok_similar( $input, $output2 );
+    ok_similar( $input, $output3 );
 }
 
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
@@ -50,6 +57,12 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests
 
     # F = F^(-1) / N on real inputs
     ok_similar( $input, [ map { $_ / $N } @$output2 ] );
+
+    my ($status3, $output3) = gsl_fft_halfcomplex_radix2_inverse($output, 1, $N);
+    ok_status($status3);
+
+    # F = F^(-1) on real inputs
+    ok_similar( $input, $output3 );
 
     # TODO
     #   Failed test 'FFT_REAL_RADIX2_TRANSFORM died (TypeError in method

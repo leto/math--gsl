@@ -1,11 +1,18 @@
 =head1 Math::GSL Changes
 
 =head1 v0.40 - ??? 2016
-    - gsl_fft_real_radix2_transform works again
+    - Various FFT functions work again, such as:
+        gsl_fft_real_radix2_transform
+        gsl_fft_real_transform
+        gsl_fft_halfcomplex_inverse
+        gsl_fft_halfcomplex_radix2_inverse
+        gsl_fft_halfcomplex_backward
+        gsl_fft_halfcomplex_radix2_backward
     - gsl_linalg_givens now works
     - gsl_vector_const_subvector is now exported properly
     - Documentation for Math::GSL::Rstat
     - Math::GSL::Multifit now requires GSL 2.1 and higher
+    - Math::GSL::Rstat now requires GSL 2.1 and higher
 
 =head1 v0.39 - September 2016
     - Fix Debian Bug reported by Niko Tyni

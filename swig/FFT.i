@@ -43,6 +43,25 @@
     argvi++;
 }
 
+// TODO: this is not working. something close to this is needed for
+// gsl_fft_real_unpack
+%typemap(argout) (const double real_coefficient[],
+                         double complex_coefficient[],
+                         const size_t stride, const size_t n)
+{
+    printf("FFT ARGOUT unpack\n");
+    int i=0;
+    AV* tempav = newAV();
+
+    while( i < $4 ) {
+        av_push(tempav, newSVnv((double) $1[i]));
+        i++;
+    }
+
+    $result = sv_2mortal( newRV_noinc( (SV*) tempav) );
+    argvi++;
+}
+
 
 %include "gsl/gsl_inline.h"
 %include "gsl/gsl_math.h"

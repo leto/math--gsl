@@ -77,7 +77,8 @@
     const double xrange[], const double yrange[], double * base,
     const double * base, const double xrange[], const double yrange[] ,
     const double * array , const double data2[], const double w[] ,
-    double *v, const double alpha[],
+    double *v, const double alpha[], const double real_coefficient[],
+    double complex_coefficient [],
     gsl_complex_packed_array data, const double halfcomplex_coefficient[]
 };
 

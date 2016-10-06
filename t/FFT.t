@@ -45,6 +45,16 @@ sub FFT_REAL_TRANSFORM : Tests
     ok_similar( $input, $output3 );
 }
 
+sub FFT_REAL_UNPACK : Tests
+{
+    my $input  = [ 0 .. 7 ];
+    my $N      = @$input;
+    #TODO: this core dumps still
+    #my ($status, $output ) = gsl_fft_real_unpack($input, 1, $N);
+    #ok_status($status);
+    #warn Dumper [ $output ];
+}
+
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
     my $N      = 8;
@@ -72,6 +82,14 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests
     #my ($status3,$complex_array) = gsl_fft_halfcomplex_radix2_unpack($output, $blarg, 1, $N);
     #ok_status($status3);
 }
+sub FFT_COMPLEX_RADIX2_DIF_FORWARD : Tests
+{
+    my $data = [ 0 .. 7 ];
+    my $N = @$data;
+    my ($status2, $output2) = gsl_fft_complex_radix2_dif_forward ($data, 2, $N / 2);
+    ok_status($status2);
+    ok( @$output2 == $N / 2 );
+}
 
 sub FFT_COMPLEX_RADIX2_FORWARD : Tests
 {
@@ -79,7 +97,7 @@ sub FFT_COMPLEX_RADIX2_FORWARD : Tests
     my $N = @$data;
     my ($status1, $output1) = gsl_fft_complex_radix2_forward ($data, 1, $N / 2);
     ok_status($status1);
-    ok( defined $output1, 'got data back');
+    ok( @$output1 == $N / 2 );
 
     # this seems to non-deterministically fail OR cause a core dump
     #my ($status2, $output2) = gsl_fft_complex_radix2_inverse($output1, 1, $N / 2);

@@ -10,6 +10,9 @@ and [Using Pull Requests](https://help.github.com/articles/using-pull-requests/)
 All submissions, including submissions by project members, require review. 
 We use Github pull requests for this purpose.
 
+If possible, please enable Travis CI on your fork of math--gsl so that it can run on your branch. 
+It tests Math::GSL across multiple versions of GSL and Perl which will find various bugs.
+
 ## Create a pull request
 * Create new branch (probably from master) `git checkout -b descriptive_branch_name`  
 * Fix the bug or add the feature

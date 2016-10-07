@@ -104,4 +104,5 @@ script:
     - perl Build.PL
     - ./Build
     # - ./Build test verbose=1
-    - prove -rblvs -j 3 t/
+    # -j3 saves us 3 seconds but makes the output really annoying to read
+    - prove -rblvs t/

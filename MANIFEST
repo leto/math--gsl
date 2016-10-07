@@ -4,6 +4,7 @@ c/Matrix.h
 c/Randist.c
 c/Randist.h
 Changes
+CONTRIBUTING.md
 CREDITS
 examples/aliased
 examples/benchmark/sort
@@ -74,6 +75,7 @@ lib/Math/GSL/Rstat.pm
 lib/Math/GSL/SF.pm
 lib/Math/GSL/Siman.pm
 lib/Math/GSL/Sort.pm
+lib/Math/GSL/SparseMatrix.pm
 lib/Math/GSL/Spline.pm
 lib/Math/GSL/Statistics.pm
 lib/Math/GSL/Sum.pm
@@ -343,6 +345,10 @@ pm/Math/GSL/Sort.pm.2.0
 pm/Math/GSL/Sort.pm.2.1
 pm/Math/GSL/Sort.pm.2.2
 pm/Math/GSL/Sort.pm.2.2.1
+pm/Math/GSL/SparseMatrix.pm.2.0
+pm/Math/GSL/SparseMatrix.pm.2.1
+pm/Math/GSL/SparseMatrix.pm.2.2
+pm/Math/GSL/SparseMatrix.pm.2.2.1
 pm/Math/GSL/Spline.pm.1.15
 pm/Math/GSL/Spline.pm.1.16
 pm/Math/GSL/Spline.pm.2.0
@@ -441,6 +447,7 @@ pod/Rstat.pod
 pod/SF.pod
 pod/Siman.pod
 pod/Sort.pod
+pod/SparseMatrix.pod
 pod/Spline.pod
 pod/Statistics.pod
 pod/Sum.pod
@@ -497,6 +504,7 @@ swig/Rstat.i
 swig/SF.i
 swig/Siman.i
 swig/Sort.i
+swig/SparseMatrix.i
 swig/Spline.i
 swig/Statistics.i
 swig/Sum.i
@@ -551,6 +559,7 @@ t/Rstat.t
 t/SF.t
 t/Siman.t
 t/Sort.t
+t/SparseMatrix.t
 t/Spline.t
 t/Statistics.t
 t/Sum.t
@@ -816,6 +825,10 @@ xs/Sort_wrap.2.0.c
 xs/Sort_wrap.2.1.c
 xs/Sort_wrap.2.2.1.c
 xs/Sort_wrap.2.2.c
+xs/SparseMatrix_wrap.2.0.c
+xs/SparseMatrix_wrap.2.1.c
+xs/SparseMatrix_wrap.2.2.1.c
+xs/SparseMatrix_wrap.2.2.c
 xs/Spline_wrap.1.15.c
 xs/Spline_wrap.1.16.c
 xs/Spline_wrap.2.0.c

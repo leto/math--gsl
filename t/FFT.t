@@ -57,8 +57,8 @@ sub FFT_REAL_UNPACK : Tests
 
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
-    my $N      = 8;
     my $input  = [ 0 .. 7 ];
+    my $N      = @$input;
     my ($status, $output ) = gsl_fft_real_radix2_transform ($input, 1, $N);
     ok_status($status);
 

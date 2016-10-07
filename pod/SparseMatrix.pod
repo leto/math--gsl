@@ -1,0 +1,47 @@
+%perlcode %{
+@EXPORT_OK = qw/
+               gsl_spmatrix_alloc
+               gsl_spmatrix_get
+               gsl_spmatrix_set
+               gsl_spmatrix_free
+             /;
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+Math::GSL::SparseMatrix - Sparse Matrices
+
+=head1 SYNOPSIS
+
+    use Math::GSL::SparseMatrix qw/:all/;
+    my $sparse = gsl_spmatrix_alloc(100,100);
+    my $status = gsl_spmatrix_set($sparse,50,50,42.42);
+    my $value  = gsl_spmatrix_get($sparse,50,50);
+
+=head1 DESCRIPTION
+
+IN DEVELOPMENT
+
+For more informations on the functions, we refer you to the GSL offcial
+documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+
+
+=head1 AUTHORS
+
+Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008-2016 Jonathan "Duke" Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+
+
+%}

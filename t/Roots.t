@@ -1,5 +1,6 @@
 package Math::GSL::Roots::Test;
 use strict;
+use warnings;
 use base q{Test::Class};
 use Test::More tests => 13;
 use Math::GSL        qw/:all/;

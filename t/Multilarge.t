@@ -1,6 +1,6 @@
 package Math::GSL::Multilarge::Test;
 use base q{Test::Class};
-use Test::More;
+use Test::Most;
 use Math::GSL           qw/:all/;
 use Math::GSL::Min      qw/:all/;
 use Math::GSL::Test     qw/:all/;
@@ -13,6 +13,7 @@ use Data::Dumper;
 use strict;
 use warnings;
 
+BEGIN { gsl_set_error_handler_off() }
 BEGIN {
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
@@ -25,13 +26,12 @@ BEGIN {
     }
 }
 
-
-BEGIN { gsl_set_error_handler_off() }
-
 sub make_fixture : Test(setup) {
+    my $self = shift;
 }
 
 sub teardown : Test(teardown) {
+    my $self = shift;
 }
 
 # this is a rough translation of multilarge/test.c in the gsl source code

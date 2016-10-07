@@ -107,9 +107,9 @@ sub FFT_COMPLEX_RADIX2_DIF_FORWARD : Tests
 {
     my $data = [ 0 .. 7 ];
     my $N = @$data;
-    my ($status2, $output2) = gsl_fft_complex_radix2_dif_forward ($data, 2, $N / 2);
+    my ($status2, $output2) = gsl_fft_complex_radix2_dif_forward ($data, 2, $N);
     ok_status($status2);
-    ok( @$output2 == $N / 2 );
+    ok( @$output2 == $N );
 }
 
 sub FFT_COMPLEX_RADIX2_FORWARD : Tests

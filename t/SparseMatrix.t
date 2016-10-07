@@ -40,6 +40,26 @@ sub TEST_BASIC : Tests {
     my $value2 = gsl_spmatrix_get($sparse,50,50);
     ok_similar($value2, 42.42);
 
+    my $status2 = gsl_spmatrix_set_zero($sparse);
+    ok_status($status2);
+    my $value3 = gsl_spmatrix_get($sparse,50,50);
+    ok_similar($value3, 0);
+
+    gsl_spmatrix_set($sparse,42,69,3.14);
+    my $status3 = gsl_spmatrix_transpose($sparse);
+    ok_status($status3);
+
+    my $value4 = gsl_spmatrix_get($sparse,69,42);
+    ok_similar($value4, 3.14);
+
+    my $status4 = gsl_spmatrix_transpose2($sparse);
+
+    my $status6 = gsl_spmatrix_scale($sparse, 5);
+    ok_status($status6);
+
+    my $value5 = gsl_spmatrix_get($sparse,42,69);
+    ok_similar($value5, 3.14*5);
+
     lives_ok { gsl_spmatrix_free($sparse) };
 }
 

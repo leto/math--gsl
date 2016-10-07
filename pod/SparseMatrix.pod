@@ -4,6 +4,11 @@
                gsl_spmatrix_get
                gsl_spmatrix_set
                gsl_spmatrix_free
+               gsl_spmatrix_transpose
+               gsl_spmatrix_transpose2
+               gsl_spmatrix_set_zero
+               gsl_spmatrix_add
+               gsl_spmatrix_scale
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

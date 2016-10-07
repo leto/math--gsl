@@ -66,6 +66,20 @@ sub FFT_REAL_UNPACK : Tests
     #warn Dumper [ $output ];
 }
 
+sub FFT_REAL_RADIX2_TRANSFORM_STRIDE : Tests
+{
+    my $input  = [ 0 .. 7 ];
+    my $N      = @$input;
+    my $stride = 2;
+    my ($status, $output ) = gsl_fft_real_radix2_transform ($input, $stride, $N / 2);
+    ok_status($status);
+    ok( @$output == $N/2 );
+
+    my ($status2, $output2) = gsl_fft_halfcomplex_radix2_inverse($output, $stride, $N/2);
+    ok( @$output2 == $N/2 );
+    ok_status($status2);
+}
+
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
     my $input  = [ 0 .. 7 ];
@@ -86,12 +100,8 @@ sub FFT_REAL_RADIX2_TRANSFORM : Tests
     ok_similar( $input, $output3 );
 
     # TODO
-    #   Failed test 'FFT_REAL_RADIX2_TRANSFORM died (TypeError in method
-    #   'gsl_fft_halfcomplex_radix2_unpack', argument 2 of type 'double []' at
-    #   t/FFT.t line 36.)'
-    #my $blarg = map { $_ + 0.1 } ( 0 .. 7 );
-    #my ($status3,$complex_array) = gsl_fft_halfcomplex_radix2_unpack($output, $blarg, 1, $N);
-    #ok_status($status3);
+    #my ($status4,$output4) = gsl_fft_halfcomplex_radix2_unpack($output, 1, $N);
+    #ok_status($status4);
 }
 sub FFT_COMPLEX_RADIX2_DIF_FORWARD : Tests
 {

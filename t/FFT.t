@@ -45,6 +45,17 @@ sub FFT_REAL_TRANSFORM : Tests
     ok_similar( $input, $output3 );
 }
 
+sub FFT_HALFCOMPLEX_UNPACK : Tests
+{
+    my $input  = [ 0 .. 7 ];
+    my $N      = @$input;
+    #TODO: this core dumps still
+    #my ($status, $output ) = gsl_fft_halfcomplex_unpack($input, 1, $N / 2);
+    #warn Dumper [ $output ];
+    #ok_status($status);
+}
+
+
 sub FFT_REAL_UNPACK : Tests
 {
     my $input  = [ 0 .. 7 ];

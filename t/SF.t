@@ -32,12 +32,13 @@ sub TEST_RT66882 : Tests {
     # perls that have DUSELONGDOUBLE, so give it some leeway
     # Where is the loss of precision coming from? Is it a bug in Perl, GSL or Math::GSL ?
     # A beer if you figure it out.
+    # why doesn't $TODO work here?
     local $TODO = "loss of precision on Perls with DUSELONGDOUBLE";
 
     # additional diagnostics
     local %ENV; $ENV{DEBUG} = 1;
     my $results = {
-        'gsl_sf_fermi_dirac_m1_e(10.0, $r)' => 10.9999546021312975656,
+        'gsl_sf_fermi_dirac_m1_e(10.0, $r)' => 0.9999546021312975656,
     };
     verify_results($results, 'Math::GSL::SF', 1e-16);
 }

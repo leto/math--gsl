@@ -26,6 +26,7 @@ perl:
 
 env:
     matrix:
+        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-latest/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-latest/bin:$PATH
         - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
         - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
         - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
@@ -74,6 +75,13 @@ before_install:
     - make -j2 > /dev/null
     - make -j2 install > /dev/null
     - ls -la /tmp/gsl-2.0/lib
+    - cd ..
+    - git clone git://git.savannah.gnu.org/gsl.git gsl-latest
+    - cd gsl-latest
+    - ./autogen.sh
+    - ./configure --prefix /tmp/gsl-latest > /dev/null
+    - make -j2 > /dev/null
+    - make -j2 install > /dev/null
     - cd ..
     - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz
     - tar zxpf gsl-2.1.tar.gz

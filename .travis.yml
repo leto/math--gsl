@@ -6,6 +6,12 @@ git:
 cache:
   - ccache
   - apt
+  - directories:
+    - /tmp/gsl-2.2.1
+    - /tmp/gsl-2.0
+    - /tmp/gsl-2.1
+    - /tmp/gsl-1.15
+    - /tmp/gsl-1.16
 
 #os:
 #  - osx

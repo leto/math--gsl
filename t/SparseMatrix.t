@@ -2,6 +2,7 @@ package Math::GSL::SparseMatrix::Test;
 use base 'Test::Class';
 use Test::Most;
 use Math::GSL          qw/:all/;
+use Math::GSl::Matrix  qw/:all/;
 use Math::GSL::Errno   qw/:all/;
 use Math::GSL::Test    qw/:all/;
 use Data::Dumper;
@@ -28,6 +29,25 @@ sub make_fixture : Test(setup) {
 
 sub teardown : Test(teardown) {
     my $self = shift;
+}
+
+sub TEST_SPARSE_DENSE : Tests {
+    my $self   = shift;
+    # Why won't Math::GSL::Matrix::* import properly?
+    my $sparse = gsl_spmatrix_alloc(100,100);
+    my $dense  = Math::GSL::Matrix::gsl_matrix_alloc(100,100);
+    Math::GSL::Matrix::gsl_matrix_set($dense,50,50, 42 );
+    my $status = gsl_spmatrix_d2sp($sparse, $dense);
+    ok_status($status);
+
+    my $value  = gsl_spmatrix_get($sparse,50,50);
+    ok_similar($value, 42);
+
+    $status = gsl_spmatrix_sp2d($dense, $sparse);
+    ok_status($status);
+
+    $value  = Math::GSL::Matrix::gsl_matrix_get($dense,50,50);
+    ok_similar($value, 42);
 }
 
 sub TEST_BASIC : Tests {

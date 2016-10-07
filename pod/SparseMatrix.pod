@@ -9,6 +9,8 @@
                gsl_spmatrix_set_zero
                gsl_spmatrix_add
                gsl_spmatrix_scale
+               gsl_spmatrix_d2sp
+               gsl_spmatrix_sp2d
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

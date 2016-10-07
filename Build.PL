@@ -71,7 +71,7 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
     $ccflags .= ' -fPIC  -fno-omit-frame-pointer ';
 }
 # this causes warnings with clang + OSX
-$ccflags = $Config{cccdlflags} . ' ' . $ldflags unless GSLBuilder::is_darwin();
+$ccflags = $Config{cccdlflags} . ' ' . $ccflags unless GSLBuilder::is_darwin();
 
 my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
 # NOTE: keep in sync with inc/GSLBuilder.pm

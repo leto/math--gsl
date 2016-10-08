@@ -34,11 +34,10 @@ _get_master_gsl () {
     cd ..
 }
 
-get_lastest_gsl () {
+get_master_gsl () {
     _get_master_gsl
     # _get_master_gsl &> /dev/null
 }
-
 
 cpanm -n PkgConfig
 export ORIG_DIR=`pwd`

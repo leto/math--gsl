@@ -39,6 +39,7 @@ addons:
   apt:
     packages:
       # - libgsl0-dev # this is 1.16 on trusty
+      - gdb
       - ccache
       - swig2.0
 

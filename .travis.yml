@@ -100,6 +100,9 @@ install:
     # this should always point to the newest version of GSL we support
     - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm -vv --installdeps --notest .
 
+before_script:
+    - ulimit -c unlimited -S       # enable core dumps
+
 script:
     - cd /tmp/math--gsl
     - tar zxpf Math-GSL*
@@ -109,3 +112,7 @@ script:
     # - ./Build test verbose=1
     # -j3 saves us 3 seconds but makes the output really annoying to read
     - prove -rblvs t/
+
+after_failure:
+    - COREFILE=$(find . -maxdepth 1 -name "core*" | head -n 1) # find core file
+    - if [[ -f "$COREFILE" ]]; then gdb -c "$COREFILE" example -ex "thread apply all bt" -ex "set pagination 0" -batch; fi

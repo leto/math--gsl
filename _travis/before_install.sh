@@ -37,8 +37,7 @@ _get_master_gsl () {
 }
 
 get_master_gsl () {
-    _get_master_gsl
-    # _get_master_gsl &> /dev/null
+    _get_master_gsl &> /dev/null
 }
 
 cpanm -n PkgConfig
@@ -52,7 +51,8 @@ get_gsl 2.1
 get_gsl 2.2.1
 get_master_gsl
 
-ls -la /tmp/gsl-*/lib
+ls -la /tmp/
+ls -la /tmp/gsl-2.2.1/bin
 cd /home/travis/build/leto/math--gsl
 LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
 cp Math-GSL*.tar.gz /tmp

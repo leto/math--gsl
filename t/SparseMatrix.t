@@ -92,6 +92,31 @@ sub TEST_SPARSE_DENSE : Tests {
     ok_similar($value, 42, 'dense value looks correct');
 }
 
+sub TEST_SPARSE_COMPRESSED : Tests {
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    # this was added in GSL 2.2
+    if ($major >= 2 && $minor >= 2) {
+        my $sparse = gsl_spmatrix_alloc(100,100);
+        my $status = gsl_spmatrix_set($sparse,42, 69, 6666);
+        ok_status($status);
+
+        my $ccs    = gsl_spmatrix_ccs($sparse);
+        my $crs    = gsl_spmatrix_crs($sparse);
+
+        my $value6 = gsl_spmatrix_get($ccs,42,69);
+        ok_similar($value6, 6666);
+
+        my $value7 = gsl_spmatrix_get($ccs,42,69);
+        ok_similar($value7, 6666);
+
+        my $nnz2 = gsl_spmatrix_nnz($ccs);
+        cmp_ok($nnz2, '==', 1, 'gsl_spmatrix_nnz on a ccs spmatrix');
+        my $nnz3 = gsl_spmatrix_nnz($crs);
+        cmp_ok($nnz3, '==', 1, 'gsl_spmatrix_nnz on a crs spmatrix');
+    }
+}
+
 sub TEST_BASIC : Tests {
     my $self   = shift;
     my $sparse = gsl_spmatrix_alloc(100,100);
@@ -122,19 +147,6 @@ sub TEST_BASIC : Tests {
     ok_similar( $min, -100.1234, 'gsl_spmatrix_minmax min');
     ok_similar( $max, 6666, 'gsl_spmatrix_minmax max');
 
-    my $ccs = gsl_spmatrix_ccs($sparse);
-    my $crs = gsl_spmatrix_crs($sparse);
-
-    my $value6 = gsl_spmatrix_get($ccs,42,69);
-    ok_similar($value6, 6666);
-
-    my $value7 = gsl_spmatrix_get($ccs,42,69);
-    ok_similar($value7, 6666);
-
-    my $nnz2 = gsl_spmatrix_nnz($ccs);
-    cmp_ok($nnz2, '==', 2, 'gsl_spmatrix_nnz on a ccs spmatrix');
-    my $nnz3 = gsl_spmatrix_nnz($crs);
-    cmp_ok($nnz3, '==', 2, 'gsl_spmatrix_nnz on a crs spmatrix');
 
     my $ptr = gsl_spmatrix_ptr($sparse, 42, 69);
     ok(1, "got ptr=$ptr");

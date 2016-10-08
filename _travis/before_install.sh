@@ -19,11 +19,13 @@ get_gsl () {
 }
 
 _get_master_gsl () {
+    rm -rf /tmp/gsl-master
     if [ ! -d "gsl-master" ]; then
         git clone git://git.savannah.gnu.org/gsl.git gsl-master
         cd gsl-master
     else
         cd gsl-master
+        ls -la
         git pull origin master
     fi
 

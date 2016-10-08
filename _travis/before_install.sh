@@ -54,7 +54,7 @@ get_master_gsl
 
 ls -la /tmp/gsl-*/lib
 cd /home/travis/build/leto/math--gsl
-PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL &>/dev/null && ./Build &>/dev/null && ./Build dist # create a CPAN dist with latest supported GSL release
+LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
 cp Math-GSL*.tar.gz /tmp
 ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
 cd $ORIG_DIR

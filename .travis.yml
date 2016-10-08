@@ -43,6 +43,7 @@ addons:
       - gdb
       - ccache
       - swig2.0
+      - texinfo
 
 before_install: ./_travis/before_install.sh
 

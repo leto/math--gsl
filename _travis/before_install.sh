@@ -30,7 +30,7 @@ _get_master_gsl () {
     fi
 
     ./autogen.sh
-    ./configure --prefix /tmp/gsl-master
+    ./configure --enable-maintainer-mode --prefix /tmp/gsl-master
     make -j2
     make -j2 install
     cd ..

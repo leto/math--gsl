@@ -14,11 +14,7 @@ cache:
     - /tmp/gsl-1.16
 
 before_cache:
-  - rm -f /tmp/gsl-*/{config.log,libtool}
-
-#os:
-#  - osx
-#  - linux
+  - rm -f /tmp/gsl-*/config.log /tmp/gsl-*/libtool
 
 perl:
     - "5.24"
@@ -28,12 +24,17 @@ perl:
     - "5.8"
 
 env:
+    global:
+        - CCACHE_CPP2=1
+        - CC="ccache clang"
+        - MAKE="make -j2 &> /dev/null"
+        - MAKE_INSTALL="make -j2 install &> /dev/null"
     matrix:
-        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
-        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
-        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
-        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
-        - CCACHE_CPP2=1 CC="ccache clang" LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
+        - LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
 
 addons:
   apt:
@@ -44,69 +45,63 @@ addons:
       - swig2.0
 
 before_install:
-    - ls -la /home/travis/build
-    - ls -la /home/travis/builds
     - cpanm -n PkgConfig
     - export ORIG_DIR=`pwd`
     - echo ORIG_DIR=$ORIG_DIR
     - cd /tmp
-    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
+    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
     - tar zxpf gsl-1.15.tar.gz
     - cd gsl-1.15
     - ./configure --prefix /tmp/gsl-1.15 > /dev/null
-    - make -j2 > /dev/null
-    - make -j2 install > /dev/null
+    - `$MAKE`
+    - `$MAKE_INSTALL`
     - cd ..
-    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-1.16.tar.gz
+    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-1.16.tar.gz
     - tar zxpf gsl-1.16.tar.gz
     - cd gsl-1.16
     - ./configure --prefix /tmp/gsl-1.16 > /dev/null
-    - make -j2 > /dev/null
-    - make -j2 install > /dev/null
+    - `$MAKE`
+    - `$MAKE_INSTALL`
     - cd ..
-    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
+    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
     - tar zxpf gsl-2.2.1.tar.gz
     - cd gsl-2.2.1
     - ./configure --prefix /tmp/gsl-2.2.1 > /dev/null
-    - make -j2 > /dev/null
-    - make -j2 install > /dev/null
+    - `$MAKE`
+    - `$MAKE_INSTALL`
     - ls -la /tmp/gsl-2.2.1/lib
     - cd ..
-    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.0.tar.gz
+    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.0.tar.gz
     - tar zxpf gsl-2.0.tar.gz
     - cd gsl-2.0
     - ./configure --prefix /tmp/gsl-2.0 > /dev/null
-    - make -j2 > /dev/null
-    - make -j2 install > /dev/null
+    - `$MAKE`
+    - `$MAKE_INSTALL`
     - ls -la /tmp/gsl-2.0/lib
     - cd ..
-    - wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz
+    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz
     - tar zxpf gsl-2.1.tar.gz
     - cd gsl-2.1
     - ./configure --prefix /tmp/gsl-2.1 > /dev/null
-    - make -j2 > /dev/null
-    - make -j2 install > /dev/null
+    - `$MAKE`
+    - `$MAKE_INSTALL`
     - ls -la /tmp/gsl-2.1/lib
-    - cd ..
-    - git clone --depth=5 https://github.com/leto/math--gsl.git
-    - cd math--gsl
-    - PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest GSL
-    - ls -la /tmp/math--gsl/Math-GSL*.tar.gz
-    # now we have /tmp/math--gsl/Math-GSL*.tar.gz to test with
+    - cd /home/travis/build/leto/math--gsl
+    - PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL &>/dev/null && ./Build &>/dev/null && ./Build dist # create a CPAN dist with latest GSL
+    - cp Math-GSL*.tar.gz /tmp
+    - ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
     - cd $ORIG_DIR
 
 # Add verbosity for debugging
 install:
-    - ls -la /home/travis/build
-    - ls -la /home/travis/builds
-    # this should always point to the newest version of GSL we support
-    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm -vv --installdeps --notest .
+    # this should always point to the version we build the CPAN dist with
+    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm --installdeps --notest . &> /dev/null
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps
 
 script:
-    - cd /tmp/math--gsl
+    - cd /tmp
     - tar zxpf Math-GSL*
     - cd Math-GSL*
     - perl Build.PL

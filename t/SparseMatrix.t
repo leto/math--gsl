@@ -14,7 +14,7 @@ BEGIN{ gsl_set_error_handler_off() };
 BEGIN {
     my $version= gsl_version();
     my ($major, $minor) = split /\./, $version;
-    if ($major >= 2 && $minor >= 1) {
+    if ($major >= 2 && $minor >= 0) {
         eval "use Math::GSL::SparseMatrix qw/:all/";
         die $@ if @$;
     } else {

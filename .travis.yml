@@ -44,53 +44,7 @@ addons:
       - ccache
       - swig2.0
 
-before_install:
-    - cpanm -n PkgConfig
-    - export ORIG_DIR=`pwd`
-    - echo ORIG_DIR=$ORIG_DIR
-    - cd /tmp
-    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
-    - tar zxpf gsl-1.15.tar.gz
-    - cd gsl-1.15
-    - ./configure --prefix /tmp/gsl-1.15 > /dev/null
-    - `$MAKE`
-    - `$MAKE_INSTALL`
-    - cd ..
-    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-1.16.tar.gz
-    - tar zxpf gsl-1.16.tar.gz
-    - cd gsl-1.16
-    - ./configure --prefix /tmp/gsl-1.16 > /dev/null
-    - `$MAKE`
-    - `$MAKE_INSTALL`
-    - cd ..
-    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.2.1.tar.gz
-    - tar zxpf gsl-2.2.1.tar.gz
-    - cd gsl-2.2.1
-    - ./configure --prefix /tmp/gsl-2.2.1 > /dev/null
-    - `$MAKE`
-    - `$MAKE_INSTALL`
-    - ls -la /tmp/gsl-2.2.1/lib
-    - cd ..
-    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.0.tar.gz
-    - tar zxpf gsl-2.0.tar.gz
-    - cd gsl-2.0
-    - ./configure --prefix /tmp/gsl-2.0 > /dev/null
-    - `$MAKE`
-    - `$MAKE_INSTALL`
-    - ls -la /tmp/gsl-2.0/lib
-    - cd ..
-    - wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz
-    - tar zxpf gsl-2.1.tar.gz
-    - cd gsl-2.1
-    - ./configure --prefix /tmp/gsl-2.1 > /dev/null
-    - `$MAKE`
-    - `$MAKE_INSTALL`
-    - ls -la /tmp/gsl-2.1/lib
-    - cd /home/travis/build/leto/math--gsl
-    - PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL &>/dev/null && ./Build &>/dev/null && ./Build dist # create a CPAN dist with latest GSL
-    - cp Math-GSL*.tar.gz /tmp
-    - ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
-    - cd $ORIG_DIR
+before_install: ./_travis/before_install.sh
 
 # Add verbosity for debugging
 install:

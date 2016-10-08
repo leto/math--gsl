@@ -36,17 +36,36 @@ Math::GSL::SparseMatrix - Sparse Matrices
 =head1 SYNOPSIS
 
     use Math::GSL::SparseMatrix qw/:all/;
+    use Math::GSL::Matrix qw/gsl_matrix_alloc/;
     my $sparse = gsl_spmatrix_alloc(100,100);
     my $status = gsl_spmatrix_set($sparse,50,50,42.42);
     my $value  = gsl_spmatrix_get($sparse,50,50);
 
+    # multiply every element by 5
+    $status = gsl_spmatrix_scale($sparse, 5);
+
+    # get the number of non-zero elements
+    my $nnz = gsl_spmatrix_nnz($sparse);
+
+    # fine min and max values, other than zero elements
+    ($status, $min, $max) = gsl_spmatrix_minmax($sparse);
+
+    # set all elements to zero
+    $status = gsl_spmatrix_set_zero($sparse);
+
+    my $dense  = gsl_matrix_alloc(100,100);
+    # convert a sparse matrix to a dense matrix
+    $status = gsl_spmatrix_sp2d($dense, $sparse);
+
+    # convert a dense matrix to a sparse matrix
+    $status = gsl_spmatrix_d2sp($sparse, $dense);
+
 =head1 DESCRIPTION
 
-IN DEVELOPMENT
+NOTE: This module requires GSL 2.0 or higher.
 
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
-
 
 =head1 AUTHORS
 

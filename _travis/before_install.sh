@@ -2,16 +2,16 @@
 set -ev
 
 _get_gsl () {
-    # only download/compile/install if not cached
-    if [ ! -d "gsl-$1" ]; then
+    # only download if necessary
+    if [ ! -e "gsl-$1.tar.gz" ]; then
         wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz
-        tar zxpf gsl-$1.tar.gz
-        cd gsl-$1
-        ./configure --prefix /tmp/gsl-$1
-        make -j2
-        make -j2 install
-        cd ..
     fi
+    tar zxpf gsl-$1.tar.gz
+    cd gsl-$1
+    ./configure --prefix /tmp/gsl-$1
+    make -j2
+    make -j2 install
+    cd ..
 }
 
 get_gsl () {

@@ -114,6 +114,9 @@ sub TEST_SPARSE_COMPRESSED : Tests {
         cmp_ok($nnz2, '==', 1, 'gsl_spmatrix_nnz on a ccs spmatrix');
         my $nnz3 = gsl_spmatrix_nnz($crs);
         cmp_ok($nnz3, '==', 1, 'gsl_spmatrix_nnz on a crs spmatrix');
+
+        my $ptr = gsl_spmatrix_ptr($sparse, 42, 69);
+        ok(1, "got ptr=$ptr");
     }
 }
 
@@ -146,10 +149,6 @@ sub TEST_BASIC : Tests {
     my ($status7, $min, $max) = gsl_spmatrix_minmax($sparse);
     ok_similar( $min, -100.1234, 'gsl_spmatrix_minmax min');
     ok_similar( $max, 6666, 'gsl_spmatrix_minmax max');
-
-
-    my $ptr = gsl_spmatrix_ptr($sparse, 42, 69);
-    ok(1, "got ptr=$ptr");
 
     lives_ok { gsl_spmatrix_free($sparse) };
 }

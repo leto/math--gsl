@@ -13,6 +13,9 @@ cache:
     - /tmp/gsl-1.15
     - /tmp/gsl-1.16
 
+before_cache:
+  - rm -f /tmp/gsl-*/{config.log,libtool}
+
 #os:
 #  - osx
 #  - linux

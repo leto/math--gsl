@@ -6,6 +6,7 @@
                gsl_spmatrix_free
                gsl_spmatrix_transpose
                gsl_spmatrix_transpose2
+               gsl_spmatrix_transpose_memcpy
                gsl_spmatrix_set_zero
                gsl_spmatrix_add
                gsl_spmatrix_nnz
@@ -16,6 +17,11 @@
                gsl_spmatrix_ccs
                gsl_spmatrix_crs
                gsl_spmatrix_memcpy
+               gsl_spmatrix_ptr
+               gsl_spmatrix_fwrite
+               gsl_spmatrix_fread
+               gsl_spmatrix_fprintf
+               gsl_spmatrix_fscanf
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

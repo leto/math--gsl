@@ -31,6 +31,19 @@ sub teardown : Test(teardown) {
     my $self = shift;
 }
 
+sub TEST_SPARSE_TRANSPOSE_MEMCPY : Tests {
+    my $sparse1 = gsl_spmatrix_alloc(100,100);
+    gsl_spmatrix_set($sparse1, 12, 34, 42 );
+    my $sparse2 = gsl_spmatrix_alloc(100,100);
+
+    my $status = gsl_spmatrix_transpose_memcpy($sparse2, $sparse1);
+    ok_status($status);
+
+    my $value = gsl_spmatrix_get($sparse2, 34, 12);
+    ok_similar($value, 42, 'gsl_spmatrix_transpose_memcpy seems to work');
+
+}
+
 sub TEST_SPARSE_MEMCPY : Tests {
     my $sparse1 = gsl_spmatrix_alloc(100,100);
     gsl_spmatrix_set($sparse1, 50,50, 42 );
@@ -112,6 +125,9 @@ sub TEST_BASIC : Tests {
     cmp_ok($nnz2, '==', 2, 'gsl_spmatrix_nnz on a ccs spmatrix');
     my $nnz3 = gsl_spmatrix_nnz($crs);
     cmp_ok($nnz3, '==', 2, 'gsl_spmatrix_nnz on a crs spmatrix');
+
+    my $ptr = gsl_spmatrix_ptr($sparse, 42, 69);
+    ok(1, "got ptr=$ptr");
 
     lives_ok { gsl_spmatrix_free($sparse) };
 }

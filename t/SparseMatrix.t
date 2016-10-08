@@ -41,7 +41,25 @@ sub TEST_SPARSE_TRANSPOSE_MEMCPY : Tests {
 
     my $value = gsl_spmatrix_get($sparse2, 34, 12);
     ok_similar($value, 42, 'gsl_spmatrix_transpose_memcpy seems to work');
+}
 
+sub TEST_SPARSE_TRANSPOSE : Tests {
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    # this was added in GSL 2.2
+    if ($major >= 2 && $minor >= 2) {
+        my $sparse = gsl_spmatrix_alloc(100,100);
+        gsl_spmatrix_set($sparse,42,69,3.14);
+
+        my $status1 = gsl_spmatrix_transpose($sparse);
+        ok_status($status1);
+
+        my $value = gsl_spmatrix_get($sparse,69,42);
+        ok_similar($value, 3.14);
+
+        my $status2 = gsl_spmatrix_transpose2($sparse);
+        ok_status($status2);
+    }
 }
 
 sub TEST_SPARSE_MEMCPY : Tests {
@@ -89,20 +107,12 @@ sub TEST_BASIC : Tests {
     my $value3 = gsl_spmatrix_get($sparse,50,50);
     ok_similar($value3, 0);
 
-    gsl_spmatrix_set($sparse,42,69,3.14);
-    my $status3 = gsl_spmatrix_transpose($sparse);
-    ok_status($status3);
-
-    my $value4 = gsl_spmatrix_get($sparse,69,42);
-    ok_similar($value4, 3.14);
-
-    my $status4 = gsl_spmatrix_transpose2($sparse);
-
     my $status6 = gsl_spmatrix_scale($sparse, 5);
     ok_status($status6);
 
+    gsl_spmatrix_set($sparse, 42, 69, 6666);
     my $value5 = gsl_spmatrix_get($sparse,42,69);
-    ok_similar($value5, 3.14*5);
+    ok_similar($value5, 6666);
 
     gsl_spmatrix_set($sparse,5,5, -100.1234);
     my $nnz = gsl_spmatrix_nnz($sparse);
@@ -110,16 +120,16 @@ sub TEST_BASIC : Tests {
 
     my ($status7, $min, $max) = gsl_spmatrix_minmax($sparse);
     ok_similar( $min, -100.1234, 'gsl_spmatrix_minmax min');
-    ok_similar( $max, 3.14*5, 'gsl_spmatrix_minmax max');
+    ok_similar( $max, 6666, 'gsl_spmatrix_minmax max');
 
     my $ccs = gsl_spmatrix_ccs($sparse);
     my $crs = gsl_spmatrix_crs($sparse);
 
     my $value6 = gsl_spmatrix_get($ccs,42,69);
-    ok_similar($value6, 3.14*5);
+    ok_similar($value6, 6666);
 
     my $value7 = gsl_spmatrix_get($ccs,42,69);
-    ok_similar($value7, 3.14*5);
+    ok_similar($value7, 6666);
 
     my $nnz2 = gsl_spmatrix_nnz($ccs);
     cmp_ok($nnz2, '==', 2, 'gsl_spmatrix_nnz on a ccs spmatrix');

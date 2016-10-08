@@ -41,13 +41,13 @@ sub TEST_SPARSE_DENSE : Tests {
     ok_status($status);
 
     my $value  = gsl_spmatrix_get($sparse,50,50);
-    ok_similar($value, 42);
+    ok_similar($value, 42, 'sparse value looks correct');
 
     $status = gsl_spmatrix_sp2d($dense, $sparse);
     ok_status($status);
 
     $value  = Math::GSL::Matrix::gsl_matrix_get($dense,50,50);
-    ok_similar($value, 42);
+    ok_similar($value, 42, 'dense value looks correct');
 }
 
 sub TEST_BASIC : Tests {

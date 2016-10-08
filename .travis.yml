@@ -12,6 +12,7 @@ cache:
     - /tmp/gsl-2.1
     - /tmp/gsl-1.15
     - /tmp/gsl-1.16
+    - /tmp/gsl-master
 
 before_cache:
   - rm -f /tmp/gsl-*/config.log /tmp/gsl-*/libtool
@@ -27,14 +28,13 @@ env:
     global:
         - CCACHE_CPP2=1
         - CC="ccache clang"
-        - MAKE="make -j2 &> /dev/null"
-        - MAKE_INSTALL="make -j2 install &> /dev/null"
     matrix:
-        - LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-2.0/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.0/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-2.1/lib:$LD_LIBRARY_PATH   PATH=/tmp/gsl-2.1/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-1.15/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.15/bin:$PATH
-        - LD_LIBRARY_PATH=/tmp/gsl-1.16/lib:$LD_LIBRARY_PATH  PATH=/tmp/gsl-1.16/bin:$PATH
+        - GSL=2.2.1
+        - GSL=2.1
+        - GSL=2.0
+        - GSL=1.16
+        - GSL=1.15
+        - GSL=master
 
 addons:
   apt:
@@ -55,6 +55,8 @@ before_script:
     - ulimit -c unlimited -S       # enable core dumps
 
 script:
+    - export LD_LIBRARY_PATH=/tmp/gsl-$GSL/lib
+    - export PATH=/tmp/gsl-$GSL/bin:$PATH
     - cd /tmp
     - tar zxpf Math-GSL*
     - cd Math-GSL*
@@ -64,6 +66,7 @@ script:
     # -j3 saves us 3 seconds but makes the output really annoying to read
     - prove -rblvs t/
 
+# NOTE: this only finds the first corefile generated
 after_failure:
     - COREFILE=$(find . -maxdepth 1 -name "core*" | head -n 1) # find core file
     - if [[ -f "$COREFILE" ]]; then gdb -c "$COREFILE" `which perl` -ex "thread apply all bt" -ex "info registers" -ex "set pagination 0" -batch; fi

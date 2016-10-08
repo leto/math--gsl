@@ -8,9 +8,14 @@
                gsl_spmatrix_transpose2
                gsl_spmatrix_set_zero
                gsl_spmatrix_add
+               gsl_spmatrix_nnz
                gsl_spmatrix_scale
                gsl_spmatrix_d2sp
                gsl_spmatrix_sp2d
+               gsl_spmatrix_minmax
+               gsl_spmatrix_ccs
+               gsl_spmatrix_crs
+               gsl_spmatrix_memcpy
              /;
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 

@@ -20,18 +20,24 @@ sub teardown : Test(teardown) {
 
 sub FFT_REAL_TRANSFORM : Tests
 {
-    my $input  = [ 0 .. 6 ];
+    my $input  = [ (4242) x 100 ];
     my $N      = @$input;
 
     my $workspace1          = gsl_fft_real_workspace_alloc($N);
+    isa_ok($workspace1, 'Math::GSL::FFT');
     my $wavetable1          = gsl_fft_real_wavetable_alloc($N);
+    isa_ok($wavetable1, 'Math::GSL::FFT');
+
     my ($status, $output )  = gsl_fft_real_transform ($input, 1, $N, $wavetable1, $workspace1);
-    ok_status($status);
+    ok_status($status, $GSL_SUCCESS, 'gsl_fft_real_transform');
 
     my $workspace2          = gsl_fft_real_workspace_alloc($N);
+    isa_ok($workspace2, 'Math::GSL::FFT');
     my $wavetable2          = gsl_fft_halfcomplex_wavetable_alloc($N);
+    isa_ok($wavetable2, 'Math::GSL::FFT');
+
     my ($status2, $output2) = gsl_fft_halfcomplex_backward($output, 1, $N, $wavetable2, $workspace2);
-    ok_status($status2);
+    ok_status($status2, $GSL_SUCCESS, 'gsl_fft_halfcomplex_backward');
 
     # F = F^(-1)/$N on real inputs
     ok_similar( $input, [ map { $_ / $N } @$output2 ] );
@@ -39,7 +45,7 @@ sub FFT_REAL_TRANSFORM : Tests
     my $wavetable3          = gsl_fft_halfcomplex_wavetable_alloc($N);
     my $workspace3          = gsl_fft_real_workspace_alloc($N);
     my ($status3, $output3) = gsl_fft_halfcomplex_inverse($output, 1, $N, $wavetable3, $workspace3);
-    ok_status($status3);
+    ok_status($status3, $GSL_SUCCESS, 'gsl_fft_halfcomplex_inverse');
 
     # F = F^(-1) on real inputs
     ok_similar( $input, $output3 );

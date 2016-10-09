@@ -75,11 +75,10 @@ sub FFT_REAL_UNPACK : Tests
 
 sub FFT_REAL_RADIX2_TRANSFORM_STRIDE : Tests
 {
-    my $input  = [ 0 .. 7 ];
-    my $N      = @$input;
+    my $data   = [ (0) x 3, (1) x 2, (0) x 3 ];
+    my $N      = @$data;
     my $stride = 2;
-
-    my ($status, $output ) = gsl_fft_real_radix2_transform ($input, $stride, $N / 2);
+    my ($status,$output) = gsl_fft_real_radix2_transform ($data, $stride, $N/2);
     ok_status($status);
     ok( @$output == $N/2 );
 

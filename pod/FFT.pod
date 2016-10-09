@@ -285,16 +285,13 @@ This module also includes the following constants :
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
-
-
-
 =head1 AUTHORS
 
 Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2016 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2014 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

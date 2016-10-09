@@ -10,7 +10,8 @@
         gsl_fft_halfcomplex_radix2_backward
     - gsl_linalg_givens now works
     - gsl_vector_const_subvector is now exported properly
-    - Documentation for Math::GSL::Rstat
+    - Documentation for Math::GSL::Rstat, Math::GSL::SparseMatrix,
+      Math::GSL::Diff
     - Math::GSL::Multifit now requires GSL 2.1 and higher
     - Math::GSL::Rstat now requires GSL 2.1 and higher
 

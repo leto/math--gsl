@@ -19,15 +19,17 @@ get_gsl () {
 }
 
 _get_master_gsl () {
-    rm -rf /tmp/gsl-master
     if [ ! -d "gsl-master" ]; then
         git clone git://git.savannah.gnu.org/gsl.git gsl-master
         cd gsl-master
     else
         cd gsl-master
         ls -la
-        git pull origin master
+        [ -d ".git" ] && git pull origin master
     fi
+
+    GSL_COMMIT=`git rev-parse master`
+    echo "Testing GSL master commit $GSL_COMMIT"
 
     ./autogen.sh
     ./configure --enable-maintainer-mode --prefix /tmp/gsl-master
@@ -37,7 +39,8 @@ _get_master_gsl () {
 }
 
 get_master_gsl () {
-    _get_master_gsl &> /dev/null
+    _get_master_gsl
+    #_get_master_gsl &> /dev/null
 }
 
 cpanm -n PkgConfig

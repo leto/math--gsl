@@ -44,7 +44,7 @@ addons:
       - ccache
       - swig2.0
       - texinfo
-      - valgrind
+      # - valgrind
 
 before_install: ./_travis/before_install.sh
 
@@ -67,9 +67,9 @@ script:
     # - ./Build test verbose=1
     # -j3 saves us 3 seconds but makes the output really annoying to read
     # just run FFT tests under valgrind on this branch
-    - valgrind prove -rblvs t/FFT.t
+    - prove -rblvs t/FFT.t
 
 # NOTE: this only finds the first corefile generated
 after_failure:
     - COREFILE=$(find . -maxdepth 1 -name "core*" | head -n 1) # find core file
-    - if [[ -f "$COREFILE" ]]; then gdb -c "$COREFILE" `which perl` -ex "thread apply all bt" -ex "info registers" -ex "info float" -ex "set pagination 0" -batch; fi
+    - if [[ -f "$COREFILE" ]]; then gdb -c "$COREFILE" `which perl` -ex "thread apply all bt full" -ex "info registers" -ex "info float" -ex "set pagination 0" -batch; fi

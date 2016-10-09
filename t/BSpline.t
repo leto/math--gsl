@@ -19,7 +19,7 @@ sub teardown : Test(teardown) {
 
 sub BASIC : Tests {
     my $bspline = gsl_bspline_alloc(4,10);
-    isa_ok($bspline, 'Math::GSL::BSpline');
+    ok(defined $bspline, 'gsl_bspline_alloc');
 
     my $status  = gsl_bspline_knots_uniform(0,5, $bspline);
     ok_status($status);

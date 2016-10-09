@@ -23,8 +23,6 @@ sub FFT_REAL_TRANSFORM : Tests
     my $input  = [ (4242) x 100 ];
     my $N      = @$input;
 
-    local $TODO = "https://github.com/leto/math--gsl/issues/132";
-    return;
 
     my $workspace1          = gsl_fft_real_workspace_alloc($N);
     isa_ok($workspace1, 'Math::GSL::FFT');
@@ -81,9 +79,6 @@ sub FFT_REAL_RADIX2_TRANSFORM_STRIDE : Tests
     my $N      = @$input;
     my $stride = 2;
 
-    local $TODO = "coredumps :(";
-    return;
-
     my ($status, $output ) = gsl_fft_real_radix2_transform ($input, $stride, $N / 2);
     ok_status($status);
     ok( @$output == $N/2 );
@@ -95,11 +90,8 @@ sub FFT_REAL_RADIX2_TRANSFORM_STRIDE : Tests
 
 sub FFT_REAL_RADIX2_TRANSFORM : Tests
 {
-    my $input  = [ 0 .. 7 ];
+    my $input  = [ 1 .. 2**10 ];
     my $N      = @$input;
-
-    local $TODO = "coredumps :(";
-    return;
 
     my ($status, $output ) = gsl_fft_real_radix2_transform ($input, 1, $N);
     ok_status($status);
@@ -140,9 +132,6 @@ sub FFT_COMPLEX_RADIX2_FORWARD : Tests
 {
     my $data = [ 0 .. 7 ];
     my $N = @$data;
-
-    local $TODO = "FFT tests are messed up";
-    return;
 
     my ($status1, $output1) = gsl_fft_complex_radix2_forward ($data, 1, $N / 2);
     ok_status($status1);

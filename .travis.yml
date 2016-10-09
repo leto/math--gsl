@@ -44,6 +44,7 @@ addons:
       - ccache
       - swig2.0
       - texinfo
+      - valgrind
 
 before_install: ./_travis/before_install.sh
 
@@ -65,7 +66,8 @@ script:
     - ./Build
     # - ./Build test verbose=1
     # -j3 saves us 3 seconds but makes the output really annoying to read
-    - prove -rblvs t/
+    # just run FFT tests under valgrind on this branch
+    - valgrind prove -rblvs t/FFT.t
 
 # NOTE: this only finds the first corefile generated
 after_failure:

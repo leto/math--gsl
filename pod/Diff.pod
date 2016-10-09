@@ -26,9 +26,33 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_diff_central>
 
+This function computes the numerical derivative of the function f
+at the point x using an adaptive central difference algorithm.
+The result is an array where the first position is an error code (0 for success),
+the second is derivative value, and the third is an estimate of its absolute error.
+
+   my ($success, $result, $error) =
+         gsl_diff_central(sub { return $_[0] ** 1.5 }, 2.0);
+
 =item C<gsl_diff_backward>
 
+This function computes the numerical derivative of the function f 
+at the point x using an adaptive forward difference algorithm.
+Its usage is similar to C<gsl_diff_central>.
+
+   my ($success, $result, $error) =
+          gsl_diff_backward(sub { return $_[0] ** 1.5 }, 0.0);
+
+
 =item C<gsl_diff_forward>
+
+This function computes the numerical derivative of the
+function f at the point x using an adaptive backward difference algorithm.
+Its usage is similar to C<gsl_diff_central>.
+
+   my ($success, $result, $error) =
+          gsl_diff_forward(sub { return $_[0] ** 1.5 }, 1.0);
+
 
 =back
 

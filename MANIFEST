@@ -885,3 +885,5 @@ xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xt/01-pod.t
 xt/style-trailing-space.t
+swig/MultiSet.i
+pod/MultiSet.pod

@@ -27,7 +27,7 @@ sub subsystems {
         NTuple       Integration  Sort          Test
         DHT          Interp       ODEIV         SF
         Deriv        Linalg       Permutation   Spline
-        Version
+        Version      MultiSet
     /;
 }
 

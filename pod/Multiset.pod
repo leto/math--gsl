@@ -78,13 +78,13 @@ __END__
 
 =head1 NAME
 
-Math::GSL::MultiSet - Multisets manipulation
+Math::GSL::Multiset - Multisets manipulation
 
 =head1 SYNOPSIS
 
-    use Math::GSL::MultiSet qw/:all/;
+    use Math::GSL::Multiset qw/:all/;
 
-    my $ms = Math::GSL::MultiSet->($n, $k);
+    my $ms = Math::GSL::Multiset->($n, $k);
     
     my $value = $ms->get(2);
 
@@ -107,7 +107,7 @@ multiplicity of any value.
 
 =head2 Object Oriented API
 
-Handy Perl-style OO API for MultiSets.
+Handy Perl-style OO API for Multisets.
 
 =over 4
 
@@ -116,7 +116,7 @@ Handy Perl-style OO API for MultiSets.
 Creates a new multiset with parameters n, k and initializes it to the 
 lexicographically first multiset element, i.e., 0 repeated k times.
 
-    my $ms = Math::GSL::MultiSet->($n, $k);
+    my $ms = Math::GSL::Multiset->($n, $k);
 
 =item C<init_first>
 

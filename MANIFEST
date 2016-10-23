@@ -434,6 +434,7 @@ pod/Multifit.pod
 pod/Multilarge.pod
 pod/Multimin.pod
 pod/Multiroots.pod
+pod/Multiset.pod
 pod/NTuple.pod
 pod/ODEIV.pod
 pod/Permutation.pod
@@ -491,6 +492,7 @@ swig/Multifit.i
 swig/Multilarge.i
 swig/Multimin.i
 swig/Multiroots.i
+swig/Multiset.i
 swig/NTuple.i
 swig/ODEIV.i
 swig/Permutation.i
@@ -749,6 +751,12 @@ xs/Multiroots_wrap.2.0.c
 xs/Multiroots_wrap.2.1.c
 xs/Multiroots_wrap.2.2.1.c
 xs/Multiroots_wrap.2.2.c
+xs/Multiset_wrap.1.15.c
+xs/Multiset_wrap.1.16.c
+xs/Multiset_wrap.2.0.c
+xs/Multiset_wrap.2.1.c
+xs/Multiset_wrap.2.2.1.c
+xs/Multiset_wrap.2.2.c
 xs/NTuple_wrap.1.15.c
 xs/NTuple_wrap.1.16.c
 xs/NTuple_wrap.2.0.c
@@ -885,5 +893,5 @@ xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xt/01-pod.t
 xt/style-trailing-space.t
-swig/MultiSet.i
-pod/MultiSet.pod
+
+

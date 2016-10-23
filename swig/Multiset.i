@@ -1,4 +1,4 @@
-%module "Math::GSL::MultiSet"
+%module "Math::GSL::Multiset"
 
 %include "typemaps.i"
 %include "gsl_typemaps.i"
@@ -13,4 +13,4 @@
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_inline.h"
 %include "gsl/gsl_multiset.h"
-%include "../pod/MultiSet.pod"
+%include "../pod/Multiset.pod"

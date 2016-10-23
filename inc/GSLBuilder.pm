@@ -30,7 +30,7 @@ sub subsystems {
         NTuple       Integration  Sort          Test
         DHT          Interp       ODEIV         SF
         Deriv        Linalg       Permutation   Spline
-        Version
+        Version      Multiset
     /;
 }
 
@@ -141,7 +141,7 @@ sub process_versioned_swig_files {
                 if ($major >=2 && $minor >= 1) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
-            } elsif ($file->[0] =~ m/(Rstat|SparseMatrix|MultiSet)/) {
+            } elsif ($file->[0] =~ m/(Rstat|SparseMatrix)/) {
                 if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }

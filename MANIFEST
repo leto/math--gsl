@@ -62,6 +62,7 @@ lib/Math/GSL/Multifit.pm
 lib/Math/GSL/Multilarge.pm
 lib/Math/GSL/Multimin.pm
 lib/Math/GSL/Multiroots.pm
+lib/Math/GSL/Multiset.pm
 lib/Math/GSL/NTuple.pm
 lib/Math/GSL/ODEIV.pm
 lib/Math/GSL/Permutation.pm
@@ -269,6 +270,12 @@ pm/Math/GSL/Multiroots.pm.2.0
 pm/Math/GSL/Multiroots.pm.2.1
 pm/Math/GSL/Multiroots.pm.2.2
 pm/Math/GSL/Multiroots.pm.2.2.1
+pm/Math/GSL/Multiset.pm.1.15
+pm/Math/GSL/Multiset.pm.1.16
+pm/Math/GSL/Multiset.pm.2.0
+pm/Math/GSL/Multiset.pm.2.1
+pm/Math/GSL/Multiset.pm.2.2
+pm/Math/GSL/Multiset.pm.2.2.1
 pm/Math/GSL/NTuple.pm.1.15
 pm/Math/GSL/NTuple.pm.1.16
 pm/Math/GSL/NTuple.pm.2.0
@@ -548,6 +555,7 @@ t/Multifit.t
 t/Multilarge.t
 t/Multimin.t
 t/Multiroots.t
+t/Multiset.t
 t/NTuple.t
 t/ODEIV.t
 t/Permutation.t
@@ -895,3 +903,4 @@ xt/01-pod.t
 xt/style-trailing-space.t
 
 
+META.json

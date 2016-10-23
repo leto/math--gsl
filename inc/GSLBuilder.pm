@@ -12,6 +12,9 @@ use base 'Module::Build';
 sub is_release {
     return -e '.git' ? 0 : 1;
 }
+
+# Only subsystems that existed in GSL 1.15 are listed here
+# update inc/GSLBuilder.pm and Build.PL to add others
 sub subsystems {
     sort qw/
         Diff         Machine      Statistics    BLAS
@@ -27,7 +30,7 @@ sub subsystems {
         NTuple       Integration  Sort          Test
         DHT          Interp       ODEIV         SF
         Deriv        Linalg       Permutation   Spline
-        Version      MultiSet
+        Version
     /;
 }
 
@@ -138,7 +141,7 @@ sub process_versioned_swig_files {
                 if ($major >=2 && $minor >= 1) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }
-            } elsif ($file->[0] =~ m/(Rstat|SparseMatrix)/) {
+            } elsif ($file->[0] =~ m/(Rstat|SparseMatrix|MultiSet)/) {
                 if ($major >=2 ) {
                     $self->process_swig($file->[0], $file->[1], $ver);
                 }

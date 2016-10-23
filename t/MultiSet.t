@@ -1,18 +1,24 @@
 package Math::GSL::MultiSet::Test;
 use base q{Test::Class};
-
-use Test::Most;
-
 use strict;
 use warnings;
-
+use Test::Most;
 use Math::GSL           qw/:all/;
 use Math::GSL::Test     qw/:all/;
-use Math::GSL::MultiSet qw/:all/;
-use Math::GSL::Errno qw/:all/;
-
+use Math::GSL::Errno    qw/:all/;
 
 BEGIN{ gsl_set_error_handler_off(); }
+BEGIN {
+    my $version= gsl_version();
+    my ($major, $minor) = split /\./, $version;
+    if ($major >= 2) {
+        eval "use Math::GSL::MultiSet qw/:all/";
+        die $@ if @$;
+    } else {
+        plan skip_all => "MultiSet was added in GSL 2.0";
+        exit(0);
+    }
+}
 
 sub constructor : Test(5) {
 	my ($k,$n) = (20,10);

@@ -1,4 +1,7 @@
 %perlcode %{
+
+use Math::GSL           qw/gsl_version/;
+
 @EXPORT_OK = qw/
     gsl_multiset_calloc gsl_multiset_alloc
     gsl_multiset_init_first gsl_multiset_init_last
@@ -18,6 +21,10 @@
 
 sub new {
 	my ($class, $n, $k) = @_;
+
+    if (gsl_version() < v1.16 && $k > $n) {
+        die __PACKAGE__.": This version of GSL doesn't support k > n"
+    }
 
 	my $self = { k => $k, n => $n, multiset => gsl_multiset_calloc($n, $k)};
 

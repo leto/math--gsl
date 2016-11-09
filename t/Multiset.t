@@ -10,8 +10,15 @@ use Math::GSL::Multiset qw/:all/;
 
 BEGIN{ gsl_set_error_handler_off(); }
 
+sub constructor_1_15 : Test {
+	return "GSL >= 1.16" if gsl_version() > v1.15;
+
+	dies_ok { Math::GSL::Multiset->new(10,20); }, 
+		"This version of GSL doesn't support k > n";
+}
+
 sub constructor : Test(5) {
-	my ($k,$n) = (20,10);
+	my ($k,$n) = (10,20);
 	my $ms = Math::GSL::Multiset->new($n, $k);
 
 	isa_ok($ms, "Math::GSL::Multiset");
@@ -22,7 +29,7 @@ sub constructor : Test(5) {
 }
 
 sub clone: Test(3) {
-	my ($k,$n) = (20,10);
+	my ($k,$n) = (10,20);
 	my $ms = Math::GSL::Multiset->new($n, $k);
 	$ms->init_last;
 
@@ -45,7 +52,7 @@ sub list : Test {
 }
 
 sub next_prev : Test(3) {
-	my ($k,$n) = (20,10);
+	my ($k,$n) = (10,20);
 	my $ms = Math::GSL::Multiset->new($n, $k);
 	$ms->next;
 	is $ms->get($k-1) => 1;
@@ -56,7 +63,7 @@ sub next_prev : Test(3) {
 }
 
 sub init : Test(2) {
-	my ($k,$n) = (20,10);
+	my ($k,$n) = (10,20);
 	my $ms = Math::GSL::Multiset->new($n, $k);
 	$ms->init_last;
 	my $allOK = 1;
@@ -75,7 +82,7 @@ sub init : Test(2) {
 }
 
 sub get : Test(3) {
-	my ($k,$n) = (20,10);
+	my ($k,$n) = (10,20);
 	my $ms = Math::GSL::Multiset->new($n, $k);	
 	throws_ok { $ms->get(-1) } qr /out of range.*0 <= i < $k/;
 	throws_ok { $ms->get($k) } qr /out of range.*0 <= i < $k/;

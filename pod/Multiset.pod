@@ -1,0 +1,238 @@
+%perlcode %{
+
+use Math::GSL           qw/gsl_version/;
+
+@EXPORT_OK = qw/
+    gsl_multiset_calloc gsl_multiset_alloc
+    gsl_multiset_init_first gsl_multiset_init_last
+    gsl_multiset_free gsl_multiset_memcpy
+    gsl_multiset_get gsl_multiset_n gsl_multiset_k
+    gsl_multiset_data
+    gsl_multiset_valid
+    gsl_multiset_next gsl_multiset_prev
+    gsl_multiset_fwrite
+    gsl_multiset_fread
+    gsl_multiset_fprintf
+    gsl_multiset_fscanf
+/;
+
+
+%EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+
+sub new {
+	my ($class, $n, $k) = @_;
+
+    if (gsl_version() < v1.16 && $k > $n) {
+        die __PACKAGE__.": This version of GSL doesn't support k > n"
+    }
+
+	my $self = { k => $k, n => $n, multiset => gsl_multiset_calloc($n, $k)};
+
+	return bless $self, $class;
+}
+
+sub init_first {
+	my ($self) = @_;
+	gsl_multiset_init_first($self->{multiset});
+}
+
+sub init_last {
+	my ($self) = @_;
+	gsl_multiset_init_last($self->{multiset});
+}
+
+
+sub get {
+	my ($self, $i) = @_;
+	die __PACKAGE__.": element $i is out of range (0 <= i < $self->{k})"
+		unless $i >= 0 && $i < $self->{k};
+	return gsl_multiset_get($self->{multiset}, $i);
+}
+
+sub k { $_[0]->{k} }
+sub n { $_[0]->{n} }
+
+sub clone {
+	my $self = shift;
+	my $other = ref($self)->new($self->n, $self->k);
+	gsl_multiset_memcpy($other->{multiset}, $self->{multiset});
+	return $other;
+}
+
+sub next {
+	my $self=shift;
+	return gsl_multiset_next($self->{multiset});
+}
+
+sub prev {
+	my $self=shift;
+	return gsl_multiset_prev($self->{multiset});
+}
+
+sub to_list {
+	my $self = shift;
+	return map { $self->get($_) } (0..$self->k-1);
+}
+
+sub DESTROY {
+	my $self = shift;
+	gsl_multiset_free($self->{multiset});
+}
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+Math::GSL::Multiset - Multisets manipulation
+
+=head1 SYNOPSIS
+
+    use Math::GSL::Multiset qw/:all/;
+
+    my $ms = Math::GSL::Multiset->($n, $k);
+    
+    my $value = $ms->get(2);
+
+    # compute next multiset
+    $ms->next;
+    # compute the previous multiset
+
+
+    # clone a multiset
+    my $other = $ms->clone();
+
+=head1 DESCRIPTION
+
+A multiset c is represented by an array of k integers 
+in the range 0 to n-1, where each value c_i may occur more
+than once. The multiset c corresponds to indices of k elements 
+chosen from an n element vector with replacement. In mathematical
+terms, n is the cardinality of the multiset while k is the maximum
+multiplicity of any value.
+
+=head2 Object Oriented API
+
+Handy Perl-style OO API for Multisets.
+
+=over 4
+
+=item C<new>
+
+Creates a new multiset with parameters n, k and initializes it to the 
+lexicographically first multiset element, i.e., 0 repeated k times.
+
+    my $ms = Math::GSL::Multiset->($n, $k);
+
+=item C<init_first>
+
+Initializes the multiset to the lexicographically first multiset element, i.e.
+0 repeated k times. 
+
+    $ms->init_first;
+
+=item C<init_last>
+
+Initializes the multiset c to the lexicographically last multiset element, i.e.
+n-1 repeated k times. 
+
+    $ms->init_last;
+
+=item C<get>
+
+Returns the value of the i-th element of the multiset. If i lies outside
+the allowed range of 0 to k-1 then the error handler is invoked and 0 is returned.
+
+    my $val = $ms->get($k-1);
+
+=item C<next>
+
+Advances the multiset to the next multiset element in lexicographic order and returns
+GSL_SUCCESS. If no further multisets elements are available it returns GSL_FAILURE and
+leaves the multiset unmodified. Starting with the first multiset and repeatedly applying
+this function will iterate through all possible multisets of a given order. 
+
+    $ms->next();
+
+=item C<prev>
+
+    $ms->prev();
+
+Steps backwards from the multiset to the previous multiset element in lexicographic 
+order, returning GSL_SUCCESS. If no previous multiset is available it returns
+GSL_FAILURE and leaves the multiset unmodified. 
+
+=item C<to_list>
+
+Creates a Perl list of integers with the values from the multiset, starting at
+index 0 and ending at index $k-1.
+
+    @data = $ms->to_list;
+
+=item C<clone>
+
+Creates a new multiset with the same size, and same values.
+
+    my $new = $ms->clone;
+
+=back
+
+=head2 GSL API
+
+For reference on these methds, please consult the GSL documentation.
+
+=over 4 
+
+=item C<gsl_multiset_calloc>
+
+=item C<gsl_multiset_alloc>
+
+=item C<gsl_multiset_init_first>
+
+=item C<gsl_multiset_init_last>
+
+=item C<gsl_multiset_free>
+
+=item C<gsl_multiset_memcpy>
+
+=item C<gsl_multiset_get>
+
+=item C<gsl_multiset_n>
+
+=item C<gsl_multiset_k>
+
+=item C<gsl_multiset_data>
+
+=item C<gsl_multiset_valid>
+
+=item C<gsl_multiset_next>
+
+=item C<gsl_multiset_prev>
+
+=item C<gsl_multiset_fwrite>
+
+=item C<gsl_multiset_fread>
+
+=item C<gsl_multiset_fprintf>
+
+=item C<gsl_multiset_fscanf>
+
+
+=back
+
+=head1 AUTHORS
+
+Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2008-2016 Jonathan "Duke" Leto and Thierry Moisan
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+%}
+
+

@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - added Math::GSL::Multiset (standard gsl API and Perl OO)
+
 =head1 v0.40 - ??? 2016
     - gsl_linalg_givens now works
     - gsl_vector_const_subvector is now exported properly

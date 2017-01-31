@@ -62,3 +62,9 @@ cp Math-GSL*.tar.gz /tmp
 ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
 cd $ORIG_DIR
 
+git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+source ~/travis-perl-helpers/init
+build-perl
+perl -V
+build-dist
+cd $BUILD_DIR # $BUILD_DIR is set by the build-dist command

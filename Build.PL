@@ -56,7 +56,7 @@ $ccflags .= try_cflags("-Wno-unused-variable");
 $ccflags .= try_cflags("-Wno-gnu");
 $ccflags .= try_cflags("-g");
 
-$swig_flags = "$gsl_conf->{gsl_cflags} $swig_flags";
+$swig_flags = "$gsl_conf->{gsl_cflags} $swig_flags -DGSL_DISABLE_DEPRECATED";
 
 if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z} ) {
     $ldflags .= " -L$1 -lperl";

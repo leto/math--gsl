@@ -1,5 +1,7 @@
 =head1 Math::GSL Changes
 
+    - compiles against GSL 2.3 and GSL 2.4
+
     - added Math::GSL::Multiset (standard gsl API and Perl OO)
 
 =head1 v0.40 - ??? 2016

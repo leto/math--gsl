@@ -119,4 +119,52 @@ return {
       "2.2.1" => [qw/
         ^gsl_linalg_cholesky_decomp1$
       /],
+      "2.3" => [qw/
+      ^gsl_multifit_linear_tsvd$
+      ^gsl_multifit_linear_rank$
+      ^gsl_multifit_wlinear_tsvd$
+      ^gsl_multifit_linear_gcv_init$
+      ^gsl_multifit_linear_gcv_curve$
+      ^gsl_multifit_linear_gcv_min$
+      ^gsl_multifit_linear_gcv_calc$
+      ^gsl_multifit_linear_gcv$
+      /],
+      "2.4" => [qw/
+      ^gsl_integration_fixed_n$
+      ^gsl_integration_fixed_nodes$
+      ^gsl_integration_fixed_weights$
+      ^gsl_integration_fixed$
+      ^gsl_linalg_COD_lssolve2$
+      ^gsl_sf_hermite_prob_e$
+      ^gsl_sf_hermite_prob$
+      ^gsl_sf_hermite_prob_der_e$
+      ^gsl_sf_hermite_prob_der$
+      ^gsl_sf_hermite_phys_e$
+      ^gsl_sf_hermite_phys$
+      ^gsl_sf_hermite_phys_der_e$
+      ^gsl_sf_hermite_phys_der$
+      ^gsl_sf_hermite_func_e$
+      ^gsl_sf_hermite_func$
+      ^gsl_sf_hermite_prob_array$
+      ^gsl_sf_hermite_prob_array_der$
+      ^gsl_sf_hermite_prob_der_array$
+      ^gsl_sf_hermite_prob_series_e$
+      ^gsl_sf_hermite_prob_series$
+      ^gsl_sf_hermite_phys_array$
+      ^gsl_sf_hermite_phys_array_der$
+      ^gsl_sf_hermite_phys_der_array$
+      ^gsl_sf_hermite_phys_series_e$
+      ^gsl_sf_hermite_phys_series$
+      ^gsl_sf_hermite_func_array$
+      ^gsl_sf_hermite_func_series_e$
+      ^gsl_sf_hermite_func_series$
+      ^gsl_sf_hermite_func_der_e$
+      ^gsl_sf_hermite_func_der$
+      ^gsl_sf_hermite_prob_zero_e$
+      ^gsl_sf_hermite_prob_zero$
+      ^gsl_sf_hermite_phys_zero_e$
+      ^gsl_sf_hermite_phys_zero$
+      ^gsl_sf_hermite_func_zero_e$
+      ^gsl_sf_hermite_func_zero$
+      /],
 };

@@ -87,7 +87,7 @@ L<Math::GSL::Const>           - Various Constants
 
 L<Math::GSL::DHT>             - Discrete Hankel Transforms
 
-L<Math::GSL::Deriv>            - Numerical Derivative
+L<Math::GSL::Deriv>           - Numerical Derivative
 
 L<Math::GSL::Eigen>           - Eigenvalues and Eigenvectors
 
@@ -141,11 +141,15 @@ L<Math::GSL::Randist>         - Random Number Distributions
 
 L<Math::GSL::Roots>           - Root Finding Algorithms
 
+L<Math::GSL::Rstat>           - Running Statistics
+
 L<Math::GSL::SF>              - Special Functions
 
 L<Math::GSL::Siman>           - Simulated Annealing
 
 L<Math::GSL::Sort>            - Sorting
+
+L<Math::GSL::SparseMatrix>    - Sparse Matrices
 
 L<Math::GSL::Spline>          - Splines
 
@@ -159,7 +163,7 @@ L<Math::GSL::Vector>          - N-dimensional Vectors
 
 L<Math::GSL::Wavelet>         - Basic Wavelets
 
-L<Math::GSL::Wavelet2D>        - 2D Wavelets
+L<Math::GSL::Wavelet2D>       - 2D Wavelets
 
 =cut
 

@@ -23,12 +23,30 @@ sub teardown : Test(teardown) {
 
 sub GSL_FDFSOLVER_BASIC : Tests {
     my $self = shift;
-    local $TODO = 'this blows up';
-    #ok_status(gsl_root_fdfsolver_set($self->{fdfsolver},
-    #    sub { my $x=shift; ($x-3.2)**3 },
-    #    5
-    #));
 
+    my $solver = $self->{fdfsolver};
+
+    ok_status(
+        gsl_root_fdfsolver_set(
+            $solver,
+            {
+                f  => sub { my $x = shift; $x**3 ; },
+                df => sub { my $x = shift; 3 * $x**2 ; },
+                fdf => sub {
+                    my $x = shift;
+                    return $x**3, 3 * $x**2;
+                }
+            },
+            5
+        ) );
+
+    my ( $status, $root );
+    for ( 1 .. 20 ) {
+        $status = gsl_root_fdfsolver_iterate( $solver );
+        $root   = gsl_root_fdfsolver_root( $solver );
+    }
+    ok_status( $status );
+    ok_similar( [$root], [0], 'gsl_root_fdfsolver_root', 0.1 );
 }
 
 sub GSL_ROOTS_SET : Tests {

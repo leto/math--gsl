@@ -103,17 +103,39 @@ invoked with an error code of $GSL_ENOMEM.
 
 =item * C<gsl_root_fdfsolver_set($s, $fdf, $root)> -
 
-This function initializes, or reinitializes, an existing solver $s to use the
-function and derivative $fdf and the initial guess $root. $f has to be of this
-form :
+This function initializes, or reinitializes, an existing solver $s, to use the
+function and its derivativess, $fdf, and the initial guess, $root. 
 
-    sub { my $x=shift; function($x) }
+$fdf is a hash with the following elements:
 
-For example:
+=over
 
-    sub { my $x=shift; ($x-3.2)**3 }
+=item f
 
-is a valid value for $fdf.
+A subroutine returning the value of the function at a given C<x>. It is called as C<&$f($x)>.
+
+=item df
+
+A subroutine returning the value of the derivative of the function with
+respect to C<x>. It is called as C<&$df($x)>.
+
+=item fdf
+
+A subroutine returning the value of the function and its derivative with
+respect to C<x>. It is called as C<&$fdf($x)>.
+
+=back
+
+For example,
+
+  $fdf = {
+    f   => sub { my $x = shift; exp( 2 * $x ) },
+    df  => sub { my $x = shift; 2 * exp( 2 * $x ) },
+    fdf => sub { my $x = shift;
+                 my $t = exp( 2 * x );
+                 $t, 2 * $t;
+           }
+  }
 
 =item * C<gsl_root_fdfsolver_iterate($s)> -
 
@@ -126,7 +148,7 @@ $GSL_EZERODIV - The derivative of the function vanished at the iteration point, 
 
 =item * C<gsl_root_fdfsolver_free($s)> -
 
-This function frees all the memory associated with the solver $s.
+Don't call this function explicitly. It will be called automatically in DESTROY for fdfsolver.
 
 =item * C<gsl_root_fdfsolver_name($s)> -
 

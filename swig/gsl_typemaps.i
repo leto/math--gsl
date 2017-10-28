@@ -443,6 +443,15 @@ void array_wrapper_free(array_wrapper * daw){
         SV * function;
         SV * params;
     };
+
+    struct gsl_function_fdf_perl {
+        gsl_function_fdf C_gsl_function_fdf;
+        SV * f;
+        SV * df;
+        SV * fdf;
+        SV * params;
+    };
+
     struct gsl_monte_function_perl {
         gsl_monte_function C_gsl_monte_function;
         SV * f;
@@ -458,11 +467,20 @@ void array_wrapper_free(array_wrapper * daw){
         }
     }
 
+    void gsl_function_fdf_perl_free(struct gsl_function_fdf_perl * perl_fdf){
+        if (perl_fdf != NULL) {
+	  SvREFCNT_dec(perl_fdf->f);
+	  SvREFCNT_dec(perl_fdf->df);
+	  SvREFCNT_dec(perl_fdf->fdf);
+	  SvREFCNT_dec(perl_fdf->params);
+	  Safefree(perl_fdf);
+        }
+    }
+
     /* These functions (C callbacks) calls the perl callbacks.
        Info for perl callback can be found using the 'void*params' parameter
     */
-    double call_gsl_function(double x , void *params){
-        struct gsl_function_perl *F=(struct gsl_function_perl*)params;
+    double call_gsl_function_x_params(SV* function, double x, SV *params){
         unsigned int count;
         double y;
         dSP;
@@ -473,10 +491,10 @@ void array_wrapper_free(array_wrapper * daw){
 
         PUSHMARK(SP);
         XPUSHs(sv_2mortal(newSVnv((double)x)));
-        XPUSHs(F->params);
+        XPUSHs(params);
         PUTBACK;                                /* make local stack pointer global */
 
-        count = call_sv(F->function, G_SCALAR);
+        count = call_sv(function, G_SCALAR);
         SPAGAIN;
 
         if (count != 1)
@@ -490,6 +508,52 @@ void array_wrapper_free(array_wrapper * daw){
 
         return y;
     }
+
+    double call_gsl_function(double x , void *params){
+        struct gsl_function_perl *F=(struct gsl_function_perl*)params;
+	return call_gsl_function_x_params( F->function, x, F->params );
+    }
+
+    double call_gsl_function_fdf_f(double x , void *params){
+        struct gsl_function_fdf_perl *F=(struct gsl_function_fdf_perl*)params;
+	return call_gsl_function_x_params( F->f, x, F->params );
+    }
+
+    double call_gsl_function_fdf_df(double x , void *params){
+        struct gsl_function_fdf_perl *F=(struct gsl_function_fdf_perl*)params;
+	return call_gsl_function_x_params( F->df, x, F->params );
+    }
+
+    void call_gsl_function_fdf_fdf(double x , void *params, double *f, double *df ){
+        struct gsl_function_fdf_perl *F=(struct gsl_function_fdf_perl*)params;
+
+        dSP;
+
+        ENTER;
+        SAVETMPS;
+
+        PUSHMARK(SP);
+	EXTEND(SP, 2);
+        PUSHs(sv_2mortal(newSVnv((double)x)));
+        PUSHs(F->params);
+        PUTBACK;                                /* make local stack pointer global */
+
+	{
+	  unsigned int count = call_sv(F->fdf, G_ARRAY);
+	  SPAGAIN;
+
+	  if (count != 2)
+	    croak( "Expected two return values, got %d", count );
+	}
+
+        *f = POPn;
+	*df = POPn;
+
+        PUTBACK;                                /* make local stack pointer global */
+        FREETMPS;
+        LEAVE;
+    }
+
     double call_gsl_monte_function(double *x_array , size_t dim, void *params){
         struct gsl_monte_function_perl *F=(struct gsl_monte_function_perl*)params;
         unsigned int count;
@@ -644,19 +708,104 @@ void array_wrapper_free(array_wrapper * daw){
     SvREFCNT_dec(p->params);
 };
 
+%{
+  void gsl_function_fdf_extract( char* param_name, HV* hash, SV* func[] ) {
+    static const char *keys[3] = { "f", "df", "fdf" };
+
+    int ikey;
+
+    for ( ikey = 0 ; ikey < 3 ; ++ikey ) {
+      func[ikey] = 0;
+      const char* key = keys[ikey];
+      /* it just so happens that strlen(keys[ikey]) == ikey + 1 */
+      SV** pp_sv = hv_fetch( hash, key, ikey+1, 0 );
+      SV* function;
+
+      if ( !pp_sv )
+	croak("Math::GSL : %s: missing key %s!", param_name, key);
+
+      function = *pp_sv;
+
+      if ( SvPOK(function) || ( SvROK( function ) && SvTYPE(SvRV(function)) == SVt_PVCV ) ) {
+        /* hold on to SV after the enclosing hash goes away */
+        SvREFCNT_inc( function );
+	func[ikey] = function;
+      }
+      else {
+	croak( "Math::GSL : %s:  key %s is not a reference to code!", param_name, key);
+      }
+    }
+  }
+
+%}
+
+%typemap(in) gsl_function_fdf * {
+    SV* func[3];
+    SV * params = 0;
+
+    struct gsl_function_fdf_perl *w_gsl_function_fdf;
+    Newx(w_gsl_function_fdf, 1, struct gsl_function_fdf_perl);
+
+    if (SvROK($input) && (SvTYPE(SvRV($input)) == SVt_PVAV)) {
+	AV* array=(AV*)SvRV($input);
+
+	if (av_len(array)<1) {
+	    croak("Math::GSL : $$1_name is an empty array!");
+	}
+	if (av_len(array)>2) {
+	    croak("Math::GSL : $$1_name is an array with more than 2 elements!");
+	}
+
+	{
+	  SV** pp_sv = av_fetch(array, 0, 0);
+	  if ( ! SvROK( *pp_sv ) || SvTYPE(SvRV(*pp_sv)) != SVt_PVHV )
+	    croak("Math::GSL : first element of $$1_name must be a hashref!");
+
+	  gsl_function_fdf_extract( "$$1_name", (HV*) SvRV(*pp_sv), func );
+	}
+
+	if (av_len(array)>1) {
+	    SV ** p_params = 0;
+	    p_params = av_fetch(array, 1, 0);
+	    params = *p_params;
+	}
+    } else if (SvROK($input) && (SvTYPE(SvRV($input)) == SVt_PVHV)) {
+
+	HV* hash = (HV*) SvRV($input );
+	gsl_function_fdf_extract( "$$1_name", hash, func );
+
+    } else {
+      croak("Math::GSL : $$1_name must be a hashref!");
+    }
+
+    if (! params) {
+	params=&PL_sv_undef;
+    }
+    params = newSVsv(params);
+
+    w_gsl_function_fdf->params = params;
+    w_gsl_function_fdf->f   = func[0];
+    w_gsl_function_fdf->df  = func[1];
+    w_gsl_function_fdf->fdf = func[2];
+
+
+    w_gsl_function_fdf->C_gsl_function_fdf.params = w_gsl_function_fdf;
+    w_gsl_function_fdf->C_gsl_function_fdf.f   = &call_gsl_function_fdf_f;
+    w_gsl_function_fdf->C_gsl_function_fdf.df  = &call_gsl_function_fdf_df;
+    w_gsl_function_fdf->C_gsl_function_fdf.fdf = &call_gsl_function_fdf_fdf;
+
+    $1 = &w_gsl_function_fdf->C_gsl_function_fdf;
+};
+
+%typemap(freearg) gsl_function_fdf * {
+    struct gsl_function_fdf_perl *p=(struct gsl_function_fdf_perl *) $1->params;
+    gsl_function_fdf_perl_free(p);
+};
 
 %typemap(freearg) gsl_function * {
     struct gsl_function_perl *p=(struct gsl_function_perl *) $1->params;
     gsl_function_perl_free(p);
 };
-
-
-/*
-%typemap(in) gsl_function_fdf * {
-    XSRETURN(GSL_NAN);
-}
-*/
-
 
 %typemap(in) (const gsl_qrng * q, double x[]) (void *argp = 0, int res) {
     res = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_gsl_qrng, 0 );

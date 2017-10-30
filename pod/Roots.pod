@@ -101,41 +101,114 @@ derivative-based solver of type $T. If there is insufficient memory to create
 the solver then the function returns a null pointer and the error handler is
 invoked with an error code of $GSL_ENOMEM.
 
-=item * C<gsl_root_fdfsolver_set($s, $fdf, $root)> -
+=item * C<gsl_root_fdfsolver_set($s, $fspec, $root)> -
 
-This function initializes, or reinitializes, an existing solver $s, to use the
-function and its derivativess, $fdf, and the initial guess, $root. 
+This function initializes, or reinitializes, an existing fdfsolver C<$s> to use the
+function and its derivatives specified by C<$fspec> and the initial guess C<$root.> 
 
-$fdf is a hash with the following elements:
+C<$fspec> may either be:
+
 
 =over
 
-=item f
+=item *
 
-A subroutine returning the value of the function at a given C<x>. It is called as C<&$f($x)>.
+A hashref with elements C<f>, C<df>, C<fdf>.
 
-=item df
 
-A subroutine returning the value of the derivative of the function with
-respect to C<x>. It is called as C<&$df($x)>.
+=item *
 
-=item fdf
+An arrayref with elements C<[ $hashref, $params ]>
 
-A subroutine returning the value of the function and its derivative with
-respect to C<x>. It is called as C<&$fdf($x)>.
+where C<$hashref> has elements  C<f>, C<df>, C<fdf>;
 
 =back
 
-For example,
+The hashref elements are
+
+=over
+
+=item *
+
+C<f>
+
+A coderef returning the value of the function at a given C<x>. It is called as C<&$f($x, $params)>.
+
+=item *
+
+C<df>
+
+A coderef returning the value of the derivative of the function with
+respect to C<x>. It is called as C<&$df($x, $params)>.
+
+=item *
+
+C<fdf>
+
+A coderef returning the value of the function and its derivative with
+respect to C<x>. It is called as C<&$fdf($x, $params)>.
+
+=back
+
+
+For example, to find the root of a quadratic with run-time specified coefficients C<3, 2, 22>,
 
   $fdf = {
-    f   => sub { my $x = shift; exp( 2 * $x ) },
-    df  => sub { my $x = shift; 2 * exp( 2 * $x ) },
-    fdf => sub { my $x = shift;
-                 my $t = exp( 2 * x );
-                 $t, 2 * $t;
-           }
-  }
+
+      f => sub {
+          my ( $x, $params ) = @_;
+          return $params->[0] + $x * $params->[1] + $x**2 * $params->[2];
+      },
+
+      df => sub {
+          my ( $x, $params ) = @_;
+
+          $params->[1] + 2 * $x * $params->[2];
+      },
+
+      fdf => sub {
+          my ( $x, $params ) = @_;
+
+          return
+            $params->[0] + $x * $params->[1] + $x**2 * $params->[2],
+            $params->[1] + 2 * $x * $params->[2];
+      },
+  };
+
+  $fspec = [ $fdf, [ 3, 2, 22 ];
+
+  gsl_root_fdsolver_set( $s, $fspec );
+
+If there are no extra parameters, set C<$fspec> to C<$fdf>:
+
+  $fdf = {
+
+      f => sub {
+          my $x = shift;
+          return $x + $x**2;
+      },
+
+      df => sub {
+          my $x = shift;
+
+          1 + 2 * $x;
+      },
+
+      fdf => sub {
+          my $x = shift;
+
+          return
+            $x + $x**2,
+            1 + 2 * $x;
+      },
+  };
+
+  gsl_root_fdfsolver_set( $s, $fdf );
+
+Don't apply C<gsl_root_fdffsolver_set> twice to the same fdfsolver.  It
+will cause a memory leak. Instead of this you should create new
+fdfsolver.
+
 
 =item * C<gsl_root_fdfsolver_iterate($s)> -
 

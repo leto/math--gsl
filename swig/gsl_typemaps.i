@@ -546,8 +546,8 @@ void array_wrapper_free(array_wrapper * daw){
 	    croak( "Expected two return values, got %d", count );
 	}
 
-        *f = POPn;
 	*df = POPn;
+        *f = POPn;
 
         PUTBACK;                                /* make local stack pointer global */
         FREETMPS;

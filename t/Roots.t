@@ -2,7 +2,7 @@ package Math::GSL::Roots::Test;
 use strict;
 use warnings;
 use base q{Test::Class};
-use Test::More tests => 13;
+use Test::More tests => 16;
 use Math::GSL        qw/:all/;
 use Math::GSL::Roots qw/:all/;
 use Math::GSL::Test  qw/:all/;

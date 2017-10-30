@@ -749,10 +749,10 @@ void array_wrapper_free(array_wrapper * daw){
     if (SvROK($input) && (SvTYPE(SvRV($input)) == SVt_PVAV)) {
 	AV* array=(AV*)SvRV($input);
 
-	if (av_len(array)<1) {
+	if (av_len(array)<0) {
 	    croak("Math::GSL : $$1_name is an empty array!");
 	}
-	if (av_len(array)>2) {
+	if (av_len(array)>1) {
 	    croak("Math::GSL : $$1_name is an array with more than 2 elements!");
 	}
 
@@ -764,7 +764,7 @@ void array_wrapper_free(array_wrapper * daw){
 	  gsl_function_fdf_extract( "$$1_name", (HV*) SvRV(*pp_sv), func );
 	}
 
-	if (av_len(array)>1) {
+	if (av_len(array)>0) {
 	    SV ** p_params = 0;
 	    p_params = av_fetch(array, 1, 0);
 	    params = *p_params;

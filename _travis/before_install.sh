@@ -19,6 +19,9 @@ get_gsl () {
 }
 
 _get_master_gsl () {
+    
+    rmdir "gsl-master" && echo "removed empty gsl-master directory"
+
     if [ ! -d "gsl-master" ]; then
         git clone git://git.savannah.gnu.org/gsl.git gsl-master
         cd gsl-master
@@ -52,12 +55,14 @@ get_gsl 1.16
 get_gsl 2.0
 get_gsl 2.1
 get_gsl 2.2.1
+get_gsl 2.3
+get_gsl 2.4
 get_master_gsl
 
 ls -la /tmp/
-ls -la /tmp/gsl-2.2.1/bin
-cd /home/travis/build/leto/math--gsl
-LD_LIBRARY_PATH=/tmp/gsl-2.2.1/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-2.2.1/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
+ls -la /tmp/gsl-2.4/bin
+cd $TRAVIS_BUILD_DIR
+LD_LIBRARY_PATH=/tmp/gsl-4/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-4/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
 cp Math-GSL*.tar.gz /tmp
 ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
 cd $ORIG_DIR

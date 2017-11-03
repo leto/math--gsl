@@ -7,6 +7,8 @@ cache:
   - ccache
   - apt
   - directories:
+    - /tmp/gsl-2.4
+    - /tmp/gsl-2.3
     - /tmp/gsl-2.2.1
     - /tmp/gsl-2.0
     - /tmp/gsl-2.1
@@ -29,6 +31,8 @@ env:
         - CCACHE_CPP2=1
         - CC="ccache clang"
     matrix:
+        - GSL=2.4
+        - GSL=2.3
         - GSL=2.2.1
         - GSL=2.1
         - GSL=2.0
@@ -50,7 +54,7 @@ before_install: ./_travis/before_install.sh
 # Add verbosity for debugging
 install:
     # this should always point to the version we build the CPAN dist with
-    - PATH=/tmp/gsl-2.2.1/bin:$PATH cpanm --installdeps --notest . &> /dev/null
+    - PATH=/tmp/gsl-4/bin:$PATH cpanm --installdeps --notest . &> /dev/null
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps

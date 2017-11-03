@@ -59,11 +59,22 @@ get_gsl 2.3
 get_gsl 2.4
 get_master_gsl
 
+GSL_CURRENT_DIR=/tmp/gsl-2.4
+
 ls -la /tmp/
-ls -la /tmp/gsl-2.4/bin
+ls -la $GSL_CURRENT_DIR/bin
 cd $TRAVIS_BUILD_DIR
-LD_LIBRARY_PATH=/tmp/gsl-4/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-4/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
+export LD_LIBRARY_PATH=$GSL_CURRENT_DIR/lib:$LD_LIBRARY_PATH
+export PATH=$GSL_CURRENT_DIR/bin:$PATH
+
+# create a CPAN dist with latest supported GSL release
+perl Build.PL                                   \
+    && ./Build                                  \
+    && ./Build dist
+
 cp Math-GSL*.tar.gz /tmp
-ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
+
+# now we have a CPAN dist to test on each version of GSL
+ls -la /tmp/Math-GSL*.tar.gz
 cd $ORIG_DIR
 

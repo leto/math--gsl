@@ -89,7 +89,7 @@ my $cleanup = qq{
 
 $ldflags = '-shared ' . $ldflags unless GSLBuilder::is_darwin();
 
-my $ver2func = do(catfile(qw/inc ver2func/));
+my $ver2func = do(rel2abs(catfile(qw/inc ver2func/)));
 
 my $swig_version;
 

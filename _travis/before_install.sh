@@ -19,7 +19,7 @@ get_gsl () {
 }
 
 _get_master_gsl () {
-    
+
     rmdir "gsl-master" && echo "removed empty gsl-master directory"
 
     if [ ! -d "gsl-master" ]; then
@@ -60,10 +60,9 @@ get_gsl 2.4
 get_master_gsl
 
 ls -la /tmp/
-ls -la /tmp/gsl-2.4/bin
+ls -la /tmp/gsl-2.2.1/bin
 cd $TRAVIS_BUILD_DIR
-LD_LIBRARY_PATH=/tmp/gsl-4/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-4/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
+LD_LIBRARY_PATH=/tmp/gsl-${GSL_CURRENT}/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-4/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
 cp Math-GSL*.tar.gz /tmp
 ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
 cd $ORIG_DIR
-

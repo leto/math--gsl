@@ -20,16 +20,19 @@ before_cache:
   - rm -f /tmp/gsl-*/config.log /tmp/gsl-*/libtool
 
 perl:
+    - "5.26"
     - "5.24"
     - "5.20-extras" # -Duseshrplib -Duseithreads
     - "5.16"
     - "5.10"
     - "5.8"
 
+# GSL_CURRENT should always point to the version we build the CPAN dist with
 env:
     global:
         - CCACHE_CPP2=1
         - CC="ccache clang"
+        - GSL_CURRENT=2.2.1
     matrix:
         - GSL=2.4
         - GSL=2.3
@@ -53,8 +56,7 @@ before_install: ./_travis/before_install.sh
 
 # Add verbosity for debugging
 install:
-    # this should always point to the version we build the CPAN dist with
-    - PATH=/tmp/gsl-4/bin:$PATH cpanm --installdeps --notest . &> /dev/null
+    - PATH=/tmp/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps

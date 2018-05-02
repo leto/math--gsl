@@ -69,9 +69,7 @@ script:
     - cd Math-GSL*
     - perl Build.PL
     - ./Build
-    # - ./Build test verbose=1
-    # -j3 saves us 3 seconds but makes the output really annoying to read
-    - prove -rblvs t/
+    - ./Build test
 
 # NOTE: this only finds the first corefile generated
 after_failure:

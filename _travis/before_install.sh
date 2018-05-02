@@ -13,10 +13,10 @@ get_gsl () {
 
 get_gsl_version () {
     # only download if necessary
-    if [ ! -e "gsl-$1.tar.gz" ]; then
-        wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz
+    if [ ! -e "src/gsl-$1.tar.gz" ]; then
+        ( cd src; wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz )
     fi
-    tar zxpf gsl-$1.tar.gz
+    tar zxpf src/gsl-$1.tar.gz
     cd gsl-$1
     ./configure --prefix /tmp/gsl-$1
     make -j2

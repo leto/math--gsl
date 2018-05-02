@@ -7,6 +7,7 @@ cache:
   - ccache
   - apt
   - directories:
+    - /tmp/src
     - /tmp/gsl-2.4
     - /tmp/gsl-2.3
     - /tmp/gsl-2.2.1

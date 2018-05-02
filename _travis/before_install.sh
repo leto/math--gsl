@@ -53,7 +53,7 @@ cpanm -n PkgConfig
 export ORIG_DIR=`pwd`
 echo ORIG_DIR=$ORIG_DIR
 cd /tmp
-ls -la /tmp/
+ls -la /tmp/src
 get_gsl $GSL
 get_gsl $GSL_CURRENT
 

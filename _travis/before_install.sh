@@ -1,7 +1,17 @@
 #!/bin/bash
 set -ev
 
-_get_gsl () {
+get_gsl () {
+
+    if [ "$1" = master ] ; then
+        get_gsl_master
+    else
+        get_gsl_version $1 &> /dev/null
+
+    fi
+}
+
+get_gsl_version () {
     # only download if necessary
     if [ ! -e "gsl-$1.tar.gz" ]; then
         wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz
@@ -14,11 +24,8 @@ _get_gsl () {
     cd ..
 }
 
-get_gsl () {
-    _get_gsl $1 &> /dev/null
-}
 
-_get_master_gsl () {
+get_master_gsl () {
 
     rmdir "gsl-master" && echo "removed empty gsl-master directory"
 
@@ -41,28 +48,18 @@ _get_master_gsl () {
     cd ..
 }
 
-get_master_gsl () {
-    _get_master_gsl
-    #_get_master_gsl &> /dev/null
-}
 
 cpanm -n PkgConfig
 export ORIG_DIR=`pwd`
 echo ORIG_DIR=$ORIG_DIR
 cd /tmp
-get_gsl 1.15
-get_gsl 1.16
-get_gsl 2.0
-get_gsl 2.1
-get_gsl 2.2.1
-get_gsl 2.3
-get_gsl 2.4
-get_master_gsl
+get_gsl $GSL
+get_gsl $GSL_CURRENT
 
 ls -la /tmp/
-ls -la /tmp/gsl-2.2.1/bin
+ls -la /tmp/gsl-${GSL_CURRENT}/bin
 cd $TRAVIS_BUILD_DIR
-LD_LIBRARY_PATH=/tmp/gsl-${GSL_CURRENT}/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-4/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
+LD_LIBRARY_PATH=/tmp/gsl-${GSL_CURRENT}/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-${GSL_CURRENT}/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
 cp Math-GSL*.tar.gz /tmp
 ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
 cd $ORIG_DIR

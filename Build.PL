@@ -148,6 +148,7 @@ my $builder = GSLBuilder->new(
     configure_requires => {
         'PkgConfig'       => '0.07720',
         'Module::Build'   => '0.38',
+        'Alien::GSL'      => '1.01',
     },
     swig_source           => $swig_source,
     swig_version          => $swig_version,

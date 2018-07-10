@@ -211,13 +211,18 @@ sub swig_binary_name {
     my $out  = eval { no warnings; `$cmd` };
     if ($?) {
         $cmd = "swig2.0 -version";
-        $out = eval { no warnings; `$cmd` };
-
+        $out  = eval { no warnings; `$cmd` };
         if ($?) {
-            die "Can't find the swig binary!";
-        } else {
-            return "swig2.0";
+            $cmd = "swig3.0 -version";
+            $out = eval { no warnings; `$cmd` };
+
+            if ($?) {
+                die "Can't find the swig binary!";
+            } else {
+                return "swig3.0";
+            }
         }
+        return "swig2.0";
     }
     return "swig";
 }

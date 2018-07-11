@@ -1,5 +1,6 @@
 =head1 Math::GSL Changes
 
+    - added random method in Math::GSL::Matrix (Rui Meira)
     - added Math::GSL::Multiset (standard gsl API and Perl OO)
 
 =head1 v0.40 - ??? 2016

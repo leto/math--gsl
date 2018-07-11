@@ -1080,6 +1080,20 @@ sub hconcat {
     }, 'Math::GSL::Matrix'
 }
 
+=head3 random ()
+
+Fills a matrix with random values between 0 and 1
+
+=cut
+
+sub random {
+	my ($self) = @_;
+	
+	gsl_matrix_random($self->raw);
+	
+	return $self;
+}
+
 
 
 

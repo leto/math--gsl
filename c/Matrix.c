@@ -43,3 +43,16 @@ gsl_matrix *gsl_matrix_vconcat(const gsl_matrix *A,
 
 	return C;
 }
+
+void gsl_matrix_random(const gsl_matrix *A){
+	int i, j, rows, cols;
+	rows = A->size1;
+	cols = A->size2;
+
+	for( i = 0; i < rows; i++)
+		for( j = 0; j < cols; j++ )
+			gsl_matrix_set (A, i, j, ((float)rand() / RAND_MAX));
+
+}
+
+	

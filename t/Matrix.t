@@ -942,4 +942,21 @@ sub CONCAT_HORIZONTALLY : Tests(5) {
     		 "should have same number of rows");
 }
 
+sub RANDOM : Tests(2) {
+	my $a = Math::GSL::Matrix->new(2,2);
+	$a->random();
+	my $false = 0;
+	my $k = 0;
+	for my $i (0..1){
+		for my $j (0..1){
+			my $v = $a->get_elem($i, $j);
+			$k++ if($v == 0);	
+			$false = 1 if($v < 0 || $v > 1);
+		 }
+	}
+	ok($k !=4);
+	ok($false == 0);
+	
+}
+
 Test::Class->runtests;

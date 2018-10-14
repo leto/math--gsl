@@ -16,6 +16,18 @@
     }
  }
 
+%typemap(freearg) gsl_function_fdf *;
+%newobject gsl_root_fdfsolver_alloc;
+%extend gsl_root_fdfsolver {
+    ~gsl_root_fdfsolver() {
+        if ($self->fdf != NULL) {
+            struct gsl_function_fdf_perl *perl_fdf = (struct gsl_function_fdf_perl *) $self->fdf->params;
+            gsl_function_fdf_perl_free(perl_fdf);
+        }
+        gsl_root_fdfsolver_free($self);
+    }
+ }
+
 %{
     #include "gsl/gsl_types.h"
     #include "gsl/gsl_roots.h"

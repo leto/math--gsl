@@ -44,7 +44,7 @@ Math::GSL::Roots - Find roots of arbitrary 1-D functions
 =item * C<gsl_root_fsolver_alloc($T)> -
 
 This function returns a pointer to a newly allocated instance of a solver of
-type $T. $T must be one of the constant included with this module. If there is
+type C<$T>. C<$T> must be one of the constant included with this module. If there is
 insufficient memory to create the solver then the function returns a null
 pointer and the error handler is invoked with an error code of $GSL_ENOMEM.
 
@@ -52,18 +52,57 @@ pointer and the error handler is invoked with an error code of $GSL_ENOMEM.
 
 Don't call this function explicitly. It will be called automatically in DESTROY for fsolver.
 
-=item * C<gsl_root_fsolver_set($s, $f, $x_lower, $x_upper)> -
+=item * C<gsl_root_fsolver_set($s, $fspec, $x_lower, $x_upper)> -
 
-This function initializes, or reinitializes, an existing solver $s to use the
-function $f and the initial search interval [$x_lower, $x_upper]. $f has to be
-of this form :
+This function initializes, or reinitializes, an existing solver C<$s>
+to use the function described by C<$fspec> and the initial search interval
+[C<$x_lower>, C<$x_upper>]. C<$fspec> may either be
 
-    sub { my $x=shift; function_with_$x }
-For example:
+=over
 
-    sub { my $x=shift; ($x-3.2)**3 }
+=item *
 
-is a valid value for $f.  Don't apply this function twice to the same fsolver.
+a I<coderef>, e.g.
+
+  $fspec = sub { ... };
+
+or
+
+  sub f { ... };
+  $fspec = \&f;
+
+=item *
+
+an arrayref with elements [ I<$coderef>, I<$params> ]
+
+=back
+
+The coderef is called as
+
+      &$coderef( $x, $params );
+
+and should return the function evaluated at C<$x, $params>. For example, to
+find the root of a quadratic with run-time specified coefficients C<3, 2, 22>,
+
+  $f = sub {
+             my ( $x, $params ) = @_;
+             return $params->[0] + $x * $params->[1] + $x**2 * $params->[2];
+           };
+
+  $fspec = [ $f, [ 3, 2, 22 ];
+
+  gsl_root_fsolver_set( $s, $fspec, $x_lower, $x_upper );
+
+If there are no extra parameters, set C<$fspec> to the function to be evaluated:
+
+  $fspec = sub {
+             my ( $x ) = shift;
+             return  $x + $x**2;
+           };
+
+  gsl_root_fsolver_set( $s, $fspec, $x_lower, $x_upper );
+
+Don't apply C<gsl_root_fsolver_set> twice to the same fsolver.
 It will cause a memory leak. Instead of this you should create new fsolver.
 
 =item * C<gsl_root_fsolver_iterate($s)> -

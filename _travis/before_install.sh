@@ -4,7 +4,6 @@ set -euv
 
 : ${GSL_INST_DIR:?environment variable not specified}
 : ${GSL_SRC_DIR:?environment variable not specified}
-: ${DIST_DIR:?environment variable not specified}
 : ${GSL:?environment variable not specified}
 : ${GSL_CURRENT:?environment variable not specified}
 
@@ -71,6 +70,8 @@ ls -la $GSL_INST_DIR
 ls -la ${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin
 
 if [ -n "$TRAVIS_BUILD_DIR" ] ; then
+
+    : ${DIST_DIR:?environment variable not specified}
 
     # perform in subshell to avoid polluting this shell
     (

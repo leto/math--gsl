@@ -1,5 +1,15 @@
 #!/bin/bash
-set -ev
+
+set -euv
+
+: ${GSL_INST_DIR:?environment variable not specified}
+: ${GSL_SRC_DIR:?environment variable not specified}
+: ${DIST_DIR:?environment variable not specified}
+: ${GSL:?environment variable not specified}
+: ${GSL_CURRENT:?environment variable not specified}
+
+mkdir -p $GSL_SRC_DIR
+mkdir -p $GSL_INST_DIR
 
 get_gsl () {
 
@@ -11,21 +21,27 @@ get_gsl () {
     fi
 }
 
-get_gsl_version () {
+get_gsl_version () (
+
+    set -euv
+    cd $GSL_SRC_DIR
+
     # only download if necessary
-    if [ ! -e "src/gsl-$1.tar.gz" ]; then
-        ( cd src; wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz )
+    if [ ! -e "gsl-$1.tar.gz" ]; then
+        wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-$1.tar.gz
     fi
-    tar zxpf src/gsl-$1.tar.gz
+    tar zxpf gsl-$1.tar.gz
     cd gsl-$1
-    ./configure --prefix /tmp/gsl-$1
+    ./configure --prefix $GSL_INST_DIR/gsl-$1
     make -j2
     make -j2 install
-    cd ..
-}
+)
 
 
-get_master_gsl () {
+get_master_gsl () (
+
+    set -euv
+    cd $GSL_SRC_DIR
 
     rmdir "gsl-master" && echo "removed empty gsl-master directory"
 
@@ -42,25 +58,30 @@ get_master_gsl () {
     echo "Testing GSL master commit $GSL_COMMIT"
 
     ./autogen.sh
-    ./configure --enable-maintainer-mode --prefix /tmp/gsl-master
+    ./configure --enable-maintainer-mode --prefix $GSL_INST_DIR/gsl-master
     make -j2
     make -j2 install
-    cd ..
-}
+)
 
-
-cpanm -n PkgConfig
-export ORIG_DIR=`pwd`
-echo ORIG_DIR=$ORIG_DIR
-cd /tmp
-ls -la /tmp/src
+ls -la $GSL_SRC_DIR
 get_gsl $GSL
 get_gsl $GSL_CURRENT
 
-ls -la /tmp/
-ls -la /tmp/gsl-${GSL_CURRENT}/bin
-cd $TRAVIS_BUILD_DIR
-LD_LIBRARY_PATH=/tmp/gsl-${GSL_CURRENT}/lib:$LD_LIBRARY_PATH PATH=/tmp/gsl-${GSL_CURRENT}/bin:$PATH perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
-cp Math-GSL*.tar.gz /tmp
-ls -la /tmp/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
-cd $ORIG_DIR
+ls -la $GSL_INST_DIR
+ls -la ${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin
+
+if [ -n "$TRAVIS_BUILD_DIR" ] ; then
+
+    # perform in subshell to avoid polluting this shell
+    (
+	cpanm -n PkgConfig
+	cd $TRAVIS_BUILD_DIR
+
+	export LD_LIBRARY_PATH=$GSL_INST_DIR/gsl-${GSL_CURRENT}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+	PATH=$GSL_INST_DIR/gsl-${GSL_CURRENT}/bin:$PATH
+
+	perl Build.PL && ./Build && ./Build dist # create a CPAN dist with latest supported GSL release
+	cp Math-GSL*.tar.gz $DIST_DIR
+	ls -la ${DIST_DIR}/Math-GSL*.tar.gz # now we have a CPAN dist to test on each version of GSL
+    )
+fi

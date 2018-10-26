@@ -18,7 +18,7 @@ cache:
     - /tmp/gsl-master
 
 before_cache:
-  - rm -f /tmp/gsl-*/config.log /tmp/gsl-*/libtool
+  - rm -f ${GSL_INST_DIR}/gsl-*/config.log ${GSL_INST_DIR}/gsl-*/libtool
 
 perl:
     - "5.26"
@@ -34,6 +34,9 @@ env:
         - CCACHE_CPP2=1
         - CC="ccache clang"
         - GSL_CURRENT=2.2.1
+        - GSL_INST_DIR=/tmp
+        - GSL_SRC_DIR=/tmp/src
+        - DIST_DIR=/tmp
     matrix:
         - GSL=2.4
         - GSL=2.3
@@ -57,16 +60,16 @@ before_install: ./_travis/before_install.sh
 
 # Add verbosity for debugging
 install:
-    - PATH=/tmp/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
+    - PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps
 
 script:
-    - export LD_LIBRARY_PATH=/tmp/gsl-$GSL/lib
-    - export PATH=/tmp/gsl-$GSL/bin:$PATH
+    - export LD_LIBRARY_PATH=${GSL_INST_DIR}/gsl-$GSL/lib
+    - export PATH=${GSL_INST_DIR}/gsl-$GSL/bin:$PATH
     - cd /tmp
-    - tar zxpf Math-GSL*
+    - tar zxpf ${DIST_DIR}/Math-GSL*
     - cd Math-GSL*
     - perl Build.PL
     - ./Build

@@ -60,7 +60,7 @@ before_install: ./_travis/before_install.sh
 
 # Add verbosity for debugging
 install:
-    - PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
+    - PKG_CONFIG_PATH=${GSL_INST_DIR}/gsl-$GSL/lib/pkgconfig PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps

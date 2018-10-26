@@ -38,7 +38,7 @@ get_gsl_version () (
 )
 
 
-get_master_gsl () (
+get_gsl_master () (
 
     set -euv
     cd $GSL_SRC_DIR

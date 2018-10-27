@@ -134,11 +134,13 @@ my $builder = GSLBuilder->new(
     },
     build_requires => {
         'Test::Most'      => '0.31',
+        'Test::More'      => 0,
         'Test::Exception' => '0.21',
         'Test::Class'     => '0.12',
         'Test::Taint'     => '1.06',
     },
     requires => {
+        'Math::Complex'   => 0,
         'Scalar::Util'    => 0,
         'version'         => '0.77',
         'perl'            => '5.8.1',

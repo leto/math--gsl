@@ -16,7 +16,7 @@ BEGIN {
     my ($major, $minor) = split /\./, $version;
     if ($major >= 2 && $minor >= 0) {
         eval "use Math::GSL::SparseMatrix qw/:all/";
-        die $@ if @$;
+        die $@ if $@;
     } else {
         plan skip_all => "SparseMatrix was added in GSL 2.0";
         exit(0);

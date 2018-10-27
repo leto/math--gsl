@@ -60,7 +60,7 @@ before_install: ./_travis/before_install.sh
 
 # Add verbosity for debugging
 install:
-    - PKG_CONFIG_PATH=${GSL_INST_DIR}/gsl-$GSL/lib/pkgconfig PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest --verbose
+    - PKG_CONFIG_PATH=${GSL_INST_DIR}/gsl-$GSL/lib/pkgconfig PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest --verbose .
     - cpanm --verbose --notest --skip-satisfied App::ReportPrereqs
 
 before_script:

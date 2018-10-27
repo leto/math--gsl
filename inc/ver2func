@@ -115,6 +115,16 @@ return {
         ^gsl_linalg_tri_upper_unit_invert$
         ^gsl_multilarge_linear_lcurve$
         ^gsl_permute_matrix$
+        ^gsl_spmatrix_ccs$
+        ^gsl_spmatrix_crs$
+        ^gsl_spmatrix_fread$
+        ^gsl_spmatrix_fscanf$
+        ^gsl_spmatrix_fwrite$
+        ^gsl_spmatrix_ptr$
+        ^gsl_spmatrix_ptr$
+        ^gsl_spmatrix_transpose$
+        ^gsl_spmatrix_transpose2$
+        ^gsl_spmatrix_tree_rebuild$
       /],
       "2.2.1" => [qw/
         ^gsl_linalg_cholesky_decomp1$

@@ -61,6 +61,7 @@ before_install: ./_travis/before_install.sh
 # Add verbosity for debugging
 install:
     - PKG_CONFIG_PATH=${GSL_INST_DIR}/gsl-$GSL/lib/pkgconfig PATH=${GSL_INST_DIR}/gsl-${GSL_CURRENT}/bin:$PATH cpanm --installdeps --notest . &> /dev/null
+    - cpanm --verbose --notest --skip-satisfied App::ReportPrereqs
 
 before_script:
     - ulimit -c unlimited -S       # enable core dumps
@@ -72,6 +73,8 @@ script:
     - tar zxpf ${DIST_DIR}/Math-GSL*
     - cd Math-GSL*
     - perl Build.PL
+    - mymeta-cpanfile > cpanfile
+    - report-prereqs --with-develop
     - ./Build
     - ./Build test
 

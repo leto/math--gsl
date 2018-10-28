@@ -121,8 +121,12 @@ sub process_versioned_swig_files {
         next if (cmp_versions($cur_ver, $ver) == -1);
         my @renames;
         foreach my $high_ver (keys %{$ver2func}) {
-            next if (cmp_versions($high_ver, $ver) < 1);
-            push @renames, @{$ver2func->{$high_ver}};
+            if ( cmp_versions($high_ver, $ver) < 1 ) {
+		push @renames, @{ $ver2func->{$ver}{deprecated} || [] };
+	    }
+	    else {
+		push @renames, @{ $ver2func->{$high_ver}{new} || [] };
+	    }
         }
         print "Building wrappers for GSL $ver\n";
         my $renames_fname = catfile(qw/swig renames.i/);

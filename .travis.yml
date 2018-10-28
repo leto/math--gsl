@@ -33,7 +33,7 @@ env:
     global:
         - CCACHE_CPP2=1
         - CC="ccache clang"
-        - GSL_CURRENT=2.2.1
+        - GSL_CURRENT=2.4
         - GSL_INST_DIR=/tmp
         - GSL_SRC_DIR=/tmp/src
         - DIST_DIR=/tmp

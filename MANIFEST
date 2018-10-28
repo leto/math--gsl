@@ -98,6 +98,7 @@ pm/Math/GSL/BLAS.pm.2.2
 pm/Math/GSL/BLAS.pm.2.2.1
 pm/Math/GSL/BLAS.pm.2.3
 pm/Math/GSL/BLAS.pm.2.4
+pm/Math/GSL/BLAS.pm.2.5
 pm/Math/GSL/BSpline.pm.1.15
 pm/Math/GSL/BSpline.pm.1.16
 pm/Math/GSL/BSpline.pm.2.0
@@ -106,6 +107,7 @@ pm/Math/GSL/BSpline.pm.2.2
 pm/Math/GSL/BSpline.pm.2.2.1
 pm/Math/GSL/BSpline.pm.2.3
 pm/Math/GSL/BSpline.pm.2.4
+pm/Math/GSL/BSpline.pm.2.5
 pm/Math/GSL/CBLAS.pm.1.15
 pm/Math/GSL/CBLAS.pm.1.16
 pm/Math/GSL/CBLAS.pm.2.0
@@ -114,6 +116,7 @@ pm/Math/GSL/CBLAS.pm.2.2
 pm/Math/GSL/CBLAS.pm.2.2.1
 pm/Math/GSL/CBLAS.pm.2.3
 pm/Math/GSL/CBLAS.pm.2.4
+pm/Math/GSL/CBLAS.pm.2.5
 pm/Math/GSL/CDF.pm.1.15
 pm/Math/GSL/CDF.pm.1.16
 pm/Math/GSL/CDF.pm.2.0
@@ -122,6 +125,7 @@ pm/Math/GSL/CDF.pm.2.2
 pm/Math/GSL/CDF.pm.2.2.1
 pm/Math/GSL/CDF.pm.2.3
 pm/Math/GSL/CDF.pm.2.4
+pm/Math/GSL/CDF.pm.2.5
 pm/Math/GSL/Chebyshev.pm.1.15
 pm/Math/GSL/Chebyshev.pm.1.16
 pm/Math/GSL/Chebyshev.pm.2.0
@@ -130,6 +134,7 @@ pm/Math/GSL/Chebyshev.pm.2.2
 pm/Math/GSL/Chebyshev.pm.2.2.1
 pm/Math/GSL/Chebyshev.pm.2.3
 pm/Math/GSL/Chebyshev.pm.2.4
+pm/Math/GSL/Chebyshev.pm.2.5
 pm/Math/GSL/Combination.pm.1.15
 pm/Math/GSL/Combination.pm.1.16
 pm/Math/GSL/Combination.pm.2.0
@@ -138,6 +143,7 @@ pm/Math/GSL/Combination.pm.2.2
 pm/Math/GSL/Combination.pm.2.2.1
 pm/Math/GSL/Combination.pm.2.3
 pm/Math/GSL/Combination.pm.2.4
+pm/Math/GSL/Combination.pm.2.5
 pm/Math/GSL/Complex.pm.1.15
 pm/Math/GSL/Complex.pm.1.16
 pm/Math/GSL/Complex.pm.2.0
@@ -146,6 +152,7 @@ pm/Math/GSL/Complex.pm.2.2
 pm/Math/GSL/Complex.pm.2.2.1
 pm/Math/GSL/Complex.pm.2.3
 pm/Math/GSL/Complex.pm.2.4
+pm/Math/GSL/Complex.pm.2.5
 pm/Math/GSL/Const.pm.1.15
 pm/Math/GSL/Const.pm.1.16
 pm/Math/GSL/Const.pm.2.0
@@ -154,6 +161,7 @@ pm/Math/GSL/Const.pm.2.2
 pm/Math/GSL/Const.pm.2.2.1
 pm/Math/GSL/Const.pm.2.3
 pm/Math/GSL/Const.pm.2.4
+pm/Math/GSL/Const.pm.2.5
 pm/Math/GSL/Deriv.pm.1.15
 pm/Math/GSL/Deriv.pm.1.16
 pm/Math/GSL/Deriv.pm.2.0
@@ -162,6 +170,7 @@ pm/Math/GSL/Deriv.pm.2.2
 pm/Math/GSL/Deriv.pm.2.2.1
 pm/Math/GSL/Deriv.pm.2.3
 pm/Math/GSL/Deriv.pm.2.4
+pm/Math/GSL/Deriv.pm.2.5
 pm/Math/GSL/DHT.pm.1.15
 pm/Math/GSL/DHT.pm.1.16
 pm/Math/GSL/DHT.pm.2.0
@@ -170,6 +179,7 @@ pm/Math/GSL/DHT.pm.2.2
 pm/Math/GSL/DHT.pm.2.2.1
 pm/Math/GSL/DHT.pm.2.3
 pm/Math/GSL/DHT.pm.2.4
+pm/Math/GSL/DHT.pm.2.5
 pm/Math/GSL/Diff.pm.1.15
 pm/Math/GSL/Diff.pm.1.16
 pm/Math/GSL/Diff.pm.2.0
@@ -178,6 +188,7 @@ pm/Math/GSL/Diff.pm.2.2
 pm/Math/GSL/Diff.pm.2.2.1
 pm/Math/GSL/Diff.pm.2.3
 pm/Math/GSL/Diff.pm.2.4
+pm/Math/GSL/Diff.pm.2.5
 pm/Math/GSL/Eigen.pm.1.15
 pm/Math/GSL/Eigen.pm.1.16
 pm/Math/GSL/Eigen.pm.2.0
@@ -186,6 +197,7 @@ pm/Math/GSL/Eigen.pm.2.2
 pm/Math/GSL/Eigen.pm.2.2.1
 pm/Math/GSL/Eigen.pm.2.3
 pm/Math/GSL/Eigen.pm.2.4
+pm/Math/GSL/Eigen.pm.2.5
 pm/Math/GSL/Errno.pm.1.15
 pm/Math/GSL/Errno.pm.1.16
 pm/Math/GSL/Errno.pm.2.0
@@ -194,6 +206,7 @@ pm/Math/GSL/Errno.pm.2.2
 pm/Math/GSL/Errno.pm.2.2.1
 pm/Math/GSL/Errno.pm.2.3
 pm/Math/GSL/Errno.pm.2.4
+pm/Math/GSL/Errno.pm.2.5
 pm/Math/GSL/FFT.pm.1.15
 pm/Math/GSL/FFT.pm.1.16
 pm/Math/GSL/FFT.pm.2.0
@@ -202,6 +215,7 @@ pm/Math/GSL/FFT.pm.2.2
 pm/Math/GSL/FFT.pm.2.2.1
 pm/Math/GSL/FFT.pm.2.3
 pm/Math/GSL/FFT.pm.2.4
+pm/Math/GSL/FFT.pm.2.5
 pm/Math/GSL/Fit.pm.1.15
 pm/Math/GSL/Fit.pm.1.16
 pm/Math/GSL/Fit.pm.2.0
@@ -210,6 +224,7 @@ pm/Math/GSL/Fit.pm.2.2
 pm/Math/GSL/Fit.pm.2.2.1
 pm/Math/GSL/Fit.pm.2.3
 pm/Math/GSL/Fit.pm.2.4
+pm/Math/GSL/Fit.pm.2.5
 pm/Math/GSL/Heapsort.pm.1.15
 pm/Math/GSL/Heapsort.pm.1.16
 pm/Math/GSL/Heapsort.pm.2.0
@@ -218,6 +233,7 @@ pm/Math/GSL/Heapsort.pm.2.2
 pm/Math/GSL/Heapsort.pm.2.2.1
 pm/Math/GSL/Heapsort.pm.2.3
 pm/Math/GSL/Heapsort.pm.2.4
+pm/Math/GSL/Heapsort.pm.2.5
 pm/Math/GSL/Histogram.pm.1.15
 pm/Math/GSL/Histogram.pm.1.16
 pm/Math/GSL/Histogram.pm.2.0
@@ -226,6 +242,7 @@ pm/Math/GSL/Histogram.pm.2.2
 pm/Math/GSL/Histogram.pm.2.2.1
 pm/Math/GSL/Histogram.pm.2.3
 pm/Math/GSL/Histogram.pm.2.4
+pm/Math/GSL/Histogram.pm.2.5
 pm/Math/GSL/Histogram2D.pm.1.15
 pm/Math/GSL/Histogram2D.pm.1.16
 pm/Math/GSL/Histogram2D.pm.2.0
@@ -234,6 +251,7 @@ pm/Math/GSL/Histogram2D.pm.2.2
 pm/Math/GSL/Histogram2D.pm.2.2.1
 pm/Math/GSL/Histogram2D.pm.2.3
 pm/Math/GSL/Histogram2D.pm.2.4
+pm/Math/GSL/Histogram2D.pm.2.5
 pm/Math/GSL/IEEEUtils.pm.1.15
 pm/Math/GSL/IEEEUtils.pm.1.16
 pm/Math/GSL/IEEEUtils.pm.2.0
@@ -242,6 +260,7 @@ pm/Math/GSL/IEEEUtils.pm.2.2
 pm/Math/GSL/IEEEUtils.pm.2.2.1
 pm/Math/GSL/IEEEUtils.pm.2.3
 pm/Math/GSL/IEEEUtils.pm.2.4
+pm/Math/GSL/IEEEUtils.pm.2.5
 pm/Math/GSL/Integration.pm.1.15
 pm/Math/GSL/Integration.pm.1.16
 pm/Math/GSL/Integration.pm.2.0
@@ -250,6 +269,7 @@ pm/Math/GSL/Integration.pm.2.2
 pm/Math/GSL/Integration.pm.2.2.1
 pm/Math/GSL/Integration.pm.2.3
 pm/Math/GSL/Integration.pm.2.4
+pm/Math/GSL/Integration.pm.2.5
 pm/Math/GSL/Interp.pm.1.15
 pm/Math/GSL/Interp.pm.1.16
 pm/Math/GSL/Interp.pm.2.0
@@ -258,6 +278,7 @@ pm/Math/GSL/Interp.pm.2.2
 pm/Math/GSL/Interp.pm.2.2.1
 pm/Math/GSL/Interp.pm.2.3
 pm/Math/GSL/Interp.pm.2.4
+pm/Math/GSL/Interp.pm.2.5
 pm/Math/GSL/Linalg.pm.1.15
 pm/Math/GSL/Linalg.pm.1.16
 pm/Math/GSL/Linalg.pm.2.0
@@ -266,6 +287,7 @@ pm/Math/GSL/Linalg.pm.2.2
 pm/Math/GSL/Linalg.pm.2.2.1
 pm/Math/GSL/Linalg.pm.2.3
 pm/Math/GSL/Linalg.pm.2.4
+pm/Math/GSL/Linalg.pm.2.5
 pm/Math/GSL/Machine.pm.1.15
 pm/Math/GSL/Machine.pm.1.16
 pm/Math/GSL/Machine.pm.2.0
@@ -274,6 +296,7 @@ pm/Math/GSL/Machine.pm.2.2
 pm/Math/GSL/Machine.pm.2.2.1
 pm/Math/GSL/Machine.pm.2.3
 pm/Math/GSL/Machine.pm.2.4
+pm/Math/GSL/Machine.pm.2.5
 pm/Math/GSL/Matrix.pm.1.15
 pm/Math/GSL/Matrix.pm.1.16
 pm/Math/GSL/Matrix.pm.2.0
@@ -282,6 +305,7 @@ pm/Math/GSL/Matrix.pm.2.2
 pm/Math/GSL/Matrix.pm.2.2.1
 pm/Math/GSL/Matrix.pm.2.3
 pm/Math/GSL/Matrix.pm.2.4
+pm/Math/GSL/Matrix.pm.2.5
 pm/Math/GSL/MatrixComplex.pm.1.15
 pm/Math/GSL/MatrixComplex.pm.1.16
 pm/Math/GSL/MatrixComplex.pm.2.0
@@ -290,6 +314,7 @@ pm/Math/GSL/MatrixComplex.pm.2.2
 pm/Math/GSL/MatrixComplex.pm.2.2.1
 pm/Math/GSL/MatrixComplex.pm.2.3
 pm/Math/GSL/MatrixComplex.pm.2.4
+pm/Math/GSL/MatrixComplex.pm.2.5
 pm/Math/GSL/Min.pm.1.15
 pm/Math/GSL/Min.pm.1.16
 pm/Math/GSL/Min.pm.2.0
@@ -298,6 +323,7 @@ pm/Math/GSL/Min.pm.2.2
 pm/Math/GSL/Min.pm.2.2.1
 pm/Math/GSL/Min.pm.2.3
 pm/Math/GSL/Min.pm.2.4
+pm/Math/GSL/Min.pm.2.5
 pm/Math/GSL/Monte.pm.1.15
 pm/Math/GSL/Monte.pm.1.16
 pm/Math/GSL/Monte.pm.2.0
@@ -306,16 +332,19 @@ pm/Math/GSL/Monte.pm.2.2
 pm/Math/GSL/Monte.pm.2.2.1
 pm/Math/GSL/Monte.pm.2.3
 pm/Math/GSL/Monte.pm.2.4
+pm/Math/GSL/Monte.pm.2.5
 pm/Math/GSL/Multifit.pm.2.1
 pm/Math/GSL/Multifit.pm.2.2
 pm/Math/GSL/Multifit.pm.2.2.1
 pm/Math/GSL/Multifit.pm.2.3
 pm/Math/GSL/Multifit.pm.2.4
+pm/Math/GSL/Multifit.pm.2.5
 pm/Math/GSL/Multilarge.pm.2.1
 pm/Math/GSL/Multilarge.pm.2.2
 pm/Math/GSL/Multilarge.pm.2.2.1
 pm/Math/GSL/Multilarge.pm.2.3
 pm/Math/GSL/Multilarge.pm.2.4
+pm/Math/GSL/Multilarge.pm.2.5
 pm/Math/GSL/Multimin.pm.1.15
 pm/Math/GSL/Multimin.pm.1.16
 pm/Math/GSL/Multimin.pm.2.0
@@ -324,6 +353,7 @@ pm/Math/GSL/Multimin.pm.2.2
 pm/Math/GSL/Multimin.pm.2.2.1
 pm/Math/GSL/Multimin.pm.2.3
 pm/Math/GSL/Multimin.pm.2.4
+pm/Math/GSL/Multimin.pm.2.5
 pm/Math/GSL/Multiroots.pm.1.15
 pm/Math/GSL/Multiroots.pm.1.16
 pm/Math/GSL/Multiroots.pm.2.0
@@ -332,6 +362,7 @@ pm/Math/GSL/Multiroots.pm.2.2
 pm/Math/GSL/Multiroots.pm.2.2.1
 pm/Math/GSL/Multiroots.pm.2.3
 pm/Math/GSL/Multiroots.pm.2.4
+pm/Math/GSL/Multiroots.pm.2.5
 pm/Math/GSL/Multiset.pm.1.15
 pm/Math/GSL/Multiset.pm.1.16
 pm/Math/GSL/Multiset.pm.2.0
@@ -340,6 +371,7 @@ pm/Math/GSL/Multiset.pm.2.2
 pm/Math/GSL/Multiset.pm.2.2.1
 pm/Math/GSL/Multiset.pm.2.3
 pm/Math/GSL/Multiset.pm.2.4
+pm/Math/GSL/Multiset.pm.2.5
 pm/Math/GSL/NTuple.pm.1.15
 pm/Math/GSL/NTuple.pm.1.16
 pm/Math/GSL/NTuple.pm.2.0
@@ -348,6 +380,7 @@ pm/Math/GSL/NTuple.pm.2.2
 pm/Math/GSL/NTuple.pm.2.2.1
 pm/Math/GSL/NTuple.pm.2.3
 pm/Math/GSL/NTuple.pm.2.4
+pm/Math/GSL/NTuple.pm.2.5
 pm/Math/GSL/ODEIV.pm.1.15
 pm/Math/GSL/ODEIV.pm.1.16
 pm/Math/GSL/ODEIV.pm.2.0
@@ -356,6 +389,7 @@ pm/Math/GSL/ODEIV.pm.2.2
 pm/Math/GSL/ODEIV.pm.2.2.1
 pm/Math/GSL/ODEIV.pm.2.3
 pm/Math/GSL/ODEIV.pm.2.4
+pm/Math/GSL/ODEIV.pm.2.5
 pm/Math/GSL/Permutation.pm.1.15
 pm/Math/GSL/Permutation.pm.1.16
 pm/Math/GSL/Permutation.pm.2.0
@@ -364,6 +398,7 @@ pm/Math/GSL/Permutation.pm.2.2
 pm/Math/GSL/Permutation.pm.2.2.1
 pm/Math/GSL/Permutation.pm.2.3
 pm/Math/GSL/Permutation.pm.2.4
+pm/Math/GSL/Permutation.pm.2.5
 pm/Math/GSL/Poly.pm.1.15
 pm/Math/GSL/Poly.pm.1.16
 pm/Math/GSL/Poly.pm.2.0
@@ -372,6 +407,7 @@ pm/Math/GSL/Poly.pm.2.2
 pm/Math/GSL/Poly.pm.2.2.1
 pm/Math/GSL/Poly.pm.2.3
 pm/Math/GSL/Poly.pm.2.4
+pm/Math/GSL/Poly.pm.2.5
 pm/Math/GSL/PowInt.pm.1.15
 pm/Math/GSL/PowInt.pm.1.16
 pm/Math/GSL/PowInt.pm.2.0
@@ -380,6 +416,7 @@ pm/Math/GSL/PowInt.pm.2.2
 pm/Math/GSL/PowInt.pm.2.2.1
 pm/Math/GSL/PowInt.pm.2.3
 pm/Math/GSL/PowInt.pm.2.4
+pm/Math/GSL/PowInt.pm.2.5
 pm/Math/GSL/QRNG.pm.1.15
 pm/Math/GSL/QRNG.pm.1.16
 pm/Math/GSL/QRNG.pm.2.0
@@ -388,6 +425,7 @@ pm/Math/GSL/QRNG.pm.2.2
 pm/Math/GSL/QRNG.pm.2.2.1
 pm/Math/GSL/QRNG.pm.2.3
 pm/Math/GSL/QRNG.pm.2.4
+pm/Math/GSL/QRNG.pm.2.5
 pm/Math/GSL/Randist.pm.1.15
 pm/Math/GSL/Randist.pm.1.16
 pm/Math/GSL/Randist.pm.2.0
@@ -396,6 +434,7 @@ pm/Math/GSL/Randist.pm.2.2
 pm/Math/GSL/Randist.pm.2.2.1
 pm/Math/GSL/Randist.pm.2.3
 pm/Math/GSL/Randist.pm.2.4
+pm/Math/GSL/Randist.pm.2.5
 pm/Math/GSL/RNG.pm.1.15
 pm/Math/GSL/RNG.pm.1.16
 pm/Math/GSL/RNG.pm.2.0
@@ -404,6 +443,7 @@ pm/Math/GSL/RNG.pm.2.2
 pm/Math/GSL/RNG.pm.2.2.1
 pm/Math/GSL/RNG.pm.2.3
 pm/Math/GSL/RNG.pm.2.4
+pm/Math/GSL/RNG.pm.2.5
 pm/Math/GSL/Roots.pm.1.15
 pm/Math/GSL/Roots.pm.1.16
 pm/Math/GSL/Roots.pm.2.0
@@ -412,12 +452,14 @@ pm/Math/GSL/Roots.pm.2.2
 pm/Math/GSL/Roots.pm.2.2.1
 pm/Math/GSL/Roots.pm.2.3
 pm/Math/GSL/Roots.pm.2.4
+pm/Math/GSL/Roots.pm.2.5
 pm/Math/GSL/Rstat.pm.2.0
 pm/Math/GSL/Rstat.pm.2.1
 pm/Math/GSL/Rstat.pm.2.2
 pm/Math/GSL/Rstat.pm.2.2.1
 pm/Math/GSL/Rstat.pm.2.3
 pm/Math/GSL/Rstat.pm.2.4
+pm/Math/GSL/Rstat.pm.2.5
 pm/Math/GSL/SF.pm.1.15
 pm/Math/GSL/SF.pm.1.16
 pm/Math/GSL/SF.pm.2.0
@@ -426,6 +468,7 @@ pm/Math/GSL/SF.pm.2.2
 pm/Math/GSL/SF.pm.2.2.1
 pm/Math/GSL/SF.pm.2.3
 pm/Math/GSL/SF.pm.2.4
+pm/Math/GSL/SF.pm.2.5
 pm/Math/GSL/Siman.pm.1.15
 pm/Math/GSL/Siman.pm.1.16
 pm/Math/GSL/Siman.pm.2.0
@@ -434,6 +477,7 @@ pm/Math/GSL/Siman.pm.2.2
 pm/Math/GSL/Siman.pm.2.2.1
 pm/Math/GSL/Siman.pm.2.3
 pm/Math/GSL/Siman.pm.2.4
+pm/Math/GSL/Siman.pm.2.5
 pm/Math/GSL/Sort.pm.1.15
 pm/Math/GSL/Sort.pm.1.16
 pm/Math/GSL/Sort.pm.2.0
@@ -442,12 +486,14 @@ pm/Math/GSL/Sort.pm.2.2
 pm/Math/GSL/Sort.pm.2.2.1
 pm/Math/GSL/Sort.pm.2.3
 pm/Math/GSL/Sort.pm.2.4
+pm/Math/GSL/Sort.pm.2.5
 pm/Math/GSL/SparseMatrix.pm.2.0
 pm/Math/GSL/SparseMatrix.pm.2.1
 pm/Math/GSL/SparseMatrix.pm.2.2
 pm/Math/GSL/SparseMatrix.pm.2.2.1
 pm/Math/GSL/SparseMatrix.pm.2.3
 pm/Math/GSL/SparseMatrix.pm.2.4
+pm/Math/GSL/SparseMatrix.pm.2.5
 pm/Math/GSL/Spline.pm.1.15
 pm/Math/GSL/Spline.pm.1.16
 pm/Math/GSL/Spline.pm.2.0
@@ -456,6 +502,7 @@ pm/Math/GSL/Spline.pm.2.2
 pm/Math/GSL/Spline.pm.2.2.1
 pm/Math/GSL/Spline.pm.2.3
 pm/Math/GSL/Spline.pm.2.4
+pm/Math/GSL/Spline.pm.2.5
 pm/Math/GSL/Statistics.pm.1.15
 pm/Math/GSL/Statistics.pm.1.16
 pm/Math/GSL/Statistics.pm.2.0
@@ -464,6 +511,7 @@ pm/Math/GSL/Statistics.pm.2.2
 pm/Math/GSL/Statistics.pm.2.2.1
 pm/Math/GSL/Statistics.pm.2.3
 pm/Math/GSL/Statistics.pm.2.4
+pm/Math/GSL/Statistics.pm.2.5
 pm/Math/GSL/Sum.pm.1.15
 pm/Math/GSL/Sum.pm.1.16
 pm/Math/GSL/Sum.pm.2.0
@@ -472,6 +520,7 @@ pm/Math/GSL/Sum.pm.2.2
 pm/Math/GSL/Sum.pm.2.2.1
 pm/Math/GSL/Sum.pm.2.3
 pm/Math/GSL/Sum.pm.2.4
+pm/Math/GSL/Sum.pm.2.5
 pm/Math/GSL/Sys.pm.1.15
 pm/Math/GSL/Sys.pm.1.16
 pm/Math/GSL/Sys.pm.2.0
@@ -480,6 +529,7 @@ pm/Math/GSL/Sys.pm.2.2
 pm/Math/GSL/Sys.pm.2.2.1
 pm/Math/GSL/Sys.pm.2.3
 pm/Math/GSL/Sys.pm.2.4
+pm/Math/GSL/Sys.pm.2.5
 pm/Math/GSL/Vector.pm.1.15
 pm/Math/GSL/Vector.pm.1.16
 pm/Math/GSL/Vector.pm.2.0
@@ -488,6 +538,7 @@ pm/Math/GSL/Vector.pm.2.2
 pm/Math/GSL/Vector.pm.2.2.1
 pm/Math/GSL/Vector.pm.2.3
 pm/Math/GSL/Vector.pm.2.4
+pm/Math/GSL/Vector.pm.2.5
 pm/Math/GSL/VectorComplex.pm.1.15
 pm/Math/GSL/VectorComplex.pm.1.16
 pm/Math/GSL/VectorComplex.pm.2.0
@@ -496,6 +547,7 @@ pm/Math/GSL/VectorComplex.pm.2.2
 pm/Math/GSL/VectorComplex.pm.2.2.1
 pm/Math/GSL/VectorComplex.pm.2.3
 pm/Math/GSL/VectorComplex.pm.2.4
+pm/Math/GSL/VectorComplex.pm.2.5
 pm/Math/GSL/Version.pm.1.15
 pm/Math/GSL/Version.pm.1.16
 pm/Math/GSL/Version.pm.2.0
@@ -504,6 +556,7 @@ pm/Math/GSL/Version.pm.2.2
 pm/Math/GSL/Version.pm.2.2.1
 pm/Math/GSL/Version.pm.2.3
 pm/Math/GSL/Version.pm.2.4
+pm/Math/GSL/Version.pm.2.5
 pm/Math/GSL/Wavelet.pm.1.15
 pm/Math/GSL/Wavelet.pm.1.16
 pm/Math/GSL/Wavelet.pm.2.0
@@ -512,6 +565,7 @@ pm/Math/GSL/Wavelet.pm.2.2
 pm/Math/GSL/Wavelet.pm.2.2.1
 pm/Math/GSL/Wavelet.pm.2.3
 pm/Math/GSL/Wavelet.pm.2.4
+pm/Math/GSL/Wavelet.pm.2.5
 pm/Math/GSL/Wavelet2D.pm.1.15
 pm/Math/GSL/Wavelet2D.pm.1.16
 pm/Math/GSL/Wavelet2D.pm.2.0
@@ -520,6 +574,7 @@ pm/Math/GSL/Wavelet2D.pm.2.2
 pm/Math/GSL/Wavelet2D.pm.2.2.1
 pm/Math/GSL/Wavelet2D.pm.2.3
 pm/Math/GSL/Wavelet2D.pm.2.4
+pm/Math/GSL/Wavelet2D.pm.2.5
 pod/BLAS.pod
 pod/BSpline.pod
 pod/CBLAS.pod
@@ -698,6 +753,7 @@ xs/BLAS_wrap.2.2.1.c
 xs/BLAS_wrap.2.2.c
 xs/BLAS_wrap.2.3.c
 xs/BLAS_wrap.2.4.c
+xs/BLAS_wrap.2.5.c
 xs/BSpline_wrap.1.15.c
 xs/BSpline_wrap.1.16.c
 xs/BSpline_wrap.2.0.c
@@ -706,6 +762,7 @@ xs/BSpline_wrap.2.2.1.c
 xs/BSpline_wrap.2.2.c
 xs/BSpline_wrap.2.3.c
 xs/BSpline_wrap.2.4.c
+xs/BSpline_wrap.2.5.c
 xs/CBLAS_wrap.1.15.c
 xs/CBLAS_wrap.1.16.c
 xs/CBLAS_wrap.2.0.c
@@ -714,6 +771,7 @@ xs/CBLAS_wrap.2.2.1.c
 xs/CBLAS_wrap.2.2.c
 xs/CBLAS_wrap.2.3.c
 xs/CBLAS_wrap.2.4.c
+xs/CBLAS_wrap.2.5.c
 xs/CDF_wrap.1.15.c
 xs/CDF_wrap.1.16.c
 xs/CDF_wrap.2.0.c
@@ -722,6 +780,7 @@ xs/CDF_wrap.2.2.1.c
 xs/CDF_wrap.2.2.c
 xs/CDF_wrap.2.3.c
 xs/CDF_wrap.2.4.c
+xs/CDF_wrap.2.5.c
 xs/Chebyshev_wrap.1.15.c
 xs/Chebyshev_wrap.1.16.c
 xs/Chebyshev_wrap.2.0.c
@@ -730,6 +789,7 @@ xs/Chebyshev_wrap.2.2.1.c
 xs/Chebyshev_wrap.2.2.c
 xs/Chebyshev_wrap.2.3.c
 xs/Chebyshev_wrap.2.4.c
+xs/Chebyshev_wrap.2.5.c
 xs/Combination_wrap.1.15.c
 xs/Combination_wrap.1.16.c
 xs/Combination_wrap.2.0.c
@@ -738,6 +798,7 @@ xs/Combination_wrap.2.2.1.c
 xs/Combination_wrap.2.2.c
 xs/Combination_wrap.2.3.c
 xs/Combination_wrap.2.4.c
+xs/Combination_wrap.2.5.c
 xs/Complex_wrap.1.15.c
 xs/Complex_wrap.1.16.c
 xs/Complex_wrap.2.0.c
@@ -746,6 +807,7 @@ xs/Complex_wrap.2.2.1.c
 xs/Complex_wrap.2.2.c
 xs/Complex_wrap.2.3.c
 xs/Complex_wrap.2.4.c
+xs/Complex_wrap.2.5.c
 xs/Const_wrap.1.15.c
 xs/Const_wrap.1.16.c
 xs/Const_wrap.2.0.c
@@ -754,6 +816,7 @@ xs/Const_wrap.2.2.1.c
 xs/Const_wrap.2.2.c
 xs/Const_wrap.2.3.c
 xs/Const_wrap.2.4.c
+xs/Const_wrap.2.5.c
 xs/Deriv_wrap.1.15.c
 xs/Deriv_wrap.1.16.c
 xs/Deriv_wrap.2.0.c
@@ -762,6 +825,7 @@ xs/Deriv_wrap.2.2.1.c
 xs/Deriv_wrap.2.2.c
 xs/Deriv_wrap.2.3.c
 xs/Deriv_wrap.2.4.c
+xs/Deriv_wrap.2.5.c
 xs/DHT_wrap.1.15.c
 xs/DHT_wrap.1.16.c
 xs/DHT_wrap.2.0.c
@@ -770,6 +834,7 @@ xs/DHT_wrap.2.2.1.c
 xs/DHT_wrap.2.2.c
 xs/DHT_wrap.2.3.c
 xs/DHT_wrap.2.4.c
+xs/DHT_wrap.2.5.c
 xs/Diff_wrap.1.15.c
 xs/Diff_wrap.1.16.c
 xs/Diff_wrap.2.0.c
@@ -778,6 +843,7 @@ xs/Diff_wrap.2.2.1.c
 xs/Diff_wrap.2.2.c
 xs/Diff_wrap.2.3.c
 xs/Diff_wrap.2.4.c
+xs/Diff_wrap.2.5.c
 xs/Eigen_wrap.1.15.c
 xs/Eigen_wrap.1.16.c
 xs/Eigen_wrap.2.0.c
@@ -786,6 +852,7 @@ xs/Eigen_wrap.2.2.1.c
 xs/Eigen_wrap.2.2.c
 xs/Eigen_wrap.2.3.c
 xs/Eigen_wrap.2.4.c
+xs/Eigen_wrap.2.5.c
 xs/Errno_wrap.1.15.c
 xs/Errno_wrap.1.16.c
 xs/Errno_wrap.2.0.c
@@ -794,6 +861,7 @@ xs/Errno_wrap.2.2.1.c
 xs/Errno_wrap.2.2.c
 xs/Errno_wrap.2.3.c
 xs/Errno_wrap.2.4.c
+xs/Errno_wrap.2.5.c
 xs/FFT_wrap.1.15.c
 xs/FFT_wrap.1.16.c
 xs/FFT_wrap.2.0.c
@@ -802,6 +870,7 @@ xs/FFT_wrap.2.2.1.c
 xs/FFT_wrap.2.2.c
 xs/FFT_wrap.2.3.c
 xs/FFT_wrap.2.4.c
+xs/FFT_wrap.2.5.c
 xs/Fit_wrap.1.15.c
 xs/Fit_wrap.1.16.c
 xs/Fit_wrap.2.0.c
@@ -810,6 +879,7 @@ xs/Fit_wrap.2.2.1.c
 xs/Fit_wrap.2.2.c
 xs/Fit_wrap.2.3.c
 xs/Fit_wrap.2.4.c
+xs/Fit_wrap.2.5.c
 xs/Heapsort_wrap.1.15.c
 xs/Heapsort_wrap.1.16.c
 xs/Heapsort_wrap.2.0.c
@@ -818,6 +888,7 @@ xs/Heapsort_wrap.2.2.1.c
 xs/Heapsort_wrap.2.2.c
 xs/Heapsort_wrap.2.3.c
 xs/Heapsort_wrap.2.4.c
+xs/Heapsort_wrap.2.5.c
 xs/Histogram2D_wrap.1.15.c
 xs/Histogram2D_wrap.1.16.c
 xs/Histogram2D_wrap.2.0.c
@@ -826,6 +897,7 @@ xs/Histogram2D_wrap.2.2.1.c
 xs/Histogram2D_wrap.2.2.c
 xs/Histogram2D_wrap.2.3.c
 xs/Histogram2D_wrap.2.4.c
+xs/Histogram2D_wrap.2.5.c
 xs/Histogram_wrap.1.15.c
 xs/Histogram_wrap.1.16.c
 xs/Histogram_wrap.2.0.c
@@ -834,6 +906,7 @@ xs/Histogram_wrap.2.2.1.c
 xs/Histogram_wrap.2.2.c
 xs/Histogram_wrap.2.3.c
 xs/Histogram_wrap.2.4.c
+xs/Histogram_wrap.2.5.c
 xs/IEEEUtils_wrap.1.15.c
 xs/IEEEUtils_wrap.1.16.c
 xs/IEEEUtils_wrap.2.0.c
@@ -842,6 +915,7 @@ xs/IEEEUtils_wrap.2.2.1.c
 xs/IEEEUtils_wrap.2.2.c
 xs/IEEEUtils_wrap.2.3.c
 xs/IEEEUtils_wrap.2.4.c
+xs/IEEEUtils_wrap.2.5.c
 xs/Integration_wrap.1.15.c
 xs/Integration_wrap.1.16.c
 xs/Integration_wrap.2.0.c
@@ -850,6 +924,7 @@ xs/Integration_wrap.2.2.1.c
 xs/Integration_wrap.2.2.c
 xs/Integration_wrap.2.3.c
 xs/Integration_wrap.2.4.c
+xs/Integration_wrap.2.5.c
 xs/Interp_wrap.1.15.c
 xs/Interp_wrap.1.16.c
 xs/Interp_wrap.2.0.c
@@ -858,6 +933,7 @@ xs/Interp_wrap.2.2.1.c
 xs/Interp_wrap.2.2.c
 xs/Interp_wrap.2.3.c
 xs/Interp_wrap.2.4.c
+xs/Interp_wrap.2.5.c
 xs/Linalg_wrap.1.15.c
 xs/Linalg_wrap.1.16.c
 xs/Linalg_wrap.2.0.c
@@ -866,6 +942,7 @@ xs/Linalg_wrap.2.2.1.c
 xs/Linalg_wrap.2.2.c
 xs/Linalg_wrap.2.3.c
 xs/Linalg_wrap.2.4.c
+xs/Linalg_wrap.2.5.c
 xs/Machine_wrap.1.15.c
 xs/Machine_wrap.1.16.c
 xs/Machine_wrap.2.0.c
@@ -874,6 +951,7 @@ xs/Machine_wrap.2.2.1.c
 xs/Machine_wrap.2.2.c
 xs/Machine_wrap.2.3.c
 xs/Machine_wrap.2.4.c
+xs/Machine_wrap.2.5.c
 xs/Matrix_wrap.1.15.c
 xs/Matrix_wrap.1.16.c
 xs/Matrix_wrap.2.0.c
@@ -882,6 +960,7 @@ xs/Matrix_wrap.2.2.1.c
 xs/Matrix_wrap.2.2.c
 xs/Matrix_wrap.2.3.c
 xs/Matrix_wrap.2.4.c
+xs/Matrix_wrap.2.5.c
 xs/MatrixComplex_wrap.1.15.c
 xs/MatrixComplex_wrap.1.16.c
 xs/MatrixComplex_wrap.2.0.c
@@ -890,6 +969,7 @@ xs/MatrixComplex_wrap.2.2.1.c
 xs/MatrixComplex_wrap.2.2.c
 xs/MatrixComplex_wrap.2.3.c
 xs/MatrixComplex_wrap.2.4.c
+xs/MatrixComplex_wrap.2.5.c
 xs/Min_wrap.1.15.c
 xs/Min_wrap.1.16.c
 xs/Min_wrap.2.0.c
@@ -898,6 +978,7 @@ xs/Min_wrap.2.2.1.c
 xs/Min_wrap.2.2.c
 xs/Min_wrap.2.3.c
 xs/Min_wrap.2.4.c
+xs/Min_wrap.2.5.c
 xs/Monte_wrap.1.15.c
 xs/Monte_wrap.1.16.c
 xs/Monte_wrap.2.0.c
@@ -906,16 +987,19 @@ xs/Monte_wrap.2.2.1.c
 xs/Monte_wrap.2.2.c
 xs/Monte_wrap.2.3.c
 xs/Monte_wrap.2.4.c
+xs/Monte_wrap.2.5.c
 xs/Multifit_wrap.2.1.c
 xs/Multifit_wrap.2.2.1.c
 xs/Multifit_wrap.2.2.c
 xs/Multifit_wrap.2.3.c
 xs/Multifit_wrap.2.4.c
+xs/Multifit_wrap.2.5.c
 xs/Multilarge_wrap.2.1.c
 xs/Multilarge_wrap.2.2.1.c
 xs/Multilarge_wrap.2.2.c
 xs/Multilarge_wrap.2.3.c
 xs/Multilarge_wrap.2.4.c
+xs/Multilarge_wrap.2.5.c
 xs/Multimin_wrap.1.15.c
 xs/Multimin_wrap.1.16.c
 xs/Multimin_wrap.2.0.c
@@ -924,6 +1008,7 @@ xs/Multimin_wrap.2.2.1.c
 xs/Multimin_wrap.2.2.c
 xs/Multimin_wrap.2.3.c
 xs/Multimin_wrap.2.4.c
+xs/Multimin_wrap.2.5.c
 xs/Multiroots_wrap.1.15.c
 xs/Multiroots_wrap.1.16.c
 xs/Multiroots_wrap.2.0.c
@@ -932,6 +1017,7 @@ xs/Multiroots_wrap.2.2.1.c
 xs/Multiroots_wrap.2.2.c
 xs/Multiroots_wrap.2.3.c
 xs/Multiroots_wrap.2.4.c
+xs/Multiroots_wrap.2.5.c
 xs/Multiset_wrap.1.15.c
 xs/Multiset_wrap.1.16.c
 xs/Multiset_wrap.2.0.c
@@ -940,6 +1026,7 @@ xs/Multiset_wrap.2.2.1.c
 xs/Multiset_wrap.2.2.c
 xs/Multiset_wrap.2.3.c
 xs/Multiset_wrap.2.4.c
+xs/Multiset_wrap.2.5.c
 xs/NTuple_wrap.1.15.c
 xs/NTuple_wrap.1.16.c
 xs/NTuple_wrap.2.0.c
@@ -948,6 +1035,7 @@ xs/NTuple_wrap.2.2.1.c
 xs/NTuple_wrap.2.2.c
 xs/NTuple_wrap.2.3.c
 xs/NTuple_wrap.2.4.c
+xs/NTuple_wrap.2.5.c
 xs/ODEIV_wrap.1.15.c
 xs/ODEIV_wrap.1.16.c
 xs/ODEIV_wrap.2.0.c
@@ -956,6 +1044,7 @@ xs/ODEIV_wrap.2.2.1.c
 xs/ODEIV_wrap.2.2.c
 xs/ODEIV_wrap.2.3.c
 xs/ODEIV_wrap.2.4.c
+xs/ODEIV_wrap.2.5.c
 xs/Permutation_wrap.1.15.c
 xs/Permutation_wrap.1.16.c
 xs/Permutation_wrap.2.0.c
@@ -964,6 +1053,7 @@ xs/Permutation_wrap.2.2.1.c
 xs/Permutation_wrap.2.2.c
 xs/Permutation_wrap.2.3.c
 xs/Permutation_wrap.2.4.c
+xs/Permutation_wrap.2.5.c
 xs/Poly_wrap.1.15.c
 xs/Poly_wrap.1.16.c
 xs/Poly_wrap.2.0.c
@@ -972,6 +1062,7 @@ xs/Poly_wrap.2.2.1.c
 xs/Poly_wrap.2.2.c
 xs/Poly_wrap.2.3.c
 xs/Poly_wrap.2.4.c
+xs/Poly_wrap.2.5.c
 xs/PowInt_wrap.1.15.c
 xs/PowInt_wrap.1.16.c
 xs/PowInt_wrap.2.0.c
@@ -980,6 +1071,7 @@ xs/PowInt_wrap.2.2.1.c
 xs/PowInt_wrap.2.2.c
 xs/PowInt_wrap.2.3.c
 xs/PowInt_wrap.2.4.c
+xs/PowInt_wrap.2.5.c
 xs/QRNG_wrap.1.15.c
 xs/QRNG_wrap.1.16.c
 xs/QRNG_wrap.2.0.c
@@ -988,6 +1080,7 @@ xs/QRNG_wrap.2.2.1.c
 xs/QRNG_wrap.2.2.c
 xs/QRNG_wrap.2.3.c
 xs/QRNG_wrap.2.4.c
+xs/QRNG_wrap.2.5.c
 xs/Randist_wrap.1.15.c
 xs/Randist_wrap.1.16.c
 xs/Randist_wrap.2.0.c
@@ -996,6 +1089,7 @@ xs/Randist_wrap.2.2.1.c
 xs/Randist_wrap.2.2.c
 xs/Randist_wrap.2.3.c
 xs/Randist_wrap.2.4.c
+xs/Randist_wrap.2.5.c
 xs/RNG_wrap.1.15.c
 xs/RNG_wrap.1.16.c
 xs/RNG_wrap.2.0.c
@@ -1004,6 +1098,7 @@ xs/RNG_wrap.2.2.1.c
 xs/RNG_wrap.2.2.c
 xs/RNG_wrap.2.3.c
 xs/RNG_wrap.2.4.c
+xs/RNG_wrap.2.5.c
 xs/Roots_wrap.1.15.c
 xs/Roots_wrap.1.16.c
 xs/Roots_wrap.2.0.c
@@ -1012,12 +1107,14 @@ xs/Roots_wrap.2.2.1.c
 xs/Roots_wrap.2.2.c
 xs/Roots_wrap.2.3.c
 xs/Roots_wrap.2.4.c
+xs/Roots_wrap.2.5.c
 xs/Rstat_wrap.2.0.c
 xs/Rstat_wrap.2.1.c
 xs/Rstat_wrap.2.2.1.c
 xs/Rstat_wrap.2.2.c
 xs/Rstat_wrap.2.3.c
 xs/Rstat_wrap.2.4.c
+xs/Rstat_wrap.2.5.c
 xs/SF_wrap.1.15.c
 xs/SF_wrap.1.16.c
 xs/SF_wrap.2.0.c
@@ -1026,6 +1123,7 @@ xs/SF_wrap.2.2.1.c
 xs/SF_wrap.2.2.c
 xs/SF_wrap.2.3.c
 xs/SF_wrap.2.4.c
+xs/SF_wrap.2.5.c
 xs/Siman_wrap.1.15.c
 xs/Siman_wrap.1.16.c
 xs/Siman_wrap.2.0.c
@@ -1034,6 +1132,7 @@ xs/Siman_wrap.2.2.1.c
 xs/Siman_wrap.2.2.c
 xs/Siman_wrap.2.3.c
 xs/Siman_wrap.2.4.c
+xs/Siman_wrap.2.5.c
 xs/Sort_wrap.1.15.c
 xs/Sort_wrap.1.16.c
 xs/Sort_wrap.2.0.c
@@ -1042,12 +1141,14 @@ xs/Sort_wrap.2.2.1.c
 xs/Sort_wrap.2.2.c
 xs/Sort_wrap.2.3.c
 xs/Sort_wrap.2.4.c
+xs/Sort_wrap.2.5.c
 xs/SparseMatrix_wrap.2.0.c
 xs/SparseMatrix_wrap.2.1.c
 xs/SparseMatrix_wrap.2.2.1.c
 xs/SparseMatrix_wrap.2.2.c
 xs/SparseMatrix_wrap.2.3.c
 xs/SparseMatrix_wrap.2.4.c
+xs/SparseMatrix_wrap.2.5.c
 xs/Spline_wrap.1.15.c
 xs/Spline_wrap.1.16.c
 xs/Spline_wrap.2.0.c
@@ -1056,6 +1157,7 @@ xs/Spline_wrap.2.2.1.c
 xs/Spline_wrap.2.2.c
 xs/Spline_wrap.2.3.c
 xs/Spline_wrap.2.4.c
+xs/Spline_wrap.2.5.c
 xs/Statistics_wrap.1.15.c
 xs/Statistics_wrap.1.16.c
 xs/Statistics_wrap.2.0.c
@@ -1064,6 +1166,7 @@ xs/Statistics_wrap.2.2.1.c
 xs/Statistics_wrap.2.2.c
 xs/Statistics_wrap.2.3.c
 xs/Statistics_wrap.2.4.c
+xs/Statistics_wrap.2.5.c
 xs/Sum_wrap.1.15.c
 xs/Sum_wrap.1.16.c
 xs/Sum_wrap.2.0.c
@@ -1072,6 +1175,7 @@ xs/Sum_wrap.2.2.1.c
 xs/Sum_wrap.2.2.c
 xs/Sum_wrap.2.3.c
 xs/Sum_wrap.2.4.c
+xs/Sum_wrap.2.5.c
 xs/Sys_wrap.1.15.c
 xs/Sys_wrap.1.16.c
 xs/Sys_wrap.2.0.c
@@ -1080,6 +1184,7 @@ xs/Sys_wrap.2.2.1.c
 xs/Sys_wrap.2.2.c
 xs/Sys_wrap.2.3.c
 xs/Sys_wrap.2.4.c
+xs/Sys_wrap.2.5.c
 xs/Vector_wrap.1.15.c
 xs/Vector_wrap.1.16.c
 xs/Vector_wrap.2.0.c
@@ -1088,6 +1193,7 @@ xs/Vector_wrap.2.2.1.c
 xs/Vector_wrap.2.2.c
 xs/Vector_wrap.2.3.c
 xs/Vector_wrap.2.4.c
+xs/Vector_wrap.2.5.c
 xs/VectorComplex_wrap.1.15.c
 xs/VectorComplex_wrap.1.16.c
 xs/VectorComplex_wrap.2.0.c
@@ -1096,6 +1202,7 @@ xs/VectorComplex_wrap.2.2.1.c
 xs/VectorComplex_wrap.2.2.c
 xs/VectorComplex_wrap.2.3.c
 xs/VectorComplex_wrap.2.4.c
+xs/VectorComplex_wrap.2.5.c
 xs/Version_wrap.1.15.c
 xs/Version_wrap.1.16.c
 xs/Version_wrap.2.0.c
@@ -1104,6 +1211,7 @@ xs/Version_wrap.2.2.1.c
 xs/Version_wrap.2.2.c
 xs/Version_wrap.2.3.c
 xs/Version_wrap.2.4.c
+xs/Version_wrap.2.5.c
 xs/Wavelet2D_wrap.1.15.c
 xs/Wavelet2D_wrap.1.16.c
 xs/Wavelet2D_wrap.2.0.c
@@ -1112,6 +1220,7 @@ xs/Wavelet2D_wrap.2.2.1.c
 xs/Wavelet2D_wrap.2.2.c
 xs/Wavelet2D_wrap.2.3.c
 xs/Wavelet2D_wrap.2.4.c
+xs/Wavelet2D_wrap.2.5.c
 xs/Wavelet_wrap.1.15.c
 xs/Wavelet_wrap.1.16.c
 xs/Wavelet_wrap.2.0.c
@@ -1120,6 +1229,7 @@ xs/Wavelet_wrap.2.2.1.c
 xs/Wavelet_wrap.2.2.c
 xs/Wavelet_wrap.2.3.c
 xs/Wavelet_wrap.2.4.c
+xs/Wavelet_wrap.2.5.c
 xt/01-pod.t
 xt/style-trailing-space.t
 META.json

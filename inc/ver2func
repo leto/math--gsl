@@ -214,4 +214,23 @@ return {
               ^gsl_sf_hermite_func_zero$
               /
         ],
-    } };
+    },
+
+    "2.5" => {
+        new => [
+            qw/
+              ^gsl_stats_median$
+              ^gsl_stats_select$
+              ^gsl_stats_mad$
+              ^gsl_stats_mad0$
+              ^gsl_Sn_from_sorted_data$
+              ^gsl_Qn_from_sorted_data$
+              ^gsl_stats_gastwirth_from_sorted_data$
+              ^gsl_stats_trmean_from_sorted_data$
+	      ^gsl_integration_romberg
+	      ^gsl_spmatrix_work_sze
+              /
+        ],
+    },
+
+};

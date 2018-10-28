@@ -13,19 +13,30 @@ sub make_fixture : Test(setup) {
 sub teardown : Test(teardown) {
 }
 
-sub TEST_DIFF_CENTRAL : Tests {
+sub TEST_DIFF_CENTRAL : Tests  {
+
+    if ( !defined &{\&gsl_diff_central} ) {
+        $_[0]->builder->skip( "gsl_diff_central not found" );
+        return;
+    }
+
     my ($success, $result, $error) = gsl_diff_central(sub { return $_[0]**(1.5)}, 2.0);
     ok_similar($result, 2.1213203435, "Testing Result");
     ok_similar($error, 0.01490, "Testing Error", 0.00001);
 
-
 }
 
 sub TEST_DIFF_FORWARD : Tests {
+
+    if ( !defined &{\&gsl_diff_forward} ) {
+        $_[0]->builder->skip( "gsl_diff_forward not found" );
+        return;
+    }
+
     my ($success, $result, $error) = gsl_diff_forward(sub { return $_[0]**(1.5)}, 0.0);
     ok_similar($result, 0.0012172897, "Testing Result");
     ok_similar($error, 0.05028, "Testing Error", 0.00001);
-}   
+}
 
 
 

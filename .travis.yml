@@ -8,6 +8,7 @@ cache:
   - apt
   - directories:
     - /tmp/src
+    - /tmp/gsl-2.5
     - /tmp/gsl-2.4
     - /tmp/gsl-2.3
     - /tmp/gsl-2.2.1
@@ -33,11 +34,12 @@ env:
     global:
         - CCACHE_CPP2=1
         - CC="ccache clang"
-        - GSL_CURRENT=2.4
+        - GSL_CURRENT=2.5
         - GSL_INST_DIR=/tmp
         - GSL_SRC_DIR=/tmp/src
         - DIST_DIR=/tmp
     matrix:
+        - GSL=2.5
         - GSL=2.4
         - GSL=2.3
         - GSL=2.2.1

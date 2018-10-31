@@ -371,10 +371,21 @@ sub write_renames_i {
 
     for my $ignore ( $self->ignore ) {
 
-        print $fh q{%rename("%(regex:/} . $ignore . q{/$ignore/)s") "";} . "\n";
+        my ( @args, $target );
+
+        if ( 'ARRAY' eq ref $ignore ) {
+            @args   = @$ignore;
+            $target = pop @args;
+        }
+        else {
+            @args   = ( qq["%(regex:/$ignore/\$ignore/)s"] );
+            $target = q[""];
+        }
+
+	my $args = join( ', ', @args );
+        print $fh qq{%rename($args) $target;} . "\n";
     }
     close( $fh ) or die "Could not close $filename: $!";
-
 }
 
 1;

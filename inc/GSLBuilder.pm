@@ -93,7 +93,9 @@ sub process_versioned_swig_files {
 
         my $ver2func = Ver2Func->new( $ver );
 
-        $ver2func->write_renames_i( catfile( qw/swig renames.i/ ) );
+	my $renames_i = catfile( qw/swig renames.i/ );
+        $ver2func->write_renames_i( $renames_i );
+	copy( $renames_i, catfile( 'swig', "renames.${ver}.i" ) );
 
         foreach my $entry ( $ver2func->sources ) {
             my ( $swig_file, $deps ) = @$entry;

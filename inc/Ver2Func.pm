@@ -168,6 +168,7 @@ my @ver2func = (
               ^gsl_permute_matrix$
               ^gsl_spmatrix_ccs$
               ^gsl_spmatrix_crs$
+              ^gsl_spmatrix_fprintf$
               ^gsl_spmatrix_fread$
               ^gsl_spmatrix_fscanf$
               ^gsl_spmatrix_fwrite$
@@ -249,19 +250,51 @@ my @ver2func = (
     "2.5" => {
         new => [
             qw/
-              ^gsl_spmatrix::work_sze$
-              ^gsl_spmatrix::work_dbl$
-              ^gsl_stats_median$
-              ^gsl_stats_select$
+	      ^gsl_stats_Qn0_from_sorted_data$
+	      ^gsl_stats_Qn_from_sorted_data$
+	      ^gsl_stats_Sn0_from_sorted_data$
+	      ^gsl_stats_Sn_from_sorted_data$
+	      ^gsl_stats_char_Qn0_from_sorted_data$
+	      ^gsl_stats_char_Qn_from_sorted_data$
+	      ^gsl_stats_char_Sn0_from_sorted_data$
+	      ^gsl_stats_char_Sn_from_sorted_data$
+	      ^gsl_stats_char_gastwirth_from_sorted_data$
+	      ^gsl_stats_char_mad$
+	      ^gsl_stats_char_mad0$
+	      ^gsl_stats_char_median$
+	      ^gsl_stats_char_trmean_from_sorted_data$
+	      ^gsl_stats_int_Qn0_from_sorted_data$
+	      ^gsl_stats_int_Qn_from_sorted_data$
+	      ^gsl_stats_int_Sn0_from_sorted_data$
+	      ^gsl_stats_int_Sn_from_sorted_data$
+	      ^gsl_stats_int_gastwirth_from_sorted_data$
+	      ^gsl_stats_int_mad$
+	      ^gsl_stats_int_mad0$
+	      ^gsl_stats_int_median$
+	      ^gsl_stats_int_select$
+	      ^gsl_stats_int_trmean_from_sorted_data$
+              ^gsl_int_Qn_from_sorted_data$
+              ^gsl_int_Sn_from_sorted_data$
+              ^gsl_integration_romberg
+              ^gsl_linalg_cholesky_solve_mat$
+              ^gsl_linalg_cholesky_svx_mat$
+              ^gsl_ran_wishart$
+              ^gsl_ran_wishart_log_pdf$
+              ^gsl_ran_wishart_pdf$
+              ^gsl_spmatrix_work_sze
+              ^gsl_stats_char_select$
+              ^gsl_stats_gastwirth_from_sorted_data$
+              ^gsl_stats_int_Sn_from_sorted_data$
               ^gsl_stats_mad$
               ^gsl_stats_mad0$
-              ^gsl_Sn_from_sorted_data$
-              ^gsl_Qn_from_sorted_data$
-              ^gsl_stats_gastwirth_from_sorted_data$
+              ^gsl_stats_median$
+              ^gsl_stats_select$
               ^gsl_stats_trmean_from_sorted_data$
-              ^gsl_integration_romberg
-              ^gsl_spmatrix_work_sze
-              /
+              /,
+            [ '$ignore', '%$isvariable', '%$ismember', 'work_dbl' ],
+            [ '$ignore', '%$isvariable', '%$ismember', 'work_sze' ],
+
+
         ],
     },
 );
@@ -273,7 +306,7 @@ my ( %index, @info, @versions );
 
     while ( @ver2func ) {
         my ( $version, $info ) = splice( @ver2func, 0, 2 );
-	$info->{$_} ||= [] for qw[ deprecated new subsystems ];
+        $info->{$_} ||= [] for qw[ deprecated new subsystems ];
         $index{$version} = $idx++;
         push @versions, $version;
         push @info,     $info;
@@ -322,7 +355,7 @@ sub versions {
 
 {
     my %C_modules;
-    @C_modules{ qw[ Matrix Randist ] } = ();
+    @C_modules{qw[ Matrix Randist ]} = ();
 
     sub is_c_module {
         my ( $self, $module ) = @_;

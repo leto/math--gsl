@@ -122,7 +122,7 @@ sub process_versioned_swig_files {
         my @renames;
         foreach my $high_ver (keys %{$ver2func}) {
             if ( cmp_versions($high_ver, $ver) < 1 ) {
-		push @renames, @{ $ver2func->{$ver}{deprecated} || [] };
+		push @renames, @{ $ver2func->{$high_ver}{deprecated} || [] };
 	    }
 	    else {
 		push @renames, @{ $ver2func->{$high_ver}{new} || [] };

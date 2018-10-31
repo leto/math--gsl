@@ -1,6 +1,34 @@
-return {
+package Ver2Func;
 
-    "1.15" => {},
+use strict;
+use warnings;
+
+use Carp;
+use File::Spec::Functions qw/:ALL/;
+
+# THESE MUST BE IN ORDER
+my @ver2func = (
+
+    "1.15" => {
+        subsystems => [
+            qw/
+              Diff         Machine      Statistics    BLAS
+              Eigen        Matrix       Poly          MatrixComplex
+              BSpline      Errno        PowInt        VectorComplex
+              CBLAS        FFT          Min           IEEEUtils
+              CDF          Fit          QRNG
+              Chebyshev    Monte        RNG           Vector
+              Heapsort     Randist      Roots
+              Combination  Histogram    Multimin      Wavelet
+              Complex      Histogram2D  Multiroots    Wavelet2D
+              Const        Siman        Sum           Sys
+              NTuple       Integration  Sort          Test
+              DHT          Interp       ODEIV         SF
+              Deriv        Linalg       Permutation   Spline
+              Version      Multiset
+              /
+        ],
+    },
 
     "1.16" => {
         new => [
@@ -73,7 +101,8 @@ return {
               ^gsl_linalg_givens_gv$
               ^gsl_linalg_QR_matQ$
               /
-        ]
+        ],
+        subsystems => [qw/ Rstat SparseMatrix /],
     },
 
     "2.1" => {
@@ -82,7 +111,8 @@ return {
               ^gsl_multifit_linear_rcond$
               ^gsl_multifit_linear_L_decomp$
               /
-        ]
+        ],
+        subsystems => [qw/ Multilarge Multifit /],
     },
 
     "2.2" => {
@@ -219,6 +249,8 @@ return {
     "2.5" => {
         new => [
             qw/
+              ^gsl_spmatrix::work_sze$
+              ^gsl_spmatrix::work_dbl$
               ^gsl_stats_median$
               ^gsl_stats_select$
               ^gsl_stats_mad$
@@ -227,10 +259,122 @@ return {
               ^gsl_Qn_from_sorted_data$
               ^gsl_stats_gastwirth_from_sorted_data$
               ^gsl_stats_trmean_from_sorted_data$
-	      ^gsl_integration_romberg
-	      ^gsl_spmatrix_work_sze
+              ^gsl_integration_romberg
+              ^gsl_spmatrix_work_sze
               /
         ],
     },
+);
 
-};
+my ( %index, @info, @versions );
+
+{
+    my $idx = 0;
+
+    while ( @ver2func ) {
+        my ( $version, $info ) = splice( @ver2func, 0, 2 );
+	$info->{$_} ||= [] for qw[ deprecated new subsystems ];
+        $index{$version} = $idx++;
+        push @versions, $version;
+        push @info,     $info;
+    }
+
+}
+
+sub new {
+    my ( $class, $version ) = @_;
+
+    defined( my $vers_idx = $index{$version} )
+      or croak( "unsupported version: $version" );
+
+    my ( @ignore, @subsystems );
+
+    my $idx;
+
+    # ignore deprecated symbols in previous and current versions
+    for ( $idx = 0 ; $idx <= $vers_idx ; ++$idx ) {
+        push @ignore,     @{ $info[$idx]{deprecated} };
+        push @subsystems, @{ $info[$idx]{subsystems} };
+    }
+
+    # ignore added symbols in future versions
+    for ( ; $idx < @info ; ++$idx ) {
+        push @ignore,     @{ $info[$idx]{new} };
+    }
+
+    return bless {
+        ignore     => \@ignore,
+        subsystems => [ grep { !/^Test$/ } @subsystems ],
+    };
+}
+
+sub versions {
+
+    ( undef, my $cur_ver ) = @_;
+
+    return @versions unless defined $cur_ver;
+
+    defined( my $idx = $index{$cur_ver} )
+      or croak( "unsupported version: $cur_ver" );
+
+    return @versions[ 0 .. $idx ];
+}
+
+{
+    my %C_modules;
+    @C_modules{ qw[ Matrix Randist ] } = ();
+
+    sub is_c_module {
+        my ( $self, $module ) = @_;
+        return exists $C_modules{$module};
+    }
+
+}
+
+sub subsystems {
+    return @{ $_[0]->{subsystems} };
+}
+
+sub ignore {
+    return @{ $_[0]->{ignore} };
+}
+
+sub sources {
+    my $self = shift;
+    (
+        map { [
+                catfile( "swig", "$_.i" ),
+                [
+                    catfile( "pod", "$_.pod" ),
+                    (
+                        Ver2Func->is_c_module( $_ )
+                        ? ( catfile( "c", "$_.c" ), catfile( "c", "$_.h" ) )
+                        : (),
+                    )
+                ],
+            ]
+        } $self->subsystems
+    );
+}
+
+sub swig_files {
+    my $self = shift;
+    return ( map { catfile( "swig", "$_.i" ) } $self->subsystems );
+}
+
+sub write_renames_i {
+
+    my ( $self, $filename ) = @_;
+
+    open( my $fh, '>', $filename )
+      or die "Could not create $filename: $!";
+
+    for my $ignore ( $self->ignore ) {
+
+        print $fh q{%rename("%(regex:/} . $ignore . q{/$ignore/)s") "";} . "\n";
+    }
+    close( $fh ) or die "Could not close $filename: $!";
+
+}
+
+1;

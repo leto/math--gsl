@@ -9,42 +9,15 @@ use File::Path qw/mkpath/;
 use File::Spec::Functions qw/:ALL/;
 use base 'Module::Build';
 
+use Ver2Func;
+
 sub is_release {
     return -e '.git' ? 0 : 1;
-}
-
-# Only subsystems that existed in GSL 1.15 are listed here
-# update inc/GSLBuilder.pm and Build.PL to add others
-sub subsystems {
-    sort qw/
-        Diff         Machine      Statistics    BLAS
-        Eigen        Matrix       Poly          MatrixComplex
-        BSpline      Errno        PowInt        VectorComplex
-        CBLAS        FFT          Min           IEEEUtils
-        CDF          Fit          QRNG
-        Chebyshev    Monte        RNG           Vector
-        Heapsort     Randist      Roots
-        Combination  Histogram    Multimin      Wavelet
-        Complex      Histogram2D  Multiroots    Wavelet2D
-        Const        Siman        Sum           Sys
-        NTuple       Integration  Sort          Test
-        DHT          Interp       ODEIV         SF
-        Deriv        Linalg       Permutation   Spline
-        Version      Multiset
-    /;
-}
-
-sub c_modules {
-    my @c = qw/Matrix Randist/;
-    return +{ map {($_ => 1)} @c };
 }
 
 sub process_swig_files {
     my $self = shift;
     my $p = $self->{properties};
-
-    my $files_ref = $p->{swig_source};
-    return unless ($files_ref);
 
     unless (is_release()) {
         $self->process_versioned_swig_files;
@@ -72,9 +45,8 @@ sub process_swig_files {
     print "PERL5LIB        = $PERL5LIB\n";
     print "LD_LIBRARY_PATH =$LD_LIBRARY_PATH\n";
 
-    foreach my $file (@$files_ref) {
-        $self->process_xs_file($file->[0], $binding_ver);
-    }
+    $self->process_xs_file( $_, $binding_ver )
+      foreach Ver2Func->new( $current_version )->swig_files;
 }
 
 sub get_binding_version {
@@ -112,46 +84,20 @@ sub process_versioned_swig_files {
     my $self = shift;
 
     my $p = $self->{properties};
-    my $files_ref = $p->{swig_source};
 
     my $cur_ver = $p->{current_version};
-    my $ver2func = $p->{ver2func};
 
-    foreach my $ver (sort {cmp_versions($a, $b)} keys %{$ver2func}) {
-        next if (cmp_versions($cur_ver, $ver) == -1);
-        my @renames;
-        foreach my $high_ver (keys %{$ver2func}) {
-            if ( cmp_versions($high_ver, $ver) < 1 ) {
-		push @renames, @{ $ver2func->{$high_ver}{deprecated} || [] };
-	    }
-	    else {
-		push @renames, @{ $ver2func->{$high_ver}{new} || [] };
-	    }
-        }
+    foreach my $ver ( Ver2Func->versions( $cur_ver ) ) {
+
         print "Building wrappers for GSL $ver\n";
-        my $renames_fname = catfile(qw/swig renames.i/);
-        open(my $fh, '>', $renames_fname)
-            or die "Could not create $renames_fname: $!";
-        foreach my $rename (@renames) {
-            print $fh q{%rename("%(regex:/} . $rename . q{/$ignore/)s") "";} . "\n";
-        }
-        close($fh) or die "Could not close $renames_fname: $!";
 
-        foreach my $file (@$files_ref) {
-            my ($major,$minor,$tiny) = split /\./, $ver;
-            # don't create lots of XS for subsystems that didn't exist
-            # in old GSL versions
-            if ($file->[0] =~ m/Multilarge/ or $file->[0] =~ m/Multifit/) {
-                if ($major >=2 && $minor >= 1) {
-                    $self->process_swig($file->[0], $file->[1], $ver);
-                }
-            } elsif ($file->[0] =~ m/(Rstat|SparseMatrix)/) {
-                if ($major >=2 ) {
-                    $self->process_swig($file->[0], $file->[1], $ver);
-                }
-            } else {
-                $self->process_swig($file->[0], $file->[1], $ver);
-            }
+        my $ver2func = Ver2Func->new( $ver );
+
+        $ver2func->write_renames_i( catfile( qw/swig renames.i/ ) );
+
+        foreach my $entry ( $ver2func->sources ) {
+            my ( $swig_file, $deps ) = @$entry;
+            $self->process_swig( $swig_file, $deps, $ver );
         }
     }
 }

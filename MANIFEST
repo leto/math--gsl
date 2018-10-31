@@ -28,7 +28,7 @@ examples/vector/dot_product
 examples/vector/serialize
 examples/vector/speed
 inc/GSLBuilder.pm
-inc/ver2func
+inc/Ver2Func.pm
 KNOWN_BUGS
 lib/Math/GSL.pm
 lib/Math/GSL/BLAS.pm

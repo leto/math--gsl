@@ -24,6 +24,7 @@ use Data::Dumper;
 use Module::Build;
 use lib 'inc';
 use GSLBuilder;
+use Ver2Func;
 use File::Spec::Functions qw/:ALL/;
 
 our $MIN_GSL_VERSION = "1.15";
@@ -73,23 +74,16 @@ if ($Config{archname} =~ /x86_64|amd64/ ) {
 # this causes warnings with clang + OSX
 $ccflags = $Config{cccdlflags} . ' ' . $ccflags unless GSLBuilder::is_darwin();
 
-my @Subsystems = grep { ! /^Test$/ } GSLBuilder::subsystems();
-# NOTE: keep in sync with inc/GSLBuilder.pm
-push @Subsystems, "Multilarge"    if $major >= 2 and $minor >= 1;
-push @Subsystems, "Multifit"      if $major >= 2 and $minor >= 1;
-push @Subsystems, "Rstat"         if $major >= 2;
-push @Subsystems, "SparseMatrix"  if $major >= 2;
+my $ver2func = Ver2Func->new( $gsl_conf->{gsl_version} );
 
 my $cleanup = qq{
                  xs/*_wrap*.c core *.core swig/system.i swig/renames.i
                  swig/*.o Makefile Math-GSL-* tmp* pod2ht*.tmp _build pm
                  lib/Math/GSL/[A-z]+/* blib *.so *.orig
-                } . join " ", map { catfile( (qw/lib Math GSL/, "$_.pm") ) } @Subsystems;
+                } . join " ", map { catfile( (qw/lib Math GSL/, "$_.pm") ) } $ver2func->subsystems;
 
 
 $ldflags = '-shared ' . $ldflags unless GSLBuilder::is_darwin();
-
-my $ver2func = do(rel2abs(catfile(qw/inc ver2func/)));
 
 my $swig_version;
 
@@ -105,15 +99,6 @@ unless (GSLBuilder::is_release()) {
 }
 
 $ccflags = "$ccflags " . ($ENV{CC_FLAGS}||''),
-
-my $c_deps      = GSLBuilder::c_modules();
-my $swig_source = [
-                   map {
-                       my $deps = [ catfile("pod", "$_.pod") ];
-                       push @$deps, catfile("c","$_.c"), catfile("c","$_.h") if $c_deps->{$_};
-                       [ catfile("swig", "$_.i"), $deps ]
-                   } @Subsystems ,
-                  ];
 
 my $builder = GSLBuilder->new(
     module_name         => 'Math::GSL',
@@ -152,9 +137,7 @@ my $builder = GSLBuilder->new(
         'Module::Build'   => '0.38',
         'Alien::GSL'      => '1.01',
     },
-    swig_source           => $swig_source,
     swig_version          => $swig_version,
-    ver2func              => $ver2func,
     current_version       => $gsl_conf->{gsl_version},
     gsl_prefix            => $gsl_conf->{gsl_prefix},
 );

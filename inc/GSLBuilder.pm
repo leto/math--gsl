@@ -43,7 +43,7 @@ sub process_swig_files {
     my $PERL5LIB           = $ENV{PERL5LIB} || "";
     my $LD_LIBRARY_PATH    = $ENV{LD_LIBRARY_PATH} || "";
     print "PERL5LIB        = $PERL5LIB\n";
-    print "LD_LIBRARY_PATH =$LD_LIBRARY_PATH\n";
+    print "LD_LIBRARY_PATH = $LD_LIBRARY_PATH\n";
 
     $self->process_xs_file( $_, $binding_ver )
       foreach Ver2Func->new( $current_version )->swig_files;

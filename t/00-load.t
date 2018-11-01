@@ -2,7 +2,7 @@ use Test::More;
 use Config;
 use File::Spec::Functions;
 use lib 'inc';
-use GSLBuilder;
+use Ver2Func;
 use strict;
 use warnings;
 
@@ -10,19 +10,8 @@ my $gsl_version;
 BEGIN {
     use_ok( 'Math::GSL', qw/gsl_version/ );
 
-    map { use_ok("Math::GSL::$_") } GSLBuilder::subsystems();
-
     $gsl_version = gsl_version();
-    my ($major, $minor, $tiny) = split /\./, $gsl_version;
-
-    eval "use_ok('Math::GSL::Rstat')" if ($major >= 2);
-    ok(0, $@) if $@;
-
-    eval "use_ok('Math::GSL::Multilarge')" if ($major >= 2 and $minor >= 1);
-    ok(0, $@) if $@;
-
-    eval "use_ok('Math::GSL::Multifit')" if ($major >= 2 and $minor >= 1);
-    ok(0, $@) if $@;
+    map { use_ok("Math::GSL::$_") } Ver2Func->new( $gsl_version )->subsystems;
 }
 
 my $arch        = $Config{archname};

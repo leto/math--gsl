@@ -17,9 +17,13 @@ also requires that the gsl-config binary can be found in your PATH or [PkgConfig
 
 ## Git repo dependencies
 
-SWIG 2.x is needed to build Math::GSL from the git repo, in addition to all
+SWIG >= 2.x is needed to build Math::GSL from the git repo, in addition to all
 the dependencies above. 2.0.8 or newer is required to work with Perl 5.20 and
-higher.
+higher. SWIG 3.x is recommended.
+
+On OS X with Homebrew, you can install swig with:
+
+    brew install swig
 
 # Installation
 

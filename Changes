@@ -1,6 +1,8 @@
 =head1 Math::GSL Changes
 
 =head1 v0.40 - December 2018
+    - added support for GSL 2.5 (djerius)
+    - vast improvements to Travis CI test infrastructure (djerius)
     - added random method in Math::GSL::Matrix (Rui Meira)
     - added Math::GSL::Multiset (standard gsl API and Perl OO)
     - gsl_linalg_givens now works

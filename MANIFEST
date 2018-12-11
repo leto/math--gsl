@@ -689,6 +689,7 @@ swig/Version.i
 swig/Wavelet.i
 swig/Wavelet2D.i
 t/00-load.t
+t/ver2func.t
 t/BLAS.t
 t/BSpline.t
 t/CBLAS.t

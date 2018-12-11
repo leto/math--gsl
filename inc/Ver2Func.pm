@@ -317,8 +317,10 @@ my ( %index, @info, @versions );
 sub new {
     my ( $class, $version ) = @_;
 
+    $version = '1.16' if $version eq '1.16.1';
+
     defined( my $vers_idx = $index{$version} )
-      or croak( "unsupported version: $version" );
+      or croak( "Unsupported GSL version!!! : $version" );
 
     my ( @ignore, @subsystems );
 

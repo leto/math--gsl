@@ -1,6 +1,5 @@
 *~
 pm
-.gitignore
 *.core
 core
 Build
@@ -12,6 +11,7 @@ _build
 tmp*
 pod2htm*
 lib/Math/GSL/[A-z0-9]*\.pm
+!lib/Math/GSL/Test.pm
 Makefile
 *.data
 foo*

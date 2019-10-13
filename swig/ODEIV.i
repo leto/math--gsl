@@ -293,12 +293,12 @@
         SAVETMPS;
         PUSHMARK(SP);
         EXTEND(SP, 5);
-        mPUSHs(newSVnv(t));
+        PUSHs(sv_2mortal(newSVnv(t)));
         swig_math_gsl_odeiv_copy_doubles_to_av(ay, y, params->dim);
-        mPUSHs((SV *)newRV_inc((SV *) ay));
-        mPUSHs((SV *)newRV_inc((SV *) a_dfdy));
-        mPUSHs((SV *)newRV_inc((SV *) a_dfdt));
-        XPUSHs(params->params);
+        PUSHs(sv_2mortal((SV *)newRV_inc((SV *) ay)));
+        PUSHs(sv_2mortal((SV *)newRV_inc((SV *) a_dfdy)));
+        PUSHs(sv_2mortal((SV *)newRV_inc((SV *) a_dfdt)));
+        PUSHs(params->params);
         PUTBACK;
         count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
         SPAGAIN;
@@ -331,11 +331,11 @@
         SAVETMPS;
         PUSHMARK(SP);
         EXTEND(SP, 4);
-        mPUSHs(newSVnv(t));
+        PUSHs(sv_2mortal(newSVnv(t)));
         swig_math_gsl_odeiv_copy_doubles_to_av(ay, y, params->dim);
-        mPUSHs((SV *)newRV_inc((SV *) ay));
-        mPUSHs((SV *)newRV_inc((SV *) aj));
-        XPUSHs(params->params);
+        PUSHs(sv_2mortal((SV *)newRV_inc((SV *) ay)));
+        PUSHs(sv_2mortal((SV *)newRV_inc((SV *) aj)));
+        PUSHs(params->params);
         PUTBACK;
         count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
         SPAGAIN;

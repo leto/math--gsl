@@ -230,7 +230,7 @@
         SV *sv;
         double val;
 
-        array_len = av_top_index(array) + 1;
+        array_len = av_len(array) + 1;
         if (array_len != dim ) {
             swig_math_gsl_odeiv_callback_error(
                 "Callback returned array of wrong dimension"

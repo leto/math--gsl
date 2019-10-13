@@ -25,18 +25,23 @@
         const char *varname, const char *value
     )
     {
-        SV *pvname = newSVpvf( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);
+        SV *pvname;
+        SV *sv;
+
+        pvname = newSVpvf( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);
         /*char *pvname = form( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);*/
-        SV* sv = get_sv( SvPV_nolen(pvname), GV_ADD );
+        sv = get_sv( SvPV_nolen(pvname), GV_ADD );
         SvREFCNT_dec(pvname);
         sv_setpv( sv, value );
     }
 
     const char *swig_math_gsl_odeiv_get_gut_pv(const char *varname)
     {
-        SV *pvname = newSVpvf( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);
+        SV *pvname, *sv;
+
+        pvname = newSVpvf( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);
         /*char *pvname = form( "%s::%s", SWIG_MATH_GSL_ODEIV_GUTS, varname);*/
-        SV* sv = get_sv( SvPV_nolen(pvname), GV_ADD );
+        sv = get_sv( SvPV_nolen(pvname), GV_ADD );
         SvREFCNT_dec(pvname);
         return SvPV_nolen(sv);
     }
@@ -58,13 +63,16 @@
         const char *msg, ...
     )
     {
-        const char *cbname = swig_math_gsl_odeiv_get_gut_pv("cbname");
+        const char *cbname;
         va_list args;
+        SV *msg2;
+
+        cbname = swig_math_gsl_odeiv_get_gut_pv("cbname");
         va_start(args, msg);
         /*char *msg2 = form(
            "Math::GSL::ODEIV: callback function : %s() : %s", cbname, msg
         );*/
-        SV *msg2 = newSVpvf(
+        msg2 = newSVpvf(
            "Math::GSL::ODEIV: callback function : %s() : %s", cbname, msg
         );
         vcroak( SvPV_nolen(msg2), &args );
@@ -77,11 +85,15 @@
         const char *msg, ...
     )
     {
-        const char *subname = swig_math_gsl_odeiv_get_gut_pv("symname");
-        const char *param = swig_math_gsl_odeiv_get_gut_pv("param");
+        const char *subname;
+        const char *param;
         va_list args;
+        SV *msg2;
+
+        subname = swig_math_gsl_odeiv_get_gut_pv("symname");
+        param = swig_math_gsl_odeiv_get_gut_pv("param");
         va_start(args, msg);
-        SV *msg2 = newSVpvf(
+        msg2 = newSVpvf(
            "Math::GSL::ODEIV:%s() : parameter $%s : %s", subname, param, msg
         );
         vcroak( SvPV_nolen(msg2), &args );
@@ -94,10 +106,13 @@
         const char *msg, ...
     )
     {
-        const char *subname = swig_math_gsl_odeiv_get_gut_pv("symname");
+        const char *subname;
+        SV *msg2;
         va_list args;
+
+        subname = swig_math_gsl_odeiv_get_gut_pv("symname");
         va_start(args, msg);
-        SV *msg2 = newSVpvf( "Math::GSL::ODEIV:%s() : %s", subname, msg);
+        msg2 = newSVpvf( "Math::GSL::ODEIV:%s() : %s", subname, msg);
         vcroak( SvPV_nolen(msg2), &args );
         /* NOTE: these two lines will never be reached */
         SvREFCNT_dec(msg2);
@@ -106,10 +121,13 @@
 
     SV *swig_math_gsl_odeiv_get_hash_sv(HV *hash, const char *key)
     {
-        SV *key_sv = newSVpv(key, strlen (key));
-        SV *value;
+        SV *key_sv, *value;
+        HE *he;
+
+        key_sv = newSVpv(key, strlen (key));
+        value;
         if (hv_exists_ent(hash, key_sv, 0)) {
-            HE *he = hv_fetch_ent(hash, key_sv, 0, 0);
+            he = hv_fetch_ent(hash, key_sv, 0, 0);
             value = HeVAL(he);
         }
         else {
@@ -121,7 +139,8 @@
     }
 
     IV swig_math_gsl_odeiv_get_hash_iv(HV *hash, const char *key) {
-        SV *sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
+        SV *sv;
+        sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
         if (SvROK(sv)) {
             swig_math_gsl_odeiv_input_param_error(
                 "Hash value for key '%s' is not a scalar value", key
@@ -136,7 +155,9 @@
     }
 
     SV *swig_math_gsl_odeiv_get_hash_hashref(HV *hash, const char *key) {
-        SV *sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
+        SV *sv;
+
+        sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
         if (!SvROK(sv)) {
             swig_math_gsl_odeiv_input_param_error(
                 "Hash value for key '%s' is not a reference", key
@@ -151,7 +172,9 @@
     }
 
     SV *swig_math_gsl_odeiv_get_hash_coderef(HV *hash, const char *key) {
-        SV *sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
+        SV *sv;
+
+        sv = swig_math_gsl_odeiv_get_hash_sv(hash, key);
         if (!SvROK(sv)) {
             swig_math_gsl_odeiv_input_param_error(
                 "Hash value for key '%s' is not a reference", key
@@ -167,7 +190,9 @@
 
     void swig_math_gsl_odeiv_store_hash_ptr( HV *hash, const char *key, void *ptr)
     {
-        SV *sv = newSViv(PTR2IV(ptr));
+        SV *sv;
+
+        sv = newSViv(PTR2IV(ptr));
         /* Let the hash take ownership of the sv */
         if( !hv_store(hash, key, strlen(key), sv, 0) ) {
             SvREFCNT_dec(sv);
@@ -178,13 +203,17 @@
     }
 
     void *swig_math_gsl_odeiv_get_hash_ptr(HV *hash, const char *key) {
-        IV ptr = swig_math_gsl_odeiv_get_hash_iv(hash, key);
+        IV ptr;
+
+        ptr = swig_math_gsl_odeiv_get_hash_iv(hash, key);
         return (void *) INT2PTR(SV*, ptr);
     }
 
     void swig_math_gsl_odeiv_store_double_in_av( AV *array, SSize_t index, double val)
     {
-        SV *sval = newSVnv(val);
+        SV *sval;
+
+        sval = newSVnv(val);
         if( !av_store(array, index, sval) ) {
             SvREFCNT_dec(sval);
             swig_math_gsl_odeiv_callback_error(
@@ -195,20 +224,26 @@
 
     void swig_math_gsl_odeiv_copy_av_to_carray(AV *array, double *y, size_t dim)
     {
-        SSize_t array_len = av_top_index(array) + 1;
+        int i;
+        SSize_t array_len;
+        SV **sv_ptr;
+        SV *sv;
+        double val;
+
+        array_len = av_top_index(array) + 1;
         if (array_len != dim ) {
             swig_math_gsl_odeiv_callback_error(
                 "Callback returned array of wrong dimension"
             );
         }
-        for (int i = 0; i < dim; i++) {
-            SV **sv_ptr = av_fetch( array, i, 0 );
+        for (i = 0; i < dim; i++) {
+            sv_ptr = av_fetch( array, i, 0 );
             if (!sv_ptr) {
                 swig_math_gsl_odeiv_callback_error(
                     "Cannot extract values from returned array"
                 );
             }
-            SV *sv = *sv_ptr;
+            sv = *sv_ptr;
             if (SvROK(sv)) {
                 swig_math_gsl_odeiv_callback_error(
                     "Returned array value is not a scalar"
@@ -220,14 +255,15 @@
                     "Returned array value is not of scalar type"
                 );
             }
-            double val = (double ) SvNV(sv);
+            val = (double ) SvNV(sv);
             y[i] = val;
         }
     }
 
     void swig_math_gsl_odeiv_copy_doubles_to_av(AV *array, const double *y, size_t dim)
     {
-        for (int i = 0; i < dim; i++) {
+        int i;
+        for (i = 0; i < dim; i++) {
             swig_math_gsl_odeiv_store_double_in_av(array, i, y[i]);
         }
     }
@@ -245,9 +281,13 @@
         swig_math_gsl_odeiv_system *params
     )
     {
-        AV *ay = (AV *)sv_2mortal((SV *)newAV());
-        AV *a_dfdy = (AV *)sv_2mortal((SV *)newAV());
-        AV *a_dfdt = (AV *)sv_2mortal((SV *)newAV());
+        AV *ay, *a_dfdy, *a_dfdt;
+        int count;
+        IV result;
+
+        ay = (AV *)sv_2mortal((SV *)newAV());
+        a_dfdy = (AV *)sv_2mortal((SV *)newAV());
+        a_dfdt = (AV *)sv_2mortal((SV *)newAV());
         dSP;     /* declares a local copy of stack pointer */
         ENTER;
         SAVETMPS;
@@ -260,14 +300,14 @@
         mPUSHs((SV *)newRV_inc((SV *) a_dfdt));
         XPUSHs(params->params);
         PUTBACK;
-        int count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
+        count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
         SPAGAIN;
         if (count != 1) {
             swig_math_gsl_odeiv_callback_error(
                 "Bad return value from callback: expected 1 value, got %d", count
             );
         }
-        IV result = POPi;  /* TODO: check ST(0) instead for valid value */
+        result = POPi;  /* TODO: check ST(0) instead for valid value */
         swig_math_gsl_odeiv_copy_av_to_carray(a_dfdy, dfdy, (params->dim)*(params->dim));
         swig_math_gsl_odeiv_copy_av_to_carray(a_dfdt, dfdt, params->dim);
         PUTBACK;
@@ -280,8 +320,12 @@
         SV *callback, double t, const double y[], double dydt[],
         swig_math_gsl_odeiv_system *params)
     {
-        AV *ay = (AV *)sv_2mortal((SV *)newAV());
-        AV *aj = (AV *)sv_2mortal((SV *)newAV());
+        AV *ay, *aj;
+        int count;
+        IV result;
+
+        ay = (AV *)sv_2mortal((SV *)newAV());
+        aj = (AV *)sv_2mortal((SV *)newAV());
         dSP;     /* declares a local copy of stack pointer */
         ENTER;
         SAVETMPS;
@@ -293,9 +337,9 @@
         mPUSHs((SV *)newRV_inc((SV *) aj));
         XPUSHs(params->params);
         PUTBACK;
-        int count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
+        count = call_sv(callback, G_SCALAR);  /* call the Perl callback */
         SPAGAIN;
-        /* This should happen for G_SCALAR, see perldoc perlcall.
+        /* This should not happen for G_SCALAR, see perldoc perlcall.
          *  Even if the callback does not return anything, count will still be 1
          *  since we are not the G_DISCARD flag
          */
@@ -304,7 +348,7 @@
                 "Bad return value from callback: expected 1 value, got %d", count
             );
         }
-        IV result = POPi;  /* TODO: check ST(0) instead for valid value */
+        result = POPi;  /* TODO: check ST(0) instead for valid value */
         swig_math_gsl_odeiv_copy_av_to_carray(aj, dydt, params->dim);
         PUTBACK;
         FREETMPS;
@@ -432,10 +476,12 @@
 %typemap(argout) double y[] {
     struct perl_array * p_array = 0;  /* see gsl_typemaps.i for definition */
     int i;
+    double val;
     SV **tv;
+
     p_array=(struct perl_array *)(((char*)$1)-sizeof(struct perl_array));
     for (i = 0; i <= p_array->len; i++) {
-        double val= $1[i];
+        val = $1[i];
         tv = av_fetch(p_array->array, i, 0);
         sv_setnv(*tv, val);
     }
@@ -454,6 +500,9 @@
 %}
 
 %typemap(in) double *h {
+    SV *sv;
+    swig_perl_double_in_out *h_wrap;
+
     swig_math_gsl_odeiv_set_error_param( "$symname", "$1_name" );
     if (!SvROK($input)) {
         swig_math_gsl_odeiv_input_error(
@@ -465,8 +514,7 @@
             "Input parameter $$1_name is not a scalar reference!"
         );
     }
-    SV *sv = SvRV($input);
-    swig_perl_double_in_out *h_wrap;
+    sv = SvRV($input);
     Newx(h_wrap, 1, swig_perl_double_in_out);
     h_wrap->sv = sv;
     h_wrap->h = (double) SvNV(sv);
@@ -474,8 +522,11 @@
 }
 
 %typemap(argout) double *h {
-    swig_perl_double_in_out *h_wrap = (swig_perl_double_in_out *) $1;
-    SV *sv = h_wrap->sv;
+    swig_perl_double_in_out *h_wrap;
+    SV *sv;
+
+    h_wrap = (swig_perl_double_in_out *) $1;
+    sv = h_wrap->sv;
     sv_setnv(sv, h_wrap->h);
 }
 

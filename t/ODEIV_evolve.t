@@ -155,15 +155,6 @@ sub GSL_ODEIV_BAD_Y_INPUT : Tests {
     } qr/not an array reference/, 'wrong y type 2';
 }
 
-sub func2 {
-    my ($t, $y, $dydt, $params) = @_;
-    my $mu = $params->{mu};
-
-    $dydt->[0] = $y->[1];
-    $dydt->[1] = -$y->[0] - $mu*$y->[1]*(($y->[0])**2 - 1);
-    return $GSL_SUCCESS;
-}
-
 sub GSL_ODEIV_BAD_FUNC_CALLBACK : Tests {
     my $self = shift;
 

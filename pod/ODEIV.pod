@@ -1,4 +1,6 @@
 %perlcode %{
+package Math::GSL::ODEIV;
+
 @EXPORT_OK = qw/
                gsl_odeiv_step_alloc
                gsl_odeiv_step_reset
@@ -47,7 +49,7 @@ Math::GSL::ODEIV - functions for solving ordinary differential equation (ODE) in
 
 =head1 SYNOPSIS
 
-use Math::GSL::ODEIV qw /:all/;
+ use Math::GSL::ODEIV qw /:all/;
 
 =head1 DESCRIPTION
 
@@ -87,7 +89,7 @@ Here is a list of all the functions in this module :
 
 =item * C<gsl_odeiv_evolve_alloc($dim)> - This function returns a pointer to a newly allocated instance of an evolution function for a system of $dim dimensions.
 
-=item * C<gsl_odeiv_evolve_apply >
+=item * C<gsl_odeiv_evolve_apply($e, $c, $step, $dydt, \$t, $t1, \$h, $y)> - This function advances the system ($e, $dydt) from time $t and position $y using the stepping function $step. The new time and position are stored in $t and $y on output. The initial step-size is taken as $h, but this will be modified using the control function $c to achieve the appropriate error bound if necessary. The routine may make several calls to step in order to determine the optimum step-size. If the step-size has been changed the value of $h will be modified on output. The maximum time $t1 is guaranteed not to be exceeded by the time-step. On the final time-step the value of $t will be set to $t1 exactly.
 
 =item * C<gsl_odeiv_evolve_reset($e)> - This function resets the evolution function $e. It should be used whenever the next use of $e will not be a continuation of a previous step.
 
@@ -138,6 +140,58 @@ This module also includes the following constants :
 For more informations on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
+=head1 EXAMPLE
+
+The example is taken from L<https://www.math.utah.edu/software/gsl/gsl-ref_367.html>.
+
+ use strict;
+ use warnings;
+ use Math::GSL::Errno qw($GSL_SUCCESS);
+ use Math::GSL::ODEIV qw/ :all /;
+ use Math::GSL::Matrix qw/:all/;
+ use Math::GSL::IEEEUtils qw/ :all /;
+ 
+ sub func {
+     my ($t, $y, $dydt, $params) = @_;
+     my $mu = $params->{mu};
+     $dydt->[0] = $y->[1];
+     $dydt->[1] = -$y->[0] - $mu*$y->[1]*(($y->[0])**2 - 1);
+     return $GSL_SUCCESS;
+ }
+ 
+ sub jac {
+     my ($t, $y, $dfdy, $dfdt, $params) = @_;
+
+     my $mu = $params->{mu};
+     my $m = gsl_matrix_view_array($dfdy, 2, 2);
+     gsl_matrix_set( $m, 0, 0, 0.0 );
+     gsl_matrix_set( $m, 0, 1, 1.0 );
+     gsl_matrix_set( $m, 1, 0, (-2.0 * $mu * $y->[0] * $y->[1]) - 1.0 );
+     gsl_matrix_set( $m, 1, 1, -$mu * (($y->[0])**2 - 1.0) );
+     $dfdt->[0] = 0.0;
+     $dfdt->[1] = 0.0;
+     return $GSL_SUCCESS;
+ }
+ 
+ my $T = $gsl_odeiv_step_rk8pd;
+ my $s = gsl_odeiv_step_alloc($T, 2);
+ my $c = gsl_odeiv_control_y_new(1e-6, 0.0);
+ my $e = gsl_odeiv_evolve_alloc(2);
+ my $params = { mu => 10 };
+ my $sys = Math::GSL::ODEIV::gsl_odeiv_system->new(\&func, \&jac, 2, $params );
+ my $t = 0.0;
+ my $t1 = 100.0;
+ my $h = 1e-6;
+ my $y = [ 1.0, 0.0 ];
+ gsl_ieee_env_setup;
+ while ($t < $t1) {
+     my $status = gsl_odeiv_evolve_apply ($e, $c, $s, $sys, \$t, $t1, \$h, $y);
+     last if $status != $GSL_SUCCESS;
+     printf "%.5e %.5e %.5e\n", $t, $y->[0], $y->[1];
+ }
+ gsl_odeiv_evolve_free($e);
+ gsl_odeiv_control_free($c);
+ gsl_odeiv_step_free($s);
 
 
 

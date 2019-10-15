@@ -8,7 +8,6 @@
 //%newobject gsl_odeiv_evolve_alloc;
 
 %{
-    //1
 #include "gsl/gsl_types.h"
 #include "gsl/gsl_odeiv.h"
 #include <stdarg.h>

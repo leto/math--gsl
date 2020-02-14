@@ -124,7 +124,6 @@
         HE *he;
 
         key_sv = newSVpv(key, strlen (key));
-        value;
         if (hv_exists_ent(hash, key_sv, 0)) {
             he = hv_fetch_ent(hash, key_sv, 0, 0);
             value = HeVAL(he);
@@ -340,7 +339,7 @@
         SPAGAIN;
         /* This should not happen for G_SCALAR, see perldoc perlcall.
          *  Even if the callback does not return anything, count will still be 1
-         *  since we are not the G_DISCARD flag
+         *  since we are not passing the G_DISCARD flag
          */
         if (count != 1) {
             swig_math_gsl_odeiv_callback_error(

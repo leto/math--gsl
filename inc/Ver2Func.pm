@@ -293,10 +293,10 @@ my @ver2func = (
               /,
             [ '$ignore', '%$isvariable', '%$ismember', 'work_dbl' ],
             [ '$ignore', '%$isvariable', '%$ismember', 'work_sze' ],
-
-
         ],
     },
+    "2.6" => {
+    }
 );
 
 my ( %index, @info, @versions );

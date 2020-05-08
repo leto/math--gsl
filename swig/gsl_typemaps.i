@@ -1,7 +1,14 @@
 %include "system.i"
 %include "gsl/gsl_nan.h"
-#if defined GSL_MINOR_VERSION && (GSL_MINOR_VERSION >= 12)
+
+#if defined GSL_MAJOR_VERSION
+# if GSL_MAJOR_VERSION == 1
+#  if defined GSL_MINOR_VERSION && (GSL_MINOR_VERSION >= 12)
     %include "gsl/gsl_inline.h"
+#  endif
+# elif GSL_MAJOR_VERSION > 1
+    %include "gsl/gsl_inline.h"
+# endif
 #endif
 
 %include "gsl/gsl_errno.h"

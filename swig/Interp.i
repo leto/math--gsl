@@ -19,7 +19,6 @@
 
 %include "gsl/gsl_inline.h"
 %include "gsl/gsl_types.h"
-%include "gsl/gsl_version.h"
 %include "gsl/gsl_interp.h"
 
 %include "../pod/Interp.pod"

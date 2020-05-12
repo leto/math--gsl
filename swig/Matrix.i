@@ -10,6 +10,7 @@
 
 %{
     #include "gsl/gsl_inline.h"
+    #include "gsl/gsl_blas_types.h"
     #include "gsl/gsl_matrix.h"
     #include "gsl/gsl_complex.h"
     #include "gsl/gsl_vector_double.h"
@@ -22,6 +23,7 @@
 %}
 
 %include "gsl/gsl_inline.h"
+%include "gsl/gsl_blas_types.h"
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_complex.h"
 %include "gsl/gsl_vector_double.h"

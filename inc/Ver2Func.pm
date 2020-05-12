@@ -296,6 +296,12 @@ my @ver2func = (
         ],
     },
     "2.6" => {
+        new => [
+            qw/
+	      ^gsl_spmatrix_pool_node$
+	      ^gsl_spmatrix_pool$
+              /
+            ]
     }
 );
 

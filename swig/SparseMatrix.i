@@ -9,7 +9,7 @@
     #include "gsl/gsl_spmatrix.h"
 %}
 
-#if MG_GSL_VERSION >= 002006
+#if MG_GSL_NUM_VERSION >= 002006
   %include "gsl/gsl_spmatrix.h"
   %include "gsl/gsl_spmatrix_double.h"
   %include "gsl/gsl_spmatrix_complex_long_double.h"

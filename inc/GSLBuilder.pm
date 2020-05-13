@@ -205,6 +205,7 @@ sub compile_swig {
 
     my @swig       = swig_binary_name(), defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
     my @swig_flags = defined($p->{swig_flags}) ? $self->split_like_shell($p->{swig_flags}) : ();
+    push @swig_flags, "-I./include";
     my ($major, $minor, $numerical_ver) = reformat_version($ver);
     push @swig_flags, "-DMG_GSL_MAJOR_VERSION=$major",
       "-DMG_GSL_MINOR_VERSION=$minor", "-DMG_GSL_VERSION=$numerical_ver";

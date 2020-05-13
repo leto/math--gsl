@@ -179,6 +179,17 @@ sub swig_binary_name {
     return "swig";
 }
 
+sub reformat_version {
+    my ( $ver) = @_;
+
+    my ($major, $minor) = $ver =~ /^(\d+)\.(\d+)/;
+    if (($major > 999) || ( $minor > 999 )) {
+        die "Unexpected swig version: $ver";
+    }
+    my $numerical_ver = (sprintf "%03d", $major) . ( sprintf "%03d", $minor );
+    return ($major, $minor, $numerical_ver);
+}
+
 # Invoke swig with -perl -outdir and other options.
 sub compile_swig {
     my ($self, $file, $c_file, $ver) = @_;
@@ -194,6 +205,9 @@ sub compile_swig {
 
     my @swig       = swig_binary_name(), defined($p->{swig}) ? ($self->split_like_shell($p->{swig})) : ();
     my @swig_flags = defined($p->{swig_flags}) ? $self->split_like_shell($p->{swig_flags}) : ();
+    my ($major, $minor, $numerical_ver) = reformat_version($ver);
+    push @swig_flags, "-DMG_GSL_MAJOR_VERSION=$major",
+      "-DMG_GSL_MINOR_VERSION=$minor", "-DMG_GSL_VERSION=$numerical_ver";
 
     my $blib_lib = catdir(qw/blib lib/);
     my $gsldir = catdir('pm', qw/Math GSL/);

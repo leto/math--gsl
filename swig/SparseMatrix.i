@@ -11,5 +11,6 @@
 
 
 %include "gsl/gsl_spmatrix.h"
+%include "gsl/gsl_spmatrix_double.h"
 
 %include "../pod/SparseMatrix.pod"

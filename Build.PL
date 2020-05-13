@@ -317,6 +317,7 @@ sub check_gsl_version {
     if ($gsl_version =~ m{\A(\d+(?:\.\d+)+)}) {
         $current_version = $1;
         my @current = split /\./, $current_version;
+        print $fh "#define GSL_VERSION $current[0].$current[1]\n";
         print $fh "#define GSL_MAJOR_VERSION $current[0]\n";
         print $fh "#define GSL_MINOR_VERSION $current[1]\n";
 

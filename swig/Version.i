@@ -1,8 +1,5 @@
 %module "Math::GSL::Version"
-%include "system.i"
-%{
-    #include "gsl/gsl_types.h"
-    #include "gsl/gsl_version.h"
-%}
-%ignore gsl_version;
-%include "gsl/gsl_types.h"
+
+#define GSL_VERSION MG_GSL_VERSION
+#define GSL_MAJOR_VERSION MG_GSL_MAJOR_VERSION
+#define GSL_MINOR_VERSION MG_GSL_MINOR_VERSION

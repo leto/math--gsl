@@ -209,7 +209,7 @@ sub compile_swig {
     my ($major, $minor, $numerical_ver) = reformat_version($ver);
     push @swig_flags, "-DMG_GSL_MAJOR_VERSION=$major",
       "-DMG_GSL_MINOR_VERSION=$minor",
-      "-DMG_GSL_VERSION=$major.$minor",
+      "-DMG_GSL_VERSION=\"$major.$minor\"",
       "-DMG_GSL_NUM_VERSION=$numerical_ver";
 
     my $blib_lib = catdir(qw/blib lib/);

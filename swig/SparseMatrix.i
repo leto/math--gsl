@@ -9,8 +9,24 @@
     #include "gsl/gsl_spmatrix.h"
 %}
 
+#if MG_GSL_VERSION >= 002006
+  %include "gsl/gsl_spmatrix.h"
+  %include "gsl/gsl_spmatrix_double.h"
+  %include "gsl/gsl_spmatrix_complex_long_double.h"
+  %include "gsl/gsl_spmatrix_complex_float.h"
+  %include "gsl/gsl_spmatrix_long_double.h"
+  %include "gsl/gsl_spmatrix_uint.h"
+  %include "gsl/gsl_spmatrix_double.h"
+  %include "gsl/gsl_spmatrix_complex_double.h"
+  %include "gsl/gsl_spmatrix_char.h"
+  %include "gsl/gsl_spmatrix_uchar.h"
+  %include "gsl/gsl_spmatrix_int.h"
+  %include "gsl/gsl_spmatrix_short.h"
+  %include "gsl/gsl_spmatrix_float.h"
+  %include "gsl/gsl_spmatrix_ushort.h"
+#else
+  %include "legacy/gsl-2.5/gsl_spmatrix.h"
+#endif
 
-%include "gsl/gsl_spmatrix.h"
-%include "gsl/gsl_spmatrix_double.h"
 
 %include "../pod/SparseMatrix.pod"

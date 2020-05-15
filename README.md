@@ -54,6 +54,10 @@ CPAN Ratings http://cpanratings.perl.org/d/Math::GSL
 Search CPAN http://search.cpan.org/dist/Math::GSL
 
 
+# Developer information
+
+- [Upgrading to a new GSL version](developer/wiki/Upgrade.md)
+
 # Copyright and Licence
 
 Copyright (C) 2008-2018 Jonathan "Duke" Leto and Thierry Moisan.

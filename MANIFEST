@@ -780,6 +780,7 @@ t/Multiroots.t
 t/Multiset.t
 t/NTuple.t
 t/ODEIV.t
+t/ODEIV_evolve.t
 t/Permutation.t
 t/Poly.t
 t/PowInt.t

@@ -57,6 +57,7 @@ Search CPAN http://search.cpan.org/dist/Math::GSL
 # Developer information
 
 - [Upgrading to a new GSL version](developer/wiki/Upgrade.md)
+- [Uploading a new CPAN distribution](developer/wiki/Upload.md)
 
 # Copyright and Licence
 

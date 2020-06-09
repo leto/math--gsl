@@ -9,6 +9,8 @@ line 29:
 our $VERSION = '0.41';  # <-- increase the version number
 ```
 
+and in the Pod at line 37.
+
 ## Build the CPAN distribution
 
 ```

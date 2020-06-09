@@ -1,6 +1,9 @@
 =head1 Math::GSL Changes
 
-=head1 v0.41 - xxx 2018
+=head1 v0.41 - June 2020
+    - Added support for GSL 2.6 (hakonhagland)
+    - Added docker file support for building a CPAN distribution
+    - Added support for gsl_odeiv_system (hakonhagland)
     - Add support for Debian-specific version 1.16.1, which caused test failures
 
 =head1 v0.40 - December 2018

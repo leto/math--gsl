@@ -18,6 +18,10 @@ cd developer/bin
 ./update_copyright.pl
 ```
 
+## Update Changes file
+
+Update the `Changes` file.
+
 ## Build the CPAN distribution
 
 ```

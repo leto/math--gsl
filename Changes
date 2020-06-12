@@ -1,5 +1,8 @@
 =head1 Math::GSL Changes
 
+=head1 v0.42 - June 2020
+    - Disabled two tests in SF.t and GSL.t that failed on some platforms.
+
 =head1 v0.41 - June 2020
     - Added support for GSL 2.6 (hakonhagland)
     - Added docker file support for building a CPAN distribution

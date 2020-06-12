@@ -11,6 +11,13 @@ our $VERSION = '0.41';  # <-- increase the version number
 
 and in the Pod at line 37.
 
+## Update copyright year in Pod files
+
+```
+cd developer/bin
+./update_copyright.pl
+```
+
 ## Build the CPAN distribution
 
 ```

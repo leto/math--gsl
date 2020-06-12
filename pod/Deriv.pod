@@ -93,7 +93,7 @@ Jonathan "Duke" Leto <jonathan@leto.net> and Thierry Moisan <thierry.moisan@gmai
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2008-2011 Jonathan "Duke" Leto and Thierry Moisan
+Copyright (C) 2008-2020 Jonathan "Duke" Leto and Thierry Moisan
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

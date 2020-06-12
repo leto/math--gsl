@@ -6,7 +6,6 @@ use feature qw(say);
 use strict;
 use warnings;
 use File::Find;
-use Data::Printer;
 
 {
     my $year = @{[localtime]}[5] + 1900;

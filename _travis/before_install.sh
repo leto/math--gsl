@@ -203,6 +203,7 @@ if [ -n "$TRAVIS_BUILD_DIR" ] ; then
     (
         set -v
 	cpanm -n PkgConfig
+	cpanm Alien::GSL
 	cd $TRAVIS_BUILD_DIR
 
 	export LD_LIBRARY_PATH=$GSL_INST_DIR/gsl-${GSL_CURRENT}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}

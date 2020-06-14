@@ -26,11 +26,13 @@ use lib 'inc';
 use GSLBuilder;
 use Ver2Func;
 use File::Spec::Functions qw/:ALL/;
+use Alien::GSL;
 
 our $MIN_GSL_VERSION = "1.15";
 
 my $gsl_conf;
 
+check_alien_gsl_share_dir();
 $gsl_conf = check_gsl_version();
 $gsl_conf = check_gsl_version_pkgconfig() if not $gsl_conf;
 
@@ -240,6 +242,14 @@ sub try_cflags {
     }
     print "no\n";
     return '';
+}
+
+sub check_alien_gsl_share_dir {
+    if (Alien::GSL->install_type eq "share") {
+        my $dist_dir = Alien::GSL->dist_dir;
+        my $bin_dir = File::Spec->catfile( $dist_dir, "bin" );
+        $ENV{PATH} .= ":$bin_dir";
+    }
 }
 
 sub check_gsl_version_pkgconfig {

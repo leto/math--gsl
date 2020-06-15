@@ -9,25 +9,36 @@ generate Perl bindings to *most* GSL functionality.
 
 # Dependencies
 
-## CPAN distribution dependencies
+Currently `Math::GSL` requires at least Perl 5.8.1 to compile.
 
-Currently Math::GSL requires at least Perl 5.8.1 and GSL 1.15 to compile. It
-also requires that the gsl-config binary can be found in your PATH or [PkgConfig](http://metacpan.org/release/PkgConfig/) to find GSL.
+## Library dependencies
 
+- GSL version 1.15 or larger. If you have installed GSL on your system,
+the location of the library files are determined by running the
+`gsl-config` binary. If it cannot be found
+in your `PATH`, [PkgConfig](http://metacpan.org/release/PkgConfig/) is
+tried to locate GSL.
 
-## Git repo dependencies
+- If you have not installed GSL on your system,
+[`Alien::GSL`](https://metacpan.org/pod/Alien::GSL) is used to
+install the latest version on your system. `Alien::GSL` depends
+on [`Net::SSLeay`](https://metacpan.org/pod/Net::SSLeay) to download
+the library, which requires that you have
+installed `libssl-dev` and `libz-dev` (on Debian platforms, or similar
+libraries on other platforms).
 
-SWIG >= 2.x is needed to build Math::GSL from the git repo, in addition to all
-the dependencies above. 2.0.8 or newer is required to work with Perl 5.20 and
-higher. SWIG 3.x is recommended.
-
-On OS X with Homebrew, you can install swig with:
-
-    brew install swig
 
 # Installation
 
-To install this module, run the following commands:
+To install this module, run
+
+```
+cpanm Math::GSL
+```
+
+or download the tarball distribution
+from [metacpan.org](https://metacpan.org/pod/Math::GSL) and run the following
+commands:
 
     perl Build.PL
     ./Build
@@ -55,6 +66,18 @@ Search CPAN http://search.cpan.org/dist/Math::GSL
 
 
 # Developer information
+
+## Git repo dependencies
+
+SWIG >= 2.x is needed to build `Math::GSL` from the git repo, version
+2.0.8 or newer is required to work with Perl 5.20 and
+higher. SWIG 3.x is recommended.
+
+On OS X with Homebrew, you can install swig with:
+
+    brew install swig
+
+## Upgrading and uploading
 
 - [Upgrading to a new GSL version](developer/wiki/Upgrade.md)
 - [Uploading a new CPAN distribution](developer/wiki/Upload.md)

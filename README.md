@@ -84,7 +84,7 @@ On OS X with Homebrew, you can install swig with:
 
 # Copyright and Licence
 
-Copyright (C) 2008-2018 Jonathan "Duke" Leto and Thierry Moisan.
+Copyright (C) 2008-2020 Jonathan "Duke" Leto and Thierry Moisan.
 
 A full list of contributors is listed in the [CREDITS](https://github.com/leto/math--gsl/blob/master/CREDITS) file.
 

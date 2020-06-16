@@ -19,7 +19,7 @@ sub find_helper {
     my ($year) = @_;
     my $fn = $_;
     return if !(-f $fn);
-    return if !(($fn =~ /\.pod$/) || ($fn eq "GSL.pm"));
+    return if !(($fn =~ /\.pod$/) || ($fn eq "GSL.pm") || ($fn eq "README.md"));
 
     system 'perl', '-i', '-spE',
       '$line = $_;

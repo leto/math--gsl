@@ -14,7 +14,8 @@ foo*
 Math-GSL
 \.prove
 swig/system\.i
-swig/renames\.i
+swig/renames*
 .*~
 ^MYMETA.yml$
 META.json
+developer/*

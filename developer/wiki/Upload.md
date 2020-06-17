@@ -25,7 +25,7 @@ Update the `Changes` file.
 ## Build the CPAN distribution
 
 ```
-cd docker 
+cd developer/docker
 ./build_image.sh
 ./run.sh 2.6  # <-- Uses GSL version 2.6 to build the distribution
 ```

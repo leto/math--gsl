@@ -29,16 +29,9 @@ cd developer/docker
 ./build_image.sh
 ./run.sh 2.6  # <-- Uses GSL version 2.6 to build the distribution
 ```
-after `run.sh` finishes you are left in the bash shell of the docker
-container with a file `Math-GSL-xx.yy.tar.gz`, where xx.yy corresponds
-to the version you chose in the previous step.
-
-Go to another shell window on the host machine and copy the generated
-tarball from the docker image to the host machine:
-
-```
-./get_tarball.sh
-```
+after `run.sh` there should be a distribution tarball
+`Math-GSL-xx.yy.tar.gz`, in the current directory. Here, xx.yy
+corresponds the current version, i.e., `$Math::GSL::VERSION`.
 
 ## Upload the distribution
 

@@ -8,4 +8,4 @@ else
     GSL_VERSION="$1"
 fi
 
-docker run --name math-gsl-ubuntu-2004 -it math-gsl-ubuntu-2004 "$GSL_VERSION"
+docker run --rm -v "$PWD":/tmp/dist --name math-gsl-ubuntu-2004 -it math-gsl-ubuntu-2004 "$GSL_VERSION"

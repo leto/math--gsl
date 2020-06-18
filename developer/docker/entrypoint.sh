@@ -31,11 +31,16 @@ export LD_LIBRARY_PATH="$GSL_INST_DIR"/"$TARBALL_GSL"/lib
 export PATH="$GSL_INST_DIR"/"$TARBALL_GSL"/bin:"$PATH"
 git clone https://github.com/leto/math--gsl.git
 cd math--gsl
+cpanm -n Net::SSLeay
+cpanm Alien::GSL
 cpanm Module::Build
 perl Build.PL
 ./Build installdeps --cpan_client cpanm
 ./Build
 ./Build test
 ./Build dist
+mkdir -p /tmp/dist
+mv *.tar.gz /tmp/dist
 
-exec bash
+# Uncomment the following line if you do not want to immediately remove the container..
+# exec bash

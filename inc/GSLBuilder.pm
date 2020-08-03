@@ -253,6 +253,7 @@ sub compile_swig {
 sub is_windows { $^O =~ /MSWin32/i }
 sub is_darwin  { $^O =~ /darwin/i  }
 sub is_cygwin  { $^O =~ /cygwin/i }
+sub is_msys  { $^O eq "msys" }
 
 # Windows fixes courtesy of <sisyphus@cpan.org>
 sub link_c {

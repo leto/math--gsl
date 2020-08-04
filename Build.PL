@@ -65,6 +65,12 @@ if ( GSLBuilder::is_cygwin()  && $Config{shrpenv} =~ m{\Aenv LD_RUN_PATH=(.*)\Z}
     $ldflags .= " -L$1 -lperl";
     # Should we check the 32-ness?
     $swig_flags = '-DNEED_LONG';
+} elsif (GSLBuilder::is_msys()) {
+    # It is not possible to leave a symbol in a PE DLL undefined at link time, 
+    # to be satisfied at runtime, as it is instead possible with most UNIX shared objects
+    # See https://autotools.io/libtool/windows.html
+    # So we need to link with libperl.dll.a on MSYS2
+    $ldflags .= " -L$Config{archlib}/CORE -lperl";
 } elsif (GSLBuilder::is_darwin()) {
     $ldflags .= ' -bundle -flat_namespace ';
 }

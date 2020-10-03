@@ -2,7 +2,7 @@
 
 Math::GSL is a Perl interface to the [GNU Scientific Library](http://www.gnu.org/software/gsl/), using [SWIG](http://swig.org).  The GNU
 Scientific Library (GSL) is a numerical library for C and C++ programmers. It
-is free software under the GNU General Public License.  Math::GSL uses SWIG to
+is free Software under the GNU General Public License.  Math::GSL uses SWIG to
 generate Perl bindings to *most* GSL functionality.
 
 [![Build Status](https://secure.travis-ci.org/leto/math--gsl.png)](http://travis-ci.org/leto/math--gsl)
@@ -90,3 +90,4 @@ A full list of contributors is listed in the [CREDITS](https://github.com/leto/m
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself. Fuck Yeah.
+

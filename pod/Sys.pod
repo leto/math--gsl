@@ -138,7 +138,7 @@ zero. The implementation is based on the package fcmp by T.C. Belding.
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial
+For more informations on the functions, we refer you to the GSL official
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 =head1 AUTHORS

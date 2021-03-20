@@ -68,7 +68,7 @@ gsl_bspline_ncoeffs. It is far more efficient to compute all of the basis
 functions at once than to compute them individually, due to the nature of the
 defining recurrence relation.
 
-For more informations on the functions, we refer you to the GSL offcial documentation:
+For more informations on the functions, we refer you to the GSL official documentation:
 http://www.gnu.org/software/gsl/manual/html_node/
 
 =back

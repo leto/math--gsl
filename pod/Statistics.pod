@@ -378,7 +378,7 @@ The following function are simply variants for int and char of the last function
 
 =back
 
-You have to add the functions you want to use inside the qw /put_funtion_here /.
+You have to add the functions you want to use inside the qw /put_function_here /.
 You can also write use Math::GSL::Statistics qw/:all/; to use all available functions of the module.
 Other tags are also available, here is a complete list of all tags for this module :
 

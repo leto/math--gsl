@@ -352,7 +352,7 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 =item gsl_linalg_balance_columns
 
 
- You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all available functions of the module.
+ You have to add the functions you want to use inside the qw /put_function_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all available functions of the module.
 
 For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 

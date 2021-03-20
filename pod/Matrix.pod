@@ -1582,7 +1582,7 @@ sure if anyone wants these. Please speak up if you do and/or submit some patches
 
 =back
 
-You have to add the functions you want to use inside the qw /put_funtion_here /.
+You have to add the functions you want to use inside the qw /put_function_here /.
 You can also write use Math::GSL::Matrix qw/:all/ to use all available functions of the module.
 Other tags are also available, here is a complete list of all tags for this module :
 

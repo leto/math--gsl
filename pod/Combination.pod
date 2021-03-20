@@ -205,7 +205,7 @@ sub prev {
 
 =head1 MORE INFO
 
-For more informations on the functions, we refer you to the GSL offcial
+For more informations on the functions, we refer you to the GSL official
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

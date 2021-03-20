@@ -299,19 +299,19 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 
 =item gsl_linalg_PTLQ_update
 
-=item gsl_linalg_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The function returns 0 if the operation succeeded, 0 otherwise.
 
-=item gsl_linalg_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. $b and $x are vectors. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. $b and $x are vectors. The function returns 0 if the operation succeeded, 0 otherwise.
 
-=item gsl_linalg_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The function returns 0 if the operation succeeded, 0 otherwise.
 
 =item gsl_linalg_cholesky_decomp_unit
 
-=item gsl_linalg_complex_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A which contains complex numbers into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_complex_cholesky_decomp($A) - Factorize the symmetric, positive-definite square matrix $A which contains complex numbers into the Cholesky decomposition A = L L^T and stores it into the matrix $A. The function returns 0 if the operation succeeded, 0 otherwise.
 
-=item gsl_linalg_complex_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. $b and $x are vectors. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_complex_cholesky_solve($cholesky, $b, $x) - This function solves the system A x = b using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. $b and $x are vectors. The function returns 0 if the operation succeeded, 0 otherwise.
 
-=item gsl_linalg_complex_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The funtcion returns 0 if the operation succeeded, 0 otherwise.
+=item gsl_linalg_complex_cholesky_svx($cholesky, $x) - This function solves the system A x = b in-place using the Cholesky decomposition of A into the matrix $cholesky given by gsl_linalg_complex_cholesky_decomp. On input the vector $x should contain the right-hand side b, which is replaced by the solution on output. The function returns 0 if the operation succeeded, 0 otherwise.
 
 =item gsl_linalg_symmtd_decomp($A, $tau) - This function factorizes the symmetric square matrix $A into the symmetric tridiagonal decomposition Q T Q^T. On output the diagonal and subdiagonal part of the input matrix $A contain the tridiagonal matrix T. The remaining lower triangular part of the input matrix contains the Householder vectors which, together with the Householder coefficients $tau, encode the orthogonal matrix Q. This storage scheme is the same as used by lapack. The upper triangular part of $A is not referenced. $tau is a vector.
 
@@ -352,9 +352,9 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 =item gsl_linalg_balance_columns
 
 
- You have to add the functions you want to use inside the qw /put_funtion_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all avaible functions of the module.
+ You have to add the functions you want to use inside the qw /put_function_here / with spaces between each function. You can also write use Math::GSL::Complex qw/:all/ to use all available functions of the module.
 
-For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+For more informations on the functions, we refer you to the GSL official documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 
 =back

@@ -749,9 +749,9 @@ De-allocates the gsl_ran_discrete pointed to by g.
 
 =back
 
- You have to add the functions you want to use inside the qw /put_funtion_here /.
- You can also write use Math::GSL::Randist qw/:all/; to use all avaible functions of the module.
- Other tags are also avaible, here is a complete list of all tags for this module :
+ You have to add the functions you want to use inside the qw /put_function_here /.
+ You can also write use Math::GSL::Randist qw/:all/; to use all available functions of the module.
+ Other tags are also available, here is a complete list of all tags for this module :
 
 =over
 
@@ -835,7 +835,7 @@ De-allocates the gsl_ran_discrete pointed to by g.
 
  For example the beta tag contains theses functions : gsl_ran_beta, gsl_ran_beta_pdf.
 
-For more informations on the functions, we refer you to the GSL offcial documentation:
+For more informations on the functions, we refer you to the GSL official documentation:
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

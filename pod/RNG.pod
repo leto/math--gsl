@@ -399,7 +399,7 @@ __END__
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation:
+For more informations on the functions, we refer you to the GSL official documentation:
 
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 

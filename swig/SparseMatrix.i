@@ -10,6 +10,8 @@
 %}
 
 #if MG_GSL_NUM_VERSION >= 002006
+// ignore gsl_spmatrix_uchar_norm1, gsl_spmatrix_char_norm1, ...
+  %rename("%(regex:/^gsl_spmatrix_.+_norm1$/$ignore/)s") "";
   %include "gsl/gsl_spmatrix.h"
   %include "gsl/gsl_spmatrix_double.h"
   %include "gsl/gsl_spmatrix_complex_long_double.h"

@@ -397,7 +397,14 @@ my @ver2func = (
               ^gsl_matrix_uint_scale_columns$
               /
             ]
+    },
+    "2.7" => {
+        new => [
+            qw/
+              /
+        ]
     }
+
 );
 
 my ( %index, @info, @versions );

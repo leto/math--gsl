@@ -18,7 +18,6 @@
     #include "gsl/gsl_multifit.h"
     #include "gsl/gsl_multilarge.h"
 %}
-
 %include "gsl/gsl_inline.h"
 %include "gsl/gsl_types.h"
 %include "gsl/gsl_math.h"
@@ -26,5 +25,9 @@
 %include "gsl/gsl_matrix.h"
 %include "gsl/gsl_permutation.h"
 %include "gsl/gsl_multifit.h"
-%include "gsl/gsl_multilarge.h"
+#if MG_GSL_NUM_VERSION >= 002007
+  %include "gsl/gsl_multilarge.h"
+#else
+  %include "legacy/gsl-2.6/gsl_multilarge.h"
+#endif
 %include "../pod/Multifit.pod"

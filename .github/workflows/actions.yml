@@ -1,0 +1,167 @@
+name: linux-build-dist
+on: [push, pull_request]
+jobs:
+  build-perls:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        perl: [34, 32, 30, 28, 26]
+    steps:
+      - uses: actions/checkout@v2
+      - name: set environment variables
+        env:
+          PERL_NAME: perl-5.${{ matrix.perl }}.0
+          PERL_DIR: ~/perl/${{ runner.os }}/5.${{ matrix.perl }}
+        run: |
+          ./.github/scripts/set_environment_variables.sh
+      - name: perl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-perl3-${{ matrix.perl }}
+        id: cache-perl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PERL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: install perl
+        if: steps.cache-perl.outputs.cache-hit != 'true'
+        run: |
+          ./.github/scripts/install_perl.sh
+  build-gsl:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        gsl: [2.7, 2.6, 2.5, 2.4, 2.3]
+    steps:
+      - uses: actions/checkout@v2
+      - name: set environment variables
+        env:
+          GSL_NAME: gsl-${{ matrix.gsl }}
+          GSL_DIR: ~/gsl/${{ runner.os }}/gsl-${{ matrix.gsl }}
+        run: |
+          ./.github/scripts/set_environment_variables.sh
+      - name: gsl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-gsl4-${{ matrix.gsl }}
+        id: cache-gsl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.GSL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: install gsl
+        if: steps.cache-gsl.outputs.cache-hit != 'true'
+        run: |
+          ./.github/scripts/install_gsl.sh
+  build-dist:
+    runs-on: ubuntu-20.04
+    needs: [build-gsl, build-perls]
+    strategy:
+      matrix:
+        gsl: [2.7]
+        perl: [34]
+    steps:
+      - uses: actions/checkout@v2
+      - name: set environment variables
+        env:
+          GSL_NAME: gsl-${{ matrix.gsl }}
+          GSL_DIR: ~/gsl/${{ runner.os }}/gsl-${{ matrix.gsl }}
+          PERL_NAME: perl-5.${{ matrix.perl }}.0
+          PERL_DIR: ~/perl/${{ runner.os }}/5.${{ matrix.perl }}
+        run: |
+          ./.github/scripts/set_environment_variables.sh
+
+      - name: perl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-perl3-${{ matrix.perl }}
+        id: cache-perl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PERL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: gsl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-gsl4-${{ matrix.gsl }}
+        id: cache-gsl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.GSL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: install packages
+        run: |
+          # NOTE: The following packages are already installed in "ubuntu-20.04" :
+          #     build-essential curl g++ git wget libssl-dev libz-dev
+          #       swig autoconf libtool
+          #sudo apt-get install swig autoconf libtool
+          swig -version
+      - name: install perl modules, build, and test
+        run: |
+          ./.github/scripts/build_and_test.sh
+      - name: build dist
+        run: |
+          ./.github/scripts/build_dist.sh
+      - name: Save dist as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: math_gsl_dist
+          path: ${{ env.MATH_GSL_DISTNAME }}
+      - name: Save name of dist as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: math_gsl_dist_name
+          path: math-gsl-dist-name.txt
+  install-dist-linux:
+    runs-on: ubuntu-20.04
+    needs: [build-dist]
+    strategy:
+      matrix:
+        gsl: [2.7, 2.6, 2.5, 2.4, 2.3]
+        perl: [34, 32, 30, 28, 26]
+    steps:
+      - uses: actions/checkout@v2
+      - name: set environment variables
+        env:
+          GSL_NAME: gsl-${{ matrix.gsl }}
+          GSL_DIR: ~/gsl/${{ runner.os }}/gsl-${{ matrix.gsl }}
+          PERL_NAME: perl-5.${{ matrix.perl }}.0
+          PERL_DIR: ~/perl/${{ runner.os }}/5.${{ matrix.perl }}
+        run: |
+          ./.github/scripts/set_environment_variables.sh
+      - name: perl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-perl3-${{ matrix.perl }}
+        id: cache-perl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PERL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: gsl cache
+        env:
+          CACHE_KEY: ${{ runner.os }}-gsl4-${{ matrix.gsl }}
+        id: cache-gsl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.GSL_DIR }}
+          key: ${{ env.CACHE_KEY }}
+      - name: Download dist
+        env:
+          PERL_NAME: perl-5.${{ matrix.perl }}
+          PERL_DIR: ~/perl/${{runner.os}}/5.${{ matrix.perl }}
+          GSL_NAME: gsl-${{ matrix.gsl }}
+          GSL_DIR: ~/gsl/${{runner.os}}/gsl-${{ matrix.gsl }}
+        uses: actions/download-artifact@v2
+        with:
+          name: math_gsl_dist
+      - name: Download dist name
+        uses: actions/download-artifact@v2
+        with:
+          name: math_gsl_dist_name
+      - name: extract dist
+        run: |
+          DISTNAME=$(<math-gsl-dist-name.txt)
+          tar zxvf $DISTNAME
+          DISTDIR=$(perl -pe 's/\.tar.gz$//' <<<"$DISTNAME")
+          echo "DISTDIR=$DISTDIR" >> $GITHUB_ENV
+      - name: install perl modules and build and test
+        run: |
+          BASEDIR=$PWD
+          cd $DISTDIR
+          $BASEDIR/.github/scripts/build_and_test.sh

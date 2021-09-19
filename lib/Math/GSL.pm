@@ -63,7 +63,7 @@ Each GSL subsystem has its own module. For example, the random number generator
 subsystem is Math::GSL::RNG. Many subsystems have a more Perlish and
 object-oriented frontend which can be used, as the above example shows. The raw
 GSL object is useful for using the low-level GSL functions, which in the case of
-the Matrix subsytem, would be of the form gsl_matrix_* . Each module has further
+the Matrix subsystem, would be of the form gsl_matrix_* . Each module has further
 documentation about the low-level C functions as well as using the more
 intuitive (but slightly slower) object-oriented interface.
 
@@ -157,7 +157,7 @@ L<Math::GSL::Statistics>      - Statistics Functions
 
 L<Math::GSL::Sum>             - Summation
 
-L<Math::GSL::Sys>             - Sytem utility functions
+L<Math::GSL::Sys>             - System utility functions
 
 L<Math::GSL::Vector>          - N-dimensional Vectors
 

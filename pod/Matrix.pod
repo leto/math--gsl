@@ -288,7 +288,7 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 
     use Math::GSL::Matrix qw/:all/;
     my $matrix1 = Math::GSL::Matrix->new(5,5);  # OO interface
-    my $matrix2 = $matrix1 + 4;                 # You can add or substract values or matrices to OO matrices
+    my $matrix2 = $matrix1 + 4;                 # You can add or subtract values or matrices to OO matrices
     my $matrix3 = $matrix1 - 4;
     my $matrix4 = $matrix2 + $matrix1;
     my $matrix5 = $matrix2 . $matrix1;          # This is a scalar product, it simply multiply each element
@@ -1248,11 +1248,11 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_swap($m1, $m2)> - Exchange the elements of the matrices $m1 and $m2 by copying. The two matrices must have the same size.
 
-=item C<gsl_matrix_swap_rows($m, $i, $j)> - Exchange the $i-th and $j-th row of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
+=item C<gsl_matrix_swap_rows($m, $i, $j)> - Exchange the $i-th and $j-th row of the matrix $m. The function returns 0 if the operation succeeded, 1 otherwise.
 
-=item C<gsl_matrix_swap_columns($m, $i, $j)> - Exchange the $i-th and $j-th column of the matrix $m. The function returns 0 if the operation suceeded, 1 otherwise.
+=item C<gsl_matrix_swap_columns($m, $i, $j)> - Exchange the $i-th and $j-th column of the matrix $m. The function returns 0 if the operation succeeded, 1 otherwise.
 
-=item C<gsl_matrix_swap_rowcol($m, $i, $j)> - Exchange the $i-th row and the $j-th column of the matrix $m. The matrix must be square. The function returns 0 if the operation suceeded, 1 otherwise.
+=item C<gsl_matrix_swap_rowcol($m, $i, $j)> - Exchange the $i-th row and the $j-th column of the matrix $m. The matrix must be square. The function returns 0 if the operation succeeded, 1 otherwise.
 
 =item C<gsl_matrix_transpose($m)> - This function replaces the matrix m by its transpose by copying the elements of the matrix in-place. The matrix must be square for this operation to be possible.
 
@@ -1272,7 +1272,7 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_isnull($m)> - Return 1 if all the elements of the matrix $m are zero, 0 otherwise
 
-=item C<gsl_matrix_ispos($m)> - Return 1 if all the elements of the matrix $m are strictly positve, 0 otherwise
+=item C<gsl_matrix_ispos($m)> - Return 1 if all the elements of the matrix $m are strictly positive, 0 otherwise
 
 =item C<gsl_matrix_isneg($m)> - Return 1 if all the elements of the matrix $m are strictly negative, 0 otherwise
 
@@ -1292,13 +1292,13 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_add_diagonal($a, $x)> - Add the constant value $x to the elements of the diagonal of the matrix $a
 
-=item C<gsl_matrix_get_row($v, $m, $i)> - Copy the elements of the $i-th row of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_get_row($v, $m, $i)> - Copy the elements of the $i-th row of the matrix $m into the vector $v. The length of the vector must be of the same as the lenght of the row. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_get_col($v, $m, $i)> - Copy the elements of the $j-th column of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_get_col($v, $m, $i)> - Copy the elements of the $j-th column of the matrix $m into the vector $v. The length of the vector must be of the same as the lenght of the column. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_set_row($m, $i, $v)> - Copy the elements of vector $v into the $i-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_set_row($m, $i, $v)> - Copy the elements of vector $v into the $i-th row of the matrix $m The length of the vector must be of the same as the lenght of the row. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_set_col($m, $j, $v)> - Copy the elements of vector $v into the $j-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_set_col($m, $j, $v)> - Copy the elements of vector $v into the $j-th row of the matrix $m The length of the vector must be of the same as the lenght of the column. The function returns 0 if it succeeded, 1 otherwise.
 
 =back
 
@@ -1600,7 +1600,7 @@ Other tags are also avaible, here is a complete list of all tags for this module
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation
+For more information on the functions, we refer you to the GSL offcial documentation
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

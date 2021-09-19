@@ -133,11 +133,11 @@ C<gsl_histogram2d_set_ranges_uniform> or this function will return undef.
 
 =item C<gsl_histogram2d_max_val($h)> - This function returns the maximum value contained in the histogram bins.
 
-=item C<gsl_histogram2d_max_bin($h)> - This function finds the indices of the bin containing the maximum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same maximum value the first bin found is returned.
+=item C<gsl_histogram2d_max_bin($h)> - This function finds the indices of the bin containing the maximum value in the histogram $h and returns the result in this order : 0 if the operation succeeded, 1 otherwise, i and j. In the case where several bins contain the same maximum value the first bin found is returned.
 
 =item C<gsl_histogram2d_min_val($h)> - This function returns the minimum value contained in the histogram bins.
 
-=item C<gsl_histogram2d_min_bin($h)> - This function finds the indices of the bin containing the minimum value in the histogram $h and returns the result in this order : 0 if the operation succeded, 1 otherwise, i and j. In the case where several bins contain the same minimum value the first bin found is returned.
+=item C<gsl_histogram2d_min_bin($h)> - This function finds the indices of the bin containing the minimum value in the histogram $h and returns the result in this order : 0 if the operation succeeded, 1 otherwise, i and j. In the case where several bins contain the same minimum value the first bin found is returned.
 
 =item C<gsl_histogram2d_xmean($h)> - This function returns the mean of the histogrammed x variable, where the histogram is regarded as a probability distribution. Negative bin values are ignored for the purposes of this calculation.
 

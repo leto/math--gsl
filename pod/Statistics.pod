@@ -198,7 +198,7 @@ These functions return the total sum of squares (TSS) of data about the mean. Fo
 
 =item * C<gsl_stats_variance_m($data, $stride, $n, $mean)> - This function returns the sample variance of $data, an array reference, relative to the given value of $mean. The function is computed with \Hat\mu replaced by the value of mean that you supply, \Hat\sigma^2 = (1/(N-1)) \sum (x_i - mean)^2
 
-=item * C<gsl_stats_absdev_m($data, $stride, $n, $mean)> - This function computes the absolute deviation of the dataset $data, an array refrence, relative to the given value of $mean, absdev  = (1/N) \sum |x_i - mean|. This function is useful if you have already computed the mean of data (and want to avoid recomputing it), or wish to calculate the absolute deviation relative to another value (such as zero, or the median).
+=item * C<gsl_stats_absdev_m($data, $stride, $n, $mean)> - This function computes the absolute deviation of the dataset $data, an array reference, relative to the given value of $mean, absdev  = (1/N) \sum |x_i - mean|. This function is useful if you have already computed the mean of data (and want to avoid recomputing it), or wish to calculate the absolute deviation relative to another value (such as zero, or the median).
 
 =item * C<gsl_stats_wmean($w, $wstride, $data, $stride, $n)> - This function returns the weighted mean of the dataset $data array reference with stride $stride and length $n, using the set of weights $w, which is an array reference, with stride $wstride and length $n. The weighted mean is defined as, \Hat\mu = (\sum w_i x_i) / (\sum w_i)
 
@@ -392,7 +392,7 @@ Other tags are also avaible, here is a complete list of all tags for this module
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial
+For more information on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

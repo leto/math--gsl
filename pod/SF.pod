@@ -1644,7 +1644,7 @@ These functions compute the incomplete elliptic integral D(\phi,k) which is defi
 
 =over
 
-=item C<gsl_sf_elljac_e($u, $m)> - This function computes the Jacobian elliptic functions sn(u|m), cn(u|m), dn(u|m) by descending Landen transformations. The function returns 0 if the operation succeded, 1 otherwise and then returns the result of sn, cn and dn in this order.
+=item C<gsl_sf_elljac_e($u, $m)> - This function computes the Jacobian elliptic functions sn(u|m), cn(u|m), dn(u|m) by descending Landen transformations. The function returns 0 if the operation succeeded, 1 otherwise and then returns the result of sn, cn and dn in this order.
 
 =item C<gsl_sf_erfc_e($x, $result)>
 
@@ -3172,7 +3172,7 @@ This module also contains the following constants used as mode in various of tho
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial
+For more information on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

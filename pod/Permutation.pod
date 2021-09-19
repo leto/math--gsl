@@ -72,7 +72,7 @@ Math::GSL::Permutation - functions for creating and manipulating permutations
 
  use Math::GSL::Permutation qw/:all/;
  my $permutation = Math::GSL::Permutation->new(30); # allocate and initialize a permutation of size 30
- my $lenght = $permutation->lenght; # returns the lenght of the permutation object, here it is 30
+ my $length = $permutation->lenght; # returns the lenght of the permutation object, here it is 30
  gsl_permutation_swap($permutation->raw, 2,7);
  # the raw method is made to use the underlying permutation structure of the permutation object
  my $value = $permutation->get(2); # returns the third value (starting from 0) of the permutation
@@ -93,7 +93,7 @@ Here is a list of all the functions included in this module :
 
 =item gsl_permutation_free($p) - free all the memory use by the permutaion $p
 
-=item gsl_permutation_memcpy($dest, $src) - copy the permutation $src into the permutation $dest, the two permutations must have the same lenght and return 0 if the operation succeeded, 1 otherwise
+=item gsl_permutation_memcpy($dest, $src) - copy the permutation $src into the permutation $dest, the two permutations must have the same length and return 0 if the operation succeeded, 1 otherwise
 
 =item gsl_permutation_fread($stream, $p) -  This function reads into the permutation $p from the open stream $stream (opened with the gsl_fopen function from the Math::GSL module) in binary format. The permutation $p must be preallocated with the correct length since the function uses the size of $p to determine how many bytes to read. The function returns 1 if there was a problem reading from the file. The data is assumed to have been written in the native binary format on the same architecture.
 

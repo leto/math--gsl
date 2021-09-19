@@ -531,17 +531,17 @@ success and 1 if there was a problem writing to the file.
 =item C<gsl_vector_memcpy($dest, $src)>
 
 This function copies the elements of the vector $src into the vector $dest and
-return 0 if the opertaion succeeded, 1 otherwise. The two vectors must have the
+return 0 if the operation succeeded, 1 otherwise. The two vectors must have the
 same length.
 
 =item C<gsl_vector_reverse($v)>
 
 reverse the order of the elements of the vector $v and return 0 if the
-opertaion succeeded, 1 otherwise
+operation succeeded, 1 otherwise
 
 =item C<gsl_vector_swap($v, $v2)>
 
-swap the values of the vectors $v and $v2 and return 0 if the opertaion
+swap the values of the vectors $v and $v2 and return 0 if the operation
 succeeded, 1 otherwise
 
 =item C<gsl_vector_swap_elements($v, $i, $j)>

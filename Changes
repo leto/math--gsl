@@ -189,7 +189,7 @@
     - Math::GSL::Test::ok_status() now takes an optional message argument
     - Added KNOWN_BUGS
     - Added Math::GSL::Test::is_status_ok()
-    - New subsytems: VectorComplex and MatrixComplex
+    - New subsystems: VectorComplex and MatrixComplex
     - Operator overloading for addition and subtraction with vectors
     - Added example: examples/matrix/nonsymmetric_eigen
         Shows how to find the eigenvalues of a nonsymmetric matrix

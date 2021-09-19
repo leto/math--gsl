@@ -288,7 +288,7 @@ Math::GSL::Matrix - Mathematical functions concerning Matrices
 
     use Math::GSL::Matrix qw/:all/;
     my $matrix1 = Math::GSL::Matrix->new(5,5);  # OO interface
-    my $matrix2 = $matrix1 + 4;                 # You can add or substract values or matrices to OO matrices
+    my $matrix2 = $matrix1 + 4;                 # You can add or subtract values or matrices to OO matrices
     my $matrix3 = $matrix1 - 4;
     my $matrix4 = $matrix2 + $matrix1;
     my $matrix5 = $matrix2 . $matrix1;          # This is a scalar product, it simply multiply each element

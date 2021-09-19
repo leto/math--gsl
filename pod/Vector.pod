@@ -582,7 +582,7 @@ same length and return 0 if the operation succeeded, 1 otherwise.
 
 =item C<gsl_vector_sub($v, $v2)>
 
-substract the elements of $v2 from the elements of $v, the two vectors must
+subtract the elements of $v2 from the elements of $v, the two vectors must
 have the same length and return 0 if the operation succeeded, 1 otherwise.
 
 =item C<gsl_vector_mul($v, $v2)>

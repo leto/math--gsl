@@ -157,7 +157,7 @@ L<Math::GSL::Statistics>      - Statistics Functions
 
 L<Math::GSL::Sum>             - Summation
 
-L<Math::GSL::Sys>             - Sytem utility functions
+L<Math::GSL::Sys>             - System utility functions
 
 L<Math::GSL::Vector>          - N-dimensional Vectors
 

@@ -139,7 +139,7 @@ Here is a list of all the functions included in this module :
 
 =item gsl_linalg_complex_householder_transform
 
-=item gsl_linalg_householder_hm($tau, $v, $A) - This function applies the Householder matrix P defined by the scalar $tau and the vector $v to the left-hand side of the matrix $A. On output the result P A is stored in $A. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_householder_hm($tau, $v, $A) - This function applies the Householder matrix P defined by the scalar $tau and the vector $v to the left-hand side of the matrix $A. On output the result P A is stored in $A. The function returns 0 if it succeeded, 1 otherwise.
 
 =item gsl_linalg_householder_mh($tau, $v, $A) - This function applies the Householder matrix P defined by the scalar $tau and the vector $v to the right-hand side of the matrix $A. On output the result A P is stored in $A.
 
@@ -161,7 +161,7 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 
 =item gsl_linalg_complex_householder_hv($tau, $v, $w) - Does the same operation than gsl_linalg_householder_hv but with the complex value $tau and the complex vectors $v and $w.
 
-=item gsl_linalg_hessenberg_decomp($A, $tau) - This function computes the Hessenberg decomposition of the matrix $A by applying the similarity transformation H = U^T A U. On output, H is stored in the upper portion of $A. The information required to construct the matrix U is stored in the lower triangular portion of $A. U is a product of N - 2 Householder matrices. The Householder vectors are stored in the lower portion of $A (below the subdiagonal) and the Householder coefficients are stored in the vector $tau. tau must be of length N. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_hessenberg_decomp($A, $tau) - This function computes the Hessenberg decomposition of the matrix $A by applying the similarity transformation H = U^T A U. On output, H is stored in the upper portion of $A. The information required to construct the matrix U is stored in the lower triangular portion of $A. U is a product of N - 2 Householder matrices. The Householder vectors are stored in the lower portion of $A (below the subdiagonal) and the Householder coefficients are stored in the vector $tau. tau must be of length N. The function returns 0 if it succeeded, 1 otherwise.
 
 =item gsl_linalg_hessenberg_unpack($H, $tau, $U) - This function constructs the orthogonal matrix $U from the information stored in the Hessenberg matrix $H along with the vector $tau. $H and $tau are outputs from gsl_linalg_hessenberg_decomp.
 
@@ -185,9 +185,9 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 
 =item gsl_linalg_LU_decomp($a, $p) - factorize the matrix $a into the LU decomposition PA = LU. On output the diagonal and upper triangular part of the input matrix A contain the matrix U. The lower triangular part of the input matrix (excluding the diagonal) contains L. The diagonal elements of L are unity, and are not stored. The function returns two value, the first is 0 if the operation succeeded, 1 otherwise, and the second is the sign of the permutation.
 
-=item gsl_linalg_LU_solve($LU, $p, $b, $x) - This function solves the square system A x = b using the LU decomposition of the matrix A into (LU, p) given by gsl_linalg_LU_decomp. $LU is a matrix, $p a permutation and $b and $x are vectors. The function returns 1 if the operation succeded, 0 otherwise.
+=item gsl_linalg_LU_solve($LU, $p, $b, $x) - This function solves the square system A x = b using the LU decomposition of the matrix A into (LU, p) given by gsl_linalg_LU_decomp. $LU is a matrix, $p a permutation and $b and $x are vectors. The function returns 1 if the operation succeeded, 0 otherwise.
 
-=item gsl_linalg_LU_svx($LU, $p, $x) - This function solves the square system A x = b in-place using the LU decomposition of A into (LU,p). On input $x should contain the right-hand side b, which is replaced by the solution on output. $LU is a matrix, $p a permutation and $x is a vector. The function returns 1 if the operation succeded, 0 otherwise.
+=item gsl_linalg_LU_svx($LU, $p, $x) - This function solves the square system A x = b in-place using the LU decomposition of A into (LU,p). On input $x should contain the right-hand side b, which is replaced by the solution on output. $LU is a matrix, $p a permutation and $x is a vector. The function returns 1 if the operation succeeded, 0 otherwise.
 
 =item gsl_linalg_LU_refine($A, $LU, $p, $b, $x, $residual) - This function apply an iterative improvement to $x, the solution of $A $x = $b, using the LU decomposition of $A into ($LU,$p). The initial residual $r = $A $x - $b (where $x and $b are vectors) is also computed and stored in the vector $residual.
 
@@ -221,27 +221,27 @@ Performs a Givens rotation on the $i and $j-th elements of $v, storing them in $
 
 =item gsl_linalg_QR_svx($QR, $tau, $x) - This function solves the square system A x = b in-place using the QR decomposition of A into the matrix $QR and the vector $tau given by gsl_linalg_QR_decomp. On input, the vector $x should contain the right-hand side b, which is replaced by the solution on output.
 
-=item gsl_linalg_QR_lssolve($QR, $tau, $b, $x, $residual) - This function finds the least squares solution to the overdetermined system $A $x = $b where the matrix $A has more rows than columns. The least squares solution minimizes the Euclidean norm of the residual, ||Ax - b||.The routine uses the $QR decomposition of $A into ($QR, $tau) given by gsl_linalg_QR_decomp. The solution is returned in $x. The residual is computed as a by-product and stored in residual. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_lssolve($QR, $tau, $b, $x, $residual) - This function finds the least squares solution to the overdetermined system $A $x = $b where the matrix $A has more rows than columns. The least squares solution minimizes the Euclidean norm of the residual, ||Ax - b||.The routine uses the $QR decomposition of $A into ($QR, $tau) given by gsl_linalg_QR_decomp. The solution is returned in $x. The residual is computed as a by-product and stored in residual. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_QRsolve($Q, $R, $b, $x) - This function solves the system $R $x = $Q**T $b for $x. It can be used when the $QR decomposition of a matrix is available in unpacked form as ($Q, $R). The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_QRsolve($Q, $R, $b, $x) - This function solves the system $R $x = $Q**T $b for $x. It can be used when the $QR decomposition of a matrix is available in unpacked form as ($Q, $R). The function returns 0 if it succeeded, 1 otherwise.
 
 =item gsl_linalg_QR_Rsolve($QR, $b, $x) - This function solves the triangular system R $x = $b for $x. It may be useful if the product b' = Q^T b has already been computed using gsl_linalg_QR_QTvec.
 
-=item gsl_linalg_QR_Rsvx($QR, $x) - This function solves the triangular system R $x = b for $x in-place. On input $x should contain the right-hand side b and is replaced by the solution on output. This function may be useful if the product b' = Q^T b has already been computed using gsl_linalg_QR_QTvec. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_Rsvx($QR, $x) - This function solves the triangular system R $x = b for $x in-place. On input $x should contain the right-hand side b and is replaced by the solution on output. This function may be useful if the product b' = Q^T b has already been computed using gsl_linalg_QR_QTvec. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_update($Q, $R, $b, $x) - This function performs a rank-1 update $w $v**T of the QR decomposition ($Q, $R). The update is given by Q'R' = Q R + w v^T where the output matrices Q' and R' are also orthogonal and right triangular. Note that w is destroyed by the update. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_update($Q, $R, $b, $x) - This function performs a rank-1 update $w $v**T of the QR decomposition ($Q, $R). The update is given by Q'R' = Q R + w v^T where the output matrices Q' and R' are also orthogonal and right triangular. Note that w is destroyed by the update. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_QTvec($QR, $tau, $v) - This function applies the matrix Q^T encoded in the decomposition ($QR,$tau) to the vector $v, storing the result Q^T v in $v. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q^T. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_QTvec($QR, $tau, $v) - This function applies the matrix Q^T encoded in the decomposition ($QR,$tau) to the vector $v, storing the result Q^T v in $v. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q^T. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_Qvec($QR, $tau, $v) - This function applies the matrix Q encoded in the decomposition ($QR,$tau) to the vector $v, storing the result Q v in $v. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_Qvec($QR, $tau, $v) - This function applies the matrix Q encoded in the decomposition ($QR,$tau) to the vector $v, storing the result Q v in $v. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_QTmat($QR, $tau, $A) - This function applies the matrix Q^T encoded in the decomposition ($QR,$tau) to the matrix $A, storing the result Q^T A in $A. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q^T. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_QTmat($QR, $tau, $A) - This function applies the matrix Q^T encoded in the decomposition ($QR,$tau) to the matrix $A, storing the result Q^T A in $A. The matrix multiplication is carried out directly using the encoding of the Householder vectors without needing to form the full matrix Q^T. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_QR_unpack($QR, $tau, $Q, $R) - This function unpacks the encoded QR decomposition ($QR,$tau) into the matrices $Q and $R, where $Q is M-by-M and $R is M-by-N. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_QR_unpack($QR, $tau, $Q, $R) - This function unpacks the encoded QR decomposition ($QR,$tau) into the matrices $Q and $R, where $Q is M-by-M and $R is M-by-N. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_R_solve($R, $b, $x) - This function solves the triangular system $R $x = $b for the N-by-N matrix $R. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_R_solve($R, $b, $x) - This function solves the triangular system $R $x = $b for the N-by-N matrix $R. The function returns 0 if it succeeded, 1 otherwise.
 
-=item gsl_linalg_R_svx($R, $x) - This function solves the triangular system $R $x = b in-place. On input $x should contain the right-hand side b, which is replaced by the solution on output. The function returns 0 if it succeded, 1 otherwise.
+=item gsl_linalg_R_svx($R, $x) - This function solves the triangular system $R $x = b in-place. On input $x should contain the right-hand side b, which is replaced by the solution on output. The function returns 0 if it succeeded, 1 otherwise.
 
 =item gsl_linalg_QRPT_decomp($A, $tau, $p, $norm) - This function factorizes the M-by-N matrix $A into the QRP^T decomposition A = Q R P^T. On output the diagonal and upper triangular part of the input matrix contain the matrix R. The permutation matrix P is stored in the permutation $p. There's two value returned by this function : the first is 0 if the operation succeeded, 1 otherwise. The second is sign of the permutation. It has the value (-1)^n, where n is the number of interchanges in the permutation. The vector $tau and the columns of the lower triangular part of the matrix $A contain the Householder coefficients and vectors which encode the orthogonal matrix Q. The vector tau must be of length k=\min(M,N). The matrix Q is related to these components by, Q = Q_k ... Q_2 Q_1 where Q_i = I - \tau_i v_i v_i^T and v_i is the Householder vector v_i = (0,...,1,A(i+1,i),A(i+2,i),...,A(m,i)). This is the same storage scheme as used by lapack. The vector norm is a workspace of length N used for column pivoting. The algorithm used to perform the decomposition is Householder QR with column pivoting (Golub & Van Loan, Matrix Computations, Algorithm 5.4.1).
 

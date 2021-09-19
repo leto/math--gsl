@@ -1292,13 +1292,13 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_add_diagonal($a, $x)> - Add the constant value $x to the elements of the diagonal of the matrix $a
 
-=item C<gsl_matrix_get_row($v, $m, $i)> - Copy the elements of the $i-th row of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_get_row($v, $m, $i)> - Copy the elements of the $i-th row of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_get_col($v, $m, $i)> - Copy the elements of the $j-th column of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_get_col($v, $m, $i)> - Copy the elements of the $j-th column of the matrix $m into the vector $v. The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_set_row($m, $i, $v)> - Copy the elements of vector $v into the $i-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_set_row($m, $i, $v)> - Copy the elements of vector $v into the $i-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the row. The function returns 0 if it succeeded, 1 otherwise.
 
-=item C<gsl_matrix_set_col($m, $j, $v)> - Copy the elements of vector $v into the $j-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeded, 1 otherwise.
+=item C<gsl_matrix_set_col($m, $j, $v)> - Copy the elements of vector $v into the $j-th row of the matrix $m The lenght of the vector must be of the same as the lenght of the column. The function returns 0 if it succeeded, 1 otherwise.
 
 =back
 

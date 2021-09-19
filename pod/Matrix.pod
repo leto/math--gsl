@@ -1272,7 +1272,7 @@ Here is a list of all the functions included in this module :
 
 =item C<gsl_matrix_isnull($m)> - Return 1 if all the elements of the matrix $m are zero, 0 otherwise
 
-=item C<gsl_matrix_ispos($m)> - Return 1 if all the elements of the matrix $m are strictly positve, 0 otherwise
+=item C<gsl_matrix_ispos($m)> - Return 1 if all the elements of the matrix $m are strictly positive, 0 otherwise
 
 =item C<gsl_matrix_isneg($m)> - Return 1 if all the elements of the matrix $m are strictly negative, 0 otherwise
 

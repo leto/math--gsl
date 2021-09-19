@@ -835,7 +835,7 @@ De-allocates the gsl_ran_discrete pointed to by g.
 
  For example the beta tag contains theses functions : gsl_ran_beta, gsl_ran_beta_pdf.
 
-For more informations on the functions, we refer you to the GSL offcial documentation:
+For more information on the functions, we refer you to the GSL offcial documentation:
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

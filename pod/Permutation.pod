@@ -152,7 +152,7 @@ Here is a list of all the functions included in this module :
  You have to add the functions you want to use inside the qw/put_funtion_here/ with spaces between each function.
  You can also write use Math::GSL::CDF qw/:all/ to use all avaible functions of the module.
  Other tags are also avaible, here is a complete list of all tags for this module.
-For more informations on the functions, we refer you to the GSL offcial documentation:
+For more information on the functions, we refer you to the GSL offcial documentation:
 L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 

@@ -365,7 +365,7 @@ Other tags are also avaible, here is a complete list of all tags for this module
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
+For more information on the functions, we refer you to the GSL offcial documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 =head1 AUTHORS
 

@@ -66,7 +66,7 @@ ya as arguments on each evaluation.
 
 =back
 
-For more informations on the functions, we refer you to the GSL offcial
+For more information on the functions, we refer you to the GSL offcial
 documentation: L<http://www.gnu.org/software/gsl/manual/html_node/>
 
 
